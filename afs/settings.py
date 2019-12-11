@@ -21,6 +21,8 @@ TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "functions", "templates"))
 TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "widgets", "templates"))
 TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
 
+ONTOLOGY_DIR = os.path.join(APP_ROOT, "ontologies")
+
 LOCALE_PATHS.append(os.path.join(APP_ROOT, "locale"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -39,9 +41,6 @@ ELASTICSEARCH_CUSTOM_INDEXES = []
 #     'module': 'afs.search_indexes.sample_index.SampleIndex',
 #     'name': 'my_new_custom_index' <-- follow ES index naming rules
 # }]
-
-LOAD_DEFAULT_ONTOLOGY = False
-LOAD_PACKAGE_ONTOLOGIES = True
 
 DATABASES = {
     "default": {
