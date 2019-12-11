@@ -40,9 +40,6 @@ ELASTICSEARCH_CUSTOM_INDEXES = []
 #     'name': 'my_new_custom_index' <-- follow ES index naming rules
 # }]
 
-LOAD_DEFAULT_ONTOLOGY = False
-LOAD_PACKAGE_ONTOLOGIES = True
-
 DATABASES = {
     "default": {
         "ATOMIC_REQUESTS": False,
