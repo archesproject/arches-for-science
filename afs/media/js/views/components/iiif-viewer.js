@@ -29,11 +29,11 @@ define([
             }
         };
         this.manifest.subscribe(getManifestData);
-        getManifestData(params.manifest);
+        getManifestData(this.manifest());
         
         WorkbenchViewmodel.apply(this, [params]);
         
-        this.showGallery = ko.observable(false);
+        this.showGallery = ko.observable(true);
         
         this.toggleGallery = function() {
             self.showGallery(!self.showGallery());
@@ -64,14 +64,22 @@ define([
         };
         this.map.subscribe(addCanvasLayer);
         this.canvas.subscribe(addCanvasLayer);
+        
+        this.selectCanvas = function(canvas) {
+            var service = self.getCanvasService(canvas);
+            if (service) self.canvas(service);
+        };
+        
+        this.getCanvasService = function(canvas) {
+            if (canvas.images.length > 0) return canvas.images[0].resource.service['@id'];
+        };
+        
         this.manifestData.subscribe(function(manifestData) {
             if (!self.canvas() && manifestData.sequences.length > 0) {
                 var sequence = manifestData.sequences[0];
                 if (sequence.canvases.length > 0) {
                     var canvas = sequence.canvases[0];
-                    if (canvas.images.length > 0) {
-                        self.canvas(canvas.images[0].resource.service['@id']);
-                    }
+                    self.selectCanvas(canvas);
                 }
             }
         });

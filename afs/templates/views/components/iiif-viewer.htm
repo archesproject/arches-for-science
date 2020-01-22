@@ -32,14 +32,21 @@
     css: {'gallery-visible': showGallery},
     text: showGallery() ? '{% trans "Hide Gallery" %}' : '{% trans "Show Gallery" %}'
 "></div>
+<!--ko let: {selectCanvas: selectCanvas, getCanvasService: getCanvasService, selectedCanvas: canvas} -->
 <div class="iiif-viewer-gallery">
     <!--ko if: showGallery() && manifestData() -->
     <div class="iiif-gallery-content" data-bind="foreach: sequences">
         <div class="iiif-gallery-sequence">
             <div class="iiif-gallery-sequence-label" data-bind="text: label"></div>
             <div class="iiif-gallery-sequence-canvases" data-bind="foreach: canvases">
-                <div class="iiif-gallery-canvas">
+                <div class="iiif-gallery-canvas" data-bind="click: function() {
+                    selectCanvas($data);
+                }, css: {
+                    active: getCanvasService($data) === selectedCanvas()
+                }">
+                    <!--ko if: $data.thumbnail -->
                     <div class="iiif-gallery-canvas-thumbnail" data-bind="style: { backgroundImage: 'url(\'' + thumbnail + '\')' }"></div>
+                    <!--/ko -->
                     <div class="iiif-gallery-canvas-label" data-bind="text: label"></div>
                 </div>
             </div>
@@ -47,4 +54,5 @@
     </div>
     <!--/ko -->
 </div>
+<!--/ko -->
 {% endblock content_management %}

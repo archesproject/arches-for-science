@@ -47,11 +47,26 @@
     float: left;
 }
 .iiif-gallery-canvas-thumbnail {
-    height: 75px;
+    height: 65px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
-/* 
-iiif-gallery-sequence
-iiif-gallery-sequence-label
-iiif-gallery-sequence-canvases
-iiif-gallery-canvas-label
-*/
+.iiif-gallery-sequence-label {
+    font-weight: bold;
+    text-decoration: underline;
+    padding-bottom: 3px;
+}
+.iiif-gallery-canvas {
+    cursor: pointer;
+    margin-left:6px;
+    padding: 3px;
+    border: 1px solid transparent;
+}
+.iiif-gallery-canvas:hover, .iiif-gallery-canvas.active {
+    border: 1px solid rgb(180, 180, 180);
+    background-color: rgb(230, 230, 230);
+}
+.iiif-gallery-canvas-label {
+    font-size: 0.9em;
+}
