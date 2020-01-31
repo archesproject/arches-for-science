@@ -16,7 +16,7 @@ INSERT INTO plugins(
     'views/components/iiif-viewer',
     'iiif-viewer',
     '{
-        "manifest": "https://data.getty.edu/museum/api/iiif/249995/manifest.json"
+        "manifest": "https://purl.stanford.edu/qm670kv1873/iiif/manifest"
     }',
     'iiif',
     0
