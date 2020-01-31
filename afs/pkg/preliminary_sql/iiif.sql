@@ -1,4 +1,4 @@
--- DELETE FROM plugins WHERE name='IIIF Viewer';
+DELETE FROM plugins WHERE name='IIIF Viewer';
 
 INSERT INTO plugins(
     pluginid,
@@ -16,7 +16,7 @@ INSERT INTO plugins(
     'views/components/iiif-viewer',
     'iiif-viewer',
     '{
-        "manifest": "https://data.getty.edu/museum/api/iiif/249995/manifest.json"
+        "manifest": "https://d.lib.ncsu.edu/collections/catalog/nubian-message-1992-11-30/manifest"
     }',
     'iiif',
     0

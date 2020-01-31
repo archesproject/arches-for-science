@@ -1,4 +1,5 @@
 {% extends "views/components/workbench.htm" %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block tabs %}
@@ -17,8 +18,37 @@
 <div class="workbench-card-sidepanel-header-container">
     <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">{% trans "Image Tools" %}</h4>
 </div>
-<div>
-    IMAGE TOOLS HERE...
+<div class="iiif-image-tools">
+    <div class="iiif-image-tool-slider">
+        <div class="iiif-image-tool-label">
+            <i class="fa fa-lightbulb-o"></i>
+            {% trans "Brightness" %}
+        </div>
+        <input type="range" min="0" max="200" step="1" data-bind="value: brightness, valueUpdate: 'input'">
+        <div class="iiif-image-tool-value">
+            <span data-bind="text: brightness"></span>%
+        </div>
+    </div>
+    <div class="iiif-image-tool-slider">
+        <div class="iiif-image-tool-label">
+            <i class="fa fa-adjust"></i>
+            {% trans "Contrast" %}
+        </div>
+        <input type="range" min="0" max="200" step="1" data-bind="value: contrast, valueUpdate: 'input'">
+        <div class="iiif-image-tool-value">
+            <span data-bind="text: contrast"></span>%
+        </div>
+    </div>
+    <div class="iiif-image-tool-slider">
+        <div class="iiif-image-tool-label">
+            <i class="fa fa-eyedropper"></i>
+            {% trans "Saturation" %}
+        </div>
+        <input type="range" min="0" max="200" step="1" data-bind="value: saturation, valueUpdate: 'input'">
+        <div class="iiif-image-tool-value">
+            <span data-bind="text: saturation"></span>%
+        </div>
+    </div>
 </div>
 <!--/ko -->
 {% endblock sidepanel %}
@@ -35,22 +65,22 @@
 <!--ko let: {selectCanvas: selectCanvas, getCanvasService: getCanvasService, selectedCanvas: canvas} -->
 <div class="iiif-viewer-gallery">
     <!--ko if: showGallery() && manifestData() -->
-    <div class="iiif-gallery-content" data-bind="foreach: sequences">
+    <div class="iiif-gallery-content">
+        <div class="iiif-gallery-sequence-label" data-bind="text: manifestData().label"></div>
+        <!--ko foreach: sequences -->
         <div class="iiif-gallery-sequence">
-            <div class="iiif-gallery-sequence-label" data-bind="text: label"></div>
             <div class="iiif-gallery-sequence-canvases" data-bind="foreach: canvases">
                 <div class="iiif-gallery-canvas" data-bind="click: function() {
                     selectCanvas($data);
                 }, css: {
                     active: getCanvasService($data) === selectedCanvas()
                 }">
-                    <!--ko if: $data.thumbnail -->
-                    <div class="iiif-gallery-canvas-thumbnail" data-bind="style: { backgroundImage: 'url(\'' + thumbnail + '\')' }"></div>
-                    <!--/ko -->
+                    <div class="iiif-gallery-canvas-thumbnail" data-bind="style: { backgroundImage: 'url(\'' + ($data.thumbnail || '{% static 'img/photo_missing.png' %}') + '\')' }"></div>
                     <div class="iiif-gallery-canvas-label" data-bind="text: label"></div>
                 </div>
             </div>
         </div>
+        <!--/ko -->
     </div>
     <!--/ko -->
 </div>

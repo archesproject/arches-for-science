@@ -32,6 +32,8 @@
     height: 130px;
     width: 100%;
     padding: 10px;
+    white-space: nowrap;
+    overflow-x: auto;
 }
 .workbench-card-wrapper .workbench-card-container-wrapper {
     height: 100%;
@@ -44,10 +46,11 @@
 }
 .iiif-gallery-canvas, .iiif-gallery-sequence, .iiif-gallery-sequence-canvases {
     padding-left: 10px;
-    float: left;
+    display: inline-block;
+    white-space: nowrap;
 }
 .iiif-gallery-canvas-thumbnail {
-    height: 65px;
+    height: 55px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -62,6 +65,8 @@
     margin-left:6px;
     padding: 3px;
     border: 1px solid transparent;
+    min-width: 60px;
+    height: 80px;
 }
 .iiif-gallery-canvas:hover, .iiif-gallery-canvas.active {
     border: 1px solid rgb(180, 180, 180);
@@ -69,4 +74,5 @@
 }
 .iiif-gallery-canvas-label {
     font-size: 0.9em;
+    text-align: center;
 }
