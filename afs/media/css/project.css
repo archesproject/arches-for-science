@@ -49,6 +49,9 @@
     display: inline-block;
     white-space: nowrap;
 }
+.iiif-gallery-sequence {
+    padding-right: 20px;
+}
 .iiif-gallery-canvas-thumbnail {
     height: 55px;
     background-size: contain;
@@ -76,8 +79,6 @@
     font-size: 0.9em;
     text-align: center;
 }
-
-
 .iiif-image-tools {
     padding: 10px;
     color: rgb(30, 63, 94);
@@ -86,12 +87,15 @@
 .iiif-image-tool-slider {
     padding-bottom: 20px;
 }
-.iiif-image-tool-label {
-    
-}
 .iiif-image-tool-slider-wrap {
     margin: 0 20px;
 }
 .iiif-image-tool-value {
     padding: 0 20px;
+}
+.iiif-image-tool-slider .toggle-container {
+    padding: 5px;
+}
+.iiif-image-tool-slider .arches-toggle-sm {
+    margin-top: -19px;
 }

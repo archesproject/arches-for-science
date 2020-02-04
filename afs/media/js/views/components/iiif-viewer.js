@@ -60,11 +60,14 @@ define([
         this.brightness = ko.observable(100);
         this.contrast = ko.observable(100);
         this.saturation = ko.observable(100);
+        this.greyscale = ko.observable(false);
         this.canvasFilter = ko.pureComputed(function() {
             var brightness = self.brightness()/100;
             var contrast = self.contrast()/100;
             var saturation = self.saturation()/100;
-            return 'brightness(' + brightness + ') contrast(' + contrast + ') saturate(' + saturation + ')';
+            var greyscale = self.greyscale() ? 1 : 0;
+            return 'brightness(' + brightness + ') contrast(' + contrast + ') ' +
+                'saturate(' + saturation + ') grayscale(' + greyscale + ')';
         });
         var updateCanvasLayerFilter = function() {
             var filter = self.canvasFilter();
@@ -74,6 +77,13 @@ define([
             }
         };
         this.canvasFilter.subscribe(updateCanvasLayerFilter);
+        
+        this.resetImageSettings = function() {
+            self.brightness(100);
+            self.contrast(100);
+            self.saturation(100);
+            self.greyscale(false);
+        };
 
         var addCanvasLayer = function() {
             var map = self.map();
@@ -84,9 +94,7 @@ define([
                     canvasLayer = undefined;
                 }
                 if (canvas) {
-                    canvasLayer = L.tileLayer.iiif(
-                        canvas + '/info.json'
-                    );
+                    canvasLayer = L.tileLayer.iiif(canvas + '/info.json');
                     canvasLayer.addTo(map);
                     updateCanvasLayerFilter();
                 }
