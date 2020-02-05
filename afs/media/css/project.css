@@ -59,6 +59,7 @@
     background-position: center;
 }
 .iiif-gallery-sequence-label {
+    cursor: pointer;
     font-weight: bold;
     text-decoration: underline;
     padding-bottom: 3px;
@@ -98,4 +99,12 @@
 }
 .iiif-image-tool-slider .arches-toggle-sm {
     margin-top: -19px;
+}
+.manifest-editor {
+    padding-bottom: 10px;
+}
+.manifest-editor-error {
+    display: inline-block;
+    padding-left: 10px;
+    color: red;
 }

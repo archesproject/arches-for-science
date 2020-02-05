@@ -7,11 +7,15 @@ define([
 ], function(ko, L, WorkbenchViewmodel) {
     var IIIFViewerViewmodel = function(params) {
         var self = this;
-        
+
         this.map = ko.observable();
         this.manifest = ko.observable(params.manifest);
+        this.enteredManifestURL = ko.observable(params.manifest);
+        this.editManifest = ko.observable(false);
         this.canvas = ko.observable(params.canvas);
+        this.manifestLoading = ko.observable();
         this.manifestData = ko.observable();
+        this.manifestError = ko.observable();
         this.sequences = ko.pureComputed(function() {
             var manifestData = self.manifestData();
             var sequences = manifestData ? manifestData.sequences : [];
@@ -26,15 +30,32 @@ define([
             });
             return sequences;
         });
+        this.manifestName = ko.pureComputed(function() {
+            var manifestData = self.manifestData();
+            var name = manifestData ? manifestData.label : '';
+            return name;
+        });
+        this.applyManifestURL = function() {
+            self.manifest(self.enteredManifestURL());
+        };
         
         var getManifestData = function(manifestURL) {
             if (manifestURL) {
+                self.manifestLoading(true);
+                self.manifestError(undefined);
                 fetch(manifestURL)
                     .then(function(response) {
                         return response.json();
                     })
                     .then(function(manifestData) {
                         self.manifestData(manifestData);
+                        self.editManifest(false);
+                    })
+                    .catch(function(error) {
+                        self.manifestError(error);
+                    })
+                    .finally(function() {
+                        self.manifestLoading(false);
                     });
             }
         };
@@ -121,6 +142,10 @@ define([
                 }
             }
         });
+        
+        this.toggleManifestEditor = function() {
+            self.editManifest(!self.editManifest());
+        };
     };
     ko.components.register('iiif-viewer', {
         viewModel: IIIFViewerViewmodel,

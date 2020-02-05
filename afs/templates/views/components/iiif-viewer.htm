@@ -86,22 +86,58 @@
 "></div>
 <!--ko let: {selectCanvas: selectCanvas, getCanvasService: getCanvasService, selectedCanvas: canvas} -->
 <div class="iiif-viewer-gallery">
-    <!--ko if: showGallery() && manifestData() -->
+    <!--ko if: showGallery() -->
     <div class="iiif-gallery-content">
-        <div class="iiif-gallery-sequence-label" data-bind="text: manifestData().label"></div>
-        <!--ko foreach: sequences -->
-        <div class="iiif-gallery-sequence">
-            <div class="iiif-gallery-sequence-canvases" data-bind="foreach: canvases">
-                <div class="iiif-gallery-canvas" data-bind="click: function() {
-                    selectCanvas($data);
-                }, css: {
-                    active: getCanvasService($data) === selectedCanvas()
-                }">
-                    <div class="iiif-gallery-canvas-thumbnail" data-bind="style: { backgroundImage: 'url(\'' + ($data.thumbnail || '{% static 'img/photo_missing.png' %}') + '\')' }"></div>
-                    <div class="iiif-gallery-canvas-label" data-bind="text: label"></div>
+        <!--ko if: !editManifest() -->
+            <!--ko if: manifestLoading() -->
+            <span class="manifest-editor-loading">
+                {% trans "Loading manifest..." %}
+            </span>
+            <!--/ko -->
+            <!--ko if: !manifestLoading() -->
+                <div class="iiif-gallery-sequence-label" data-bind="click: toggleManifestEditor">
+                    <span data-bind="text: manifestName() ? manifestName() : '{% trans "No manifest selected..." %}'"></span>
+                    <i class="fa fa-pencil"></i>
+                </div>
+                <!--ko foreach: sequences -->
+                <div class="iiif-gallery-sequence">
+                    <div class="iiif-gallery-sequence-canvases" data-bind="foreach: canvases">
+                        <div class="iiif-gallery-canvas" data-bind="click: function() {
+                            selectCanvas($data);
+                        }, css: {
+                            active: getCanvasService($data) === selectedCanvas()
+                        }">
+                            <div class="iiif-gallery-canvas-thumbnail" data-bind="style: { backgroundImage: 'url(\'' + ($data.thumbnail || '{% static 'img/photo_missing.png' %}') + '\')' }"></div>
+                            <div class="iiif-gallery-canvas-label" data-bind="text: label"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ko -->
+            <!--/ko -->
+        <!--/ko -->
+        <!--ko if: editManifest() -->
+            <div class="manifest-editor">
+                <div class="manifest-editor-label">
+                    {% trans "Enter manifest URL:" %}
+                </div>
+                <div class="manifest-editor-input">
+                    <input type="text" data-bind="textInput: enteredManifestURL" class="form-control input-lg widget-input">
                 </div>
             </div>
-        </div>
+            <div class="install-buttons">
+                <button class="btn btn-shim btn-mint btn-labeled btn-lg fa fa-pencil" data-bind="click: applyManifestURL, disabled: manifestLoading(), css: { 'disabled': manifestLoading() }">{% trans 'Update manifest' %}</button>
+                <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-refresh" data-bind="click: toggleManifestEditor, disabled: manifestLoading(), css: { 'disabled': manifestLoading() }">{% trans 'Cancel' %}</button>
+                <!--ko if: manifestLoading() -->
+                <span class="manifest-editor-loading">
+                    {% trans "Loading manifest..." %}
+                </span>
+                <!--/ko -->
+                <!--ko if: manifestError() -->
+                <span class="manifest-editor-error">
+                    {% trans "Error loading manifest..." %}
+                </span>
+                <!--/ko -->
+            </div>
         <!--/ko -->
     </div>
     <!--/ko -->
