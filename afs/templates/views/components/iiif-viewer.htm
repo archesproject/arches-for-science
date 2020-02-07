@@ -63,7 +63,7 @@
         <div class="toggle-container">
             <span class="switch switch-small switch-widget" data-bind="css: {'on': greyscale()}, click: function() { greyscale(!greyscale()); }"><small></small></span>
             <div style="display:flex; flex-direction:row;">
-                <div class="arches-toggle-sm">Display as greyscale</div>
+                <div class="arches-toggle-sm" data-bind="click: function() { greyscale(!greyscale()); }">Display as greyscale</div>
             </div>
         </div>
     </div>
@@ -121,12 +121,12 @@
                     {% trans "Enter manifest URL:" %}
                 </div>
                 <div class="manifest-editor-input">
-                    <input type="text" data-bind="textInput: enteredManifestURL" class="form-control input-lg widget-input">
+                    <input type="text" data-bind="textInput: manifest" class="form-control input-lg widget-input">
                 </div>
             </div>
             <div class="install-buttons">
-                <button class="btn btn-shim btn-mint btn-labeled btn-lg fa fa-pencil" data-bind="click: applyManifestURL, disabled: manifestLoading(), css: { 'disabled': manifestLoading() }">{% trans 'Update manifest' %}</button>
-                <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-refresh" data-bind="click: toggleManifestEditor, disabled: manifestLoading(), css: { 'disabled': manifestLoading() }">{% trans 'Cancel' %}</button>
+                <button class="btn btn-shim btn-mint btn-labeled btn-lg fa fa-pencil" data-bind="click: getManifestData, disabled: manifestLoading(), css: { 'disabled': manifestLoading() }">{% trans 'Update manifest' %}</button>
+                <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-refresh" data-bind="click: toggleManifestEditor">{% trans 'Cancel' %}</button>
                 <!--ko if: manifestLoading() -->
                 <span class="manifest-editor-loading">
                     {% trans "Loading manifest..." %}

@@ -7,10 +7,10 @@ define([
 ], function(ko, L, WorkbenchViewmodel) {
     var IIIFViewerViewmodel = function(params) {
         var self = this;
+        var abortFetchManifest;
 
         this.map = ko.observable();
         this.manifest = ko.observable(params.manifest);
-        this.enteredManifestURL = ko.observable(params.manifest);
         this.editManifest = ko.observable(false);
         this.canvas = ko.observable(params.canvas);
         this.manifestLoading = ko.observable();
@@ -33,17 +33,17 @@ define([
         this.manifestName = ko.pureComputed(function() {
             var manifestData = self.manifestData();
             var name = manifestData ? manifestData.label : '';
+            if (Array.isArray(name)) name = name[0]["@value"];
             return name;
         });
-        this.applyManifestURL = function() {
-            self.manifest(self.enteredManifestURL());
-        };
         
-        var getManifestData = function(manifestURL) {
+        this.getManifestData = function() {
+            var manifestURL = self.manifest();
             if (manifestURL) {
                 self.manifestLoading(true);
                 self.manifestError(undefined);
-                fetch(manifestURL)
+                abortFetchManifest = new window.AbortController();
+                fetch(manifestURL, {signal: abortFetchManifest.signal})
                     .then(function(response) {
                         return response.json();
                     })
@@ -52,15 +52,16 @@ define([
                         self.editManifest(false);
                     })
                     .catch(function(error) {
-                        self.manifestError(error);
+                        if (error.message !== "The user aborted a request.")
+                            self.manifestError(error);
                     })
                     .finally(function() {
                         self.manifestLoading(false);
+                        abortFetchManifest = undefined;
                     });
             }
         };
-        this.manifest.subscribe(getManifestData);
-        getManifestData(this.manifest());
+        this.getManifestData();
         
         WorkbenchViewmodel.apply(this, [params]);
         
@@ -145,6 +146,7 @@ define([
         
         this.toggleManifestEditor = function() {
             self.editManifest(!self.editManifest());
+            if (abortFetchManifest) abortFetchManifest.abort();
         };
     };
     ko.components.register('iiif-viewer', {
