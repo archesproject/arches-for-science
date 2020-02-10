@@ -152,6 +152,13 @@ ONTOLOGY_NAMESPACES = {
     "http://www.ics.forth.gr/isl/CRMsci/": "sci",
 }
 
+RENDERERS = [
+    {"name": "imagereader", "component": "views/components/cards/file-renderers/imagereader", "type": "image/*", "hastab": True,},
+    {"name": "textreader", "component": "views/components/cards/file-renderers/textreader", "type": "text/plain", "hastab": True,},
+    {"name": "pdbreader", "component": "views/components/cards/file-renderers/pdbreader", "type": "", "hastab": True,},
+]
+
+
 try:
     from .package_settings import *
 except ImportError:

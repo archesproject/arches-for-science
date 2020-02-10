@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<!--ko if: params.context === 'render' -->
+<div class="">
+    <!--ko if: params.selected() -->
+    <div class="preview">
+        <!--ko if: ko.unwrap(chartData) -->
+        <div class="chart" data-bind='c3: {data: chartData, options: chartOptions}'></div>
+        <!--/ko-->
+    </div>
+    <!--/ko-->
+</div>
+<!--/ko-->
+<!--ko if: params.context === 'tab' -->
+    <i class="fa fa-bar-chart-o"></i>
+    <span class="map-sidebar-text">{% trans "Data" %}</span>
+<!--/ko-->
+<!--ko if: params.context === 'tab-contents' -->
+<div class="col-xs-12 pad-no crud-widget-container">
+    <input style="display:inline-block;"
+    data-bind="select2Query: {
+        select2Config: {
+            clickBubble: true,
+            disabled: false,
+            data: dataOptions,
+            value: selectedData,
+            multiple: false,
+            placeholder: 'Chart Data',
+        }}">
+</div>
+<!--/ko-->
+
