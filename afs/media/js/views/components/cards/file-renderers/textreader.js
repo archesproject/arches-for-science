@@ -62,8 +62,8 @@ define(['jquery',
                         vals.forEach(function(val){
                             var rec = val.trim().split(/[ ,]+/);
                             if (Number(rec[1]) > 30 && rec[0] > 0.5) {
-                                data1[0].push(Number(rec[0]))
-                                data1[1].push(Number(rec[1]))
+                                data1[0].push(Number(rec[0]));
+                                data1[1].push(Number(rec[1]));
                             }
                         });
                         self.chartData(data1);
