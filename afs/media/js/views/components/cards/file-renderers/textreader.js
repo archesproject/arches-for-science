@@ -2,7 +2,7 @@ define(['jquery',
     'knockout',
     'bindings/c3',
     'bindings/select2-query'
-], function ($, ko) {
+], function($, ko) {
     return ko.components.register('textreader', {
         viewModel: function(params) {
             this.params = params;
@@ -11,10 +11,10 @@ define(['jquery',
             this.type = "";
             this.commonData = params.state;
             if ('chartData' in params.state === false) {
-                this.commonData.chartData = ko.observable()
+                this.commonData.chartData = ko.observable();
             }
             if ('parsedData' in params.state === false) {
-                this.commonData.parsedData = ko.observable()
+                this.commonData.parsedData = ko.observable();
             }
             if ('selectedData' in params.state === false) {
                 this.commonData.selectedData = ko.observable('data1');
@@ -37,17 +37,18 @@ define(['jquery',
             }];
 
             this.chartOptions = {
-                                axis: {
-                                    x: {
-                                        tick: {
-                                            count: 4
-                                        }
-                                    }
-                                },
-                                zoom: {
-                                    enabled: true
-                                }
-                            }                           
+                axis: {
+                    x: {
+                        tick: {
+                            count: 4
+                        }
+                    }
+                },
+                zoom: {
+                    enabled: true
+                }
+            };
+
             this.render  = function() {
                 var data1 = [
                     ['value'],
@@ -56,34 +57,34 @@ define(['jquery',
                 $.ajax({
                     url : this.params.displayContent.url,
                     dataType: "text"})
-                        .done(function (data) {
-                            var vals = data.split('Energy Counts')[1].trim().split('\n')
-                            vals.forEach(function(val){
-                                var rec = val.trim().split(/[ ,]+/);
-                                if (Number(rec[1]) > 30 && rec[0] > 0.5) {
-                                    data1[0].push(Number(rec[0]))
-                                    data1[1].push(Number(rec[1]))
-                                }
-                            })
-                            self.chartData(data1)
-                            self.parsedData(data1)
-                            }, this);
-                };
+                    .done(function(data) {
+                        var vals = data.split('Energy Counts')[1].trim().split('\n');
+                        vals.forEach(function(val){
+                            var rec = val.trim().split(/[ ,]+/);
+                            if (Number(rec[1]) > 30 && rec[0] > 0.5) {
+                                data1[0].push(Number(rec[0]))
+                                data1[1].push(Number(rec[1]))
+                            }
+                        });
+                        self.chartData(data1);
+                        self.parsedData(data1);
+                    }, this);
+            };
 
             if (this.params.displayContent) {
                 this.url = this.params.displayContent.url;
                 this.type = this.params.displayContent.type;
                 var self = this;
                 if (self.params.context === 'render') {
-                    self.render()
+                    self.render();
                 }
-                this.selectedData.subscribe(function(val){;
+                this.selectedData.subscribe(function(val){
                     if (val === 'data1') {
-                        this.chartData(this.parsedData())
+                        this.chartData(this.parsedData());
                     } else if (val === 'data2') {
-                        this.chartData(this.data2)
+                        this.chartData(this.data2);
                     }
-                }, this)
+                }, this);
             }
         },
         template: { require: 'text!templates/views/components/cards/file-renderers/textreader.htm' }
