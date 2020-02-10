@@ -165,8 +165,15 @@ RENDERERS = [
             "type": "text/plain",
             "hastab": True,
         },
+        {  
+            "name": "pdbreader",
+            "component": "views/components/cards/file-renderers/pdbreader",
+            "type": "",
+            "hastab": True,
+        }
     ]
-    
+
+
 try:
     from .package_settings import *
 except ImportError:

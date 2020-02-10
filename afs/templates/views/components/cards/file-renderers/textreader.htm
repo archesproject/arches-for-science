@@ -4,7 +4,7 @@
 <div class="">
     <!--ko if: params.selected() -->
     <div class="preview">
-        <!--ko if: chartData() -->
+        <!--ko if: ko.unwrap(chartData) -->
         <div class="chart" data-bind='c3: {data: chartData, options: chartOptions}'></div>
         <!--/ko-->
     </div>
