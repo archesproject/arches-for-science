@@ -7,7 +7,6 @@ define(['jquery',
 ], function ($, ko, THREE) {
     return ko.components.register('pdbreader', {
         viewModel: function(params) {
-            console.log(THREE)
             this.params = params;
             this.fileType = '';
             this.url = "";
