@@ -153,9 +153,11 @@ ONTOLOGY_NAMESPACES = {
 }
 
 RENDERERS = [
-    {"name": "imagereader", "component": "views/components/cards/file-renderers/imagereader", "type": "image/*", "hastab": True,},
-    {"name": "textreader", "component": "views/components/cards/file-renderers/textreader", "type": "text/plain", "hastab": True,},
-    {"name": "pdbreader", "component": "views/components/cards/file-renderers/pdbreader", "type": "", "hastab": True,},
+    {"name": "imagereader", "component": "views/components/cards/file-renderers/imagereader", "ext":"", "type": "image/*", "hastab": True,},
+    {"name": "textreader", "component": "views/components/cards/file-renderers/textreader", "ext":"txt", "type": "text/plain", "hastab": True,},
+    {"name": "pdbreader", "component": "views/components/cards/file-renderers/pdbreader", "ext":"pdb", "type": "", "hastab": True,},
+    {"name": "pcdreader", "component": "views/components/cards/file-renderers/pcdreader", "ext":"pcd", "type": "", "hastab": True,},
+    {"name": "colladareader", "component": "views/components/cards/file-renderers/colladareader", "ext":"dae", "type": "", "hastab": True,},
 ]
 
 
