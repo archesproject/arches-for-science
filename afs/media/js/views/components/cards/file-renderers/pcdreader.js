@@ -41,7 +41,7 @@ define(['jquery',
                     controls.update();
 
                 } );
-                container = window.document.getElementById( 'pcd-container' )
+                container = window.document.getElementById( 'pcd-container' );
                 container.appendChild( renderer.domElement );
 
                 controls = new THREE.TrackballControls( camera, renderer.domElement );
