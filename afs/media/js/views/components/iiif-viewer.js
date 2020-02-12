@@ -8,6 +8,11 @@ define([
     var IIIFViewerViewmodel = function(params) {
         var self = this;
         var abortFetchManifest;
+        var getLabel = function(object) {
+            var label = object.label;
+            if (Array.isArray(label)) label = object.label[0]["@value"];
+            return label;
+        };
 
         this.map = ko.observable();
         this.manifest = ko.observable(params.manifest);
@@ -21,10 +26,11 @@ define([
             var sequences = manifestData ? manifestData.sequences : [];
             sequences.forEach(function(sequence) {
                 if (sequence.canvases) {
-                    if (Array.isArray(sequence.label)) sequence.label = sequence.label[0]["@value"];
+                    sequence.label = getLabel(sequence);
                     sequence.canvases.forEach(function(canvas) {
-                        if (Array.isArray(canvas.label)) canvas.label = canvas.label[0]["@value"];
-                        if (typeof canvas.thumbnail === 'object') canvas.thumbnail = canvas.thumbnail["@id"];
+                        canvas.label = getLabel(canvas);
+                        if (typeof canvas.thumbnail === 'object')
+                            canvas.thumbnail = canvas.thumbnail["@id"];
                     });
                 }
             });
@@ -32,9 +38,7 @@ define([
         });
         this.manifestName = ko.pureComputed(function() {
             var manifestData = self.manifestData();
-            var name = manifestData ? manifestData.label : '';
-            if (Array.isArray(name)) name = name[0]["@value"];
-            return name;
+            return getLabel(manifestData || {label: ''});
         });
         
         this.getManifestData = function() {
@@ -84,12 +88,12 @@ define([
         this.saturation = ko.observable(100);
         this.greyscale = ko.observable(false);
         this.canvasFilter = ko.pureComputed(function() {
-            var brightness = self.brightness()/100;
-            var contrast = self.contrast()/100;
-            var saturation = self.saturation()/100;
-            var greyscale = self.greyscale() ? 1 : 0;
-            return 'brightness(' + brightness + ') contrast(' + contrast + ') ' +
-                'saturate(' + saturation + ') grayscale(' + greyscale + ')';
+            var b = self.brightness() / 100;
+            var c = self.contrast() / 100;
+            var s = self.saturation() / 100;
+            var g = self.greyscale() ? 1 : 0;
+            return 'brightness(' + b + ') contrast(' + c + ') ' +
+                'saturate(' + s + ') grayscale(' + g + ')';
         });
         var updateCanvasLayerFilter = function() {
             var filter = self.canvasFilter();
