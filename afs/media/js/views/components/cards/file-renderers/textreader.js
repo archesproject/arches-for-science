@@ -9,6 +9,7 @@ define(['jquery',
             this.fileType = 'text/plain';
             this.url = "";
             this.type = "";
+            this.loading = ko.observable(true);
             this.commonData = params.state;
             if ('chartData' in params.state === false) {
                 this.commonData.chartData = ko.observable();
@@ -68,6 +69,7 @@ define(['jquery',
                         });
                         self.chartData(data1);
                         self.parsedData(data1);
+                        self.loading(false);
                     }, this);
             };
 

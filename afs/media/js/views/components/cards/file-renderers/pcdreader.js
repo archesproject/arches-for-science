@@ -2,80 +2,43 @@ define(['jquery',
     'knockout',
     'three',
     'PCDLoader',
-    'TrackballControls'
+    'TrackballControls',
+    'bindings/threePCD'
 ], function($, ko, THREE) {
     return ko.components.register('pcdreader', {
         viewModel: function(params) {
             this.params = params;
+            this.displayContent = this.params.displayContent;
             this.fileType = '';
             this.url = "";
             this.type = "";
+            this.renderers = [];
+            this.loading = ko.observable(true);
             var self = this;
-            var camera, scene, renderer;
-            var controls;
-            var container;
-
+            var renderer;
             init();
-            animate();
+
             function init() {
-
-                scene = new THREE.Scene();
-                scene.background = new THREE.Color( 0x000000 );
-
-                camera = new THREE.PerspectiveCamera( 15, window.innerWidth / window.innerHeight, 0.01, 40 );
-                camera.position.x = 0.4;
-                camera.position.z = - 2;
-                camera.up.set( 0, 0, 1 );
-
-                scene.add( camera );
-
+                self.scene = new THREE.Scene();
+                self.scene.background = new THREE.Color( 0x000000 );
+                self.camera = new THREE.PerspectiveCamera( 15, window.innerWidth / window.innerHeight, 0.01, 40 );
+                self.camera.position.x = 0.4;
+                self.camera.position.z = - 2;
+                self.camera.up.set( 0, 0, 1 );
+                self.scene.add( self.camera );
                 renderer = new THREE.WebGLRenderer( { antialias: true } );
                 renderer.setPixelRatio( window.devicePixelRatio );
                 renderer.setSize( window.innerWidth, window.innerHeight );
-                var loader = new THREE.PCDLoader();
-                loader.load(self.params.displayContent.url, function( points ) {
-
-                    scene.add( points );
-                    var center = points.geometry.boundingSphere.center;
-                    controls.target.set( center.x, center.y, center.z );
-                    controls.update();
-
-                } );
-                container = window.document.getElementById( 'pcd-container' );
-                container.appendChild( renderer.domElement );
-
-                controls = new THREE.TrackballControls( camera, renderer.domElement );
-
-                controls.rotateSpeed = 2.0;
-                controls.zoomSpeed = 0.3;
-                controls.panSpeed = 0.2;
-
-                controls.staticMoving = true;
-
-                controls.minDistance = 0.3;
-                controls.maxDistance = 0.3 * 100;
-
-                window.addEventListener( 'resize', onWindowResize, false );
-
+                self.loader = new THREE.PCDLoader();
+                self.controls = new THREE.TrackballControls( self.camera, renderer.domElement );
+                self.controls.rotateSpeed = 2.0;
+                self.controls.zoomSpeed = 0.3;
+                self.controls.panSpeed = 0.2;
+                self.controls.staticMoving = true;
+                self.controls.minDistance = 0.3;
+                self.controls.maxDistance = 0.3 * 100;
+                self.renderers.push(renderer);
             }
-
-            function onWindowResize() {
-
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize( window.innerWidth, window.innerHeight );
-                controls.handleResize();
-
-            }
-
-            function animate() {
-
-                window.requestAnimationFrame( animate );
-                controls.update();
-                renderer.render( scene, camera );
-
-            }
-
         },
         template: { require: 'text!templates/views/components/cards/file-renderers/pcdreader.htm' }
     });
