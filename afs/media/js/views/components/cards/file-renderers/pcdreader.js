@@ -28,7 +28,6 @@ define(['jquery',
                 self.scene.add( self.camera );
                 renderer = new THREE.WebGLRenderer( { antialias: true } );
                 renderer.setPixelRatio( window.devicePixelRatio );
-                renderer.setSize( window.innerWidth, window.innerHeight );
                 self.loader = new THREE.PCDLoader();
                 self.controls = new THREE.TrackballControls( self.camera, renderer.domElement );
                 self.controls.rotateSpeed = 2.0;
