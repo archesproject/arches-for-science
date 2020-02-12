@@ -39,9 +39,7 @@ define(['jquery',
                 self.scene.add( self.root );
                 renderer = new THREE.WebGLRenderer( { antialias: true } );
                 renderer.setPixelRatio( window.devicePixelRatio );
-                renderer.setSize( window.innerWidth, window.innerHeight );
                 labelRenderer = new THREE.CSS2DRenderer();
-                labelRenderer.setSize( window.innerWidth, window.innerHeight );
                 labelRenderer.domElement.style.position = 'absolute';
                 labelRenderer.domElement.style.top = '0';
                 labelRenderer.domElement.style.pointerEvents = 'none';

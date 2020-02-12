@@ -7,21 +7,31 @@ define([
         init: function(element, valueAccessor) {
             var config = ko.unwrap(valueAccessor());
             var animationFrame;
+
+            function getRendererSize(){
+                var width = $(element).width();
+                var height = window.innerHeight;
+                config.camera.aspect = width / height;
+                config.camera.updateProjectionMatrix();
+                return {'height': height, 'width': width}
+            };
+
             config.renderers.forEach(function(renderer){
+                var dimensions = getRendererSize();
+                renderer.setSize( dimensions.width, dimensions.height );
                 element.append( renderer.domElement );
             });
             
             loadFile(config.displayContent.url);
+            
             window.addEventListener( 'resize', onWindowResize, false );
             
             function onWindowResize() {
-                config.camera.aspect = window.innerWidth / window.innerHeight;
-                config.camera.updateProjectionMatrix();
+                var dimensions = getRendererSize();
                 config.renderers.forEach(function(renderer){
-                    renderer.setSize( window.innerWidth, window.innerHeight );
-                    renderer.setSize( window.innerWidth, window.innerHeight );
+                    renderer.setSize( dimensions.width, dimensions.height );
                 });
-                render();
+                config.controls.handleResize();
             }
     
             function animate() {
