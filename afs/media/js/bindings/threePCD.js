@@ -1,8 +1,7 @@
 define([
     'jquery',
-    'knockout',
-    'three'
-], function($, ko, THREE) {
+    'knockout'
+], function($, ko) {
     ko.bindingHandlers.threePCD = {
         init: function(element, valueAccessor) {
             var config = ko.unwrap(valueAccessor());
