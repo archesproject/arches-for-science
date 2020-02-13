@@ -11,6 +11,7 @@ define(['jquery',
             this.type = "";
             this.loading = ko.observable(true);
             this.commonData = params.state;
+            this.displayContent = ko.unwrap(this.params.displayContent);
             if ('chartData' in params.state === false) {
                 this.commonData.chartData = ko.observable();
             }
@@ -49,14 +50,13 @@ define(['jquery',
                     enabled: true
                 }
             };
-
             this.render  = function() {
                 var data1 = [
                     ['value'],
                     ['count']
                 ];
                 $.ajax({
-                    url : this.params.displayContent.url,
+                    url : this.displayContent.url,
                     dataType: "text"})
                     .done(function(data) {
                         var vals = data.split('Energy Counts')[1].trim().split('\n');
@@ -73,9 +73,9 @@ define(['jquery',
                     }, this);
             };
 
-            if (this.params.displayContent) {
-                this.url = this.params.displayContent.url;
-                this.type = this.params.displayContent.type;
+            if (this.displayContent) {
+                this.url = this.displayContent.url;
+                this.type = this.displayContent.type;
                 var self = this;
                 if (self.params.context === 'render') {
                     self.render();
