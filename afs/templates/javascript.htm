@@ -11,7 +11,8 @@
     'PDBLoader': '{{ STATIC_URL }}packages/three/examples/js/loaders/PDBLoader',
     'PCDLoader': '{{ STATIC_URL }}packages/three/examples/js/loaders/PCDLoader',
     'TWEEN': '{{ STATIC_URL }}packages/@tweenjs/tween.js/src/Tween',
-    'ColladaLoader': '{{ STATIC_URL }}packages/three/examples/js/loaders/ColladaLoader'
+    'ColladaLoader': '{{ STATIC_URL }}packages/three/examples/js/loaders/ColladaLoader',
+    'Plotly': '{{ STATIC_URL }}packages/plotly.js-dist/plotly'
 {% endblock paths %}
 
 {% block shim %}
@@ -19,7 +20,7 @@
     'TrackballControls': {deps: ['register-three']},
     'PDBLoader': {deps: ['register-three']},
     'PCDLoader': {deps: ['register-three']},
-    'ColladaLoader': {deps: ['register-three']},
+    'ColladaLoader': {deps: ['register-three']}
 {% endblock shim %}
 
 {% block project_modules %}

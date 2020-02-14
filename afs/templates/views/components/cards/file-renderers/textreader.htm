@@ -6,7 +6,7 @@
     <div class="preview file-viewer" style="position: relative">
         <div class='loading-mask' data-bind="visible: loading()"></div>
         <!--ko if: ko.unwrap(chartData) -->
-        <div class="chart" data-bind='c3: {data: chartData, options: chartOptions, loading: loading}'></div>
+        <div class="chart" data-bind='plotly: {data: chartData, options: chartOptions, loading: loading}'></div>
         <!--/ko-->
     </div>
     <!--/ko-->
