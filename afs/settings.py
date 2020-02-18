@@ -152,7 +152,8 @@ ONTOLOGY_NAMESPACES = {
     "http://www.ics.forth.gr/isl/CRMsci/": "sci",
 }
 
-RENDERERS = [{
+RENDERERS = [
+    {
         "name": "imagereader",
         "id": "5e05aa2e-5db0-4922-8938-b4d2b7919733",
         "iconclass": "fa fa-pencil",
@@ -160,7 +161,8 @@ RENDERERS = [{
         "ext": "",
         "type": "image/*",
         "hastab": True,
-    },{
+    },
+    {
         "name": "textreader",
         "id": "31be40ae-dbe6-4f41-9c13-1964d7d17042",
         "iconclass": "fa fa-globe",
@@ -168,7 +170,8 @@ RENDERERS = [{
         "ext": "txt",
         "type": "text/plain",
         "hastab": True,
-    },{
+    },
+    {
         "name": "pdbreader",
         "id": "3744d5ec-c3f1-45a1-ab79-a4a141ee4197",
         "iconclass": "fa fa-camera",
@@ -176,7 +179,8 @@ RENDERERS = [{
         "ext": "pdb",
         "type": "",
         "hastab": True,
-    },{
+    },
+    {
         "name": "pcdreader",
         "id": "e96e84f2-bcb2-4ca4-8793-7568b09d7374",
         "iconclass": "fa fa-cloud",
