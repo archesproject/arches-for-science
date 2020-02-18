@@ -169,13 +169,13 @@ RENDERERS = [
     },
     {"name": "pdbreader", "component": "views/components/cards/file-renderers/pdbreader", "ext": "pdb", "type": "", "hastab": True,},
     {"name": "pcdreader", "component": "views/components/cards/file-renderers/pcdreader", "ext": "pcd", "type": "", "hastab": True,},
-    {
-        "name": "colladareader",
-        "component": "views/components/cards/file-renderers/colladareader",
-        "ext": "dae",
-        "type": "",
-        "hastab": True,
-    },
+    # {
+    #     "name": "colladareader",
+    #     "component": "views/components/cards/file-renderers/colladareader",
+    #     "ext": "dae",
+    #     "type": "",
+    #     "hastab": True,
+    # },
 ]
 
 
