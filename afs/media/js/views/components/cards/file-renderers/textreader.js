@@ -74,7 +74,6 @@ define(['jquery',
             };
 
             if (this.displayContent) {
-                console.log('subscribing')
                 this.url = this.displayContent.url;
                 this.type = this.displayContent.type;
                 var self = this;
