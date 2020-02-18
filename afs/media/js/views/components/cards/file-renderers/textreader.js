@@ -1,6 +1,6 @@
 define(['jquery',
     'knockout',
-    'bindings/c3',
+    'bindings/plotly',
     'bindings/select2-query'
 ], function($, ko) {
     return ko.components.register('textreader', {
@@ -25,10 +25,10 @@ define(['jquery',
             this.chartData = this.commonData.chartData;
             this.selectedData = this.commonData.selectedData;
 
-            this.data2 = [
-                ['value', 750, 340, 200, 140],
-                ['count', 25000, 34000, 2000, 10040]
-            ];
+            this.data2 = {
+                'value': [750, 340, 200, 140],
+                'count': [25000, 34000, 2000, 10040]
+            };
 
             this.dataOptions = [{
                 text: 'Data 1',
@@ -51,10 +51,10 @@ define(['jquery',
                 }
             };
             this.render  = function() {
-                var data1 = [
-                    ['value'],
-                    ['count']
-                ];
+                var data1 = {
+                    'value': [],
+                    'count': []
+                };
                 $.ajax({
                     url : this.displayContent.url,
                     dataType: "text"})
@@ -63,8 +63,8 @@ define(['jquery',
                         vals.forEach(function(val){
                             var rec = val.trim().split(/[ ,]+/);
                             if (Number(rec[1]) > 30 && rec[0] > 0.5) {
-                                data1[0].push(Number(rec[0]));
-                                data1[1].push(Number(rec[1]));
+                                data1.count.push(Number(rec[1]));
+                                data1.value.push(Number(rec[0]));
                             }
                         });
                         self.chartData(data1);
@@ -74,19 +74,21 @@ define(['jquery',
             };
 
             if (this.displayContent) {
+                console.log('subscribing')
                 this.url = this.displayContent.url;
                 this.type = this.displayContent.type;
                 var self = this;
                 if (self.params.context === 'render') {
                     self.render();
+                    this.selectedData.subscribe(function(val){
+                        if (val === 'data1') {
+                            this.chartData(this.parsedData());
+                        } else if (val === 'data2') {
+                            this.chartData(this.data2);
+                        }
+                    }, this);
                 }
-                this.selectedData.subscribe(function(val){
-                    if (val === 'data1') {
-                        this.chartData(this.parsedData());
-                    } else if (val === 'data2') {
-                        this.chartData(this.data2);
-                    }
-                }, this);
+
             }
         },
         template: { require: 'text!templates/views/components/cards/file-renderers/textreader.htm' }

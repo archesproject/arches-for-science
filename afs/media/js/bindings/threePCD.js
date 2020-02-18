@@ -12,8 +12,8 @@ define([
                 var height = window.innerHeight;
                 config.camera.aspect = width / height;
                 config.camera.updateProjectionMatrix();
-                return {'height': height, 'width': width}
-            };
+                return {'height': height, 'width': width};
+            }
 
             config.renderers.forEach(function(renderer){
                 var dimensions = getRendererSize();
