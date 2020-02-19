@@ -2,10 +2,10 @@ from arches.app.datatypes.base import BaseDataType
 from arches.app.models.models import Widget
 
 details = {
-    "datatype": "iiif",
+    "datatype": "annotation",
     "iconclass": "fa fa-image",
     "modulename": "datatypes.py",
-    "classname": "IIIFDataType",
+    "classname": "AnnotationDataType",
     "configcomponent": None,
     "defaultconfig": None,
     "configname": None,
@@ -13,18 +13,9 @@ details = {
     "defaultwidget": Widget.objects.get(widgetid="aae743b8-4c48-11ea-988b-2bc775672c81"),
     "issearchable": False,
 }
-# resource-instance-list
-# fa fa-external-link-square
-# datatypes.py
-# ResourceInstanceListDataType
-# views/components/datatypes/resource-instance
-# {"graphid":null}
-# resource-instance-datatype-config
-# false
-# ff3c400a-76ec-11e7-a793-784f435179ea
 
 
-class IIIFDataType(BaseDataType):
+class AnnotationDataType(BaseDataType):
     def validate(self, value, source=None):
         errors = []
         return errors
