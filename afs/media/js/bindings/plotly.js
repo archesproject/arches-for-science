@@ -11,29 +11,91 @@ define([
                 y: config.data().count,
                 type: 'scatter'
             };
-            Plotly.newPlot(element, [chartData]);
-            config.data.subscribe(function(val){
+            var layout = {
+                title: {
+                    text: config.title(),
+                    font: {
+                        family: 'Arial, monospace',
+                        size: config.titleSize()
+                    },
+                    xref: 'paper',
+                    x: 0.05,
+                },
+                xaxis: {
+                    title: {
+                        text: config.xAxisLabel(),
+                        font: {
+                            family: 'Arial, monospace',
+                            size: config.xAxisLabelSize(),
+                            color: '#7f7f7f'
+                        }
+                    },
+                },
+                yaxis: {
+                    title: {
+                        text: config.yAxisLabel(),
+                        font: {
+                            family: 'Arial, monospace',
+                            size: config.yAxisLabelSize(),
+                            color: '#7f7f7f'
+                        }
+                    }
+                }
+            };
 
+            var chartConfig = {responsive: true};
+
+            Plotly.newPlot(element, [chartData], layout, chartConfig);
+            // var layoutOptions = [
+            //     {option: config.title, layout: {title: {text: 'Title'}}},
+            //     {option: config.titleSize, layout: {title: {font: {size: 24}}}},
+            //     {option: config.xAxisLabel, layout: {xaxis: {title: {text: 'xaxis label'}}}},
+            //     {option: config.xAxisLabelSize, layout: {xaxis: {title: {font: {size: 18}}}}},
+            //     {option: config.yAxisLabel, layout: {yaxis: {title: {text: 'yaxis label'}}}},
+            //     {option: config.yAxisLabelSizelayout, layout: {yaxis: {title: {font: {size: 18}}}}},
+            // ];
+
+            // layoutOptions.forEach(function(layoutOption) {
+            //     layoutOption.option.subscribe(function(val){
+
+            //     })
+            // });
+            config.title.subscribe(function(val){
+                layout.title.text = val;
+                Plotly.relayout(element, layout);
+            });
+
+            config.titleSize.subscribe(function(val){
+                layout.title.font.size = val;
+                Plotly.relayout(element, layout);
+            });
+
+            config.xAxisLabel.subscribe(function(val){
+                layout.xaxis.title.text = val;
+                Plotly.relayout(element, layout);
+            });
+
+            config.xAxisLabelSize.subscribe(function(val){
+                layout.xaxis.title.font.size = val;
+                Plotly.relayout(element, layout);
+            });
+
+            config.yAxisLabel.subscribe(function(val){
+                layout.yaxis.title.text = val;
+                Plotly.relayout(element, layout);
+            });
+
+            config.yAxisLabelSize.subscribe(function(val){
+                layout.yaxis.title.font.size = val;
+                Plotly.relayout(element, layout);
+            });
+
+            config.data.subscribe(function(val){
                 Plotly.addTraces(element, {
                     x: val.value,
                     y: val.count
                 }, 0);
-                // Plotly.animate(element, {
-                //     data: [{
-                //         x: val[0].slice(1),
-                //         y: val[1].slice(1)
-                //     }],
-                //     traces: [0],
-                //     layout: {}
-                // }, {
-                //     transition: {
-                //         duration: 500,
-                //         easing: 'cubic-in-out'
-                //     },
-                //     frame: {
-                //         duration: 500
-                //     }
-                // });
+
             }, this);
 
             ko.utils.domNodeDisposal.addDisposeCallback(element, function() {

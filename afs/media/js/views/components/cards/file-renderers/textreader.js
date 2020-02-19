@@ -11,6 +11,7 @@ define(['jquery',
             this.type = "";
             this.loading = ko.observable(true);
             this.commonData = params.state;
+            this.fileViewer = params.fileViewer;
             this.displayContent = ko.unwrap(this.params.displayContent);
             if ('chartData' in params.state === false) {
                 this.commonData.chartData = ko.observable();
@@ -18,12 +19,27 @@ define(['jquery',
             if ('parsedData' in params.state === false) {
                 this.commonData.parsedData = ko.observable();
             }
+            if ('chartTitle' in params.state === false) {
+                this.commonData.chartTitle = ko.observable("Title");
+                this.commonData.titleSize = ko.observable(24);
+                this.commonData.xAxisLabel = ko.observable("x axis");
+                this.commonData.xAxisLabelSize = ko.observable(18);
+                this.commonData.yAxisLabel = ko.observable("y axis");
+                this.commonData.yAxisLabelSize = ko.observable(18);
+            }
             if ('selectedData' in params.state === false) {
                 this.commonData.selectedData = ko.observable('data1');
             }
+
             this.parsedData = this.commonData.parsedData;
             this.chartData = this.commonData.chartData;
             this.selectedData = this.commonData.selectedData;
+            this.chartTitle = this.commonData.chartTitle;
+            this.titleSize = this.commonData.titleSize;
+            this.xAxisLabel = this.commonData.xAxisLabel;
+            this.xAxisLabelSize = this.commonData.xAxisLabelSize;
+            this.yAxisLabel = this.commonData.yAxisLabel;
+            this.yAxisLabelSize = this.commonData.yAxisLabelSize;
 
             this.data2 = {
                 'value': [750, 340, 200, 140],
