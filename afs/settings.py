@@ -159,7 +159,6 @@ RENDERERS = [{
         "component": "views/components/cards/file-renderers/imagereader",
         "ext": "",
         "type": "image/*",
-        "hastab": True,
     },{
         "name": "textreader",
         "id": "31be40ae-dbe6-4f41-9c13-1964d7d17042",
@@ -167,7 +166,6 @@ RENDERERS = [{
         "component": "views/components/cards/file-renderers/textreader",
         "ext": "txt",
         "type": "text/plain",
-        "hastab": True,
     },{
         "name": "pdbreader",
         "id": "3744d5ec-c3f1-45a1-ab79-a4a141ee4197",
@@ -175,7 +173,6 @@ RENDERERS = [{
         "component": "views/components/cards/file-renderers/pdbreader",
         "ext": "pdb",
         "type": "",
-        "hastab": True,
     },{
         "name": "pcdreader",
         "id": "e96e84f2-bcb2-4ca4-8793-7568b09d7374",
@@ -183,7 +180,6 @@ RENDERERS = [{
         "component": "views/components/cards/file-renderers/pcdreader",
         "ext": "pcd",
         "type": "",
-        "hastab": True,
     },
     # {
     #     "name": "colladareader",
@@ -192,7 +188,6 @@ RENDERERS = [{
     #     "component": "views/components/cards/file-renderers/colladareader",
     #     "ext": "dae",
     #     "type": "",
-    #     "hastab": True,
     # },
 ]
 

@@ -6,28 +6,83 @@
     <div class="preview file-viewer" style="position: relative">
         <div class='loading-mask' data-bind="visible: loading()"></div>
         <!--ko if: ko.unwrap(chartData) -->
-        <div class="chart" data-bind='plotly: {data: chartData, options: chartOptions, loading: loading}'></div>
+        <div class="chart" data-bind='plotly: {
+            data: chartData, 
+            title: chartTitle, 
+            titleSize: titleSize,
+            xAxisLabel: xAxisLabel,
+            xAxisLabelSize: xAxisLabelSize,
+            yAxisLabel: yAxisLabel,
+            yAxisLabelSize: yAxisLabelSize,
+            options: chartOptions, 
+            loading: loading
+        }'></div>
         <!--/ko-->
     </div>
     <!--/ko-->
 </div>
 <!--/ko-->
 <!--ko if: params.context === 'tab' -->
+    <div class="workbench-card-sidebar-tab" data-bind="click: function() {
+        fileViewer.toggleTab('file-context');
+    }, css: {
+        'active': fileViewer.activeTab() === 'file-context'
+    }">
+    <i class="fa fa-cog"></i>
+    <span class="map-sidebar-text">{% trans "Config" %}</span>
+    </div>
+    <div class="workbench-card-sidebar-tab" data-bind="click: function() {
+        fileViewer.toggleTab('other-tab');
+    }, css: {
+        'active': fileViewer.activeTab() === 'other-tab'
+    }">
     <i class="fa fa-bar-chart-o"></i>
     <span class="map-sidebar-text">{% trans "Data" %}</span>
+    </div>
 <!--/ko-->
+<div>
 <!--ko if: params.context === 'tab-contents' -->
-<div class="col-xs-12 pad-no crud-widget-container">
-    <input style="display:inline-block;"
-    data-bind="select2Query: {
-        select2Config: {
-            clickBubble: true,
-            disabled: false,
-            data: dataOptions,
-            value: selectedData,
-            multiple: false,
-            placeholder: 'Chart Data',
-        }}">
-</div>
+    <!--ko if: fileViewer.activeTab() === 'file-context' -->
+        <div class="col-xs-12 pad-no crud-widget-container">
+            <div class="row form-group widget-wrapper">
+                <div style="padding-top: 3px" class="control-label widget-input-label">Title Text and Font Size</div>
+                <div style="display: inline-flex">
+                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: chartTitle">
+                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: titleSize">
+                </div>
+            </div>
+            <div class="row form-group widget-wrapper">
+                <div style="padding-top: 3px" class="control-label widget-input-label">X Axis Label and Font Size</div>
+                <div style="display: inline-flex">
+                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: xAxisLabel">
+                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: xAxisLabelSize">
+                </div>
+            </div>
+            <div class="row form-group widget-wrapper">
+                <div style="padding-top: 3px" class="control-label widget-input-label">Y Axis Label and Font Size</div>
+                <div style="display: inline-flex">
+                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: yAxisLabel">
+                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
+                </div>
+            </div>
+        </div>
+    <!--/ko-->
+    <!--ko if: fileViewer.activeTab() === 'other-tab' -->
+    <div class="col-xs-12 pad-no crud-widget-container">
+        <input style="display:inline-block;"
+        data-bind="select2Query: {
+            select2Config: {
+                clickBubble: true,
+                disabled: false,
+                data: dataOptions,
+                value: selectedData,
+                multiple: false,
+                placeholder: 'Chart Data',
+            }}">
+    </div>
+    <!--ko foreach: fileViewer.card.tiles -->
+        <div data-bind="text: $data.tileid"></div>
+    <!--/ko-->
+    <!--/ko-->
 <!--/ko-->
 
