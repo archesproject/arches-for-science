@@ -47,7 +47,7 @@ define(['jquery',
                     'value': [],
                     'count': []
                 };
-                notYetLoaded = self.seriesData().filter(function(t){return t.tileid === tileid}).length === 0;
+                notYetLoaded = self.seriesData().filter(function(t){return t.tileid === tileid;}).length === 0;
                 if (notYetLoaded) {
                     $.ajax({
                         url : url,
