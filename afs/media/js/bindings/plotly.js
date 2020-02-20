@@ -6,10 +6,12 @@ define([
     ko.bindingHandlers.plotly = {
         init: function(element, valueAccessor) {
             var config = ko.unwrap(valueAccessor());
+            var self = this;
             var chartData = {
                 x: config.data().value,
                 y: config.data().count,
-                type: 'scatter'
+                type: 'scatter',
+                name: config.data().name,
             };
             var layout = {
                 title: {
@@ -45,7 +47,7 @@ define([
 
             var chartConfig = {responsive: true};
 
-            Plotly.newPlot(element, [chartData], layout, chartConfig);
+            this.chart = Plotly.newPlot(element, [chartData], layout, chartConfig);
             // var layoutOptions = [
             //     {option: config.title, layout: {title: {text: 'Title'}}},
             //     {option: config.titleSize, layout: {title: {font: {size: 24}}}},
@@ -90,13 +92,23 @@ define([
                 Plotly.relayout(element, layout);
             });
 
-            config.data.subscribe(function(val){
-                Plotly.addTraces(element, {
-                    x: val.value,
-                    y: val.count
-                }, 0);
-
-            }, this);
+            config.seriesData.subscribe(function(val){
+                val.forEach(function(series){
+                    if (series.status === 'added') {
+                        Plotly.addTraces(element, {
+                            x: series.value.data.value,
+                            y: series.value.data.count,
+                            name: series.value.name
+                        }, element.data.length);
+                    } else {
+                        element.data.forEach(function(trace, i){
+                            if (trace.name === series.value.name) {
+                                Plotly.deleteTraces(element, i);
+                            }
+                        });
+                    }
+                });
+            }, this, "arrayChange");
 
             ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
             }, this); 

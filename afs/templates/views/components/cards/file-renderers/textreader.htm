@@ -14,7 +14,8 @@
             xAxisLabelSize: xAxisLabelSize,
             yAxisLabel: yAxisLabel,
             yAxisLabelSize: yAxisLabelSize,
-            options: chartOptions, 
+            options: chartOptions,
+            seriesData: seriesData,
             loading: loading
         }'></div>
         <!--/ko-->
@@ -68,21 +69,22 @@
         </div>
     <!--/ko-->
     <!--ko if: fileViewer.activeTab() === 'other-tab' -->
-    <div class="col-xs-12 pad-no crud-widget-container">
-        <input style="display:inline-block;"
-        data-bind="select2Query: {
-            select2Config: {
-                clickBubble: true,
-                disabled: false,
-                data: dataOptions,
-                value: selectedData,
-                multiple: false,
-                placeholder: 'Chart Data',
-            }}">
-    </div>
+    <div class="file-workbench-files">
     <!--ko foreach: fileViewer.card.tiles -->
-        <div data-bind="text: $data.tileid"></div>
-    <!--/ko-->
+        <!--ko if: $parent.fileViewer.getUrl($data).renderer.id === "31be40ae-dbe6-4f41-9c13-1964d7d17042" && $parent.fileViewer.selected().tileid !== $data.tileid -->
+                <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
+                <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
+                <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
+                </div>
+                <!--/ko-->
+                <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
+                <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
+                <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-trash" data-bind="click: function(){$parent.removeData(tileid)}"></i>
+                </div>
+                <!--/ko-->
+                <!--/ko-->
+                <!--/ko-->
+            </div>
     <!--/ko-->
 <!--/ko-->
 
