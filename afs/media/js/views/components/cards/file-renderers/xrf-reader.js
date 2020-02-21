@@ -9,7 +9,7 @@ define(['jquery',
             AfsInstrumentViewModel.apply(this, [params]);
             var self = this;
 
-            this.getChartingData = function(tileid, url) {
+            this.getChartingData = function(tileid, url, name) {
                 var notYetLoaded;
                 var res = {
                     'value': [],
@@ -29,7 +29,7 @@ define(['jquery',
                                     res.value.push(Number(rec[0]));
                                 }
                             });
-                            self.seriesData.push({tileid: tileid, data: res, name: url});
+                            self.seriesData.push({tileid: tileid, data: res, name: name});
                         }, this);
                 }
             };

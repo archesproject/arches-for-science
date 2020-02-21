@@ -158,7 +158,7 @@ RENDERERS = [
         "title": "Image Reader",
         "description": "Displays most image file types",
         "id": "5e05aa2e-5db0-4922-8938-b4d2b7919733",
-        "iconclass": "fa fa-pencil",
+        "iconclass": "fa fa-camera",
         "component": "views/components/cards/file-renderers/imagereader",
         "ext": "",
         "type": "image/*",
@@ -182,7 +182,7 @@ RENDERERS = [
         "type": "text/plain",
     },{
         "name": "pdbreader",
-        "title": "",
+        "title": "PDB File Reader",
         "description": "",
         "id": "3744d5ec-c3f1-45a1-ab79-a4a141ee4197",
         "iconclass": "fa fa-camera",
@@ -191,7 +191,7 @@ RENDERERS = [
         "type": "",
     },{
         "name": "pcdreader",
-        "title": "",
+        "title": "Point Cloud Reader",
         "description": "",
         "id": "e96e84f2-bcb2-4ca4-8793-7568b09d7374",
         "iconclass": "fa fa-cloud",

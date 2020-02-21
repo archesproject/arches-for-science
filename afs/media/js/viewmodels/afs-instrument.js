@@ -20,6 +20,7 @@ define(['jquery',
         this.loading = ko.observable(true);
         this.commonData = params.state;
         this.fileViewer = params.fileViewer;
+        this.filter = ko.observable('');
         this.displayContent = ko.unwrap(this.params.displayContent);
         if ('chartData' in params.state === false) {
             this.commonData.chartData = ko.observable();
@@ -51,7 +52,7 @@ define(['jquery',
 
         this.addData = function(tile) {
             var fileInfo = this.fileViewer.getUrl(tile);
-            this.getChartingData(tile.tileid, fileInfo.url);
+            this.getChartingData(tile.tileid, fileInfo.url, fileInfo.name);
         };
 
         this.removeData = function(tileid) {
@@ -59,7 +60,11 @@ define(['jquery',
                 if (series.tileid === tileid) {
                     this.seriesData.remove(series);
                 }
-            });
+            }, this);
+        };
+
+        this.isFiltered = function(t){
+            return self.fileViewer.getUrl(t).name.toLowerCase().includes(self.filter().toLowerCase());
         };
             
         this.chartOptions = {
