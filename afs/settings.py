@@ -152,7 +152,8 @@ ONTOLOGY_NAMESPACES = {
     "http://www.ics.forth.gr/isl/CRMsci/": "sci",
 }
 
-RENDERERS = [{
+RENDERERS = [
+    {
         "name": "imagereader",
         "title": "Image Reader",
         "description": "Displays most image file types",
