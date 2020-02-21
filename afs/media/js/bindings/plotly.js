@@ -6,7 +6,6 @@ define([
     ko.bindingHandlers.plotly = {
         init: function(element, valueAccessor) {
             var config = ko.unwrap(valueAccessor());
-            var self = this;
             var chartData = {
                 x: config.data().value,
                 y: config.data().count,

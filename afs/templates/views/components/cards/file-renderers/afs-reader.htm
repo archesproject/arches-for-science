@@ -71,7 +71,7 @@
     <!--ko if: fileViewer.activeTab() === 'other-tab' -->
     <div class="file-workbench-files">
     <!--ko foreach: fileViewer.card.tiles -->
-        <!--ko if: $parent.fileViewer.getUrl($data).renderer.id === "31be40ae-dbe6-4f41-9c13-1964d7d17042" && $parent.fileViewer.selected().tileid !== $data.tileid -->
+        <!--ko if: $parent.fileViewer.getUrl($data).renderer && $parent.fileViewer.getUrl($data).renderer.id === $parent.fileViewer.displayContent().renderer.id && $parent.fileViewer.selected().tileid !== $data.tileid -->
                 <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
                 <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
                 <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
