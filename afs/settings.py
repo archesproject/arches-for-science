@@ -162,7 +162,8 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/imagereader",
         "ext": "",
         "type": "image/*",
-    },{
+    },
+    {
         "name": "xrf-reader",
         "title": "HP Spectrometer XRF ASCII Output",
         "description": "Use for exports from all our HP XRF outputs",
@@ -171,7 +172,8 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/xrf-reader",
         "ext": "txt",
         "type": "text/plain",
-    },{
+    },
+    {
         "name": "raman-reader",
         "title": "HP Spectrometer ASCII Output",
         "description": "Use for exports from all our HP raman and gas chromatograph spectrometers",
@@ -180,7 +182,8 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/raman-reader",
         "ext": "txt",
         "type": "text/plain",
-    },{
+    },
+    {
         "name": "pdbreader",
         "title": "",
         "description": "",
@@ -189,7 +192,8 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/pdbreader",
         "ext": "pdb",
         "type": "",
-    },{
+    },
+    {
         "name": "pcdreader",
         "title": "",
         "description": "",
