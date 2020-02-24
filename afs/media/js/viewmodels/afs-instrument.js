@@ -1,8 +1,9 @@
 define(['jquery',
+    'underscore',
     'knockout',
     'bindings/plotly',
     'bindings/select2-query'
-], function($, ko) {
+], function($, _, ko) {
     /**
     * A viewmodel used for generic AFS instrument files
     *
@@ -22,17 +23,30 @@ define(['jquery',
         this.fileViewer = params.fileViewer;
         this.filter = ko.observable('');
         this.displayContent = ko.unwrap(this.params.displayContent);
+        var localStore = window.localStorage;
+
+        var renderer = this.displayContent.renderer.id;
+
+        var formatDefaults = {
+            'title': localStore.getItem(renderer + 'title') || 'Sample Reflectance',
+            'titlesize': localStore.getItem(renderer + 'titlesize') || 24, 
+            'xaxislabel': localStore.getItem(renderer + 'xaxislabel') || "Energy",
+            'xaxislabelsize': localStore.getItem(renderer + 'xaxislabelsize') || 18,
+            'yaxislabel': localStore.getItem(renderer + 'yaxislabel') || "Count",
+            'yaxislabelsize': localStore.getItem(renderer + 'yaxislabelsize') || 18,
+        };
+
         if ('chartData' in params.state === false) {
             this.commonData.chartData = ko.observable();
             this.commonData.seriesData = ko.observableArray([]);
         }
         if ('chartTitle' in params.state === false) {
-            this.commonData.chartTitle = ko.observable("Sample Reflectance");
-            this.commonData.titleSize = ko.observable(24);
-            this.commonData.xAxisLabel = ko.observable("Energy");
-            this.commonData.xAxisLabelSize = ko.observable(18);
-            this.commonData.yAxisLabel = ko.observable("Count");
-            this.commonData.yAxisLabelSize = ko.observable(18);
+            this.commonData.chartTitle = ko.observable(formatDefaults['title']);
+            this.commonData.titleSize = ko.observable(formatDefaults['titlesize']);
+            this.commonData.xAxisLabel = ko.observable(formatDefaults['xaxislabel']);
+            this.commonData.xAxisLabelSize = ko.observable(formatDefaults['xaxislabelsize']);
+            this.commonData.yAxisLabel = ko.observable(formatDefaults['yaxislabel']);
+            this.commonData.yAxisLabelSize = ko.observable(formatDefaults['yaxislabelsize']);
         }
         if ('selectedData' in params.state === false) {
             this.commonData.selectedData = ko.observable('data1');
@@ -47,8 +61,22 @@ define(['jquery',
         this.xAxisLabelSize = this.commonData.xAxisLabelSize;
         this.yAxisLabel = this.commonData.yAxisLabel;
         this.yAxisLabelSize = this.commonData.yAxisLabelSize;
-        this.yAxisLabelSize = this.commonData.yAxisLabelSize;
         this.seriesData = this.commonData.seriesData;
+
+        var chartFormattingDetails = {
+            'title': this.chartTitle,
+            'titlesize': this.titleSize, 
+            'xaxislabel': this.xAxisLabel,
+            'xaxislabelsize': this.xAxisLabelSize,
+            'yaxislabel': this.yAxisLabel,
+            'yaxislabelsize': this.yAxisLabelSize
+        };
+
+        _.each(chartFormattingDetails, function(val, key) {
+            val.subscribe(function(val){
+                localStore.setItem(renderer + key, val);
+            });
+        });
 
         this.addData = function(tile) {
             var fileInfo = this.fileViewer.getUrl(tile);
