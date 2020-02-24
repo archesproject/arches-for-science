@@ -103,7 +103,39 @@
                                 <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[widget.node_id()].isrequired}"></i>
 
                                 <div class="col-xs-12">
-                                    editor here....
+                                    <div class="map-card-feature-list">
+                                        <div class="add-new-feature">
+                                            <select data-placeholder="{% trans "Add a new feature..." %}" data-bind="
+                                                value: self.featureLookup[widget.node_id()].selectedTool,
+                                                valueAllowUnset: true,
+                                                options: [
+                                                    {
+                                                        value: '',
+                                                        text: ''
+                                                    },
+                                                    {
+                                                        value: 'draw_point',
+                                                        text: 'Add point'
+                                                    },
+                                                    {
+                                                        value: 'draw_line_string',
+                                                        text: 'Add line'
+                                                    },
+                                                    {
+                                                        value: 'draw_polygon',
+                                                        text: 'Add polygon'
+                                                    }
+                                                ],
+                                                optionsText: 'text',
+                                                optionsValue: 'value',
+                                                chosen: {
+                                                    'width': '100%',
+                                                    'disable_search_threshold': 10,
+                                                    'allow_single_deselect': true
+                                                }
+                                            "></select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

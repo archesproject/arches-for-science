@@ -21,7 +21,9 @@ class AnnotationDataType(BaseDataType):
         return errors
 
     def append_to_document(self, document, nodevalue, nodeid, tile):
-        document["strings"].append({"string": nodevalue["address"], "nodegroup_id": tile.nodegroup_id})
+        # document["strings"].append({"string": nodevalue["address"], "nodegroup_id": tile.nodegroup_id})
+        return
 
     def get_search_terms(self, nodevalue, nodeid=None):
-        return [nodevalue["address"]]
+        # return [nodevalue["address"]]
+        return []
