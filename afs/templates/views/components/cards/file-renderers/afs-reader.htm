@@ -1,0 +1,100 @@
+{% load i18n %}
+
+<!--ko if: params.context === 'render' -->
+<div class="">
+    <!--ko if: params.selected() -->
+    <div class="preview file-viewer" style="position: relative">
+        <div class='loading-mask' data-bind="visible: loading()"></div>
+        <!--ko if: ko.unwrap(chartData) -->
+        <div class="chart" data-bind='plotly: {
+            data: chartData, 
+            title: chartTitle, 
+            titleSize: titleSize,
+            xAxisLabel: xAxisLabel,
+            xAxisLabelSize: xAxisLabelSize,
+            yAxisLabel: yAxisLabel,
+            yAxisLabelSize: yAxisLabelSize,
+            options: chartOptions,
+            seriesData: seriesData,
+            loading: loading
+        }'></div>
+        <!--/ko-->
+    </div>
+    <!--/ko-->
+</div>
+<!--/ko-->
+<!--ko if: params.context === 'tab' -->
+    <div class="workbench-card-sidebar-tab" data-bind="click: function() {
+        fileViewer.toggleTab('file-context');
+    }, css: {
+        'active': fileViewer.activeTab() === 'file-context'
+    }">
+    <i class="fa fa-cog"></i>
+    <span class="map-sidebar-text">{% trans "Config" %}</span>
+    </div>
+    <div class="workbench-card-sidebar-tab" data-bind="click: function() {
+        fileViewer.toggleTab('other-tab');
+    }, css: {
+        'active': fileViewer.activeTab() === 'other-tab'
+    }">
+    <i class="fa fa-bar-chart-o"></i>
+    <span class="map-sidebar-text">{% trans "Data" %}</span>
+    </div>
+<!--/ko-->
+<div>
+<!--ko if: params.context === 'tab-contents' -->
+    <!--ko if: fileViewer.activeTab() === 'file-context' -->
+        <div class="col-xs-12 pad-no crud-widget-container">
+            <div class="row form-group widget-wrapper">
+                <div style="padding-top: 3px" class="control-label widget-input-label">Title Text and Font Size</div>
+                <div style="display: inline-flex">
+                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: chartTitle">
+                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: titleSize">
+                </div>
+            </div>
+            <div class="row form-group widget-wrapper">
+                <div style="padding-top: 3px" class="control-label widget-input-label">X Axis Label and Font Size</div>
+                <div style="display: inline-flex">
+                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: xAxisLabel">
+                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: xAxisLabelSize">
+                </div>
+            </div>
+            <div class="row form-group widget-wrapper">
+                <div style="padding-top: 3px" class="control-label widget-input-label">Y Axis Label and Font Size</div>
+                <div style="display: inline-flex">
+                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: yAxisLabel">
+                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
+                </div>
+            </div>
+        </div>
+    <!--/ko-->
+    <!--ko if: fileViewer.activeTab() === 'other-tab' -->
+    <h4>Add/remove data from other files...</h4>
+
+    <div style='position: relative;'>
+        <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'Filter file list...' %}" data-bind="textInput: filter"></input>
+        <span class="clear-node-search" data-bind="visible: filter().length > 0, click: function() { filter(''); }"><i class="fa fa-times-circle"></i></span>
+    </div>
+
+    <div class="file-workbench-files">
+    <!--ko foreach: fileViewer.card.tiles -->
+        <!--ko if: $parent.fileViewer.getUrl($data).renderer 
+            && $parent.fileViewer.getUrl($data).renderer.id === $parent.fileViewer.displayContent().renderer.id 
+            && $parent.fileViewer.selected().tileid !== $data.tileid
+            && ($parent.filter().length === 0 || $parent.isFiltered($data))-->
+                <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
+                <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
+                <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
+                </div>
+                <!--/ko-->
+                <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
+                <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
+                <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
+                </div>
+                <!--/ko-->
+                <!--/ko-->
+                <!--/ko-->
+            </div>
+    <!--/ko-->
+<!--/ko-->
+
