@@ -16,7 +16,7 @@ details = {
 
 
 class AnnotationDataType(BaseDataType):
-    def validate(self, value, source=None):
+    def validate(self, value, source=None, node=None):
         errors = []
         return errors
 
@@ -27,3 +27,7 @@ class AnnotationDataType(BaseDataType):
     def get_search_terms(self, nodevalue, nodeid=None):
         # return [nodevalue["address"]]
         return []
+
+    def default_es_mapping(self):
+        # let ES dyanamically map this datatype
+        return

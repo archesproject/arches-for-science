@@ -16,7 +16,7 @@ define([
 
         this.map = ko.observable();
         this.manifest = ko.observable(params.manifest);
-        this.editManifest = ko.observable(false);
+        this.editManifest = ko.observable(!params.manifest);
         this.canvas = ko.observable(params.canvas);
         this.manifestLoading = ko.observable();
         this.manifestData = ko.observable();

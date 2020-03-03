@@ -9,7 +9,7 @@ define([
     var viewModel = function(params) {
         var self = this;
         var drawControl;
-        var drawnItems = new L.FeatureGroup();
+        var drawnItems;
         var editItems = new L.FeatureGroup();
         var tools;
 
@@ -67,6 +67,47 @@ define([
             return !!(self.selectedFeatureIds().length > 0 || self.selectedTool());
         });
         
+        this.updateTiles = function() {
+            var featureCollection = drawnItems.toGeoJSON();
+            _.each(self.featureLookup, function(value) {
+                value.selectedTool(null);
+            });
+            self.widgets.forEach(function(widget) {
+                var id = ko.unwrap(widget.node_id);
+                var features = [];
+                featureCollection.features.forEach(function(feature){
+                    if (feature.properties.nodeId === id) features.push(feature);
+                });
+                if (ko.isObservable(self.tile.data[id])) {
+                    self.tile.data[id]({
+                        type: 'FeatureCollection',
+                        features: features
+                    });
+                } else {
+                    self.tile.data[id].features(features);
+                }
+            });
+        };
+        
+        var getDrawFeatures = function() {
+            var drawFeatures = [];
+            self.widgets.forEach(function(widget) {
+                var id = ko.unwrap(widget.node_id);
+                var featureCollection = koMapping.toJS(self.tile.data[id]);
+                if (featureCollection) {
+                    featureCollection.features.forEach(function(feature) {
+                        feature.properties.nodeId = id;
+                    });
+                    drawFeatures = drawFeatures.concat(featureCollection.features);
+                }
+            });
+            return drawFeatures;
+        };
+        drawnItems = L.geoJson({
+            type: 'FeatureCollection',
+            features: getDrawFeatures()
+        });
+        
         params.activeTab = 'editor';
         IIIFViewerViewmodel.apply(this, [params]);
         
@@ -83,13 +124,20 @@ define([
                 map.addControl(drawControl);
                 
                 tools = {
-                    'draw_point': new L.Draw.Marker(map, drawControl.options.marker),
+                    'draw_point': new L.Draw.CircleMarker(map, drawControl.options.circlemarker),
                     'draw_line_string': new L.Draw.Polyline(map, drawControl.options.polyline),
                     'draw_polygon': new L.Draw.Polygon(map, drawControl.options.polygon)
                 };
-                map.on(L.Draw.Event.CREATED, function(e) {
+                map.on('draw:created', function(e) {
                     var layer = e.layer;
+                    layer.feature = layer.feature || {
+                        type: 'Feature',
+                        properties: {
+                            nodeId: self.newNodeId
+                        }
+                    };
                     drawnItems.addLayer(layer);
+                    self.updateTiles();
                 });
             }
         });
