@@ -68,7 +68,9 @@ define([
         });
         
         this.updateTiles = function() {
-            var featureCollection = drawnItems.toGeoJSON();
+            var featureCollection = {
+                features: drawFeatures
+            };
             _.each(self.featureLookup, function(value) {
                 value.selectedTool(null);
             });
@@ -81,7 +83,8 @@ define([
                 if (ko.isObservable(self.tile.data[id])) {
                     self.tile.data[id]({
                         type: 'FeatureCollection',
-                        features: features
+                        features: features,
+                        manifest: self.manifest()
                     });
                 } else {
                     self.tile.data[id].features(features);
@@ -89,31 +92,55 @@ define([
             });
         };
         
-        var getDrawFeatures = function() {
-            var drawFeatures = [];
-            self.widgets.forEach(function(widget) {
-                var id = ko.unwrap(widget.node_id);
-                var featureCollection = koMapping.toJS(self.tile.data[id]);
-                if (featureCollection) {
-                    featureCollection.features.forEach(function(feature) {
-                        feature.properties.nodeId = id;
-                    });
-                    drawFeatures = drawFeatures.concat(featureCollection.features);
-                }
-            });
-            return drawFeatures;
-        };
-        drawnItems = L.geoJson({
-            type: 'FeatureCollection',
-            features: getDrawFeatures()
+        var drawFeatures = [];
+        self.widgets.forEach(function(widget) {
+            var id = ko.unwrap(widget.node_id);
+            var featureCollection = koMapping.toJS(self.tile.data[id]);
+            if (featureCollection) {
+                if (featureCollection.manifest && !params.manifest)
+                    params.manifest = featureCollection.manifest;
+                featureCollection.features.forEach(function(feature) {
+                    if (feature.properties.canvas && !params.canvas)
+                        params.canvas = feature.properties.canvas;
+                    feature.properties.nodeId = id;
+                });
+                drawFeatures = drawFeatures.concat(featureCollection.features);
+            }
         });
         
         params.activeTab = 'editor';
         IIIFViewerViewmodel.apply(this, [params]);
         
+        var drawLayer = ko.computed(function() {
+            return L.geoJson({
+                type: 'FeatureCollection',
+                features: drawFeatures
+            }, {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng);
+                },
+                style: function() {
+                    return {};
+                },
+                filter: function(feature) {
+                    return feature.properties.canvas === self.canvas();
+                }
+            });
+        });
+
+        var oldDrawLayer = drawLayer();
+        drawLayer.subscribe(function(newDrawLayer) {
+            var map = self.map();
+            if (map) {
+                map.removeLayer(oldDrawLayer);
+                map.addLayer(newDrawLayer);
+                oldDrawLayer = newDrawLayer;
+            }
+        });
+        
         this.map.subscribe(function(map) {
             if (map && !drawControl) {
-                map.addLayer(drawnItems);
+                map.addLayer(oldDrawLayer);
                 map.addLayer(editItems);
                 
                 drawControl = new L.Control.Draw({
@@ -133,10 +160,12 @@ define([
                     layer.feature = layer.feature || {
                         type: 'Feature',
                         properties: {
-                            nodeId: self.newNodeId
+                            nodeId: self.newNodeId,
+                            canvas: self.canvas()
                         }
                     };
-                    drawnItems.addLayer(layer);
+                    drawFeatures.push(layer.toGeoJSON());
+                    drawLayer().addLayer(layer);
                     self.updateTiles();
                 });
             }
