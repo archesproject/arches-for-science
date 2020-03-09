@@ -52,7 +52,6 @@ define([
                         'width': 1800,
                         'height': 1400,
                         'path': "M704 1216q0 -26 -19 -45t-45 -19h-128v-1024h128q26 0 45 -19t19 -45t-19 -45l-256 -256q-19 -19 -45 -19t-45 19l-256 256q-19 19 -19 45t19 45t45 19h128v1024h-128q-26 0 -45 19t-19 45t19 45l256 256q19 19 45 19t45 -19l256 -256q19 -19 19 -45z",
-                        // 'transform': 'matrix(1 0 0 -1 0 850)'
                     },
                     click: function() {
                         config.autosize = ko.unwrap(config.autosize) === undefined ? false : !ko.unwrap(config.autosize);
