@@ -3,13 +3,15 @@ define([
     'knockout',
     'knockout-mapping',
     'leaflet',
+    'uuid',
+    'geojson-extent',
     'views/components/iiif-viewer',
     'leaflet-draw'
-], function(_, ko, koMapping, L, IIIFViewerViewmodel) {
+], function(_, ko, koMapping, L, uuid, geojsonExtent, IIIFViewerViewmodel) {
     var viewModel = function(params) {
         var self = this;
         var drawControl;
-        var drawnItems;
+        var drawFeatures = ko.observableArray();
         var editItems = new L.FeatureGroup();
         var tools;
 
@@ -68,16 +70,13 @@ define([
         });
         
         this.updateTiles = function() {
-            var featureCollection = {
-                features: drawFeatures
-            };
             _.each(self.featureLookup, function(value) {
                 value.selectedTool(null);
             });
             self.widgets.forEach(function(widget) {
                 var id = ko.unwrap(widget.node_id);
                 var features = [];
-                featureCollection.features.forEach(function(feature){
+                drawFeatures().forEach(function(feature){
                     if (feature.properties.nodeId === id) features.push(feature);
                 });
                 if (ko.isObservable(self.tile.data[id])) {
@@ -92,21 +91,24 @@ define([
             });
         };
         
-        var drawFeatures = [];
-        self.widgets.forEach(function(widget) {
-            var id = ko.unwrap(widget.node_id);
-            var featureCollection = koMapping.toJS(self.tile.data[id]);
-            if (featureCollection) {
-                if (featureCollection.manifest && !params.manifest)
-                    params.manifest = featureCollection.manifest;
-                featureCollection.features.forEach(function(feature) {
-                    if (feature.properties.canvas && !params.canvas)
-                        params.canvas = feature.properties.canvas;
-                    feature.properties.nodeId = id;
-                });
-                drawFeatures = drawFeatures.concat(featureCollection.features);
-            }
-        });
+        var updateDrawFeatures = function() {
+            drawFeatures([]);
+            self.widgets.forEach(function(widget) {
+                var id = ko.unwrap(widget.node_id);
+                var featureCollection = koMapping.toJS(self.tile.data[id]);
+                if (featureCollection) {
+                    if (featureCollection.manifest && !params.manifest)
+                        params.manifest = featureCollection.manifest;
+                    featureCollection.features.forEach(function(feature) {
+                        if (feature.properties.canvas && !params.canvas)
+                            params.canvas = feature.properties.canvas;
+                        feature.properties.nodeId = id;
+                    });
+                    drawFeatures(drawFeatures().concat(featureCollection.features));
+                }
+            });
+        };
+        updateDrawFeatures();
         
         params.activeTab = 'editor';
         IIIFViewerViewmodel.apply(this, [params]);
@@ -114,7 +116,7 @@ define([
         var drawLayer = ko.computed(function() {
             return L.geoJson({
                 type: 'FeatureCollection',
-                features: drawFeatures
+                features: drawFeatures()
             }, {
                 pointToLayer: function(feature, latlng) {
                     return L.circleMarker(latlng);
@@ -128,20 +130,59 @@ define([
             });
         });
 
-        var oldDrawLayer = drawLayer();
         drawLayer.subscribe(function(newDrawLayer) {
             var map = self.map();
             if (map) {
-                map.removeLayer(oldDrawLayer);
-                map.addLayer(newDrawLayer);
-                oldDrawLayer = newDrawLayer;
+                editItems.clearLayers();
+                editItems.addLayer(newDrawLayer);
             }
         });
         
+        this.disableDrawing = ko.computed(function() {
+            return !self.canvas();
+        });
+        
+        this.showFeature = function(feature) {
+            self.canvas(feature.properties.canvas);
+            setTimeout(function() {
+                if (feature.geometry.type === 'Point') {
+                    var coords = feature.geometry.coordinates;
+                    self.map().panTo([coords[1], coords[0]]);
+                } else {
+                    var extent = geojsonExtent(feature);
+                    self.map().fitBounds([
+                        [extent[1], extent[0]],
+                        [extent[3], extent[2]]
+                    ]);
+                }
+            }, 200);
+        };
+        
+        var editingFeature;
+        this.editFeature = function(feature) {
+            self.canvas(feature.properties.canvas);
+            var addedFeatures = editItems.getLayers()[0].getLayers();
+            if (editingFeature) editingFeature.editing.disable();
+            addedFeatures.forEach(function(addedFeature) {
+                if (addedFeature.feature.id === feature.id) {
+                    editingFeature = addedFeature;
+                    addedFeature.options.editing || (addedFeature.options.editing = {});
+                    editingFeature.editing.enable();
+                }
+            });
+        };
+        
+        this.deleteFeature = function(feature) {
+            drawFeatures().forEach(function(drawFeature) {
+                if (drawFeature.id === feature.id) drawFeatures.remove(drawFeature);
+            });
+            self.updateTiles();
+        };
+        
         this.map.subscribe(function(map) {
             if (map && !drawControl) {
-                map.addLayer(oldDrawLayer);
                 map.addLayer(editItems);
+                editItems.addLayer(drawLayer());
                 
                 drawControl = new L.Control.Draw({
                     edit: {
@@ -156,17 +197,34 @@ define([
                     'draw_polygon': new L.Draw.Polygon(map, drawControl.options.polygon)
                 };
                 map.on('draw:created', function(e) {
-                    var layer = e.layer;
-                    layer.feature = layer.feature || {
-                        type: 'Feature',
-                        properties: {
-                            nodeId: self.newNodeId,
-                            canvas: self.canvas()
-                        }
+                    var feature = e.layer.toGeoJSON();
+                    feature.id = uuid.generate();
+                    feature.properties = {
+                        nodeId: self.newNodeId,
+                        canvas: self.canvas()
                     };
-                    drawFeatures.push(layer.toGeoJSON());
-                    drawLayer().addLayer(layer);
+                    drawFeatures.push(feature);
                     self.updateTiles();
+                });
+                
+                map.on('draw:editvertex draw:editmove', function() {
+                    if (editingFeature) {
+                        drawFeatures().forEach(function(drawFeature) {
+                            if (drawFeature.id === editingFeature.feature.id) {
+                                drawFeature.geometry = editingFeature.toGeoJSON().geometry;
+                            }
+                        });
+                        self.updateTiles();
+                    }
+                });
+                
+                if (self.form) self.form.on('tile-reset', function() {
+                    if (editingFeature) editingFeature.editing.disable();
+                    editingFeature = undefined;
+                    updateDrawFeatures();
+                    _.each(self.featureLookup, function(value) {
+                        if (value.selectedTool()) value.selectedTool('');
+                    });
                 });
             }
         });
