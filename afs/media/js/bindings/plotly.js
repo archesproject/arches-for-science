@@ -44,7 +44,28 @@ define([
                 }
             };
 
-            var chartConfig = {responsive: true};
+            var chartConfig = {
+                responsive: true,
+                modeBarButtonsToAdd: [{ 
+                    name: 'expand height',
+                    // icon: {
+                    //     'width': 500,
+                    //     'height': 500,
+                    //     'path': "fa fa-arrows-v"
+                    //     // 'path': 'fa-arrows-v'
+                    // },
+                    icon: Plotly.Icons.pencil,
+                    click: function() {
+                        config.autosize = ko.unwrap(config.autosize) === undefined ? false : !ko.unwrap(config.autosize);
+                        if (!ko.unwrap(config.autosize)) {
+                            layout.height = ko.unwrap(config.height) || window.innerHeight - 250; //set custom height
+                        } else {
+                            layout.height = 450; //default
+                        }
+                        Plotly.relayout(element, layout);
+                    }
+                }]
+            };
 
             this.chart = Plotly.newPlot(element, [chartData], layout, chartConfig);
             // var layoutOptions = [
