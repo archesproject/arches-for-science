@@ -16,7 +16,7 @@ define([
 
         this.map = ko.observable();
         this.manifest = ko.observable(params.manifest);
-        this.editManifest = ko.observable(false);
+        this.editManifest = ko.observable(!params.manifest);
         this.canvas = ko.observable(params.canvas);
         this.manifestLoading = ko.observable();
         this.manifestData = ko.observable();
@@ -40,6 +40,7 @@ define([
             var manifestData = self.manifestData();
             return getLabel(manifestData || {label: ''});
         });
+        this.zoomToCanvas = true;
         
         this.getManifestData = function() {
             var manifestURL = self.manifest();
@@ -120,17 +121,21 @@ define([
                     canvasLayer = undefined;
                 }
                 if (canvas) {
-                    canvasLayer = L.tileLayer.iiif(canvas + '/info.json');
+                    canvasLayer = L.tileLayer.iiif(canvas + '/info.json', {
+                        fitBounds: self.zoomToCanvas
+                    });
                     canvasLayer.addTo(map);
                     updateCanvasLayerFilter();
                 }
             }
+            self.zoomToCanvas = false;
         };
         this.map.subscribe(addCanvasLayer);
         this.canvas.subscribe(addCanvasLayer);
         
         this.selectCanvas = function(canvas) {
             var service = self.getCanvasService(canvas);
+            self.zoomToCanvas = true;
             if (service) self.canvas(service);
         };
         

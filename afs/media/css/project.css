@@ -46,6 +46,9 @@
     height: 100%;
     background: #fafafa;
 }
+.iiif-leaflet .leaflet-draw {
+    display: none;
+}
 .iiif-gallery-canvas, .iiif-gallery-sequence, .iiif-gallery-sequence-canvases {
     padding-left: 10px;
     display: inline-block;
