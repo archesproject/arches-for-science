@@ -113,6 +113,20 @@ define([
         params.activeTab = 'editor';
         IIIFViewerViewmodel.apply(this, [params]);
         
+        var disableEditing = function() {
+            if (editingFeature) editingFeature.editing.disable();
+            editingFeature = undefined;
+            self.selectedFeatureIds([]);
+        };
+        var enableEditing = function(feature) {
+            disableEditing();
+            editingFeature = feature;
+            editingFeature.options.editing || (editingFeature.options.editing = {});
+            editingFeature.editing.enable();
+            self.selectedFeatureIds([feature.feature.id]);
+        };
+        
+        var featureClick;
         var drawLayer = ko.computed(function() {
             return L.geoJson({
                 type: 'FeatureCollection',
@@ -126,6 +140,12 @@ define([
                 },
                 filter: function(feature) {
                     return feature.properties.canvas === self.canvas();
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.on('click', function(e) {
+                        enableEditing(e.target);
+                        featureClick = true;
+                    });
                 }
             });
         });
@@ -161,14 +181,9 @@ define([
         var editingFeature;
         this.editFeature = function(feature) {
             self.canvas(feature.properties.canvas);
-            var addedFeatures = editItems.getLayers()[0].getLayers();
-            if (editingFeature) editingFeature.editing.disable();
-            addedFeatures.forEach(function(addedFeature) {
-                if (addedFeature.feature.id === feature.id) {
-                    editingFeature = addedFeature;
-                    addedFeature.options.editing || (addedFeature.options.editing = {});
-                    editingFeature.editing.enable();
-                }
+            var layers = editItems.getLayers()[0].getLayers();
+            layers.forEach(function(layer) {
+                if (layer.feature.id === feature.id) enableEditing(layer);
             });
         };
         
@@ -178,6 +193,8 @@ define([
             });
             self.updateTiles();
         };
+        
+        this.canvas.subscribe(disableEditing);
         
         this.map.subscribe(function(map) {
             if (map && !drawControl) {
@@ -218,9 +235,13 @@ define([
                     }
                 });
                 
+                map.on('click', function() {
+                    if (!featureClick) disableEditing();
+                    featureClick = false;
+                });
+                
                 if (self.form) self.form.on('tile-reset', function() {
-                    if (editingFeature) editingFeature.editing.disable();
-                    editingFeature = undefined;
+                    disableEditing();
                     updateDrawFeatures();
                     _.each(self.featureLookup, function(value) {
                         if (value.selectedTool()) value.selectedTool('');
