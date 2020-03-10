@@ -113,6 +113,7 @@ define([
         params.activeTab = 'editor';
         IIIFViewerViewmodel.apply(this, [params]);
         
+        var featureClick;
         var drawLayer = ko.computed(function() {
             return L.geoJson({
                 type: 'FeatureCollection',
@@ -126,6 +127,15 @@ define([
                 },
                 filter: function(feature) {
                     return feature.properties.canvas === self.canvas();
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.on('click', function(e) {
+                        if (editingFeature) editingFeature.editing.disable();
+                        editingFeature = e.target;
+                        editingFeature.options.editing || (editingFeature.options.editing = {});
+                        editingFeature.editing.enable();
+                        featureClick = true;
+                    });
                 }
             });
         });
@@ -216,6 +226,11 @@ define([
                         });
                         self.updateTiles();
                     }
+                });
+                
+                map.on('click', function(e) {
+                    if (!featureClick && editingFeature) editingFeature.editing.disable();
+                    featureClick = false;
                 });
                 
                 if (self.form) self.form.on('tile-reset', function() {
