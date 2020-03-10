@@ -235,7 +235,7 @@ define([
                     }
                 });
                 
-                map.on('click', function(e) {
+                map.on('click', function() {
                     if (!featureClick) disableEditing();
                     featureClick = false;
                 });
