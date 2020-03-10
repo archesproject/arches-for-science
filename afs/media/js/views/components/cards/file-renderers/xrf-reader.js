@@ -10,7 +10,7 @@ define(['jquery',
             var self = this;
 
             this.getChartingData = function(tileid, url, name) {
-                var notYetLoaded;
+                var notYetLoaded, lineColor = "";
                 var res = {
                     'value': [],
                     'count': []
@@ -29,7 +29,14 @@ define(['jquery',
                                     res.value.push(Number(rec[0]));
                                 }
                             });
-                            self.seriesData.push({tileid: tileid, data: res, name: name});
+                            if (self.seriesStyles()[tileid]) {
+                                lineColor = ko.unwrap(self.seriesStyles()[tileid]["color"]);
+                            } else {
+                                self.seriesStyles()[tileid] = {};
+                                self.seriesStyles()[tileid]["color"] = ko.observable(Math.floor(Math.random()*16777215).toString(16));
+                                lineColor = ko.unwrap(self.seriesStyles()[tileid]["color"]);
+                            }
+                            self.seriesData.push({tileid: tileid, data: res, name: name, color: lineColor});
                         }, this);
                 }
             };

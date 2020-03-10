@@ -116,6 +116,9 @@ define([
                         Plotly.addTraces(element, {
                             x: series.value.data.value,
                             y: series.value.data.count,
+                            marker: {
+                                color: series.value.color
+                            },
                             name: series.value.name
                         }, element.data.length);
                     } else {
