@@ -44,6 +44,9 @@
 <div>
 <!--ko if: params.context === 'tab-contents' -->
     <!--ko if: fileViewer.activeTab() === 'file-context' -->
+        <div class="workbench-card-sidepanel-header-container file-workbench">
+            <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Chart Configuration'"></h4>
+        </div>
         <div class="col-xs-12 pad-no crud-widget-container">
             <div class="row form-group widget-wrapper">
                 <div style="padding-top: 3px" class="control-label widget-input-label">Title Text and Font Size</div>
@@ -69,8 +72,9 @@
         </div>
     <!--/ko-->
     <!--ko if: fileViewer.activeTab() === 'other-tab' -->
-    <h4>Add/remove data from other files...</h4>
-
+    <div class="workbench-card-sidepanel-header-container file-workbench">
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Manage Series Data'"></h4>
+    </div>
     <div style='position: relative;'>
         <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'Filter file list...' %}" data-bind="textInput: filter"></input>
         <span class="clear-node-search" data-bind="visible: filter().length > 0, click: function() { filter(''); }"><i class="fa fa-times-circle"></i></span>
