@@ -1,10 +1,11 @@
 define(['jquery',
     'underscore',
     'knockout',
+    'knockout-mapping',
     'bindings/plotly',
     'bindings/select2-query',
     'bindings/color-picker',
-], function($, _, ko, colorPicker) {
+], function($, _, ko, koMapping, colorPicker) {
     /**
     * A viewmodel used for generic AFS instrument files
     *
@@ -35,12 +36,12 @@ define(['jquery',
             'xaxislabelsize': localStore.getItem(renderer + 'xaxislabelsize') || 18,
             'yaxislabel': localStore.getItem(renderer + 'yaxislabel') || "Count",
             'yaxislabelsize': localStore.getItem(renderer + 'yaxislabelsize') || 18,
-            'seriesStyles': localStore.getItem(renderer + 'seriesStyles') || {}
         };
 
         if ('chartData' in params.state === false) {
             this.commonData.chartData = ko.observable();
             this.commonData.seriesData = ko.observableArray([]);
+            this.commonData.seriesStyles = ko.observableArray([]);
         }
         if ('chartTitle' in params.state === false) {
             this.commonData.chartTitle = ko.observable(formatDefaults['title']);
@@ -50,7 +51,6 @@ define(['jquery',
             this.commonData.yAxisLabel = ko.observable(formatDefaults['yaxislabel']);
             this.commonData.yAxisLabelSize = ko.observable(formatDefaults['yaxislabelsize']);
         }
-        this.commonData.seriesStyles = ko.observable(formatDefaults['seriesStyles']);
 
         this.parsedData = this.commonData.parsedData;
         this.chartData = this.commonData.chartData;
@@ -62,25 +62,38 @@ define(['jquery',
         this.yAxisLabelSize = this.commonData.yAxisLabelSize;
         this.seriesData = this.commonData.seriesData;
         this.selectedSeriesTile = ko.observable(null);
-        this.selectedSeriesTile.subscribe(function(val){
-            if(val) {
-                if(self.seriesStyles()[val.tileid]) {
-                    self.seriesStyles()[val.tileid].color.subscribe(function(color){
-                        if(color) {
-                            // self.removeData(val.tileid);
-                            // self.addData(val);
-                            self.chartTitle(self.chartTitle());
-                            console.log("rendered in color");
-                        }
-                    });
+        this.seriesStyles = this.commonData.seriesStyles;
+        this.selectedSeriesTile.subscribe(function(tile){
+            if(tile) {
+                var existing = self.seriesStyles().find(function(el){
+                    return el["tileid"] === tile.tileid;
+                });
+                if (existing) { self.colorHolder(existing["color"]); }
+            }
+        });
+        this.colorHolder = ko.observable();
+        this.colorHolder.subscribe(function(val){
+            var existing = null, updated = null;
+            if (self.selectedSeriesTile()) {
+                existing = self.seriesStyles().find(function(el){
+                    return el["tileid"] === self.selectedSeriesTile().tileid;
+                });
+                if (existing && val) {
+                    updated = existing;
+                    updated["color"] = val;
+                    self.seriesStyles.replace(existing, updated);
                 }
             }
         });
-        this.seriesStyles = this.commonData.seriesStyles;
-        // this.seriesStyles.subscribe(function(val) {
-        //     console.log(val);
-        //     self.render();
-        // });
+
+        this.toggleSelected = function(tile) {
+            var selectable = self.seriesData().filter(function(t){return t.tileid === tile.tileid}).length === 1;
+            if(!tile || tile == self.selectedSeriesTile()) {
+                self.selectedSeriesTile(null);
+            } else if (selectable || tile) {
+                self.selectedSeriesTile(tile);
+            }
+        }
 
         var chartFormattingDetails = {
             'title': this.chartTitle,
@@ -98,23 +111,33 @@ define(['jquery',
         });
 
         this.addData = function(tile) {
-            if (ko.unwrap(self.seriesStyles()[tile.tileid])) {
-            } else {
-                self.seriesStyles()[tile.tileid] = {};
-                self.seriesStyles()[tile.tileid]["color"] = ko.observable(Math.floor(Math.random()*16777215).toString(16));
-                //no style saved
+            var existing = self.seriesStyles().find(function(el){
+                return el["tileid"] === tile.tileid;
+            });
+            if (!existing) {
+                self.seriesStyles.push({
+                    "tileid":tile.tileid,
+                    "color": (Math.floor(Math.random()*16777215).toString(16))
+                });
             }
-            //give a color
-            //track w/obs to mutate later
             var fileInfo = this.fileViewer.getUrl(tile);
             this.getChartingData(tile.tileid, fileInfo.url, fileInfo.name);
+            self.toggleSelected(tile);
         };
 
         this.removeData = function(tileid) {
-            self.selectedSeriesTile(null);
+            if (!self.selectedSeriesTile()) {
+                self.selectedSeriesTile(null);
+            } else if (self.selectedSeriesTile().tileid === tileid) {
+                self.selectedSeriesTile(null);
+            }
+            var existing = self.seriesStyles().find(function(el){
+                return el["tileid"] === tileid;
+            });
             this.seriesData().forEach(function(series) {
                 if (series.tileid === tileid) {
                     this.seriesData.remove(series);
+                    if (existing) { self.seriesStyles.remove(existing); }
                 }
             }, this);
         };
