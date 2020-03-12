@@ -84,12 +84,12 @@
                 && $parent.fileViewer.selected().tileid !== $data.tileid
                 && ($parent.filter().length === 0 || $parent.isFiltered($data))-->
                     <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
-                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;" data-bind="click: function(){$parent.selectedSeriesTile($data)}">
+                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
                         <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
                     </div>
                     <!--/ko-->
                     <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
-                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;" data-bind="click: function(){$parent.selectedSeriesTile($data)}">
+                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;" data-bind="click: function(){$parent.toggleSelected($data)}, css: {'selected-photo': $parent.selectedSeriesTile() === $data}">
                         <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
                     </div>
                     <!--/ko-->
