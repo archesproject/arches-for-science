@@ -115,12 +115,11 @@ define([
                 if(val.length >= 1) {
                     val.forEach(function(style) {
                         traceIndices = [];
-                        color = false;
                         element.data.forEach(function(trace, i){
                             if (trace.tileid === style.tileid) { traceIndices = [i]; }
                         });
                         if (traceIndices.length === 1) {
-                            Plotly.restyle(element, {'marker.color': style["color"]}, traceIndices)
+                            Plotly.restyle(element, {'marker.color': style["color"]}, traceIndices);
                         }
                     });
                 }
@@ -129,7 +128,7 @@ define([
             config.seriesData.subscribe(function(val){
                 val.forEach(function(series){
                     if (series.status === 'added') {
-                        style = config.seriesStyles().find(function(el){
+                        var style = config.seriesStyles().find(function(el){
                             return el["tileid"] === series.value.tileid;
                         });
                         Plotly.addTraces(element, {

@@ -5,7 +5,7 @@ define(['jquery',
     'bindings/plotly',
     'bindings/select2-query',
     'bindings/color-picker',
-], function($, _, ko, koMapping, colorPicker) {
+], function($, _, ko, colorPicker) {
     /**
     * A viewmodel used for generic AFS instrument files
     *
@@ -93,7 +93,7 @@ define(['jquery',
             } else if (selectable || tile) {
                 self.selectedSeriesTile(tile);
             }
-        }
+        };
 
         var chartFormattingDetails = {
             'title': this.chartTitle,
