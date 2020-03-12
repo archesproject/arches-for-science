@@ -302,14 +302,14 @@ define([
                 });
                 
                 map.on('draw:editvertex draw:editmove', function() {
-                    if (editingFeature) {
-                        drawFeatures().forEach(function(drawFeature) {
-                            if (drawFeature.id === editingFeature.feature.id) {
-                                drawFeature.geometry = editingFeature.toGeoJSON().geometry;
-                            }
+                    var layers = editItems.getLayers()[0].getLayers();
+                    drawFeatures().forEach(function(drawFeature) {
+                        layers.forEach(function(layer) {
+                            if (drawFeature.id === layer.feature.id) 
+                                drawFeature.geometry = layer.toGeoJSON().geometry;
                         });
-                        self.updateTiles();
-                    }
+                    });
+                    self.updateTiles();
                 });
                 
                 map.on('click', function() {
