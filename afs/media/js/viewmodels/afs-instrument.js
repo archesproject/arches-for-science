@@ -87,7 +87,7 @@ define(['jquery',
         });
 
         this.toggleSelected = function(tile) {
-            var selectable = self.seriesData().filter(function(t){return t.tileid === tile.tileid}).length === 1;;
+            var selectable = (self.seriesData().filter(function(t){return t.tileid === tile.tileid}).length === 1);
             if(!tile || tile == self.selectedSeriesTile()) {
                 self.selectedSeriesTile(null);
             } else if (selectable || tile) {
