@@ -110,16 +110,37 @@ define([
                 Plotly.relayout(element, layout);
             });
 
+            config.seriesStyles.subscribe(function(val){
+                var traceIndices;
+                if(val.length >= 1) {
+                    val.forEach(function(style) {
+                        traceIndices = [];
+                        color = false;
+                        element.data.forEach(function(trace, i){
+                            if (trace.tileid === style.tileid) { traceIndices = [i]; }
+                        });
+                        if (traceIndices.length === 1) {
+                            Plotly.restyle(element, {'marker.color': style["color"]}, traceIndices)
+                        }
+                    });
+                }
+            });
+
             config.seriesData.subscribe(function(val){
                 val.forEach(function(series){
                     if (series.status === 'added') {
+                        style = config.seriesStyles().find(function(el){
+                            return el["tileid"] === series.value.tileid;
+                        });
                         Plotly.addTraces(element, {
                             x: series.value.data.value,
                             y: series.value.data.count,
+                            opacity: 0.5,
                             marker: {
-                                color: series.value.color
+                                color: style.color,
                             },
-                            name: series.value.name
+                            name: series.value.name,
+                            tileid: series.value.tileid,
                         }, element.data.length);
                     } else {
                         element.data.forEach(function(trace, i){
