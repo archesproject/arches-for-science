@@ -5,7 +5,7 @@
     <!--ko if: params.selected() -->
     <div class="preview file-viewer" style="position: relative">
         <div class='loading-mask' data-bind="visible: loading()"></div>
-        <!--ko if: ko.unwrap(chartData) -->
+        <!--ko if: chartData -->
         <div class="chart" data-bind='plotly: {
             data: chartData, 
             title: chartTitle, 
@@ -15,6 +15,7 @@
             yAxisLabel: yAxisLabel,
             yAxisLabelSize: yAxisLabelSize,
             options: chartOptions,
+            seriesStyles: seriesStyles,
             seriesData: seriesData,
             loading: loading
         }'></div>
@@ -108,9 +109,8 @@
                     </div>
 
                     <div class="colorpicker-component input-group" id="cp1">
-                        <input placeholder="{% trans  'Data Series Line Color'  %}" class="form-control input-md widget-input" data-bind="colorPicker: {color: seriesStyles()[selectedSeriesTile().tileid].color, format:'hex', container: '#cp1'}">
-                        <span class="input-group-addon"><i class="ion-stop resource-color-swatch" data-bind="style: {color: seriesStyles()[selectedSeriesTile().tileid].color}"></i></span>
-                        <!-- <button data-bind="click: ">{% trans 'Save Changes' %}</button> -->
+                        <input placeholder="{% trans  'Data Series Line Color'  %}" class="form-control input-md widget-input" data-bind="colorPicker: {color: colorHolder, format:'hex', container: '#cp1'}">
+                        <span class="input-group-addon"><i class="ion-stop resource-color-swatch" data-bind="style: {color: colorHolder}"></i></span>
                     </div>
 
                 </div>
