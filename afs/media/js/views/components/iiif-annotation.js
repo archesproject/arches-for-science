@@ -19,6 +19,13 @@ define([
         this.newNodeId = null;
         this.featureLookup = {};
         this.selectedFeatureIds = ko.observableArray();
+        this.lineColor = ko.observable("#3388ff");
+        this.fillColor = ko.observable("#3388ff");
+        this.lineWidth = ko.observable(3);
+        this.pointRadius = ko.observable(10);
+        this.lineOpacity = ko.observable(1);
+        this.fillOpacity = ko.observable(0.2);
+        this.showStylingTools = ko.observable(false);
         
         this.cancelDrawing = function() {
             _.each(tools, function(tool) {
@@ -52,6 +59,7 @@ define([
                         self.newNodeId = id;
                     }
                     self.setDrawTool(tool);
+                    disableEditing();
                 }
             });
         });
@@ -123,20 +131,64 @@ define([
             editingFeature = feature;
             editingFeature.options.editing || (editingFeature.options.editing = {});
             editingFeature.editing.enable();
+            self.styleProperties(feature.feature.properties);
             self.selectedFeatureIds([feature.feature.id]);
         };
         
+        this.styleProperties = ko.computed({
+            read: function() {
+                return {
+                    color: self.lineColor(),
+                    fillColor: self.fillColor(),
+                    weight: self.lineWidth(),
+                    radius: self.pointRadius(),
+                    opacity: self.lineOpacity(),
+                    fillOpacity: self.fillOpacity()
+                };
+            },
+            write: function(style) {
+                self.lineColor(style.color);
+                self.fillColor(style.fillColor);
+                self.lineWidth(style.weight);
+                self.pointRadius(style.radius);
+                self.lineOpacity(style.opacity);
+                self.fillOpacity(style.fillOpacity);
+            }
+        });
+        
         var featureClick;
         var drawLayer = ko.computed(function() {
+            var selectedFeatureIds = self.selectedFeatureIds();
+            var styleProperties = self.styleProperties();
             return L.geoJson({
                 type: 'FeatureCollection',
                 features: drawFeatures()
             }, {
                 pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng);
+                    var style;
+                    if (selectedFeatureIds.includes(feature.id)) style = styleProperties;
+                    else style = {
+                        color: feature.properties.color,
+                        fillColor: feature.properties.fillColor,
+                        weight: feature.properties.weight,
+                        radius: feature.properties.radius,
+                        opacity: feature.properties.opacity,
+                        fillOpacity: feature.properties.fillOpacity
+                    };
+                    return L.circleMarker(latlng, style);
                 },
-                style: function() {
-                    return {};
+                style: function(feature) {
+                    var style;
+                    if (selectedFeatureIds.includes(feature.id)) style = styleProperties;
+                    else style = {
+                        color: feature.properties.color,
+                        fillColor: feature.properties.fillColor,
+                        weight: feature.properties.weight,
+                        radius: feature.properties.radius,
+                        opacity: feature.properties.opacity,
+                        fillOpacity: feature.properties.fillOpacity
+                    };
+                    return style;
                 },
                 filter: function(feature) {
                     return feature.properties.canvas === self.canvas();
@@ -152,9 +204,16 @@ define([
 
         drawLayer.subscribe(function(newDrawLayer) {
             var map = self.map();
+            var selectedFeatureIds = self.selectedFeatureIds();
             if (map) {
                 editItems.clearLayers();
                 editItems.addLayer(newDrawLayer);
+                newDrawLayer.getLayers().forEach(function(layer) {
+                    if (selectedFeatureIds.includes(layer.feature.id)) {
+                        layer.options.editing || (layer.options.editing = {});
+                        layer.editing.enable();
+                    }
+                });
             }
         });
         
@@ -180,8 +239,8 @@ define([
         
         var editingFeature;
         this.editFeature = function(feature) {
-            self.canvas(feature.properties.canvas);
             var layers = editItems.getLayers()[0].getLayers();
+            self.canvas(feature.properties.canvas);
             layers.forEach(function(layer) {
                 if (layer.feature.id === feature.id) enableEditing(layer);
             });
@@ -213,15 +272,33 @@ define([
                     'draw_line_string': new L.Draw.Polyline(map, drawControl.options.polyline),
                     'draw_polygon': new L.Draw.Polygon(map, drawControl.options.polygon)
                 };
+                self.styleProperties.subscribe(function(styleProperties) {
+                    _.each(tools, function(tool) {
+                        if (tool.type === "circlemarker") tool.setOptions(styleProperties);
+                        else tool.setOptions({ shapeOptions: styleProperties });
+                    });
+                    self.selectedFeatureIds().forEach(function(id) {
+                        drawFeatures().forEach(function(drawFeature) {
+                            if (drawFeature.id === id) {
+                                drawFeature.properties = Object.assign(
+                                    drawFeature.properties,
+                                    styleProperties
+                                );
+                            }
+                        });
+                        self.updateTiles();
+                    });
+                });
+                
                 map.on('draw:created', function(e) {
                     var feature = e.layer.toGeoJSON();
                     feature.id = uuid.generate();
-                    feature.properties = {
-                        nodeId: self.newNodeId,
-                        canvas: self.canvas()
-                    };
+                    feature.properties = self.styleProperties();
+                    feature.properties.nodeId = self.newNodeId;
+                    feature.properties.canvas = self.canvas();
                     drawFeatures.push(feature);
                     self.updateTiles();
+                    self.editFeature(feature);
                 });
                 
                 map.on('draw:editvertex draw:editmove', function() {
