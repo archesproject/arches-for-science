@@ -23,6 +23,19 @@ define(['jquery',
         this.loading = ko.observable(true);
         this.commonData = params.state;
         this.fileViewer = params.fileViewer;
+        this.selectedFileName = ko.observable(false);
+        this.setSelectedFileName = function(tile) {
+            var lookupObj = tile.datatypeLookup;
+            for (var [key, value] of Object.entries(lookupObj)) {
+                if (value === "file-list") {
+                    self.selectedFileName(ko.unwrap(self.params.selected().data[key]()[0].name));
+                    break;
+                }
+            }
+        }
+        if (this.params.selected) {
+            self.setSelectedFileName(ko.unwrap(this.params.selected));
+        }
         this.filter = ko.observable('');
         this.displayContent = ko.unwrap(this.params.displayContent);
         var localStore = window.localStorage;
@@ -111,6 +124,7 @@ define(['jquery',
         });
 
         this.addData = function(tile) {
+            console.log("hello");
             var existing = self.seriesStyles().find(function(el){
                 return el["tileid"] === tile.tileid;
             });

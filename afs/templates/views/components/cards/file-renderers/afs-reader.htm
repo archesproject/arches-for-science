@@ -3,8 +3,8 @@
 <!--ko if: params.context === 'render' -->
     <!-- ko if: params.selected() -->
     <div class="file-viewer chart-header">
-        <!-- ko if: params.selected().data['7c486328-d380-11e9-b88e-a4d18cec433a'] -->
-        <h3 data-bind="text: (params.selected().data['7c486328-d380-11e9-b88e-a4d18cec433a']()[0].name)"></h3>
+        <!-- ko if: selectedFileName() -->
+        <h3 data-bind="text: selectedFileName"></h3>
         <!-- /ko -->
     </div>
     <!-- /ko -->
