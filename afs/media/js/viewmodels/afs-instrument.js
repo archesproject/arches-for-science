@@ -124,7 +124,6 @@ define(['jquery',
         });
 
         this.addData = function(tile) {
-            console.log("hello");
             var existing = self.seriesStyles().find(function(el){
                 return el["tileid"] === tile.tileid;
             });
