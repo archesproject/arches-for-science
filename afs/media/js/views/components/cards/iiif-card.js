@@ -11,25 +11,42 @@ define([
             
             CardComponentViewModel.apply(this, [params]);
             
-            if (!params.manifest) params.manifest = this.defaultManifest();
+            if (!params.manifest)
+                params.manifest = this.card.manifest || this.defaultManifest();
+            params.canvas = params.canvas || this.card.canvas;
             
-            if (self.form && self.tile) params.widgets = self.card.widgets().filter(function(widget) {
-                var id = widget.node_id();
-                var type = ko.unwrap(self.form.nodeLookup[id].datatype);
-                return type === 'annotation';
-            });
+            if (this.form && this.tile) {
+                params.widgets = this.card.widgets().filter(function(widget) {
+                    var id = widget.node_id();
+                    var type = ko.unwrap(self.form.nodeLookup[id].datatype);
+                    return type === 'annotation';
+                });
+            }
             
             IIIFAnnotationViewmodel.apply(this, [params]);
             
-            this.manifest.subscribe(function(manifest) {
-                if (manifest !== self.defaultManifest())
-                    self.defaultManifest(manifest);
-            });
+            if (this.form && !this.preview) {
+                this.card.manifest = this.manifest();
+                this.card.canvas = this.canvas();
+                this.manifest.subscribe(function(manifest) {
+                    self.card.manifest = manifest;
+                });
+                this.canvas.subscribe(function(canvas) {
+                    self.card.canvas = canvas;
+                });
+            }
             
-            this.defaultManifest.subscribe(function(manifest) {
-                if (manifest !== self.manifest())
-                    self.manifest(manifest);
-            });
+            if (this.preview) {
+                this.manifest.subscribe(function(manifest) {
+                    if (manifest !== self.defaultManifest())
+                        self.defaultManifest(manifest);
+                });
+                
+                this.defaultManifest.subscribe(function(manifest) {
+                    if (manifest !== self.manifest())
+                        self.manifest(manifest);
+                });
+            }
         },
         template: {
             require: 'text!templates/views/components/cards/iiif-card.htm'
