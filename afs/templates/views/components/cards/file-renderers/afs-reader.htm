@@ -1,11 +1,16 @@
 {% load i18n %}
 
 <!--ko if: params.context === 'render' -->
+    <!-- ko if: params.selected() -->
+    <div class="file-viewer chart-header">
+        <h3 data-bind="text: (params.selected().data['7c486328-d380-11e9-b88e-a4d18cec433a']()[0].name)"></h3>
+    </div>
+    <!-- /ko -->
 <div class="">
     <!--ko if: params.selected() -->
     <div class="preview file-viewer" style="position: relative">
         <div class='loading-mask' data-bind="visible: loading()"></div>
-        <!--ko if: ko.unwrap(chartData) -->
+        <!--ko if: chartData -->
         <div class="chart" data-bind='plotly: {
             data: chartData, 
             title: chartTitle, 
@@ -15,6 +20,7 @@
             yAxisLabel: yAxisLabel,
             yAxisLabelSize: yAxisLabelSize,
             options: chartOptions,
+            seriesStyles: seriesStyles,
             seriesData: seriesData,
             loading: loading
         }'></div>
@@ -81,24 +87,45 @@
     </div>
 
     <div class="file-workbench-files">
-    <!--ko foreach: fileViewer.card.tiles -->
-        <!--ko if: $parent.fileViewer.getUrl($data).renderer 
-            && $parent.fileViewer.getUrl($data).renderer.id === $parent.fileViewer.displayContent().renderer.id 
-            && $parent.fileViewer.selected().tileid !== $data.tileid
-            && ($parent.filter().length === 0 || $parent.isFiltered($data))-->
-                <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
-                <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
-                <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
-                </div>
-                <!--/ko-->
-                <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
-                <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
-                <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
-                </div>
-                <!--/ko-->
-                <!--/ko-->
-                <!--/ko-->
-            </div>
+        <!--ko foreach: fileViewer.card.tiles -->
+            <!--ko if: $parent.fileViewer.getUrl($data).renderer 
+                && $parent.fileViewer.getUrl($data).renderer.id === $parent.fileViewer.displayContent().renderer.id 
+                && $parent.fileViewer.selected().tileid !== $data.tileid
+                && ($parent.filter().length === 0 || $parent.isFiltered($data))-->
+                    <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
+                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
+                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
+                    </div>
+                    <!--/ko-->
+                    <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
+                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;" data-bind="click: function(){$parent.toggleSelected($data)}, css: {'selected-photo': $parent.selectedSeriesTile() === $data}">
+                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
+                    </div>
+                    <!--/ko-->
+            <!--/ko-->
+        <!--/ko-->
+    </div>
     <!--/ko-->
+    <div>
+        <!-- ko if: seriesData().length >= 1 && selectedSeriesTile -->
+        <div>
+            <h2>Style</h2>
+            <div class="row widget-container">
+                <div class="form-group">
+
+                    <div class="relative">
+                        <label class="col-xs-12 control-label widget-input-label"> {% trans "Color" %} </label>
+                    </div>
+
+                    <div class="colorpicker-component input-group" id="cp1">
+                        <input placeholder="{% trans  'Data Series Line Color'  %}" class="form-control input-md widget-input" data-bind="colorPicker: {color: colorHolder, format:'hex', container: '#cp1'}">
+                        <span class="input-group-addon"><i class="ion-stop resource-color-swatch" data-bind="style: {color: colorHolder}"></i></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
 <!--/ko-->
 
