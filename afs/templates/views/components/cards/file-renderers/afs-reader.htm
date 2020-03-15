@@ -57,21 +57,21 @@
         </div>
         <div class="col-xs-12 pad-no crud-widget-container">
             <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">Title Text and Font Size</div>
+                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Title Text and Font Size" %}</div>
                 <div style="display: inline-flex">
                     <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: chartTitle">
                     <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: titleSize">
                 </div>
             </div>
             <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">X Axis Label and Font Size</div>
+                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "X Axis Label and Font Size" %}</div>
                 <div style="display: inline-flex">
                     <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: xAxisLabel">
                     <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: xAxisLabelSize">
                 </div>
             </div>
             <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">Y Axis Label and Font Size</div>
+                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Y Axis Label and Font Size" %}</div>
                 <div style="display: inline-flex">
                     <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: yAxisLabel">
                     <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
@@ -85,7 +85,7 @@
     </div>
 
     <div class="file-workbench-filter">
-        <h2 class="file-workbench-filter-header">File Filter</h2>
+        <h2 class="file-workbench-filter-header">{% trans "File Filter" %}</h2>
         <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}" data-bind="textInput: filter"></input>
         <span class="clear-node-search" data-bind="visible: filter().length > 0, click: function() { filter(''); }"><i class="fa fa-times-circle"></i></span>
     </div>
