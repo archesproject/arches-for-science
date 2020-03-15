@@ -163,7 +163,7 @@ define(['jquery',
             axis: {
                 x: {
                     tick: {
-                        count: 4
+                        count: 5
                     }
                 }
             },
