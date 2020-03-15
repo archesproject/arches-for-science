@@ -98,12 +98,18 @@
                 && ($parent.filter().length === 0 || $parent.isFiltered($data))-->
                     <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
                     <div class="file-workbench-file chart-series-selector">
-                        <i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i><div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
+                        <div class="add-data-series">
+                            <i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
+                        </div>
+                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
                     </div>
                     <!--/ko-->
                     <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
                     <div class="file-workbench-file chart-series-selector" data-bind="click: function(){$parent.toggleSelected($data)}, css: {'selected-photo': $parent.selectedSeriesTile() === $data}">
-                        <i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i><div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
+                        <div class="add-data-series">
+                            <i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
+                        </div>
+                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
                     </div>
                     <!--/ko-->
             <!--/ko-->
@@ -122,7 +128,7 @@
                     </div>
 
                     <div class="colorpicker-component input-group" id="cp1">
-                        <input placeholder="{% trans  'Data Series Line Color'  %}" class="form-control input-lg widget-input" data-bind="colorPicker: {color: colorHolder, format:'hex', container: '#cp1'}">
+                        <input id="cp1" placeholder="{% trans  'Data Series Line Color'  %}" class="form-control input-lg widget-input" data-bind="colorPicker: {color: colorHolder, format:'hex', container: '#cp1'}">
                         <span class="input-group-addon" data-bind="style: {background: colorHolder}"></span>
                     </div>
                 </div>
