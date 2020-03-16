@@ -57,21 +57,21 @@
         </div>
         <div class="col-xs-12 pad-no crud-widget-container">
             <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">Title Text and Font Size</div>
+                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Title Text and Font Size" %}</div>
                 <div style="display: inline-flex">
                     <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: chartTitle">
                     <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: titleSize">
                 </div>
             </div>
             <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">X Axis Label and Font Size</div>
+                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "X Axis Label and Font Size" %}</div>
                 <div style="display: inline-flex">
                     <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: xAxisLabel">
                     <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: xAxisLabelSize">
                 </div>
             </div>
             <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">Y Axis Label and Font Size</div>
+                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Y Axis Label and Font Size" %}</div>
                 <div style="display: inline-flex">
                     <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: yAxisLabel">
                     <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
@@ -83,8 +83,10 @@
     <div class="workbench-card-sidepanel-header-container file-workbench">
         <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Manage Series Data'"></h4>
     </div>
-    <div style='position: relative;'>
-        <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'Filter file list...' %}" data-bind="textInput: filter"></input>
+
+    <div class="file-workbench-filter">
+        <h2 class="file-workbench-filter-header">{% trans "File Filter" %}</h2>
+        <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}" data-bind="textInput: filter"></input>
         <span class="clear-node-search" data-bind="visible: filter().length > 0, click: function() { filter(''); }"><i class="fa fa-times-circle"></i></span>
     </div>
 
@@ -95,13 +97,19 @@
                 && $parent.fileViewer.selected().tileid !== $data.tileid
                 && ($parent.filter().length === 0 || $parent.isFiltered($data))-->
                     <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
-                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;">
-                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
+                    <div class="file-workbench-file chart-series-selector">
+                        <div class="add-data-series">
+                            <i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
+                        </div>
+                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
                     </div>
                     <!--/ko-->
                     <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
-                    <div class="file-workbench-file" style="display: inline-flex; width: 100%; justify-content: space-between;" data-bind="click: function(){$parent.toggleSelected($data)}, css: {'selected-photo': $parent.selectedSeriesTile() === $data}">
-                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div><i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
+                    <div class="file-workbench-file chart-series-selector" data-bind="click: function(){$parent.toggleSelected($data)}, css: {'selected-photo': $parent.selectedSeriesTile() === $data}">
+                        <div class="add-data-series">
+                            <i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
+                        </div>
+                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
                     </div>
                     <!--/ko-->
             <!--/ko-->
@@ -110,20 +118,19 @@
     <!--/ko-->
     <div>
         <!-- ko if: seriesData().length >= 1 && selectedSeriesTile -->
-        <div>
-            <h2>Style</h2>
+        <div class="chart-style-panel">
+            <h2>{% trans "Style" %}</h2>
             <div class="row widget-container">
-                <div class="form-group">
 
+                <div class="form-group">
                     <div class="relative">
                         <label class="col-xs-12 control-label widget-input-label"> {% trans "Color" %} </label>
                     </div>
 
                     <div class="colorpicker-component input-group" id="cp1">
-                        <input placeholder="{% trans  'Data Series Line Color'  %}" class="form-control input-md widget-input" data-bind="colorPicker: {color: colorHolder, format:'hex', container: '#cp1'}">
-                        <span class="input-group-addon"><i class="ion-stop resource-color-swatch" data-bind="style: {color: colorHolder}"></i></span>
+                        <input id="cp1" placeholder="{% trans  'Data Series Line Color'  %}" class="form-control input-lg widget-input" data-bind="colorPicker: {color: colorHolder, format:'hex', container: '#cp1'}">
+                        <span class="input-group-addon" data-bind="style: {background: colorHolder}"></span>
                     </div>
-
                 </div>
             </div>
         </div>

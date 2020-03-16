@@ -46,9 +46,9 @@ define(['jquery',
             'title': localStore.getItem(renderer + 'title') || 'Sample Reflectance',
             'titlesize': localStore.getItem(renderer + 'titlesize') || 24, 
             'xaxislabel': localStore.getItem(renderer + 'xaxislabel') || "Energy",
-            'xaxislabelsize': localStore.getItem(renderer + 'xaxislabelsize') || 18,
+            'xaxislabelsize': localStore.getItem(renderer + 'xaxislabelsize') || 17,
             'yaxislabel': localStore.getItem(renderer + 'yaxislabel') || "Count",
-            'yaxislabelsize': localStore.getItem(renderer + 'yaxislabelsize') || 18,
+            'yaxislabelsize': localStore.getItem(renderer + 'yaxislabelsize') || 17,
         };
 
         if ('chartData' in params.state === false) {
@@ -163,7 +163,7 @@ define(['jquery',
             axis: {
                 x: {
                     tick: {
-                        count: 4
+                        count: 5
                     }
                 }
             },

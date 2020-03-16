@@ -38,46 +38,48 @@
                                 }"></i>
                             </div>
                             <div class="form-horizontal" data-bind="if: self.showStylingTools">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">{% trans "Line Color" %}</label>
-                                    <div class="col-sm-8">
-                                        <div class="colorpicker-component input-group">
-                                            <input placeholder="{% trans "Line Color " %}" class="form-control input-lg widget-input" data-bind="colorPicker: {color: self.lineColor, format:'hex'}">
-                                            <span class="input-group-addon"><i class="ion-stop resource-color-swatch" data-bind="style: {color: self.lineColor}"></i></span>
+                                <div class="style-tools-panel">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">{% trans "Line Color" %}</label>
+                                        <div class="col-sm-8">
+                                            <div class="colorpicker-component input-group">
+                                                <input placeholder="{% trans "Line Color " %}" class="form-control input-lg widget-input" data-bind="colorPicker: {color: self.lineColor, format:'hex'}">
+                                                <span class="input-group-addon style-tools-color-visualizer" data-bind="style: {background: self.lineColor}"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">{% trans "Fill color" %}</label>
-                                    <div class="col-sm-8">
-                                        <div class="colorpicker-component input-group">
-                                            <input placeholder="{% trans "Fill Color " %}" class="form-control input-lg widget-input" data-bind="colorPicker: {color: self.fillColor, format:'hex'}">
-                                            <span class="input-group-addon"><i class="ion-stop resource-color-swatch" data-bind="style: {color: self.fillColor}"></i></span>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">{% trans "Fill color" %}</label>
+                                        <div class="col-sm-8">
+                                            <div class="colorpicker-component input-group">
+                                                <input placeholder="{% trans "Fill Color " %}" class="form-control input-lg widget-input" data-bind="colorPicker: {color: self.fillColor, format:'hex'}">
+                                                <span class="input-group-addon style-tools-color-visualizer" data-bind="style: {background: self.fillColor}"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">{% trans "Line Width" %}</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.lineWidth">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">{% trans "Line Width" %}</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.lineWidth">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">{% trans "Line Opacity" %}</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.lineOpacity">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">{% trans "Line Opacity" %}</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.lineOpacity">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">{% trans "Point Radius" %}</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.pointRadius">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">{% trans "Point Radius" %}</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.pointRadius">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">{% trans "Fill Opacity" %}</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.fillOpacity">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">{% trans "Fill Opacity" %}</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" placeholder="" class="form-control" data-bind="valueUpdate: 'keyup', value: self.fillOpacity">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
