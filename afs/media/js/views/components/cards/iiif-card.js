@@ -37,14 +37,11 @@ define([
             }
             
             if (this.preview) {
-                this.manifest.subscribe(function(manifest) {
-                    if (manifest !== self.defaultManifest())
-                        self.defaultManifest(manifest);
+                this.manifest.subscribe(function(m) {
+                    if (m !== self.defaultManifest()) self.defaultManifest(m);
                 });
-                
-                this.defaultManifest.subscribe(function(manifest) {
-                    if (manifest !== self.manifest())
-                        self.manifest(manifest);
+                this.defaultManifest.subscribe(function(m) {
+                    if (m !== self.manifest()) self.manifest(m);
                 });
             }
         },
