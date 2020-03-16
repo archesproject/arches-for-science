@@ -23,6 +23,19 @@ define(['jquery',
         this.loading = ko.observable(true);
         this.commonData = params.state;
         this.fileViewer = params.fileViewer;
+        this.selectedFileName = ko.observable(false);
+        this.setSelectedFileName = function(tile) {
+            var lookupObj = tile.datatypeLookup;
+            for (var [key, value] of Object.entries(lookupObj)) {
+                if (value === "file-list") {
+                    self.selectedFileName(ko.unwrap(self.params.selected().data[key]()[0].name));
+                    break;
+                }
+            }
+        }
+        if (this.params.selected) {
+            self.setSelectedFileName(ko.unwrap(this.params.selected));
+        }
         this.filter = ko.observable('');
         this.displayContent = ko.unwrap(this.params.displayContent);
         var localStore = window.localStorage;
@@ -33,9 +46,9 @@ define(['jquery',
             'title': localStore.getItem(renderer + 'title') || 'Sample Reflectance',
             'titlesize': localStore.getItem(renderer + 'titlesize') || 24, 
             'xaxislabel': localStore.getItem(renderer + 'xaxislabel') || "Energy",
-            'xaxislabelsize': localStore.getItem(renderer + 'xaxislabelsize') || 18,
+            'xaxislabelsize': localStore.getItem(renderer + 'xaxislabelsize') || 17,
             'yaxislabel': localStore.getItem(renderer + 'yaxislabel') || "Count",
-            'yaxislabelsize': localStore.getItem(renderer + 'yaxislabelsize') || 18,
+            'yaxislabelsize': localStore.getItem(renderer + 'yaxislabelsize') || 17,
         };
 
         if ('chartData' in params.state === false) {
@@ -150,7 +163,7 @@ define(['jquery',
             axis: {
                 x: {
                     tick: {
-                        count: 4
+                        count: 5
                     }
                 }
             },
