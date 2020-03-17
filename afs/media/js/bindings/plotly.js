@@ -41,11 +41,12 @@ define([
                             color: '#7f7f7f'
                         }
                     }
-                }
+                },
+                width: $(element).width() - 2
             };
 
             var chartConfig = {
-                responsive: true,
+                responsive: false,
                 modeBarButtonsToAdd: [{ 
                     name: 'expand height',
                     icon: {
@@ -66,6 +67,12 @@ define([
             };
 
             this.chart = Plotly.newPlot(element, [chartData], layout, chartConfig);
+
+            $(window).resize(function() {
+                layout.width = $(element).width() - 2;
+                Plotly.relayout(element, layout);
+            });
+            
             // var layoutOptions = [
             //     {option: config.title, layout: {title: {text: 'Title'}}},
             //     {option: config.titleSize, layout: {title: {font: {size: 24}}}},
