@@ -155,6 +155,44 @@ define(['jquery',
             }, this);
         };
 
+        this.getChartingData = function(tileid, url, name) {
+            var notYetLoaded;
+            var series = {
+                'value': [],
+                'count': []
+            };
+            notYetLoaded = this.seriesData().filter(function(t){return t.tileid === tileid;}).length === 0;
+            if (notYetLoaded) {
+                $.ajax({
+                    url : url,
+                    dataType: "text"})
+                    .done(function(data) {
+                        self.parse(data, series);
+                        self.seriesData.push({tileid: tileid, data: series, name: name});
+                    }, this);
+            }
+        };
+
+        this.render  = function() {
+            var series = {
+                'value': [],
+                'count': [],
+                'name': this.displayContent.name
+            };
+            $.ajax({
+                url : this.displayContent.url,
+                dataType: "text"})
+                .done(function(data) {
+                    try {
+                        self.parse(data, series);
+                        self.chartData(series);
+                    } catch(e) {
+                        self.displayContent.validRenderer(false);
+                    }
+                    self.loading(false);
+                }, this);
+        };        
+
         this.isFiltered = function(t){
             return self.fileViewer.getUrl(t).name.toLowerCase().includes(self.filter().toLowerCase());
         };
@@ -171,6 +209,14 @@ define(['jquery',
                 enabled: true
             }
         };
+
+        if (this.displayContent) {
+            this.url = this.displayContent.url;
+            this.type = this.displayContent.type;
+            if (self.params.context === 'render') {
+                self.render();
+            }
+        }
 
     };
 

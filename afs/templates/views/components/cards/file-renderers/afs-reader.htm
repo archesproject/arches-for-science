@@ -3,7 +3,7 @@
 <!--ko if: params.context === 'render' -->
     <!-- ko if: params.selected() -->
     <div class="file-viewer chart-header">
-        <!-- ko if: selectedFileName() -->
+        <!-- ko if: selectedFileName() && fileViewer && fileViewer.displayContent().validRenderer() === true -->
         <h3 data-bind="text: selectedFileName"></h3>
         <!-- /ko -->
     </div>
