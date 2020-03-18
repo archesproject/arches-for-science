@@ -1,13 +1,15 @@
 {% load i18n %}
 
 <!--ko if: params.context === 'render' -->
-    <!-- ko if: params.selected() -->
+<!-- ko if: params.selected() -->
     <div class="file-viewer chart-header">
         <!-- ko if: selectedFileName() && fileViewer && fileViewer.displayContent().validRenderer() === true -->
         <h3 data-bind="text: selectedFileName"></h3>
         <!-- /ko -->
     </div>
-    <!-- /ko -->
+<!-- /ko -->
+</div>
+<!-- /ko -->
 <div class="">
     <!--ko if: params.selected() -->
     <div class="preview file-viewer" style="position: relative;">
@@ -32,53 +34,56 @@
 </div>
 <!--/ko-->
 <!--ko if: params.context === 'tab' -->
-    <div class="workbench-card-sidebar-tab" data-bind="click: function() {
-        fileViewer.toggleTab('file-context');
-    }, css: {
-        'active': fileViewer.activeTab() === 'file-context'
-    }">
+<div class="workbench-card-sidebar-tab" data-bind="click: function() {
+    fileViewer.toggleTab('file-context');
+}, css: {
+    'active': fileViewer.activeTab() === 'file-context'
+}">
     <i class="fa fa-cog"></i>
     <span class="map-sidebar-text">{% trans "Config" %}</span>
-    </div>
-    <div class="workbench-card-sidebar-tab" data-bind="click: function() {
+</div>
+
+<div class="workbench-card-sidebar-tab" data-bind="click: function() {
         fileViewer.toggleTab('other-tab');
     }, css: {
         'active': fileViewer.activeTab() === 'other-tab'
     }">
     <i class="fa fa-bar-chart-o"></i>
     <span class="map-sidebar-text">{% trans "Data" %}</span>
-    </div>
+</div>
 <!--/ko-->
-<div>
+
+
 <!--ko if: params.context === 'tab-contents' -->
     <!--ko if: fileViewer.activeTab() === 'file-context' -->
-        <div class="workbench-card-sidepanel-header-container file-workbench">
-            <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Chart Configuration'"></h4>
-        </div>
-        <div class="col-xs-12 pad-no crud-widget-container">
-            <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Title Text and Font Size" %}</div>
-                <div style="display: inline-flex">
-                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: chartTitle">
-                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: titleSize">
-                </div>
-            </div>
-            <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "X Axis Label and Font Size" %}</div>
-                <div style="display: inline-flex">
-                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: xAxisLabel">
-                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: xAxisLabelSize">
-                </div>
-            </div>
-            <div class="row form-group widget-wrapper">
-                <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Y Axis Label and Font Size" %}</div>
-                <div style="display: inline-flex">
-                    <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: yAxisLabel">
-                    <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
-                </div>
+    <div class="workbench-card-sidepanel-header-container file-workbench">
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Chart Configuration'"></h4>
+    </div>
+    <div class="col-xs-12 pad-no crud-widget-container chart-config-panel">
+        <div class="row form-group widget-wrapper">
+            <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Title Text and Font Size" %}</div>
+            <div style="display: inline-flex">
+                <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: chartTitle">
+                <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: titleSize">
             </div>
         </div>
+        <div class="row form-group widget-wrapper">
+            <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "X Axis Label and Font Size" %}</div>
+            <div style="display: inline-flex">
+                <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: xAxisLabel">
+                <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: xAxisLabelSize">
+            </div>
+        </div>
+        <div class="row form-group widget-wrapper">
+            <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Y Axis Label and Font Size" %}</div>
+            <div style="display: inline-flex">
+                <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: yAxisLabel">
+                <input style="margin-left: 5px; width: 20%" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
+            </div>
+        </div>
+    </div>
     <!--/ko-->
+
     <!--ko if: fileViewer.activeTab() === 'other-tab' -->
     <div class="workbench-card-sidepanel-header-container file-workbench">
         <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Manage Series Data'"></h4>
@@ -116,6 +121,7 @@
         <!--/ko-->
     </div>
     <!--/ko-->
+        
     <div>
         <!-- ko if: seriesData().length >= 1 && selectedSeriesTile -->
         <div class="chart-style-panel">
