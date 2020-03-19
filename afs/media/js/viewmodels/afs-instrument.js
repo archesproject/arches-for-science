@@ -63,6 +63,8 @@ define(['jquery',
             this.commonData.xAxisLabelSize = ko.observable(formatDefaults['xaxislabelsize']);
             this.commonData.yAxisLabel = ko.observable(formatDefaults['yaxislabel']);
             this.commonData.yAxisLabelSize = ko.observable(formatDefaults['yaxislabelsize']);
+            this.commonData.selectedSeriesTile = ko.observable(null);
+            this.commonData.colorHolder = ko.observable(null);
         }
 
         this.parsedData = this.commonData.parsedData;
@@ -74,8 +76,9 @@ define(['jquery',
         this.yAxisLabel = this.commonData.yAxisLabel;
         this.yAxisLabelSize = this.commonData.yAxisLabelSize;
         this.seriesData = this.commonData.seriesData;
-        this.selectedSeriesTile = ko.observable(null);
+        this.selectedSeriesTile = this.commonData.selectedSeriesTile;
         this.seriesStyles = this.commonData.seriesStyles;
+        this.colorHolder = this.commonData.colorHolder;
         this.selectedSeriesTile.subscribe(function(tile){
             if(tile) {
                 var existing = self.seriesStyles().find(function(el){
