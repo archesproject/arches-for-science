@@ -33,6 +33,23 @@ define(['jquery',
                 }
             }
         }
+        this.addedFiles = ko.observableArray([]);
+        this.enqueueAddedFiles = function() {
+            var existing, tile;
+            self.addedFiles().forEach(function(tileid){
+                tile = null;
+                existing = self.seriesData().find(function(el){
+                    return el.tileid === tileid;
+                });
+                if (!existing) {
+                    tile = self.fileViewer.card.tiles().find(function(t) {
+                        return t.tileid === tileid;
+                    });
+                    if (tile) { self.addData(tile); }
+                }
+            });
+        };
+
         if (this.params.selected) {
             self.setSelectedFileName(ko.unwrap(this.params.selected));
         }
@@ -99,6 +116,25 @@ define(['jquery',
             }
         });
 
+        this.getSelect2FilesConfig = function(){
+            return {
+                clickBubble: true,
+                disabled: false,
+                data: {results: self.fileViewer.card.tiles().filter(function(tile){
+                    return tile.tileid !== self.params.selected().tileid;
+                }).filter(function(tile){
+                    return self.seriesData().filter(function(val){ return val.tileid === tile.tileid; }).length === 0;
+                }).map(function(tile){
+                    return {text: tile.data[self.fileViewer.fileListNodeId]()[0].name, id: tile.tileid};
+                })},
+                value: this.addedFiles,
+                multiple: true,
+                closeOnSelect: false,
+                placeholder: "type in the name of a file",
+                allowClear: true
+            };
+        };
+
         this.toggleSelected = function(tile) {
             var selectable = (self.seriesData().filter(function(t){return t.tileid === tile.tileid}).length === 1);
             if(!tile || tile == self.selectedSeriesTile()) {
@@ -133,6 +169,7 @@ define(['jquery',
                     "color": (Math.floor(Math.random()*16777215).toString(16))
                 });
             }
+            self.addedFiles.remove(tile.tileid);
             var fileInfo = this.fileViewer.getUrl(tile);
             this.getChartingData(tile.tileid, fileInfo.url, fileInfo.name);
             self.toggleSelected(tile);
