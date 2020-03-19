@@ -2,11 +2,11 @@
 
 <!--ko if: params.context === 'render' -->
 <!-- ko if: params.selected() -->
-<div class="file-viewer chart-header">
-    <!-- ko if: selectedFileName() -->
-    <h3 data-bind="text: selectedFileName"></h3>
-    <!-- /ko -->
-</div>
+    <div class="file-viewer chart-header">
+        <!-- ko if: selectedFileName() && fileViewer && fileViewer.displayContent().validRenderer() === true -->
+        <h3 data-bind="text: selectedFileName"></h3>
+        <!-- /ko -->
+    </div>
 <!-- /ko -->
 <div class="">
     <!--ko if: params.selected() -->
