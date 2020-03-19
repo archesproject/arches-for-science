@@ -121,7 +121,7 @@
     <!--/ko-->
         
     <div>
-        <!-- ko if: seriesData().length >= 1 && selectedSeriesTile -->
+        <!-- ko if: seriesData().length >= 1 && selectedSeriesTile && fileViewer.activeTab() === 'other-tab' -->
         <div class="chart-style-panel">
             <h2>{% trans "Style" %}</h2>
             <div class="row widget-container">
