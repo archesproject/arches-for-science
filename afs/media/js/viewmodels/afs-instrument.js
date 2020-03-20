@@ -3,9 +3,8 @@ define(['jquery',
     'knockout',
     'knockout-mapping',
     'bindings/plotly',
-    'bindings/select2-query',
-    'bindings/color-picker',
-], function($, _, ko, colorPicker) {
+    'bindings/select2-query'
+], function($, _, ko) {
     /**
     * A viewmodel used for generic AFS instrument files
     *
@@ -63,6 +62,8 @@ define(['jquery',
             this.commonData.xAxisLabelSize = ko.observable(formatDefaults['xaxislabelsize']);
             this.commonData.yAxisLabel = ko.observable(formatDefaults['yaxislabel']);
             this.commonData.yAxisLabelSize = ko.observable(formatDefaults['yaxislabelsize']);
+            this.commonData.selectedSeriesTile = ko.observable(null);
+            this.commonData.colorHolder = ko.observable('#ff00ff');
         }
 
         this.parsedData = this.commonData.parsedData;
@@ -74,8 +75,9 @@ define(['jquery',
         this.yAxisLabel = this.commonData.yAxisLabel;
         this.yAxisLabelSize = this.commonData.yAxisLabelSize;
         this.seriesData = this.commonData.seriesData;
-        this.selectedSeriesTile = ko.observable(null);
+        this.selectedSeriesTile = this.commonData.selectedSeriesTile;
         this.seriesStyles = this.commonData.seriesStyles;
+        this.colorHolder = this.commonData.colorHolder;
         this.selectedSeriesTile.subscribe(function(tile){
             if(tile) {
                 var existing = self.seriesStyles().find(function(el){
@@ -84,9 +86,10 @@ define(['jquery',
                 if (existing) { self.colorHolder(existing["color"]); }
             }
         });
-        this.colorHolder = ko.observable();
+
         this.colorHolder.subscribe(function(val){
-            var existing = null, updated = null;
+            var existing; 
+            var updated;
             if (self.selectedSeriesTile()) {
                 existing = self.seriesStyles().find(function(el){
                     return el["tileid"] === self.selectedSeriesTile().tileid;
@@ -129,8 +132,8 @@ define(['jquery',
             });
             if (!existing) {
                 self.seriesStyles.push({
-                    "tileid":tile.tileid,
-                    "color": (Math.floor(Math.random()*16777215).toString(16))
+                    "tileid": tile.tileid,
+                    "color": self.colorHolder()
                 });
             }
             var fileInfo = this.fileViewer.getUrl(tile);

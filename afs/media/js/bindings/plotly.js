@@ -141,7 +141,7 @@ define([
                         Plotly.addTraces(element, {
                             x: series.value.data.value,
                             y: series.value.data.count,
-                            opacity: 0.5,
+                            opacity: 0.9,
                             marker: {
                                 color: style.color,
                             },
