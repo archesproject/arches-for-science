@@ -53,8 +53,20 @@ define(['jquery',
         if ('chartData' in params.state === false) {
             this.commonData.chartData = ko.observable();
             this.commonData.seriesData = ko.observableArray([]);
+            this.commonData.stagedSeries = ko.observableArray([]);
             this.commonData.seriesStyles = ko.observableArray([]);
+            this.commonData.compatibleSeries = ko.pureComputed(function(){
+                if (self.fileViewer) {
+                    var compat = self.fileViewer.card.tiles().filter(function(tile){
+                        return self.fileViewer.getUrl(tile).renderer &&
+                        self.fileViewer.getUrl(tile).renderer.id === self.fileViewer.displayContent().renderer.id &&
+                        self.fileViewer.selected().tileid !== tile.tileid
+                    }).map(function(t){return {text: self.fileViewer.getUrl(t).name, id: t.tileid }});
+                    return compat;
         }
+            });
+        }
+
         if ('chartTitle' in params.state === false) {
             this.commonData.chartTitle = ko.observable(formatDefaults['title']);
             this.commonData.titleSize = ko.observable(formatDefaults['titlesize']);
@@ -75,9 +87,12 @@ define(['jquery',
         this.yAxisLabel = this.commonData.yAxisLabel;
         this.yAxisLabelSize = this.commonData.yAxisLabelSize;
         this.seriesData = this.commonData.seriesData;
+        this.stagedSeries = this.commonData.stagedSeries;
         this.selectedSeriesTile = this.commonData.selectedSeriesTile;
         this.seriesStyles = this.commonData.seriesStyles;
         this.colorHolder = this.commonData.colorHolder;
+        this.compatibleSeries = this.commonData.compatibleSeries;
+
         this.selectedSeriesTile.subscribe(function(tile){
             if(tile) {
                 var existing = self.seriesStyles().find(function(el){
@@ -125,6 +140,16 @@ define(['jquery',
                 localStore.setItem(renderer + key, val);
             });
         });
+
+        this.addAllToChart = function(t){
+            if (self.fileViewer) {
+                self.fileViewer.card.tiles().forEach(function(tile){
+                    if (self.stagedSeries().indexOf(tile.tileid) > -1) {
+                        self.addData(tile);
+                    }
+                })
+            }
+        }
 
         this.addData = function(tile) {
             var existing = self.seriesStyles().find(function(el){

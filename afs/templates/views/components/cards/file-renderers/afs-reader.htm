@@ -86,35 +86,39 @@
     <div class="workbench-card-sidepanel-header-container file-workbench">
         <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Manage Series Data'"></h4>
     </div>
+    
+    <!-- ko if: fileViewer -->
+    <input style="display:inline-block; padding-top: 70px;"
+    data-bind="select2Query: {
+        select2Config: {
+            clickBubble: false,
+            disabled: false,
+            data: compatibleSeries(),
+            value: stagedSeries,
+            closeOnSlect: false,
+            allowClear: true,
+            multiple: true,
+            placeholder: {% trans "'Available Series'" %}}}">
+    <div style="padding-top: 10px">
+        <button style="margin-right: 3px;" class="btn btn-lg btn-workbench btn-primary" data-bind="click: function(){addAllToChart()}, css: {'disabled':stagedSeries().length === 0}"><i class="fa fa-line-chart"></i> {% trans 'Add Series to Chart' %}</button>
+    </div>
+    <!-- /ko -->
 
-    <div class="file-workbench-filter">
+    <!-- <div class="file-workbench-filter series-data">
         <h2 class="file-workbench-filter-header">{% trans "File Filter" %}</h2>
         <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}" data-bind="textInput: filter"></input>
         <span class="clear-node-search" data-bind="visible: filter().length > 0, click: function() { filter(''); }"><i class="fa fa-times-circle"></i></span>
-    </div>
+    </div> -->
 
-    <div class="file-workbench-files">
+    <div class="file-workbench-files" data-bind="visible: seriesData().length > 0">
         <!--ko foreach: fileViewer.card.tiles -->
-            <!--ko if: $parent.fileViewer.getUrl($data).renderer 
-                && $parent.fileViewer.getUrl($data).renderer.id === $parent.fileViewer.displayContent().renderer.id 
-                && $parent.fileViewer.selected().tileid !== $data.tileid
-                && ($parent.filter().length === 0 || $parent.isFiltered($data))-->
-                    <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 0; -->
-                    <div class="file-workbench-file chart-series-selector">
-                        <div class="add-data-series">
-                            <i class="fa fa-plus" data-bind="click: function(){$parent.addData($data)}"></i>
-                        </div>
-                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
-                    </div>
-                    <!--/ko-->
-                    <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
-                    <div class="file-workbench-file chart-series-selector" data-bind="click: function(){$parent.toggleSelected($data)}, css: {'selected-photo': $parent.selectedSeriesTile() === $data}">
-                        <div class="add-data-series">
-                            <i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
-                        </div>
-                        <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
-                    </div>
-                    <!--/ko-->
+            <!--ko if: $parent.seriesData().filter(function(t){return t.tileid === $data.tileid}).length === 1; -->
+            <div class="file-workbench-file chart-series-selector" data-bind="click: function(){$parent.toggleSelected($data)}, css: {'selected-photo': $parent.selectedSeriesTile() === $data}">
+                <div class="add-data-series">
+                    <i class="fa fa-times-circle" data-bind="click: function(){$parent.removeData(tileid)}"></i>
+                </div>
+                <div data-bind="text: $parent.fileViewer.getUrl($data).name"></div>
+            </div>
             <!--/ko-->
         <!--/ko-->
     </div>
