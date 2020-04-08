@@ -152,11 +152,7 @@ ONTOLOGY_NAMESPACES = {
     "http://www.ics.forth.gr/isl/CRMsci/": "sci",
 }
 
-PREFERRED_CONCEPT_SCHEMES = [
-    "http://vocab.getty.edu/aat/", 
-    "http://www.cidoc-crm.org/cidoc-crm/",
-    "http://www.w3.org/ns/oa#"
-    ]
+PREFERRED_CONCEPT_SCHEMES = ["http://vocab.getty.edu/aat/", "http://www.cidoc-crm.org/cidoc-crm/", "http://www.w3.org/ns/oa#"]
 
 RENDERERS = [
     {
