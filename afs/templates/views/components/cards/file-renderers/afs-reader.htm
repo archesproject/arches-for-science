@@ -1,13 +1,9 @@
 {% load i18n %}
 
 <!--ko if: params.context === 'render' -->
-<!-- ko if: params.selected() -->
-    <div class="file-viewer chart-header">
-        <!-- ko if: selectedFileName() && fileViewer && fileViewer.displayContent().validRenderer() === true -->
-        <h3 data-bind="text: selectedFileName"></h3>
-        <!-- /ko -->
-    </div>
-<!-- /ko -->
+<div class="file-viewer chart-header">
+    <h3 data-bind="text: displayContent.name"></h3>
+</div>
 <div class="">
     <!--ko if: params.selected() -->
     <div class="preview file-viewer" style="position: relative;">

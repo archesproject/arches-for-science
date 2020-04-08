@@ -168,6 +168,7 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/imagereader",
         "ext": "",
         "type": "image/*",
+        "exclude": "tif,tiff,psd"
     },
     {
         "name": "xrf-reader",
@@ -178,6 +179,7 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/xrf-reader",
         "ext": "txt",
         "type": "text/plain",
+        "exclude": "",
     },
     {
         "name": "raman-reader",
@@ -187,7 +189,8 @@ RENDERERS = [
         "iconclass": "fa fa-bolt",
         "component": "views/components/cards/file-renderers/raman-reader",
         "ext": "txt",
-        "type": "text/plain",
+        "type": "text/plain",   
+        "exclude": "",
     },
     {
         "name": "pdbreader",
@@ -198,6 +201,7 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/pdbreader",
         "ext": "pdb",
         "type": "",
+        "exclude": "",
     },
     {
         "name": "pcdreader",
@@ -208,6 +212,7 @@ RENDERERS = [
         "component": "views/components/cards/file-renderers/pcdreader",
         "ext": "pcd",
         "type": "",
+        "exclude": "",
     },
     # {
     #     "name": "colladareader",
@@ -216,6 +221,7 @@ RENDERERS = [
     #     "component": "views/components/cards/file-renderers/colladareader",
     #     "ext": "dae",
     #     "type": "",
+    #    "exclude": [],
     # },
 ]
 
