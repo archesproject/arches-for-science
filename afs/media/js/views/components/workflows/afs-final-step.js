@@ -53,7 +53,7 @@ define([
             });
         };
 
-        this.getCardJSON = function(data) {
+        this.getCardJSON = function() {
             $.getJSON(url, function(data) {
                 var handlers = {
                     'after-update': [],
@@ -112,7 +112,7 @@ define([
 
                 self.loading(false);
             });
-        }
+        };
         this.getJSON();
         this.getCardJSON();
 

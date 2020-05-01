@@ -5,7 +5,6 @@ define([
 
     var InitWorkflow = function(params) {
         this.workflows = params.workflows.map(function(wf){
-            // wf.url = "/arches-her" + arches.urls.plugin(wf.slug);
             wf.url = arches.urls.plugin(wf.slug);
             return wf;
         }, this);
