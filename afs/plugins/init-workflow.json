@@ -1,0 +1,23 @@
+{
+    "pluginid": "49507fb0-89c6-47b7-b506-9b2b29a3b8d8",
+    "name": "Workflows",
+    "icon": "fa fa-play-circle",
+    "component": "views/components/plugins/init-workflow",
+    "componentname": "init-workflow",
+    "config": {
+        "workflows": [
+            {
+                "workflowid": "a1667717-b7bd-4570-b27a-ec352c767e0e",
+                "slug":"project-workflow",
+                "name": "New Activity",
+                "icon": "fa fa-file",
+                "bgColor": "#62a3db",
+                "circleColor": "#8bbfea",
+                "desc": "A research effort, study, or conservation project"
+            }
+        ],
+        "show":true
+    },
+    "slug": "init-workflow",
+    "sortorder": 0
+}
