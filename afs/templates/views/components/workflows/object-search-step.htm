@@ -1,0 +1,13 @@
+<div class="sampling-activity">
+    <div class="sampling-activity-search-panel"></div>
+    <div></div>
+    <div>
+
+        
+    </div>
+    <div class="physical-object-search-results">
+        <!-- ko foreach: physicalResources -->
+        <div style="padding: 10px" data-bind="text: JSON.stringify($data['_source'], null, '   ')"></div>
+        <!-- /ko -->
+    </div>
+</div>

@@ -10,18 +10,19 @@ define([
             var self = this;
             params.steps = [
                 {
-                    title: 'Activity Name',
-                    name: 'setactivityname',
-                    description: 'Identify the project and its objectives',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '0b926359-ca85-11e9-ac9c-a4d18cec433a',
+                    title: 'Sampled Physical Resource',
+                    name: 'objectsearchstep',
+                    description: 'Select the physical resource',
+                    component: 'views/components/workflows/object-search-step',
+                    componentname: 'object-search-step',
+                    graphid: null,
+                    nodegroupid: null,
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-code-fork',
+                    icon: 'fa-search',
+                    class: 'fa-search',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 }
             ];
