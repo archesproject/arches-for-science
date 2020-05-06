@@ -9,5 +9,5 @@ urlpatterns = [
     url(r"^plugins/sampling-activity-workflow", PluginView.as_view(), name="sampling-activity-workflow"),
     url(r"^plugins/project-workflow", PluginView.as_view(), name="project-workflow"),
     url(r"^plugins/init-workflow", PluginView.as_view(), name="init-workflow"),
-    url(r'^physical_thing_search_terms', PhysicalThingSearchView.as_view(), name="physical_thing_search_results"),
+    url(r"^physical_thing_search_terms", PhysicalThingSearchView.as_view(), name="physical_thing_search_results"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
