@@ -1,9 +1,10 @@
 <div class="sampling-activity">
-    <div class="sampling-activity-search-panel"></div>
-    <div></div>
-    <div>
-
-        
+    <div class="sampling-activity-search-panel" style="display: inline-flex; align-items: center">
+        <div style="width: 80%">
+        </div>
+        <div style="display: inline-flex; width: 20%; justify-content: center;">
+            <div>Total:</div><div style="padding-left: 10px;" data-bind="text: totalResults()"></div>
+        </div>
     </div>
     <div class="physical-object-search-results">
         <!-- ko foreach: physicalResources -->
