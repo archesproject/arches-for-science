@@ -14,7 +14,8 @@ define([
         if (params.workflow.state.steps[params._index]) {
             params.tileid(params.workflow.state.steps[params._index].tileid);
         }
-
+        this.paginator = ko.observable();
+        this.totalResults = ko.observable(21);
         this.physicalResources=ko.observableArray([]);
         var self = this;
 
@@ -25,6 +26,8 @@ define([
                 "resource-type-filter": [{"graphid":"9519cb4f-b25b-11e9-8c7b-a4d18cec433a","inverted":false}]
             }
         }).done(function(data){
+            self.paginator(data['paging_filter']);
+            self.totalResults(data['total_results']);
             self.physicalResources(data['results']['hits']['hits']);
         });
 
