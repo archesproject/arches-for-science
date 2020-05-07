@@ -37,6 +37,7 @@ define([
                 data: function(term, page) {
                     var data = {
                         start: (page-1)*limit,
+                        // eslint-disable-next-line camelcase
                         page_limit: limit,
                         q: term
                     };
