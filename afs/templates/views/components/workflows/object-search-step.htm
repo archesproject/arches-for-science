@@ -1,14 +1,29 @@
 <div class="sampling-activity">
     <div class="sampling-activity-search-panel" style="display: inline-flex; align-items: center">
         <div style="width: 80%">
+            <div style="padding-left: 25px">
+                <input data-bind="select2Query: {select2Config: physicalResourceSelectConfig}">
+            </div>
         </div>
         <div style="display: inline-flex; width: 20%; justify-content: center;">
-            <div>Total:</div><div style="padding-left: 10px;" data-bind="text: totalResults()"></div>
+            <div>Physical Things: </div><div style="padding-left: 10px;" data-bind="text: totalResults()"></div>
         </div>
     </div>
     <div class="physical-object-search-results">
         <!-- ko foreach: physicalResources -->
         <div style="padding: 10px" data-bind="text: JSON.stringify($data['_source'], null, '   ')"></div>
         <!-- /ko -->
+    </div>
+    <div class="sampling-activity-search-panel" style="
+        position: absolute; 
+        bottom: 0px; 
+        display: inline-flex; 
+        align-items: center;
+        justify-content: space-around;
+        border-top: 1px solid #ddd;
+        width: 100%">
+        <div style="width: 20%;">
+            paginator goes here
+        </div>
     </div>
 </div>
