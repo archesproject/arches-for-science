@@ -71,16 +71,6 @@ define([
             }
         };
 
-        var termFilterx = [{
-            "context":"",
-            "context_label":"Physical Thing - Name",
-            "id":1,
-            "text":"The Vexed Man",
-            "type":"term",
-            "value":"The Vexed Man",
-            "inverted":false
-        }];
-
         var resourceTypeFilter = [{
             "graphid":"9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
             "inverted":false
@@ -97,7 +87,7 @@ define([
             }
 
             $.ajax({
-                url: arches.urls.search_results,
+                url: arches.urls.physical_thing_search_results,
                 data: filters,
             }).done(function(data){
                 self.paginator(data['paging_filter']);
@@ -105,8 +95,8 @@ define([
                 self.physicalResources(data['results']['hits']['hits']);
             });
         };
-        this.updateSearchResults();
 
+        this.updateSearchResults();
         this.selectedTerm.subscribe(function(val){
             var termFilter = self.termOptions[val];
             self.updateSearchResults(termFilter);
