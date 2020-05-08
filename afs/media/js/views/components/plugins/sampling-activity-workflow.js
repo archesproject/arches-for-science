@@ -24,7 +24,71 @@ define([
                     icon: 'fa-search',
                     class: 'fa-search',
                     wastebin: {resourceid: null, description: 'an activity instance'}
-                }
+                },
+                {
+                    title: 'Sample Name',
+                    name: 'objectsamplename',
+                    description: 'Provide a name for the sample',
+                    component: 'views/components/workflows/new-tile-step',
+                    componentname: 'new-tile-step',
+                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                    nodegroupid: '0b926359-ca85-11e9-ac9c-a4d18cec433a',
+                    resourceid: null,
+                    tileid: null,
+                    parenttileid: null,
+                    required: true,
+                    icon: 'fa-search',
+                    class: 'fa-search',
+                    wastebin: {resourceid: null, description: 'an activity instance'}
+                },
+                {
+                    title: 'Sample Date',
+                    name: 'objectsampledate',
+                    description: 'The date that the sample was taken',
+                    component: 'views/components/workflows/new-tile-step',
+                    componentname: 'new-tile-step',
+                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                    nodegroupid: '0b925e3a-ca85-11e9-a308-a4d18cec433a',
+                    resourceid: null,
+                    tileid: null,
+                    parenttileid: null,
+                    required: true,
+                    icon: 'fa-search',
+                    class: 'fa-search',
+                    wastebin: {resourceid: null, description: 'an activity instance'}
+                },
+                {
+                    title: 'Sample Taker',
+                    name: 'objectsampletaker',
+                    description: 'Who took the sample?',
+                    component: 'views/components/workflows/new-tile-step',
+                    componentname: 'new-tile-step',
+                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                    nodegroupid: '0b92abdc-ca85-11e9-8a23-a4d18cec433a',
+                    resourceid: null,
+                    tileid: null,
+                    parenttileid: null,
+                    required: true,
+                    icon: 'fa-search',
+                    class: 'fa-search',
+                    wastebin: {resourceid: null, description: 'an activity instance'}
+                },
+                {
+                    title: 'Notes',
+                    name: 'objectsamplenotes',
+                    description: 'Select the physical resource',
+                    component: 'views/components/workflows/new-tile-step',
+                    componentname: 'new-tile-step',
+                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                    nodegroupid: null,
+                    resourceid: null,
+                    tileid: null,
+                    parenttileid: null,
+                    required: true,
+                    icon: 'fa-search',
+                    class: 'fa-search',
+                    wastebin: {resourceid: null, description: 'an activity instance'}
+                },
             ];
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');

@@ -22,6 +22,11 @@
     'ColladaLoader': {deps: ['register-three']}
 {% endblock shim %}
 
+
+{% block urls %}
+                physical_thing_search_results: "{% url 'physical-thing-search-results' %}",
+{% endblock urls %}
+
 {% block project_modules %}
 <script>
 define('register-three', ['three'], function (THREE) {

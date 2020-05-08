@@ -5,7 +5,7 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step'
 ], function(ko, $, arches, Workflow) {
-    return ko.components.register('project-workflow', {
+    return ko.components.register('research-activity-workflow', {
         viewModel: function(params) {
 
             var self = this;
@@ -83,12 +83,12 @@ define([
 
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('project-workflow');
+            self.getJSON('research-activity-workflow');
 
             self.activeStep.subscribe(this.updateState);
 
             self.ready(true);
         },
-        template: { require: 'text!templates/views/components/plugins/project-workflow.htm' }
+        template: { require: 'text!templates/views/components/plugins/research-activity-workflow.htm' }
     });
 });
