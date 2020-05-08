@@ -34,8 +34,7 @@ class FileToIIIF(BaseFunction):
             except Exception as e:
                 raise e
 
-    
-    def on_import(self,tile):
+    def on_import(self, tile):
         raise NotImplementedError
 
     def after_function_save(self, tile, request):
