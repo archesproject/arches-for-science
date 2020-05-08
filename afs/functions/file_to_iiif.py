@@ -9,19 +9,18 @@ from arches.app.models.tile import Tile
 from arches.app.datatypes.datatypes import DataTypeFactory
 
 
-
 details = {
-    'name': 'File to IIIF',
-    'type': 'node',
-    'description': 'copies uploaded files into a directory reserved for local Cantaloupe host (for IIIF hosting)',
-    'defaultconfig': {"selected_nodegroup":""},
-    'classname': 'FileToIIIF',
-    'component': 'views/components/functions/file-to-iiif',
-    'functionid':'210519e3-ee55-460a-ab6d-0b56e1b5ba3a'
+    "name": "File to IIIF",
+    "type": "node",
+    "description": "copies uploaded files into a directory reserved for local Cantaloupe host (for IIIF hosting)",
+    "defaultconfig": {"selected_nodegroup": ""},
+    "classname": "FileToIIIF",
+    "component": "views/components/functions/file-to-iiif",
+    "functionid": "210519e3-ee55-460a-ab6d-0b56e1b5ba3a",
 }
 
-class FileToIIIF(BaseFunction): 
 
+class FileToIIIF(BaseFunction):
     def save(self, tile, request):
 
         acceptable_types = ["jpg", "tiff", "tff", "png"]
@@ -34,22 +33,18 @@ class FileToIIIF(BaseFunction):
                     print("copying...")
                     shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url)))
                 else:
-                    print("filetype unacceptable: "+f.path.name)
+                    print("filetype unacceptable: " + f.path.name)
 
             except Exception as e:
                 raise e
-        
+
         return
 
-
-    
-    def on_import(self,tile):
+    def on_import(self, tile):
         raise NotImplementedError
 
-    
-    def after_function_save(self,tile,request):
+    def after_function_save(self, tile, request):
         raise NotImplementedError
-    
-    
+
     def get(self):
         raise NotImplementedError
