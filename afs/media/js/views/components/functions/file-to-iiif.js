@@ -7,7 +7,6 @@ function (ko, koMapping, ListView, FunctionViewModel, chosen) {
     return ko.components.register('views/components/functions/file-to-iiif', {
         viewModel: function(params) {
             FunctionViewModel.apply(this, arguments);
-            console.log("Running a sample function")
             var self = this;
             var nodegroups = {};
             this.cards = ko.observableArray();

@@ -1,12 +1,8 @@
-import uuid
-import json
 import os
 import shutil
 from afs.settings import CANTALOUPE_DIR, MEDIA_ROOT
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
-from arches.app.models.tile import Tile
-from arches.app.datatypes.datatypes import DataTypeFactory
 
 
 
@@ -40,7 +36,6 @@ class FileToIIIF(BaseFunction):
                 raise e
         
         return
-
 
     
     def on_import(self,tile):
