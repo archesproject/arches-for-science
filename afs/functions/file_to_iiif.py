@@ -28,12 +28,16 @@ class FileToIIIF(BaseFunction):
         desc = resource.displaydescription
 
         for f in files:
-            print(f.path.name)
-            try:
-                if any(ac == (f.path.name.split(".")[-1]) for ac in acceptable_types):
-                    print("copying...")
-                    shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url)))
-                else:
+            if any(ac == (f.path.name.split(".")[-1]) for ac in acceptable_types):
+                dest = os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url))
+                file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/"+ f.path.name.split("/")[-1] + "/info.json"
+                # reformat dest with cantaloupe ip address
+                logger.info("copying file to local dir")
+                shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), dest)
+                manifest = models.IIIFManifest.objects.create(label=name, description=desc, url=file_url)
+                manifest.save()
+
+            else:
                 logger.warn("filetype unacceptable: " + f.path.name)
 
     def on_import(self, tile):
