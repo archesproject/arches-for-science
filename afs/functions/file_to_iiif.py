@@ -19,7 +19,7 @@ details = {
 logger = logging.getLogger(__name__)
 
 class FileToIIIF(BaseFunction):
-    def save(self, tile, request):
+    def postSave(self, tile, request):
 
         acceptable_types = ["jpg", "jpeg", "tiff", "tif", "png"]
         files = list(models.File.objects.filter(tile=tile))
