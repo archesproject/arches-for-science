@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 from afs.settings import CANTALOUPE_DIR, MEDIA_ROOT
@@ -15,6 +16,7 @@ details = {
     "functionid": "210519e3-ee55-460a-ab6d-0b56e1b5ba3a",
 }
 
+logger = logging.getLogger(__name__)
 
 class FileToIIIF(BaseFunction):
     def save(self, tile, request):
@@ -29,10 +31,7 @@ class FileToIIIF(BaseFunction):
                     print("copying...")
                     shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url)))
                 else:
-                    print("filetype unacceptable: " + f.path.name)
-
-            except Exception as e:
-                raise e
+                logger.warn("filetype unacceptable: " + f.path.name)
 
     def on_import(self, tile):
         raise NotImplementedError
