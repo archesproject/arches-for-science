@@ -23,6 +23,9 @@ class FileToIIIF(BaseFunction):
 
         acceptable_types = ["jpg", "jpeg", "tiff", "tif", "png"]
         files = list(models.File.objects.filter(tile=tile))
+        resource = Resource.objects.get(resourceinstanceid=tile.resourceinstance_id)
+        name = resource.displayname
+        desc = resource.displaydescription
 
         for f in files:
             print(f.path.name)
