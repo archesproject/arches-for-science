@@ -116,6 +116,10 @@ class FileToIIIF(BaseFunction):
             else:
                 logger.warn("filetype unacceptable: " + f.path.name)
 
+    def fetch(self, url):
+        resp = requests.get(url)
+        return resp.json()
+
     def on_import(self, tile):
         raise NotImplementedError
 
