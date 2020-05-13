@@ -12,7 +12,7 @@ from arches.app.models.resource import Resource
 details = {
     "name": "File to IIIF",
     "type": "node",
-    "description": "copies uploaded files into a directory reserved for local Cantaloupe host (for IIIF hosting) and creates IIIF manifest json and db record",
+    "description": "copies uploaded files into a Cantaloupe host dir, creates IIIF manifest json and db record",
     "defaultconfig": {"selected_nodegroup": ""},
     "classname": "FileToIIIF",
     "component": "views/components/functions/file-to-iiif",
