@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 class FileToIIIF(BaseFunction):
     def postSave(self, tile, request):
 
-        acceptable_types = ["jpg", "jpeg", "tiff", "tif", "png"]
+        acceptable_types = ["jpg", "jpeg", "tiff", "tif", "png"] # 2nd validation in case card not configured to filter image filetypes
         files = list(models.File.objects.filter(tile=tile))
         resource = Resource.objects.get(resourceinstanceid=tile.resourceinstance_id)
         name = resource.displayname
