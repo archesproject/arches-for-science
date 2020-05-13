@@ -13,9 +13,9 @@ function($, _, ko, koMapping, ListView, FunctionViewModel, chosen) {
             var nodegroups = {};
             this.cards = ko.observableArray();
             this.selectedNodegroup = params.config.selected_nodegroup;
-            this.selectedNodegroup.subscribe(function(ng){
-                console.log('selected nodegroup id:', ng);
-            });
+            // this.selectedNodegroup.subscribe(function(ng){
+            //     console.log('selected nodegroup id:', ng);
+            // });
 
             this.graph.cards.forEach(function(card){
                 var found = !!_.find(this.graph.nodegroups, function(nodegroup){
@@ -27,7 +27,7 @@ function($, _, ko, koMapping, ListView, FunctionViewModel, chosen) {
                 }
             }, this);
 
-            window.setTimeout(function(){$("select[data-bind^=chosen]").trigger("chosen:updated")}, 300);
+            window.setTimeout(function(){$("select[data-bind^=chosen]").trigger("chosen:updated");}, 300);
         },
         template: {
             require: 'text!templates/views/components/functions/file-to-iiif.htm'
