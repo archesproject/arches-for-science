@@ -21,6 +21,7 @@ details = {
 
 logger = logging.getLogger(__name__)
 
+
 class FileToIIIF(BaseFunction):
     def postSave(self, tile, request):
 
