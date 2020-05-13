@@ -31,8 +31,10 @@ class FileToIIIF(BaseFunction):
         for f in files:
             if any(ac == (f.path.name.split(".")[-1]) for ac in acceptable_types):
                 dest = os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url))
-                file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/"+ f.path.name.split("/")[-1] + "/info.json"
-                # reformat dest with cantaloupe ip address
+                file_name = f.path.name.split("/")[-1]
+                file_name_less_ext = file_name[:(file_name.index(file_name.split(".")[-1])-1)] # end slice before the '.'
+                file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/"+ file_name
+                file_json = file_url + "/info.json"
                 logger.info("copying file to local dir")
                 shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), dest)
                 image_json = self.fetch(file_json)
