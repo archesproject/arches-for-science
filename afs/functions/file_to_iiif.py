@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class FileToIIIF(BaseFunction):
     def postSave(self, tile, request):
 
-        acceptable_types = ["jpg", "jpeg", "tiff", "tif", "png"] # 2nd validation in case card not configured to filter image filetypes
+        acceptable_types = ["jpg", "jpeg", "tiff", "tif", "png"]  # 2nd validation in case card not configured to filter image filetypes
         files = list(models.File.objects.filter(tile=tile))
         resource = Resource.objects.get(resourceinstanceid=tile.resourceinstance_id)
         name = resource.displayname
@@ -35,8 +35,8 @@ class FileToIIIF(BaseFunction):
             if any(ac == (f.path.name.split(".")[-1]) for ac in acceptable_types):
                 dest = os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url))
                 file_name = f.path.name.split("/")[-1]
-                file_name_less_ext = file_name[:(file_name.index(file_name.split(".")[-1])-1)] # end slice before the '.'
-                file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/"+ file_name
+                file_name_less_ext = file_name[: (file_name.index(file_name.split(".")[-1]) - 1)]  # end slice before the '.'
+                file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/" + file_name
                 file_json = file_url + "/info.json"
                 logger.info("copying file to local dir")
                 shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), dest)
@@ -47,12 +47,7 @@ class FileToIIIF(BaseFunction):
                     "description": desc,
                     "label": name,
                     "logo": "",
-                    "metadata": [
-                        {
-                            "label": "TBD",
-                            "value": ["Unknown"]
-                        }
-                    ],
+                    "metadata": [{"label": "TBD", "value": ["Unknown"]}],
                     "thumbnail": {
                         "@id": file_url + "/full/!300,300/0/default.jpg",
                         "@type": "dctypes:Image",
@@ -85,8 +80,8 @@ class FileToIIIF(BaseFunction):
                                                     "@context": "http://iiif.io/api/image/2/context.json",
                                                     "@id": file_url,
                                                     "profile": "http://iiif.io/api/image/2/level2.json",
-                                                }
-                                            }
+                                                },
+                                            },
                                         }
                                     ],
                                     "label": name,
@@ -99,19 +94,18 @@ class FileToIIIF(BaseFunction):
                                             "@context": "http://iiif.io/api/image/2/context.json",
                                             "@id": file_url,
                                             "profile": "http://iiif.io/api/image/2/level2.json",
-                                        }
+                                        },
                                     },
                                 }
                             ],
                             "label": "Object",
-                            "startCanvas": ""
+                            "startCanvas": "",
                         }
-                    ]
+                    ],
                 }
 
-
-                json_url = "http://localhost:8000" + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json") # hosted address
-                json_path =  os.path.join(APP_ROOT, "uploadedfiles", (file_name_less_ext + ".json")) # abs address
+                json_url = "http://localhost:8000" + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json")  # hosted address
+                json_path = os.path.join(APP_ROOT, "uploadedfiles", (file_name_less_ext + ".json"))  # abs address
                 with open(json_path, "w") as pres_json:
                     json.dump(pres_dict, pres_json)
 
