@@ -23,6 +23,9 @@ TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
 
 APP_PATHNAME = ""
 
+CANTALOUPE_DIR = os.path.join(APP_ROOT, "cantaloupe")
+CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
+
 LOCALE_PATHS.append(os.path.join(APP_ROOT, "locale"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
