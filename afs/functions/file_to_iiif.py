@@ -35,7 +35,82 @@ class FileToIIIF(BaseFunction):
                 # reformat dest with cantaloupe ip address
                 logger.info("copying file to local dir")
                 shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), dest)
-                manifest = models.IIIFManifest.objects.create(label=name, description=desc, url=file_url)
+                image_json = self.fetch(file_json)
+                pres_dict = {
+                    "@context": "http://iiif.io/api/presentation/2/context.json",
+                    "@type": "sc:Manifest",
+                    "description": desc,
+                    "label": name,
+                    "logo": "",
+                    "metadata": [
+                        {
+                            "label": "TBD",
+                            "value": ["Unknown"]
+                        }
+                    ],
+                    "thumbnail": {
+                        "@id": file_url + "/full/!300,300/0/default.jpg",
+                        "@type": "dctypes:Image",
+                        "format": "image/jpeg",
+                        "label": "Main VIew (.45v)",
+                    },
+                    "sequences": [
+                        {
+                            "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/sequence/TBD.json",
+                            "@type": "sc:Sequence",
+                            "canvases": [
+                                {
+                                    "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/canvas/TBD.json",
+                                    "@type": "sc:Canvas",
+                                    "height": image_json["height"],
+                                    "width": image_json["width"],
+                                    "images": [
+                                        {
+                                            "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/annotation/TBD.json",
+                                            "@type": "oa.Annotation",
+                                            "motivation": "unknown",
+                                            "on": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/canvas/TBD.json",
+                                            "resource": {
+                                                "@id": file_url + "/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "format": "image/jpeg",
+                                                "height": image_json["height"],
+                                                "width": image_json["width"],
+                                                "service": {
+                                                    "@context": "http://iiif.io/api/image/2/context.json",
+                                                    "@id": file_url,
+                                                    "profile": "http://iiif.io/api/image/2/level2.json",
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "label": name,
+                                    "license": "TBD",
+                                    "thumbnail": {
+                                        "@id": file_url + "/full/!300,300/0/default.jpg",
+                                        "@type": "dctypes:Image",
+                                        "format": "image/jpeg",
+                                        "service": {
+                                            "@context": "http://iiif.io/api/image/2/context.json",
+                                            "@id": file_url,
+                                            "profile": "http://iiif.io/api/image/2/level2.json",
+                                        }
+                                    },
+                                }
+                            ],
+                            "label": "Object",
+                            "startCanvas": ""
+                        }
+                    ]
+                }
+
+
+                json_url = "http://localhost:8000" + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json") # hosted address
+                json_path =  os.path.join(APP_ROOT, "uploadedfiles", (file_name_less_ext + ".json")) # abs address
+                with open(json_path, "w") as pres_json:
+                    json.dump(pres_dict, pres_json)
+
+                manifest = models.IIIFManifest.objects.create(label=name, description=desc, url=json_url)
                 manifest.save()
 
             else:
