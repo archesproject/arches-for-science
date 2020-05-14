@@ -10,16 +10,7 @@ define([
 
     function viewModel(params) {
         NewTileStep.apply(this, [params]);
-        // if (!params.resourceid()) {
-        //     params.resourceid(params.workflow.state.resourceid);
-        // }
-        // if (params.workflow.state.steps[params._index]) {
-        //     params.tileid(params.workflow.state.steps[params._index].tileid);
-        // }
-        params.tile.subscribe(function(val){
-            console.log('I got one')
-            console.log(val);
-        })
+
         var self = this;
         this.paginator = ko.observable();
         this.physicalResource = ko.observable();
@@ -33,7 +24,6 @@ define([
         this.startValue = null;
         var getStartData = this.tile.subscribe(function(tile){
             this.startValue = tile.data[params.nodeid()]();
-            console.log(this.startValue);
         });
 
         this.addItemToTile = function(val){
@@ -54,10 +44,6 @@ define([
 
         this.dirty = ko.pureComputed(function(){
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
-        });
-
-        this.dirty.subscribe(function(a){
-            console.log(a);
         });
 
         this.submit = function(){
