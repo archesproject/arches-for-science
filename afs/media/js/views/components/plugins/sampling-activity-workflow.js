@@ -10,22 +10,6 @@ define([
             var self = this;
             params.steps = [
                 {
-                    title: 'Sampled Physical Resource',
-                    name: 'objectsearchstep',
-                    description: 'Select the physical resource',
-                    component: 'views/components/workflows/object-search-step',
-                    componentname: 'object-search-step',
-                    graphid: null,
-                    nodegroupid: null,
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search',
-                    wastebin: {resourceid: null, description: 'an activity instance'}
-                },
-                {
                     title: 'Sample Name',
                     name: 'objectsamplename',
                     description: 'Provide a name for the sample',

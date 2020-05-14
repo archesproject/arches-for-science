@@ -10,7 +10,6 @@ define([
     'viewmodels/provisional-tile',
     'viewmodels/alert'
 ], function(_, $, arches, ko, koMapping, FinalStep, GraphModel, CardViewModel, ProvisionalTileViewModel, AlertViewModel) {
-
     function viewModel(params) {
         var self = this;
         FinalStep.apply(this, [params]);
@@ -128,8 +127,8 @@ define([
         params.getStateProperties = function(){
             return {
                 resourceid: ko.unwrap(params.resourceid),
-                tile: !!(params.tile) ? koMapping.toJS(params.tile().data) : undefined,
-                tileid: !!(params.tile) ? ko.unwrap(params.tile().tileid): undefined
+                tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
+                tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined
             };
         };
     }

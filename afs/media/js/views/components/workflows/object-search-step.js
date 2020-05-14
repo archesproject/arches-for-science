@@ -4,16 +4,13 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
+    'views/components/workflows/new-tile-step',
     'bindings/select2-query',
-], function(_, $, arches, ko, koMapping) {
+], function(_, $, arches, ko, koMapping, NewTileStep) {
 
     function viewModel(params) {
-        if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.resourceid);
-        }
-        if (params.workflow.state.steps[params._index]) {
-            params.tileid(params.workflow.state.steps[params._index].tileid);
-        }
+        NewTileStep.apply(this, [params]);
+
         var self = this;
         this.paginator = ko.observable();
         this.physicalResource = ko.observable();
@@ -23,6 +20,46 @@ define([
         this.physicalResourceSearchValue = ko.observable();
         var limit = 10;
         this.termOptions = [];
+        this.value = ko.observableArray([]);
+        this.startValue = null;
+        this.tile.subscribe(function(tile){
+            this.startValue = tile.data[params.nodeid()]();
+        });
+
+        this.addItemToTile = function(val){
+            var resourceid = val['_source']['resourceinstanceid'];
+            var tilevalue = self.tile().data[params.nodeid()];
+            var index = self.value().indexOf(resourceid);
+            if (index > -1) {
+                self.value.remove(resourceid);
+            } else {
+                self.value.push(resourceid);
+            }
+            if (self.value().length === 0 && self.startValue === null) {
+                tilevalue(null);
+            } else {
+                tilevalue(self.value());
+            }
+        };
+
+        this.dirty = ko.pureComputed(function(){
+            return ko.unwrap(self.tile) ? self.tile().dirty() : false;
+        });
+
+        this.submit = function(){
+            $.ajax({
+                url: arches.urls.api_tiles,
+                type: 'POST',
+                data: {
+                    'nodeid': params.nodeid(),
+                    'data': JSON.stringify(self.value()),
+                    'resourceinstanceid': self.tile().resourceinstance_id
+                }
+            }).done(function(data){
+                //pass
+            });
+        };
+
         this.physicalResourceSelectConfig = {
             value: self.selectedTerm,
             placeholder: 'find a physical thing: enter an artist, object name, artwork title or object number',

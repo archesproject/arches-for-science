@@ -30,6 +30,7 @@ define([
                     title: 'Activity Statement',
                     name: 'setactivitystatement',
                     description: 'Set the Activity Statement',
+                    component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '0b92a414-ca85-11e9-b725-a4d18cec433a',
@@ -66,6 +67,19 @@ define([
                     parenttileid: null,
                     required: false,
                     icon: 'fa-list-alt'
+                },
+                {
+                    title: 'Physical Things',
+                    name: 'createphysicalthingsset',
+                    description: 'Create a set of physical things',
+                    componentname: 'new-tile-step',
+                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                    nodegroupid: 'cc5d6df3-d477-11e9-9f59-a4d18cec433a',
+                    resourceid: null,
+                    tileid: null,
+                    parenttileid: null,
+                    required: false,
+                    icon: 'fa-archive'
                 },
                 {
                     title: 'Add Project Complete',
