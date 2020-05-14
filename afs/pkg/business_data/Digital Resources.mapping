@@ -1,6 +1,6 @@
 {
     "resource_model_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
-    "resource_model_name": "Digital Resource",
+    "resource_model_name": "Digital Resources",
     "nodes": [
         {
             "arches_nodeid": "a90b3a99-ca7a-11e9-8bc5-a4d18cec433a",
@@ -13,6 +13,41 @@
             "arches_nodeid": "a4af8528-ca7f-11e9-8f7b-a4d18cec433a",
             "arches_node_name": "conforms to",
             "file_field_name": "Conforms To",
+            "data_type": "string",
+            "export": false
+        },
+        {
+            "arches_nodeid": "5e1791d4-79a5-11ea-8ae2-acde48001122",
+            "arches_node_name": "Conforms To",
+            "file_field_name": "",
+            "data_type": "string",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ca227726-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "content",
+            "file_field_name": "",
+            "data_type": "string",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ba463de2-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "content",
+            "file_field_name": "",
+            "data_type": "string",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ca22760e-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "content",
+            "file_field_name": "",
+            "data_type": "string",
+            "export": false
+        },
+        {
+            "arches_nodeid": "17fc5e14-79a5-11ea-8ae2-acde48001122",
+            "arches_node_name": "content",
+            "file_field_name": "",
             "data_type": "string",
             "export": false
         },
@@ -520,8 +555,8 @@
             "export": false
         },
         {
-            "arches_nodeid": "b843acae-ca7f-11e9-9bac-a4d18cec433a",
-            "arches_node_name": "format",
+            "arches_nodeid": "21d0ba4e-78eb-11ea-a33b-acde48001122",
+            "arches_node_name": "Format-of-File",
             "file_field_name": "format",
             "data_type": "string",
             "export": false
@@ -560,6 +595,30 @@
             "arches_node_name": "_label",
             "file_field_name": "_label",
             "data_type": "string",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ca2273e8-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "language",
+            "file_field_name": "",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ca227582-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "language",
+            "file_field_name": "",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
+            "export": false
+        },
+        {
+            "arches_nodeid": "17fc5cfc-79a5-11ea-8ae2-acde48001122",
+            "arches_node_name": "language",
+            "file_field_name": "",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
             "export": false
         },
         {
@@ -860,6 +919,46 @@
             "arches_nodeid": "09c1778a-ca7b-11e9-860b-a4d18cec433a",
             "arches_node_name": "type",
             "file_field_name": "Type",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
+            "export": false
+        },
+        {
+            "arches_nodeid": "17fc5b9e-79a5-11ea-8ae2-acde48001122",
+            "arches_node_name": "type",
+            "file_field_name": "",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ca227474-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "type",
+            "file_field_name": "",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ca2272c6-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "type",
+            "file_field_name": "",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
+            "export": false
+        },
+        {
+            "arches_nodeid": "ba463b6c-78ed-11ea-a33b-acde48001122",
+            "arches_node_name": "type",
+            "file_field_name": "",
+            "data_type": "concept-list",
+            "concept_export_value": "label",
+            "export": false
+        },
+        {
+            "arches_nodeid": "29d5ecb8-79a5-11ea-8ae2-acde48001122",
+            "arches_node_name": "Type",
+            "file_field_name": "",
             "data_type": "concept-list",
             "concept_export_value": "label",
             "export": false
