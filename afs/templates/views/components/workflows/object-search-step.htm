@@ -9,9 +9,14 @@
             <div>Physical Things: </div><div style="padding-left: 10px;" data-bind="text: totalResults()"></div>
         </div>
     </div>
-    <div class="physical-object-search-results">
+    <div class="physical-object-search-results" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
         <!-- ko foreach: physicalResources -->
-        <div style="padding: 10px" data-bind="text: JSON.stringify($data['_source'], null, '   ')"></div>
+        <div style="padding: 10px" data-bind="click: $parent.addItemToTile, text: JSON.stringify(
+            {
+                name: $data['_source']['displayname'],
+                resourceid: $data['_source']['resourceinstanceid'],
+                selected: $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0
+            }, null, '   '), css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0}"></div>
         <!-- /ko -->
     </div>
     <div class="sampling-activity-search-panel" style="
@@ -25,5 +30,6 @@
         <div style="width: 20%;">
             paginator goes here
         </div>
+        <button data-bind="visible: dirty, click: function(){submit()}">Save and Continue</button>
     </div>
 </div>
