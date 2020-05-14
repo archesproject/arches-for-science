@@ -22,7 +22,7 @@ define([
         this.termOptions = [];
         this.value = ko.observableArray([]);
         this.startValue = null;
-        var getStartData = this.tile.subscribe(function(tile){
+        this.tile.subscribe(function(tile){
             this.startValue = tile.data[params.nodeid()]();
         });
 
@@ -56,9 +56,9 @@ define([
                     'resourceinstanceid': self.tile().resourceinstance_id
                 }
             }).done(function(data){
-                console.log(data);
+                //pass
             });
-        }
+        };
 
         this.physicalResourceSelectConfig = {
             value: self.selectedTerm,
