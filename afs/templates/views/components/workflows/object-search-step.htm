@@ -2,7 +2,7 @@
     <div class="sampling-activity-search-panel" style="display: inline-flex; align-items: center">
         <div style="width: 80%">
             <div style="padding-left: 25px">
-                <input data-bind="select2Query: {select2Config: physicalResourceSelectConfig}">
+                <input data-bind="select2Query: {select2Config: targetResourceSelectConfig}">
             </div>
         </div>
         <div style="display: inline-flex; width: 20%; justify-content: center;">
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="physical-object-search-results" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <!-- ko foreach: physicalResources -->
+        <!-- ko foreach: targetResources -->
         <div style="padding: 10px" data-bind="click: $parent.updateTileData, text: JSON.stringify(
             {
                 name: $data['_source']['displayname'],
