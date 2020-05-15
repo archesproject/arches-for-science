@@ -19,11 +19,11 @@ define([
 
         var self = this;
         this.paginator = ko.observable();
-        this.physicalResource = ko.observable();
+        this.targetResource = ko.observable();
         this.selectedTerm = ko.observable();
         this.totalResults = ko.observable();
-        this.physicalResources=ko.observableArray([]);
-        this.physicalResourceSearchValue = ko.observable();
+        this.targetResources=ko.observableArray([]);
+        this.targetResourceSearchValue = ko.observable();
         var limit = 10;
         this.termOptions = [];
         this.value = ko.observableArray([]);
@@ -75,7 +75,7 @@ define([
             });
         };
 
-        this.physicalResourceSelectConfig = {
+        this.targetResourceSelectConfig = {
             value: self.selectedTerm,
             placeholder: 'find a physical thing: enter an artist, object name, artwork title or object number',
             clickBubble: true,
@@ -124,15 +124,9 @@ define([
             }
         };
 
-        var resourceTypeFilter = [{
-            "graphid":"9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
-            "inverted":false
-        }];
-
         this.updateSearchResults = function(termFilter){
             var filters ={
-                "paging-filter": 1,
-                "resource-type-filter": JSON.stringify(resourceTypeFilter),
+                "paging-filter": 1
             };
             if (termFilter) {
                 termFilter['inverted'] = false;
@@ -145,7 +139,7 @@ define([
             }).done(function(data){
                 self.paginator(data['paging_filter']);
                 self.totalResults(data['total_results']);
-                self.physicalResources(data['results']['hits']['hits']);
+                self.targetResources(data['results']['hits']['hits']);
             });
         };
 
