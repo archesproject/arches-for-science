@@ -9,6 +9,12 @@ define([
 ], function(_, $, arches, ko, koMapping, NewTileStep) {
 
     function viewModel(params) {
+        if (!params.resourceid()) {
+            params.resourceid(params.workflow.state.resourceid);
+        }
+        if (params.workflow.state.steps[params._index]) {
+            params.tileid(params.workflow.state.steps[params._index].tileid);
+        }
         NewTileStep.apply(this, [params]);
 
         var self = this;
@@ -24,9 +30,14 @@ define([
         this.startValue = null;
         this.tile.subscribe(function(tile){
             this.startValue = tile.data[params.nodeid()]();
+            if (this.startValue) {
+                this.startValue.forEach(function(item){
+                    self.value.push(item);
+                });
+            }
         });
 
-        this.addItemToTile = function(val){
+        this.updateTileData = function(val){
             var resourceid = val['_source']['resourceinstanceid'];
             var tilevalue = self.tile().data[params.nodeid()];
             var index = self.value().indexOf(resourceid);
@@ -53,11 +64,14 @@ define([
                 data: {
                     'nodeid': params.nodeid(),
                     'data': JSON.stringify(self.value()), 
-                    'resourceinstanceid': self.tile().resourceinstance_id
+                    'resourceinstanceid': self.tile().resourceinstance_id,
+                    'tileid': self.tile().tileid
                 }
             }).done(function(data){
-                // eslint-disable-next-line no-console
-                console.log(data);
+                if (data.tileid && params.tile().tileid === "") {
+                    params.tile().tileid = data.tileid;
+                }
+                self.onSaveSuccess([data]);
             });
         };
 
@@ -136,12 +150,12 @@ define([
         };
 
         this.updateSearchResults();
+
         this.selectedTerm.subscribe(function(val){
             var termFilter = self.termOptions[val];
             self.updateSearchResults(termFilter);
         }); 
 
-        this.workflowStepClass = ko.unwrap(params.class());
         params.getStateProperties = function(){
             return {
                 resourceid: ko.unwrap(params.resourceid),

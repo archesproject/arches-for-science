@@ -11,7 +11,7 @@
     </div>
     <div class="physical-object-search-results" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
         <!-- ko foreach: physicalResources -->
-        <div style="padding: 10px" data-bind="click: $parent.addItemToTile, text: JSON.stringify(
+        <div style="padding: 10px" data-bind="click: $parent.updateTileData, text: JSON.stringify(
             {
                 name: $data['_source']['displayname'],
                 resourceid: $data['_source']['resourceinstanceid'],
