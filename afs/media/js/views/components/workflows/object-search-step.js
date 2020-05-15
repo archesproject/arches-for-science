@@ -52,11 +52,12 @@ define([
                 type: 'POST',
                 data: {
                     'nodeid': params.nodeid(),
-                    'data': JSON.stringify(self.value()),
+                    'data': JSON.stringify(self.value()), 
                     'resourceinstanceid': self.tile().resourceinstance_id
                 }
             }).done(function(data){
-                //pass
+                // eslint-disable-next-line no-console
+                console.log(data);
             });
         };
 
