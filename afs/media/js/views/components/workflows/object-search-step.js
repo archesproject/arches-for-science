@@ -26,19 +26,49 @@ define([
         this.targetResourceSearchValue = ko.observable();
         var limit = 10;
         this.termOptions = [];
-        this.value = ko.observableArray([]);
+        this.value = ko.observableArray([]).extend({ rateLimit: 100 });
+        this.selectedResources = ko.observableArray([]);
         this.startValue = null;
+
+        this.value.subscribe(function(a){
+            a.forEach(function(action){
+                if (action.status === 'added') {
+                    $.ajax({
+                        url: arches.urls.api_resources(action.value),
+                        data: {format:'json'}
+                    }).done(function(data){
+                        self.selectedResources.push(data);
+                    });
+                } else if (action.status === 'deleted') {
+                    self.selectedResources().forEach(function(val){
+                        if (val.resourceinstanceid === action.value) {
+                            self.selectedResources.remove(val);
+                        }
+                    });
+                }
+            });
+        }, null, "arrayChange");
+
         this.tile.subscribe(function(tile){
-            this.startValue = tile.data[params.nodeid()]();
-            if (this.startValue) {
-                this.startValue.forEach(function(item){
+            self.startValue = tile.data[params.nodeid()]();
+            if (self.startValue) {
+                self.startValue.forEach(function(item){
                     self.value.push(item);
                 });
             }
         });
 
-        this.updateTileData = function(val){
-            var resourceid = val['_source']['resourceinstanceid'];
+        this.resetTile = function(){
+            self.tile().data[params.nodeid()](self.startValue);
+            self.value.removeAll();
+            if (self.startValue) {
+                self.startValue.forEach(function(item){
+                    self.value.push(item);
+                });
+            }
+        };
+
+        this.updateTileData = function(resourceid) {
             var tilevalue = self.tile().data[params.nodeid()];
             var index = self.value().indexOf(resourceid);
             if (index > -1) {
@@ -53,7 +83,8 @@ define([
             }
         };
 
-        this.dirty = ko.pureComputed(function(){
+        this.dirty = ko.pureComputed(function(val){
+            console.log(val);
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
         });
 

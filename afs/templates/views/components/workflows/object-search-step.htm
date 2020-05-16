@@ -9,15 +9,33 @@
             <div>Physical Things: </div><div style="padding-left: 10px;" data-bind="text: totalResults()"></div>
         </div>
     </div>
-    <div class="physical-object-search-results" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <!-- ko foreach: targetResources -->
-        <div style="padding: 10px" data-bind="click: $parent.updateTileData, text: JSON.stringify(
-            {
-                name: $data['_source']['displayname'],
-                resourceid: $data['_source']['resourceinstanceid'],
-                selected: $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0
-            }, null, '   '), css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0}"></div>
-        <!-- /ko -->
+    <div class="physical-object-search-results" style="height: 100%;">
+        <div style="display: inline-flex; justify-content: stretch;">
+            <div style="display:flex; flex-direction: column;">
+                <!-- ko foreach: targetResources -->
+                <div style="padding: 10px;" data-bind="click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}, text: JSON.stringify(
+                    {
+                        name: $data['_source']['displayname'],
+                        resourceid: $data['_source']['resourceinstanceid'],
+                        selected: $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0
+                    }, null, '   '), css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0}">
+                </div>
+                <!-- /ko -->
+            </div>
+            <div style="display: flex; flex-direction: column; min-width: 300px">
+                <!-- ko foreach: selectedResources -->
+                <div style="padding: 10px; height: 75; display: inline-flex; justify-content: space-evenly; background-color: #fdfdfd;">
+                    <div style="display: flex; flex-direction: column;">
+                        <div data-bind="text: $data.displayname"></div>
+                        <div data-bind="text: $data.displaydescription"></div>
+                    </div>
+                    <div>
+                        <i data-bind="click: function(){$parent.updateTileData($data.resourceinstanceid)}" class="fa fa-close"></i>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
     </div>
     <div class="sampling-activity-search-panel" style="
         position: absolute; 
@@ -30,6 +48,7 @@
         <div style="width: 20%;">
             paginator goes here
         </div>
-        <button data-bind="visible: dirty, click: function(){submit()}">Save and Continue</button>
+        <button data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
+        <button data-bind="visible: dirty, click: function(){submit()}">Save</button>
     </div>
 </div>
