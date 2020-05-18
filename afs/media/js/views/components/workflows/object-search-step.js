@@ -83,8 +83,7 @@ define([
             }
         };
 
-        this.dirty = ko.pureComputed(function(val){
-            console.log(val);
+        this.dirty = ko.pureComputed(function(){
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
         });
 
