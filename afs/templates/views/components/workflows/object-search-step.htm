@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="physical-object-search-results" style="height: 100%;">
-        <div style="display: inline-flex; justify-content: stretch;">
-            <div style="display:flex; flex-direction: column;">
+        <div style="display: inline-flex; justify-content: space-between; width: 100%; height: 100%">    
+            <div style="display:flex; flex-direction: column; width: 100%;">
                 <!-- ko foreach: targetResources -->
                 <div style="padding: 10px;" data-bind="click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}, text: JSON.stringify(
                     {
@@ -22,9 +22,16 @@
                 </div>
                 <!-- /ko -->
             </div>
-            <div style="display: flex; flex-direction: column; min-width: 300px">
+            <div style="
+                display: flex; 
+                flex-direction: 
+                column; width: 350px;
+                height: 100%;
+                background: #f3f3f3;
+                border-left: 1px solid #ccc;
+            ">
                 <!-- ko foreach: selectedResources -->
-                <div style="padding: 10px; height: 75; display: inline-flex; justify-content: space-evenly; background-color: #fdfdfd;">
+                <div style="padding: 10px; height: 75; display: inline-flex; justify-content: space-between; background-color: #fdfdfd; border-bottom: solid 1px #ccc">
                     <div style="display: flex; flex-direction: column;">
                         <div data-bind="text: $data.displayname"></div>
                         <div data-bind="text: $data.displaydescription"></div>
