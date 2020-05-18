@@ -38,8 +38,8 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search',
+                    icon: 'fa-calendar',
+                    class: 'fa-calendar',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
                 {
@@ -54,7 +54,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-search',
+                    icon: 'fa-user',
                     class: 'fa-search',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
@@ -65,15 +65,27 @@ define([
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: null,
+                    nodegroupid: '0b92a414-ca85-11e9-b725-a4d18cec433a',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-search',
+                    icon: 'fa-pencil',
                     class: 'fa-search',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
+                {
+                    title: 'Add Project Complete',
+                    description: 'Choose an option below',
+                    component: 'views/components/workflows/afs-final-step',
+                    componentname: 'afs-final-step',
+                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                    nodegroupid: '',
+                    icon: 'fa-check',
+                    resourceid: null,
+                    tileid: null,
+                    parenttileid: null
+                }
             ];
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
