@@ -22,25 +22,39 @@
                 </div>
                 <!-- /ko -->
             </div>
-            <div style="
-                display: flex; 
-                flex-direction: 
-                column; width: 350px;
-                height: 100%;
-                background: #f3f3f3;
-                border-left: 1px solid #ccc;
-            ">
-                <!-- ko foreach: selectedResources -->
-                <div style="padding: 10px; height: 75; display: inline-flex; justify-content: space-between; background-color: #fdfdfd; border-bottom: solid 1px #ccc">
-                    <div style="display: flex; flex-direction: column;">
-                        <div data-bind="text: $data.displayname"></div>
-                        <div data-bind="text: $data.displaydescription"></div>
-                    </div>
-                    <div>
-                        <i data-bind="click: function(){$parent.updateTileData($data.resourceinstanceid)}" class="fa fa-close"></i>
-                    </div>
+
+            <div class="wf-multi-tile-step-list" style="padding: 0px;">
+                <div style="
+                padding: 10px;
+                display: inline-flex;
+                justify-content: space-between;
+                background-color: #f8f8f8;
+                solid 1px #ddd;">
+                <h4>In this set: </h4>
+                <div style="width: 100px; display: flex; justify-content: space-between;">
+                    <button class="btn btn-sm btn-warning" data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
+                    <button class="btn btn-sm btn-mint" data-bind="visible: dirty, click: function(){submit()}">Save</button>
+                    <button class="btn btn-sm btn-mint" data-bind="visible: !dirty(), click: function(){console.log('continue')}">Continue</button>
                 </div>
+                </div>
+                <div style="padding: 24px 24px 0px 24px;">
+                <!-- ko foreach: selectedResources -->
+                <div class="wf-multi-tile-step-card" >
+                    <div class="wf-multi-tile-card-info">
+                        <!-- <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span></div> -->
+                        <div class="wf-multi-tile-card-info-details">
+                        <dt data-bind="text: $data.displayname"></dt>
+                        <dd>
+                            <a target="_blank" href="" data-bind="text: $data.displaydescription"></a>
+                        </dd>
+                        </div>
+                    </div>
+                    <div class="wf-multi-tile-step-card-controls">
+                        <span><i class="fa fa-times-circle"></i></span><span class="" data-bind="click: function(){$parent.updateTileData($data.resourceinstanceid)}">Remove</span>
+                    </div>
+                 </div>
                 <!-- /ko -->
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +69,5 @@
         <div style="width: 20%;">
             paginator goes here
         </div>
-        <button data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
-        <button data-bind="visible: dirty, click: function(){submit()}">Save</button>
     </div>
 </div>
