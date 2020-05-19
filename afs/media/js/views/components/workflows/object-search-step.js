@@ -172,6 +172,7 @@ define([
                 filters["term-filter"] = JSON.stringify([termFilter]);
             }
             
+            params.loading(true);
             $.ajax({
                 url: arches.urls.physical_thing_search_results,
                 data: filters,
@@ -212,11 +213,13 @@ define([
                     return source;
                 });
                 self.targetResources(resources);
+                params.loading(false);
             });
         };
         
         var graph;
         this.updateSearchResults = function(termFilter) {
+            params.loading(true);
             if (graph) {
                 getResultData(termFilter);
             } else {
