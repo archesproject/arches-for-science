@@ -1,0 +1,19 @@
+<div style="display: flex; flex-direction: column;">
+    <div>
+        <h3>heres the list</h3>
+    </div>
+    <div>
+        <!-- ko foreach: items -->
+        <div style="margin-right: 26px; padding-left:16px; padding-bottom:12px; border-bottom: 1px #bbb solid; min-height: 130px;">
+            <h4 data-bind="text: $data.name" style="color: #647c95;"></h4>
+            <p data-bind="text: $data.desc" style="color: #7a8ea4;"></p>
+            <p style="float: right;">Object ID</p>
+            <!-- ko if: $data.iiif.length > 0 -->
+                <!-- ko foreach: { data: $data.iiif, as: "annotation" } -->
+                <img data-bind="click: function(){$parents[1].selectIIIFTile($parent.$data, annotation);}, attr: {src: annotation.thumbnail}" />
+                <!-- /ko -->
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
