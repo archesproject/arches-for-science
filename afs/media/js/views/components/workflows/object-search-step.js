@@ -22,6 +22,7 @@ define([
         NewTileStep.apply(this, [params]);
 
         var self = this;
+        var graph;
         this.paginator = ko.observable();
         this.targetResource = ko.observable();
         this.selectedTerm = ko.observable();
@@ -217,7 +218,6 @@ define([
             });
         };
         
-        var graph;
         this.updateSearchResults = function(termFilter) {
             params.loading(true);
             if (graph) {
