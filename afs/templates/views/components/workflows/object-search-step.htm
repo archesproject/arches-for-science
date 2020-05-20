@@ -24,20 +24,26 @@
             </div>
 
             <div class="wf-multi-tile-step-list" style="padding: 0px;">
+                <!-- ko if: selectedResources().length > 0 || dirty() -->
                 <div style="
                 padding: 10px;
                 display: inline-flex;
-                justify-content: space-between;
+                justify-content: flex-start;
                 background-color: #f8f8f8;
-                solid 1px #ddd;">
-                <h4>In this set: </h4>
-                <div style="width: 100px; display: flex; justify-content: space-between;">
-                    <button class="btn btn-sm btn-warning" data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
-                    <button class="btn btn-sm btn-mint" data-bind="visible: dirty, click: function(){submit()}">Save</button>
-                    <button class="btn btn-sm btn-mint" data-bind="visible: !dirty(), click: function(){console.log('continue')}">Continue</button>
+                border-bottom: solid 1px #ddd;">
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-md btn-mint" data-bind="visible: dirty, click: function(){submit()}, text: complete() === true ? 'Save' : 'Save and Continue'"></button>
+                        <button class="btn btn-md btn-mint" data-bind="visible: !dirty() && complete() === true, click: function(){next()}">Continue</button>
+                        <button class="btn btn-md btn-warning" style="margin-left: 8px" data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
+                    </div>                
                 </div>
-                </div>
+                <!--/ko -->
                 <div style="padding: 24px 24px 0px 24px;">
+                <!-- ko if: selectedResources().length === 0 && !dirty() -->
+                <div class="wf-multi-tile-step-list-empty">
+                    <p>You have not added any Physical Things</p>
+                </div>
+                <!--/ko -->
                 <!-- ko foreach: selectedResources -->
                 <div class="wf-multi-tile-step-card" >
                     <div class="wf-multi-tile-card-info">
