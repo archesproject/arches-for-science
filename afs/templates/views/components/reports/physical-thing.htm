@@ -1,5 +1,6 @@
 {% extends "views/report-templates/tabbed.htm" %} {% load i18n %} {% block summary %}
-<div class="relative report-title-bar">
+
+<div class="relative report-title-bar" data-bind="if: showTitleBar">
 
     <!-- Title Block -->
     <div class="report-toolbar-preview ep-form-toolbar">
@@ -11,26 +12,27 @@
         </div>
     </div>
 </div>
-<div class="rp-report-container-preview">
-    <div class="rp-report-section relative rp-report-section-root">
-        <div class="rp-report-section-title">
-            <!-- ko if: report.cards.length > 0 -->
-            <!--ko let: { card: report.cards[0] }-->
-            <div class="rp-card-section">
-                <!-- ko component: {
-                        name: card.model.cardComponentLookup[card.model.component_id()].componentname,
-                        params: {
-                        state: 'report',
-                        preview: report.preview,
-                        card: card,
-                        pageVm: $root
-                    }
-                    } -->
-                <!-- /ko -->
-            </div>
-            <!--/ko-->
-            <!-- /ko -->
-        </div>
+
+<div style="padding: 30px;">
+    <div style="font-size: 16px; font-weight: 600; color: rgb(13, 59, 99);">
+        <span data-bind="text: report.get('displayname') "></span>
+        <a href="javascript(void);" style="float: right; text-decoration: underline;" data-bind="text: gallerySystemsTMSid"></a>
+    </div>
+    <div>
+        <span>
+            <span>{% trans "Artist:" %}</span>
+        <span style="color:rgb(6, 119, 218)" data-bind="text: 'temp'"></span>
+        </span>
+        <span style="float: right; font-size: 11px;">{% trans "Gallery Systems TMS id" %}</span>
+    </div>
+
+    <div style="color: gray;padding-top: 10px;padding-bottom: 10px;" data-bind="html: description"></div>
+    <div>Placeholder for manifest canvases</div>
+
+    <div style="font-size: 16px; font-weight: 600; color: rgb(13, 59, 99);padding-top: 10px;">{% trans "Included in the following Activites" %}</div>
+    <div data-bind="foreach: activities">
+        <div style="color:rgb(6, 119, 218)" data-bind="text: name"></div>
     </div>
 </div>
+
 {% endblock summary %}
