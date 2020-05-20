@@ -75,9 +75,9 @@ define([
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
                 {
-                    title: 'TTEST',
-                    name: 'test',
-                    description: 'test',
+                    title: 'Select Physical Thing',
+                    name: 'selectphysicalthing',
+                    description: 'Select a physical thing from the set to annotate',
                     component: 'views/components/workflows/physical-thing-list',
                     componentname: 'physical-thing-list',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
