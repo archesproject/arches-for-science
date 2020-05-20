@@ -1,5 +1,5 @@
 <div class="sampling-activity">
-    <div class="sampling-activity-search-panel" style="display: inline-flex; align-items: center">
+    <div class="sampling-activity-search-panel" style="display: inline-flex; align-items: center; z-index: 10;">
         <div style="width: 80%">
             <div style="padding-left: 25px">
                 <input data-bind="select2Query: {select2Config: targetResourceSelectConfig}">
@@ -11,7 +11,7 @@
     </div>
     <div class="physical-object-search-results" style="height: 100%;">
         <div style="display: inline-flex; justify-content: space-between; width: 100%; height: 100%">    
-            <div style="display:flex; flex-direction: column; width: 100%;">
+            <div style="display:flex; flex-direction: column; width: 100%; overflow-y: auto;">
                 <!-- ko foreach: targetResources -->
                 <div class='resource-report' data-bind="component: {
                     name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
