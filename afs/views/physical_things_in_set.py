@@ -8,7 +8,7 @@ class PhysicalThingSetView(View):
     def get(self, request):
         # via an id for a set, returns list of phys things and stuff necessary
         set_resourceid = (
-            None if request.GET.get("resourceid") == "" or request.GET.get("resourceid") == None else (request.GET.get("resourceid"))
+            None if request.GET.get("resourceid") == "" or request.GET.get("resourceid") is None else (request.GET.get("resourceid"))
         )
         # set_resourceid = 'cc221153-08a1-49ba-bc07-35fc3b8d783e'
         print(set_resourceid)
