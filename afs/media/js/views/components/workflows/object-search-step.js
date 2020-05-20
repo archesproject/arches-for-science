@@ -20,15 +20,16 @@ define([
             params.tileid(params.workflow.state.steps[params._index].tileid);
         }
         NewTileStep.apply(this, [params]);
-
+        var limit = 10;
         var self = this;
+        var graph;
+        this.next = params.workflow.next;
         this.paginator = ko.observable();
         this.targetResource = ko.observable();
         this.selectedTerm = ko.observable();
         this.totalResults = ko.observable();
         this.targetResources = ko.observableArray([]);
         this.targetResourceSearchValue = ko.observable();
-        var limit = 10;
         this.termOptions = [];
         this.value = ko.observableArray([]).extend({
             rateLimit: 100
@@ -110,6 +111,8 @@ define([
                     params.tile().tileid = data.tileid;
                 }
                 self.onSaveSuccess([data]);
+                self.startValue = data.data[params.nodeid()];
+                self.tile()._tileData(koMapping.toJSON(data.data));
             });
         };
 
@@ -217,7 +220,6 @@ define([
             });
         };
         
-        var graph;
         this.updateSearchResults = function(termFilter) {
             params.loading(true);
             if (graph) {
