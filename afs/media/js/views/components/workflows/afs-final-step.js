@@ -124,7 +124,7 @@ define([
             }
         });
 
-        params.getStateProperties = function(){
+        params.defineStateProperties = function(){
             return {
                 resourceid: ko.unwrap(params.resourceid),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
