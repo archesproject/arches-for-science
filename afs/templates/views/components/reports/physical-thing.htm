@@ -31,7 +31,7 @@
 
     <div style="font-size: 16px; font-weight: 600; color: rgb(13, 59, 99);padding-top: 10px;">{% trans "Included in the following Activites" %}</div>
     <div data-bind="foreach: activities">
-        <div style="color:rgb(6, 119, 218)" data-bind="text: name"></div>
+        <a target="_blank" style="color:rgb(6, 119, 218)" data-bind="text: name, attr: { href: link }"></a>
     </div>
 </div>
 

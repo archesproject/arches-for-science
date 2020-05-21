@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'knockout-mapping', 'viewmodels/tabbed-report'], function(_, ko, koMapping, TabbedReportViewModel) {
+define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function(_, ko, arches, TabbedReportViewModel, resourceUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -7,15 +7,6 @@ define(['underscore', 'knockout', 'knockout-mapping', 'viewmodels/tabbed-report'
 
             if (params.summary) {
                 this.showTitleBar = params.showTitleBar || false;
-                this.activities = ko.observableArray();
-                this.activities.push({
-                    name: 'Activity 1',
-                    link: ''
-                });
-                this.activities.push({
-                    name: 'Activity 2',
-                    link: ''
-                });
 
                 this.getValue = function(queryClause, graph, tiles) {
                     var nodeId;
@@ -134,8 +125,15 @@ define(['underscore', 'knockout', 'knockout-mapping', 'viewmodels/tabbed-report'
                 }, this.report.graph, this.report.get('tiles'));
 
                 console.log(this.collectionSet);
-            }
 
+                this.activities = ko.observableArray();
+                this.collectionSet.forEach(function(resourceid) {
+                    resourceUtils.lookupResourceInstanceData(resourceid)
+                        .then(function(data) {
+                            self.activities.push({ name: data._source.displayname, link: arches.urls.resource + '/' + resourceid });
+                        })
+                })
+            }
         },
         template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
     });
