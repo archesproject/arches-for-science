@@ -43,7 +43,8 @@ define([
                     $.ajax({
                         url: arches.urls.api_resources(action.value),
                         data: {
-                            format: 'json'
+                            format: 'json',
+                            includetiles: 'false'
                         }
                     }).done(function(data) {
                         self.selectedResources.push(data);
