@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function(, ko, arches, TabbedReportViewModel, resourceUtils) {
+define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function(_, ko, arches, TabbedReportViewModel, resourceUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
