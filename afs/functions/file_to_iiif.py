@@ -3,7 +3,7 @@ import logging
 import os
 import requests
 import shutil
-from afs.settings import CANTALOUPE_DIR, CANTALOUPE_HTTP_ENDPOINT, MEDIA_ROOT, MEDIA_URL, APP_ROOT
+from afs.settings import CANTALOUPE_DIR, CANTALOUPE_HTTP_ENDPOINT, MEDIA_ROOT, MEDIA_URL, APP_ROOT, ARCHES_HOST_ENDPOINT
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.resource import Resource
@@ -104,7 +104,7 @@ class FileToIIIF(BaseFunction):
                     ],
                 }
 
-                json_url = "http://localhost:8000" + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json")  # hosted address
+                json_url = ARCHES_HOST_ENDPOINT + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json")  # hosted address
                 json_path = os.path.join(APP_ROOT, "uploadedfiles", (file_name_less_ext + ".json"))  # abs address
                 with open(json_path, "w") as pres_json:
                     json.dump(pres_dict, pres_json)
