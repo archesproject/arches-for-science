@@ -33,7 +33,7 @@ class NameSelectModels(BaseFunction):
         },
     }
 
-    def save(self, tile, request):
+    def execute(self, tile):
         def update_tile_name_node(tile, name_nodegroupid, name_nodeid, related_nodeid):
             # set tile for name using descriptor for rel resource
             related_resource_node_tile = Tile.objects.get(resourceinstance=tile.resourceinstance, nodegroup_id=related_nodeid)
@@ -50,7 +50,6 @@ class NameSelectModels(BaseFunction):
         # check if its in the list of models I care about
         if str(tile.resourceinstance.graph.graphid) in list(self.select_models.keys()):
             # check the name node for a value, if empty: check appropriate related res node
-            # g = tile.resourceinstance.graph
             name_nodegroupid = self.select_models[str(tile.resourceinstance.graph.graphid)]["name_nodegroupid"]
             # name_nodegroup = models.NodeGroup.objects.get(nodegroupid=)
             if not Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=name_nodegroupid).exists():
@@ -61,8 +60,11 @@ class NameSelectModels(BaseFunction):
                     name_nodeid = self.select_models[str(tile.resourceinstance.graph.graphid)]["name_nodeid"]
                     update_tile_name_node(tile, name_nodegroupid, name_nodeid, related_nodeid)
 
+    def save(self, tile, request):
+        self.execute(tile)
+
     def postSave(self, tile, request):
-        raise NotImplementedError
+        self.execute(tile)
 
     def on_import(self, tile):
         raise NotImplementedError
