@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function(_, ko, arches, TabbedReportViewModel, resourceUtils) {
+define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function(, ko, arches, TabbedReportViewModel, resourceUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -6,13 +6,13 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
             TabbedReportViewModel.apply(this, [params]);
 
             if (params.summary) {
-                var Identifier_Content_nodeid = '22c169b5-b498-11e9-bdad-a4d18cec433a';
-                var Identifier_Type = '22c15cfa-b498-11e9-b5e3-a4d18cec433a';
+                var IdentifierContentnodeid = '22c169b5-b498-11e9-bdad-a4d18cec433a';
+                var IdentifierType = '22c15cfa-b498-11e9-b5e3-a4d18cec433a';
                 var GallerySystemsTMSid = '26094e9c-2702-4963-adee-19ad118f0f5a';
                 this.gallerySystemsTMSid = resourceUtils.getNodeValues({
-                    nodeId: Identifier_Content_nodeid,
+                    nodeId: IdentifierContentnodeid,
                     where: {
-                        nodeId: Identifier_Type,
+                        nodeId: IdentifierType,
                         contains: GallerySystemsTMSid
                     },
                     returnTiles: false
@@ -30,12 +30,12 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                         })
                 })
 
-                var Description_Concept_valueid = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
+                var DescriptionConceptvalueid = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
                 this.description = resourceUtils.getNodeValues({
                     widgetLabel: 'Statement about Thing.Text of Statement',
                     where: {
                         widgetLabel: 'Statement about Thing.Type of Statement',
-                        contains: Description_Concept_valueid
+                        contains: DescriptionConceptvalueid
                     },
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
@@ -93,10 +93,10 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                         })
                 };
 
-                var VisualWork_UsedImage_nodeid = '9743a1b2-8591-11ea-97eb-acde48001122';
-                var DigitalResource_Identifier_Content_nodeid = 'db05c421-ca7a-11e9-bd7a-a4d18cec433a';
-                var DigitalResource_Identifier_Type_nodeid = 'db05c05e-ca7a-11e9-8824-a4d18cec433a';
-                var URL_Concept_valueid = 'f32d0944-4229-4792-a33c-aadc2b181dc7';
+                var VisualWorkUsedImagenodeid = '9743a1b2-8591-11ea-97eb-acde48001122';
+                var DigitalResourceIdentifierContentnodeid = 'db05c421-ca7a-11e9-bd7a-a4d18cec433a';
+                var DigitalResourceIdentifierTypenodeid = 'db05c05e-ca7a-11e9-8824-a4d18cec433a';
+                var URLConceptvalueid = 'f32d0944-4229-4792-a33c-aadc2b181dc7';
                 this.visualWorkIds = resourceUtils.getNodeValues({
                     widgetLabel: 'Shows Image.shows',
                     returnTiles: false
@@ -105,21 +105,21 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     // look up related Visual Work
                     resourceUtils.lookupResourceInstanceData(resourceid)
                         .then(function(data) {
-                            var used_image_resourceids = resourceUtils.getNodeValues({
-                                nodeId: VisualWork_UsedImage_nodeid,
+                            var usedimageresourceids = resourceUtils.getNodeValues({
+                                nodeId: VisualWorkUsedImagenodeid,
                                 returnTiles: false
                             }, data._source.tiles);
 
                             // look up related Digital Resource
-                            used_image_resourceids.forEach(function(resourceid) {
+                            usedimageresourceids.forEach(function(resourceid) {
                                 resourceUtils.lookupResourceInstanceData(resourceid)
                                     .then(function(data) {
                                         // console.log(data)
                                         var manifests = resourceUtils.getNodeValues({
-                                            nodeId: DigitalResource_Identifier_Content_nodeid,
+                                            nodeId: DigitalResourceIdentifierContentnodeid,
                                             where: {
-                                                nodeId: DigitalResource_Identifier_Type_nodeid,
-                                                contains: URL_Concept_valueid
+                                                nodeId: DigitalResourceIdentifierTypenodeid,
+                                                contains: URLConceptvalueid
                                             },
                                             returnTiles: false
                                         }, data._source.tiles);
