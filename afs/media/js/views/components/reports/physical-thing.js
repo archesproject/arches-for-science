@@ -27,8 +27,8 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     resourceUtils.lookupResourceInstanceData(resourceid)
                         .then(function(data) {
                             self.artists.push({ name: data._source.displayname, link: arches.urls.resource + '/' + resourceid });
-                        })
-                })
+                        });
+                });
 
                 var DescriptionConceptvalueid = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
                 this.description = resourceUtils.getNodeValues({
@@ -50,8 +50,8 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     resourceUtils.lookupResourceInstanceData(resourceid)
                         .then(function(data) {
                             self.activities.push({ name: data._source.displayname, link: arches.urls.resource + '/' + resourceid });
-                        })
-                })
+                        });
+                });
 
 
                 var getLabel = function(object) {
@@ -90,7 +90,7 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                         })
                         .then(function(manifestData) {
                             parseManifestJson(manifestData);
-                        })
+                        });
                 };
 
                 var VisualWorkUsedImagenodeid = '9743a1b2-8591-11ea-97eb-acde48001122';
