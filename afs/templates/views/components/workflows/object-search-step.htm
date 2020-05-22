@@ -1,16 +1,17 @@
-<div class="sampling-activity">
-    <div class="sampling-activity-search-panel" style="display: inline-flex; align-items: center; z-index: 10;">
+<div class="sampling-activity object-search-step">
+    <div class="workflow-search-panel" style="display: inline-flex; align-items: center; z-index: 10;">
         <div style="width: 80%">
             <div style="padding-left: 25px">
                 <input data-bind="select2Query: {select2Config: targetResourceSelectConfig}">
             </div>
         </div>
-        <div style="display: inline-flex; width: 20%; justify-content: center;">
+        <div class="workflow-search-count">
             <div>Physical Things: </div><div style="padding-left: 10px;" data-bind="text: totalResults()"></div>
         </div>
     </div>
-    <div class="physical-object-search-results" style="height: 100%;">
-        <div style="display: inline-flex; justify-content: space-between; width: 100%; height: 100%; overflow-y: hidden;">    
+    <div class="workflow-search-results">
+        <div style="display: inline-flex; justify-content: space-between; width: 100%; height: 100%; overflow-y: hidden;">
+            <div style="position: relative; display:flex; flex-direction: column; width: 100%">    
             <div style="display:flex; flex-direction: column; width: 100%; overflow-y: auto;">
                 <!-- ko foreach: targetResources -->
                 <div class='resource-report' data-bind="component: {
@@ -23,22 +24,32 @@
                 click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
                 <!-- /ko -->
             </div>
+            <div class="search-results-footer">
+                <div style="width: 100%;">
+                    <div data-bind="with: paginator">
+                        <div class="text-center">
+                            <ul class="pagination">
+                                <li><a data-bind="css: {'disabled': !has_previous()}, click: $parent.newPage.bind($parent, previous_page_number())" href="#">«</a></li>
+                                <!-- ko foreach: { data: pages, as: 'page' } -->
+                                    <!-- ko if: page -->
+                                    <li class="page" data-bind="click: $parents[1].newPage.bind($parents[1]), css: {'current active': (page == $parent.current_page())}">
+                                        <a href="#" data-bind="text: page, attr:{'data-page':page}"></a>
+                                    </li>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: page -->
+                                    <li class="disabled"><a href="#">...</a></li>
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                                <li><a data-bind="css: { 'disabled': !has_next()}, click: $parent.newPage.bind($parent, next_page_number())" href="#">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
 
             <div class="wf-multi-tile-step-list" style="padding: 0px;">
-                <!-- ko if: selectedResources().length > 0 || dirty() -->
-                <div style="
-                padding: 10px;
-                display: inline-flex;
-                justify-content: flex-start;
-                background-color: #f8f8f8;
-                border-bottom: solid 1px #ddd;">
-                    <div style="display: flex; justify-content: flex-end;">
-                        <button class="btn btn-md btn-mint" data-bind="visible: dirty, click: function(){submit()}, text: complete() === true ? 'Save' : 'Save and Continue'"></button>
-                        <button class="btn btn-md btn-mint" data-bind="visible: !dirty() && complete() === true, click: function(){next()}">Continue</button>
-                        <button class="btn btn-md btn-warning" style="margin-left: 8px" data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
-                    </div>                
-                </div>
-                <!--/ko -->
+
                 <div style="padding: 24px 24px 0px 24px;">
                 <!-- ko if: selectedResources().length === 0 && !dirty() -->
                 <div class="wf-multi-tile-step-list-empty">
@@ -62,35 +73,15 @@
                  </div>
                 <!-- /ko -->
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="sampling-activity-search-panel" style="
-        position: absolute; 
-        bottom: 0px; 
-        display: inline-flex; 
-        align-items: center;
-        justify-content: space-around;
-        border-top: 1px solid #ddd;
-        width: 100%">
-        <div style="width: 100%;">
-            <div id="paginator" data-bind="with: paginator">
-                <div class="text-center">
-                    <ul class="pagination">
-                        <li><a data-bind="css: {'disabled': !has_previous()}, click: $parent.newPage.bind($parent, previous_page_number())" href="#">«</a></li>
-                        <!-- ko foreach: { data: pages, as: 'page' } -->
-                            <!-- ko if: page -->
-                            <li class="page" data-bind="click: $parents[1].newPage.bind($parents[1]), css: {'current active': (page == $parent.current_page())}">
-                                <a href="#" data-bind="text: page, attr:{'data-page':page}"></a>
-                            </li>
-                            <!-- /ko -->
-                            <!-- ko ifnot: page -->
-                            <li class="disabled"><a href="#">...</a></li>
-                            <!-- /ko -->
-                        <!-- /ko -->
-                        <li><a data-bind="css: { 'disabled': !has_next()}, click: $parent.newPage.bind($parent, next_page_number())" href="#">»</a></li>
-                    </ul>
+                <!-- ko if: selectedResources().length > 0 || dirty() -->
+                <div class="search-selection-controls">
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-md btn-mint" data-bind="visible: dirty, click: function(){submit()}, text: complete() === true ? 'Save' : 'Save and Continue'"></button>
+                        <button class="btn btn-md btn-mint" data-bind="visible: !dirty() && complete() === true, click: function(){next()}">Continue</button>
+                        <button class="btn btn-md btn-warning" style="margin-left: 8px" data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
+                    </div>                
                 </div>
+                <!--/ko -->
             </div>
         </div>
     </div>
