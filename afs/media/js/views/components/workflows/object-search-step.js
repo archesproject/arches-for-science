@@ -59,7 +59,8 @@ define([
                     $.ajax({
                         url: arches.urls.api_resources(action.value),
                         data: {
-                            format: 'json'
+                            format: 'json',
+                            includetiles: 'false'
                         }
                     }).done(function(data) {
                         self.selectedResources.push(data);
@@ -190,13 +191,13 @@ define([
                 termFilter['inverted'] = false;
                 filters["term-filter"] = JSON.stringify([termFilter]);
             }
-            
+
             params.loading(true);
             $.ajax({
                 url: arches.urls.physical_thing_search_results,
                 data: filters,
             }).done(function(data) {
-                self.paginator(data['paging_filter']);
+                self.paginator(koMapping.fromJS(data['paging-filter']['paginator']));
                 self.totalResults(data['total_results']);
                 var resources = data['results']['hits']['hits'].map(function(source) {
                     var tileData = {
@@ -221,7 +222,7 @@ define([
                             cardwidgets: graph.cardwidgets
                         });
                     });
-
+                    
                     tileData.templates = reportLookup;
                     tileData.cardComponents = cardComponents;
                     source.report = new ReportModel(_.extend(tileData, {
@@ -235,6 +236,13 @@ define([
                 params.loading(false);
             });
         };
+
+        this.newPage = function(page) {
+            if(page){
+                console.log(page);
+                // this.page(page);
+            }
+        },
         
         this.updateSearchResults = function(termFilter) {
             params.loading(true);
