@@ -18,7 +18,7 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                this.artists = ko.observableArray();
+                this.artists = ko.observableArray([]);
                 this.artistIds = resourceUtils.getNodeValues({
                     widgetLabel: 'Production (partitioned).carried out by',
                     returnTiles: false
