@@ -8,6 +8,7 @@
         </h2>
     </div>
 
+    <!-- Header -->
     <div class="summary-report-subtitle">
         <span>
             <span class="subtitle-category">{% trans "Artist:" %}</span>
@@ -24,18 +25,28 @@
         <span style="float: right; font-size: 13px;">{% trans "Gallery Systems TMS id" %}</span>
     </div>
 
-    <span data-bind="if: description.length > 0">
-        <div style="color: gray;padding-top: 10px;padding-bottom: 10px;" data-bind="html: description"></div>
-    </span>
-    <span data-bind="if: description.length === 0">
-        {% trans "No description available" %}
-    </span>
+    <!-- Description -->
+    <div class="summary-report-description">
+        <span data-bind="if: description.length > 0">
+            <div data-bind="html: description"></div>
+        </span>
+        <span data-bind="if: description.length === 0">
+            {% trans "No description available" %}
+        </span>
+    </div>
     
-    <div data-bind="foreach: manifests">
+    <!-- Manifests/Canvases -->
+    <div class="summary-report-manifests" data-bind="foreach: manifests">
         <div style="margin-bottom: 15px;">
-            <div data-bind="text: label"></div>
+            <div class="summary-report-manifest-title">
+                <span class="subtitle-category">{% trans "Related Images: " %}</span>
+                <span data-bind="text: label"></span>
+            </div>
+            
             <div data-bind="foreach: sequences">
-                <div data-bind="foreach: canvases"><img src="" data-bind="attr:{src: thumbnail, title: label}" /></div>
+                <div data-bind="foreach: canvases">
+                    <img class="summary-report-canvas" src="" data-bind="attr:{src: thumbnail, title: label}" />
+                </div>
             </div>
         </div>
     </div>
