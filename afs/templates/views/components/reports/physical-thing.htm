@@ -51,17 +51,20 @@
         </div>
     </div>
 
-    <div style="font-size: 16px; font-weight: 600; color: rgb(13, 59, 99);padding-top: 10px;">
-        {% trans "Included in the following Activites" %}
-    </div>
-    <span data-bind="if: activities().length > 0">
-        <div data-bind="foreach: activities">
-            <a target="_blank" style="color:rgb(6, 119, 218)" data-bind="text: name, attr: { href: link }"></a>
+    <!-- Related Activities -->
+    <div class="summary-report-related-panel">
+        <div class="summary-report-related">
+            {% trans "Included in the following Activites" %}
         </div>
-    </span>
-    <span data-bind="if: activities().length === 0">
-        {% trans "No associated activities" %}
-    </span>
+        <div data-bind="if: activities().length > 0">
+            <div class="subtitle-value" data-bind="foreach: activities">
+                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }"></a>
+            </div>
+        </div>
+        <span data-bind="if: activities().length === 0">
+            {% trans "No associated activities" %}
+        </span>
+    </div>
 </div>
 
 {% endblock summary %}
