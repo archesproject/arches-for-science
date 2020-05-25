@@ -154,8 +154,9 @@ CACHES = {
 CACHE_BY_USER = {"anonymous": 3600 * 24}
 
 TILE_CACHE_TIMEOUT = 600  # seconds
-CARDS_API_VIEW_TIMEOUT = 3600  # seconds
-GRAPHS_API_VIEW_TIMEOUT = 3600  # seconds
+GRAPH_MODEL_CACHE_TIMEOUT = 3600 * 24 * 30 # seconds * hours * days = ~1mo
+USER_GRAPH_PERMITTED_CARDS_TIMEOUT = 3600 * 24 * 30 # seconds * hours * days = ~1mo
+USER_GRAPH_CARDWIDGETS_TIMEOUT = 3600 * 24 * 30 # seconds * hours * days = ~1mo
 
 MOBILE_OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 MOBILE_DEFAULT_ONLINE_BASEMAP = {"default": "mapbox://styles/mapbox/streets-v9"}
