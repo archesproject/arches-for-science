@@ -114,8 +114,8 @@ class FileToIIIF(BaseFunction):
                 manifest.save()
 
                 # save the url to digital resource identifier_content node
-                manifest_url_nodeid = 'db05c421-ca7a-11e9-bd7a-a4d18cec433a'
-                manifest_url_nodegroupid = 'db05b5ca-ca7a-11e9-82ca-a4d18cec433a'
+                manifest_url_nodeid = "db05c421-ca7a-11e9-bd7a-a4d18cec433a"
+                manifest_url_nodegroupid = "db05b5ca-ca7a-11e9-82ca-a4d18cec433a"
                 if not Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=manifest_url_nodegroupid).exists():
                     url_tile = Tile()
                     url_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=manifest_url_nodegroupid)
