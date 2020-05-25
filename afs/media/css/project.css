@@ -88,3 +88,82 @@
     right: 100px;
     font-weight: 800;
 }
+
+
+.model-summary-report {
+    padding: 20px 30px 30px 30px;
+}
+
+.summary-report-title {
+    color: rgb(13, 59, 99);
+    font-size: 17px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.summary-report-link {
+    float: right;
+    color: #1576EB;
+}
+
+.summary-report-subtitle {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #888;
+}
+
+.subtitle-category {
+    color: rgb(13, 59, 99);
+}
+
+.subtitle-value a {
+    color: #1576EB;
+    font-size: 14px;
+}
+
+.subtitle-value-blank {
+    color: #777;
+}
+
+.summary-report-description {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.summary-report-manifests {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888;
+}
+
+.summary-report-manifest-title {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.summary-report-canvas {
+    max-height: 150px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.summary-report-related-panel {
+    color: #888;
+}
+
+.summary-report-related {
+    font-size: 16px; 
+    font-weight: 500; 
+    color: rgb(13, 59, 99);
+    padding-top: 10px;
+}
+
+.summary-report-related-panel .subtitle-value {
+    display: inline-grid;
+}
+
+.summary-report-related-list {
+    color:rgb(6, 119, 218);
+}
