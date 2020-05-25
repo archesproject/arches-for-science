@@ -1,51 +1,50 @@
 <div class="sampling-activity object-search-step">
-    <div class="workflow-search-panel" style="display: inline-flex; align-items: center; z-index: 10;">
-        <div style="width: 80%">
-            <div style="padding-left: 25px">
-                <input data-bind="select2Query: {select2Config: targetResourceSelectConfig}">
-            </div>
+    <div class="workflow-search-panel">
+        <div class="search-bar">
+            <input data-bind="select2Query: {select2Config: targetResourceSelectConfig}">
         </div>
         <div class="workflow-search-count">
-            <div>Physical Things: </div><div style="padding-left: 10px;" data-bind="text: totalResults()"></div>
+            <div data-bind="text: totalResults()"></div><div>Physical Things</div>
         </div>
     </div>
     <div class="workflow-search-results">
-        <div style="display: inline-flex; justify-content: space-between; width: 100%; height: 100%; overflow-y: hidden;">
-            <div style="position: relative; display:flex; flex-direction: column; width: 100%">    
-            <div style="display:flex; flex-direction: column; width: 100%; overflow-y: auto;">
-                <!-- ko foreach: targetResources -->
-                <div class='resource-report' data-bind="component: {
-                    name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
-                    params: {
-                        report: $data.report,
-                        summary: true
-                    }
-                }, css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0},
-                click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
-                <!-- /ko -->
-            </div>
-            <div class="search-results-footer">
-                <div style="width: 100%;">
-                    <div data-bind="with: paginator">
-                        <div class="text-center">
-                            <ul class="pagination">
-                                <li><a data-bind="css: {'disabled': !has_previous()}, click: $parent.newPage.bind($parent, previous_page_number())" href="#">«</a></li>
-                                <!-- ko foreach: { data: pages, as: 'page' } -->
-                                    <!-- ko if: page -->
-                                    <li class="page" data-bind="click: $parents[1].newPage.bind($parents[1]), css: {'current active': (page == $parent.current_page())}">
-                                        <a href="#" data-bind="text: page, attr:{'data-page':page}"></a>
-                                    </li>
+        <div class="workflow-search-results-full-container" style="display: inline-flex; justify-content: space-between; width: 100%; height: 100%; overflow-y: hidden;">
+            <div class="workflow-search-results-container" style="position: relative; display:flex; flex-direction: column; width: 100%">    
+                <div class="workflow-search-list" style="display:flex; flex-direction: column; width: 100%; overflow-y: auto;">
+                    <!-- ko foreach: targetResources -->
+                    <div class='resource-report' data-bind="component: {
+                        name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
+                        params: {
+                            report: $data.report,
+                            summary: true
+                        }
+                    }, css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0},
+                    click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
+                    <!-- /ko -->
+                </div>
+                
+                <div class="search-results-footer">
+                    <div style="width: 100%;">
+                        <div data-bind="with: paginator">
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <li><a data-bind="css: {'disabled': !has_previous()}, click: $parent.newPage.bind($parent, previous_page_number())" href="#">«</a></li>
+                                    <!-- ko foreach: { data: pages, as: 'page' } -->
+                                        <!-- ko if: page -->
+                                        <li class="page" data-bind="click: $parents[1].newPage.bind($parents[1]), css: {'current active': (page == $parent.current_page())}">
+                                            <a href="#" data-bind="text: page, attr:{'data-page':page}"></a>
+                                        </li>
+                                        <!-- /ko -->
+                                        <!-- ko ifnot: page -->
+                                        <li class="disabled"><a href="#">...</a></li>
+                                        <!-- /ko -->
                                     <!-- /ko -->
-                                    <!-- ko ifnot: page -->
-                                    <li class="disabled"><a href="#">...</a></li>
-                                    <!-- /ko -->
-                                <!-- /ko -->
-                                <li><a data-bind="css: { 'disabled': !has_next()}, click: $parent.newPage.bind($parent, next_page_number())" href="#">»</a></li>
-                            </ul>
+                                    <li><a data-bind="css: { 'disabled': !has_next()}, click: $parent.newPage.bind($parent, next_page_number())" href="#">»</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
 
             <div class="wf-multi-tile-step-list" style="padding: 0px;">

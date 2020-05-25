@@ -18,6 +18,11 @@
     height: 100%;
 }
 
+.sampling-activity.object-search-step {
+    padding-left: 35px;
+}
+
+
 
 .sampling-activity .selected-instance {   
     background-color: #fff;
@@ -33,16 +38,24 @@
 }
 
 .workflow-search-panel {
-    height: 55px;
     background-color: #f3f3f3;
     border-bottom: #ddd solid 1px;
     position: fixed;
     width: 100%;
+    margin-left: -35px;
+    padding: 10px 60px;
+    display: inline-flex; 
+    align-items: center; 
+    z-index: 10;
+}
+
+.workflow-search-panel .search-bar {
+    width: 600px;
 }
 
 .workflow-search-count {
     display: inline-flex;
-    width: 20%; 
+    padding-left: 10px;
     justify-content: center;
 }
 
@@ -66,7 +79,8 @@
 
 .object-search-step .workflow-search-results {
     margin-top: 55px;
-    padding: 0;
+    margin-left: -35px;
+    padding-left: 35px;
     height: 100%;
 }
 
