@@ -12,35 +12,20 @@ define([
         if (!params.resourceid()) {
             params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
         }
-        // if (params.workflow.state.steps[params._index - 1]) {
-        //     params.tileid(params.workflow.state.steps[params._index - 1].tileid);
-        // }
         NewTileStep.apply(this, [params]);
         var self = this;
-
-        // var self = this;
-        // this.tile.subscribe(function(val) {
-        //     console.log(val);
-        //     if (val.data[params.nodegroupid()]()) {
-        //         console.log("complete");
-        //     }
-        // });
 
         this.card.subscribe(function(val) {
             if(val.tiles != undefined) {
                 val.tiles.subscribe(function(arr) {
                     if (arr.length > 0) {
-                        arr[0].save();
-                        self.complete(true);
+                        arr[0].save(null, function(){
+                            self.onSaveSuccess(arr[0]);
+                        }, this);
                     }
-                    // console.log(tile);
                 });
             }
         });
-
-        // this.tile.subscribe(function(val) {
-        //     console.log(val);
-        // });
 
         params.getStateProperties = function(){
             return {
