@@ -7,6 +7,7 @@ from afs.settings import CANTALOUPE_DIR, CANTALOUPE_HTTP_ENDPOINT, MEDIA_ROOT, M
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.resource import Resource
+from arches.app.models.tile import Tile
 
 
 details = {
@@ -111,6 +112,17 @@ class FileToIIIF(BaseFunction):
 
                 manifest = models.IIIFManifest.objects.create(label=name, description=desc, url=json_url)
                 manifest.save()
+
+                # save the url to digital resource identifier_content node
+                manifest_url_nodeid = 'db05c421-ca7a-11e9-bd7a-a4d18cec433a'
+                manifest_url_nodegroupid = 'db05b5ca-ca7a-11e9-82ca-a4d18cec433a'
+                if not Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=manifest_url_nodegroupid).exists():
+                    url_tile = Tile()
+                    url_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=manifest_url_nodegroupid)
+                    url_tile.resourceinstance = tile.resourceinstance
+                    url_tile.data = {}
+                    url_tile.data[manifest_url_nodeid] = json_url
+                    url_tile.save()
 
             else:
                 logger.warn("filetype unacceptable: " + f.path.name)
