@@ -17,13 +17,13 @@ class PhysicalThingSetView(View):
         results = []
         tiles = models.TileModel.objects.filter(resourceinstance_id=set_resourceid).filter(nodegroup_id=nodegroupid)
         if len(tiles) > 0:
-            tile=tiles[0]
+            tile = tiles[0]
             related = tile.data[nodeid]
         for resourceid in related:
             search_request = HttpRequest()
             search_request.user = request.user
             search_request.GET["id"] = resourceid
             result = json.loads(search_results(search_request).content)
-            results.append(result['results']['hits']['hits'][0])
+            results.append(result["results"]["hits"]["hits"][0])
 
         return JSONResponse({"items": results})
