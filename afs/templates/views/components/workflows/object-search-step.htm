@@ -4,7 +4,7 @@
             <input data-bind="select2Query: {select2Config: targetResourceSelectConfig}">
         </div>
         <div class="workflow-search-count">
-            <div data-bind="text: totalResults()"></div><div>Physical Things</div>
+            <div class="count-number" data-bind="text: totalResults()"></div><div>Physical Things</div>
         </div>
     </div>
     <div class="workflow-search-results">
@@ -52,7 +52,7 @@
                 <div style="padding: 24px 24px 0px 24px;">
                 <!-- ko if: selectedResources().length === 0 && !dirty() -->
                 <div class="wf-multi-tile-step-list-empty">
-                    <p>You have not added any Physical Things to this collection/set</p>
+                    <p>You have not added any Physical Things to this Collection/Set</p>
                 </div>
                 <!--/ko -->
                 <!-- ko foreach: selectedResources -->

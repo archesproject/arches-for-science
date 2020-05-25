@@ -47,8 +47,16 @@
 
 .workflow-search-count {
     display: inline-flex;
-    padding-left: 10px;
+    padding-left: 15px;
     justify-content: center;
+    font-size: 16px;
+    color: #888;
+}
+
+.workflow-search-count .count-number {
+    font-weight: 600;
+    color: #004577;
+    padding-right: 5px;
 }
 
 .object-search-step .search-results-footer {
@@ -105,6 +113,7 @@
     flex-direction: column; 
     width: 100%; 
     overflow-y: auto;
+    padding-bottom: 105px;
 }
 
 .workflow-search-list .resource-report {
