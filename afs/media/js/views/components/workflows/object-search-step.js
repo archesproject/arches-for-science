@@ -190,22 +190,7 @@ define([
                         "displayname": source._source.displayname,
                         "resourceid": source._source.resourceinstanceid
                     };
-                    tileData.cards = _.filter(graph.cards, function(card) {
-                        var nodegroup = _.find(graph.graph.nodegroups, function(group) {
-                            return group.nodegroupid === card.nodegroup_id;
-                        });
-                        return !nodegroup || !nodegroup.parentnodegroup_id;
-                    }).map(function(card) {
-                        return new CardViewModel({
-                            card: card,
-                            graphModel: graph.graphModel,
-                            resourceId: tileData.resourceid,
-                            displayname: tileData.displayname,
-                            cards: graph.cards,
-                            tiles: tileData.tiles,
-                            cardwidgets: graph.cardwidgets
-                        });
-                    });
+                    tileData.cards = [];
                     
                     tileData.templates = reportLookup;
                     tileData.cardComponents = cardComponents;
