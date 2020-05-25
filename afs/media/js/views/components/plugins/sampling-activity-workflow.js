@@ -49,7 +49,7 @@ define([
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '0b92abdc-ca85-11e9-8a23-a4d18cec433a',
+                    nodegroupid: 'dbaa2022-9ae7-11ea-ab62-dca90488358a',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
