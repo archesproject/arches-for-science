@@ -18,15 +18,8 @@
     height: 100%;
 }
 
-.sampling-activity.object-search-step {
-    padding-left: 35px;
-}
-
-
-
 .sampling-activity .selected-instance {   
     background-color: #fff;
-    font-weight: 700;
 }
 
 .sampling-activity-search-panel {
@@ -42,7 +35,6 @@
     border-bottom: #ddd solid 1px;
     position: fixed;
     width: 100%;
-    margin-left: -35px;
     padding: 10px 60px;
     display: inline-flex; 
     align-items: center; 
@@ -79,8 +71,6 @@
 
 .object-search-step .workflow-search-results {
     margin-top: 55px;
-    margin-left: -35px;
-    padding-left: 35px;
     height: 100%;
 }
 
@@ -95,6 +85,41 @@
     width: 100%;
 }
 
+.workflow-search-results-full-container {
+    display: inline-flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    height: 100%; 
+    overflow-y: hidden;
+}
+
+.workflow-search-list-container {
+    position: relative; 
+    display:flex; 
+    flex-direction: column; 
+    width: 100%;
+}
+
+.workflow-search-list {
+    display:flex; 
+    flex-direction: column; 
+    width: 100%; 
+    overflow-y: auto;
+}
+
+.workflow-search-list .resource-report {
+    padding-left: 35px;
+    border-bottom: 1px solid #ddd;
+}
+
+.workflow-search-list .resource-report:hover {
+    cursor: pointer;
+    background: #fff;
+}
+
+.workflow-search-list .resource-report .summary-report-related-panel {
+    /*display: none;*/
+}
 
 .wf-multi-tile-btn-complete {
     position: absolute;

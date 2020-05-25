@@ -8,11 +8,11 @@
         </div>
     </div>
     <div class="workflow-search-results">
-        <div class="workflow-search-results-full-container" style="display: inline-flex; justify-content: space-between; width: 100%; height: 100%; overflow-y: hidden;">
-            <div class="workflow-search-results-container" style="position: relative; display:flex; flex-direction: column; width: 100%">    
-                <div class="workflow-search-list" style="display:flex; flex-direction: column; width: 100%; overflow-y: auto;">
+        <div class="workflow-search-results-full-container">
+            <div class="workflow-search-list-container">    
+                <div class="workflow-search-list">
                     <!-- ko foreach: targetResources -->
-                    <div class='resource-report' data-bind="component: {
+                    <div class="resource-report" data-bind="component: {
                         name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
                         params: {
                             report: $data.report,
@@ -52,7 +52,7 @@
                 <div style="padding: 24px 24px 0px 24px;">
                 <!-- ko if: selectedResources().length === 0 && !dirty() -->
                 <div class="wf-multi-tile-step-list-empty">
-                    <p>You have not added any Physical Things</p>
+                    <p>You have not added any Physical Things to this collection/set</p>
                 </div>
                 <!--/ko -->
                 <!-- ko foreach: selectedResources -->
