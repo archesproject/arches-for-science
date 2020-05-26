@@ -19,7 +19,7 @@ define([
             params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
             params.tileid(params.workflow.state.steps[params._index - 1].tileid);
         }
-        // NewTileStep.apply(this, [params]);
+        
         var self = this;
         var graph;
         this.items = ko.observableArray([]);
