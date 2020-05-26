@@ -70,7 +70,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-search',
+                    icon: 'fa fa-cubes',
                     class: 'fa-search',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
@@ -81,7 +81,8 @@ define([
                     component: 'views/components/workflows/physical-thing-list',
                     componentname: 'physical-thing-list',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '',
+                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
+                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
