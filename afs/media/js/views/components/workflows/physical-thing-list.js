@@ -12,13 +12,6 @@ define([
 ], function(_, $, arches, ko, koMapping, ReportModel, GraphModel, reportLookup, cardComponents) {
 
     function viewModel(params) {
-        if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.resourceid);
-        }
-        if (params.workflow.state.steps[params._index - 1]) {
-            params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
-            params.tileid(params.workflow.state.steps[params._index - 1].tileid);
-        }
         
         var self = this;
         var graph;
@@ -26,10 +19,10 @@ define([
         this.setresourceid = params.workflow.state.steps[params._index - 1].relatedresourceid;
         this.complete = params.complete || ko.observable();
         this.completeOnSave = params.completeOnSave === false ? false : true;
+        this.selectedPhysicalThingId = ko.observable();
 
         this.selectIIIFTile = function(item) {
-            // params.tileid(annotation.tileid);
-            params.resourceid(item._id);
+            self.selectedPhysicalThingId(item._id);
             if (ko.unwrap(self.complete) !== true) {
                 self.complete(true);
             } else {
@@ -101,6 +94,7 @@ define([
                 tileid = ko.unwrap(params.tileid);
             }
             return {
+                selectedPhysicalThingId: self.selectedPhysicalThingId(),
                 resourceid: ko.unwrap(params.resourceid),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,

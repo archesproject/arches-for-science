@@ -32,7 +32,7 @@ define([
             });
         };
         if (params.workflow.state.steps[params._index - 1]) {
-            this.digitalResourceId(params.workflow.state.steps[params._index - 1].resourceid);
+            this.digitalResourceId(params.workflow.state.steps[params._index - 1].selectedPhysicalThingId);
         }
         self.getData();
 
@@ -46,14 +46,14 @@ define([
 
         this.tile.subscribe(function(t){
             if (t) {
-                t.data["5d440fea-8651-11ea-97eb-acde48001122"](params.workflow.state.steps[3].resourceid); // set resourceid from related visual work
+                t.data["5d440fea-8651-11ea-97eb-acde48001122"](params.workflow.state.steps[3].relatedresourceid); // set resourceid from related visual work
                 t.data["b240c366-8594-11ea-97eb-acde48001122"](params.workflow.state.steps[0].resourceid); // set resourceid from physical thing
             }
         });
 
         params.defineStateProperties = function(){
             return {
-                resourceid: ko.unwrap(params.resourceid),
+                resourceid: self.digitalResourceId(),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
             };
