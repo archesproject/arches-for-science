@@ -138,7 +138,10 @@ SESSION_COOKIE_NAME = "afs"
 
 CACHES = {
     # "default": {"BACKEND": "django.core.cache.backends.memcached.MemcachedCache", "LOCATION": "127.0.0.1:11211",}
-    "default": {"BACKEND": "django.core.cache.backends.db.DatabaseCache", "LOCATION": "afs_cache",}
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'afs_cache',
+    }
 }
 
 # Identify the usernames and duration (seconds) for which you want to cache the time wheel
