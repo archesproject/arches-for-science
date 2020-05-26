@@ -7,11 +7,27 @@ define([
     'views/components/workflows/new-tile-step',
     'models/report',
     'models/graph',
-    'viewmodels/card',
     'report-templates',
     'card-components',
-    'bindings/select2-query',
-], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, CardViewModel, reportLookup, cardComponents) {
+    'bindings/select2-query'
+], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
+    var graph = ko.observable();
+    var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+    $.getJSON(arches.urls.graphs_api + graphId, function(data) {
+        var graphModel = new GraphModel({
+            data: data.graph,
+            datatypes: data.datatypes
+        });
+
+        graph({
+            graphModel: graphModel,
+            cards: data.cards,
+            graph: data.graph,
+            datatypes: data.datatypes,
+            cardwidgets: data.cardwidgets
+        });
+    });
+
     function viewModel(params) {
         if (!params.resourceid()) {
             params.resourceid(params.workflow.state.resourceid);
@@ -22,7 +38,6 @@ define([
         NewTileStep.apply(this, [params]);
         var limit = 10;
         var self = this;
-        var graph;
         this.next = params.workflow.next;
         this.paginator = ko.observable();
         this.targetResource = ko.observable();
@@ -167,7 +182,7 @@ define([
         };
         
         this.reportLookup = reportLookup;
-        var getResultData = function(termFilter) {
+        var getResultData = function(termFilter, graph) {
             var filters = {
                 "paging-filter": 1
             };
@@ -215,27 +230,10 @@ define([
         
         this.updateSearchResults = function(termFilter) {
             params.loading(true);
-            if (graph) {
-                getResultData(termFilter);
-            } else {
-                var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
-                $.getJSON(arches.urls.graphs_api + graphId, function(data) {
-                    var graphModel = new GraphModel({
-                        data: data.graph,
-                        datatypes: data.datatypes
-                    });
-
-                    graph = {
-                        graphModel: graphModel,
-                        cards: data.cards,
-                        graph: data.graph,
-                        datatypes: data.datatypes,
-                        cardwidgets: data.cardwidgets
-                    };
-                    
-                    getResultData(termFilter);
-                });
-            }
+            if (graph()) getResultData(termFilter, graph());
+            else graph.subscribe(function(graph) {
+                getResultData(termFilter, graph);
+            });
         };
 
         this.updateSearchResults();

@@ -30,8 +30,9 @@ define([
         this.tile.subscribe(function(t){
             if (t && params.workflow.state.steps[params._index - 1]) {
                 t.data[params.nodegroupid()]([params.workflow.state.steps[params._index - 1].resourceid]);
-                t.save();
-                // self.complete(true);
+                t.save(null, function(){
+                    self.onSaveSuccess(t);
+                }, this);
             }
         });
 

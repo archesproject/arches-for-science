@@ -25,6 +25,7 @@ APP_PATHNAME = ""
 
 CANTALOUPE_DIR = os.path.join(APP_ROOT, "cantaloupe")
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
+ARCHES_HOST_ENDPOINT = "http://localhost:8000"
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, "locale"))
 
