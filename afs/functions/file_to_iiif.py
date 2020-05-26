@@ -31,6 +31,8 @@ class FileToIIIF(BaseFunction):
         resource = Resource.objects.get(resourceinstanceid=tile.resourceinstance_id)
         name = resource.displayname
         desc = resource.displaydescription
+        if not os.path.exists(CANTALOUPE_DIR):
+            os.mkdir(CANTALOUPE_DIR)
 
         for f in files:
             if any(ac == (f.path.name.split(".")[-1]) for ac in acceptable_types):
