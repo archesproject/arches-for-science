@@ -71,6 +71,7 @@ define([
                 },
                 {
                     title: 'Physical Things',
+                    customCardLabel: 'Set or Collection Used in Research Activity',
                     name: 'createphysicalthingsset',
                     description: 'Create a set of physical things',
                     componentname: 'new-tile-step',
