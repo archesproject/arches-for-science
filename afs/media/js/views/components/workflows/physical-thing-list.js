@@ -4,13 +4,12 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
-    'views/components/workflows/new-tile-step',
     'models/report',
     'models/graph',
     'report-templates',
     'card-components',
     'bindings/select2-query',
-], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
+], function(_, $, arches, ko, koMapping, ReportModel, GraphModel, reportLookup, cardComponents) {
 
     function viewModel(params) {
         if (!params.resourceid()) {
@@ -20,20 +19,21 @@ define([
             params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
             params.tileid(params.workflow.state.steps[params._index - 1].tileid);
         }
-        NewTileStep.apply(this, [params]);
+        
         var self = this;
         var graph;
         this.items = ko.observableArray([]);
-        this.setresourceid = params.resourceid() || '';
+        this.setresourceid = params.workflow.state.steps[params._index - 1].relatedresourceid;
+        this.complete = params.complete || ko.observable();
+        this.completeOnSave = params.completeOnSave === false ? false : true;
 
         this.selectIIIFTile = function(item) {
             // params.tileid(annotation.tileid);
             params.resourceid(item._id);
-            params.getStateProperties();
-            if (ko.unwrap(self.complete) === true) {
-                params.workflow.next();
-            } else {
+            if (ko.unwrap(self.complete) !== true) {
                 self.complete(true);
+            } else {
+                params.workflow.next();
             }
         };
 
@@ -91,10 +91,9 @@ define([
             }
         };
 
-
         this.getData();
 
-        params.getStateProperties = function(){
+        params.defineStateProperties = function(){
             var tileid = undefined;
             if (!!(ko.unwrap(params.tile))) {
                 tileid = ko.unwrap(params.tile().tileid);

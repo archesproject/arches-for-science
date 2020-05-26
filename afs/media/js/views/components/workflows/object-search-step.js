@@ -7,11 +7,10 @@ define([
     'views/components/workflows/new-tile-step',
     'models/report',
     'models/graph',
-    'viewmodels/card',
     'report-templates',
     'card-components',
     'bindings/select2-query',
-], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, CardViewModel, reportLookup, cardComponents) {
+], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
     function viewModel(params) {
         if (!params.resourceid()) {
             params.resourceid(params.workflow.state.resourceid);
