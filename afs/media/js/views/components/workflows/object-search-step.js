@@ -7,11 +7,10 @@ define([
     'views/components/workflows/new-tile-step',
     'models/report',
     'models/graph',
-    'viewmodels/card',
     'report-templates',
     'card-components',
-    'bindings/select2-query',
-], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, CardViewModel, reportLookup, cardComponents) {
+    'bindings/select2-query'
+], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
     var graph = ko.observable();
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
     $.getJSON(arches.urls.graphs_api + graphId, function(data) {
@@ -206,22 +205,7 @@ define([
                         "displayname": source._source.displayname,
                         "resourceid": source._source.resourceinstanceid
                     };
-                    tileData.cards = _.filter(graph.cards, function(card) {
-                        var nodegroup = _.find(graph.graph.nodegroups, function(group) {
-                            return group.nodegroupid === card.nodegroup_id;
-                        });
-                        return !nodegroup || !nodegroup.parentnodegroup_id;
-                    }).map(function(card) {
-                        return new CardViewModel({
-                            card: card,
-                            graphModel: graph.graphModel,
-                            resourceId: tileData.resourceid,
-                            displayname: tileData.displayname,
-                            cards: graph.cards,
-                            tiles: tileData.tiles,
-                            cardwidgets: graph.cardwidgets
-                        });
-                    });
+                    tileData.cards = [];
                     
                     tileData.templates = reportLookup;
                     tileData.cardComponents = cardComponents;

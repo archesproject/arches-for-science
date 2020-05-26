@@ -18,10 +18,8 @@
     height: 100%;
 }
 
-
 .sampling-activity .selected-instance {   
     background-color: #fff;
-    font-weight: 700;
 }
 
 .sampling-activity-search-panel {
@@ -33,17 +31,32 @@
 }
 
 .workflow-search-panel {
-    height: 55px;
     background-color: #f3f3f3;
     border-bottom: #ddd solid 1px;
     position: fixed;
     width: 100%;
+    padding: 10px 60px;
+    display: inline-flex; 
+    align-items: center; 
+    z-index: 10;
+}
+
+.workflow-search-panel .search-bar {
+    width: 600px;
 }
 
 .workflow-search-count {
     display: inline-flex;
-    width: 20%; 
+    padding-left: 15px;
     justify-content: center;
+    font-size: 16px;
+    color: #888;
+}
+
+.workflow-search-count .count-number {
+    font-weight: 600;
+    color: #004577;
+    padding-right: 5px;
 }
 
 .object-search-step .search-results-footer {
@@ -66,7 +79,6 @@
 
 .object-search-step .workflow-search-results {
     margin-top: 55px;
-    padding: 0;
     height: 100%;
 }
 
@@ -81,6 +93,42 @@
     width: 100%;
 }
 
+.workflow-search-results-full-container {
+    display: inline-flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    height: 100%; 
+    overflow-y: hidden;
+}
+
+.workflow-search-list-container {
+    position: relative; 
+    display:flex; 
+    flex-direction: column; 
+    width: 100%;
+}
+
+.workflow-search-list {
+    display:flex; 
+    flex-direction: column; 
+    width: 100%; 
+    overflow-y: auto;
+    padding-bottom: 105px;
+}
+
+.workflow-search-list .resource-report {
+    padding-left: 35px;
+    border-bottom: 1px solid #ddd;
+}
+
+.workflow-search-list .resource-report:hover {
+    cursor: pointer;
+    background: #fff;
+}
+
+.workflow-search-list .resource-report .summary-report-related-panel {
+    /*display: none;*/
+}
 
 .wf-multi-tile-btn-complete {
     position: absolute;

@@ -3,10 +3,11 @@ import logging
 import os
 import requests
 import shutil
-from afs.settings import CANTALOUPE_DIR, CANTALOUPE_HTTP_ENDPOINT, MEDIA_ROOT, MEDIA_URL, APP_ROOT
+from afs.settings import CANTALOUPE_DIR, CANTALOUPE_HTTP_ENDPOINT, MEDIA_ROOT, MEDIA_URL, APP_ROOT, ARCHES_HOST_ENDPOINT
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from arches.app.models.resource import Resource
+from arches.app.models.tile import Tile
 
 
 details = {
@@ -104,13 +105,24 @@ class FileToIIIF(BaseFunction):
                     ],
                 }
 
-                json_url = "http://localhost:8000" + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json")  # hosted address
+                json_url = ARCHES_HOST_ENDPOINT + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json")  # hosted address
                 json_path = os.path.join(APP_ROOT, "uploadedfiles", (file_name_less_ext + ".json"))  # abs address
                 with open(json_path, "w") as pres_json:
                     json.dump(pres_dict, pres_json)
 
                 manifest = models.IIIFManifest.objects.create(label=name, description=desc, url=json_url)
                 manifest.save()
+
+                # save the url to digital resource identifier_content node
+                manifest_url_nodeid = "db05c421-ca7a-11e9-bd7a-a4d18cec433a"
+                manifest_url_nodegroupid = "db05b5ca-ca7a-11e9-82ca-a4d18cec433a"
+                if not Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=manifest_url_nodegroupid).exists():
+                    url_tile = Tile()
+                    url_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=manifest_url_nodegroupid)
+                    url_tile.resourceinstance = tile.resourceinstance
+                    url_tile.data = {}
+                    url_tile.data[manifest_url_nodeid] = json_url
+                    url_tile.save()
 
             else:
                 logger.warn("filetype unacceptable: " + f.path.name)
