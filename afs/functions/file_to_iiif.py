@@ -34,6 +34,8 @@ class FileToIIIF(BaseFunction):
 
         for f in files:
             if any(ac == (f.path.name.split(".")[-1]) for ac in acceptable_types):
+                if not os.path.exists(CANTALOUPE_DIR):
+                    os.mkdir(CANTALOUPE_DIR)
                 dest = os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url))
                 file_name = f.path.name.split("/")[-1]
                 file_name_less_ext = file_name[: (file_name.index(file_name.split(".")[-1]) - 1)]  # end slice before the '.'
