@@ -119,7 +119,7 @@ define([
                 data: {
                     'nodeid': params.nodeid(),
                     'data': JSON.stringify(self.value()),
-                    'resourceinstanceid': self.tile().resourceinstance_id,
+                    'resourceinstanceid': ko.unwrap(params.resourceid),
                     'tileid': self.tile().tileid
                 }
             }).done(function(data) {
