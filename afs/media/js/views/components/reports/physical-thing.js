@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function(_, ko, arches, TabbedReportViewModel, resourceUtils) {
+define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/physical-thing'], function(_, ko, arches, TabbedReportViewModel, resourceUtils, physicalThingUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -93,41 +93,8 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                         });
                 };
 
-                var VisualWorkUsedImagenodeid = '9743a1b2-8591-11ea-97eb-acde48001122';
-                var DigitalResourceIdentifierContentnodeid = 'db05c421-ca7a-11e9-bd7a-a4d18cec433a';
-                var DigitalResourceIdentifierTypenodeid = 'db05c05e-ca7a-11e9-8824-a4d18cec433a';
-                var URLConceptvalueid = 'f32d0944-4229-4792-a33c-aadc2b181dc7';
-                this.visualWorkIds = resourceUtils.getNodeValues({
-                    widgetLabel: 'Shows Image.shows',
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-                this.visualWorkIds.forEach(function(resourceid) {
-                    // look up related Visual Work
-                    resourceUtils.lookupResourceInstanceData(resourceid)
-                        .then(function(data) {
-                            var usedimageresourceids = resourceUtils.getNodeValues({
-                                nodeId: VisualWorkUsedImagenodeid,
-                                returnTiles: false
-                            }, data._source.tiles);
-
-                            // look up related Digital Resource
-                            usedimageresourceids.forEach(function(resourceid) {
-                                resourceUtils.lookupResourceInstanceData(resourceid)
-                                    .then(function(data) {
-                                        // console.log(data)
-                                        var manifests = resourceUtils.getNodeValues({
-                                            nodeId: DigitalResourceIdentifierContentnodeid,
-                                            where: {
-                                                nodeId: DigitalResourceIdentifierTypenodeid,
-                                                contains: URLConceptvalueid
-                                            },
-                                            returnTiles: false
-                                        }, data._source.tiles);
-                                        // console.log(manifests);
-                                        getManifestData(manifests);
-                                    });
-                            });
-                        });
+                physicalThingUtils.getManifests(this.report.get('tiles')).then(function(manifests) {
+                    getManifestData(manifests);
                 });
             }
         },
