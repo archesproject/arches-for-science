@@ -12,7 +12,14 @@ define([
 ], function(_, $, arches, ko, koMapping, ReportModel, GraphModel, reportLookup, cardComponents) {
 
     function viewModel(params) {
-        
+        if (!params.resourceid()) {
+            params.resourceid(params.workflow.state.resourceid);
+        }
+        if (params.workflow.state.steps[params._index - 1]) {
+            params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
+            params.tileid(params.workflow.state.steps[params._index - 1].tileid);
+        }        
+
         var self = this;
         var graph;
         this.items = ko.observableArray([]);
