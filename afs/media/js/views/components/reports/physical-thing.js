@@ -83,14 +83,16 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     return canvases;
                 };
 
-                var getManifestData = function(manifestURL) {
-                    window.fetch(manifestURL)
-                        .then(function(response) {
-                            return response.json();
-                        })
-                        .then(function(manifestData) {
-                            parseManifestJson(manifestData);
-                        });
+                var getManifestData = function(manifestURLs) {
+                    manifestURLs.forEach(function(manifestURL) {
+                        window.fetch(manifestURL)
+                            .then(function(response) {
+                                return response.json();
+                            })
+                            .then(function(manifestData) {
+                                parseManifestJson(manifestData);
+                            });
+                    });
                 };
 
                 physicalThingUtils.getManifests(this.report.get('tiles')).then(function(manifests) {
