@@ -10,11 +10,10 @@ define([
 
     function viewModel(params) {
         if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
+            params.resourceid(params.workflow.state.steps[0].digitalresourcid);
         }
         NewTileStep.apply(this, [params]);
         var self = this;
-
         this.card.subscribe(function(val) {
             if(val.tiles != undefined) {
                 val.tiles.subscribe(function(arr) {

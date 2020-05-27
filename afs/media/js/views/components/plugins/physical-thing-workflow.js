@@ -15,15 +15,15 @@ define([
                     title: 'Physical Thing Name',
                     name: 'physicalthingname',
                     description: 'Preliminary information about this physical thing',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
+                    component: 'views/components/workflows/physical-thing-step',
+                    componentname: 'physical-thing-step',
                     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
                     nodegroupid: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-code-fork',
+                    icon: 'fa-asterisk',
                     wastebin: {resourceid: null, description: 'a physical thing instance'}
                 },
                 {
@@ -38,7 +38,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-code-fork',
+                    icon: 'fa-file-text',
                     wastebin: {resourceid: null, description: 'a physical thing instance'}
                 },
                 {
@@ -53,38 +53,8 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-code-fork',
+                    icon: 'fa-list',
                     wastebin: {resourceid: null, description: 'a physical thing instance'}
-                },
-                {
-                    title: 'Depicted Physical Thing',
-                    name: 'depictedphysicalthing',
-                    description: '',
-                    component: 'views/components/workflows/insert-prev-resource-as-related-resource-step',
-                    componentname: 'insert-prev-resource-as-related-resource-step',
-                    graphid: 'ba892214-b25b-11e9-bf3e-a4d18cec433a', // visual work
-                    nodegroupid: '5513933a-c062-11e9-9e4b-a4d18cec433a', // depicts (physical thing)
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                    icon: 'fa-code-fork',
-                    wastebin: {resourceid: null, description: 'a visual work instance'}
-                },
-                {
-                    title: 'Digital Resource Image',
-                    name: 'digitalresourceimage',
-                    description: 'Identify the related visual work',
-                    component: 'views/components/workflows/insert-prev-resource-as-related-resource-step',
-                    componentname: 'insert-prev-resource-as-related-resource-step',
-                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a', // digital resource
-                    nodegroupid: 'c1e732b0-ca7a-11e9-b369-a4d18cec433a', // shows (visual work)
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                    icon: 'fa-code-fork',
-                    wastebin: {resourceid: null, description: 'a digital resource instance'}
                 },
                 {
                     title: 'Digital Resource File',
@@ -98,7 +68,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-code-fork',
+                    icon: 'fa-file-image-o',
                     wastebin: {resourceid: null, description: 'a digital resource instance'}
                 },
                 {
