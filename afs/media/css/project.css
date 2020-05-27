@@ -215,3 +215,17 @@
 .summary-report-related-list {
     color:rgb(6, 119, 218);
 }
+
+.physical-thing-search-list {
+    margin-left: -25px;
+    padding-left: 35px;
+}
+
+.physical-thing-search-list .resource-report {
+    border-bottom: 1px solid #ddd;
+}
+
+.physical-thing-search-list .resource-report:hover {
+    cursor: pointer;
+    background: #fff;
+}
