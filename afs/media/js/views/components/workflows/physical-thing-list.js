@@ -30,6 +30,7 @@ define([
 
         this.selectIIIFTile = function(item) {
             self.selectedPhysicalThingId(item._id);
+            params.resourceid(item._id);
             if (ko.unwrap(self.complete) !== true) {
                 self.complete(true);
             } else {
@@ -102,7 +103,7 @@ define([
             }
             return {
                 selectedPhysicalThingId: self.selectedPhysicalThingId(),
-                resourceid: self.selectedPhysicalThingId(),
+                resourceid: ko.unwrap(params.resourceid),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,
             };
