@@ -19,8 +19,8 @@ define([
                 tileid = ko.unwrap(params.tileid);
             }
             return {
-                relatedresourceid: params.tile().data[relatedSetNodeId]()[0],
-                resourceid: ko.unwrap(params.resourceid),
+                relatedresourceid: params.tile() ? params.tile().data[relatedSetNodeId]()[0] : null,
+                resourceid: ko.unwrap(params.resourceid) || this.workflow.state.resourceid,
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,
             };
