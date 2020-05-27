@@ -13,55 +13,39 @@
         <span>
             <span class="subtitle-category">{% trans "Created By:" %}</span>
             <span class="subtitle-value">
-                <span>
+                <!-- <span>
                     <a target="_blank" data-bind="text: name, attr: { href: link }"></a>
-                </span>
+                </span> -->
             </span>
-            <span class="subtitle-value-blank" data-bind="if: artists().length === 0">
+            <!-- <span class="subtitle-value-blank" data-bind="if: artists().length === 0">
                 {% trans "No artist information" %}
-            </span>
+            </span> -->
         </span>
-        <span style="float: right; font-size: 13px;">{% trans "Gallery Systems TMS id" %}</span>
+        <span style="float: right; font-size: 13px;">{% trans "Visual Work Type" %}</span>
     </div>
 
     <!-- Description -->
     <div class="summary-report-description">
-        <span data-bind="if: description.length > 0">
-            <div data-bind="html: description"></div>
+        <span>
+            <div data-bind="html: Statement"></div>
         </span>
-        <span data-bind="if: description.length === 0">
+        <!-- <span data-bind="if: description.length === 0">
             {% trans "No description available" %}
-        </span>
-    </div>
-    
-    <!-- Manifests/Canvases -->
-    <div class="summary-report-manifests" data-bind="foreach: manifests">
-        <div style="margin-bottom: 15px;">
-            <div class="summary-report-manifest-title">
-                <span class="subtitle-category">{% trans "Related Images: " %}</span>
-                <span data-bind="text: label"></span>
-            </div>
-            
-            <div data-bind="foreach: sequences">
-                <div data-bind="foreach: canvases">
-                    <img class="summary-report-canvas" src="" data-bind="attr:{src: thumbnail, title: label}" />
-                </div>
-            </div>
-        </div>
+        </span> -->
     </div>
 
     <!-- Related Activities -->
     <div class="summary-report-related-panel">
         <div class="summary-report-related">
-            {% trans "Included in the following Activites" %}
+            {% trans "Depicts" %}
         </div>
-        <div data-bind="if: activities().length > 0">
-            <div class="subtitle-value" data-bind="foreach: activities">
-                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }"></a>
+        <div>
+            <div class="subtitle-value">
+                <a class="summary-report-related-list" target="_blank" data-bind="text: DepictsPhysicalName, attr: { href: link }"></a>
             </div>
         </div>
-        <span data-bind="if: activities().length === 0">
-            {% trans "No associated activities" %}
+        <span data-bind="if: !DepictsPhysicalValue">
+            {% trans "No Physical Things Depicted" %}
         </span>
     </div>
 </div>
