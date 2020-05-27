@@ -60,6 +60,7 @@ define([
                 },
                 {
                     title: 'Set or Collection',
+                    customCardLabel: 'Set or Collection Used in Sampling Activity',
                     name: 'activitycollection',
                     description: 'What set or collection is related?',
                     component: 'views/components/workflows/related-set-step',
