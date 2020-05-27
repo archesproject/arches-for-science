@@ -26,9 +26,9 @@ define([
             }
         });
 
-        params.getStateProperties = function(){
+        params.defineStateProperties = function(){
             return {
-                resourceid: ko.unwrap(params.resourceid),
+                resourceid: ko.unwrap(params.resourceid) || this.workflow.state.resourceid,
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
             };
