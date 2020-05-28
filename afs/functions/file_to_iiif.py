@@ -119,9 +119,9 @@ class FileToIIIF(BaseFunction):
                 manifest_url_nodeid = "db05c421-ca7a-11e9-bd7a-a4d18cec433a"
                 manifest_url_nodegroupid = "db05b5ca-ca7a-11e9-82ca-a4d18cec433a"
                 # set the identifier type node to "url" concept
-                digital_resource_identifier_type_nodeid = 'db05c05e-ca7a-11e9-8824-a4d18cec433a'
-                digital_resource_identifier_nodegroupid = 'db05b5ca-ca7a-11e9-82ca-a4d18cec433a'
-                url_concept_valueid = 'f32d0944-4229-4792-a33c-aadc2b181dc7'
+                digital_resource_identifier_type_nodeid = "db05c05e-ca7a-11e9-8824-a4d18cec433a"
+                digital_resource_identifier_nodegroupid = "db05b5ca-ca7a-11e9-82ca-a4d18cec433a"
+                url_concept_valueid = "f32d0944-4229-4792-a33c-aadc2b181dc7"
                 if not Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=manifest_url_nodegroupid).exists():
                     url_tile = Tile()
                     url_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=manifest_url_nodegroupid)
@@ -130,7 +130,9 @@ class FileToIIIF(BaseFunction):
                     url_tile.data[manifest_url_nodeid] = json_url
                     url_tile.save()
 
-                if not Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=digital_resource_identifier_nodegroupid).exists():
+                if not Tile.objects.filter(
+                    resourceinstance=tile.resourceinstance, nodegroup_id=digital_resource_identifier_nodegroupid
+                ).exists():
                     identifier_tile = Tile()
                     identifier_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=digital_resource_identifier_nodegroupid)
                     identifier_tile.resourceinstance = tile.resourceinstance
