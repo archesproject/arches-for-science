@@ -41,7 +41,7 @@ define(['jquery','underscore', 'knockout', 'arches', 'viewmodels/tabbed-report',
                     nodeId: FilesId,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
-                console.log(this.FilesValue);
+                // console.log(this.FilesValue);
 
                 $.ajax(arches.urls.concept_value + '?valueid=' + self.ResourceTypeValue, {
                     dataType: "json"
