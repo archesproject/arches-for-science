@@ -4,7 +4,7 @@
     <div>
         <h2 class="summary-report-title">
             <span data-bind="text: report.get('displayname') "></span>
-            <a class="summary-report-link" href="javascript(void);" data-bind="text: TypeOfWorkName"></a>
+            <a class="summary-report-link" href="javascript(void);" data-bind="text: ResourceTypeName"></a>
         </h2>
     </div>
 
@@ -17,11 +17,8 @@
                     <a target="_blank" data-bind="text: name, attr: { href: link }"></a>
                 </span> -->
             </span>
-            <!-- <span class="subtitle-value-blank" data-bind="if: artists().length === 0">
-                {% trans "No artist information" %}
-            </span> -->
         </span>
-        <span style="float: right; font-size: 13px;">{% trans "Visual Work Type" %}</span>
+        <span style="float: right; font-size: 13px;">{% trans "Resource Type" %}</span>
     </div>
 
     <!-- Description -->
@@ -34,8 +31,23 @@
         </span> -->
     </div>
 
-    <!-- Related Activities -->
+    <!-- Related Visual Work -->
     <div class="summary-report-related-panel">
+        <div class="summary-report-related">
+            {% trans "Shows Image" %}
+        </div>
+        <div>
+            <div class="subtitle-value">
+                <a class="summary-report-related-list" target="_blank" data-bind="text: ShowsVisualName, attr: { href: link }"></a>
+            </div>
+        </div>
+        <span data-bind="if: !ShowsVisualValue">
+            {% trans "No related Visual Works" %}
+        </span>
+    </div>
+
+    <!-- Related Activities -->
+    <!-- <div class="summary-report-related-panel">
         <div class="summary-report-related">
             {% trans "Depicts" %}
         </div>
@@ -47,7 +59,7 @@
         <span data-bind="if: !DepictsPhysicalValue">
             {% trans "No Physical Things Depicted" %}
         </span>
-    </div>
+    </div> -->
 </div>
 
 {% endblock summary %}

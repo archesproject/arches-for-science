@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function(_, ko, arches, TabbedReportViewModel, resourceUtils) {
+define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils) {
     return ko.components.register('visual-work-report', {
         viewModel: function(params) {
             var self = this;
@@ -28,6 +28,7 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                 }, this.report.get('tiles'), this.report.graph);
 
                 this.DepictsPhysicalName = ko.observable();
+                this.TypeOfWorkName = ko.observable();
 
                 this.TypeOfWorkValue = resourceUtils.getNodeValues({
                     nodeId: TypeOfWorkId,
@@ -35,6 +36,12 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                 }, this.report.get('tiles'), this.report.graph);
 
                 // TODO: get concept value label for TypeOfWorkValue
+
+                $.ajax(arches.urls.concept_value + '?valueid=' + self.TypeOfWorkValue, {
+                    dataType: "json"
+                }).done(function(data) {
+                    self.TypeOfWorkName(data.value);
+                });
 
                 this.link = ko.observable(arches.urls.resource + '/' + this.DepictsPhysicalValue);
 
