@@ -1,5 +1,5 @@
 define(['jquery','underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils) {
-    return ko.components.register('visual-work-report', {
+    return ko.components.register('digital-resource-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -58,6 +58,6 @@ define(['jquery','underscore', 'knockout', 'arches', 'viewmodels/tabbed-report',
          
             }
         },
-        template: { require: 'text!templates/views/components/reports/visual-work.htm' }
+        template: { require: 'text!templates/views/components/reports/digital-resource.htm' }
     });
 });
