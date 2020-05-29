@@ -9,6 +9,8 @@ define([
 ], function(_, $, arches, ko, koMapping, NewTileStep) {
     function viewModel(params) {
         var self = this;
+
+        params.resourceid(params.workflow.state.steps[params._index - 1].selectedPhysicalThingId);
         NewTileStep.apply(this, [params]);
         
         this.digitalResourceId = ko.observable(null);
