@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class FileToIIIF(BaseFunction):
     def postSave(self, tile, request):
 
-        acceptable_types = ["jpg", "jpeg", "tiff", "tif", "png"]  # 2nd validation in case card not configured to filter image filetypes
+        acceptable_types = [".jpg", ".jpeg", ".tiff", ".tif", ".png"]  # 2nd validation in case card not configured to filter image filetypes
         files = list(models.File.objects.filter(tile=tile))
         resource = Resource.objects.get(resourceinstanceid=tile.resourceinstance_id)
         name = resource.displayname
@@ -35,10 +35,10 @@ class FileToIIIF(BaseFunction):
             os.mkdir(CANTALOUPE_DIR)
 
         for f in files:
-            if any(ac == (f.path.name.split(".")[-1]) for ac in acceptable_types):
+            if os.path.splitext(f.path.name)[1].lower() in acceptable_types:
                 dest = os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url))
-                file_name = f.path.name.split("/")[-1]
-                file_name_less_ext = file_name[: (file_name.index(file_name.split(".")[-1]) - 1)]  # end slice before the '.'
+                file_name = os.path.basename(f.path.name)
+                file_name_less_ext = os.path.splitext(file_name)[0]
                 file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/" + file_name
                 file_json = file_url + "/info.json"
                 logger.info("copying file to local dir")
