@@ -106,9 +106,9 @@ class FileToIIIF(BaseFunction):
                         }
                     ],
                 }
-
-                json_url = ARCHES_HOST_ENDPOINT + MEDIA_URL + "uploadedfiles/" + (file_name_less_ext + ".json")  # hosted address
-                json_path = os.path.join(APP_ROOT, "uploadedfiles", (file_name_less_ext + ".json"))  # abs address
+                json_file_name = f"{file_name_less_ext}.json"
+                json_url = f"{request._current_scheme_host}{MEDIA_URL}uploadedfiles/{json_file_name}"  # hosted address
+                json_path = os.path.join(APP_ROOT, "uploadedfiles", json_file_name)  # abs address
                 with open(json_path, "w") as pres_json:
                     json.dump(pres_dict, pres_json)
 
