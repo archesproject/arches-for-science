@@ -34,7 +34,6 @@ class NameSelectModels(BaseFunction):
     }
 
     def execute(self, tile):
-
         def update_tile_name_node(tile, name_nodegroupid, name_nodeid, related_nodeid):
             # set tile for name using descriptor for rel resource
             related_resource_tile = models.TileModel.objects.get(resourceinstance=tile.resourceinstance, nodegroup_id=related_nodeid)

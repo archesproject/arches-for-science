@@ -14,7 +14,7 @@ details = {
     "name": "File to IIIF",
     "type": "node",
     "description": "copies uploaded files into a Cantaloupe host dir, creates IIIF manifest json and db record",
-    "defaultconfig": {"triggering_nodegroups":[]},
+    "defaultconfig": {"triggering_nodegroups": []},
     "classname": "FileToIIIF",
     "component": "views/components/functions/file-to-iiif",
     "functionid": "210519e3-ee55-460a-ab6d-0b56e1b5ba3a",
@@ -26,7 +26,13 @@ logger = logging.getLogger(__name__)
 class FileToIIIF(BaseFunction):
     def postSave(self, tile, request):
 
-        acceptable_types = [".jpg", ".jpeg", ".tiff", ".tif", ".png"]  # 2nd validation in case card not configured to filter image filetypes
+        acceptable_types = [
+            ".jpg",
+            ".jpeg",
+            ".tiff",
+            ".tif",
+            ".png",
+        ]  # 2nd validation in case card not configured to filter image filetypes
         files = list(models.File.objects.filter(tile=tile))
         resource = Resource.objects.get(resourceinstanceid=tile.resourceinstance_id)
         name = resource.displayname
@@ -125,10 +131,7 @@ class FileToIIIF(BaseFunction):
                     url_tile = Tile()
                     url_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=manifest_url_nodegroupid)
                     url_tile.resourceinstance = tile.resourceinstance
-                    url_tile.data = {
-                        manifest_url_nodeid : json_url,
-                        digital_resource_identifier_type_nodeid : [url_concept_valueid]
-                    }
+                    url_tile.data = {manifest_url_nodeid: json_url, digital_resource_identifier_type_nodeid: [url_concept_valueid]}
                     url_tile.save()
             else:
                 logger.warn("filetype unacceptable: " + f.path.name)
