@@ -27,8 +27,22 @@ define([
                     'tileid': null 
                 }
             }).done(function(data) {
-                console.log(data);
                 self.visualworkid = data.resourceinstance_id
+
+                // 'Updates the shows item of a physical thing with the visual work resourceid',
+                $.ajax({
+                    url: arches.urls.api_tiles,
+                    type: 'POST',
+                    data: {
+                        'resourceinstanceid': params.resourceid(), // resourceid of the physical thing
+                        'nodeid': '2fe9f066-b31e-11e9-b3be-a4d18cec433a', // Shows (physical ting)
+                        'data': JSON.stringify([data.resourceinstance_id]),  // resourceid of the visual work
+                        'tileid': null
+                    }
+                }).done(function(data) {
+                    console.log('phys thing shows updated:', data);
+                });
+
                 // 'Creates a digital resource that references the visual work',
                 $.ajax({
                     url: arches.urls.api_tiles,
@@ -41,6 +55,21 @@ define([
                 }).done(function(data) {
                     console.log(data)
                     self.digitalresourceid = data.resourceinstance_id;
+
+                    // 'Updates the used image node of the visual work with the digital resourceid',
+                    $.ajax({
+                        url: arches.urls.api_tiles,
+                        type: 'POST',
+                        data: {
+                            'resourceinstanceid': self.visualworkid,
+                            'nodeid': '9743a1b2-8591-11ea-97eb-acde48001122', // Used image (visual work)
+                            'data': self.digitalresourceid,  // resourceid of the digital resource
+                            'tileid': null
+                        }
+                    }).done(function(data) {
+                        console.log('added used image of the dig resource to the visual work:', data);
+                    });
+
                     self.setStateProperties();
                     if (params.workflow) {
                         params.workflow.updateUrl();
@@ -60,6 +89,7 @@ define([
             return {
                 digitalresourceid: self.digitalresourceid,
                 visualworkid: self.visualworkid,
+                physicalthingid: ko.unwrap(params.resourceid),
                 resourceid: ko.unwrap(params.resourceid),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,

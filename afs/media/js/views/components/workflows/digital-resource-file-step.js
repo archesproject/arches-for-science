@@ -15,12 +15,12 @@ define([
         NewTileStep.apply(this, [params]);
         var self = this;
         this.card.subscribe(function(val) {
-            if(val.tiles != undefined) {
-                val.tiles.subscribe(function(arr) {
-                    if (arr.length > 0) {
-                        arr[0].save(null, function(){
-                            self.onSaveSuccess(arr[0]);
-                        }, this);
+            if(ko.unwrap(val.tiles) && ko.unwrap(val.tiles).length > 0) {
+                self.complete(true);
+            } else {
+                val.tiles.subscribe(function(tiles) {
+                    if (tiles.length > 0) {
+                        self.complete(true);
                     }
                 });
             }
