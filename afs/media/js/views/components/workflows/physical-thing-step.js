@@ -1,11 +1,12 @@
 define([
+    'jquery',
     'underscore',
     'knockout',
     'knockout-mapping',
     'arches',
     'views/components/workflows/new-tile-step',
     'bindings/select2-query',
-], function(_, ko, koMapping, arches, NewTileStep) {
+], function($, _, ko, koMapping, arches, NewTileStep) {
 
     function viewModel(params) {
 
@@ -27,7 +28,7 @@ define([
                     'tileid': null 
                 }
             }).done(function(data) {
-                self.visualworkid = data.resourceinstance_id
+                self.visualworkid = data.resourceinstance_id;
 
                 // 'Updates the shows item of a physical thing with the visual work resourceid',
                 $.ajax({
@@ -40,7 +41,8 @@ define([
                         'tileid': null
                     }
                 }).done(function(data) {
-                    console.log('phys thing shows updated:', data);
+                    // eslint-disable-next-line no-console
+                    console.log('Updated the "shows" node of the physical thing', data);
                 });
 
                 // 'Creates a digital resource that references the visual work',
@@ -53,9 +55,7 @@ define([
                         'tileid': null
                     }
                 }).done(function(data) {
-                    console.log(data)
                     self.digitalresourceid = data.resourceinstance_id;
-
                     // 'Updates the used image node of the visual work with the digital resourceid',
                     $.ajax({
                         url: arches.urls.api_tiles,
@@ -67,7 +67,8 @@ define([
                             'tileid': null
                         }
                     }).done(function(data) {
-                        console.log('added used image of the dig resource to the visual work:', data);
+                        // eslint-disable-next-line no-console
+                        console.log('Added "used image" of the digital resource to the visual work:', data);
                     });
 
                     self.setStateProperties();
