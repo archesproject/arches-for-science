@@ -11,10 +11,9 @@ function($, _, ko, koMapping, ListView, FunctionViewModel, chosen) {
         viewModel: function(params) {
             FunctionViewModel.apply(this, arguments);
             var nodegroups = {};
+            this.triggering_nodegroups = params.config.triggering_nodegroups;
             this.cards = ko.observableArray();
-            this.selectedNodegroup = params.config.selected_nodegroup;
-
-            this.graph.cards.forEach(function(card){
+            this.graph.cards. forEach(function(card){
                 this.cards.push(card);
                 nodegroups[card.nodegroup_id] = true;
             }, this);

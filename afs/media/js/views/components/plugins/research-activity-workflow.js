@@ -74,6 +74,7 @@ define([
                     customCardLabel: 'Set or Collection Used in Research Activity',
                     name: 'createphysicalthingsset',
                     description: 'Create a set of physical things',
+                    component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: 'cc5d6df3-d477-11e9-9f59-a4d18cec433a',
