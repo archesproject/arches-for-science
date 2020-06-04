@@ -50,6 +50,8 @@ class FileToIIIF(BaseFunction):
                 logger.info("copying file to local dir")
                 shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), dest)
                 image_json = self.fetch(file_json)
+                if image_json is None:
+                    return
                 pres_dict = {
                     "@context": "http://iiif.io/api/presentation/2/context.json",
                     "@type": "sc:Manifest",
@@ -137,8 +139,12 @@ class FileToIIIF(BaseFunction):
                 logger.warn("filetype unacceptable: " + f.path.name)
 
     def fetch(self, url):
-        resp = requests.get(url)
-        return resp.json()
+        try:
+            resp = requests.get(url)
+            return resp.json()
+        except:
+            logger.warn("Manifest not created. Check if Cantaloupe running")
+            return None
 
     def on_import(self, tile):
         raise NotImplementedError
