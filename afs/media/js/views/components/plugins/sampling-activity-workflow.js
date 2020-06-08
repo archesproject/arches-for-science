@@ -119,6 +119,8 @@ define([
                     componentname: 'iiif-step',
                     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
                     nodegroupid: 'fec59582-8593-11ea-97eb-acde48001122',
+                    physicalthingidstep: 4,
+                    visualworkidstep: 3,
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
