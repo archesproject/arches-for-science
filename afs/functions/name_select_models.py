@@ -36,32 +36,34 @@ class NameSelectModels(BaseFunction):
     def execute(self, tile):
         def update_tile_name_node(tile, name_nodegroupid, name_nodeid, related_nodeid):
             # set tile for name using descriptor for rel resource
-            related_resource_node_tile = Tile.objects.get(resourceinstance=tile.resourceinstance, nodegroup_id=related_nodeid)
-            related_resource_id = related_resource_node_tile.data[related_nodeid][0]
-            related_resource = Resource.objects.get(resourceinstanceid=related_resource_id)
-            # create a new tile on the original resourceinstance concat "graph.name + 'of' + related_resource_name"
-            new_tile = Tile()
-            new_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=name_nodegroupid)
-            new_tile.resourceinstance = tile.resourceinstance
-            new_tile.data = {}
-            new_tile.data[name_nodeid] = tile.resourceinstance.graph.name + " of " + related_resource.displayname
-            new_tile.save()
+            related_resource_tile = models.TileModel.objects.get(resourceinstance=tile.resourceinstance, nodegroup_id=related_nodeid)
+            if len(related_resource_tile.data[related_nodeid]) > 0:
+                related_resource_id = related_resource_tile.data[related_nodeid][0]
+                related_resource = Resource.objects.get(resourceinstanceid=related_resource_id)
+                # create a new tile on the original resourceinstance concat "graph.name + 'of' + related_resource_name"
+                new_tile = models.TileModel()
+                new_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=name_nodegroupid)
+                new_tile.resourceinstance = tile.resourceinstance
+                name = tile.resourceinstance.graph.name + " of " + related_resource.displayname
+                new_tile.data = {name_nodeid: name}
+                new_tile_tileid = new_tile.tileid
+                new_tile.save()
 
         # check if its in the list of models I care about
-        if str(tile.resourceinstance.graph.graphid) in list(self.select_models.keys()):
+        target_graphid = tile.resourceinstance.graph_id
+        if str(target_graphid) in list(self.select_models.keys()):
             # check the name node for a value, if empty: check appropriate related res node
-            name_nodegroupid = self.select_models[str(tile.resourceinstance.graph.graphid)]["name_nodegroupid"]
-            # name_nodegroup = models.NodeGroup.objects.get(nodegroupid=)
+            name_nodegroupid = self.select_models[str(target_graphid)]["name_nodegroupid"]
             if not Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=name_nodegroupid).exists():
                 # check appropriate rel res node
-                related_nodegroupid = self.select_models[str(tile.resourceinstance.graph.graphid)]["related_nodegroupid"]
+                related_nodegroupid = self.select_models[str(target_graphid)]["related_nodegroupid"]
                 if Tile.objects.filter(resourceinstance=tile.resourceinstance, nodegroup_id=related_nodegroupid).exists():
-                    related_nodeid = self.select_models[str(tile.resourceinstance.graph.graphid)]["related_nodeid"]
-                    name_nodeid = self.select_models[str(tile.resourceinstance.graph.graphid)]["name_nodeid"]
+                    related_nodeid = self.select_models[str(target_graphid)]["related_nodeid"]
+                    name_nodeid = self.select_models[str(target_graphid)]["name_nodeid"]
                     update_tile_name_node(tile, name_nodegroupid, name_nodeid, related_nodeid)
 
     def save(self, tile, request):
-        self.execute(tile)
+        pass
 
     def postSave(self, tile, request):
         self.execute(tile)

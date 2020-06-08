@@ -8,8 +8,11 @@
       </div>
 
       <div class="col-xs-12">
-          <select data-placeholder="{% trans "Choose a card." %}"
-          data-bind="value: selectedNodegroup, options: cards, optionsText: 'name', optionsValue: 'nodegroup_id', chosen: {width: '100%', allow_single_deselect: true, disable_search_threshold: 15},"></select>
+          <!-- <select data-placeholder="{% trans "Choose a card." %}" multiple
+          data-bind="value: triggering_nodegroups, options: cards, optionsText: 'name', optionsValue: 'nodegroup_id', chosen: {width: '100%', allow_single_deselect: true, disable_search_threshold: 15},"></select> -->
+
+          <select data-placeholder="{% trans "Select a nodegroup" %}" multiple data-bind="chosen: {width: '100%'}, selectedOptions: triggering_nodegroups, options: cards, optionsText: 'name', optionsValue: 'nodegroup_id'"></select>
+
       </div>
     </div>
   </div>

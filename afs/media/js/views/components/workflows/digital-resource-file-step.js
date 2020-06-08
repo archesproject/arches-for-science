@@ -10,26 +10,25 @@ define([
 
     function viewModel(params) {
         if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
+            params.resourceid(params.workflow.state.steps[0].digitalresourceid);
         }
         NewTileStep.apply(this, [params]);
         var self = this;
-
         this.card.subscribe(function(val) {
-            if(val.tiles != undefined) {
-                val.tiles.subscribe(function(arr) {
-                    if (arr.length > 0) {
-                        arr[0].save(null, function(){
-                            self.onSaveSuccess(arr[0]);
-                        }, this);
+            if(ko.unwrap(val.tiles) && ko.unwrap(val.tiles).length > 0) {
+                self.complete(true);
+            } else {
+                val.tiles.subscribe(function(tiles) {
+                    if (tiles.length > 0) {
+                        self.complete(true);
                     }
                 });
             }
         });
 
-        params.getStateProperties = function(){
+        params.defineStateProperties = function(){
             return {
-                resourceid: ko.unwrap(params.resourceid),
+                resourceid: ko.unwrap(params.resourceid) || this.workflow.state.resourceid,
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
             };
