@@ -42,7 +42,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Curation",
                     "nodegroup_id": "466f81d4-c451-11e9-b7c9-a4d18cec433a",
                     "sortorder": 5,
@@ -125,7 +125,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Internal Label",
                     "nodegroup_id": "a5568b17-b2e2-11e9-9573-a4d18cec433a",
                     "sortorder": 6,
@@ -297,7 +297,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Used In",
                     "nodegroup_id": "9e4f6be8-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
@@ -451,7 +451,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Name",
                     "nodegroup_id": "52aa1673-c450-11e9-8640-a4d18cec433a",
                     "sortorder": 0,
@@ -548,7 +548,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Classification",
                     "nodegroup_id": "442a9c87-c450-11e9-b396-a4d18cec433a",
                     "sortorder": 2,
@@ -849,6 +849,22 @@
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
+                    },
+                    "id": "93825451-d352-11e9-b053-a4d18cec433a",
+                    "label": "_label",
+                    "node_id": "59767dbd-c450-11e9-8111-a4d18cec433a",
+                    "sortorder": 6,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "466f8030-c451-11e9-be86-a4d18cec433a",
@@ -1427,22 +1443,6 @@
                     "sortorder": 4,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "93825451-d352-11e9-b053-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "59767dbd-c450-11e9-8111-a4d18cec433a",
-                    "sortorder": 6,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "466f8f80-c451-11e9-a943-a4d18cec433a",
@@ -3816,12 +3816,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "id": "00e7c36f-9a78-11ea-9f58-024e0d439fdb"
+                    "id": "09075da9-a9e5-11ea-9f58-024e0d439fdb"
                 }
             ],
             "graphid": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
             "iconclass": "fa fa-cubes",
-            "is_editable": true,
+            "is_editable": false,
             "isactive": true,
             "isresource": true,
             "jsonldcontext": "",
@@ -6840,7 +6840,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "155412791 2020-05-13 08:57:05 -0700",
+        "git hash": "453b4cfb2 2020-06-04 18:39:40 +0000",
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }
