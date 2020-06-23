@@ -10,7 +10,7 @@ define([
             IIIFCardComponentViewModel.apply(this, [params]);
             if (this.form && this.state === 'form') {
                 var tiles = [];
-                this.form.topCards.reduce(function(tiles, card) {
+                ko.unwrap(this.form.topCards).reduce(function(tiles, card) {
                     ko.unwrap(card.tiles).forEach(function(tile) {
                         tiles.push(tile);
                         tiles.concat(self.getTiles(tile));
