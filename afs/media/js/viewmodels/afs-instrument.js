@@ -165,6 +165,7 @@ define(['jquery',
             this.seriesData().forEach(function(series) {
                 if (series.tileid === tileid) {
                     this.seriesData.remove(series);
+                    this.stagedSeries.remove(series.tileid);
                     if (existing) { self.seriesStyles.remove(existing); }
                 }
             }, this);
