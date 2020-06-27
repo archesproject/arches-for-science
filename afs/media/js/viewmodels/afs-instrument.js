@@ -50,7 +50,7 @@ define(['jquery',
                         self.fileViewer.selected().tileid !== tile.tileid
                     }).map(function(t){return {text: self.fileViewer.getUrl(t).name, id: t.tileid }});
                     return compat;
-        }
+                }
             });
         }
 
@@ -145,22 +145,25 @@ define(['jquery',
         }
 
         this.addData = function(tile) {
+            var seriesStyle = {
+                "tileid": tile.tileid,
+                "color": self.colorHolder()
+            };
             var existing = self.seriesStyles().find(function(el){
                 return el["tileid"] === tile.tileid;
             });
+            var localStoreSeriesConfig = localStore.getItem(renderer + 'series' + tile.tileid);
+            if (!localStoreSeriesConfig) {
+                localStore.setItem(renderer + 'series' + tile.tileid, JSON.stringify({color: self.colorHolder()}));
+            } else {
+                seriesStyle.color = JSON.parse(localStoreSeriesConfig).color;
+            }
             if (!existing) {
-                self.seriesStyles.push({
-                    "tileid": tile.tileid,
-                    "color": self.colorHolder()
-                });
+                self.seriesStyles.push(seriesStyle);
             }
             var fileInfo = this.fileViewer.getUrl(tile);
             this.getChartingData(tile.tileid, fileInfo.url, fileInfo.name);
             self.toggleSelected(tile);
-            var itemInLocalStore = localStore.getItem(renderer + 'series' + tile.tileid);
-            if (!itemInLocalStore) {
-                localStore.setItem(renderer + 'series' + tile.tileid, JSON.stringify({color: self.colorHolder()}));
-            }
         };
 
         this.removeData = function(tileid) {
