@@ -92,14 +92,19 @@ define(['jquery',
         this.colorHolder.subscribe(function(val){
             var existing; 
             var updated;
+            var tile;
             if (self.selectedSeriesTile()) {
+                tile = self.selectedSeriesTile();
                 existing = self.seriesStyles().find(function(el){
-                    return el["tileid"] === self.selectedSeriesTile().tileid;
+                    return el["tileid"] === tile.tileid;
                 });
                 if (existing && val) {
                     updated = existing;
                     updated["color"] = val;
                     self.seriesStyles.replace(existing, updated);
+                    var seriesConfig = JSON.parse(localStore.getItem(renderer + 'series' + tile.tileid));
+                    seriesConfig.color = val;
+                    localStore.setItem(renderer + 'series' + tile.tileid, JSON.stringify(seriesConfig));
                 }
             }
         });
@@ -128,13 +133,14 @@ define(['jquery',
             });
         });
 
-        this.addAllToChart = function(t){
-            if (self.fileViewer) {
-                self.fileViewer.card.tiles().forEach(function(tile){
+        this.addAllToChart = function(tiles){
+            var tiles = self.fileViewer ? self.fileViewer.card.tiles() : tiles;
+            if (tiles) {
+                tiles.forEach(function(tile){
                     if (self.stagedSeries().indexOf(tile.tileid) > -1) {
                         self.addData(tile);
                     }
-                })
+                });
             }
         }
 
@@ -151,6 +157,10 @@ define(['jquery',
             var fileInfo = this.fileViewer.getUrl(tile);
             this.getChartingData(tile.tileid, fileInfo.url, fileInfo.name);
             self.toggleSelected(tile);
+            var itemInLocalStore = localStore.getItem(renderer + 'series' + tile.tileid);
+            if (!itemInLocalStore) {
+                localStore.setItem(renderer + 'series' + tile.tileid, JSON.stringify({color: self.colorHolder()}));
+            }
         };
 
         this.removeData = function(tileid) {
@@ -166,6 +176,7 @@ define(['jquery',
                 if (series.tileid === tileid) {
                     this.seriesData.remove(series);
                     this.stagedSeries.remove(series.tileid);
+                    localStore.removeItem(renderer + 'series' + series.tileid);
                     if (existing) { self.seriesStyles.remove(existing); }
                 }
             }, this);
@@ -189,6 +200,24 @@ define(['jquery',
             }
         };
 
+        this.loadSeriesDataFromLocalStorage = function(){
+            var addToChart = [];
+            this.compatibleSeries().forEach(function(tile){
+                var fullTile;
+                var tileMap = self.params.card.tiles().reduce(function(result, item) {
+                    result[item.tileid] = item
+                    return result
+                }, {}) ;  
+                var item = localStorage.getItem(renderer + 'series' + tile.id);
+                if (item) {
+                    fullTile = tileMap[tile.id];
+                    self.stagedSeries.push(fullTile.tileid);
+                    addToChart.push(fullTile);
+                }
+            });
+            this.addAllToChart(addToChart);
+        };
+
         this.render  = function() {
             var series = {
                 'value': [],
@@ -202,6 +231,7 @@ define(['jquery',
                     try {
                         self.parse(data, series);
                         self.chartData(series);
+                        self.loadSeriesDataFromLocalStorage();
                     } catch(e) {
                         self.displayContent.validRenderer(false);
                     }
