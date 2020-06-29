@@ -47,6 +47,12 @@ define([
                         }
                     }
                 },
+                legend: {
+                    font: {
+                        family: 'Arial, monospace',
+                        color: '#7f7f7f'
+                    }
+                },
                 width: $(element).width() - 2
             };
 
