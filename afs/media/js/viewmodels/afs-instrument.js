@@ -136,7 +136,7 @@ define(['jquery',
         });
 
         this.addAllToChart = function(tiles){
-            var tiles = self.fileViewer ? self.fileViewer.card.tiles() : tiles;
+            tiles = self.fileViewer ? self.fileViewer.card.tiles() : tiles;
             if (tiles) {
                 tiles.forEach(function(tile){
                     if (self.stagedSeries().indexOf(tile.tileid) > -1) {
@@ -210,10 +210,10 @@ define(['jquery',
             this.compatibleSeries().forEach(function(tile){
                 var fullTile;
                 var tileMap = self.params.card.tiles().reduce(function(result, item) {
-                    result[item.tileid] = item
-                    return result
+                    result[item.tileid] = item;
+                    return result;
                 }, {}) ;  
-                var item = localStorage.getItem(renderer + 'series' + tile.id);
+                var item = localStore.getItem(renderer + 'series' + tile.id);
                 if (item) {
                     fullTile = tileMap[tile.id];
                     self.stagedSeries.push(fullTile.tileid);
