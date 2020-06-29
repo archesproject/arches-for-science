@@ -72,21 +72,7 @@ define([
                 layout.width = $(element).width() - 2;
                 Plotly.relayout(element, layout);
             });
-            
-            // var layoutOptions = [
-            //     {option: config.title, layout: {title: {text: 'Title'}}},
-            //     {option: config.titleSize, layout: {title: {font: {size: 24}}}},
-            //     {option: config.xAxisLabel, layout: {xaxis: {title: {text: 'xaxis label'}}}},
-            //     {option: config.xAxisLabelSize, layout: {xaxis: {title: {font: {size: 18}}}}},
-            //     {option: config.yAxisLabel, layout: {yaxis: {title: {text: 'yaxis label'}}}},
-            //     {option: config.yAxisLabelSizelayout, layout: {yaxis: {title: {font: {size: 18}}}}},
-            // ];
 
-            // layoutOptions.forEach(function(layoutOption) {
-            //     layoutOption.option.subscribe(function(val){
-
-            //     })
-            // });
             config.title.subscribe(function(val){
                 layout.title.text = val;
                 Plotly.relayout(element, layout);
