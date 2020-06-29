@@ -10,7 +10,12 @@ define([
                 x: config.data().value,
                 y: config.data().count,
                 type: 'scatter',
+                mode: 'lines',
                 name: config.data().name,
+                line: {
+                    color: config.primarySeriesColor,
+                    width: 3
+                }
             };
             var layout = {
                 title: {

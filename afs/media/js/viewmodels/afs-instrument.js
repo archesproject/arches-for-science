@@ -79,6 +79,8 @@ define(['jquery',
         this.seriesStyles = this.commonData.seriesStyles;
         this.colorHolder = this.commonData.colorHolder;
         this.compatibleSeries = this.commonData.compatibleSeries;
+        this.primarySeriesColor = JSON.parse(localStore.getItem(renderer + 'series' + this.fileViewer.tile.tileid) || '{"color": "#3333ff"}').color;
+
 
         this.selectedSeriesTile.subscribe(function(tile){
             if(tile) {
