@@ -10,7 +10,12 @@ define([
                 x: config.data().value,
                 y: config.data().count,
                 type: 'scatter',
+                mode: 'lines',
                 name: config.data().name,
+                line: {
+                    color: config.primarySeriesColor,
+                    width: 3
+                }
             };
             var layout = {
                 title: {
@@ -40,6 +45,12 @@ define([
                             size: config.yAxisLabelSize(),
                             color: '#7f7f7f'
                         }
+                    }
+                },
+                legend: {
+                    font: {
+                        family: 'Arial, monospace',
+                        color: '#7f7f7f'
                     }
                 },
                 width: $(element).width() - 2
@@ -72,21 +83,7 @@ define([
                 layout.width = $(element).width() - 2;
                 Plotly.relayout(element, layout);
             });
-            
-            // var layoutOptions = [
-            //     {option: config.title, layout: {title: {text: 'Title'}}},
-            //     {option: config.titleSize, layout: {title: {font: {size: 24}}}},
-            //     {option: config.xAxisLabel, layout: {xaxis: {title: {text: 'xaxis label'}}}},
-            //     {option: config.xAxisLabelSize, layout: {xaxis: {title: {font: {size: 18}}}}},
-            //     {option: config.yAxisLabel, layout: {yaxis: {title: {text: 'yaxis label'}}}},
-            //     {option: config.yAxisLabelSizelayout, layout: {yaxis: {title: {font: {size: 18}}}}},
-            // ];
 
-            // layoutOptions.forEach(function(layoutOption) {
-            //     layoutOption.option.subscribe(function(val){
-
-            //     })
-            // });
             config.title.subscribe(function(val){
                 layout.title.text = val;
                 Plotly.relayout(element, layout);
