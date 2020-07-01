@@ -1,5 +1,5 @@
 define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils) {
-    return ko.components.register('visual-work-report', {
+    return ko.components.register('modification-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -7,51 +7,56 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
 
             if (params.summary) {
                 // var resourceid = params.report.attributes.resourceid;
-                var StatementTextId = 'e58ecc2e-c062-11e9-ba30-a4d18cec433a'; // ok
-                var TypeOfWorkId = '28a4ae07-c062-11e9-a11d-a4d18cec433a';
-                var DepictsPhysicalId = '5513933a-c062-11e9-9e4b-a4d18cec433a';
+                var StatementTextId = 'ad9f5dca-c456-11e9-b5a1-a4d18cec433a';
+                var modifiedNodeId = 'cb3f3ae1-c45a-11e9-8594-a4d18cec433a';
+                var carriedOutNodeId = '85869d3d-c456-11e9-a9b6-a4d18cec433a';
+                var begOfBegNodeId = 'a95cde05-c456-11e9-8fe4-a4d18cec433a';
+                var endOfEndNodeId = 'a95cebba-c456-11e9-816a-a4d18cec433a';
 
-                // this.CreatedBy = resourceUtils.getNodeValues({
-                //     nodeId: '', // what is the nodeid?
-                //     returnTiles: false
-                // }, this.report.get('tiles'), this.report.graph);
+                this.CarriedOutBy = resourceUtils.getNodeValues({
+                    nodeId: carriedOutNodeId,
+                    returnTiles: false
+                }, this.report.get('tiles'), this.report.graph)[0];
 
                 this.Statement = resourceUtils.getNodeValues({
                     nodeId: StatementTextId,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-
-                this.DepictsPhysicalValue = resourceUtils.getNodeValues({
-                    nodeId: DepictsPhysicalId,
+                this.Beginning = resourceUtils.getNodeValues({
+                    nodeId: begOfBegNodeId,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                this.DepictsPhysicalName = ko.observable();
-                this.TypeOfWorkName = ko.observable();
-
-                this.TypeOfWorkValue = resourceUtils.getNodeValues({
-                    nodeId: TypeOfWorkId,
+                this.End = resourceUtils.getNodeValues({
+                    nodeId: endOfEndNodeId,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                // TODO: get concept value label for TypeOfWorkValue
 
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.TypeOfWorkValue, {
-                    dataType: "json"
-                }).done(function(data) {
-                    self.TypeOfWorkName(data.value);
-                });
+                this.ObjectModified = resourceUtils.getNodeValues({
+                    nodeId: modifiedNodeId,
+                    returnTiles: false
+                }, this.report.get('tiles'), this.report.graph)[0];
 
-                this.link = ko.observable(arches.urls.resource + '/' + this.DepictsPhysicalValue);
+                this.ObjectModifiedName = ko.observable();
+                this.CarriedOutByName = ko.observable();
 
-                resourceUtils.lookupResourceInstanceData(this.DepictsPhysicalValue)
+                this.link = ko.observable(arches.urls.resource + '/' + this.ObjectModified.resourceId);
+                this.carriedOutByLink = ko.observable(arches.urls.resource + '/' + this.CarriedOutBy.resourceId);
+
+                resourceUtils.lookupResourceInstanceData(this.ObjectModified.resourceId)
                     .then(function(data) {
-                        self.DepictsPhysicalName(data._source.displayname);
+                        self.ObjectModifiedName(data._source.displayname);
+                    });
+                
+                resourceUtils.lookupResourceInstanceData(this.CarriedOutBy.resourceId)
+                    .then(function(data) {
+                        self.CarriedOutByName(data._source.displayname);
                     });
          
             }
         },
-        template: { require: 'text!templates/views/components/reports/visual-work.htm' }
+        template: { require: 'text!templates/views/components/reports/modification.htm' }
     });
 });

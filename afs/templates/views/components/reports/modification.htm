@@ -4,7 +4,7 @@
     <div>
         <h2 class="summary-report-title">
             <span data-bind="text: report.get('displayname') "></span>
-            <a class="summary-report-link" href="javascript(void);" data-bind="text: TypeOfWorkName"></a>
+            <a class="summary-report-link" href="javascript(void);" data-bind="text: '[classification?]'"></a>
         </h2>
     </div>
 
@@ -13,9 +13,9 @@
         <span>
             <span class="subtitle-category">{% trans "Carried out by:" %}</span>
             <span class="subtitle-value">
-                <!-- <span>
-                    <a target="_blank" data-bind="text: name, attr: { href: link }"></a>
-                </span> -->
+                <span>
+                    <a target="_blank" data-bind="text: CarriedOutByName, attr: { href: carriedOutByLink }"></a>
+                </span>
             </span>
             <!-- <span class="subtitle-value-blank" data-bind="if: artists().length === 0">
                 {% trans "No artist information" %}
@@ -37,16 +37,28 @@
     <!-- Related Activities -->
     <div class="summary-report-related-panel">
         <div class="summary-report-related">
-            {% trans "Depicts" %}
+            {% trans "Object(s) Modified" %}
         </div>
         <div>
             <div class="subtitle-value">
-                <a class="summary-report-related-list" target="_blank" data-bind="text: DepictsPhysicalName, attr: { href: link }"></a>
+                <a class="summary-report-related-list" target="_blank" data-bind="text: ObjectModifiedName, attr: { href: link }"></a>
             </div>
         </div>
-        <span data-bind="if: !DepictsPhysicalValue">
-            {% trans "No Physical Things Depicted" %}
+        <span data-bind="if: !ObjectModified">
+            {% trans "No Objects Modified" %}
         </span>
+    </div>
+
+    <div class="summary-report-related-panel">
+        <div class="summary-report-related">
+            {% trans "Duration:" %}
+        </div>
+        <div>
+            <div class="subtitle-value">
+                <span class="" data-bind="text: 'Modification started: ' + Beginning"></span>
+                <span class="" data-bind="text: 'Modification Completed on: ' + End"></span>
+            </div>
+        </div>
     </div>
 </div>
 
