@@ -45,7 +45,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
 
                 this.link = ko.observable(arches.urls.resource + '/' + this.DepictsPhysicalValue);
 
-                resourceUtils.lookupResourceInstanceData(this.DepictsPhysicalValue)
+                resourceUtils.lookupResourceInstanceData(this.DepictsPhysicalValue[0].resourceId)
                     .then(function(data) {
                         self.DepictsPhysicalName(data._source.displayname);
                     });
