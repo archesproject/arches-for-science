@@ -31,6 +31,68 @@
                 },
                 {
                     "active": true,
+                    "cardid": "0b927ffa-ca85-11e9-908e-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0b927ffa-ca85-11e9-908e-a4d18cec433a",
+                            "constraintid": "d178bf03-8d8a-4ff7-868f-3ffe42a55677",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "__ used spec obj",
+                    "nodegroup_id": "0b927ce6-ca85-11e9-8047-a4d18cec433a",
+                    "sortorder": 8,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "0b92748a-ca85-11e9-98a4-a4d18cec433a",
+                    "component_id": "2f9054d8-de57-45cd-8a9c-58bbb1619030",
+                    "config": {
+                        "groupedCardIds": [
+                            "0b92888a-ca85-11e9-8e1d-a4d18cec433a",
+                            "0b923be6-ca85-11e9-880a-a4d18cec433a"
+                        ],
+                        "sortedWidgetIds": [
+                            "7dc7765c-cb6d-11e9-8e1f-a4d18cec433a",
+                            "00389b0c-cb71-11e9-bc4d-a4d18cec433a",
+                            "aa22a085-cb6e-11e9-aba9-a4d18cec433a"
+                        ]
+                    },
+                    "constraints": [
+                        {
+                            "card_id": "0b92748a-ca85-11e9-98a4-a4d18cec433a",
+                            "constraintid": "33658888-9de5-40da-bb54-bb78409f2ef1",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Temporal Relations",
+                    "nodegroup_id": "0b9272a8-ca85-11e9-9149-a4d18cec433a",
+                    "sortorder": 12,
+                    "visible": true
+                },
+                {
+                    "active": true,
                     "cardid": "dbaa57ae-9ae7-11ea-ab62-dca90488358a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -60,110 +122,6 @@
                     "nodegroup_id": "dbaa2022-9ae7-11ea-ab62-dca90488358a",
                     "sortorder": 5,
                     "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0b92a657-ca85-11e9-8964-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
-                            "constraintid": "eb02b669-d7b2-491f-88e8-15dd44994450",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": false,
-                    "name": "Brief Text or Statement",
-                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "cc5e7a4f-d477-11e9-8653-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "cc5e7a4f-d477-11e9-8653-a4d18cec433a",
-                            "constraintid": "0f52e26c-102b-4a2c-8ca3-4d2dffc4b437",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Used Set of Objects",
-                    "nodegroup_id": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
-                    "sortorder": 9,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                            "constraintid": "744d3091-9c75-40dd-8591-282d0ae89e98",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Timespan During Which Activity Took Place",
-                    "nodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a",
-                    "sortorder": 11,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0b924c6b-ca85-11e9-adb1-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0b924c6b-ca85-11e9-adb1-a4d18cec433a",
-                            "constraintid": "1726d9e9-ad38-417d-941c-26b80f34d2bd",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": "This value is used to briefly name or describe the activity",
-                    "is_editable": false,
-                    "name": "Internal Label",
-                    "nodegroup_id": "0b924961-ca85-11e9-85e3-a4d18cec433a",
-                    "sortorder": 16,
-                    "visible": false
                 },
                 {
                     "active": true,
@@ -205,6 +163,32 @@
                 },
                 {
                     "active": true,
+                    "cardid": "0b925251-ca85-11e9-985e-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0b925251-ca85-11e9-985e-a4d18cec433a",
+                            "constraintid": "9097583b-05c3-4d94-b8a7-1b5079bfa76e",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "__ influence",
+                    "nodegroup_id": "0b924ea6-ca85-11e9-9486-a4d18cec433a",
+                    "sortorder": 10,
+                    "visible": false
+                },
+                {
+                    "active": true,
                     "cardid": "0b92bb70-ca85-11e9-9619-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -217,17 +201,69 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\nThis property allows the selection from a controlled list to describe *how* the activity was carried out, in a general sense. \nExamples: \n  * The experiment was done computationally, versus manually\n  * The project was done collaboratively\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "helpenabled": true,
-                    "helptext": "<p>This property allows the selection from a controlled list to describe *how* the activity was carried out, in a general sense.&nbsp;<br />\nExamples:&nbsp;<br />\n&nbsp; * The experiment was done computationally, versus manually<br />\n&nbsp; * The project was done collaboratively</p>\n",
-                    "helptitle": "Usage",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
                     "name": "Technique or Style of Activity",
                     "nodegroup_id": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
                     "sortorder": 15,
                     "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0b92888a-ca85-11e9-8e1d-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0b92888a-ca85-11e9-8e1d-a4d18cec433a",
+                            "constraintid": "157a16cc-b190-4739-a35e-078403ab90f8",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "__ after",
+                    "nodegroup_id": "0b928202-ca85-11e9-a8d3-a4d18cec433a",
+                    "sortorder": 13,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "0b923be6-ca85-11e9-880a-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0b923be6-ca85-11e9-880a-a4d18cec433a",
+                            "constraintid": "1d21819b-80ce-4cca-a602-66265395508d",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "__ before",
+                    "nodegroup_id": "0b9237fd-ca85-11e9-9e80-a4d18cec433a",
+                    "sortorder": 14,
+                    "visible": false
                 },
                 {
                     "active": true,
@@ -359,10 +395,10 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Location",
+                    "name": "__ location",
                     "nodegroup_id": "0b9299e1-ca85-11e9-98fc-a4d18cec433a",
                     "sortorder": 7,
-                    "visible": true
+                    "visible": false
                 },
                 {
                     "active": true,
@@ -434,108 +470,124 @@
                     "nodegroup_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0b92a657-ca85-11e9-8964-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
+                            "constraintid": "eb02b669-d7b2-491f-88e8-15dd44994450",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Brief Text or Statement",
+                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "cc5e7a4f-d477-11e9-8653-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "cc5e7a4f-d477-11e9-8653-a4d18cec433a",
+                            "constraintid": "0f52e26c-102b-4a2c-8ca3-4d2dffc4b437",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "__ used set",
+                    "nodegroup_id": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
+                    "sortorder": 9,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                            "constraintid": "744d3091-9c75-40dd-8591-282d0ae89e98",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Timespan During Which Activity Took Place",
+                    "nodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a",
+                    "sortorder": 11,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0b924c6b-ca85-11e9-adb1-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0b924c6b-ca85-11e9-adb1-a4d18cec433a",
+                            "constraintid": "1726d9e9-ad38-417d-941c-26b80f34d2bd",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": "This value is used to briefly name or describe the activity",
+                    "is_editable": false,
+                    "name": "Internal Label",
+                    "nodegroup_id": "0b924961-ca85-11e9-85e3-a4d18cec433a",
+                    "sortorder": 16,
+                    "visible": false
                 }
             ],
             "cards_x_nodes_x_widgets": [
                 {
-                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
+                    "card_id": "0b92a2de-ca85-11e9-aa53-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
+                        "label": "Referenced in Work",
+                        "placeholder": ""
                     },
-                    "id": "87b1368c-cb70-11e9-8763-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "0b92d5a3-ca85-11e9-8ea8-a4d18cec433a",
-                    "sortorder": 4,
+                    "id": "a2d108c0-cb70-11e9-a9ad-a4d18cec433a",
+                    "label": "Referenced in Work",
+                    "node_id": "0b92e275-ca85-11e9-8ea5-a4d18cec433a",
+                    "sortorder": 2,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Type of Name",
-                        "options": [],
-                        "placeholder": "Select one or more types for this name"
-                    },
-                    "id": "87aece42-cb70-11e9-bcfb-a4d18cec433a",
-                    "label": "Type of Name",
-                    "node_id": "0b930757-ca85-11e9-a268-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
-                    "config": {
-                        "label": "Referenced In Work",
-                        "placeholder": "Select one or more reference works"
-                    },
-                    "id": "87ad56e8-cb70-11e9-935f-a4d18cec433a",
-                    "label": "Referenced In Work",
-                    "node_id": "0b92de3d-ca85-11e9-affe-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter name of activity",
-                        "width": "100%"
-                    },
-                    "id": "87abd10f-cb70-11e9-b675-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "0b92cf5c-ca85-11e9-95b1-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0b9255b8-ca85-11e9-bcbc-a4d18cec433a",
-                    "config": {
-                        "label": "Work",
-                        "placeholder": ""
-                    },
-                    "id": "6385f6ba-cb6d-11e9-9947-a4d18cec433a",
-                    "label": "Work",
-                    "node_id": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0b929cd9-ca85-11e9-b51b-a4d18cec433a",
-                    "config": {
-                        "label": "Location of Activity",
-                        "placeholder": ""
-                    },
-                    "id": "c73859b8-cb6e-11e9-8139-a4d18cec433a",
-                    "label": "Location of Activity",
-                    "node_id": "0b9299e1-ca85-11e9-98fc-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "dbaa57ae-9ae7-11ea-ab62-dca90488358a",
-                    "config": {
-                        "label": "carried out by",
-                        "placeholder": ""
-                    },
-                    "id": "12cfc87c-9ae8-11ea-ab62-dca90488358a",
-                    "label": "carried out by",
-                    "node_id": "dbaa2022-9ae7-11ea-ab62-dca90488358a",
-                    "sortorder": null,
-                    "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
@@ -553,6 +605,58 @@
                     "sortorder": 4,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b9255b8-ca85-11e9-bcbc-a4d18cec433a",
+                    "config": {
+                        "label": "Work",
+                        "placeholder": ""
+                    },
+                    "id": "6385f6ba-cb6d-11e9-9947-a4d18cec433a",
+                    "label": "Work",
+                    "node_id": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0b927ffa-ca85-11e9-908e-a4d18cec433a",
+                    "config": {
+                        "label": "Instrument or Tool used to Perform the Activity",
+                        "placeholder": ""
+                    },
+                    "id": "dc9461cf-cb6e-11e9-8e33-a4d18cec433a",
+                    "label": "Instrument or Tool used to Perform the Activity",
+                    "node_id": "0b927ce6-ca85-11e9-8047-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0b92748a-ca85-11e9-98a4-a4d18cec433a",
+                    "config": {
+                        "label": "Occurs During Period",
+                        "placeholder": ""
+                    },
+                    "id": "7dc7765c-cb6d-11e9-8e1f-a4d18cec433a",
+                    "label": "Occurs During Period",
+                    "node_id": "0b9272a8-ca85-11e9-9149-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "dbaa57ae-9ae7-11ea-ab62-dca90488358a",
+                    "config": {
+                        "label": "carried out by",
+                        "placeholder": ""
+                    },
+                    "id": "12cfc87c-9ae8-11ea-ab62-dca90488358a",
+                    "label": "carried out by",
+                    "node_id": "dbaa2022-9ae7-11ea-ab62-dca90488358a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "0b928d42-ca85-11e9-888c-a4d18cec433a",
@@ -677,218 +781,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
-                    "config": {
-                        "label": "Referenced in Work",
-                        "placeholder": "Select reference work"
-                    },
-                    "id": "b5ce70d1-cb6d-11e9-9c08-a4d18cec433a",
-                    "label": "Referenced in Work",
-                    "node_id": "0b92e4f5-ca85-11e9-9728-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
-                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
-                        ],
-                        "label": "Type of Statement",
-                        "options": [],
-                        "placeholder": "Select one or more types for this Statement"
-                    },
-                    "id": "b5d0dde1-cb6d-11e9-91d2-a4d18cec433a",
-                    "label": "Type of Statement",
-                    "node_id": "0b92eeb0-ca85-11e9-9f4d-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Statement Text",
-                        "maxLength": null,
-                        "placeholder": "Enter text for statement",
-                        "width": "100%"
-                    },
-                    "id": "b5d22c85-cb6d-11e9-a2f0-a4d18cec433a",
-                    "label": "Statement Text",
-                    "node_id": "0b930a8a-ca85-11e9-a000-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "b5ccd2ae-cb6d-11e9-8694-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "0b92cbd9-ca85-11e9-9826-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language",
-                        "options": [],
-                        "placeholder": "Select one or more languages of the content"
-                    },
-                    "id": "b5cf7a17-cb6d-11e9-a7e9-a4d18cec433a",
-                    "label": "Language",
-                    "node_id": "0b92fee6-ca85-11e9-af44-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "cc5e7a4f-d477-11e9-8653-a4d18cec433a",
-                    "config": {
-                        "label": "Set of Objects this Activity Acted Upon",
-                        "placeholder": ""
-                    },
-                    "id": "ef5749a6-d477-11e9-8515-a4d18cec433a",
-                    "label": "Set of Objects this Activity Acted Upon",
-                    "node_id": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Type of Timespan",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "fa6010cf-cb6e-11e9-9544-a4d18cec433a",
-                    "label": "Type of Timespan",
-                    "node_id": "0b92c9ee-ca85-11e9-a028-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Internal Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "fa5de6dc-cb6e-11e9-b533-a4d18cec433a",
-                    "label": "Internal Label",
-                    "node_id": "0b92c502-ca85-11e9-b9e4-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Begining of the end",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "fa5ba323-cb6e-11e9-9b99-a4d18cec433a",
-                    "label": "Begining of the end",
-                    "node_id": "0b930905-ca85-11e9-8aca-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "End of the beginning",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "fa5efb26-cb6e-11e9-a5a9-a4d18cec433a",
-                    "label": "End of the beginning",
-                    "node_id": "0b931623-ca85-11e9-b235-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Begin of the beginning",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "fa5cea17-cb6e-11e9-9dfa-a4d18cec433a",
-                    "label": "Begin of the beginning",
-                    "node_id": "0b92c0de-ca85-11e9-8d50-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "End of the end",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "fa611ffa-cb6e-11e9-be08-a4d18cec433a",
-                    "label": "End of the end",
-                    "node_id": "0b92f57d-ca85-11e9-a353-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "0b924c6b-ca85-11e9-adb1-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "b623ab26-cb6e-11e9-a155-a4d18cec433a",
-                    "label": "Label",
-                    "node_id": "0b924961-ca85-11e9-85e3-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "0b927a7a-ca85-11e9-89a5-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -905,6 +797,19 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "0b925251-ca85-11e9-985e-a4d18cec433a",
+                    "config": {
+                        "label": "This Activity was Influenced By",
+                        "placeholder": ""
+                    },
+                    "id": "e9583226-cb70-11e9-ac1b-a4d18cec433a",
+                    "label": "This Activity was Influenced By",
+                    "node_id": "0b924ea6-ca85-11e9-9486-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "0b92bb70-ca85-11e9-9619-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -915,9 +820,35 @@
                     "id": "92212b19-cb6e-11e9-96e5-a4d18cec433a",
                     "label": "Technique",
                     "node_id": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
-                    "sortorder": 0,
+                    "sortorder": null,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0b92888a-ca85-11e9-8e1d-a4d18cec433a",
+                    "config": {
+                        "label": "Occurs After Event",
+                        "placeholder": ""
+                    },
+                    "id": "00389b0c-cb71-11e9-bc4d-a4d18cec433a",
+                    "label": "Occurs After Event",
+                    "node_id": "0b928202-ca85-11e9-a8d3-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0b923be6-ca85-11e9-880a-a4d18cec433a",
+                    "config": {
+                        "label": "Occurs Before Event",
+                        "placeholder": ""
+                    },
+                    "id": "aa22a085-cb6e-11e9-aba9-a4d18cec433a",
+                    "label": "Occurs Before Event",
+                    "node_id": "0b9237fd-ca85-11e9-9e80-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "0b929321-ca85-11e9-8673-a4d18cec433a",
@@ -1139,17 +1070,17 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "0b92a2de-ca85-11e9-aa53-a4d18cec433a",
+                    "card_id": "0b929cd9-ca85-11e9-b51b-a4d18cec433a",
                     "config": {
-                        "label": "Referenced in Work",
+                        "label": "Location of Activity",
                         "placeholder": ""
                     },
-                    "id": "a2d108c0-cb70-11e9-a9ad-a4d18cec433a",
-                    "label": "Referenced in Work",
-                    "node_id": "0b92e275-ca85-11e9-8ea5-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "id": "c73859b8-cb6e-11e9-8139-a4d18cec433a",
+                    "label": "Location of Activity",
+                    "node_id": "0b9299e1-ca85-11e9-98fc-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "0b925b2e-ca85-11e9-9e82-a4d18cec433a",
@@ -1166,6 +1097,215 @@
                     "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b9242bd-ca85-11e9-a735-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "af9cf900-cb6f-11e9-81a3-a4d18cec433a",
+                    "label": "Language",
+                    "node_id": "0b930c54-ca85-11e9-9c21-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0b9242bd-ca85-11e9-a735-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                        ],
+                        "label": "Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "af9f32ee-cb6f-11e9-8dbb-a4d18cec433a",
+                    "label": "Type",
+                    "node_id": "0b92da57-ca85-11e9-8316-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0b9242bd-ca85-11e9-a735-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
+                    },
+                    "id": "af9b7621-cb6f-11e9-b1ba-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "0b92c7f8-ca85-11e9-bf5f-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Language",
+                        "options": [],
+                        "placeholder": "Select one or more languages of the content"
+                    },
+                    "id": "87b02c5e-cb70-11e9-b4b4-a4d18cec433a",
+                    "label": "Language",
+                    "node_id": "0b92f8cc-ca85-11e9-8c26-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
+                    },
+                    "id": "87b1368c-cb70-11e9-8763-a4d18cec433a",
+                    "label": "_label",
+                    "node_id": "0b92d5a3-ca85-11e9-8ea8-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                        ],
+                        "label": "Type of Name",
+                        "options": [],
+                        "placeholder": "Select one or more types for this name"
+                    },
+                    "id": "87aece42-cb70-11e9-bcfb-a4d18cec433a",
+                    "label": "Type of Name",
+                    "node_id": "0b930757-ca85-11e9-a268-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
+                    "config": {
+                        "label": "Referenced In Work",
+                        "placeholder": "Select one or more reference works"
+                    },
+                    "id": "87ad56e8-cb70-11e9-935f-a4d18cec433a",
+                    "label": "Referenced In Work",
+                    "node_id": "0b92de3d-ca85-11e9-affe-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter name of activity",
+                        "width": "100%"
+                    },
+                    "id": "87abd10f-cb70-11e9-b675-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "0b92cf5c-ca85-11e9-95b1-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
+                    "config": {
+                        "label": "Referenced in Work",
+                        "placeholder": "Select reference work"
+                    },
+                    "id": "b5ce70d1-cb6d-11e9-9c08-a4d18cec433a",
+                    "label": "Referenced in Work",
+                    "node_id": "0b92e4f5-ca85-11e9-9728-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Type of Timespan",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "fa6010cf-cb6e-11e9-9544-a4d18cec433a",
+                    "label": "Type of Timespan",
+                    "node_id": "0b92c9ee-ca85-11e9-a028-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Internal Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
+                    },
+                    "id": "fa5de6dc-cb6e-11e9-b533-a4d18cec433a",
+                    "label": "Internal Label",
+                    "node_id": "0b92c502-ca85-11e9-b9e4-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Begining of the end",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "fa5ba323-cb6e-11e9-9b99-a4d18cec433a",
+                    "label": "Begining of the end",
+                    "node_id": "0b930905-ca85-11e9-8aca-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "End of the beginning",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "fa5efb26-cb6e-11e9-a5a9-a4d18cec433a",
+                    "label": "End of the beginning",
+                    "node_id": "0b931623-ca85-11e9-b235-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "0b925b2e-ca85-11e9-9e82-a4d18cec433a",
@@ -1188,6 +1328,19 @@
                     "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "0b92b5a6-ca85-11e9-857f-a4d18cec433a",
+                    "config": {
+                        "label": "Parent Activity",
+                        "placeholder": ""
+                    },
+                    "id": "b1526638-cb6d-11e9-beaf-a4d18cec433a",
+                    "label": "Parent Activity",
+                    "node_id": "0b92b30a-ca85-11e9-a41d-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "0b925b2e-ca85-11e9-9e82-a4d18cec433a",
@@ -1274,69 +1427,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
-                    "card_id": "0b92b5a6-ca85-11e9-857f-a4d18cec433a",
-                    "config": {
-                        "label": "Parent Activity",
-                        "placeholder": ""
-                    },
-                    "id": "b1526638-cb6d-11e9-beaf-a4d18cec433a",
-                    "label": "Parent Activity",
-                    "node_id": "0b92b30a-ca85-11e9-a41d-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "0b9242bd-ca85-11e9-a735-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "af9cf900-cb6f-11e9-81a3-a4d18cec433a",
-                    "label": "Language",
-                    "node_id": "0b930c54-ca85-11e9-9c21-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "0b9242bd-ca85-11e9-a735-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
-                        "label": "Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "af9f32ee-cb6f-11e9-8dbb-a4d18cec433a",
-                    "label": "Type",
-                    "node_id": "0b92da57-ca85-11e9-8316-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "0b9242bd-ca85-11e9-a735-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "af9b7621-cb6f-11e9-b1ba-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "0b92c7f8-ca85-11e9-bf5f-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "0b9242bd-ca85-11e9-a735-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -1366,7 +1456,57 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "0b9266b5-ca85-11e9-9405-a4d18cec433a",
+                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
+                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
+                        ],
+                        "label": "Type of Statement",
+                        "options": [],
+                        "placeholder": "Select one or more types for this Statement"
+                    },
+                    "id": "b5d0dde1-cb6d-11e9-91d2-a4d18cec433a",
+                    "label": "Type of Statement",
+                    "node_id": "0b92eeb0-ca85-11e9-9f4d-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement Text",
+                        "maxLength": null,
+                        "placeholder": "Enter text for statement",
+                        "width": "100%"
+                    },
+                    "id": "b5d22c85-cb6d-11e9-a2f0-a4d18cec433a",
+                    "label": "Statement Text",
+                    "node_id": "0b930a8a-ca85-11e9-a000-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
+                    },
+                    "id": "b5ccd2ae-cb6d-11e9-8694-a4d18cec433a",
+                    "label": "_label",
+                    "node_id": "0b92cbd9-ca85-11e9-9826-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0b92a657-ca85-11e9-8964-a4d18cec433a",
                     "config": {
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
@@ -1375,12 +1515,77 @@
                         "options": [],
                         "placeholder": "Select one or more languages of the content"
                     },
-                    "id": "87b02c5e-cb70-11e9-b4b4-a4d18cec433a",
+                    "id": "b5cf7a17-cb6d-11e9-a7e9-a4d18cec433a",
                     "label": "Language",
-                    "node_id": "0b92f8cc-ca85-11e9-8c26-a4d18cec433a",
-                    "sortorder": 2,
+                    "node_id": "0b92fee6-ca85-11e9-af44-a4d18cec433a",
+                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "cc5e7a4f-d477-11e9-8653-a4d18cec433a",
+                    "config": {
+                        "label": "Set of Objects this Activity Acted Upon",
+                        "placeholder": ""
+                    },
+                    "id": "ef5749a6-d477-11e9-8515-a4d18cec433a",
+                    "label": "Set of Objects this Activity Acted Upon",
+                    "node_id": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Begin of the beginning",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "fa5cea17-cb6e-11e9-9dfa-a4d18cec433a",
+                    "label": "Begin of the beginning",
+                    "node_id": "0b92c0de-ca85-11e9-8d50-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "0b92615c-ca85-11e9-96a2-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "End of the end",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "fa611ffa-cb6e-11e9-be08-a4d18cec433a",
+                    "label": "End of the end",
+                    "node_id": "0b92f57d-ca85-11e9-a353-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "0b924c6b-ca85-11e9-adb1-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
+                    },
+                    "id": "b623ab26-cb6e-11e9-a155-a4d18cec433a",
+                    "label": "Label",
+                    "node_id": "0b924961-ca85-11e9-85e3-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 }
             ],
             "color": "rgba(23,227,41,1)",
@@ -1414,17 +1619,8 @@
             },
             "deploymentdate": null,
             "deploymentfile": null,
-            "description": "This model represents the activities of conservation scientists, including the projects, research tasks, experiments and similar activities that they carry out as part of their work. ",
+            "description": "Projects, Research Tasks, Experiments and similar activities.",
             "edges": [
-                {
-                    "description": null,
-                    "domainnode_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
-                    "edgeid": "0b991394-ca85-11e9-84d3-a4d18cec433a",
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "rangenode_id": "0b931ec5-ca85-11e9-8e51-a4d18cec433a"
-                },
                 {
                     "description": null,
                     "domainnode_id": "0b929f00-ca85-11e9-bfe2-a4d18cec433a",
@@ -1562,6 +1758,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
+                    "edgeid": "0b990e38-ca85-11e9-884b-a4d18cec433a",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
+                    "rangenode_id": "0b927ce6-ca85-11e9-8047-a4d18cec433a"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a",
                     "edgeid": "0b98f1ca-ca85-11e9-ba27-a4d18cec433a",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
@@ -1622,6 +1827,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "rangenode_id": "0b92cbd9-ca85-11e9-9826-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
+                    "edgeid": "0b98ff75-ca85-11e9-a94f-a4d18cec433a",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P182i_starts_after_or_with_the_end_of",
+                    "rangenode_id": "0b928202-ca85-11e9-a8d3-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -1689,6 +1903,15 @@
                 {
                     "description": null,
                     "domainnode_id": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
+                    "edgeid": "0b98ecd4-ca85-11e9-b372-a4d18cec433a",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P15_was_influenced_by",
+                    "rangenode_id": "0b924ea6-ca85-11e9-9486-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
                     "edgeid": "0b98e107-ca85-11e9-85d4-a4d18cec433a",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "name": null,
@@ -1739,6 +1962,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
+                    "edgeid": "0b9907bd-ca85-11e9-86ee-a4d18cec433a",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P182_ends_before_or_with_the_start_of",
+                    "rangenode_id": "0b9237fd-ca85-11e9-9e80-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -1949,6 +2181,15 @@
                 },
                 {
                     "description": null,
+                    "domainnode_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
+                    "edgeid": "0b991394-ca85-11e9-84d3-a4d18cec433a",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "rangenode_id": "0b931ec5-ca85-11e9-8e51-a4d18cec433a"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
                     "edgeid": "0b9908e1-ca85-11e9-8c5b-a4d18cec433a",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
@@ -2031,6 +2272,15 @@
                 {
                     "description": null,
                     "domainnode_id": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
+                    "edgeid": "0b990d99-ca85-11e9-b7fa-a4d18cec433a",
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P117_occurs_during",
+                    "rangenode_id": "0b9272a8-ca85-11e9-9149-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
                     "edgeid": "dbaaaff6-9ae7-11ea-ab62-dca90488358a",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "name": null,
@@ -2066,7 +2316,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "id": "bc9a991e-ab18-11ea-ac23-3af9d3b32b71"
+                    "id": "70375cf0-c2de-11ea-9d7a-3af9d3b32b71"
                 }
             ],
             "graphid": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
@@ -2080,6 +2330,12 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
+                    "nodegroupid": "0b927ce6-ca85-11e9-8047-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
                     "nodegroupid": "0b925900-ca85-11e9-8989-a4d18cec433a",
                     "parentnodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a"
                 },
@@ -2090,28 +2346,10 @@
                     "parentnodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a"
                 },
                 {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "0b926878-ca85-11e9-b841-a4d18cec433a",
-                    "parentnodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a"
-                },
-                {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
+                    "nodegroupid": "0b928a4c-ca85-11e9-9eb1-a4d18cec433a",
                     "parentnodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "0b924423-ca85-11e9-865a-a4d18cec433a",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "0b924961-ca85-11e9-85e3-a4d18cec433a",
-                    "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
@@ -2122,7 +2360,37 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
+                    "nodegroupid": "0b924423-ca85-11e9-865a-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
+                    "parentnodegroup_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b924961-ca85-11e9-85e3-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b924ea6-ca85-11e9-9486-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b9237fd-ca85-11e9-9e80-a4d18cec433a",
                     "parentnodegroup_id": null
                 },
                 {
@@ -2134,13 +2402,25 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
+                    "nodegroupid": "dbaa2022-9ae7-11ea-ab62-dca90488358a",
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "n",
+                    "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "0b929f00-ca85-11e9-bfe2-a4d18cec433a",
+                    "nodegroupid": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b9272a8-ca85-11e9-9149-a4d18cec433a",
                     "parentnodegroup_id": null
                 },
                 {
@@ -2152,14 +2432,26 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
-                    "parentnodegroup_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a"
+                    "nodegroupid": "0b928202-ca85-11e9-a8d3-a4d18cec433a",
+                    "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "0b928a4c-ca85-11e9-9eb1-a4d18cec433a",
+                    "nodegroupid": "0b929f00-ca85-11e9-bfe2-a4d18cec433a",
+                    "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
                     "parentnodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a"
+                },
+                {
+                    "cardinality": "1",
+                    "legacygroupid": null,
+                    "nodegroupid": "0b926878-ca85-11e9-b841-a4d18cec433a",
+                    "parentnodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a"
                 },
                 {
                     "cardinality": "n",
@@ -2168,87 +2460,47 @@
                     "parentnodegroup_id": null
                 },
                 {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "dbaa2022-9ae7-11ea-ab62-dca90488358a",
-                    "parentnodegroup_id": null
-                },
-                {
                     "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "0b92a414-ca85-11e9-b725-a4d18cec433a",
-                    "parentnodegroup_id": null
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
                     "parentnodegroup_id": null
                 }
             ],
             "nodes": [
                 {
                     "config": null,
-                    "datatype": "number",
-                    "description": "# Specific:\n\n\n# General:\nThis is the numeric value of the dimension, e.g. _6_ (inches long) See: https://linked.art/api/1.0/shared/dimension/\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "is_collector": false,
-                    "isrequired": false,
+                    "isrequired": true,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "TimeSpan_duration_value",
-                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
-                    "nodeid": "0b92e7ee-ca85-11e9-b945-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90_has_value",
+                    "name": "Name_content",
+                    "nodegroup_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
+                    "nodeid": "0b92cf5c-ca85-11e9-95b1-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": []
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "is_collector": false,
-                    "isrequired": false,
+                    "isrequired": true,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "TimeSpan_duration_source",
-                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
-                    "nodeid": "0b92d361-ca85-11e9-bfb6-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": []
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_statement_source",
-                    "nodegroup_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
-                    "nodeid": "0b931ec5-ca85-11e9-8e51-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "name": "Statement_content",
+                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
+                    "nodeid": "0b930a8a-ca85-11e9-a000-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -2270,6 +2522,24 @@
                     "sortorder": 0
                 },
                 {
+                    "config": null,
+                    "datatype": "number",
+                    "description": "# Specific:\n\n\n# General:\nThis is the numeric value of the dimension, e.g. _6_ (inches long) See: https://linked.art/api/1.0/shared/dimension/\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_duration_value",
+                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
+                    "nodeid": "0b92e7ee-ca85-11e9-b945-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90_has_value",
+                    "sortorder": 0
+                },
+                {
                     "config": {
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
                     },
@@ -2287,34 +2557,6 @@
                     "nodeid": "0b92f8cc-ca85-11e9-8c26-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E56_Language",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P72_has_language",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                                "name": "Textual Work"
-                            }
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Statement_name_source",
-                    "nodegroup_id": "0b926878-ca85-11e9-b841-a4d18cec433a",
-                    "nodeid": "0b92eadc-ca85-11e9-9013-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0
                 },
                 {
@@ -2356,34 +2598,6 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                                "name": "Textual Work"
-                            }
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Name_source",
-                    "nodegroup_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
-                    "nodeid": "0b92de3d-ca85-11e9-affe-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
@@ -2399,29 +2613,6 @@
                     "nodeid": "0b92cd54-ca85-11e9-8d4e-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": []
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Statement_source",
-                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
-                    "nodeid": "0b92e4f5-ca85-11e9-9728-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0
                 },
                 {
@@ -2443,13 +2634,8 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": []
-                    },
-                    "datatype": "resource-instance-list",
+                    "config": null,
+                    "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -2457,35 +2643,12 @@
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_statement_name_source",
-                    "nodegroup_id": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
-                    "nodeid": "0b92e080-ca85-11e9-8db4-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": []
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_duration_Name_source",
-                    "nodegroup_id": "0b923eb5-ca85-11e9-8a4c-a4d18cec433a",
-                    "nodeid": "0b9319ba-ca85-11e9-ab01-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "istopnode": true,
+                    "name": "Activity",
+                    "nodegroup_id": null,
+                    "nodeid": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
+                    "parentproperty": "",
                     "sortorder": 0
                 },
                 {
@@ -2508,22 +2671,22 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": "26d7ce44-20e5-44fb-a3c1-dfbe6bdd521b"
+                        "rdmCollection": "35ed167d-ab89-4f38-b046-3349256be725"
                     },
-                    "datatype": "concept",
-                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "is_collector": true,
-                    "isrequired": true,
+                    "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "type",
-                    "nodegroup_id": "0b924423-ca85-11e9-865a-a4d18cec433a",
-                    "nodeid": "0b924423-ca85-11e9-865a-a4d18cec433a",
+                    "name": "technique",
+                    "nodegroup_id": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
+                    "nodeid": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique",
                     "sortorder": 0
                 },
                 {
@@ -2600,53 +2763,6 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": []
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_name_source",
-                    "nodegroup_id": "0b928a4c-ca85-11e9-9eb1-a4d18cec433a",
-                    "nodeid": "0b92be40-ca85-11e9-885f-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": [],
-                        "rdmCollection": null
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Identifier_source",
-                    "nodegroup_id": "0b929f00-ca85-11e9-bfe2-a4d18cec433a",
-                    "nodeid": "0b92e275-ca85-11e9-8ea5-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
                         "graphid": null,
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
                     },
@@ -2709,24 +2825,6 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Statement_name_label",
-                    "nodegroup_id": "0b926878-ca85-11e9-b841-a4d18cec433a",
-                    "nodeid": "0b930594-ca85-11e9-8d7e-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
@@ -2757,33 +2855,21 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "0b9235d9-ca85-11e9-9fa2-a4d18cec433a"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                                "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
-                                "name": "Activity",
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P10i_contains"
-                            }
-                        ]
-                    },
-                    "datatype": "resource-instance",
+                    "config": null,
+                    "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "part of",
-                    "nodegroup_id": "0b92b30a-ca85-11e9-a41d-a4d18cec433a",
-                    "nodeid": "0b92b30a-ca85-11e9-a41d-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9i_forms_part_of",
+                    "name": "TimeSpan_begin of the end",
+                    "nodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a",
+                    "nodeid": "0b930905-ca85-11e9-8aca-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#dateTime",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P81b_begin_of_the_end",
                     "sortorder": 0
                 },
                 {
@@ -2805,37 +2891,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": [
-                            {
-                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                                "name": "Textual Work"
-                            }
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "source",
-                    "nodegroup_id": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
-                    "nodeid": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
                     "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "datatype": "number",
+                    "description": "# Specific:\n\n\n# General:\nThis is the lowest possible number that the value of the dimension could be, if there is uncertainty about that value. For example if the painting is 4-6 inches wide, then the lowest value is 4.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
@@ -2843,29 +2901,11 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Identifier_label",
-                    "nodegroup_id": "0b929f00-ca85-11e9-bfe2-a4d18cec433a",
-                    "nodeid": "0b92ecb0-ca85-11e9-82b1-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": true,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Name_content",
-                    "nodegroup_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
-                    "nodeid": "0b92cf5c-ca85-11e9-95b1-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
+                    "name": "TimeSpan_duration_lowest possible value",
+                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
+                    "nodeid": "0b931c47-ca85-11e9-8161-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90a_has_lower_value_limit",
                     "sortorder": 0
                 },
                 {
@@ -2890,26 +2930,6 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": "bbf81641-b1dd-4ddf-858d-7e8ca823d385"
-                    },
-                    "datatype": "concept",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_duration_unit",
-                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
-                    "nodeid": "0b92ce57-ca85-11e9-9027-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E58_Measurement_Unit",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P91_has_unit",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
                     },
                     "datatype": "concept-list",
@@ -2930,13 +2950,259 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "cc8ed633-b25b-11e9-a13a-a4d18cec433a"
-                        ],
+                        "graphs": []
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "ends before",
+                    "nodegroup_id": "0b9237fd-ca85-11e9-9e80-a4d18cec433a",
+                    "nodeid": "0b9237fd-ca85-11e9-9e80-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E4_Period",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P182_ends_before_or_with_the_start_of",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
                         "graphs": [
                             {
-                                "graphid": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
-                                "name": "Place"
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_statement_source",
+                    "nodegroup_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
+                    "nodeid": "0b931ec5-ca85-11e9-8e51-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Name_source",
+                    "nodegroup_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
+                    "nodeid": "0b92de3d-ca85-11e9-affe-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Statement_source",
+                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
+                    "nodeid": "0b92e4f5-ca85-11e9-9728-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_statement_name_source",
+                    "nodegroup_id": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
+                    "nodeid": "0b92e080-ca85-11e9-8db4-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "used object",
+                    "nodegroup_id": "0b927ce6-ca85-11e9-8047-a4d18cec433a",
+                    "nodeid": "0b927ce6-ca85-11e9-8047-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E22_Human-Made_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_duration_Name_source",
+                    "nodegroup_id": "0b923eb5-ca85-11e9-8a4c-a4d18cec433a",
+                    "nodeid": "0b9319ba-ca85-11e9-ab01-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": []
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "influenced by",
+                    "nodegroup_id": "0b924ea6-ca85-11e9-9486-a4d18cec433a",
+                    "nodeid": "0b924ea6-ca85-11e9-9486-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E1_CRM_Entity",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P15_was_influenced_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_duration_source",
+                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
+                    "nodeid": "0b92d361-ca85-11e9-bfb6-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Identifier_source",
+                    "nodegroup_id": "0b929f00-ca85-11e9-bfe2-a4d18cec433a",
+                    "nodeid": "0b92e275-ca85-11e9-8ea5-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
                             }
                         ]
                     },
@@ -2949,37 +3215,25 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "location",
-                    "nodegroup_id": "0b9299e1-ca85-11e9-98fc-a4d18cec433a",
-                    "nodeid": "0b9299e1-ca85-11e9-98fc-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": true,
-                    "name": "Activity",
-                    "nodegroup_id": null,
-                    "nodeid": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
+                    "name": "part of",
+                    "nodegroup_id": "0b92b30a-ca85-11e9-a41d-a4d18cec433a",
+                    "nodeid": "0b92b30a-ca85-11e9-a41d-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
-                    "parentproperty": "",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9i_forms_part_of",
                     "sortorder": 0
                 },
                 {
                     "config": {
-                        "rdmCollection": "35ed167d-ab89-4f38-b046-3349256be725"
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
                     },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\nThis property allows the selection from a controlled list to describe *how* the activity was carried out, in a general sense. \nExamples: \n  * The experiment was done computationally, versus manually\n  * The project was done collaboratively\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
@@ -2987,11 +3241,57 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "technique",
-                    "nodegroup_id": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
-                    "nodeid": "0b92b8c0-ca85-11e9-adef-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique",
+                    "name": "source",
+                    "nodegroup_id": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
+                    "nodeid": "0b9253d9-ca85-11e9-95b8-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "during",
+                    "nodegroup_id": "0b9272a8-ca85-11e9-9149-a4d18cec433a",
+                    "nodeid": "0b9272a8-ca85-11e9-9149-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E4_Period",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P117_occurs_during",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": []
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "starts after",
+                    "nodegroup_id": "0b928202-ca85-11e9-a8d3-a4d18cec433a",
+                    "nodeid": "0b928202-ca85-11e9-a8d3-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E5_Event",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P182i_starts_after_or_with_the_end_of",
                     "sortorder": 0
                 },
                 {
@@ -3034,6 +3334,50 @@
                 },
                 {
                     "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Identifier_label",
+                    "nodegroup_id": "0b929f00-ca85-11e9-bfe2-a4d18cec433a",
+                    "nodeid": "0b92ecb0-ca85-11e9-82b1-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Used Set",
+                    "nodegroup_id": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
+                    "nodeid": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
+                    "ontologyclass": "https://linked.art/ns/terms/Set",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
                     "exportable": false,
@@ -3053,6 +3397,24 @@
                 {
                     "config": null,
                     "datatype": "semantic",
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_statement",
+                    "nodegroup_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
+                    "nodeid": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -3066,26 +3428,6 @@
                     "nodeid": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_statement_name_type",
-                    "nodegroup_id": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
-                    "nodeid": "0b92fa70-ca85-11e9-90cb-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0
                 },
                 {
@@ -3128,24 +3470,6 @@
                 },
                 {
                     "config": null,
-                    "datatype": "date",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_begin of the end",
-                    "nodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a",
-                    "nodeid": "0b930905-ca85-11e9-8aca-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#dateTime",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P81b_begin_of_the_end",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -3183,6 +3507,24 @@
                     "sortorder": 0
                 },
                 {
+                    "config": null,
+                    "datatype": "semantic",
+                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_duration",
+                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
+                    "nodeid": "0b925900-ca85-11e9-8989-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E54_Dimension",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P191_had_duration",
+                    "sortorder": 0
+                },
+                {
                     "config": {
                         "rdmCollection": "0eb564f7-3ccb-4b13-aab1-307011c8610a"
                     },
@@ -3203,9 +3545,11 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
-                    "datatype": "number",
-                    "description": "# Specific:\n\n\n# General:\nThis is the highest possible number that the value of the dimension could be, if there is uncertainty about that value. For example, if a painting is 4-6 inches wide, then the highest value is 6.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "config": {
+                        "rdmCollection": "bbf81641-b1dd-4ddf-858d-7e8ca823d385"
+                    },
+                    "datatype": "concept",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
@@ -3213,29 +3557,29 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "TimeSpan_duration_highest possible value",
+                    "name": "TimeSpan_duration_unit",
                     "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
-                    "nodeid": "0b9303dc-ca85-11e9-8620-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit",
+                    "nodeid": "0b92ce57-ca85-11e9-9027-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E58_Measurement_Unit",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P91_has_unit",
                     "sortorder": 0
                 },
                 {
                     "config": null,
-                    "datatype": "number",
-                    "description": "# Specific:\n\n\n# General:\nThis is the lowest possible number that the value of the dimension could be, if there is uncertainty about that value. For example if the painting is 4-6 inches wide, then the lowest value is 4.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "datatype": "semantic",
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "TimeSpan_duration_lowest possible value",
-                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
-                    "nodeid": "0b931c47-ca85-11e9-8161-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90a_has_lower_value_limit",
+                    "name": "TimeSpan_duration_Name",
+                    "nodegroup_id": "0b923eb5-ca85-11e9-8a4c-a4d18cec433a",
+                    "nodeid": "0b923eb5-ca85-11e9-8a4c-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0
                 },
                 {
@@ -3318,24 +3662,6 @@
                 },
                 {
                     "config": null,
-                    "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Name",
-                    "nodegroup_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
-                    "nodeid": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -3375,24 +3701,6 @@
                 {
                     "config": null,
                     "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": true,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Statement_content",
-                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
-                    "nodeid": "0b930a8a-ca85-11e9-a000-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -3409,21 +3717,41 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names  Arches note: In Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content. This value could be used to override the default card title.\n\n# Arches Note:\n\n\n* BranchId: la-name\n* FieldId: \n",
+                    "config": {
+                        "rdmCollection": "f44f7240-35c5-49e8-a0e3-2ffe308f0862"
+                    },
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Statement_name",
+                    "name": "Statement_type",
+                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
+                    "nodeid": "0b92eeb0-ca85-11e9-9f4d-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Statement_name_label",
                     "nodegroup_id": "0b926878-ca85-11e9-b841-a4d18cec433a",
-                    "nodeid": "0b926878-ca85-11e9-b841-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "nodeid": "0b930594-ca85-11e9-8d7e-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
                 },
                 {
@@ -3444,6 +3772,88 @@
                     "nodeid": "0b92c607-ca85-11e9-9f3c-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "location",
+                    "nodegroup_id": "0b9299e1-ca85-11e9-98fc-a4d18cec433a",
+                    "nodeid": "0b9299e1-ca85-11e9-98fc-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E53_Place",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "rdmCollection": "26d7ce44-20e5-44fb-a3c1-dfbe6bdd521b"
+                    },
+                    "datatype": "concept",
+                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": true,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "type",
+                    "nodegroup_id": "0b924423-ca85-11e9-865a-a4d18cec433a",
+                    "nodeid": "0b924423-ca85-11e9-865a-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "number",
+                    "description": "# Specific:\n\n\n# General:\nThis is the highest possible number that the value of the dimension could be, if there is uncertainty about that value. For example, if a painting is 4-6 inches wide, then the highest value is 6.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_duration_highest possible value",
+                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
+                    "nodeid": "0b9303dc-ca85-11e9-8620-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "semantic",
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names  Arches note: In Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content. This value could be used to override the default card title.\n\n# Arches Note:\n\n\n* BranchId: la-name\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Statement_name",
+                    "nodegroup_id": "0b926878-ca85-11e9-b841-a4d18cec433a",
+                    "nodeid": "0b926878-ca85-11e9-b841-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0
                 },
                 {
@@ -3469,18 +3879,68 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                            "07883c9e-b25c-11e9-975a-a4d18cec433a"
-                        ],
                         "graphs": [
                             {
-                                "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                                "name": "Group"
-                            },
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Statement_name_source",
+                    "nodegroup_id": "0b926878-ca85-11e9-b841-a4d18cec433a",
+                    "nodeid": "0b92eadc-ca85-11e9-9013-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "TimeSpan_name_source",
+                    "nodegroup_id": "0b928a4c-ca85-11e9-9eb1-a4d18cec433a",
+                    "nodeid": "0b92be40-ca85-11e9-885f-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
                             {
                                 "graphid": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                                "name": "Person"
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            },
+                            {
+                                "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
                             }
                         ]
                     },
@@ -3502,43 +3962,22 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "1b210ef3-b25c-11e9-a037-a4d18cec433a"
-                        ],
-                        "graphs": []
+                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
                     },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Used Set",
-                    "nodegroup_id": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
-                    "nodeid": "cc5d6df3-d477-11e9-9f59-a4d18cec433a",
-                    "ontologyclass": "https://linked.art/ns/terms/Set",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_duration",
-                    "nodegroup_id": "0b925900-ca85-11e9-8989-a4d18cec433a",
-                    "nodeid": "0b925900-ca85-11e9-8989-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E54_Dimension",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P191_had_duration",
+                    "name": "TimeSpan_statement_name_type",
+                    "nodegroup_id": "0b9277d1-ca85-11e9-bc0c-a4d18cec433a",
+                    "nodeid": "0b92fa70-ca85-11e9-90cb-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0
                 },
                 {
@@ -3552,49 +3991,11 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "TimeSpan_duration_Name",
-                    "nodegroup_id": "0b923eb5-ca85-11e9-8a4c-a4d18cec433a",
-                    "nodeid": "0b923eb5-ca85-11e9-8a4c-a4d18cec433a",
+                    "name": "Name",
+                    "nodegroup_id": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
+                    "nodeid": "0b926359-ca85-11e9-ac9c-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "rdmCollection": "f44f7240-35c5-49e8-a0e3-2ffe308f0862"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Statement_type",
-                    "nodegroup_id": "0b92a414-ca85-11e9-b725-a4d18cec433a",
-                    "nodeid": "0b92eeb0-ca85-11e9-9f4d-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "TimeSpan_statement",
-                    "nodegroup_id": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
-                    "nodeid": "0b928f9c-ca85-11e9-a687-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0
                 },
                 {
