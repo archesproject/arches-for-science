@@ -80,7 +80,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Activity Known For",
                     "nodegroup_id": "08dca39e-d287-11e9-aa00-a4d18cec433a",
                     "sortorder": 11,
@@ -917,7 +917,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Statement",
                     "nodegroup_id": "2a9fea8c-bfb2-11e9-b057-a4d18cec433a",
                     "sortorder": 1,
@@ -1377,7 +1377,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Internal Label",
                     "nodegroup_id": "a877c540-b2e1-11e9-944a-a4d18cec433a",
                     "sortorder": 14,
@@ -1555,17 +1555,8 @@
                 {
                     "card_id": "08dc892e-d287-11e9-a699-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Lowest possible value",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "width": "100%"
+                        "label": "source",
+                        "placeholder": ""
                     },
                     "id": "08dcf06b-d287-11e9-9204-a4d18cec433a",
                     "label": "source",
@@ -1587,7 +1578,7 @@
                     "node_id": "08dcd457-d287-11e9-a967-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "110f8cb5-d289-11e9-9b79-a4d18cec433a",
@@ -1652,25 +1643,26 @@
                 {
                     "card_id": "c93b017d-d286-11e9-9164-a4d18cec433a",
                     "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Text",
-                        "options": [],
-                        "placeholder": "Select an option"
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "c93b6f2e-d286-11e9-9fc9-a4d18cec433a",
                     "label": "_label",
                     "node_id": "c93b3e45-d286-11e9-9e28-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "c93b017d-d286-11e9-9164-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "type",
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Language of Name",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -1685,10 +1677,9 @@
                     "card_id": "c93b017d-d286-11e9-9164-a4d18cec433a",
                     "config": {
                         "defaultValue": [
-                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
-                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
-                        "label": "Type of Statement",
+                        "label": "Type of Name",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -1757,19 +1748,19 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "c93b1561-d286-11e9-8d0d-a4d18cec433a",
+                    "card_id": "08dca6b5-d287-11e9-ad13-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Temporal Unit",
+                        "label": "Type of Activity",
                         "options": [],
                         "placeholder": "Select an option"
                     },
-                    "id": "c93b7370-d286-11e9-9a1a-a4d18cec433a",
-                    "label": "Temporal Unit",
-                    "node_id": "c93b320a-d286-11e9-a1e2-a4d18cec433a",
-                    "sortorder": 3,
+                    "id": "08dcf70f-d287-11e9-ba31-a4d18cec433a",
+                    "label": "Type of Activity",
+                    "node_id": "08dccc02-d287-11e9-ba46-a4d18cec433a",
+                    "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "08dca6b5-d287-11e9-ad13-a4d18cec433a",
@@ -1777,12 +1768,12 @@
                         "label": "during",
                         "placeholder": ""
                     },
-                    "id": "c93b7280-d286-11e9-9e07-a4d18cec433a",
-                    "label": "type",
-                    "node_id": "c93b46c0-d286-11e9-bae0-a4d18cec433a",
-                    "sortorder": 6,
+                    "id": "08dcf2a6-d287-11e9-bfae-a4d18cec433a",
+                    "label": "during",
+                    "node_id": "08dccf87-d287-11e9-be8f-a4d18cec433a",
+                    "sortorder": 10,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "08dca6b5-d287-11e9-ad13-a4d18cec433a",
@@ -1800,15 +1791,18 @@
                 {
                     "card_id": "08dca6b5-d287-11e9-ad13-a4d18cec433a",
                     "config": {
-                        "label": "source",
-                        "placeholder": ""
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "08dcf1c0-d287-11e9-baba-a4d18cec433a",
                     "label": "_label",
                     "node_id": "08dce5e1-d287-11e9-a0a7-a4d18cec433a",
                     "sortorder": 11,
                     "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "08dca6b5-d287-11e9-ad13-a4d18cec433a",
@@ -1859,6 +1853,7 @@
                 {
                     "card_id": "2d534d02-d286-11e9-8cea-a4d18cec433a",
                     "config": {
+                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "End of the beginning",
                         "maxDate": false,
@@ -1871,7 +1866,7 @@
                     "node_id": "2d5380eb-d286-11e9-9498-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
                     "card_id": "2d534d02-d286-11e9-8cea-a4d18cec433a",
@@ -1926,7 +1921,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
-                    "card_id": "110fb087-d289-11e9-aec4-a4d18cec433a",
+                    "card_id": "08dc92ca-d287-11e9-b814-a4d18cec433a",
                     "config": {
                         "defaultValue": [
                             "8f40c740-3c02-4839-b1a4-f1460823a9fe"
@@ -1945,8 +1940,11 @@
                 {
                     "card_id": "08dc92ca-d287-11e9-b814-a4d18cec433a",
                     "config": {
-                        "label": "Place",
-                        "placeholder": ""
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "08dcf5c5-d287-11e9-9455-a4d18cec433a",
                     "label": "_label",
@@ -1959,7 +1957,7 @@
                     "card_id": "08dc92ca-d287-11e9-b814-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Text of Name",
+                        "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "width": "100%"
@@ -2075,7 +2073,7 @@
                     "card_id": "2d53391e-d286-11e9-a9e3-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Value of Identifier",
+                        "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "width": "100%"
@@ -2618,7 +2616,7 @@
                     "card_id": "c93b2942-d286-11e9-9487-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Text of Name",
+                        "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "width": "100%"
@@ -2679,9 +2677,9 @@
                     "card_id": "e86385d7-d288-11e9-94bd-a4d18cec433a",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
-                        "label": "Language of Name",
+                        "label": "Type of Name",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -2866,7 +2864,7 @@
                     "node_id": "1ed55d73-bfb2-11e9-951c-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "f160e34c-bfb4-11e9-b1b9-a4d18cec433a",
@@ -2899,7 +2897,7 @@
                     "node_id": "e8639f3d-d288-11e9-8175-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "e8637926-d288-11e9-bfc4-a4d18cec433a",
@@ -2949,8 +2947,10 @@
                 {
                     "card_id": "e8637926-d288-11e9-bfc4-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "Temporal Unit",
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Language of Name",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -2959,7 +2959,7 @@
                     "node_id": "e863d4ca-d288-11e9-8a9e-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "c93b1091-d286-11e9-9bfc-a4d18cec433a",
@@ -2981,13 +2981,11 @@
                 {
                     "card_id": "c93b1091-d286-11e9-9bfc-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Beginning of the End",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "c93b7745-d286-11e9-9595-a4d18cec433a",
                     "label": "_label",
@@ -2999,7 +2997,6 @@
                 {
                     "card_id": "c93b1091-d286-11e9-9bfc-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Name",
                         "maxLength": null,
@@ -3011,7 +3008,7 @@
                     "node_id": "c93b5a51-d286-11e9-b84a-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "c93b1091-d286-11e9-9bfc-a4d18cec433a",
@@ -3109,7 +3106,7 @@
                     "card_id": "110f91d4-d289-11e9-830e-a4d18cec433a",
                     "config": {
                         "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
                         "label": "Language of Text",
                         "options": [],
@@ -3188,12 +3185,11 @@
                 {
                     "card_id": "08dcab14-d287-11e9-b9ee-a4d18cec433a",
                     "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
-                        "label": "Type of Name",
-                        "options": [],
-                        "placeholder": "Select an option"
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "08dd037a-d287-11e9-9b54-a4d18cec433a",
                     "label": "_label",
@@ -3216,7 +3212,7 @@
                     "node_id": "753d4c6c-0d78-11ea-b439-acde48001122",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "753d49c4-0d78-11ea-b439-acde48001122",
@@ -3240,7 +3236,7 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
-                        "label": "Language of Name",
+                        "label": "Language of Text",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -3284,15 +3280,18 @@
                 {
                     "card_id": "753d44c4-0d78-11ea-b439-acde48001122",
                     "config": {
-                        "label": "during",
-                        "placeholder": ""
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "753d6dd2-0d78-11ea-b439-acde48001122",
                     "label": "_label",
                     "node_id": "753d5004-0d78-11ea-b439-acde48001122",
                     "sortorder": 4,
                     "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "753d44c4-0d78-11ea-b439-acde48001122",
@@ -3405,23 +3404,16 @@
                     "card_id": "08dc978c-d287-11e9-add4-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "format": "",
-                        "label": "Highest possible value",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "width": "100%"
+                        "label": "Temporal Unit",
+                        "options": [],
+                        "placeholder": "Select an option"
                     },
                     "id": "08dcf238-d287-11e9-bb48-a4d18cec433a",
                     "label": "Temporal Unit",
                     "node_id": "08dcb385-d287-11e9-8414-a4d18cec433a",
                     "sortorder": 3,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "08dc978c-d287-11e9-add4-a4d18cec433a",
@@ -3470,7 +3462,6 @@
                 {
                     "card_id": "08dc978c-d287-11e9-add4-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "format": "",
                         "label": "Highest possible value",
@@ -3506,25 +3497,7 @@
                 {
                     "card_id": "e8636c68-d288-11e9-8433-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Beginning of the beginning",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "08dcf863-d287-11e9-8452-a4d18cec433a",
-                    "label": "Beginning of the beginning",
-                    "node_id": "08dcd905-d287-11e9-8d4b-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "110fb087-d289-11e9-aec4-a4d18cec433a",
-                    "config": {
-                        "label": "Location of Leaving",
+                        "label": "source",
                         "placeholder": ""
                     },
                     "id": "e863e7ba-d288-11e9-b843-a4d18cec433a",
@@ -3570,8 +3543,10 @@
                 {
                     "card_id": "e8636c68-d288-11e9-8433-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "Nationality",
+                        "defaultValue": [
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                        ],
+                        "label": "Type of Name",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -3617,14 +3592,14 @@
                 {
                     "card_id": "753d377c-0d78-11ea-b439-acde48001122",
                     "config": {
-                        "label": "Location of Activity",
+                        "label": "source",
                         "placeholder": ""
                     },
                     "id": "753d699a-0d78-11ea-b439-acde48001122",
                     "label": "source",
                     "node_id": "753d59e6-0d78-11ea-b439-acde48001122",
                     "sortorder": 3,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
@@ -3647,7 +3622,6 @@
                 {
                     "card_id": "753d377c-0d78-11ea-b439-acde48001122",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "_label",
                         "maxLength": null,
@@ -3799,7 +3773,7 @@
                     "node_id": "2d536bde-d286-11e9-8ad4-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "2d535126-d286-11e9-abfa-a4d18cec433a",
@@ -3820,10 +3794,8 @@
                 {
                     "card_id": "2d535126-d286-11e9-abfa-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "Type of Activity",
-                        "options": [],
-                        "placeholder": "Select an option"
+                        "label": "source",
+                        "placeholder": ""
                     },
                     "id": "cf5e4400-d2b9-11e9-9326-a4d18cec433a",
                     "label": "source",
@@ -4199,9 +4171,10 @@
                     "card_id": "e8637551-d288-11e9-9c97-a4d18cec433a",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
+                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
                         ],
-                        "label": "Language of Text",
+                        "label": "Type of Statement",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -4447,23 +4420,22 @@
                     "node_id": "08dce266-d287-11e9-9e24-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "753d377c-0d78-11ea-b439-acde48001122",
+                    "card_id": "9f1559b0-bfb4-11e9-aa80-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
+                        "label": "Meta Type",
+                        "options": [],
+                        "placeholder": "Select an option"
                     },
-                    "id": "753d69f4-0d78-11ea-b439-acde48001122",
-                    "label": "_label",
-                    "node_id": "753d5e8c-0d78-11ea-b439-acde48001122",
-                    "sortorder": 4,
+                    "id": "99a99c4c-d289-11e9-b770-a4d18cec433a",
+                    "label": "Meta Type",
+                    "node_id": "5a41d4b0-c05b-11e9-a6c5-a4d18cec433a",
+                    "sortorder": 1,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "9f1559b0-bfb4-11e9-aa80-a4d18cec433a",
@@ -4608,7 +4580,6 @@
                 {
                     "card_id": "eaeb2f78-bfb3-11e9-a80a-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Type of Contact Point",
                         "options": [],
@@ -4638,21 +4609,21 @@
                     "card_id": "eaeb2f78-bfb3-11e9-a80a-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "type",
-                        "options": [],
-                        "placeholder": "Select an option"
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "09270351-d2b9-11e9-abdc-a4d18cec433a",
                     "label": "_label",
                     "node_id": "eaeb3540-bfb3-11e9-b075-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "eaeb2f78-bfb3-11e9-a80a-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Text of Contact Point",
                         "maxLength": null,
@@ -4664,7 +4635,7 @@
                     "node_id": "eaeb3819-bfb3-11e9-9574-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "110fa3b8-d289-11e9-a538-a4d18cec433a",
@@ -4721,15 +4692,9 @@
                     "card_id": "110fa3b8-d289-11e9-a538-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "format": "",
-                        "label": "value",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
                         "width": "100%"
                     },
                     "id": "11100be6-d289-11e9-8b9c-a4d18cec433a",
@@ -4869,7 +4834,7 @@
                     "node_id": "2a9ff0cc-bfb2-11e9-82a9-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "2a9fef0a-bfb2-11e9-b297-a4d18cec433a",
@@ -4892,13 +4857,8 @@
                 {
                     "card_id": "2a9fef0a-bfb2-11e9-b297-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Beginning of the end",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
+                        "label": "source",
+                        "placeholder": ""
                     },
                     "id": "2c7df3c7-d2b8-11e9-9a59-a4d18cec433a",
                     "label": "source",
@@ -4965,7 +4925,7 @@
                     "node_id": "110fc3c0-d289-11e9-9d57-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "110fb087-d289-11e9-aec4-a4d18cec433a",
@@ -5102,66 +5062,54 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "e8637926-d288-11e9-bfc4-a4d18cec433a",
+                    "card_id": "753d4168-0d78-11ea-b439-acde48001122",
                     "config": {
                         "label": "source",
                         "placeholder": ""
                     },
-                    "id": "e863e49c-d288-11e9-960a-a4d18cec433a",
+                    "id": "753d6634-0d78-11ea-b439-acde48001122",
                     "label": "source",
-                    "node_id": "e863cb35-d288-11e9-89c5-a4d18cec433a",
-                    "sortorder": 3,
+                    "node_id": "753d6012-0d78-11ea-b439-acde48001122",
+                    "sortorder": 6,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "e8637926-d288-11e9-bfc4-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Name",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "e863e211-d288-11e9-9ec9-a4d18cec433a",
-                    "label": "Language of Name",
-                    "node_id": "e863d4ca-d288-11e9-8a9e-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "e8637926-d288-11e9-bfc4-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "e863d9d4-d288-11e9-ba60-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "e863c961-d288-11e9-bd4f-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "753d4168-0d78-11ea-b439-acde48001122",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
+                        "format": "",
+                        "label": "Value",
+                        "max": "",
+                        "min": "",
+                        "placeholder": "Enter number",
+                        "precision": "",
+                        "prefix": "",
+                        "step": "",
+                        "suffix": "",
                         "width": "100%"
                     },
-                    "id": "c93b7745-d286-11e9-9595-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "c93b41f0-d286-11e9-9d0b-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "id": "753d665c-0d78-11ea-b439-acde48001122",
+                    "label": "Value",
+                    "node_id": "753d6094-0d78-11ea-b439-acde48001122",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "753d4168-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Temporal Unit",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "753d667a-0d78-11ea-b439-acde48001122",
+                    "label": "Temporal Unit",
+                    "node_id": "753d6198-0d78-11ea-b439-acde48001122",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
                 },
                 {
                     "card_id": "753d4168-0d78-11ea-b439-acde48001122",
@@ -5233,17 +5181,17 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "c93b1091-d286-11e9-9bfc-a4d18cec433a",
+                    "card_id": "753d469a-0d78-11ea-b439-acde48001122",
                     "config": {
                         "defaultValue": "",
-                        "label": "Name",
+                        "label": "Text of Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "width": "100%"
                     },
-                    "id": "c93b6d8a-d286-11e9-bde2-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "c93b5a51-d286-11e9-b84a-a4d18cec433a",
+                    "id": "753d66de-0d78-11ea-b439-acde48001122",
+                    "label": "Text of Statement",
+                    "node_id": "753d63a0-0d78-11ea-b439-acde48001122",
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
@@ -5254,7 +5202,7 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
-                        "label": "Language of Name",
+                        "label": "Language of Text",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -5428,21 +5376,6 @@
                     "label": "Type of Name",
                     "node_id": "08dcd7d9-d287-11e9-b28f-a4d18cec433a",
                     "sortorder": 1,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "83cfa99c-bfb4-11e9-bbb1-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Gender",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "7f6c4be8-d289-11e9-b4b2-a4d18cec433a",
-                    "label": "Gender",
-                    "node_id": "83cf1bdc-bfb4-11e9-8f51-a4d18cec433a",
-                    "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
@@ -5529,9 +5462,10 @@
                     "card_id": "110fb74a-d289-11e9-9baa-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Type of Assignment",
-                        "options": [],
-                        "placeholder": "Select an option"
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "11101a82-d289-11e9-b764-a4d18cec433a",
                     "label": "_label",
@@ -5649,7 +5583,6 @@
                 {
                     "card_id": "c93b0bf5-d286-11e9-aecb-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "_label",
                         "maxLength": null,
@@ -5679,7 +5612,7 @@
                     "node_id": "c93b6197-d286-11e9-b2a5-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "c93b0bf5-d286-11e9-aecb-a4d18cec433a",
@@ -5748,7 +5681,7 @@
                 {
                     "card_id": "e863942e-d288-11e9-b6b6-a4d18cec433a",
                     "config": {
-                        "label": "during",
+                        "label": "source",
                         "placeholder": ""
                     },
                     "id": "e863e54f-d288-11e9-97ea-a4d18cec433a",
@@ -5791,7 +5724,7 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "e8637551-d288-11e9-9c97-a4d18cec433a",
+                    "card_id": "c93b1b33-d286-11e9-87d5-a4d18cec433a",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
@@ -5842,33 +5775,36 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
-                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
+                    "card_id": "c93b1b33-d286-11e9-87d5-a4d18cec433a",
                     "config": {
-                        "label": "source",
-                        "placeholder": ""
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
-                    "id": "08dcfe85-d287-11e9-972c-a4d18cec433a",
-                    "label": "source",
-                    "node_id": "08dcb24f-d287-11e9-9277-a4d18cec433a",
-                    "sortorder": 3,
+                    "id": "c93b75bd-d286-11e9-9c89-a4d18cec433a",
+                    "label": "_label",
+                    "node_id": "c93b51cc-d286-11e9-8540-a4d18cec433a",
+                    "sortorder": 5,
                     "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "c93b1b33-d286-11e9-87d5-a4d18cec433a",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Beginning of the beginning",
+                        "label": "End of the end",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
                     },
-                    "id": "753d676a-0d78-11ea-b439-acde48001122",
-                    "label": "Beginning of the beginning",
-                    "node_id": "753d4e88-0d78-11ea-b439-acde48001122",
-                    "sortorder": 0,
+                    "id": "c93b76ca-d286-11e9-8764-a4d18cec433a",
+                    "label": "End of the end",
+                    "node_id": "c93b56b0-d286-11e9-95ff-a4d18cec433a",
+                    "sortorder": 4,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -6034,15 +5970,18 @@
                 {
                     "card_id": "c93b1f5e-d286-11e9-84f1-a4d18cec433a",
                     "config": {
-                        "label": "source",
-                        "placeholder": ""
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "width": "100%"
                     },
                     "id": "1c4a22f5-d2ba-11e9-8784-a4d18cec433a",
                     "label": "_label",
                     "node_id": "c93b3a99-d286-11e9-a208-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "c93b1f5e-d286-11e9-84f1-a4d18cec433a",
@@ -6067,42 +6006,26 @@
                         "options": [],
                         "placeholder": "Select an option"
                     },
-                    "id": "e863e5fa-d288-11e9-b4e0-a4d18cec433a",
+                    "id": "1c48f51e-d2ba-11e9-b3ba-a4d18cec433a",
                     "label": "Type of Name",
-                    "node_id": "e863b6fd-d288-11e9-9e19-a4d18cec433a",
+                    "node_id": "c93b6b8a-d286-11e9-a131-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "e863942e-d288-11e9-b6b6-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Text of Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "e863e3de-d288-11e9-b589-a4d18cec433a",
-                    "label": "Text of Name",
-                    "node_id": "e863d1e6-d288-11e9-a00b-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "08dc92ca-d287-11e9-b814-a4d18cec433a",
+                    "card_id": "c93b1f5e-d286-11e9-84f1-a4d18cec433a",
                     "config": {
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
-                        "label": "Language of Name",
+                        "label": "Language of Tet",
                         "options": [],
                         "placeholder": "Select an option"
                     },
-                    "id": "08dcf6ab-d287-11e9-b729-a4d18cec433a",
-                    "label": "Language of Name",
-                    "node_id": "08dce842-d287-11e9-aef4-a4d18cec433a",
+                    "id": "1c47d3bd-d2ba-11e9-8878-a4d18cec433a",
+                    "label": "Language of Tet",
+                    "node_id": "c93b6ccc-d286-11e9-be7d-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
@@ -6129,15 +6052,15 @@
                     "card_id": "e8638202-d288-11e9-a364-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Type of Identifier",
+                        "label": "type",
                         "options": [],
                         "placeholder": "Select an option"
                     },
-                    "id": "e863e5a1-d288-11e9-b18a-a4d18cec433a",
-                    "label": "Type of Identifier",
-                    "node_id": "e863c48a-d288-11e9-a9a1-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
+                    "id": "e863dca3-d288-11e9-80af-a4d18cec433a",
+                    "label": "type",
+                    "node_id": "e863a891-d288-11e9-a507-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
@@ -6347,7 +6270,7 @@
                     "node_id": "2d4b585e-bfb2-11e9-b109-a4d18cec433a",
                     "sortorder": 2,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "110f9699-d289-11e9-9eb5-a4d18cec433a",
@@ -6502,7 +6425,7 @@
                     "node_id": "2d538aa6-d286-11e9-afd4-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "2d533394-d286-11e9-8f98-a4d18cec433a",
@@ -6613,7 +6536,7 @@
                     "node_id": "a877c540-b2e1-11e9-944a-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "c93b070a-d286-11e9-9e60-a4d18cec433a",
@@ -6650,17 +6573,15 @@
                 {
                     "card_id": "c93b070a-d286-11e9-9e60-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "technique",
-                        "options": [],
-                        "placeholder": "Select an option"
+                        "label": "source",
+                        "placeholder": ""
                     },
                     "id": "c93b7185-d286-11e9-b4f9-a4d18cec433a",
                     "label": "source",
                     "node_id": "c93b494a-d286-11e9-bf1a-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "c93b070a-d286-11e9-9e60-a4d18cec433a",
@@ -6806,7 +6727,7 @@
                     "card_id": "08dca15c-d287-11e9-8e71-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
+                        "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "width": "100%"
@@ -6851,10 +6772,9 @@
                     "card_id": "08dca15c-d287-11e9-8e71-a4d18cec433a",
                     "config": {
                         "defaultValue": [
-                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
-                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
-                        "label": "Type of Statement",
+                        "label": "Type of Name",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -6871,7 +6791,7 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
-                        "label": "Language of Tet",
+                        "label": "Language of Text",
                         "options": [],
                         "placeholder": "Select an option"
                     },
@@ -6900,7 +6820,6 @@
                 {
                     "card_id": "83cfa99c-bfb4-11e9-bbb1-a4d18cec433a",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
                         "label": "Gender",
                         "options": [],
@@ -10722,8 +10641,8 @@
                 {
                     "cardinality": "1",
                     "legacygroupid": null,
-                    "nodegroupid": "753d42f8-0d78-11ea-b439-acde48001122",
-                    "parentnodegroup_id": "753d4582-0d78-11ea-b439-acde48001122"
+                    "nodegroupid": "b3026e1c-b31f-11e9-aa4a-a4d18cec433a",
+                    "parentnodegroup_id": null
                 },
                 {
                     "cardinality": "1",
@@ -10741,12 +10660,6 @@
                     "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "c93b17f5-d286-11e9-8419-a4d18cec433a",
-                    "parentnodegroup_id": "c93b21c2-d286-11e9-8788-a4d18cec433a"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "c93b6a42-d286-11e9-b2b2-a4d18cec433a",
                     "parentnodegroup_id": "c93b21c2-d286-11e9-8788-a4d18cec433a"
                 },
                 {
@@ -10856,12 +10769,6 @@
                     "legacygroupid": null,
                     "nodegroupid": "110f9405-d289-11e9-af2b-a4d18cec433a",
                     "parentnodegroup_id": "110fac30-d289-11e9-a8dd-a4d18cec433a"
-                },
-                {
-                    "cardinality": "1",
-                    "legacygroupid": null,
-                    "nodegroupid": "c93b1307-d286-11e9-bc48-a4d18cec433a",
-                    "parentnodegroup_id": "c93b17f5-d286-11e9-8419-a4d18cec433a"
                 },
                 {
                     "cardinality": "n",
@@ -11034,28 +10941,6 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Identifier_Attribute Assignment _TimeSpan_duration_Name_source",
-                    "nodegroup_id": "753d3628-0d78-11ea-b439-acde48001122",
-                    "nodeid": "753d59e6-0d78-11ea-b439-acde48001122",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
@@ -11089,28 +10974,6 @@
                     "nodeid": "e863b3c7-d288-11e9-aaa9-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "subject of",
-                    "nodegroup_id": "6fb97080-b31f-11e9-b19c-a4d18cec433a",
-                    "nodeid": "6fb97080-b31f-11e9-b19c-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of",
                     "sortorder": 0
                 },
                 {
@@ -11367,11 +11230,11 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Death_identifier_source",
-                    "nodegroup_id": "c93b03d4-d286-11e9-b5d2-a4d18cec433a",
-                    "nodeid": "c93b494a-d286-11e9-bf1a-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "name": "Name_part_label",
+                    "nodegroup_id": "1ed53dba-bfb2-11e9-b399-a4d18cec433a",
+                    "nodeid": "1ed55963-bfb2-11e9-a9de-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
                 },
                 {
@@ -11381,13 +11244,13 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Name_source",
-                    "nodegroup_id": "1ed5519e-bfb2-11e9-b995-a4d18cec433a",
-                    "nodeid": "1ed55a70-bfb2-11e9-8734-a4d18cec433a",
+                    "name": "Joined Group_Statement",
+                    "nodegroup_id": "e86372e6-d288-11e9-ae94-a4d18cec433a",
+                    "nodeid": "e86372e6-d288-11e9-ae94-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0
@@ -11403,9 +11266,9 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Death_time_label",
-                    "nodegroup_id": "c93b17f5-d286-11e9-8419-a4d18cec433a",
-                    "nodeid": "c93b51cc-d286-11e9-8540-a4d18cec433a",
+                    "name": "Death_label",
+                    "nodegroup_id": "c93b21c2-d286-11e9-8788-a4d18cec433a",
+                    "nodeid": "c93b6659-d286-11e9-8ff5-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
@@ -11417,15 +11280,15 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Birth_time_name",
-                    "nodegroup_id": "2d534eae-d286-11e9-a6c8-a4d18cec433a",
-                    "nodeid": "2d534eae-d286-11e9-a6c8-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "name": "Left Group_time_duration_label",
+                    "nodegroup_id": "110f992b-d289-11e9-92fd-a4d18cec433a",
+                    "nodeid": "110fbe47-d289-11e9-8d3e-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
                 },
                 {
@@ -11442,9 +11305,9 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Birth_Statement_language",
-                    "nodegroup_id": "2d533b0a-d286-11e9-b51a-a4d18cec433a",
-                    "nodeid": "2d539802-d286-11e9-94c3-a4d18cec433a",
+                    "name": "Left Group_Statement_language",
+                    "nodegroup_id": "110f8ec7-d289-11e9-aa72-a4d18cec433a",
+                    "nodeid": "110ff899-d289-11e9-9721-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E56_Language",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P72_has_language",
                     "sortorder": 0
@@ -11512,7 +11375,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -11541,24 +11404,6 @@
                     "nodeid": "110fdbc7-d289-11e9-9e0c-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Birth",
-                    "nodegroup_id": "2d53536b-d286-11e9-a29b-a4d18cec433a",
-                    "nodeid": "2d53536b-d286-11e9-a29b-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E67_Birth",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P98i_was_born",
                     "sortorder": 0
                 },
                 {
@@ -11626,7 +11471,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -11738,7 +11583,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -11814,7 +11659,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -11944,7 +11789,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -12029,7 +11874,7 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": "0eb564f7-3ccb-4b13-aab1-307011c8610a"
+                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
                     },
                     "datatype": "concept-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -12056,7 +11901,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -12186,7 +12031,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -12430,7 +12275,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -12466,7 +12311,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -12504,7 +12349,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -12578,7 +12423,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -12908,7 +12753,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13082,7 +12927,7 @@
                     "nodegroup_id": "753d38bc-0d78-11ea-b439-acde48001122",
                     "nodeid": "753d5220-0d78-11ea-b439-acde48001122",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -13092,7 +12937,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13110,7 +12955,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13177,8 +13022,7 @@
                 },
                 {
                     "config": {
-                        "graphid": null,
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
                     },
                     "datatype": "concept-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -13315,7 +13159,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13360,24 +13204,6 @@
                     "nodeid": "08dcc075-d287-11e9-add7-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Left Group_name_label",
-                    "nodegroup_id": "110f9405-d289-11e9-af2b-a4d18cec433a",
-                    "nodeid": "110fd6b0-d289-11e9-b9b9-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
                 },
                 {
@@ -13535,7 +13361,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13646,7 +13472,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13690,7 +13516,7 @@
                     "nodegroup_id": "e86387b8-d288-11e9-bfd3-a4d18cec433a",
                     "nodeid": "e863d2d4-d288-11e9-8585-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
                 },
                 {
@@ -13738,7 +13564,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13776,7 +13602,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13942,7 +13768,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13960,7 +13786,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -13978,7 +13804,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -14282,7 +14108,7 @@
                     "nodegroup_id": "110f828f-d289-11e9-b5b6-a4d18cec433a",
                     "nodeid": "110ff605-d289-11e9-96ac-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -14318,7 +14144,7 @@
                     "nodegroup_id": "c93b0907-d286-11e9-b546-a4d18cec433a",
                     "nodeid": "c93b4a8a-d286-11e9-84fd-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -14413,7 +14239,7 @@
                     "nodegroup_id": "08dc7eca-d287-11e9-88c8-a4d18cec433a",
                     "nodeid": "08dce005-d287-11e9-a82f-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -14423,7 +14249,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -14677,7 +14503,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -15777,7 +15603,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -15812,24 +15638,6 @@
                     "nodeid": "08dcd580-d287-11e9-8403-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Profession Activity_time_name",
-                    "nodegroup_id": "08dc9ed1-d287-11e9-8278-a4d18cec433a",
-                    "nodeid": "08dc9ed1-d287-11e9-8278-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0
                 },
                 {
@@ -16261,7 +16069,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -16516,7 +16324,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -16534,7 +16342,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -16686,7 +16494,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -16704,7 +16512,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -16735,9 +16543,7 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ]
+                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
                     },
                     "datatype": "concept-list",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
@@ -16762,7 +16568,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -16854,7 +16660,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -16918,7 +16724,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17357,7 +17163,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17393,7 +17199,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17509,7 +17315,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17563,7 +17369,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17752,7 +17558,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17770,7 +17576,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17910,7 +17716,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -17967,7 +17773,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -18043,7 +17849,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -18181,7 +17987,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -18277,7 +18083,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
+                    "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -18335,7 +18141,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -18542,8 +18348,12 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
                         ]
                     },
                     "datatype": "resource-instance-list",
@@ -18590,8 +18400,12 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
                         ]
                     },
                     "datatype": "resource-instance-list",
@@ -18625,7 +18439,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
+                    "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -18664,8 +18478,12 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
                         ]
                     },
                     "datatype": "resource-instance-list",
@@ -18712,7 +18530,13 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -18758,7 +18582,13 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": "bbf81641-b1dd-4ddf-858d-7e8ca823d385"
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -18792,7 +18622,7 @@
                     "fieldname": null,
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                     "is_collector": false,
-                    "isrequired": true,
+                    "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
                     "name": "Profession Activity_time_duration_source",
@@ -18804,7 +18634,13 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "graphs": [
+                            {
+                                "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -18815,17 +18651,21 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Joined Group_name_language",
-                    "nodegroup_id": "e863771e-d288-11e9-ae15-a4d18cec433a",
-                    "nodeid": "e863d4ca-d288-11e9-8a9e-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E56_Language",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P72_has_language",
+                    "name": "Left Group_used object",
+                    "nodegroup_id": "110fac30-d289-11e9-a8dd-a4d18cec433a",
+                    "nodeid": "110ff9c5-d289-11e9-a8ee-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E22_Human-Made_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
                     "sortorder": 0
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
                         ]
                     },
                     "datatype": "resource-instance-list",
@@ -18992,24 +18832,6 @@
                     "nodeid": "c93b1307-d286-11e9-bc48-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E54_Dimension",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P191_had_duration",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Identifier_Attribute Assignment _TimeSpan_statement_name",
-                    "nodegroup_id": "753d42f8-0d78-11ea-b439-acde48001122",
-                    "nodeid": "753d42f8-0d78-11ea-b439-acde48001122",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0
                 },
                 {

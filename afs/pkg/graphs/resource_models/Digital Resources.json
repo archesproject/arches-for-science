@@ -4903,10 +4903,10 @@
                     "parentnodegroup_id": "de951c11-ca7a-11e9-a778-a4d18cec433a"
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
-                    "nodegroupid": "e19aee91-ca7c-11e9-98d8-a4d18cec433a",
-                    "parentnodegroup_id": null
+                    "nodegroupid": "de950826-ca7a-11e9-9e62-a4d18cec433a",
+                    "parentnodegroup_id": "de951c11-ca7a-11e9-a778-a4d18cec433a"
                 },
                 {
                     "cardinality": "n",
@@ -4927,7 +4927,7 @@
                     "parentnodegroup_id": "de951c11-ca7a-11e9-a778-a4d18cec433a"
                 },
                 {
-                    "cardinality": "n",
+                    "cardinality": "1",
                     "legacygroupid": null,
                     "nodegroupid": "de951794-ca7a-11e9-9187-a4d18cec433a",
                     "parentnodegroup_id": "de952085-ca7a-11e9-a7dc-a4d18cec433a"
@@ -5254,28 +5254,6 @@
                 },
                 {
                     "config": {
-                        "graphid": [
-                            "52c40a30-b25c-11e9-92cf-a4d18cec433a"
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Creation_during",
-                    "nodegroup_id": "de951c11-ca7a-11e9-a778-a4d18cec433a",
-                    "nodeid": "de9558b3-ca7a-11e9-917a-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E4_Period",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P117_occurs_during",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
                         "rdmCollection": "7a8d3213-0a64-4f31-92a4-191b41236ae9"
                     },
                     "datatype": "concept-list",
@@ -5366,28 +5344,6 @@
                     "nodeid": "52c9a033-ca7c-11e9-af57-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "0b9235d9-ca85-11e9-9fa2-a4d18cec433a"
-                        ]
-                    },
-                    "datatype": "resource-instance",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "File_Creation_Part of Experiment",
-                    "nodegroup_id": "812c7086-9471-11ea-ae26-3af9d3b32b71",
-                    "nodeid": "4e32cebc-9473-11ea-ae26-3af9d3b32b71",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
                     "sortorder": 0
                 },
                 {
@@ -5749,28 +5705,6 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "File_Creation Procedure_Dimension_Statement_name_source",
-                    "nodegroup_id": "c1e1a798-9473-11ea-ae26-3af9d3b32b71",
-                    "nodeid": "c1e1b012-9473-11ea-ae26-3af9d3b32b71",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -6105,28 +6039,6 @@
                     "nodeid": "cec360bd-ca7f-11e9-9ab7-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
                     "parentproperty": "http://purl.org/dc/terms/conformsTo",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Dimension_source",
-                    "nodegroup_id": "d816108a-ca7a-11e9-9ce8-a4d18cec433a",
-                    "nodeid": "d816451e-ca7a-11e9-9816-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0
                 },
                 {
