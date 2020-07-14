@@ -1,0 +1,20 @@
+{
+    "resource_model_id": "a4b1e82d-c231-11ea-9f58-024e0d439fdb",
+    "resource_model_name": "Sample Thing",
+    "nodes": [
+        {
+            "arches_nodeid": "b2c19ef8-c231-11ea-9f58-024e0d439fdb",
+            "arches_node_name": "Name",
+            "file_field_name": "Name",
+            "data_type": "string",
+            "export": true
+        },
+        {
+            "arches_nodeid": "c74c2190-c231-11ea-9f58-024e0d439fdb",
+            "arches_node_name": "Shows Image",
+            "file_field_name": "Shows Image",
+            "data_type": "resource-instance-list",
+            "export": true
+        }
+    ]
+}
