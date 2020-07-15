@@ -21,8 +21,8 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                         resourceUtils.lookupResourceInstanceData(participantObj.resourceId)
                             .then(function(data) {
                                 self.participants.push({ name: data._source.displayname, link: arches.urls.resource_report + participantObj.resourceId });
-                            })};
-                });
+                            });
+                    }});
                 var TypeOfActivityId = '0b924423-ca85-11e9-865a-a4d18cec433a';
                 this.typeOfActivity = ko.observable();
                 this.typeOfActivityObj = resourceUtils.getNodeValues({
