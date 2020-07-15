@@ -21,7 +21,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                         resourceUtils.lookupResourceInstanceData(participantObj.resourceId)
                             .then(function(data) {
                                 self.participants.push({ name: data._source.displayname, link: arches.urls.resource_report + participantObj.resourceId });
-                    })};
+                            })};
                 });
                 var TypeOfActivityId = '0b924423-ca85-11e9-865a-a4d18cec433a';
                 this.typeOfActivity = ko.observable();
@@ -64,8 +64,8 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                         resourceUtils.lookupResourceInstanceData(parentActivityObj.resourceId)
                             .then(function(data) {
                                 self.relatedActivities.push({ name: data._source.displayname, link: arches.urls.resource_report + parentActivityObj.resourceId });
-                            })};
-                });
+                            });
+                    }});
 
                 this.members  = ko.observableArray([]);
                 var ChildActivityId = '0b92b30a-ca85-11e9-a41d-a4d18cec433a';
@@ -78,8 +78,8 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                             resourceUtils.lookupResourceInstanceData(relatedResource.resourceinstanceidfrom)
                                 .then(function(data) {
                                     self.relatedActivities.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
-                                })};
-                    });
+                                });
+                        }});
                 });
 
                 this.relatedCollections = ko.observableArray([]);
@@ -93,8 +93,8 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                             resourceUtils.lookupResourceInstanceData(relatedResource.resourceinstanceidfrom)
                                 .then(function(data) {
                                     self.relatedCollections.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
-                                })};
-                    });
+                                });
+                        }});
                 });
             }
         },
