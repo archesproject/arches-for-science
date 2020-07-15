@@ -7,7 +7,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
 
             if (params.summary) {
 
-                this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid
+                this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;
 
                 var ParticipantId = 'dbaa2022-9ae7-11ea-ab62-dca90488358a';
                 this.participants = ko.observableArray([]);
@@ -19,8 +19,8 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                 this.participantObjs.forEach(function(participantObj) {
                     if (participantObj) {
                         resourceUtils.lookupResourceInstanceData(participantObj.resourceId)
-                        .then(function(data) {
-                            self.participants.push({ name: data._source.displayname, link: arches.urls.resource_report + participantObj.resourceId });
+                            .then(function(data) {
+                                self.participants.push({ name: data._source.displayname, link: arches.urls.resource_report + participantObj.resourceId });
                     })};
                 });
                 var TypeOfActivityId = '0b924423-ca85-11e9-865a-a4d18cec433a';
@@ -62,9 +62,9 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                 this.parentActivityObjs.forEach(function(parentActivityObj) {
                     if (parentActivityObj) {
                         resourceUtils.lookupResourceInstanceData(parentActivityObj.resourceId)
-                        .then(function(data) {
-                            self.relatedActivities.push({ name: data._source.displayname, link: arches.urls.resource_report + parentActivityObj.resourceId });
-                    })};
+                            .then(function(data) {
+                                self.relatedActivities.push({ name: data._source.displayname, link: arches.urls.resource_report + parentActivityObj.resourceId });
+                            })};
                 });
 
                 this.members  = ko.observableArray([]);
@@ -76,9 +76,9 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     data.related_resources.resource_relationships.forEach(function(relatedResource) {
                         if (relatedResource.nodeid === ChildActivityId && relatedResource.resourceinstanceidto === self.report.attributes.resourceid) {
                             resourceUtils.lookupResourceInstanceData(relatedResource.resourceinstanceidfrom)
-                            .then(function(data) {
-                                self.relatedActivities.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
-                        })};
+                                .then(function(data) {
+                                    self.relatedActivities.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
+                                })};
                     });
                 });
 
@@ -91,9 +91,9 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     data.related_resources.resource_relationships.forEach(function(relatedResource) {
                         if (relatedResource.nodeid === CollectionUsedInId) {
                             resourceUtils.lookupResourceInstanceData(relatedResource.resourceinstanceidfrom)
-                            .then(function(data) {
-                                self.relatedCollections.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
-                        })};
+                                .then(function(data) {
+                                    self.relatedCollections.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
+                                })};
                     });
                 });
             }
