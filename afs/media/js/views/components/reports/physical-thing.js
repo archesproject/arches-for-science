@@ -46,10 +46,10 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     widgetLabel: 'In Collection or Set.member of',
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
-                collectionSet.forEach(function(resourceid) {
-                    resourceUtils.lookupResourceInstanceData(resourceid)
+                collectionSet.forEach(function(relatedResourceItem) {
+                    resourceUtils.lookupResourceInstanceData(relatedResourceItem.resourceId)
                         .then(function(data) {
-                            self.activities.push({ name: data._source.displayname, link: arches.urls.resource + '/' + resourceid });
+                            self.activities.push({ name: data._source.displayname, link: arches.urls.resource + '/' + relatedResourceItem.resourceId });
                         });
                 });
 
