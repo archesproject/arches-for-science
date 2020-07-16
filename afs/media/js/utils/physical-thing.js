@@ -14,8 +14,8 @@ define([
                     returnTiles: false
                 }, tiles);
                 if (shows.length === 0) resolve([]);
-                shows.forEach(function(resourceid) {
-                    resourceUtils.lookupResourceInstanceData(resourceid)
+                shows.forEach(function(relatedResourceItem) {
+                    resourceUtils.lookupResourceInstanceData(relatedResourceItem.resourceId)
                         .then(function(data) {
                             var usedimageresourceids = resourceUtils.getNodeValues({
                                 nodeId: VisualWorkUsedImagenodeid,
@@ -24,8 +24,8 @@ define([
                             if (usedimageresourceids.length === 0) resolve([]);
                 
                             // look up related Digital Resource
-                            usedimageresourceids.forEach(function(resourceid) {
-                                resourceUtils.lookupResourceInstanceData(resourceid)
+                            usedimageresourceids.forEach(function(relatedResourceItem) {
+                                resourceUtils.lookupResourceInstanceData(relatedResourceItem.resourceId)
                                     .then(function(data) {
                                         // console.log(data)
                                         var manifests = resourceUtils.getNodeValues({
