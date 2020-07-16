@@ -1,0 +1,21 @@
+{
+    "name": "Instrument Template",
+    "component": "views/components/reports/instrument",
+    "defaultconfig": {
+        "tabs": [{
+                "icon": "fa fa-info",
+                "name": "Identity",
+                "nodegroup_ids": []
+            },
+            {
+                "icon": "fa fa-chain",
+                "name": "Links",
+                "nodegroup_ids": []
+            }
+        ],
+        "activeTabIndex": 1
+    },
+    "description": "Instrument report",
+    "componentname": "instrument-report",
+    "templateid": "c2edf720-9db0-4029-a102-48e6762ded79"
+}
