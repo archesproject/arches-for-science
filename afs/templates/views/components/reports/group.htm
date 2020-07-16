@@ -1,0 +1,88 @@
+{% extends "views/report-templates/tabbed.htm" %} {% load i18n %} {% block summary %}
+
+<div class="model-summary-report">
+    <!-- Header -->
+    <div>
+        <div class="summary-report-title">
+            <span data-bind="text: report.get('displayname') "></span>
+            <a class="summary-report-link" href="javascript(void);" data-bind="text: typeOfGroup"></a>
+        </div>
+    </div>
+
+    <div class="summary-report-subtitle">
+        <span>
+            <span class="subtitle-category">{% trans "Formed by:" %}</span>
+            <span class="subtitle-value" data-bind="if: founders().length > 0">
+                <span data-bind="foreach: founders">
+                    <span data-bind="if: $index() > 0">, </span>
+                    <a target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
+                </span>
+            </span>
+            <span class="subtitle-value-blank" data-bind="if: founders().length === 0">
+                {% trans "No information" %}
+            </span>
+        </span>
+        <span style="float: right; font-size: 13px;">{% trans "Type of Group" %}</span>
+    </div>
+
+    <!-- Description -->
+    <div class="summary-report-description">
+        <span class="subtitle-category">{% trans "Group Statement:" %}</span>
+        <span class="subtitle-value">
+            <span data-bind="if: description.length > 0">
+                <div data-bind="html: description"></div>
+            </span>
+            <span data-bind="if: description.length === 0">
+                {% trans "No description available" %}
+            </span>
+        </span>
+    </div>
+
+    <!-- Duration -->
+    <div class="summary-report-subtitle">
+        <div class="summary-report-title">
+            {% trans "Duration:" %}
+        </div>
+
+        <span class="subtitle-category">{% trans "Group formed on:" %}</span>
+        <span data-bind="if: formationDate.length > 0">
+            <span class="subtitle-value" data-bind="text: formationDate"></span>
+        </span>
+        <span data-bind="if: formationDate.length === 0">
+            {% trans "no date available" %}
+        </span>
+
+        <span class="subtitle-category">{% trans "Group dissolved on:" %}</span>
+        <span data-bind="if: dissolutionDate.length > 0">
+            <span class="subtitle-value" data-bind="text: dissolutionDate"></span>
+        </span>
+        <span data-bind="if: dissolutionDate.length === 0">
+            {% trans "no date available" %}
+        </span>
+    </div>
+
+    <!-- Related Members -->
+    <div class="summary-report-related-panel">
+        <div class="summary-report-related">
+            {% trans "Membership:" %}
+        </div>
+        <div data-bind="if: members().length > 0">
+            <div class="subtitle-value" data-bind="foreach: members">
+                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
+            </div>
+        </div>
+        <span data-bind="if: members().length === 0">
+            {% trans "No associated members" %}
+        </span>
+    </div>
+
+    <div class="summary-report-editor-button">
+        <a class="btn btn-mint btn-labeled fa fa-edit text-right" target="_blank"
+            data-bind="attr: { href: editorLink }, click: function() { return true;}, clickBubble: false">
+            {% trans "Edit Resource" %}
+        </a>
+    </div>
+
+</div>
+
+{% endblock summary %}
