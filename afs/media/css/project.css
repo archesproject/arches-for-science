@@ -1,8 +1,8 @@
-.chart {	
-    margin-right: 105px;	
-    margin-left: 15px;	
-    margin-top: 20px;	
-}	
+.chart {
+    margin-right: 105px;
+    margin-left: 15px;
+    margin-top: 20px;
+}
 
 .file-workbench-filter.series-data {
     position: relative;
@@ -11,14 +11,14 @@
 }
 
 
-.sampling-activity {   
+.sampling-activity {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     margin-left: -25px;
     height: 100%;
 }
 
-.sampling-activity .selected-instance {   
+.sampling-activity .selected-instance {
     background-color: #fff;
 }
 
@@ -36,8 +36,8 @@
     position: fixed;
     width: 100%;
     padding: 10px 60px;
-    display: inline-flex; 
-    align-items: center; 
+    display: inline-flex;
+    align-items: center;
     z-index: 10;
 }
 
@@ -94,24 +94,24 @@
 }
 
 .workflow-search-results-full-container {
-    display: inline-flex; 
-    justify-content: space-between; 
-    width: 100%; 
-    height: 100%; 
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
     overflow-y: hidden;
 }
 
 .workflow-search-list-container {
-    position: relative; 
-    display:flex; 
-    flex-direction: column; 
+    position: relative;
+    display:flex;
+    flex-direction: column;
     width: 100%;
 }
 
 .workflow-search-list {
-    display:flex; 
-    flex-direction: column; 
-    width: 100%; 
+    display:flex;
+    flex-direction: column;
+    width: 100%;
     overflow-y: auto;
     padding-bottom: 105px;
 }
@@ -202,8 +202,8 @@
 }
 
 .summary-report-related {
-    font-size: 16px; 
-    font-weight: 500; 
+    font-size: 16px;
+    font-weight: 500;
     color: rgb(13, 59, 99);
     padding-top: 10px;
 }
@@ -214,6 +214,11 @@
 
 .summary-report-related-list {
     color:rgb(6, 119, 218);
+}
+
+.summary-report-editor-button {
+    float: right;
+    padding-top: 30px;
 }
 
 .physical-thing-search-list {
