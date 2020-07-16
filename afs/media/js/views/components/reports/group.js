@@ -7,7 +7,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
 
             if (params.summary) {
 
-                this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid
+                this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;
 
                 var FounderID = '3b5f8617-c05e-11e9-9ca5-a4d18cec433a';
                 this.founders = ko.observableArray([]);
