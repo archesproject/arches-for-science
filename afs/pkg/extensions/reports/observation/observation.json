@@ -1,0 +1,21 @@
+{
+    "name": "Observation Template",
+    "component": "views/components/reports/observation",
+    "defaultconfig": {
+        "tabs": [{
+                "icon": "fa fa-info",
+                "name": "Identity",
+                "nodegroup_ids": []
+            },
+            {
+                "icon": "fa fa-chain",
+                "name": "Links",
+                "nodegroup_ids": []
+            }
+        ],
+        "activeTabIndex": 1
+    },
+    "description": "Observation report",
+    "componentname": "observation-report",
+    "templateid": "e581f911-185b-4456-873d-f83b46fd89ec"
+}
