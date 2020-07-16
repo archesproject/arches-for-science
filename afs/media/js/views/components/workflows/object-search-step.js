@@ -56,7 +56,7 @@ define([
             a.forEach(function(action) {
                 if (action.status === 'added') {
                     $.ajax({
-                        url: arches.urls.api_resources(action.value),
+                        url: arches.urls.api_resources(ko.unwrap(action.value['resourceId'])),
                         data: {
                             format: 'json',
                             includetiles: 'false'
@@ -66,7 +66,7 @@ define([
                     });
                 } else if (action.status === 'deleted') {
                     self.selectedResources().forEach(function(val) {
-                        if (val.resourceinstanceid === action.value) {
+                        if (val.resourceinstanceid === ko.unwrap(action.value['resourceId'])) {
                             self.selectedResources.remove(val);
                         }
                     });
@@ -95,11 +95,17 @@ define([
 
         this.updateTileData = function(resourceid) {
             var tilevalue = self.tile().data[params.nodeid()];
-            var index = self.value().indexOf(resourceid);
-            if (index > -1) {
-                self.value.remove(resourceid);
+            var val = self.value().find(function(item) {
+                return item['resourceId'] === resourceid;
+            });
+            if (!!val) {
+                // remove item, we don't want users to add the same item twice
+                self.value.remove(val);
             } else {
-                self.value.push(resourceid);
+                var nodeConfig = self.nodeLookup[params.nodeid()].config.graphs().find(function(config) {
+                    return config.graphid === graphId;
+                });
+                self.value.push({'resourceId': resourceid, 'ontologyProperty': nodeConfig['ontologyProperty'], 'inverseOntologyProperty': nodeConfig['inverseOntologyProperty']});
             }
             if (self.value().length === 0 && self.startValue === null) {
                 tilevalue(null);
@@ -114,7 +120,7 @@ define([
 
         this.submit = function() {
             $.ajax({
-                url: arches.urls.api_tiles,
+                url: arches.urls.api_node_value,
                 type: 'POST',
                 data: {
                     'nodeid': params.nodeid(),
