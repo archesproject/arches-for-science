@@ -74,7 +74,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     },
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
-            };
+            }
         },
         template: { require: 'text!templates/views/components/reports/group.htm' }
     });
