@@ -10,7 +10,7 @@ define([
 
     function viewModel(params) {
         if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.steps[0].digitalresourceid);
+            params.resourceid(params.workflow.state.steps[0].digitalresourceInstanceRef[0]['resourceId']);
         }
         NewTileStep.apply(this, [params]);
         var self = this;
