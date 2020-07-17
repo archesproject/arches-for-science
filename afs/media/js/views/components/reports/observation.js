@@ -89,7 +89,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                                 self.instruments.push({ name: data._source.displayname, link: arches.urls.resource_report + instrumentObj.resourceId });
                             });
                     }});
-                }
+            }
         },
         template: { require: 'text!templates/views/components/reports/observation.htm' }
     });
