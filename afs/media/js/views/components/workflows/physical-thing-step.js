@@ -10,8 +10,8 @@ define([
 
     function viewModel(params) {
 
-        this.visualworkid;
-        this.digitalresourceid;
+        this.visualworkInstanceRef;
+        this.digitalresourceInstanceRef;
         NewTileStep.apply(this, [params]);
         var self = this;
         this.onSaveSuccess = function(tile) {
@@ -20,24 +20,35 @@ define([
             self.resourceId(tile.resourceinstance_id);
             // 'Creates a visual work that references the current physical thing',
             $.ajax({
-                url: arches.urls.api_tiles,
+                url: arches.urls.api_node_value,
                 type: 'POST',
+                dataType: 'json',
                 data: {
                     'nodeid': '5513933a-c062-11e9-9e4b-a4d18cec433a', // depicts (physical thing)
-                    'data': JSON.stringify([tile.resourceinstance_id]), // resourceid of the physical thing
+                    'data': JSON.stringify([{
+                        'resourceId': tile.resourceinstance_id, // resourceid of the physical thing
+                        'ontologyProperty': '',
+                        'inverseOntologyProperty':'',
+                        'resourceXresourceId':''
+                    }]), 
                     'tileid': null 
                 }
             }).done(function(data) {
-                self.visualworkid = data.resourceinstance_id;
+                self.visualworkInstanceRef = [{
+                    'resourceId': data.resourceinstance_id,  // resourceid of the visual work
+                    'ontologyProperty': '',
+                    'inverseOntologyProperty':'',
+                    'resourceXresourceId':''
+                }];
 
                 // 'Updates the shows item of a physical thing with the visual work resourceid',
                 $.ajax({
-                    url: arches.urls.api_tiles,
+                    url: arches.urls.api_node_value,
                     type: 'POST',
                     data: {
                         'resourceinstanceid': params.resourceid(), // resourceid of the physical thing
                         'nodeid': '2fe9f066-b31e-11e9-b3be-a4d18cec433a', // Shows (physical ting)
-                        'data': JSON.stringify([data.resourceinstance_id]),  // resourceid of the visual work
+                        'data': JSON.stringify(self.visualworkInstanceRef),
                         'tileid': null
                     }
                 }).done(function(data) {
@@ -47,23 +58,29 @@ define([
 
                 // 'Creates a digital resource that references the visual work',
                 $.ajax({
-                    url: arches.urls.api_tiles,
+                    url: arches.urls.api_node_value,
                     type: 'POST',
                     data: {
                         'nodeid': 'c1e732b0-ca7a-11e9-b369-a4d18cec433a', // shows (visual work)
-                        'data': JSON.stringify([data.resourceinstance_id]),  // resourceid of the visual work
+                        'data': JSON.stringify(self.visualworkInstanceRef),
                         'tileid': null
                     }
                 }).done(function(data) {
-                    self.digitalresourceid = data.resourceinstance_id;
+                    self.digitalresourceInstanceRef = [{
+                        'resourceId': data.resourceinstance_id,  // resourceid of the visual work
+                        'ontologyProperty': '',
+                        'inverseOntologyProperty':'',
+                        'resourceXresourceId':''
+                    }];
+
                     // 'Updates the used image node of the visual work with the digital resourceid',
                     $.ajax({
-                        url: arches.urls.api_tiles,
+                        url: arches.urls.api_node_value,
                         type: 'POST',
                         data: {
-                            'resourceinstanceid': self.visualworkid,
+                            'resourceinstanceid': self.visualworkInstanceRef[0]['resourceId'],
                             'nodeid': '9743a1b2-8591-11ea-97eb-acde48001122', // Used image (visual work)
-                            'data': self.digitalresourceid,  // resourceid of the digital resource
+                            'data': JSON.stringify(self.digitalresourceInstanceRef),
                             'tileid': null
                         }
                     }).done(function(data) {
@@ -88,8 +105,8 @@ define([
                 tileid = ko.unwrap(params.tileid);
             }
             return {
-                digitalresourceid: self.digitalresourceid,
-                visualworkid: self.visualworkid,
+                digitalresourceInstanceRef: self.digitalresourceInstanceRef,
+                visualworkInstanceRef: self.visualworkInstanceRef,
                 physicalthingid: ko.unwrap(params.resourceid),
                 resourceid: ko.unwrap(params.resourceid),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,

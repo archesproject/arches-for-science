@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class FileToIIIF(BaseFunction):
-    def postSave(self, tile, request):
+    def post_save(self, tile, request):
 
         acceptable_types = [
             ".jpg",

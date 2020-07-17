@@ -38,8 +38,8 @@ class NameSelectModels(BaseFunction):
             # set tile for name using descriptor for rel resource
             related_resource_tile = models.TileModel.objects.get(resourceinstance=tile.resourceinstance, nodegroup_id=related_nodeid)
             if len(related_resource_tile.data[related_nodeid]) > 0:
-                related_resource_id = related_resource_tile.data[related_nodeid][0]
-                related_resource = Resource.objects.get(resourceinstanceid=related_resource_id)
+                related_resource_ref = related_resource_tile.data[related_nodeid][0]
+                related_resource = Resource.objects.get(resourceinstanceid=related_resource_ref["resourceId"])
                 # create a new tile on the original resourceinstance concat "graph.name + 'of' + related_resource_name"
                 new_tile = models.TileModel()
                 new_tile.nodegroup = models.NodeGroup.objects.get(nodegroupid=name_nodegroupid)
@@ -65,7 +65,7 @@ class NameSelectModels(BaseFunction):
     def save(self, tile, request):
         pass
 
-    def postSave(self, tile, request):
+    def post_save(self, tile, request):
         self.execute(tile)
 
     def on_import(self, tile):

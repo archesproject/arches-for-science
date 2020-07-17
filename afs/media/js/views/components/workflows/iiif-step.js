@@ -14,8 +14,14 @@ define([
         
         this.tile.subscribe(function(t){
             if (t) {
-                t.data["5d440fea-8651-11ea-97eb-acde48001122"](params.workflow.state.steps[params.visualworkidstep()].visualworkid); // set resourceid from related visual work
-                t.data["b240c366-8594-11ea-97eb-acde48001122"](params.workflow.state.steps[params.physicalthingidstep()].physicalthingid); // set resourceid from physical thing
+                var physicalthingInstanceRef = [{
+                    'resourceId': params.workflow.state.steps[params.physicalthingidstep()].physicalthingid,  // resourceid of the visual work
+                    'ontologyProperty': '',
+                    'inverseOntologyProperty':'',
+                    'resourceXresourceId':''
+                }];
+                t.data["b240c366-8594-11ea-97eb-acde48001122"](physicalthingInstanceRef); // set resourceid from physical thing
+                t.data["5d440fea-8651-11ea-97eb-acde48001122"](params.workflow.state.steps[params.visualworkidstep()].visualworkInstanceRef); // set resourceid from related visual work
             }
         });
 
