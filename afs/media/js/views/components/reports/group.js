@@ -35,18 +35,20 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                var TypeOfGroupId = '97f2c366-b323-11e9-98a8-a4d18cec433a';
+                var TypeId = '97f2c366-b323-11e9-98a8-a4d18cec433a';
                 this.typeOfGroup = ko.observable();
                 this.typeOfGroupId = resourceUtils.getNodeValues({
-                    nodeId: TypeOfGroupId,
+                    nodeId: TypeId,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfGroupId, {
-                    dataType: "json"
-                }).done(function(data) {
-                    self.typeOfGroup(data.value);
-                });
+                if (this.typeOfGroupId.length) {
+                    $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfGroupId, {
+                        dataType: "json"
+                    }).done(function(data) {
+                        self.typeOfGroup(data.value);
+                    });
+                }
 
                 this.members  = ko.observableArray([]);
                 var PersonMemberOfNodeid = 'b3026e1c-b31f-11e9-aa4a-a4d18cec433a';

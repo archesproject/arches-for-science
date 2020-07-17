@@ -37,11 +37,13 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
 
                 // TODO: get concept value label for TypeOfWorkValue
 
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.TypeOfWorkValue, {
-                    dataType: "json"
-                }).done(function(data) {
-                    self.TypeOfWorkName(data.value);
-                });
+                if (this.TypeOfWorkValue.length) {
+                    $.ajax(arches.urls.concept_value + '?valueid=' + self.TypeOfWorkValue, {
+                        dataType: "json"
+                    }).done(function(data) {
+                        self.TypeOfWorkName(data.value);
+                    });
+                }
 
                 this.link = ko.observable(arches.urls.resource + '/' + this.DepictsPhysicalValue);
 
@@ -49,7 +51,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     .then(function(data) {
                         self.DepictsPhysicalName(data._source.displayname);
                     });
-         
+
             }
         },
         template: { require: 'text!templates/views/components/reports/visual-work.htm' }
