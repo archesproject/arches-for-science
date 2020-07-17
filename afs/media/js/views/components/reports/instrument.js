@@ -42,11 +42,13 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfInstrumentId, {
-                    dataType: "json"
-                }).done(function(data) {
-                    self.typeOfInstrument(data.value);
-                });
+                if (this.typeOfInstrumentId.length) {
+                    $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfInstrumentId, {
+                        dataType: "json"
+                    }).done(function(data) {
+                        self.typeOfInstrument(data.value);
+                    });
+                };
 
                 this.observations  = ko.observableArray([]);
                 var usedInstrumentId = '1acc9d59-c458-11e9-99e4-a4d18cec433a';

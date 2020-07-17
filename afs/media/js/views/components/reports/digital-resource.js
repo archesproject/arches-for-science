@@ -30,7 +30,7 @@ define(['jquery','underscore', 'knockout', 'arches', 'viewmodels/tabbed-report',
 
                 this.ShowsVisualName = ko.observable();
                 this.ResourceTypeName = ko.observable();
-                
+
 
                 this.ResourceTypeValue = resourceUtils.getNodeValues({
                     nodeId: ResourceType,
@@ -43,11 +43,13 @@ define(['jquery','underscore', 'knockout', 'arches', 'viewmodels/tabbed-report',
                 }, this.report.get('tiles'), this.report.graph);
                 // console.log(this.FilesValue);
 
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.ResourceTypeValue, {
-                    dataType: "json"
-                }).done(function(data) {
-                    self.ResourceTypeName(data.value);
-                });
+                if (this.ResourceTypeValue.length) {
+                    $.ajax(arches.urls.concept_value + '?valueid=' + self.ResourceTypeValue, {
+                        dataType: "json"
+                    }).done(function(data) {
+                        self.ResourceTypeName(data.value);
+                    });
+                };
 
                 this.link = ko.observable(arches.urls.resource + '/' + this.ShowsVisualValue);
 
@@ -55,7 +57,7 @@ define(['jquery','underscore', 'knockout', 'arches', 'viewmodels/tabbed-report',
                     .then(function(data) {
                         self.ShowsVisualName(data._source.displayname);
                     });
-         
+
             }
         },
         template: { require: 'text!templates/views/components/reports/digital-resource.htm' }

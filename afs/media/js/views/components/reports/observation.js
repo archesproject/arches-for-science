@@ -42,11 +42,13 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfObservationId, {
-                    dataType: "json"
-                }).done(function(data) {
-                    self.typeOfObservation(data.value);
-                });
+                if (this.typeOfObservationId.length) {
+                    $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfObservationId, {
+                        dataType: "json"
+                    }).done(function(data) {
+                        self.typeOfObservation(data.value);
+                    });
+                };
 
                 var observedID = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
                 this.physicalThings = ko.observableArray([]);

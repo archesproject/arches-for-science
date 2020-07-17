@@ -23,19 +23,21 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                                 self.participants.push({ name: data._source.displayname, link: arches.urls.resource_report + participantObj.resourceId });
                             });
                     }});
-                var TypeOfActivityId = '0b924423-ca85-11e9-865a-a4d18cec433a';
+                var TypeId = '0b924423-ca85-11e9-865a-a4d18cec433a';
                 this.typeOfActivity = ko.observable();
                 this.typeOfActivityObj = resourceUtils.getNodeValues({
-                    nodeId: TypeOfActivityId,
+                    nodeId: TypeId,
                     //widgetLabel: 'Classification.Type of Activity',
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfActivityObj, {
-                    dataType: "json"
-                }).done(function(data) {
-                    self.typeOfActivity(data.value);
-                });
+                if (this.typeOfActivityObj.length) {
+                    $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfActivityObj, {
+                        dataType: "json"
+                    }).done(function(data) {
+                        self.typeOfActivity(data.value);
+                    });
+                };
 
                 var DescriptionConceptValueId = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
                 var StatementTextId = '0b930a8a-ca85-11e9-a000-a4d18cec433a';
