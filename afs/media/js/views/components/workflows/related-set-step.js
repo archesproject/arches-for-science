@@ -19,7 +19,7 @@ define([
                 tileid = ko.unwrap(params.tileid);
             }
             return {
-                relatedresourceid: params.tile() && params.tile().data[relatedSetNodeId] && params.tile().data[relatedSetNodeId]()[0] ? params.tile().data[relatedSetNodeId]()[0]['resourceId'] : null,
+                relatedresourceid: params.tile() && params.tile().data[relatedSetNodeId] && params.tile().data[relatedSetNodeId]() && params.tile().data[relatedSetNodeId]()[0] ? params.tile().data[relatedSetNodeId]()[0]['resourceId'] : null,
                 resourceid: ko.unwrap(params.resourceid) || this.workflow.state.resourceid,
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,
