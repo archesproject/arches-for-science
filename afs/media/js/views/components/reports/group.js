@@ -48,7 +48,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     }).done(function(data) {
                         self.typeOfGroup(data.value);
                     });
-                };
+                }
 
                 this.members  = ko.observableArray([]);
                 var PersonMemberOfNodeid = 'b3026e1c-b31f-11e9-aa4a-a4d18cec433a';

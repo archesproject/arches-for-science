@@ -43,7 +43,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     }).done(function(data) {
                         self.TypeOfWorkName(data.value);
                     });
-                };
+                }
 
                 this.link = ko.observable(arches.urls.resource + '/' + this.DepictsPhysicalValue);
 

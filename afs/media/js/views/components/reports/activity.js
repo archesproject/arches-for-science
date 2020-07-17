@@ -37,7 +37,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     }).done(function(data) {
                         self.typeOfActivity(data.value);
                     });
-                };
+                }
 
                 var DescriptionConceptValueId = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
                 var StatementTextId = '0b930a8a-ca85-11e9-a000-a4d18cec433a';

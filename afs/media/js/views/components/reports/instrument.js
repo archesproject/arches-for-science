@@ -48,7 +48,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     }).done(function(data) {
                         self.typeOfInstrument(data.value);
                     });
-                };
+                }
 
                 this.observations  = ko.observableArray([]);
                 var usedInstrumentId = '1acc9d59-c458-11e9-99e4-a4d18cec433a';
