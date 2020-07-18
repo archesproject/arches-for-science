@@ -52,6 +52,14 @@
             {% trans "No Physical Things Depicted" %}
         </span>
     </div>
+
+    <!-- Edit Button -->
+    <div class="summary-report-editor-button">
+        <a class="btn btn-mint btn-labeled fa fa-edit text-right" target="_blank"
+            data-bind="attr: { href: editorLink }, click: function() { return true;}, clickBubble: false">
+            {% trans "Edit Resource" %}
+        </a>
+    </div>
 </div>
 
 {% endblock summary %}
