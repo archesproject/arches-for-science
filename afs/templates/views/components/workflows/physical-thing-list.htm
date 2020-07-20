@@ -9,5 +9,22 @@
             }
         }, css: {'selected-instance': false}, click: function(){$parent.selectIIIFTile($data)}"></div>
         <!-- /ko -->
+        <!-- ko if: items.length === 0 -->
+        <div id="rr-splash" class="rr-splash" style="margin: 50px 310px 0px 40px;">
+            <!-- Image -->
+            <div class="img-lg img-circle rr-splash-img-container">
+                <img class="rr-splash-img" src="/media/img/Workflow.png" alt="Saved Search">
+            </div>
+
+            <!-- Splash Title -->
+            <div class="rr-splash-title">Nothing to Select</div>
+
+            <!-- Splash Instructions -->
+            <div class="rr-splash-description">No images are available for items in the collection(s) you selected.
+            </div>
+            <div class="rr-splash-description">This workflow can't be completed until your system
+                administrator updates your system</div>
+        </div>
+        <!-- /ko -->
     </div>
 </div>
