@@ -178,18 +178,8 @@ ONTOLOGY_NAMESPACES = {
     "http://www.ics.forth.gr/isl/CRMsci/": "sci",
 }
 
-RENDERERS = [
-    {
-        "name": "imagereader",
-        "title": "Image Reader",
-        "description": "Displays most image file types",
-        "id": "5e05aa2e-5db0-4922-8938-b4d2b7919733",
-        "iconclass": "fa fa-camera",
-        "component": "views/components/cards/file-renderers/imagereader",
-        "ext": "",
-        "type": "image/*",
-        "exclude": "tif,tiff,psd"
-    },
+
+RENDERERS += [
     {
         "name": "xrf-reader",
         "title": "HP Spectrometer XRF ASCII Output",
