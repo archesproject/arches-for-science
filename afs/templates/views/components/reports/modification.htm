@@ -4,7 +4,7 @@
     <div>
         <h2 class="summary-report-title">
             <span data-bind="text: report.get('displayname') "></span>
-            <a class="summary-report-link" href="javascript(void);" data-bind="text: '[classification?]'"></a>
+            <a class="summary-report-link" href="javascript(void);" data-bind="text: typeOfMod"></a>
         </h2>
     </div>
 
@@ -12,26 +12,30 @@
     <div class="summary-report-subtitle">
         <span>
             <span class="subtitle-category">{% trans "Carried out by:" %}</span>
-            <span class="subtitle-value">
-                <span>
-                    <a target="_blank" data-bind="text: CarriedOutByName, attr: { href: carriedOutByLink }"></a>
+            <span class="subtitle-value" data-bind="if: carriers().length > 0">
+                <span data-bind="foreach: carriers">
+                    <span data-bind="if: $index() > 0">, </span>
+                    <a target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
                 </span>
             </span>
-            <!-- <span class="subtitle-value-blank" data-bind="if: artists().length === 0">
-                {% trans "No artist information" %}
-            </span> -->
+            <span class="subtitle-value-blank" data-bind="if: carriers().length === 0">
+                {% trans "No information" %}
+            </span>
         </span>
         <span style="float: right; font-size: 13px;">{% trans "Modification Type" %}</span>
     </div>
 
     <!-- Description -->
     <div class="summary-report-description">
-        <span>
-            <div data-bind="html: Statement"></div>
+        <span class="subtitle-category">{% trans "Modification Description:" %}</span>
+        <span class="subtitle-value">
+            <span data-bind="if: description.length > 0">
+                <div data-bind="html: description"></div>
+            </span>
+            <span data-bind="if: description.length === 0">
+                {% trans "No description available" %}
+            </span>
         </span>
-        <!-- <span data-bind="if: description.length === 0">
-            {% trans "No description available" %}
-        </span> -->
     </div>
 
     <!-- Related Activities -->
@@ -39,13 +43,13 @@
         <div class="summary-report-related">
             {% trans "Object(s) Modified" %}
         </div>
-        <div>
-            <div class="subtitle-value">
-                <a class="summary-report-related-list" target="_blank" data-bind="text: ObjectModifiedName, attr: { href: link }"></a>
+        <div class="subtitle-value" data-bind="if: ModifiedObjects().length > 0">
+            <div data-bind="foreach: ModifiedObjects">
+                <a target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
             </div>
         </div>
-        <span data-bind="if: !ObjectModified">
-            {% trans "No Objects Modified" %}
+        <span data-bind="if: ModifiedObjects().length === 0">
+            {% trans "No Object Modified" %}
         </span>
     </div>
 
@@ -56,7 +60,7 @@
         <div>
             <div class="subtitle-value">
                 <span class="" data-bind="text: 'Modification started: ' + Beginning"></span>
-                <span class="" data-bind="text: 'Modification Completed on: ' + End"></span>
+                <span class="" data-bind="text: 'Modification completed on: ' + End"></span>
             </div>
         </div>
     </div>
