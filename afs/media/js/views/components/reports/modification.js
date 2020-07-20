@@ -12,16 +12,46 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                 var carriedOutNodeId = '85869d3d-c456-11e9-a9b6-a4d18cec433a';
                 var begOfBegNodeId = 'a95cde05-c456-11e9-8fe4-a4d18cec433a';
                 var endOfEndNodeId = 'a95cebba-c456-11e9-816a-a4d18cec433a';
+                var typeNodeId = '7a22d1e8-c456-11e9-a20c-a4d18cec433a';
 
-                this.CarriedOutBy = resourceUtils.getNodeValues({
+                this.carriers = ko.observableArray([]);
+                this.carrierObjs = resourceUtils.getNodeValues({
                     nodeId: carriedOutNodeId,
                     returnTiles: false
-                }, this.report.get('tiles'), this.report.graph)[0];
+                }, this.report.get('tiles'), this.report.graph);
 
-                this.Statement = resourceUtils.getNodeValues({
+                this.carrierObjs.forEach(function(carrierObj) {
+                    if (carrierObj) {
+                        resourceUtils.lookupResourceInstanceData(carrierObj.resourceId)
+                            .then(function(data) {
+                                self.carriers.push({ name: data._source.displayname, link: arches.urls.resource_report + carrierObj.resourceId });
+                            });
+                    }});
+
+                var DescriptionConceptValueId = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
+                var StatementTypeId = 'ad9f562e-c456-11e9-92f8-a4d18cec433a';
+                this.description = resourceUtils.getNodeValues({
                     nodeId: StatementTextId,
+                    where: {
+                        nodeId: StatementTypeId,
+                        contains: DescriptionConceptValueId
+                    },
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
+
+                this.typeOfMod = ko.observable();
+                this.typeOfModId = resourceUtils.getNodeValues({
+                    nodeId: typeNodeId,
+                    returnTiles: false
+                }, this.report.get('tiles'), this.report.graph);
+
+                if (this.typeOfModId.length) {
+                    $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfModId, {
+                        dataType: "json"
+                    }).done(function(data) {
+                        self.typeOfMod(data.value);
+                    });
+                }
 
                 this.Beginning = resourceUtils.getNodeValues({
                     nodeId: begOfBegNodeId,
@@ -33,28 +63,21 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
 
+                this.ModifiedObjects = ko.observableArray([]);
 
-                this.ObjectModified = resourceUtils.getNodeValues({
+                this.objectModifiedObjs = resourceUtils.getNodeValues({
                     nodeId: modifiedNodeId,
                     returnTiles: false
-                }, this.report.get('tiles'), this.report.graph)[0];
+                }, this.report.get('tiles'), this.report.graph);
 
-                this.ObjectModifiedName = ko.observable();
-                this.CarriedOutByName = ko.observable();
+                this.objectModifiedObjs.forEach(function(objectModifiedObj) {
+                    if (objectModifiedObj) {
+                        resourceUtils.lookupResourceInstanceData(objectModifiedObj.resourceId)
+                            .then(function(data) {
+                                self.ModifiedObjects.push({ name: data._source.displayname, link: arches.urls.resource_report + objectModifiedObj.resourceId });
+                            });
+                    }});
 
-                this.link = ko.observable(arches.urls.resource + '/' + this.ObjectModified.resourceId);
-                this.carriedOutByLink = ko.observable(arches.urls.resource + '/' + this.CarriedOutBy.resourceId);
-
-                resourceUtils.lookupResourceInstanceData(this.ObjectModified.resourceId)
-                    .then(function(data) {
-                        self.ObjectModifiedName(data._source.displayname);
-                    });
-                
-                resourceUtils.lookupResourceInstanceData(this.CarriedOutBy.resourceId)
-                    .then(function(data) {
-                        self.CarriedOutByName(data._source.displayname);
-                    });
-         
             }
         },
         template: { require: 'text!templates/views/components/reports/modification.htm' }
