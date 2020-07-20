@@ -11,55 +11,69 @@
     <!-- Header -->
     <div class="summary-report-subtitle">
         <span>
-            <span class="subtitle-category">{% trans "Created By:" %}</span>
-            <span class="subtitle-value">
-                <!-- <span>
-                    <a target="_blank" data-bind="text: name, attr: { href: link }"></a>
-                </span> -->
+            <span class="subtitle-category">{% trans "Created by:" %}</span>
+            <span class="subtitle-value" data-bind="if: creators().length > 0">
+                <span data-bind="foreach: creators">
+                    <span data-bind="if: $index() > 0">, </span>
+                    <a target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
+                </span>
             </span>
-        </span>
+            <span class="subtitle-value-blank" data-bind="if: creators().length === 0">
+                {% trans "No information" %}
+            </span>
         <span style="float: right; font-size: 13px;">{% trans "Resource Type" %}</span>
     </div>
 
     <!-- Description -->
     <div class="summary-report-description">
-        <span>
-            <div data-bind="html: Statement"></div>
+        <span class="subtitle-category">{% trans "Resource Statement:" %}</span>
+        <span class="subtitle-value">
+            <span data-bind="if: description.length > 0">
+                <div data-bind="html: description"></div>
+            </span>
+            <span data-bind="if: description.length === 0">
+                {% trans "No description available" %}
+            </span>
         </span>
-        <!-- <span data-bind="if: description.length === 0">
-            {% trans "No description available" %}
-        </span> -->
     </div>
 
-    <!-- Related Visual Work -->
+    <!-- Related Collections/Sets -->
     <div class="summary-report-related-panel">
         <div class="summary-report-related">
-            {% trans "Shows Image" %}
+            {% trans "Related Object Collection/Sets" %}
         </div>
-        <div>
-            <div class="subtitle-value">
-                <a class="summary-report-related-list" target="_blank" data-bind="text: ShowsVisualName, attr: { href: link }"></a>
+        <div data-bind="if: collections().length > 0">
+            <div class="subtitle-value" data-bind="foreach: collections">
+                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
             </div>
         </div>
-        <span data-bind="if: !ShowsVisualValue">
-            {% trans "No related Visual Works" %}
+        <span data-bind="if: collections().length === 0">
+            {% trans "No Related Collection/Set" %}
         </span>
     </div>
 
-    <!-- Related Activities -->
-    <!-- <div class="summary-report-related-panel">
+    <!-- Files -->
+    <div class="summary-report-related-panel">
         <div class="summary-report-related">
-            {% trans "Depicts" %}
+            {% trans "Files" %}
         </div>
-        <div>
-            <div class="subtitle-value">
-                <a class="summary-report-related-list" target="_blank" data-bind="text: DepictsPhysicalName, attr: { href: link }"></a>
+        <div data-bind="if: files().length > 0">
+            <div class="subtitle-value" data-bind="foreach: files">
+                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
             </div>
         </div>
-        <span data-bind="if: !DepictsPhysicalValue">
-            {% trans "No Physical Things Depicted" %}
+        <span data-bind="if: files().length === 0">
+            {% trans "No File Attached" %}
         </span>
-    </div> -->
+    </div>
+
+    <!--Edit Button-->
+    <div class="summary-report-editor-button">
+        <a class="btn btn-mint btn-labeled fa fa-edit text-right" target="_blank"
+            data-bind="attr: { href: editorLink }, click: function() { return true;}, clickBubble: false">
+            {% trans "Edit Resource" %}
+        </a>
+    </div>
 </div>
 
 {% endblock summary %}
