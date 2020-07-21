@@ -19,10 +19,10 @@ class PhysicalThingSetView(View):
         if len(tiles) > 0:
             tile = tiles[0]
             related = tile.data[nodeid]
-        for resourceid in related:
+        for related_resource_item in related:
             search_request = HttpRequest()
             search_request.user = request.user
-            search_request.GET["id"] = resourceid
+            search_request.GET["id"] = related_resource_item["resourceId"]
             result = json.loads(search_results(search_request).content)
             results.append(result["results"]["hits"]["hits"][0])
 
