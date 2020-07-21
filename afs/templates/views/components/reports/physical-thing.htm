@@ -58,7 +58,7 @@
         </div>
         <div data-bind="if: activities().length > 0">
             <div class="subtitle-value" data-bind="foreach: activities">
-                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }"></a>
+                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
             </div>
         </div>
         <span data-bind="if: activities().length === 0">
