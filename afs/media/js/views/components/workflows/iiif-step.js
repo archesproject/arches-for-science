@@ -43,6 +43,7 @@ define([
                 resourceid: params.resourceid(),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
+                wastebin: wastebin
             };
         };
     }
