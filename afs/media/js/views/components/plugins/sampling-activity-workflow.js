@@ -23,7 +23,7 @@ define([
                     required: true,
                     icon: 'fa-search',
                     class: 'fa-search',
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    wastebin: {resourceid: null, description: 'a sampling activity instance'}
                 },
                 {
                     title: 'Sample Date',
@@ -39,8 +39,7 @@ define([
                     parenttileid: null,
                     required: true,
                     icon: 'fa-calendar',
-                    class: 'fa-calendar',
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    class: 'fa-calendar'
                 },
                 {
                     title: 'Sample Taker',
@@ -55,8 +54,7 @@ define([
                     parenttileid: null,
                     required: true,
                     icon: 'fa-user',
-                    class: 'fa-search',
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    class: 'fa-search'
                 },
                 {
                     title: 'Set or Collection',
@@ -72,8 +70,7 @@ define([
                     parenttileid: null,
                     required: true,
                     icon: 'fa fa-cubes',
-                    class: 'fa-search',
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    class: 'fa-search'
                 },
                 {
                     title: 'Select Physical Thing',
@@ -89,8 +86,7 @@ define([
                     parenttileid: null,
                     required: true,
                     icon: 'fa-search',
-                    class: 'fa-search',
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    class: 'fa-search'
                 },
                 {
                     title: 'IIIF',
