@@ -108,7 +108,7 @@ define([
                     required: true,
                     icon: 'fa-pencil',
                     class: 'fa-search',
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    wastebin: {tile: null, description: 'an annotation'}
                 },
                 {
                     title: 'Add Project Complete',
