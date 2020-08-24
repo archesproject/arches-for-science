@@ -92,25 +92,6 @@ define([
                     class: 'fa-search',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
-                // {
-                //     title: 'Notes',
-                //     name: 'objectsamplenotes',
-                //     description: 'Select the physical resource',
-                //     component: 'views/components/workflows/new-tile-step',
-                //     componentname: 'new-tile-step',
-                //     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                //     nodegroupid: null,
-                //     resourceid: null,
-                //     tileid: null,
-                //     parenttileid: null,
-                //     required: true,
-                //     icon: 'fa-search',
-                //     class: 'fa-search',
-                //     wastebin: {resourceid: null, description: 'an activity instance'}
-                // },
-                // {
-                //     //select image from sequence from tile of physical thing
-                // }
                 {
                     title: 'IIIF',
                     name: 'iiif_step',
