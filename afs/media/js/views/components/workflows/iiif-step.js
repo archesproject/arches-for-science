@@ -28,22 +28,10 @@ define([
         });
 
         params.defineStateProperties = function(){
-            var wastebin = !!(ko.unwrap(params.wastebin)) ? koMapping.toJS(params.wastebin) : undefined;
-            if (wastebin && ko.unwrap(wastebin.hasOwnProperty('resourceid'))) {
-                wastebin.resourceid = ko.unwrap(params.resourceid);
-            }
-            if (wastebin && ko.unwrap(wastebin.hasOwnProperty('tile'))) {
-                if (!!ko.unwrap(params.tile)) {
-                    wastebin.tile = koMapping.toJS(params.tile().data);
-                    wastebin.tile.tileid = (ko.unwrap(params.tile)).tileid;
-                    wastebin.tile.resourceinstance_id = (ko.unwrap(params.tile)).resourceinstance_id;
-                }
-            }
             return {
                 resourceid: params.resourceid(),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
-                tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
-                wastebin: wastebin
+                tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined
             };
         };
     }
