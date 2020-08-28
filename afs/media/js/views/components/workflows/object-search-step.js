@@ -188,9 +188,9 @@ define([
         };
         
         this.reportLookup = reportLookup;
-        var getResultData = function(termFilter, graph) {
+        var getResultData = function(termFilter, graph, pagingFilter=1) {
             var filters = {
-                "paging-filter": 1
+                "paging-filter": pagingFilter
             };
             if (termFilter) {
                 termFilter['inverted'] = false;
@@ -229,8 +229,8 @@ define([
 
         this.newPage = function(page) {
             if(page){
-                console.log(page);
-                // this.page(page);
+                params.loading(true);
+                getResultData(null, graph(), page);
             }
         },
         
