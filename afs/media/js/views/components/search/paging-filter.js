@@ -52,7 +52,6 @@ function(BaseFilter, ko, koMapping) {
                 var queryObj = this.query();
                 queryObj[componentName] = this.page();
                 this.query(queryObj);
-                console.log(this.query())
             },
 
             newPage: function(page){
@@ -72,7 +71,6 @@ function(BaseFilter, ko, koMapping) {
             },
 
             updateResults: function() {
-                console.log('!', this.searchResults, componentName)
                 if(!!this.searchResults[componentName] && !!this.searchResults[componentName]['paginator']) {
                     koMapping.fromJS(this.searchResults[componentName]['paginator'], this.paginator);
                 }

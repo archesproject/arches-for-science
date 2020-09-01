@@ -58,18 +58,9 @@ define([
         this.next = params.workflow.next;
         this.paginator = ko.observable();
 
-
         this.filters = {};
         this.query = ko.observable(getQueryObject());
         this.searchResults = {'timestamp': ko.observable()};
-
-        // this.foo = {
-        //     searchResults: ko.observable(),
-        // };
-
-
-
-
 
         this.targetResource = ko.observable();
         this.selectedTerm = ko.observable();
@@ -219,9 +210,9 @@ define([
         };
         
         this.reportLookup = reportLookup;
-        var getResultData = function(termFilter, graph, pagingFilter=1) {
+        var getResultData = function(termFilter, graph, pagingFilter) {
             var filters = {
-                "paging-filter": pagingFilter
+                "paging-filter": pagingFilter || 1
             };
             if (termFilter) {
                 termFilter['inverted'] = false;
@@ -233,10 +224,6 @@ define([
                 url: arches.urls.physical_thing_search_results,
                 data: filters,
             }).done(function(data) {
-
-
-                // self.paginator(koMapping.fromJS(data['paging-filter']['paginator']));
-                console.log('**', data)
                 _.each(this.searchResults, function(_value, key) {
                     if (key !== 'timestamp') {
                         delete self.searchResults[key];
@@ -248,7 +235,6 @@ define([
                     }
                 });
                 self.searchResults.timestamp(data.timestamp);
-
 
                 self.totalResults(data['total_results']);
                 var resources = data['results']['hits']['hits'].map(function(source) {
@@ -273,20 +259,17 @@ define([
                 params.loading(false);
             });
         };
-
-        this.newPage = function(page) {
-            if(page){
-                params.loading(true);
-                getResultData(null, graph(), page);
-            }
-        },
         
-        this.updateSearchResults = function(termFilter) {
+        this.updateSearchResults = function(termFilter, pagingFilter) {
             params.loading(true);
-            if (graph()) getResultData(termFilter, graph());
-            else graph.subscribe(function(graph) {
-                getResultData(termFilter, graph);
-            });
+
+            if (graph()) {
+                getResultData(termFilter, graph(), pagingFilter);
+            } else {
+                graph.subscribe(function(graph) {
+                    getResultData(termFilter, graph, pagingFilter);
+                });
+            }
         };
 
         this.updateSearchResults();
@@ -295,6 +278,10 @@ define([
             var termFilter = self.termOptions[val];
             self.updateSearchResults(termFilter);
         });
+
+        this.query.subscribe(function(query) {
+            self.updateSearchResults(null, query['paging-filter']);
+        })
 
         params.defineStateProperties = function() {
             return {
