@@ -296,7 +296,7 @@ define([
 
         this.query.subscribe(function(query) {
             self.updateSearchResults(null, query['paging-filter']);
-        })
+        });
 
         params.defineStateProperties = function() {
             return {
