@@ -53,15 +53,13 @@ define([
             params.tileid(params.workflow.state.steps[params._index].tileid);
         }
         NewTileStep.apply(this, [params]);
+
         var limit = 10;
         var self = this;
-        this.next = params.workflow.next;
-        this.paginator = ko.observable();
-
-        this.filters = {};
+    
+        this.filters = {'paging-filter': ko.observable()};
         this.query = ko.observable(getQueryObject());
         this.searchResults = {'timestamp': ko.observable()};
-
         this.targetResource = ko.observable();
         this.selectedTerm = ko.observable();
         this.totalResults = ko.observable();
@@ -211,18 +209,19 @@ define([
         
         this.reportLookup = reportLookup;
         var getResultData = function(termFilter, graph, pagingFilter) {
-            var filters = {
-                "paging-filter": pagingFilter || 1
-            };
             if (termFilter) {
                 termFilter['inverted'] = false;
-                filters["term-filter"] = JSON.stringify([termFilter]);
+                self.filters["term-filter"] = JSON.stringify([termFilter]);
+            }
+
+            if (pagingFilter) {
+                self.filters['paging-filter'](pagingFilter);
             }
 
             params.loading(true);
             $.ajax({
                 url: arches.urls.physical_thing_search_results,
-                data: filters,
+                data: self.filters,
             }).done(function(data) {
                 _.each(this.searchResults, function(_value, key) {
                     if (key !== 'timestamp') {
@@ -281,6 +280,7 @@ define([
 
         this.query.subscribe(function(query) {
             self.updateSearchResults(null, query['paging-filter']);
+            console.log(self.searchResults, query)
         })
 
         params.defineStateProperties = function() {

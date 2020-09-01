@@ -43,7 +43,7 @@ function(BaseFilter, ko, koMapping) {
                     this.updateResults();
                 }, this);
 
-                // this.filters[componentName](this);
+                this.filters[componentName](this);
                 this.restoreState();
                 this.pageInitialized = true;
             },
