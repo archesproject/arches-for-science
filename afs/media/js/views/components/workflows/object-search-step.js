@@ -60,8 +60,8 @@ define([
      
         /* functionally useless, allows use of generic `search-results` */ 
         this.selectedTab = ko.observable();
-        this.toggleRelationshipCandidacy = ko.observable() 
-        this.isResourceRelatable = ko.observable() 
+        this.toggleRelationshipCandidacy = ko.observable();
+        this.isResourceRelatable = ko.observable();
 
         
         this.filters = {
