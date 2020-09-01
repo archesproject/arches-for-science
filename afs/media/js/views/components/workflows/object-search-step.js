@@ -209,11 +209,17 @@ define([
         
         this.reportLookup = reportLookup;
         var getResultData = function(termFilter, graph, pagingFilter) {
+            // let's empty our termFilters
+            _.each(self.filters, function(_value, key) {
+                if (key !== 'paging-filter') {
+                    delete self.filters[key];
+                }
+            });
+
             if (termFilter) {
                 termFilter['inverted'] = false;
                 self.filters["term-filter"] = JSON.stringify([termFilter]);
             }
-
             if (pagingFilter) {
                 self.filters['paging-filter'](pagingFilter);
             }
