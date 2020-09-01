@@ -10,7 +10,8 @@ define([
     'report-templates',
     'card-components',
     'bindings/select2-query',
-    'views/components/search/paging-filter'
+    'views/components/search/paging-filter',
+    'views/components/search/search-results'
 ], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
     var graph = ko.observable();
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
@@ -56,8 +57,18 @@ define([
 
         var limit = 10;
         var self = this;
-    
-        this.filters = {'paging-filter': ko.observable()};
+     
+        /* functionally useless, allows use of generic `search-results` */ 
+        this.selectedTab = ko.observable();
+        this.toggleRelationshipCandidacy = ko.observable() 
+        this.isResourceRelatable = ko.observable() 
+
+        
+        this.filters = {
+            'paging-filter': ko.observable(),
+            'search-results': ko.observable(),
+        };
+        this.reportLookup = reportLookup;
         this.query = ko.observable(getQueryObject());
         this.searchResults = {'timestamp': ko.observable()};
         this.targetResource = ko.observable();
@@ -207,11 +218,10 @@ define([
             }
         };
         
-        this.reportLookup = reportLookup;
         var getResultData = function(termFilter, graph, pagingFilter) {
             // let's empty our termFilters
             _.each(self.filters, function(_value, key) {
-                if (key !== 'paging-filter') {
+                if (key !== 'paging-filter' && key !== 'search-results') {
                     delete self.filters[key];
                 }
             });
@@ -286,7 +296,6 @@ define([
 
         this.query.subscribe(function(query) {
             self.updateSearchResults(null, query['paging-filter']);
-            console.log(self.searchResults, query)
         })
 
         params.defineStateProperties = function() {

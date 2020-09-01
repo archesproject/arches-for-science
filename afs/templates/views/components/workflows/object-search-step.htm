@@ -9,18 +9,21 @@
     </div>
     <div class="workflow-search-results">
         <div class="workflow-search-results-full-container">
-            <div class="workflow-search-list-container">    
+            <div class="workflow-search-list-container"> 
                 <div class="workflow-search-list">
-                    <!-- ko foreach: targetResources -->
-                    <div class="resource-report" data-bind="component: {
-                        name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
+                    <div data-bind="component: {
+                        name: 'search-results',
                         params: {
-                            report: $data.report,
-                            summary: true
+                            selectedTab,
+                            searchResults,
+                            targetResources,
+                            toggleRelationshipCandidacy,
+                            isResourceRelatable,
+                            reportLookup,
+                            filters,
+                            value,
                         }
-                    }, css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0},
-                    click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
-                    <!-- /ko -->
+                    }"></div>
                 </div>
                 
                 <div class="search-results-footer">

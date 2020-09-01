@@ -1,0 +1,12 @@
+<div>
+    <!-- ko foreach: targetResources -->
+    <div class="resource-report" data-bind="component: {
+        name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
+        params: {
+            report: $data.report,
+            summary: true
+        }
+    }, css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0},
+    click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
+    <!-- /ko -->
+</div>
