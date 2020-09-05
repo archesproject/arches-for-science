@@ -63,7 +63,6 @@ define([
         this.toggleRelationshipCandidacy = ko.observable();
         this.isResourceRelatable = ko.observable();
 
-        
         this.filters = {
             'paging-filter': ko.observable(),
             'search-results': ko.observable(),
