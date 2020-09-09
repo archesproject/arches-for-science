@@ -64,7 +64,7 @@
             summary: true
         }
     }, css: {'selected-instance': $parent.value().indexOf($data['_source']['resourceinstanceid']) >= 0},
-    click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
+    click: function(){$parent.params.updateTileData($data['_source']['resourceinstanceid'])}"></div>
     <!-- /ko -->
 </div>
 <!-- /ko -->
