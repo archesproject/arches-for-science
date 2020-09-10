@@ -22,7 +22,7 @@
                             reportLookup,
                             filters,
                             value,
-                            params: {updateTileData: updateTileData}
+                            updateTileData: updateTileData
                         }
                     }"></div>
                 </div>
@@ -61,7 +61,6 @@
                         </div>
                     </div>
                     <div class="wf-multi-tile-step-card-controls">
-                        <div data-bind="value: console.log($parent)"></div>
                         <span><i class="fa fa-times-circle"></i></span><span class="" data-bind="click: function(){$parent.updateTileData($data.resourceinstanceid)}">Remove</span>
                     </div>
                  </div>
