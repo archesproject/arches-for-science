@@ -218,6 +218,7 @@ define([
         };
         
         var getResultData = function(termFilter, graph, pagingFilter) {
+            var filters = {};
             // let's empty our termFilters
             _.each(self.filters, function(_value, key) {
                 if (key !== 'paging-filter' && key !== 'search-results') {
@@ -227,16 +228,20 @@ define([
 
             if (termFilter) {
                 termFilter['inverted'] = false;
-                self.filters["term-filter"] = JSON.stringify([termFilter]);
-            }
+                filters["term-filter"] = JSON.stringify([termFilter]);
+            } 
+
             if (pagingFilter) {
+                filters['paging-filter'] = pagingFilter;
                 self.filters['paging-filter'](pagingFilter);
+            } else {
+                filters['paging-filter'] = 1;
             }
 
             params.loading(true);
             $.ajax({
                 url: arches.urls.physical_thing_search_results,
-                data: self.filters,
+                data: filters
             }).done(function(data) {
                 _.each(this.searchResults, function(_value, key) {
                     if (key !== 'timestamp') {
