@@ -36,6 +36,7 @@ define([
                 if (!!ko.unwrap(params.tile)) {
                     wastebin.tile = koMapping.toJS(params.tile().data);
                     wastebin.tile.tileid = (ko.unwrap(params.tile)).tileid;
+                    // eslint-disable-next-line camelcase
                     wastebin.tile.resourceinstance_id = (ko.unwrap(params.tile)).resourceinstance_id;
                 }
             }
