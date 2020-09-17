@@ -5,6 +5,7 @@ define([
 ], function(_, ko, NewTileStep) {
 
     function viewModel(params) {
+        params.hideDefaultButtons = ko.observable(true);
         params.altButtons = [
             {
                 "label": "Delete Alt",
