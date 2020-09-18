@@ -9,7 +9,9 @@ define([
     'models/graph',
     'report-templates',
     'card-components',
-    'bindings/select2-query'
+    'bindings/select2-query',
+    'views/components/search/paging-filter',
+    'views/components/search/search-results'
 ], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
 
     var graph = ko.observable();
@@ -28,6 +30,22 @@ define([
             cardwidgets: data.cardwidgets
         });
     });
+
+    var getQueryObject = function() {
+        var query = _.chain(decodeURIComponent(location.search).slice(1).split('&'))
+            // Split each array item into [key, value]
+            // ignore empty string if search is empty
+            .map(function(item) {
+                if (item) return item.split('=');
+            })
+            // Remove undefined in the case the search is empty
+            .compact()
+            // Turn [key, value] arrays into object parameters
+            .object()
+            // Return the value of the chain operation
+            .value();
+        return query;
+    };
     
     function viewModel(params) {
 
@@ -82,8 +100,17 @@ define([
         };
         self.getJSON();
 
-        this.next = params.workflow.next;
-        this.paginator = ko.observable();
+        this.selectedTab = ko.observable();
+        this.toggleRelationshipCandidacy = ko.observable();
+        this.isResourceRelatable = ko.observable();
+
+        this.filters = {
+            'paging-filter': ko.observable(),
+            'search-results': ko.observable(),
+        };
+        this.reportLookup = reportLookup;
+        this.query = ko.observable(getQueryObject());
+        this.searchResults = {'timestamp': ko.observable()};
         this.targetResource = ko.observable();
         this.selectedTerm = ko.observable();
         this.totalResults = ko.observable();
@@ -138,10 +165,7 @@ define([
         };
 
         this.updateTileData = function(resourceid) {
-            var tilevalue = null;
-            if (ko.unwrap(self.tile)){
-                tilevalue = self.tile().data[params.nodeid()];
-            }
+            var tilevalue = self.tile().data[params.nodeid()];
             var val = self.value().find(function(item) {
                 return item['resourceId'] === resourceid;
             });
@@ -234,22 +258,44 @@ define([
             }
         };
         
-        this.reportLookup = reportLookup;
-        var getResultData = function(termFilter, graph) {
-            var filters = {
-                "paging-filter": 1
-            };
+        var getResultData = function(termFilter, graph, pagingFilter) {
+            var filters = {};
+            // let's empty our termFilters
+            _.each(self.filters, function(_value, key) {
+                if (key !== 'paging-filter' && key !== 'search-results') {
+                    delete self.filters[key];
+                }
+            });
+
             if (termFilter) {
                 termFilter['inverted'] = false;
                 filters["term-filter"] = JSON.stringify([termFilter]);
+            } 
+
+            if (pagingFilter) {
+                filters['paging-filter'] = pagingFilter;
+                self.filters['paging-filter'](pagingFilter);
+            } else {
+                filters['paging-filter'] = 1;
             }
 
             params.loading(true);
             $.ajax({
                 url: arches.urls.physical_thing_search_results,
-                data: filters,
+                data: filters
             }).done(function(data) {
-                self.paginator(koMapping.fromJS(data['paging-filter']['paginator']));
+                _.each(this.searchResults, function(_value, key) {
+                    if (key !== 'timestamp') {
+                        delete self.searchResults[key];
+                    }
+                });
+                _.each(data, function(value, key) {
+                    if (key !== 'timestamp') {
+                        self.searchResults[key] = value;
+                    }
+                });
+                self.searchResults.timestamp(data.timestamp);
+
                 self.totalResults(data['total_results']);
                 var resources = data['results']['hits']['hits'].map(function(source) {
                     var tileData = {
@@ -273,20 +319,17 @@ define([
                 params.loading(false);
             });
         };
-
-        this.newPage = function(page) {
-            if(page){
-                console.log(page);
-                // this.page(page);
-            }
-        },
         
-        this.updateSearchResults = function(termFilter) {
+        this.updateSearchResults = function(termFilter, pagingFilter) {
             params.loading(true);
-            if (graph()) getResultData(termFilter, graph());
-            else graph.subscribe(function(graph) {
-                getResultData(termFilter, graph);
-            });
+
+            if (graph()) {
+                getResultData(termFilter, graph(), pagingFilter);
+            } else {
+                graph.subscribe(function(graph) {
+                    getResultData(termFilter, graph, pagingFilter);
+                });
+            }
         };
 
         this.updateSearchResults();
@@ -294,6 +337,10 @@ define([
         this.selectedTerm.subscribe(function(val) {
             var termFilter = self.termOptions[val];
             self.updateSearchResults(termFilter);
+        });
+
+        this.query.subscribe(function(query) {
+            self.updateSearchResults(null, query['paging-filter']);
         });
 
         // params.defineStateProperties = function() {
