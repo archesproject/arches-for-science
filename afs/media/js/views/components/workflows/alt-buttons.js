@@ -5,6 +5,9 @@ define([
 ], function(_, ko, NewTileStep) {
 
     function viewModel(params) {
+        params.getJSONOnLoad = ko.observable(false);
+        NewTileStep.apply(this, [params]);
+        var self = this;
         params.hideDefaultButtons = ko.observable(true);
         params.altButtons = [
             {
@@ -32,7 +35,7 @@ define([
                 "visible": function(cardComp){return !!cardComp.tile ? !cardComp.tile.tileid : true;}
             }
         ];
-        NewTileStep.apply(this, [params]);
+        self.getJSON();
 
     }
 
