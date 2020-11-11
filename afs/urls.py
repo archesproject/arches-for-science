@@ -4,7 +4,6 @@ from django.conf.urls.static import static
 from arches.app.views.plugin import PluginView
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
-from afs.views.manifest import ManifestView
 
 urlpatterns = [
     url(r"^", include("arches.urls")),
