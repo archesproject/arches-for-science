@@ -114,13 +114,11 @@ class FileToIIIF(BaseFunction):
                         }
                     ],
                 }
-                json_file_name = f"{file_name_less_ext}.json"
-                json_url = f"{request._current_scheme_host}{MEDIA_URL}uploadedfiles/{json_file_name}"  # hosted address
-                json_path = os.path.join(APP_ROOT, "uploadedfiles", json_file_name)  # abs address
-                with open(json_path, "w") as pres_json:
-                    json.dump(pres_dict, pres_json)
 
-                manifest = models.IIIFManifest.objects.create(label=name, description=desc, url=json_url)
+                manifest = models.IIIFManifest.objects.create(label=name, description=desc, manifest=pres_dict)
+                manifest_id = manifest.id
+                json_url = f"/manifest/{manifest_id}"
+                manifest.url = json_url
                 manifest.save()
 
                 # save the url to digital resource identifier_content node
