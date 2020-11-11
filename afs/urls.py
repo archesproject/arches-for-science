@@ -10,5 +10,4 @@ urlpatterns = [
     url(r"^", include("arches.urls")),
     url(r"^physical-thing-search-results", PhysicalThingSearchView.as_view(), name="physical-thing-search-results"),
     url(r"^physical-things-in-set", PhysicalThingSetView.as_view(), name="physical_things_set"),
-    url(r"^manifest/(?P<id>[0-9]+)$", ManifestView.as_view(), name="manifest"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
