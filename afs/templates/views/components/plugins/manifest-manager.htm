@@ -1,0 +1,45 @@
+{% load i18n %}
+
+<div style="display: flex; width: 100%; height: 100%; flex-direction: column; overflow: hidden;">
+
+    <div class="file-chart-upload-panel">
+        <div class="gallery-controls new-tile">
+            <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+                <div class="file-select-window">
+                    <div class="bord-top pad-ver file-select">
+                        <div class="" style="padding: 5px">
+                           <h2>{% trans 'Upload Photographs' %}</h2>
+                           <h4>{% trans 'Drag & Dop your photos onto this panel to upload' %}</h4>
+                        </div>
+                        <button type="button" class="btn btn-lg btn-file-select fileinput-button dz-clickable" data-bind="css: uniqueidClass">
+                           <i class="fa fa-file"></i>
+                           <span>{% trans "Select Photographs" %}</span>
+                        </button>
+                        <br>
+                        <div style="padding: 10px">
+                            <p>
+                                {% trans "Adding photos to this record is <span><strong>optional.</strong></span>" %}
+                            </p>
+                            <p>
+                                {% trans "You may upload as many photos as you wish, but the maximum size of any single file is <span>8MB</span>" %}
+                            </p>
+                        </div>
+                        </div>
+                    <div class="file-upload-footer">
+                       <span>{% trans 'Images formatted as .jpg, .png, .tiff files may be uploaded. Other formats will be ignored.' %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-danger" data-bind="click: removeAlllll, clickBubble: false">{% trans "Cancel" %}</a>
+        <button class="btn btn-primary" data-bind="click: submitForManifest, clickBubble: false">{% trans "Submit" %}</button>
+    </div>
+
+    <div style="min-height: 100%;">
+        <div id="hidden-dz-previews" style="display:none"></div>
+        <!--img class="dz-img dz-img-main" data-bind="attr: {src: ko.unwrap(displayContent)}" ></img-->
+    </div>
+</div>
