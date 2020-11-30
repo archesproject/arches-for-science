@@ -154,7 +154,7 @@ define([
                 type: 'POST',
                 data: {
                     'nodeid': params.nodeid(),
-                    'data': JSON.stringify(self.value()),
+                    'data': koMapping.toJSON(self.value()),
                     'resourceinstanceid': ko.unwrap(params.resourceid),
                     'tileid': self.tile().tileid
                 }
