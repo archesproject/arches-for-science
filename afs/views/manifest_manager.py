@@ -3,8 +3,9 @@ import logging
 import os
 import requests
 import shutil
-from django.views.generic import View
+from django.core.files.storage import default_storage
 from django.http import HttpRequest
+from django.views.generic import View
 from arches.app.utils.response import JSONResponse
 from arches.app.models import models
 from arches.app.models.tile import Tile
@@ -17,10 +18,6 @@ logger = logging.getLogger(__name__)
 class ManifestManagerView(View):
     def post(self, request):
 
-        files = request.POST.get("data") # nedd to get the file 
-        name = "manifest" # to be changed, may be able to get this from request
-        desc = "description"  # to be changed
-
         acceptable_types = [
             ".jpg",
             ".jpeg",
@@ -29,21 +26,30 @@ class ManifestManagerView(View):
             ".png",
         ]
 
+        files = request.FILES.getlist("files")
+        name = request.POST.get("manifest_title")
+        desc = request.POST.get("manifest_description")
+
         if not os.path.exists(CANTALOUPE_DIR):
             os.mkdir(CANTALOUPE_DIR)
 
         canvases = []
         for f in files:
             if os.path.splitext(f.name)[1].lower() in acceptable_types:
-                dest = os.path.join(CANTALOUPE_DIR, os.path.basename(f.path.url))
-                file_name = os.path.basename(f.name)
+                import uuid
+                newImageId = uuid.uuid4()
+                newImage = models.ManifestImage.objects.create(imageid=newImageId, image=f)
+                newImage.save()
+
+                file_name = os.path.basename(newImage.image.name)
                 file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/" + file_name
                 file_json = file_url + "/info.json"
                 logger.info("copying file to local dir")
-                shutil.copyfile(os.path.join(MEDIA_ROOT, f.path.name), dest)
+
                 image_json = self.fetch(file_json)
                 if image_json is None:
                     return
+
                 canvases.append(
                     {
                         "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/canvas/TBD.json",
@@ -85,7 +91,8 @@ class ManifestManagerView(View):
                     }
                 )
             else:
-                logger.warn("filetype unacceptable: " + f.path.name)
+                logger.warn("filetype unacceptable: " + newImage.image.name)
+
         pres_dict = {
             "@context": "http://iiif.io/api/presentation/2/context.json",
             "@type": "sc:Manifest",
@@ -110,9 +117,28 @@ class ManifestManagerView(View):
             ],
         }
 
-        # create manuscript record in the db
+        # create a manuscript record in the db
         manifest = models.IIIFManifest.objects.create(label=name, description=desc, manifest=pres_dict)
         manifest_id = manifest.id
         json_url = f"/manifest/{manifest_id}"
         manifest.url = json_url
         manifest.save()
+
+        return JSONResponse(manifest)
+
+    def fetch(self, url):
+        try:
+            resp = requests.get(url)
+            return resp.json()
+        except:
+            logger.warn("Manifest not created. Check if Cantaloupe running")
+            return None
+
+    def on_import(self, tile):
+        raise NotImplementedError
+
+    def after_function_save(self, tile, request):
+        raise NotImplementedError
+
+    def get(self):
+        raise NotImplementedError

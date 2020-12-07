@@ -2,6 +2,14 @@
 
 <div style="display: flex; width: 100%; height: 100%; flex-direction: column; overflow: hidden;">
 
+    <div class="row widget-wrapper">
+        <div class="form-group">
+            <label class="control-label">Title</label>
+            <input type="text" placeholder='Manifest Title' class="form-control input-lg" style="height: 36px;" data-bind="value:title, valueUpdate: 'keyup'">
+            <label class="control-label">Description</label>
+            <input type="text" placeholder='Manifest Description' class="form-control input-lg" style="height: 36px;" data-bind="value:description, valueUpdate: 'keyup'">
+        </div>
+    </div>
     <div class="file-chart-upload-panel">
         <div class="gallery-controls new-tile">
             <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
@@ -32,9 +40,8 @@
             </div>
         </div>
     </div>
-
     <div>
-        <button class="btn btn-danger" data-bind="click: removeAlllll, clickBubble: false">{% trans "Cancel" %}</a>
+        <button class="btn btn-danger" data-bind="click: reset, clickBubble: false">{% trans "Cancel" %}</a>
         <button class="btn btn-primary" data-bind="click: submitForManifest, clickBubble: false">{% trans "Submit" %}</button>
     </div>
 
