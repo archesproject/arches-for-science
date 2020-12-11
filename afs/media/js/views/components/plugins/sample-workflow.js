@@ -15,25 +15,30 @@ define([
                     description: 'Information about the Project',
                     component: 'views/components/workflows/new-step',
                     componentname: 'new-step',
-                    graphid: '615b11ee-c457-11e9-910c-a4d18cec433a',  /* Observation */
                     layoutSections: [
                         {
-                            'sectionTitle': 'Project',
-                            'widgetConfigs': [
+                            sectionTitle: 'Project',
+                            componentConfigs: [
                                 { 
-                                    'widgetInstanceName': 'project-resource-select', /* unique to step */
-                                    'widgetid': '31f3728c-7613-11e7-a139-784f435179ea', /* resource-instance-select-widget */
-                                    'required': true,
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'project-resource-instance', /* unique to step */
+                                    graphIds: [
+                                        '0b9235d9-ca85-11e9-9fa2-a4d18cec433a', /* Activity */
+                                    ],  
+                                    required: true,
                                 },
                             ], 
                         },
                         {
-                            'sectionTitle': 'Sample Object',
-                            'widgetConfigs': [
+                            sectionTitle: 'Sample Object',
+                            componentConfigs: [
                                 { 
-                                    'widgetInstanceName': 'sample-object-resource-select', /* unique to step */
-                                    'widgetid': '31f3728c-7613-11e7-a139-784f435179ea', /* resource-instance-select-widget */
-                                    'required': true,
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'sample-object-resource-instance', /* unique to step */
+                                    graphIds: [
+                                        '615b11ee-c457-11e9-910c-a4d18cec433a', /* Observation */
+                                    ],  
+                                    required: true,
                                 },
                             ], 
                         },
