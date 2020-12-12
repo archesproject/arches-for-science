@@ -48,6 +48,32 @@ define([
                     class: 'fa-search',
                     wastebin: {}
                 },
+                {
+                    title: 'Project Info',
+                    name: 'projectInfo',
+                    description: 'Information about the Project',
+                    component: 'views/components/workflows/new-step',
+                    componentname: 'new-step',
+                    layoutSections: [
+                        {
+                            sectionTitle: 'FOOBAR',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'project-resource-instance', /* unique to step */
+                                    graphIds: [
+                                        '0b9235d9-ca85-11e9-9fa2-a4d18cec433a', /* Activity */
+                                    ],  
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
+                    required: true,
+                    icon: 'fa-search',
+                    class: 'fa-search',
+                    wastebin: {}
+                },
             ];
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
