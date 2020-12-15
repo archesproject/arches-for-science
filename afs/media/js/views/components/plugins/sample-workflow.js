@@ -15,7 +15,23 @@ define([
                     description: 'Information about the Project',
                     component: 'views/components/workflows/new-step',
                     componentname: 'new-step',
+                    autoAdvance: false,
+                    required: true,
+                    icon: 'fa-search',
+                    class: 'fa-search',
+                    wastebin: {},
                     layoutSections: [
+                        {
+                            sectionTitle: 'Foo',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'text-widget',
+                                    uniqueInstanceName: 'foo', /* unique to step */
+                                    graphIds: [],  
+                                    required: true,
+                                },
+                            ], 
+                        },
                         {
                             sectionTitle: 'Project',
                             componentConfigs: [
@@ -43,10 +59,6 @@ define([
                             ], 
                         },
                     ],
-                    required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search',
-                    wastebin: {}
                 },
                 {
                     title: 'Project Info',
@@ -54,6 +66,10 @@ define([
                     description: 'Information about the Project',
                     component: 'views/components/workflows/new-step',
                     componentname: 'new-step',
+                    required: true,
+                    icon: 'fa-search',
+                    class: 'fa-search',
+                    wastebin: {},
                     layoutSections: [
                         {
                             sectionTitle: 'FOOBAR',
@@ -69,10 +85,6 @@ define([
                             ], 
                         },
                     ],
-                    required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search',
-                    wastebin: {}
                 },
             ];
             Workflow.apply(this, [params]);
