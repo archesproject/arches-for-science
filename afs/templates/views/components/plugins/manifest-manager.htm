@@ -1,52 +1,115 @@
+{% extends "views/components/iiif-viewer.htm" %}
 {% load i18n %}
 
-<div style="display: flex; width: 100%; height: 100%; flex-direction: column; overflow: hidden;">
+{% block tabs %}
+<div class="workbench-card-sidebar-tab" data-bind="click: function() {
+    toggleTab('manager');
+}, css: {
+    'active': activeTab() === 'manager'
+}">
+    <i class="fa fa-book"></i>
+    <span class="map-sidebar-text">{% trans "Manage" %}</span>
+</div>
+{{ block.super }}
+{% endblock tabs %}
 
-    <div class="row widget-wrapper">
-        <div class="form-group">
-            <label class="control-label">Title</label>
-            <input type="text" placeholder='Manifest Title' class="form-control input-lg" style="height: 36px;" data-bind="value:title, valueUpdate: 'keyup'">
-            <label class="control-label">Description</label>
-            <input type="text" placeholder='Manifest Description' class="form-control input-lg" style="height: 36px;" data-bind="value:description, valueUpdate: 'keyup'">
+{% block sidepanel %}
+<!--ko if: activeTab() === 'manager' -->
+<!-- ko foreach: { data: [$data], as: 'self' } -->
+<div class="workbench-header-buffer">
+    <div class="workbench-card-sidepanel-header-container">
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">{% trans 'Manage Manifest' %}</h4>
+    </div>
+</div>
+
+<div class="iiif-image-tools">
+    <div class="form-group">
+        <label class="control-label">Title</label>
+        <input type="text" placeholder="Manifest Title" class="form-control input-lg" style="height: 36px;"
+            data-bind="textInput: self.manifestLabel, valueUpdate: 'keyup'">
+        <!--label class="control-label">Description</label>
+        <input type="text" placeholder='Manifest Description' class="form-control input-lg" style="height: 36px;" 
+            data-bind="value:description, valueUpdate: 'keyup'"-->
+    </div>
+
+    <!--ko if: canvases().length > 0-->
+    <label class="control-label">Canvases</label>
+    <div class="file-workbench-files" data-bind="foreach: canvases">
+        <div class='file-workbench-file' style="display: inline-flex;">
+            <i class="fa fa-trash" style="margin: 0px 10px"></i>    
+            <span class='file-name' data-bind="text: label"></span>
         </div>
     </div>
+    <!--/ko-->
+
+    <!--ko if: imagesForUpload().length > 0-->
+    <label class="control-label">Images to be Added</label>
+    <div class="file-workbench-files" data-bind="foreach: imagesForUpload">
+        <div class='file-workbench-file' style="display: inline-flex;">
+            <span class='file-name' data-bind="text: name"></span>
+        </div>
+    </div>
+    <!--/ko-->
+        
     <div class="file-chart-upload-panel">
         <div class="gallery-controls new-tile">
             <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
-                <div class="file-select-window">
+                <!--div class="file-select-window">
                     <div class="bord-top pad-ver file-select">
                         <div class="" style="padding: 5px">
-                           <h2>{% trans 'Upload Photographs' %}</h2>
-                           <h4>{% trans 'Drag & Dop your photos onto this panel to upload' %}</h4>
+                            <h2>{% trans 'Upload Photographs' %}</h2>
+                            <h4>{% trans 'Drag & Dop your photos onto this panel to upload' %}</h4>
                         </div>
                         <button type="button" class="btn btn-lg btn-file-select fileinput-button dz-clickable" data-bind="css: uniqueidClass">
-                           <i class="fa fa-file"></i>
-                           <span>{% trans "Select Photographs" %}</span>
+                            <i class="fa fa-file"></i>
+                            <span>{% trans "Select Photographs" %}</span>
                         </button>
                         <br>
                         <div style="padding: 10px">
                             <p>
-                                {% trans "Adding photos to this record is <span><strong>optional.</strong></span>" %}
-                            </p>
-                            <p>
                                 {% trans "You may upload as many photos as you wish, but the maximum size of any single file is <span>8MB</span>" %}
                             </p>
                         </div>
-                        </div>
+                    </div>
                     <div class="file-upload-footer">
-                       <span>{% trans 'Images formatted as .jpg, .png, .tiff files may be uploaded. Other formats will be ignored.' %}</span>
+                        <span>{% trans 'Images formatted as .jpg, .png, .tiff files may be uploaded. Other formats will be ignored.' %}</span>
                     </div>
                 </div>
+                <div>
+                    <select name="operation" placeholder="Choose an option" id="operation" data-bind="value: operation">
+                        <option value="create">create</option>
+                        <option value="add">add</option>
+                        <option value="remove">remove</option>
+                        <option value="delete">delete</option>
+                    </select>
+                </div-->
+        
+                <div class="file-workbench-buttons">
+                    <button class="btn btn-primary btn-lg btn-block btn-labeled btn-workbench fa fa-file fileinput-button dz-clickable" data-bind="css: uniqueidClass">
+                        <span>{% trans "Add Photos" %}</span>
+                    </button>
+                </div>
+
+            <hr class="rp-tile-separator">
+            <!--ko if: canvas-->
+            <label class="control-label">Image Information</label>
+            <div>
+                <input type="text" placeholder='Image Caption' class="form-control input-lg" style="height: 36px;" 
+                data-bind="text:canvas.label, valueUpdate: 'keyup'">
+            </div>
+            <!--/ko-->
+            <div class="file-workbench-buttons" style="margin-top: 20px;">
+                <button class="btn btn-mint btn-lg btn-labeled fa fa-pencil" data-bind="click: submitForManifest, clickBubble: false">{% trans "Submit" %}</button>
+                <button class="btn btn-danger btn-lg btn-labeled fa fa-refresh" data-bind="click: reset, clickBubble: false">{% trans "Cancel" %}</button>
             </div>
         </div>
     </div>
-    <div>
-        <button class="btn btn-danger" data-bind="click: reset, clickBubble: false">{% trans "Cancel" %}</a>
-        <button class="btn btn-primary" data-bind="click: submitForManifest, clickBubble: false">{% trans "Submit" %}</button>
-    </div>
-
     <div style="min-height: 100%;">
         <div id="hidden-dz-previews" style="display:none"></div>
-        <!--img class="dz-img dz-img-main" data-bind="attr: {src: ko.unwrap(displayContent)}" ></img-->
     </div>
 </div>
+</div>
+<!--/ko-->
+<!--/ko-->
+{{ block.super }}
+{% endblock sidepanel %}
