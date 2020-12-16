@@ -3,17 +3,21 @@ define([
     'dropzone',
     'uuid',
     'arches',
+    'views/components/iiif-viewer',
     'bindings/dropzone'
-], function (ko, Dropzone, uuid, arches) {
+], function (ko, Dropzone, uuid, arches, IIIFViewerViewmodel) {
     return ko.components.register('manifest-manager', {
-        viewModel: function() {
+        viewModel: function(params) {
             var self = this;
 
-            this.imagessForUpload = ko.observableArray();
+            this.imagesForUpload = ko.observableArray();
             this.unsupportedImageTypes = ['tif', 'tiff', 'vnd.adobe.photoshop'];
+
+            IIIFViewerViewmodel.apply(this, [params]);
 
             this.title = ko.observable();
             this.description = ko.observable();
+            this.operation = ko.observable();
 
             this.uniqueId = uuid.generate();
             this.uniqueidClass = ko.computed(function() {
@@ -22,29 +26,8 @@ define([
 
             this.formData = new FormData();
 
-            /*this.filesJSON = ko.computed(function() {
-                var imagessForUpload = self.imagessForUpload();
-                return ko.toJS(imagessForUpload, function(file, i) {
-                        return {
-                            name: file.name,
-                            accepted: file.accepted,
-                            height: file.height,
-                            lastModified: file.lastModified,
-                            size: file.size,
-                            status: file.status,
-                            type: file.type,
-                            width: file.width,
-                            url: null,
-                            file_id: null,
-                            index: i,
-                            content: URL.createObjectURL(file),
-                            error: file.error
-                        };
-                    })
-            }).extend({throttle: 100});*/
-
             this.addFile = function(file){
-                self.imagessForUpload.push(file);
+                self.imagesForUpload.push(file);
                 self.formData.append("files", file, file.name);
             };
 
@@ -56,8 +39,12 @@ define([
             };
 
             this.submitForManifest = function(){
-                self.formData.append("manifest_title", ko.unwrap(self.title));
+                self.formData.append("manifest_title", ko.unwrap(self.manifestName));
                 self.formData.append("manifest_description", ko.unwrap(self.description));
+                self.formData.append("selected_canvas", JSON.stringify(ko.unwrap(self.canvas)));
+                self.formData.append("manifest", ko.unwrap(self.manifest));
+                //self.formData.append("operation", ko.unwrap(self.operation));
+                self.formData.append("operation", "add");
                 $.ajax({
                     type: "POST",
                     url: arches.urls.manifest_manager,
@@ -66,12 +53,16 @@ define([
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        self.formData.delete('file')
-                        console.log('submitted');
+                        self.formData.delete('files');
+                        self.manifestData(response.manifest);
+                        self.manifest(response.url);
+                        self.reset();
+                        console.log('Submitted');
                     },
                     error: function(response) {
-                        self.formData.delete('file')
-                        console.log(response.responseText);
+                        self.formData.delete('files')
+                        self.reset();
+                        console.log("Failed");
                     }
                 })
             };
