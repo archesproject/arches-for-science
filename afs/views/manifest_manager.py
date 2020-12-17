@@ -94,24 +94,18 @@ class ManifestManagerView(View):
 
         def delete_canvas(manifest, canvases_to_remove):
             manifest = models.IIIFManifest.objects.get(url=manifest)
-            """
-            for canvas in canvases_to_remove:
-                manifest.manifest['sequences'][0]['canvases'].remove(canvas)
-            """
-            canvasIdsToRemove = [canvas['images'][0]['resource']['service']['@id'] for canvas in canvases_to_remove]
+            canvas_ids_remove = [canvas['images'][0]['resource']['service']['@id'] for canvas in canvases_to_remove]
             canvases = manifest.manifest['sequences'][0]['canvases']
-            for canvas in canvases:
-                if canvas['images'][0]['resource']['service']['@id'] in canvasIdsToRemove:
-                    manifest.manifest['sequences'][0]['canvases'].remove(canvas)
+            manifest.manifest['sequences'][0]['canvases'] = [canvas for canvas in canvases if canvas['images'][0]['resource']['service']['@id'] not in canvas_ids_remove]
             manifest.save()
             return manifest
 
         def create_image(file):
-            newImageId = uuid.uuid4()
-            newImage = models.ManifestImage.objects.create(imageid=newImageId, image=file)
-            newImage.save()
+            new_image_id = uuid.uuid4()
+            new_image = models.ManifestImage.objects.create(imageid=new_image_id, image=file)
+            new_image.save()
 
-            file_name = os.path.basename(newImage.image.name)
+            file_name = os.path.basename(new_image.image.name)
             file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/" + file_name
             file_json = file_url + "/info.json"
             image_json = self.fetch(file_json)
