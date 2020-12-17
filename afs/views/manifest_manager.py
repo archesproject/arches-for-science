@@ -118,6 +118,15 @@ class ManifestManagerView(View):
             manifest = models.IIIFManifest.objects.get(url=manifest)
             return len(manifest.manifest['sequences'][0]['canvases'])
 
+        def change_manifest_label(manifest, name):
+            manifest = models.IIIFManifest.objects.get(url=manifest)
+            if name != "" and name != manifest.label:
+                manifest.label = name
+            if name != "" and name != manifest.manifest["label"]:
+                manifest.manifest["label"] = name
+            manifest.save()
+            return manifest
+
         acceptable_types = [
             ".jpg",
             ".jpeg",
@@ -165,7 +174,11 @@ class ManifestManagerView(View):
             updated_manifest = delete_manifest(manifest)
             return JSONResponse(updated_manifest)
 
-        if operation == 'add':
+        if name is not None:
+            updated_manifest = change_manifest_label(manifest, name)
+            # It does not return JSONResponse and then keep going to the next step
+
+        if files is not None and len(files) > 0:
             try:
                 canvases = []
                 i = get_image_count(manifest)
@@ -181,13 +194,14 @@ class ManifestManagerView(View):
                     else:
                         logger.warn("filetype unacceptable: " + f.name)
                 updated_manifest = add_canvases(manifest, canvases)
-                return JSONResponse(updated_manifest)
             except:
                 logger.warning("You have to select a manifest to add images")
+                return None
 
         if operation == 'remove':
             updated_manifest = delete_canvas(manifest, selected_canvas)
-            return JSONResponse(updated_manifest)
+        
+        return JSONResponse(updated_manifest)
 
     def fetch(self, url):
         try:

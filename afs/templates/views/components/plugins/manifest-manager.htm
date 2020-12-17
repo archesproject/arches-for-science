@@ -26,7 +26,7 @@
     <div class="form-group">
         <label class="control-label">Title</label>
         <input type="text" placeholder="Manifest Title" class="form-control input-lg" style="height: 36px;"
-            data-bind="textInput: self.manifestName, valueUpdate: 'keyup'">
+            data-bind="textInput: self.title, valueUpdate: 'keyup'">
         <!--label class="control-label">Description</label>
         <input type="text" placeholder='Manifest Description' class="form-control input-lg" style="height: 36px;" 
             data-bind="value:description, valueUpdate: 'keyup'"-->
@@ -35,9 +35,12 @@
     <!--ko if: canvases().length > 0-->
     <label class="control-label">Canvases</label>
     <div class="file-workbench-files" data-bind="foreach: canvases">
-        <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: $parent.addCanvas, clickBubble: false">
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: $parent.selectCanvas, clickBubble: false, css: {staged: ko.unwrap($parent.canvas) === $data.images[0].resource.service['@id']}">
+            <div data-bind="value:console.log($data)"></div>
+            <!-- ko if: self.canvasesForDeletion().indexOf($data) > -1 -->
             <i class="fa fa-trash" style="margin: 0px 10px"></i>
-            <span class='file-name' data-bind="text: label"></span>
+            <!--/ko-->
+            <span class='file-name' data-bind="text: label, click: $parent.addCanvas, clickBubble: false"></span>
         </div>
     </div>
     <!--/ko-->
@@ -101,14 +104,14 @@
 
             <hr class="rp-tile-separator">
             <!--ko if: canvas-->
-            <label class="control-label">Image Information</label>
+            <label class="control-label">{% trans "Image Information" %}</label>
             <div>
                 <input type="text" placeholder='Image Caption' class="form-control input-lg" style="height: 36px;" 
                 data-bind="text:canvas.label, valueUpdate: 'keyup'">
             </div>
             <!--/ko-->
             <div class="file-workbench-buttons" style="margin-top: 20px;">
-                <button class="btn btn-mint btn-lg btn-labeled fa fa-pencil" data-bind="click: submitForManifest, clickBubble: false">{% trans "Submit" %}</button>
+                <button class="btn btn-mint btn-lg btn-labeled fa fa-pencil" data-bind="click: submitForManifest, clickBubble: false">{% trans "Save" %}</button>
                 <button class="btn btn-danger btn-lg btn-labeled fa fa-refresh" data-bind="click: reset, clickBubble: false">{% trans "Cancel" %}</button>
             </div>
         <!--/div>

@@ -15,14 +15,20 @@ define([
             this.imagesForUpload = ko.observableArray([]);
             this.canvasesForDeletion = ko.observableArray([]);
 
-            this.unsupportedImageTypes = ['tif', 'tiff', 'vnd.adobe.photoshop'];
-
             this.addCanvas = function(canvas) {
                 self.canvasesForDeletion.push(canvas);
+                self.canvas(canvas.images[0].resource.service['@id'])
+            };
+
+            this.selectCanvas = function(canvas) {
+                self.canvas(canvas.images[0].resource.service['@id'])
             };
 
             IIIFViewerViewmodel.apply(this, [params]);
 
+            this.canvas.subscribe(function(val){
+                console.log(val)
+            });
             this.title = ko.observable();
             this.description = ko.observable();
             this.operation = ko.observable();
@@ -56,7 +62,7 @@ define([
                 this.canvasesForDeletion().forEach(function(canvas) {
                     self.formData.append("selected_canvases", canvas);
                 });
-                self.formData.append("manifest_title", ko.unwrap(self.manifestName));
+                self.formData.append("manifest_title", ko.unwrap(self.title));
                 self.formData.append("manifest_description", ko.unwrap(self.description));
                 self.formData.append("selected_canvas", JSON.stringify(ko.unwrap(self.canvas)));
                 self.formData.append("manifest", ko.unwrap(self.manifest));
