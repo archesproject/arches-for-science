@@ -35,10 +35,10 @@
     <!--ko if: canvases().length > 0-->
     <label class="control-label">Canvases</label>
     <div class="file-workbench-files" data-bind="foreach: canvases">
-        <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: $parent.selectCanvas, clickBubble: false, css: {staged: ko.unwrap($parent.canvas) === $data.images[0].resource.service['@id']}">
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: $parent.canvasClick, clickBubble: false, css: {staged: ko.unwrap($parent.canvas) === $data.images[0].resource.service['@id']}">
             <div data-bind="value:console.log($data)"></div>
             <!-- ko if: self.canvasesForDeletion().indexOf($data) > -1 -->
-            <i class="fa fa-trash" style="margin: 0px 10px"></i>
+            <i class="fa fa-trash" style="color: orangered; margin: 0px 10px;" data-bind="click: $parent.removeCanvas, clickBubble: false"></i>
             <!--/ko-->
             <span class='file-name' data-bind="text: label, click: $parent.addCanvas, clickBubble: false"></span>
         </div>
@@ -46,11 +46,11 @@
     <!--/ko-->
 
     <!-- ko if: canvasesForDeletion().length > 0-->
-    <div class="file-workbench-buttons">
+    <!--div class="file-workbench-buttons">
         <button class="btn btn-mint btn-lg btn-block btn-labeled btn-workbench fa fa-trash" data-bind="css: uniqueidClass">
             <span>{% trans "Delete Selected" %}</span>
         </button>
-    </div>
+    </div-->
     <!--/ko-->
 
     <!--ko if: imagesForUpload().length > 0-->

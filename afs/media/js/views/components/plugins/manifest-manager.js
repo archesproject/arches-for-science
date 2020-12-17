@@ -15,12 +15,17 @@ define([
             this.imagesForUpload = ko.observableArray([]);
             this.canvasesForDeletion = ko.observableArray([]);
 
-            this.addCanvas = function(canvas) {
+            this.addCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.push(canvas);
                 self.canvas(canvas.images[0].resource.service['@id'])
             };
 
-            this.selectCanvas = function(canvas) {
+            /*this.selectCanvas = function(canvas) {
+                self.canvas(canvas.images[0].resource.service['@id'])
+            };*/
+
+            this.removeCanvas = function(canvas) { //the function name needs to be better
+                self.canvasesForDeletion.remove(canvas);
                 self.canvas(canvas.images[0].resource.service['@id'])
             };
 
@@ -52,6 +57,7 @@ define([
                 if (self.dropzone) {
                     self.dropzone.removeAllFiles(true);
                     self.imagesForUpload.removeAll();
+                    self.canvasesForDeletion.removeAll();
                 }
             };
 
@@ -59,14 +65,10 @@ define([
                 this.imagesForUpload().forEach(function(file) {
                     self.formData.append("files", file, file.name);
                 });
-                this.canvasesForDeletion().forEach(function(canvas) {
-                    self.formData.append("selected_canvases", canvas);
-                });
                 self.formData.append("manifest_title", ko.unwrap(self.title));
                 self.formData.append("manifest_description", ko.unwrap(self.description));
-                self.formData.append("selected_canvas", JSON.stringify(ko.unwrap(self.canvas)));
+                self.formData.append("selected_canvases", JSON.stringify(ko.unwrap(self.canvasesForDeletion)));
                 self.formData.append("manifest", ko.unwrap(self.manifest));
-                //self.formData.append("operation", ko.unwrap(self.operation));
                 self.formData.append("operation", "add");
                 $.ajax({
                     type: "POST",

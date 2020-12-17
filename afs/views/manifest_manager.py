@@ -92,14 +92,17 @@ class ManifestManagerView(View):
             manifest.save()
             return manifest
 
-        def delete_canvas(manifest, canvas): # it is possible to use canvas id?
+        def delete_canvas(manifest, canvases_to_remove):
             manifest = models.IIIFManifest.objects.get(url=manifest)
+            """
+            for canvas in canvases_to_remove:
+                manifest.manifest['sequences'][0]['canvases'].remove(canvas)
+            """
+            canvasIdsToRemove = [canvas['images'][0]['resource']['service']['@id'] for canvas in canvases_to_remove]
             canvases = manifest.manifest['sequences'][0]['canvases']
-            canvasIdToRemove = canvas.images[0].resource.service['@id']
-            for i in len(canvases):
-                if canvases[i].images[0].resource.service['@id'] == canvasIdToRemove:
-                    toBeRemoved = i
-            manifest.manifest['sequences'][0]['canvases'].pop(toBeRemoved)
+            for canvas in canvases:
+                if canvas['images'][0]['resource']['service']['@id'] in canvasIdsToRemove:
+                    manifest.manifest['sequences'][0]['canvases'].remove(canvas)
             manifest.save()
             return manifest
 
@@ -138,15 +141,14 @@ class ManifestManagerView(View):
         files = request.FILES.getlist("files")
         name = request.POST.get("manifest_title")
         desc = request.POST.get("manifest_description")
-        # operation = ['create', 'add', 'remove', 'delete']
         operation = request.POST.get('operation')
-        selected_canvas = request.POST.get('selected_canvas')
+        selected_canvases = json.loads(request.POST.get('selected_canvases'))
         manifest = request.POST.get('manifest')
 
         if not os.path.exists(CANTALOUPE_DIR):
             os.mkdir(CANTALOUPE_DIR)
 
-        if operation == 'create' or operation is None:
+        if operation == 'create':
             canvases = []
             for f in files:
                 if os.path.splitext(f.name)[1].lower() in acceptable_types:
@@ -174,11 +176,14 @@ class ManifestManagerView(View):
             updated_manifest = delete_manifest(manifest)
             return JSONResponse(updated_manifest)
 
-        if name is not None:
+        if name != "undefined":
             updated_manifest = change_manifest_label(manifest, name)
             # It does not return JSONResponse and then keep going to the next step
 
-        if files is not None and len(files) > 0:
+        if len(selected_canvases):
+            updated_manifest = delete_canvas(manifest, selected_canvases)
+
+        if len(files) > 0:
             try:
                 canvases = []
                 i = get_image_count(manifest)
@@ -197,9 +202,6 @@ class ManifestManagerView(View):
             except:
                 logger.warning("You have to select a manifest to add images")
                 return None
-
-        if operation == 'remove':
-            updated_manifest = delete_canvas(manifest, selected_canvas)
         
         return JSONResponse(updated_manifest)
 
