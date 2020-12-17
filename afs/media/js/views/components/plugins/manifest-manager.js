@@ -10,8 +10,16 @@ define([
         viewModel: function(params) {
             var self = this;
 
-            this.imagesForUpload = ko.observableArray();
             this.unsupportedImageTypes = ['tif', 'tiff', 'vnd.adobe.photoshop'];
+
+            this.imagesForUpload = ko.observableArray([]);
+            this.canvasesForDeletion = ko.observableArray([]);
+
+            this.unsupportedImageTypes = ['tif', 'tiff', 'vnd.adobe.photoshop'];
+
+            this.addCanvas = function(canvas) {
+                self.canvasesForDeletion.push(canvas);
+            };
 
             IIIFViewerViewmodel.apply(this, [params]);
 
@@ -28,7 +36,10 @@ define([
 
             this.addFile = function(file){
                 self.imagesForUpload.push(file);
-                self.formData.append("files", file, file.name);
+            };
+
+            this.removeFile = function(file){
+                self.imagesForUpload.remove(file);
             };
 
             this.reset = function() {
@@ -39,6 +50,12 @@ define([
             };
 
             this.submitForManifest = function(){
+                this.imagesForUpload().forEach(function(file) {
+                    self.formData.append("files", file, file.name);
+                });
+                this.canvasesForDeletion().forEach(function(canvas) {
+                    self.formData.append("selected_canvases", canvas);
+                });
                 self.formData.append("manifest_title", ko.unwrap(self.manifestName));
                 self.formData.append("manifest_description", ko.unwrap(self.description));
                 self.formData.append("selected_canvas", JSON.stringify(ko.unwrap(self.canvas)));

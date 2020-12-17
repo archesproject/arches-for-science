@@ -26,7 +26,7 @@
     <div class="form-group">
         <label class="control-label">Title</label>
         <input type="text" placeholder="Manifest Title" class="form-control input-lg" style="height: 36px;"
-            data-bind="textInput: self.manifestLabel, valueUpdate: 'keyup'">
+            data-bind="textInput: self.manifestName, valueUpdate: 'keyup'">
         <!--label class="control-label">Description</label>
         <input type="text" placeholder='Manifest Description' class="form-control input-lg" style="height: 36px;" 
             data-bind="value:description, valueUpdate: 'keyup'"-->
@@ -35,24 +35,33 @@
     <!--ko if: canvases().length > 0-->
     <label class="control-label">Canvases</label>
     <div class="file-workbench-files" data-bind="foreach: canvases">
-        <div class='file-workbench-file' style="display: inline-flex;">
-            <i class="fa fa-trash" style="margin: 0px 10px"></i>    
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: $parent.addCanvas, clickBubble: false">
+            <i class="fa fa-trash" style="margin: 0px 10px"></i>
             <span class='file-name' data-bind="text: label"></span>
         </div>
+    </div>
+    <!--/ko-->
+
+    <!-- ko if: canvasesForDeletion().length > 0-->
+    <div class="file-workbench-buttons">
+        <button class="btn btn-mint btn-lg btn-block btn-labeled btn-workbench fa fa-trash" data-bind="css: uniqueidClass">
+            <span>{% trans "Delete Selected" %}</span>
+        </button>
     </div>
     <!--/ko-->
 
     <!--ko if: imagesForUpload().length > 0-->
     <label class="control-label">Images to be Added</label>
     <div class="file-workbench-files" data-bind="foreach: imagesForUpload">
-        <div class='file-workbench-file' style="display: inline-flex;">
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: $parent.removeFile, clickBubble: false">
+            <i class="fa fa-trash" style="margin: 0px 10px"></i>
             <span class='file-name' data-bind="text: name"></span>
         </div>
     </div>
     <!--/ko-->
         
-    <div class="file-chart-upload-panel">
-        <div class="gallery-controls new-tile">
+    <!--div class="file-chart-upload-panel">
+        <div class="gallery-controls new-tile"-->
             <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
                 <!--div class="file-select-window">
                     <div class="bord-top pad-ver file-select">
@@ -102,8 +111,8 @@
                 <button class="btn btn-mint btn-lg btn-labeled fa fa-pencil" data-bind="click: submitForManifest, clickBubble: false">{% trans "Submit" %}</button>
                 <button class="btn btn-danger btn-lg btn-labeled fa fa-refresh" data-bind="click: reset, clickBubble: false">{% trans "Cancel" %}</button>
             </div>
-        </div>
-    </div>
+        <!--/div>
+    </div-->
     <div style="min-height: 100%;">
         <div id="hidden-dz-previews" style="display:none"></div>
     </div>
