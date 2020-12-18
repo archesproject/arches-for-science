@@ -42,7 +42,9 @@ DATABASES = {
     }
 }
 
-CELERY_BROKER_URL = "amqp://{}:{}@rabbitmq_afs".format(get_env_variable("RABBITMQ_USER"), get_env_variable("RABBITMQ_PASS")) # RabbitMQ --> "amqp://guest:guest@localhost",  Redis --> "redis://localhost:6379/0"
+CELERY_BROKER_URL = "amqp://{}:{}@rabbitmq_afs".format(
+    get_env_variable("RABBITMQ_USER"), get_env_variable("RABBITMQ_PASS")
+)  # RabbitMQ --> "amqp://guest:guest@localhost",  Redis --> "redis://localhost:6379/0"
 
 ELASTICSEARCH_HTTP_PORT = get_env_variable("ESPORT")
 ELASTICSEARCH_HOSTS = [{"host": get_env_variable("ESHOST"), "port": ELASTICSEARCH_HTTP_PORT}]
