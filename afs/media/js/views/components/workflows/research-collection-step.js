@@ -16,6 +16,10 @@ define([
 
     var graph = ko.observable();
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+    var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a';
+    var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
+    var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a";
+
     $.getJSON(arches.urls.graphs_api + graphId, function(data) {
         var graphModel = new GraphModel({
             data: data.graph,
@@ -53,7 +57,7 @@ define([
 
         var limit = 10;
         var self = this;
-        var researchActivityName = ko.unwrap(params.workflow).state.steps[0].tile["0b92cf5c-ca85-11e9-95b1-a4d18cec433a"];
+        var researchActivityName = ko.unwrap(params.workflow).state.steps[0].tile[activityNameNodeId];
         this.researchActivityResourceId(ko.unwrap(params.workflow).state.steps[0].resourceid);
 
         this.saveNewSet = function() {
@@ -62,8 +66,8 @@ define([
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    'nodeid': "52aa1e1c-c450-11e9-91cc-a4d18cec433a", // name_label (of Collection)
-                    'data':  ("Collection for "+ researchActivityName),
+                    'nodeid': collectionNameNodeId,
+                    'data':  ("Collection for " + researchActivityName),
                     'tileid': null
                 }
             }).done(function(data) {
@@ -75,7 +79,7 @@ define([
                         type: 'POST',
                         dataType: 'json',
                         data: {
-                            'nodeid': 'cc5d6df3-d477-11e9-9f59-a4d18cec433a', // used_set (of Activity)
+                            'nodeid': activityUsedSetNodeId, // used_set (of Activity)
                             'data': JSON.stringify(
                                 [{
                                     'resourceId': data.resourceinstance_id,
