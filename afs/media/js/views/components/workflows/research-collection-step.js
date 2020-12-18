@@ -95,7 +95,7 @@ define([
         params.getJSONOnLoad = ko.observable(false);
         
         NewTileStep.apply(this, [params]);
-        self.seedCardGraphId = function() {
+        self.getCardResourceIdOrGraphId = function() {
             return ko.unwrap(params.graphid);
         };
         self.getJSON();
