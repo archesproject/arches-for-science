@@ -19,12 +19,16 @@ logger = logging.getLogger(__name__)
 class ManifestManagerView(View):
     def post(self, request):
         def create_manifest(name, desc, file_url, canvases):
+            attribution = "Provided by The J. Paul Getty Museum"
+            logo = "http://www.getty.edu/museum/media/graphics/web/logos/getty.png"
+
             return  {
                         "@context": "http://iiif.io/api/presentation/2/context.json",
                         "@type": "sc:Manifest",
                         "description": desc,
                         "label": name,
-                        "logo": "",
+                        "attribution": attribution,
+                        "logo": logo,
                         "metadata": [{"label": "TBD", "value": ["Unknown"]}],
                         "thumbnail": {
                             "@id": file_url + "/full/!300,300/0/default.jpg",
@@ -41,7 +45,7 @@ class ManifestManagerView(View):
                             }],
                     }
 
-        def create_canvas(image_json, file_url, i):
+        def create_canvas(image_json, file_url, file_name):
             return  {
                         "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/canvas/TBD.json",
                         "@type": "sc:Canvas",
@@ -67,7 +71,7 @@ class ManifestManagerView(View):
                                 },
                             }
                         ],
-                        "label": f"{name} p. {i + 1}",
+                        "label": f"{file_name}",
                         "license": "TBD",
                         "thumbnail": {
                             "@id": file_url + "/full/!300,300/0/default.jpg",
@@ -115,12 +119,22 @@ class ManifestManagerView(View):
             manifest = models.IIIFManifest.objects.get(url=manifest)
             return len(manifest.manifest['sequences'][0]['canvases'])
 
-        def change_manifest_label(manifest, name):
+        def change_manifest_info(manifest, name, desc):
             manifest = models.IIIFManifest.objects.get(url=manifest)
-            if name != "" and name != manifest.label:
+            if name != "":
                 manifest.label = name
-            if name != "" and name != manifest.manifest["label"]:
                 manifest.manifest["label"] = name
+            if desc != "":
+                manifest.description = desc
+                manifest.manifest["description"] = desc
+            manifest.save()
+            return manifest
+
+        def change_manifest_metadata(manifest, metadata): # To be fixed
+            manifest = models.IIIFManifest.objects.get(url=manifest)
+            metadata = manifest.metadata
+            import ipdb
+            ipdb.set_trace()
             manifest.save()
             return manifest
 
@@ -150,7 +164,7 @@ class ManifestManagerView(View):
                         image_json, file_url = create_image(f)
                     except:
                         return
-                    canvas = create_canvas(image_json, file_url, 0)
+                    canvas = create_canvas(image_json, file_url, os.path.splitext(f.name)[0])
                     canvases.append(canvas)
                 else:
                     logger.warn("filetype unacceptable: " + f.name)
@@ -170,11 +184,11 @@ class ManifestManagerView(View):
             updated_manifest = delete_manifest(manifest)
             return JSONResponse(updated_manifest)
 
-        if name != "undefined":
-            updated_manifest = change_manifest_label(manifest, name)
+        if name != "undefined" or desc != "undefined":
+            updated_manifest = change_manifest_info(manifest, name, desc)
             # It does not return JSONResponse and then keep going to the next step
 
-        if len(selected_canvases):
+        if len(selected_canvases) > 0:
             updated_manifest = delete_canvas(manifest, selected_canvases)
 
         if len(files) > 0:
@@ -187,7 +201,7 @@ class ManifestManagerView(View):
                             image_json, file_url = create_image(f)
                         except:
                             return
-                        canvas = create_canvas(image_json, file_url, i)
+                        canvas = create_canvas(image_json, file_url, os.path.splitext(f.name)[0])
                         canvases.append(canvas)
                         i += 1
                     else:

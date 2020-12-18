@@ -14,15 +14,13 @@ define([
 
             this.imagesForUpload = ko.observableArray([]);
             this.canvasesForDeletion = ko.observableArray([]);
+            this.metadataToAdd = ko.observableArray([]);
+            this.metadataToRemove = ko.observableArray([]);
 
             this.addCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.push(canvas);
                 self.canvas(canvas.images[0].resource.service['@id'])
             };
-
-            /*this.selectCanvas = function(canvas) {
-                self.canvas(canvas.images[0].resource.service['@id'])
-            };*/
 
             this.removeCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.remove(canvas);
@@ -31,11 +29,6 @@ define([
 
             IIIFViewerViewmodel.apply(this, [params]);
 
-            this.canvas.subscribe(function(val){
-                console.log(val)
-            });
-            this.title = ko.observable();
-            this.description = ko.observable();
             this.operation = ko.observable();
 
             this.uniqueId = uuid.generate();
@@ -47,6 +40,8 @@ define([
 
             this.addFile = function(file){
                 self.imagesForUpload.push(file);
+                self.formData.append("files", file, file.name);
+                //self.submitForManifest();
             };
 
             this.removeFile = function(file){
@@ -62,11 +57,8 @@ define([
             };
 
             this.submitForManifest = function(){
-                this.imagesForUpload().forEach(function(file) {
-                    self.formData.append("files", file, file.name);
-                });
-                self.formData.append("manifest_title", ko.unwrap(self.title));
-                self.formData.append("manifest_description", ko.unwrap(self.description));
+                self.formData.append("manifest_title", ko.unwrap(self.manifestName));
+                self.formData.append("manifest_description", ko.unwrap(self.manifestDescription));
                 self.formData.append("selected_canvases", JSON.stringify(ko.unwrap(self.canvasesForDeletion)));
                 self.formData.append("manifest", ko.unwrap(self.manifest));
                 self.formData.append("operation", "add");
@@ -80,7 +72,6 @@ define([
                     success: function(response) {
                         self.formData.delete('files');
                         self.manifestData(response.manifest);
-                        self.manifest(response.url);
                         self.reset();
                         console.log('Submitted');
                     },
