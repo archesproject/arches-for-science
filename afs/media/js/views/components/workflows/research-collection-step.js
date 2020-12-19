@@ -1,9 +1,9 @@
 define([
-    'underscore',
     'jquery',
-    'arches',
+    'underscore',
     'knockout',
     'knockout-mapping',
+    'arches',
     'views/components/workflows/new-tile-step',
     'models/report',
     'models/graph',
@@ -12,9 +12,14 @@ define([
     'bindings/select2-query',
     'views/components/search/paging-filter',
     'views/components/search/search-results'
-], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
+], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
+
     var graph = ko.observable();
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+    var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a';
+    var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
+    var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a";
+
     $.getJSON(arches.urls.graphs_api + graphId, function(data) {
         var graphModel = new GraphModel({
             data: data.graph,
@@ -45,20 +50,60 @@ define([
             .value();
         return query;
     };
-
+    
     function viewModel(params) {
-        if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.resourceid);
-        }
-        if (params.workflow.state.steps[params._index]) {
-            params.tileid(params.workflow.state.steps[params._index].tileid);
-        }
-        NewTileStep.apply(this, [params]);
+
+        this.researchActivityResourceId = ko.observable();
 
         var limit = 10;
         var self = this;
-     
-        /* functionally useless, allows use of generic `search-results` */ 
+        var researchActivityName = ko.unwrap(params.workflow).state.steps[0].tile[activityNameNodeId];
+        this.researchActivityResourceId(ko.unwrap(params.workflow).state.steps[0].resourceid);
+
+        this.saveNewSet = function() {
+            $.ajax({
+                url: arches.urls.api_node_value,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'nodeid': collectionNameNodeId,
+                    'data':  ("Collection for " + researchActivityName),
+                    'tileid': null
+                }
+            }).done(function(data) {
+                // console.log(data);s
+                if (data.resourceinstance_id) {
+                    params.resourceid(data.resourceinstance_id);
+                    $.ajax({
+                        url: arches.urls.api_node_value,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            'nodeid': activityUsedSetNodeId, // used_set (of Activity)
+                            'data': JSON.stringify(
+                                [{
+                                    'resourceId': data.resourceinstance_id,
+                                    'ontologyProperty': '',
+                                    'inverseOntologyProperty':'',
+                                    'resourceXresourceId':''
+                                }]
+                            ), 
+                            'tileid': null,
+                            'resourceinstanceid': self.researchActivityResourceId()
+                        }
+                    });
+                }
+            });
+        };
+        this.saveNewSet();
+        params.getJSONOnLoad = ko.observable(false);
+        
+        NewTileStep.apply(this, [params]);
+        self.getCardResourceIdOrGraphId = function() {
+            return ko.unwrap(params.graphid);
+        };
+        self.getJSON();
+
         this.selectedTab = ko.observable();
         this.toggleRelationshipCandidacy = ko.observable();
         this.isResourceRelatable = ko.observable();
@@ -154,7 +199,7 @@ define([
                 type: 'POST',
                 data: {
                     'nodeid': params.nodeid(),
-                    'data': JSON.stringify(self.value()),
+                    'data': koMapping.toJSON(self.value()),
                     'resourceinstanceid': ko.unwrap(params.resourceid),
                     'tileid': self.tile().tileid
                 }
@@ -302,20 +347,18 @@ define([
             self.updateSearchResults(null, query['paging-filter']);
         });
 
-        params.defineStateProperties = function() {
-            return {
-                resourceid: ko.unwrap(params.resourceid),
-                tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
-                tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid) : undefined,
-            };
-        };
+        // params.defineStateProperties = function() {
+        //     return {
+        //         resourceid: ko.unwrap(params.resourceid),
+        //         tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
+        //         tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid) : undefined,
+        //     };
+        // };
     }
 
-    ko.components.register('object-search-step', {
+    ko.components.register('research-collection-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/object-search-step.htm'
-        }
+        template: { require: 'text!templates/views/components/workflows/object-search-step.htm' }
     });
     return viewModel;
 });
