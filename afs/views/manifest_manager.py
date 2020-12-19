@@ -133,10 +133,21 @@ class ManifestManagerView(View):
         def change_manifest_metadata(manifest, metadata): # To be fixed
             manifest = models.IIIFManifest.objects.get(url=manifest)
             metadata = manifest.metadata
-            import ipdb
-            ipdb.set_trace()
             manifest.save()
             return manifest
+
+        def change_canvas_label(manifest, canvas_id, label):
+            manifest = models.IIIFManifest.objects.get(url=manifest)
+            #canvas_id = canvas['images'][0]['resource']['service']['@id']
+            canvases = manifest.manifest['sequences'][0]['canvases']
+            for canvas in canvases:
+                if canvas['images'][0]['resource']['service']['@id'] == canvas_id:
+                    canvas['label'] = label
+            manifest.save()
+            import ipdb
+            ipdb.set_trace()
+            return manifest
+
 
         acceptable_types = [
             ".jpg",
@@ -152,6 +163,8 @@ class ManifestManagerView(View):
         operation = request.POST.get('operation')
         selected_canvases = json.loads(request.POST.get('selected_canvases'))
         manifest = request.POST.get('manifest')
+        canvas_label = request.POST.get('canvas_label')
+        canvas_id = request.POST.get('canvas_id')
 
         if not os.path.exists(CANTALOUPE_DIR):
             os.mkdir(CANTALOUPE_DIR)
@@ -190,6 +203,9 @@ class ManifestManagerView(View):
         if name != "undefined" or desc != "undefined":
             updated_manifest = change_manifest_info(manifest, name, desc)
             # It does not return JSONResponse and then keep going to the next step
+
+        if canvas_label != "undefined":
+            updated_manifest = change_canvas_label(manifest, canvas_id, canvas_label)
 
         if len(selected_canvases) > 0:
             updated_manifest = delete_canvas(manifest, selected_canvases)

@@ -81,6 +81,8 @@ define([
                 self.formData.append("manifest_description", ko.unwrap(self.manifestDescription));
                 self.formData.append("selected_canvases", JSON.stringify(ko.unwrap(self.canvasesForDeletion)));
                 self.formData.append("manifest", ko.unwrap(self.manifest));
+                self.formData.append("canvas_label", ko.unwrap(self.canvasLabel)); //new label for canvas
+                self.formData.append("canvas_id", ko.unwrap(self.canvas)); //canvas id for label change
                 $.ajax({
                     type: "POST",
                     url: arches.urls.manifest_manager,
