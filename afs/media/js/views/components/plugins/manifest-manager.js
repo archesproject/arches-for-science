@@ -29,6 +29,14 @@ define([
 
             IIIFViewerViewmodel.apply(this, [params]);
 
+            /*this.isManifestDirty = ko.computed(function(){
+                var manifestData = self.manifestData()
+                manifestName = self.getLabel(manifestData || {label: ''})
+                manifestDescription = self.getDescription(manifestData)
+                return ((self.manifestName() !== manifestName) ||
+                        (self.manifestDescription() !== manifestDescription));
+            });*/
+
             this.operation = ko.observable();
 
             this.uniqueId = uuid.generate();
@@ -38,10 +46,22 @@ define([
 
             this.formData = new FormData();
 
+            this.addAllCanvases = function() {
+                self.canvases().forEach(function(canvas){
+                    if (self.canvasesForDeletion().indexOf(canvas) < 0) {
+                        self.canvasesForDeletion.push(canvas);
+                    }
+                });
+            };
+
+            this.clearCanvasSelection = function() {
+                self.canvasesForDeletion([]);
+            };
+
             this.addFile = function(file){
                 self.imagesForUpload.push(file);
                 self.formData.append("files", file, file.name);
-                //self.submitForManifest();
+                self.submitForManifest();
             };
 
             this.removeFile = function(file){
@@ -61,7 +81,6 @@ define([
                 self.formData.append("manifest_description", ko.unwrap(self.manifestDescription));
                 self.formData.append("selected_canvases", JSON.stringify(ko.unwrap(self.canvasesForDeletion)));
                 self.formData.append("manifest", ko.unwrap(self.manifest));
-                self.formData.append("operation", "add");
                 $.ajax({
                     type: "POST",
                     url: arches.urls.manifest_manager,

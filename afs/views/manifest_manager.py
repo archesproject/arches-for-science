@@ -175,6 +175,9 @@ class ManifestManagerView(View):
             manifest = models.IIIFManifest.objects.create(label=name, description=desc, manifest=pres_dict)
             manifest_id = manifest.id
             json_url = f"/manifest/{manifest_id}"
+
+            pres_dict = create_manifest(name, desc, file_url, canvases)
+
             manifest.url = json_url
             manifest.save()
 
