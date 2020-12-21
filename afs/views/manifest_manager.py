@@ -130,9 +130,10 @@ class ManifestManagerView(View):
             manifest.save()
             return manifest
 
-        def change_manifest_metadata(manifest, metadata): # To be fixed
+        def change_manifest_metadata(manifest, metadata_dict): # To be fixed
             manifest = models.IIIFManifest.objects.get(url=manifest)
-            metadata = manifest.metadata
+            for k,v in metadata_dict.items():
+                manifest.manifest['metadata'].append({'label':k,'value':v})
             manifest.save()
             return manifest
 
@@ -144,8 +145,6 @@ class ManifestManagerView(View):
                 if canvas['images'][0]['resource']['service']['@id'] == canvas_id:
                     canvas['label'] = label
             manifest.save()
-            import ipdb
-            ipdb.set_trace()
             return manifest
 
 
@@ -165,6 +164,8 @@ class ManifestManagerView(View):
         manifest = request.POST.get('manifest')
         canvas_label = request.POST.get('canvas_label')
         canvas_id = request.POST.get('canvas_id')
+        metadata_label = request.POST.get('metadata_label')
+        metadata_values = request.POST.get('metadata_values')
 
         if not os.path.exists(CANTALOUPE_DIR):
             os.mkdir(CANTALOUPE_DIR)
@@ -230,6 +231,11 @@ class ManifestManagerView(View):
                 logger.warning("You have to select a manifest to add images")
                 return None
         
+        if len(metadata_values) > 0 and len(metadata_label) > 0:
+            metadata_values_list = metadata_values.split(',')
+            metadata_dict = {metadata_label: metadata_values_list}
+            updated_manifest = change_manifest_metadata(manifest, metadata_dict)
+
         return JSONResponse(updated_manifest)
 
     def fetch(self, url):

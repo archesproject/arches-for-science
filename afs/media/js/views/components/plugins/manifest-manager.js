@@ -16,6 +16,8 @@ define([
             this.canvasesForDeletion = ko.observableArray([]);
             this.metadataToAdd = ko.observableArray([]);
             this.metadataToRemove = ko.observableArray([]);
+            this.metaDataLabel = ko.observable('')
+            this.metaDataValues = ko.observable('')
 
             this.addCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.push(canvas);
@@ -83,6 +85,8 @@ define([
                 self.formData.append("manifest", ko.unwrap(self.manifest));
                 self.formData.append("canvas_label", ko.unwrap(self.canvasLabel)); //new label for canvas
                 self.formData.append("canvas_id", ko.unwrap(self.canvas)); //canvas id for label change
+                self.formData.append("metadata_label", ko.unwrap(self.metaDataLabel));
+                self.formData.append("metadata_values", ko.unwrap(self.metaDataValues));
                 $.ajax({
                     type: "POST",
                     url: arches.urls.manifest_manager,
