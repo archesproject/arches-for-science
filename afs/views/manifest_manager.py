@@ -21,6 +21,7 @@ class ManifestManagerView(View):
         def create_manifest(name, desc, file_url, canvases):
             attribution = "Provided by The J. Paul Getty Museum"
             logo = "http://www.getty.edu/museum/media/graphics/web/logos/getty.png"
+            metadata = [] #{"label": "TBD", "value": ["Unknown"]}
 
             return  {
                         "@context": "http://iiif.io/api/presentation/2/context.json",
@@ -29,7 +30,7 @@ class ManifestManagerView(View):
                         "label": name,
                         "attribution": attribution,
                         "logo": logo,
-                        "metadata": [{"label": "TBD", "value": ["Unknown"]}],
+                        "metadata": metadata,
                         "thumbnail": {
                             "@id": file_url + "/full/!300,300/0/default.jpg",
                             "@type": "dctypes:Image",
