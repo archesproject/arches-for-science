@@ -10,6 +10,7 @@ from django.views.generic import View
 from arches.app.utils.response import JSONResponse
 from arches.app.models import models
 from arches.app.models.tile import Tile
+from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 from arches.app.views.search import search_results
 
 from afs.settings import CANTALOUPE_DIR, CANTALOUPE_HTTP_ENDPOINT, MEDIA_ROOT, MEDIA_URL, APP_ROOT
@@ -17,11 +18,19 @@ from afs.settings import CANTALOUPE_DIR, CANTALOUPE_HTTP_ENDPOINT, MEDIA_ROOT, M
 logger = logging.getLogger(__name__)
 
 class ManifestManagerView(View):
+    def delete(self, request):
+        data = JSONDeserializer().deserialize(request.body)
+        manifest = data.get('manifest')
+        manifest = models.IIIFManifest.objects.get(url=manifest)
+        manifest.delete()
+        return JSONResponse({"success": True})
+
     def post(self, request):
         def create_manifest(name, desc, file_url, canvases):
             attribution = "Provided by The J. Paul Getty Museum"
             logo = "http://www.getty.edu/museum/media/graphics/web/logos/getty.png"
-            metadata = [] #{"label": "TBD", "value": ["Unknown"]}
+            metadata = [] #{"label": "TBD", "value": ["Unknown", ...]}
+            sequence_id = CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/sequence/TBD.json"
 
             return  {
                         "@context": "http://iiif.io/api/presentation/2/context.json",
@@ -38,7 +47,7 @@ class ManifestManagerView(View):
                             "label": "Main VIew (.45v)",
                         },
                         "sequences": [{
-                                "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/sequence/TBD.json",
+                                "@id": sequence_id,
                                 "@type": "sc:Sequence",
                                 "canvases": canvases,
                                 "label": "Object",
@@ -46,18 +55,21 @@ class ManifestManagerView(View):
                             }],
                     }
 
-        def create_canvas(image_json, file_url, file_name):
+        def create_canvas(image_json, file_url, file_name, image_id):
+            canvas_id = f"{CANTALOUPE_HTTP_ENDPOINT}iiif/manifest/canvas/{image_id}.json"
+            image_id = f"{CANTALOUPE_HTTP_ENDPOINT}iiif/manifest/annotation/{image_id}.json"
+
             return  {
-                        "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/canvas/TBD.json",
+                        "@id": canvas_id,
                         "@type": "sc:Canvas",
                         "height": image_json["height"],
                         "width": image_json["width"],
                         "images": [
                             {
-                                "@id": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/annotation/TBD.json",
+                                "@id": image_id,
                                 "@type": "oa.Annotation",
                                 "motivation": "unknown",
-                                "on": CANTALOUPE_HTTP_ENDPOINT + "iiif/manifest/canvas/TBD.json",
+                                "on": canvas_id,
                                 "resource": {
                                     "@id": file_url + "/full/full/0/default.jpg",
                                     "@type": "dctypes:Image",
@@ -86,11 +98,6 @@ class ManifestManagerView(View):
                         },
                     }
 
-        def delete_manifest(manifest):
-            manifest = models.IIIFManifest.objects.get(url=manifest)
-            manifest.delete()
-            return ""
-
         def add_canvases(manifest, canvases):
             manifest = models.IIIFManifest.objects.get(url=manifest)
             manifest.manifest['sequences'][0]['canvases'] += canvases
@@ -114,7 +121,7 @@ class ManifestManagerView(View):
             file_url = CANTALOUPE_HTTP_ENDPOINT + "iiif/2/" + file_name
             file_json = file_url + "/info.json"
             image_json = self.fetch(file_json)
-            return image_json, file_url
+            return image_json, new_image_id, file_url
 
         def get_image_count(manifest):
             manifest = models.IIIFManifest.objects.get(url=manifest)
@@ -161,12 +168,12 @@ class ManifestManagerView(View):
         name = request.POST.get("manifest_title")
         desc = request.POST.get("manifest_description")
         operation = request.POST.get('operation')
-        selected_canvases = json.loads(request.POST.get('selected_canvases'))
         manifest = request.POST.get('manifest')
         canvas_label = request.POST.get('canvas_label')
         canvas_id = request.POST.get('canvas_id')
         metadata_label = request.POST.get('metadata_label')
         metadata_values = request.POST.get('metadata_values')
+        selected_canvases = request.POST.get('selected_canvases')
 
         if not os.path.exists(CANTALOUPE_DIR):
             os.mkdir(CANTALOUPE_DIR)
@@ -176,55 +183,48 @@ class ManifestManagerView(View):
             for f in files:
                 if os.path.splitext(f.name)[1].lower() in acceptable_types:
                     try:
-                        image_json, file_url = create_image(f)
+                        image_json, image_id, file_url = create_image(f)
                     except:
                         return
-                    canvas = create_canvas(image_json, file_url, os.path.splitext(f.name)[0])
+                    canvas = create_canvas(image_json, file_url, os.path.splitext(f.name)[0], image_id)
                     canvases.append(canvas)
                 else:
                     logger.warn("filetype unacceptable: " + f.name)
 
-            pres_dict = create_manifest(name, desc, file_url, canvases)
+            pres_dict = create_manifest(name, "<manifest description>", "file_url", canvases)
 
             # create a manuscript record in the db
             manifest = models.IIIFManifest.objects.create(label=name, description=desc, manifest=pres_dict)
             manifest_id = manifest.id
             json_url = f"/manifest/{manifest_id}"
 
-            pres_dict = create_manifest(name, desc, file_url, canvases)
-
             manifest.url = json_url
             manifest.save()
 
             return JSONResponse(manifest)
 
-        if operation == 'delete':
-            updated_manifest = delete_manifest(manifest)
-            return JSONResponse(updated_manifest)
-
-        if name != "undefined" or desc != "undefined":
+        if name is not None or desc is not None:
             updated_manifest = change_manifest_info(manifest, name, desc)
             # It does not return JSONResponse and then keep going to the next step
 
-        if canvas_label != "undefined":
+        if canvas_label is not None:
             updated_manifest = change_canvas_label(manifest, canvas_id, canvas_label)
 
-        if len(selected_canvases) > 0:
-            updated_manifest = delete_canvas(manifest, selected_canvases)
+        if selected_canvases is not None:
+            selected_canvases_json = json.loads(selected_canvases)
+            updated_manifest = delete_canvas(manifest, selected_canvases_json)
 
         if len(files) > 0:
             try:
                 canvases = []
-                i = get_image_count(manifest)
                 for f in files:
                     if os.path.splitext(f.name)[1].lower() in acceptable_types:
                         try:
-                            image_json, file_url = create_image(f)
+                            image_json, image_id, file_url = create_image(f)
                         except:
                             return
-                        canvas = create_canvas(image_json, file_url, os.path.splitext(f.name)[0])
+                        canvas = create_canvas(image_json, file_url, os.path.splitext(f.name)[0], image_id)
                         canvases.append(canvas)
-                        i += 1
                     else:
                         logger.warn("filetype unacceptable: " + f.name)
                 updated_manifest = add_canvases(manifest, canvases)
@@ -232,7 +232,7 @@ class ManifestManagerView(View):
                 logger.warning("You have to select a manifest to add images")
                 return None
         
-        if len(metadata_values) > 0 and len(metadata_label) > 0:
+        if metadata_values is not None and metadata_values != "" and metadata_label is not None and metadata_label != "":
             metadata_values_list = metadata_values.split(',')
             metadata_dict = {metadata_label: metadata_values_list}
             updated_manifest = change_manifest_metadata(manifest, metadata_dict)
