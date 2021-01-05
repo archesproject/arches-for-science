@@ -120,6 +120,9 @@ define([
                         self.manifestData(null);
                         self.manifest(null);
                         self.canvas(null);
+                        self.manifestName(null);
+                        self.manifestDescription(null);
+                        self.expandGallery(true);
                         console.log('Deleteted');
                     },
                     error: function(response) {

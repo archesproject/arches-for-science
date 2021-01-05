@@ -191,7 +191,7 @@ class ManifestManagerView(View):
                 else:
                     logger.warn("filetype unacceptable: " + f.name)
 
-            pres_dict = create_manifest(name, "<manifest description>", "file_url", canvases)
+            pres_dict = create_manifest(name, desc, "file_url", canvases)
 
             # create a manuscript record in the db
             manifest = models.IIIFManifest.objects.create(label=name, description=desc, manifest=pres_dict)
