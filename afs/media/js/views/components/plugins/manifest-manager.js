@@ -39,10 +39,7 @@ define([
             });
 
             this.isCanvasDirty = ko.computed(function() {
-                return ((ko.unwrap(self.canvasLabel) !== self.origCanvasLabel) ||
-                        self.imagesForUpload().length > 0 ||
-                        self.canvasesForDeletion().length > 0
-                );
+                return (ko.unwrap(self.canvasLabel) !== self.origCanvasLabel);
             });
 
             this.uniqueId = uuid.generate();
@@ -72,7 +69,6 @@ define([
                 self.formData.delete("files");
                 self.formData = new FormData();
                 self.imagesForUpload.removeAll();
-                self.canvasesForDeletion.removeAll();
                 self.metaDataLabel('');
                 self.metaDataValues('');
                 self.manifestName(self.origManifestName);
@@ -103,6 +99,12 @@ define([
                         console.log("Failed");
                     }
                 })
+            };
+
+            this.deleteCanvases = function() {
+                self.formData.append("manifest", ko.unwrap(self.manifest));
+                self.formData.append("selected_canvases", JSON.stringify(ko.unwrap(self.canvasesForDeletion)));
+                self.submitToManifest();
             };
 
             this.deleteManifest = function(){
@@ -152,7 +154,6 @@ define([
             this.updateManifest = function() {
                 self.formData.append("manifest_title", ko.unwrap(self.manifestName));
                 self.formData.append("manifest_description", ko.unwrap(self.manifestDescription));
-                self.formData.append("selected_canvases", JSON.stringify(ko.unwrap(self.canvasesForDeletion)));
                 self.formData.append("manifest", ko.unwrap(self.manifest));
                 self.formData.append("canvas_label", ko.unwrap(self.canvasLabel)); //new label for canvas
                 self.formData.append("canvas_id", ko.unwrap(self.canvas)); //canvas id for label change

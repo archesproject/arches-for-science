@@ -114,6 +114,9 @@
             disabled: canvasesForDeletion().length === 0
         }"><i class="fa fa-eraser"></i> {% trans 'Clear All' %}</button>
     </div>
+    <div class="file-workbench-selected-buttons" data-bind="visible: canvasesForDeletion().length > 0">
+        <button class="btn btn-lg btn-workbench btn-danger" data-bind="click: deleteCanvases"><i class="fa fa-trash"></i> {% trans 'Delete Selected' %}</button>
+    </div>
 
     <!--ko if: canvas-->
     <label class="control-label">{% trans "Image Information" %}</label>
@@ -146,7 +149,7 @@
         </div>
         <div class="file-workbench-buttons" style="margin-top: 20px;">
             <button class="btn btn-mint btn-lg btn-labeled fa fa-pencil" data-bind="click: updateManifest, clickBubble: false, disable: !isCanvasDirty()">{% trans "Save" %}</button>
-            <button class="btn btn-danger btn-lg btn-labeled fa fa-refresh" data-bind="click: reset, clickBubble: false, disable: !isCanvasDirty()">{% trans "Cancel" %}</button>
+            <button class="btn btn-warning btn-lg btn-labeled fa fa-refresh" data-bind="click: reset, clickBubble: false, disable: !isCanvasDirty()">{% trans "Cancel" %}</button>
         </div>
     </div>
 </div>

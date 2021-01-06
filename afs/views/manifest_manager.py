@@ -129,10 +129,10 @@ class ManifestManagerView(View):
 
         def change_manifest_info(manifest, name, desc):
             manifest = models.IIIFManifest.objects.get(url=manifest)
-            if name != "":
+            if name is not None and name != "":
                 manifest.label = name
                 manifest.manifest["label"] = name
-            if desc != "":
+            if desc is not None and desc != "":
                 manifest.description = desc
                 manifest.manifest["description"] = desc
             manifest.save()
@@ -205,7 +205,6 @@ class ManifestManagerView(View):
 
         if name is not None or desc is not None:
             updated_manifest = change_manifest_info(manifest, name, desc)
-            # It does not return JSONResponse and then keep going to the next step
 
         if canvas_label is not None:
             updated_manifest = change_canvas_label(manifest, canvas_id, canvas_label)
