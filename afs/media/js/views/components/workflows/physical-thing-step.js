@@ -89,7 +89,10 @@ define([
                     });
 
                     self.setStateProperties();
-
+                    if (params.workflow) {
+                        params.workflow.updateUrl();
+                    }
+                    
                     if (self.completeOnSave === true) { self.complete(true); }
                 });
             });
