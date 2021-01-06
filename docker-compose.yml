@@ -20,6 +20,8 @@ services:
         - db_afs
         - elasticsearch_afs
         - couchdb_afs
+      stdin_open: true
+      tty: true
 
     db_afs:
       container_name: db_afs
