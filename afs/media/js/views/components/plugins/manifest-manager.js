@@ -125,7 +125,7 @@ define([
                         self.manifestName(null);
                         self.manifestDescription(null);
                         self.expandGallery(true);
-                        console.log('Deleteted');
+                        console.log('Deleted');
                     },
                     error: function(response) {
                         self.reset();
