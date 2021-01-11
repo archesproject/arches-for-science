@@ -8,21 +8,28 @@ define([
     'bindings/select2-query',
 ], function(_, $, arches, ko, koMapping, NewTileStep) {
     function viewModel(params) {
+        var self = this;
 
-        params.resourceid(params.workflow.state.steps[params.physicalthingidstep()].physicalthingid);
+        this.physicalThingIdStep = params.externalStepData['physicalthingidstep'];
+        this.visualWorkIdStep = params.externalStepData['visualworkidstep'];
+
+        console.log(self, params)
+
+        params.resourceid(self.physicalThingIdStep.data.physicalthingid);
+
         NewTileStep.apply(this, [params]);
         
         this.tile.subscribe(function(t){
             if (t) {
                 var physicalthingInstanceRef = [{
-                    'resourceId': params.workflow.state.steps[params.physicalthingidstep()].physicalthingid,  // resourceid of the visual work
+                    'resourceId': self.physicalThingIdStep.data.physicalthingid,  // resourceid of the visual work
                     'ontologyProperty': '',
                     'inverseOntologyProperty':'',
                     'resourceXresourceId':''
                 }];
                 t.data["b240c366-8594-11ea-97eb-acde48001122"](physicalthingInstanceRef); // set resourceid from physical thing
-                if(!!params.workflow.state.steps[params.visualworkidstep()].visualworkInstanceRef) {
-                    t.data["5d440fea-8651-11ea-97eb-acde48001122"](params.workflow.state.steps[params.visualworkidstep()].visualworkInstanceRef); // set resourceid from related visual work
+                if(self.visualWorkIdStep && self.visualWorkIdStep.data.visualworkInstanceRef) {
+                    t.data["5d440fea-8651-11ea-97eb-acde48001122"](self.visualWorkIdStep.visualworkInstanceRef); // set resourceid from related visual work
                 }
             }
         });

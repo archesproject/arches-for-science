@@ -103,7 +103,7 @@ define([
             }
             return {
                 physicalthingid: self.selectedPhysicalThingId(),
-                resourceid: ko.unwrap(params.resourceid) || this.workflow.state.resourceid,
+                resourceid: ko.unwrap(params.resourceid) || this.workflow.resourceId(),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,
             };

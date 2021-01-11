@@ -7,13 +7,12 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('physical-thing-workflow', {
         viewModel: function(params) {
-
             var self = this;
 
             params.steps = [
                 {
                     title: 'Physical Thing Name',
-                    name: 'physicalthingname',
+                    name: 'physical-thing-name',  /* unique to workflow */
                     description: 'Preliminary information about this physical thing',
                     component: 'views/components/workflows/physical-thing-step',
                     componentname: 'physical-thing-step',
@@ -28,7 +27,7 @@ define([
                 },
                 {
                     title: 'Physical Thing Statement',
-                    name: 'physicalthingstatement',
+                    name: 'physical-thing-statement', /* unique to workflow */
                     description: 'Preliminary information about this physical thing',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -43,7 +42,7 @@ define([
                 },
                 {
                     title: 'Physical Thing Type',
-                    name: 'physicalthingtype',
+                    name: 'physical-thing-type', /* unique to workflow */
                     description: 'Preliminary information about this physical thing',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -58,12 +57,15 @@ define([
                 },
                 {
                     title: 'Digital Resource File',
-                    name: 'digitalresourcefile',
+                    name: 'digital-resource-file', /* unique to workflow */
                     description: 'Upload a file to this digital resource',
                     component: 'views/components/workflows/digital-resource-file-step',
                     componentname: 'digital-resource-file-step',
                     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
                     nodegroupid: '7c486328-d380-11e9-b88e-a4d18cec433a',
+                    externalstepdata: { 
+                        physicalthingidstep: 'physical-thing-name',
+                    },
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
@@ -73,14 +75,16 @@ define([
                 },
                 {
                     title: 'IIIF',
-                    name: 'iiif_step',
+                    name: 'iiif-step', /* unique to workflow */
                     description: 'annotate image',
                     component: 'views/components/workflows/iiif-step',
                     componentname: 'iiif-step',
                     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
                     nodegroupid: 'fec59582-8593-11ea-97eb-acde48001122',
-                    physicalthingidstep: 0,
-                    visualworkidstep: 0,
+                    externalstepdata: { 
+                        physicalthingidstep: 'physical-thing-name',
+                        visualworkidstep: 'physical-thing-name',
+                    },
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
@@ -91,11 +95,15 @@ define([
                 },
                 {
                     title: 'Physical Thing Workflow Complete',
+                    name: 'physical-thing-workflow-complete',  /* unique to workflow */
                     description: 'Choose an option below',
                     component: 'views/components/workflows/afs-final-step',
-                    componentname: 'afs-final-step',
+                    componentname: 'afs-final-step', 
                     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
                     nodegroupid: '',
+                    externalstepdata: { 
+                        resourceidstep: 'physical-thing-name',
+                    },
                     icon: 'fa-check',
                     resourceid: null,
                     tileid: null,
@@ -106,8 +114,6 @@ define([
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
             self.getJSON('physical-thing-workflow');
-
-            self.activeStep.subscribe(this.updateState);
 
             self.ready(true);
         },
