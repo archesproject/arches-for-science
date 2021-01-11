@@ -9,6 +9,8 @@ define([
         viewModel: function(params) {
             var self = this;
 
+            this.resourceId = ko.observable();
+
             params.steps = [
                 {
                     title: 'Physical Thing Name',
@@ -101,9 +103,6 @@ define([
                     componentname: 'afs-final-step', 
                     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
                     nodegroupid: '',
-                    externalstepdata: { 
-                        resourceidstep: 'physical-thing-name',
-                    },
                     icon: 'fa-check',
                     resourceid: null,
                     tileid: null,

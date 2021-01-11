@@ -17,6 +17,11 @@ define([
         NewTileStep.apply(this, [params]);
 
         this.onSaveSuccess = function(tile) {
+            /* if we have defined that this is part of a single-resource workflow, but have not created a resource yet */ 
+            if (params.workflow.resourceId && !ko.unwrap(params.workflow.resourceId)) {
+                params.workflow.resourceId(tile.resourceinstance_id);
+            }
+
             params.resourceid(tile.resourceinstance_id);
             params.tileid(tile.tileid);
             self.resourceId(tile.resourceinstance_id);
@@ -90,11 +95,6 @@ define([
                         console.log('Added "used image" of the digital resource to the visual work:', data);
                     });
 
-                    // params.value(params.defineStateProperties());
-                    // self.setStateProperties();
-                    // if (params.workflow) {
-                    //     params.workflow.updateUrl();
-                    // }
                     if (self.completeOnSave === true) { self.complete(true); }
                 });
             });
