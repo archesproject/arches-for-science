@@ -52,25 +52,24 @@ define([
     };
     
     function viewModel(params) {
-        var self = this;
-        var limit = 10;
-        
         if (!params.resourceid()) { 
             if (ko.unwrap(params.workflow.resourceId)) {
                 params.resourceid(ko.unwrap(params.workflow.resourceId));
             }
         }
-        
+
+        console.log("AAAAAAAA", params)
+        // if (params.workflow.state.steps[params._index]) {
+        //     params.tileid(params.workflow.state.steps[params._index].tileid);
+        // }
         NewTileStep.apply(this, [params]);
-        
+
         this.researchActivityResourceId = ko.observable();
 
-        var researchActivityStepData = params.externalStepData['researchactivitystep']['data'];
-        var researchActivityName = researchActivityStepData.tile[activityNameNodeId];
-        this.researchActivityResourceId(researchActivityStepData.resourceid);
-
-
-        console.log(researchActivityName, self.researchActivityResourceId())
+        var limit = 10;
+        var self = this;
+        var researchActivityName = ko.unwrap(params.workflow).state.steps[0].tile[activityNameNodeId];
+        this.researchActivityResourceId(ko.unwrap(params.workflow).state.steps[0].resourceid);
 
         this.saveNewSet = function() {
             $.ajax({
@@ -83,6 +82,7 @@ define([
                     'tileid': null
                 }
             }).done(function(data) {
+                // console.log(data);s
                 if (data.resourceinstance_id) {
                     params.resourceid(data.resourceinstance_id);
                     $.ajax({
@@ -110,7 +110,6 @@ define([
         params.getJSONOnLoad = ko.observable(false);
         
         NewTileStep.apply(this, [params]);
-
         self.getCardResourceIdOrGraphId = function() {
             return ko.unwrap(params.graphid);
         };
@@ -162,9 +161,7 @@ define([
         }, null, "arrayChange");
 
         this.tile.subscribe(function(tile) {
-            console.log("AAAAAKKKAKAKAKA", tile, self, params, tile.data[params.nodeid()])
-            self.startValue = ko.unwrap(tile.data[params.nodeid()]);
-
+            self.startValue = tile.data[params.nodeid()]();
             if (self.startValue) {
                 self.startValue.forEach(function(item) {
                     self.value.push(item);
@@ -204,12 +201,15 @@ define([
         };
 
         this.dirty = ko.pureComputed(function() {
-            console.log('99999', self, ko.unwrap(self.tile))
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
         });
 
         this.submit = function() {
-            console.log("BEGIN", self, self.value())
+
+            console.log("HHHHHH", self)
+
+
+
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
@@ -220,8 +220,6 @@ define([
                     'tileid': self.tile().tileid
                 }
             }).done(function(data) {
-
-                console.log("DONE", data)
                 if (data.tileid && params.tile().tileid === "") {
                     params.tile().tileid = data.tileid;
                 }
