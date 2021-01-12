@@ -18,8 +18,10 @@ define([
 
         this.onSaveSuccess = function(tile) {
             /* if we have defined that this is part of a single-resource workflow, but have not created a resource yet */ 
-            if (params.workflow.resourceId && !ko.unwrap(params.workflow.resourceId)) {
-                params.workflow.resourceId(tile.resourceinstance_id);
+            if (params.shouldtrackresource) {
+                if (params.workflow.resourceId ) {  /* if we have defined that this is part of a single-resource workflow */ 
+                    params.workflow.resourceId(tile.resourceinstance_id);
+                }
             }
 
             params.resourceid(tile.resourceinstance_id);

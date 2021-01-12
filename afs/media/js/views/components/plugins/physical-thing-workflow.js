@@ -24,6 +24,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
+                    shouldtrackresource: true,
                     icon: 'fa-asterisk',
                     wastebin: {resourceid: null, description: 'a physical thing instance'}
                 },

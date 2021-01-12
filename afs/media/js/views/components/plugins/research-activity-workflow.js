@@ -7,8 +7,9 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('research-activity-workflow', {
         viewModel: function(params) {
-
             var self = this;
+
+            this.resourceId = ko.observable();
 
             params.steps = [
                 {
@@ -23,6 +24,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
+                    shouldtrackresource: true,
                     icon: 'fa-code-fork',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
@@ -101,8 +103,6 @@ define([
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
             self.getJSON('research-activity-workflow');
-
-            self.activeStep.subscribe(this.updateState);
 
             self.ready(true);
         },

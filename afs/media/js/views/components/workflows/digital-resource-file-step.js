@@ -18,7 +18,6 @@ define([
 
         
         NewTileStep.apply(this, [params]);
-        console.log('!!!', self, params)
         
         this.card.subscribe(function(val) {
             if(ko.unwrap(val.tiles) && ko.unwrap(val.tiles).length > 0) {

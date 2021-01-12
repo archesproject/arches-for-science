@@ -13,8 +13,6 @@ define([
         this.physicalThingIdStepData = params.externalStepData['physicalthingidstep']['data'];
         this.visualWorkIdStepData = params.externalStepData['visualworkidstep']['data'];
 
-        console.log(self, params)
-
         params.resourceid(self.physicalThingIdStepData.physicalthingid);
 
         NewTileStep.apply(this, [params]);

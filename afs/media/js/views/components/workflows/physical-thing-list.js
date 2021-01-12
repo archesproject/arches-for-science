@@ -12,18 +12,14 @@ define([
 ], function(_, $, arches, ko, koMapping, ReportModel, GraphModel, reportLookup, cardComponents) {
 
     function viewModel(params) {
-        if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.resourceid);
-        }
-        if (params.workflow.state.steps[params._index - 1]) {
-            params.resourceid(params.workflow.state.steps[params._index - 1].resourceid);
-            params.tileid(params.workflow.state.steps[params._index - 1].tileid);
-        }        
-
         var self = this;
+        
         var graph;
         this.items = ko.observableArray([]);
-        this.setresourceid = params.workflow.state.steps[params._index - 1].relatedresourceid;
+
+        var relatedSetStepData = params.externalStepData['relatedsetstep']['data'];
+        this.setresourceid = relatedSetStepData.relatedresourceid;
+
         this.complete = params.complete || ko.observable();
         this.completeOnSave = params.completeOnSave === false ? false : true;
         this.selectedPhysicalThingId = ko.observable();
@@ -31,6 +27,14 @@ define([
         this.selectIIIFTile = function(item) {
             self.selectedPhysicalThingId(item._id);
             params.resourceid(item._id);
+
+            if (params.shouldtrackresource) {
+                if (params.workflow.resourceId ) {  /* if we have defined that this is part of a single-resource workflow */ 
+                    params.workflow.resourceId(item._id);
+                }
+            }
+            params.value(params.defineStateProperties());
+
             if (ko.unwrap(self.complete) !== true) {
                 self.complete(true);
             } else {
@@ -103,7 +107,7 @@ define([
             }
             return {
                 physicalthingid: self.selectedPhysicalThingId(),
-                resourceid: ko.unwrap(params.resourceid) || this.workflow.resourceId(),
+                resourceid: ko.unwrap(params.resourceid),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,
             };

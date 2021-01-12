@@ -15,6 +15,7 @@ define([
 ], function(_, $, arches, ko, koMapping, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
     var graph = ko.observable();
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+
     $.getJSON(arches.urls.graphs_api + graphId, function(data) {
         var graphModel = new GraphModel({
             data: data.graph,
@@ -47,12 +48,16 @@ define([
     };
 
     function viewModel(params) {
-        if (!params.resourceid()) {
-            params.resourceid(params.workflow.state.resourceid);
+        if (!params.resourceid()) { 
+            if (ko.unwrap(params.workflow.resourceId)) {
+                params.resourceid(ko.unwrap(params.workflow.resourceId));
+            }
         }
-        if (params.workflow.state.steps[params._index]) {
-            params.tileid(params.workflow.state.steps[params._index].tileid);
-        }
+
+        console.log("AAAAAAAA", params)
+        // if (params.workflow.state.steps[params._index]) {
+        //     params.tileid(params.workflow.state.steps[params._index].tileid);
+        // }
         NewTileStep.apply(this, [params]);
 
         var limit = 10;
@@ -149,6 +154,11 @@ define([
         });
 
         this.submit = function() {
+
+            console.log("HHHHHH", self)
+
+
+
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
