@@ -1,0 +1,80 @@
+version: '3.8'
+services:
+
+    afs:
+      container_name: afs
+      image: fargeo/afs
+      build:
+        context: ..
+        dockerfile: afs/Dockerfile
+      command: run_arches
+      volumes:
+        - ../arches/:/web_root/arches
+        - ./:/web_root/afs
+      env_file:
+        - ./docker/env_file.env
+      ports:
+        - 8000:8000
+      # command: python3 manage.py runserver 0.0.0.0:8000
+      depends_on:
+        - db_afs
+        - elasticsearch_afs
+        - couchdb_afs
+      stdin_open: true
+      tty: true
+
+    db_afs:
+      container_name: db_afs
+      image: kartoza/postgis:12.0
+      volumes:
+          - postgres-data:/var/lib/postgresql/data
+          - postgres-log:/var/log/postgresql
+          - ../arches/arches/install/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
+      ports:
+        - '5432:5432'
+      env_file: 
+        - ./docker/env_file.env
+
+    couchdb_afs:
+      container_name: couchdb_afs
+      image: couchdb:2.1.1
+      ports:
+        - "5984:5984"
+      env_file: 
+        - ./docker/env_file.env
+      volumes:
+        - couchdb-data:/usr/local/var/lib/couchdb
+        - couchdb-log:/usr/local/var/log/couchdb
+
+    elasticsearch_afs:
+      container_name: elasticsearch_afs
+      image: elasticsearch:7.9.2
+      volumes:
+        - elasticsearch-data:/usr/share/elasticsearch/data
+      ports:
+        - "9201:9200"
+        - "9301:9300"
+      env_file: 
+        - ./docker/env_file.env
+
+    rabbitmq_afs:
+      container_name: rabbitmq_afs
+      image: rabbitmq:3-management
+      hostname: my-rabbit
+      volumes:
+        - rabbitmq-data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+        - rabbitmq-logs:/var/log/rabbitmq/log
+      ports:
+        - 5672:5672
+        - 15672:15672
+
+volumes:
+    arches-log:
+    arches-static:
+    couchdb-data:
+    couchdb-log:
+    postgres-data:
+    postgres-log:
+    elasticsearch-data:
+    rabbitmq-logs:
+    rabbitmq-data:
