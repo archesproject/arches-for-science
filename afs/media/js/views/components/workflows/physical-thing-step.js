@@ -7,7 +7,6 @@ define([
     'views/components/workflows/new-tile-step',
     'bindings/select2-query',
 ], function($, _, ko, koMapping, arches, NewTileStep) {
-
     function viewModel(params) {
         var self = this;
 
@@ -17,13 +16,6 @@ define([
         NewTileStep.apply(this, [params]);
 
         this.onSaveSuccess = function(tile) {
-            /* if we have defined that this is part of a single-resource workflow, but have not created a resource yet */ 
-            if (params.shouldtrackresource) {
-                if (params.workflow.resourceId ) {  /* if we have defined that this is part of a single-resource workflow */ 
-                    params.workflow.resourceId(tile.resourceinstance_id);
-                }
-            }
-
             params.resourceid(tile.resourceinstance_id);
             params.tileid(tile.tileid);
             self.resourceId(tile.resourceinstance_id);
