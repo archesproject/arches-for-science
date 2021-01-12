@@ -58,18 +58,16 @@ define([
             }
         }
 
-        console.log("AAAAAAAA", params)
-        // if (params.workflow.state.steps[params._index]) {
-        //     params.tileid(params.workflow.state.steps[params._index].tileid);
-        // }
         NewTileStep.apply(this, [params]);
 
         this.researchActivityResourceId = ko.observable();
 
         var limit = 10;
         var self = this;
-        var researchActivityName = ko.unwrap(params.workflow).state.steps[0].tile[activityNameNodeId];
-        this.researchActivityResourceId(ko.unwrap(params.workflow).state.steps[0].resourceid);
+
+        var researchActivityStepData = params.externalStepData['researchactivitystep']['data'];
+        var researchActivityName = researchActivityStepData.tile[activityNameNodeId];
+        this.researchActivityResourceId(researchActivityStepData.resourceid);
 
         this.saveNewSet = function() {
             $.ajax({
@@ -82,7 +80,6 @@ define([
                     'tileid': null
                 }
             }).done(function(data) {
-                // console.log(data);s
                 if (data.resourceinstance_id) {
                     params.resourceid(data.resourceinstance_id);
                     $.ajax({
@@ -205,11 +202,6 @@ define([
         });
 
         this.submit = function() {
-
-            console.log("HHHHHH", self)
-
-
-
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',

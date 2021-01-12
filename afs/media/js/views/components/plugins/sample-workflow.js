@@ -91,8 +91,6 @@ define([
             this.quitUrl = arches.urls.plugin('init-workflow');
             self.getJSON('sample-workflow');
 
-            self.activeStep.subscribe(this.updateState);
-
             self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/sample-workflow.htm' }
