@@ -29,7 +29,7 @@ define([
             params.resourceid(item._id);
 
             if (params.shouldtrackresource) {
-                if (params.workflow.resourceId ) {  /* if we have defined that this is part of a single-resource workflow */ 
+                if (params.workflow.resourceId) {  /* if we have defined that this is part of a single-resource workflow */ 
                     params.workflow.resourceId(item._id);
                 }
             }
