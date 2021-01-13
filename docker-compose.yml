@@ -11,6 +11,7 @@ services:
       volumes:
         - ../arches/:/web_root/arches
         - ./:/web_root/afs
+        - cantaloupe-data:/web_root/afs/afs/cantaloupe
       env_file:
         - ./docker/env_file.env
       ports:
@@ -65,8 +66,16 @@ services:
         - rabbitmq-data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
         - rabbitmq-logs:/var/log/rabbitmq/log
       ports:
-        - 5672:5672
-        - 15672:15672
+
+    cantaloupe_afs:
+      container_name: cantaloupe_afs
+      image: uclalibrary/cantaloupe
+      volumes:
+        - cantaloupe-data:/imageroot
+      ports:
+        - 8183:8182
+      env_file:
+        - ./docker/env_file.env
 
 volumes:
     arches-log:
@@ -78,3 +87,4 @@ volumes:
     elasticsearch-data:
     rabbitmq-logs:
     rabbitmq-data:
+    cantaloupe-data:
