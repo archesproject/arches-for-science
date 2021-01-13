@@ -68,6 +68,8 @@ services:
         - 5673:5672
         - 15673:15672
 
+    # for documentation on using the uclalibrary cantaloupe image:        
+    # https://gitlab.com/ucla-library/docker-cantaloupe/-/blob/master/configs/cantaloupe.properties.default-dev
     cantaloupe_afs:
       container_name: cantaloupe_afs
       image: uclalibrary/cantaloupe
