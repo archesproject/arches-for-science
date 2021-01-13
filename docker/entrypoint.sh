@@ -86,18 +86,13 @@ init_arches() {
 	else
 		echo "Custom Arches project '${ARCHES_PROJECT}' exists."
 		wait_for_db
-		if [[ ${LOAD_PACKAGE} == "True" ]]; then
-			run_load_package
-			setup_couchdb
+		if db_exists; then
+			echo "Database ${PGDBNAME} already exists."
+			echo "Skipping Package Loading"
 		else
-			if db_exists; then
-				echo "Database ${PGDBNAME} already exists"
-				echo "Skipping Package Loading"
-			else
-				echo "Database ${PGDBNAME} does not exists yet"
-				run_load_package
-				setup_couchdb
-			fi
+			echo "Database ${PGDBNAME} does not exists yet."
+			run_load_package #change to run_load_package if preferred 
+			setup_couchdb
 		fi
 	fi
 }
