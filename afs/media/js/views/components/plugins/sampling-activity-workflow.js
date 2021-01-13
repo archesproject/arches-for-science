@@ -21,8 +21,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search',
                     wastebin: {resourceid: null, description: 'a sampling activity instance'}
                 },
                 {
@@ -38,8 +36,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-calendar',
-                    class: 'fa-calendar'
                 },
                 {
                     title: 'Sample Taker',
@@ -53,8 +49,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-user',
-                    class: 'fa-search'
                 },
                 {
                     title: 'Set or Collection',
@@ -69,8 +63,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa fa-cubes',
-                    class: 'fa-search'
                 },
                 {
                     title: 'Select Physical Thing',
@@ -85,8 +77,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search'
                 },
                 {
                     title: 'IIIF',
@@ -102,8 +92,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-pencil',
-                    class: 'fa-search',
                     wastebin: {tile: null, description: 'an annotation'}
                 },
                 {
@@ -113,7 +101,6 @@ define([
                     componentname: 'afs-final-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '',
-                    icon: 'fa-check',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null

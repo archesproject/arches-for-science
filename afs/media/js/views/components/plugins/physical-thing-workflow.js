@@ -23,7 +23,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-asterisk',
                     wastebin: {resourceid: null, description: 'a physical thing instance'}
                 },
                 {
@@ -38,7 +37,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-file-text',
                     wastebin: {resourceid: null, description: 'a physical thing instance'}
                 },
                 {
@@ -53,7 +51,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-list',
                     wastebin: {resourceid: null, description: 'a physical thing instance'}
                 },
                 {
@@ -68,7 +65,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-file-image-o',
                     wastebin: {resourceid: null, description: 'a digital resource instance'}
                 },
                 {
@@ -85,8 +81,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-pencil',
-                    class: 'fa-search',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
                 {
@@ -96,7 +90,6 @@ define([
                     componentname: 'afs-final-step',
                     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
                     nodegroupid: '',
-                    icon: 'fa-check',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null

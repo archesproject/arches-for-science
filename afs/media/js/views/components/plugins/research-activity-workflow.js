@@ -23,7 +23,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-code-fork',
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
                 {
@@ -38,7 +37,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: false,
-                    icon: 'fa-map-marker'
                 },
                 {
                     title: 'Activity Timespan',
@@ -53,7 +51,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-calendar-o'
                 },
                 {
                     title: 'Project Team',
@@ -67,7 +64,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: false,
-                    icon: 'fa-list-alt'
                 },
                 {
                     title: 'Add Things to Your Set',
@@ -82,8 +78,6 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search',
                 },
                 {
                     title: 'Add Project Complete',
@@ -92,7 +86,6 @@ define([
                     componentname: 'afs-final-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '',
-                    icon: 'fa-check',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null
