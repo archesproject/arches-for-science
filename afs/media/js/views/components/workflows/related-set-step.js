@@ -9,6 +9,12 @@ define([
     function viewModel(params) {
         var relatedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
 
+        if (!params.resourceid()) { 
+            if (ko.unwrap(params.workflow.resourceId)) {
+                params.resourceid(ko.unwrap(params.workflow.resourceId));
+            }
+        }
+
         NewTileStep.apply(this, [params]);
 
         params.defineStateProperties = function(){
@@ -18,9 +24,19 @@ define([
             } else if (!!(ko.unwrap(params.tileid))) {
                 tileid = ko.unwrap(params.tileid);
             }
+
+            var relatedResourceId;
+            if (params.tile()) {
+                var relatedSetNodeData = ko.unwrap(params.tile().data[relatedSetNodeId]);
+
+                if (relatedSetNodeData && relatedSetNodeData.length) {
+                    relatedResourceId = ko.unwrap(relatedSetNodeData[0]['resourceId']);
+                }
+            }
+            
             return {
-                relatedresourceid: params.tile() && params.tile().data[relatedSetNodeId] && params.tile().data[relatedSetNodeId]() && params.tile().data[relatedSetNodeId]()[0] ? params.tile().data[relatedSetNodeId]()[0]['resourceId'] : null,
-                resourceid: ko.unwrap(params.resourceid) || this.workflow.state.resourceid,
+                relatedresourceid: relatedResourceId,
+                resourceid: ko.unwrap(params.resourceid),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
                 tileid: tileid,
             };
