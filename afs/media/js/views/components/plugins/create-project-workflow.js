@@ -5,7 +5,7 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step'
 ], function(ko, $, arches, Workflow) {
-    return ko.components.register('research-activity-workflow', {
+    return ko.components.register('create-project-workflow', {
         viewModel: function(params) {
             var self = this;
 
@@ -13,8 +13,8 @@ define([
 
             params.steps = [
                 {
-                    title: 'Activity Name',
-                    name: 'set-activity-name',  /* unique to workflow */
+                    title: 'Project Name',
+                    name: 'set-project-name',  /* unique to workflow */
                     description: 'Identify the project and its objectives',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -29,9 +29,9 @@ define([
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
                 {
-                    title: 'Activity Statement',
-                    name: 'set-activity-statement',  /* unique to workflow */
-                    description: 'Set the Activity Statement',
+                    title: 'Project Statement',
+                    name: 'set-project-statement',  /* unique to workflow */
+                    description: 'Set the Project Statement',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
@@ -43,8 +43,8 @@ define([
                     icon: 'fa-map-marker'
                 },
                 {
-                    title: 'Activity Timespan',
-                    name: 'set-activity-timespan',  /* unique to workflow */
+                    title: 'Project Timespan',
+                    name: 'set-project-timespan',  /* unique to workflow */
                     description: 'Consultation Dates',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -81,7 +81,7 @@ define([
                     nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
                     nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
                     externalstepdata: { 
-                        researchactivitystep: 'set-activity-name',
+                        researchactivitystep: 'set-project-name',
                     },
                     resourceid: null,
                     tileid: null,
@@ -107,10 +107,10 @@ define([
 
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('research-activity-workflow');
+            self.getJSON('create-project-workflow');
 
             self.ready(true);
         },
-        template: { require: 'text!templates/views/components/plugins/research-activity-workflow.htm' }
+        template: { require: 'text!templates/views/components/plugins/create-project-workflow.htm' }
     });
 });
