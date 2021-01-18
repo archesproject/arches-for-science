@@ -7,13 +7,14 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('research-activity-workflow', {
         viewModel: function(params) {
-
             var self = this;
+
+            this.resourceId = ko.observable();
 
             params.steps = [
                 {
                     title: 'Activity Name',
-                    name: 'setactivityname',
+                    name: 'set-activity-name',  /* unique to workflow */
                     description: 'Identify the project and its objectives',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -23,11 +24,12 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
+                    shouldtrackresource: true,
                     wastebin: {resourceid: null, description: 'an activity instance'}
                 },
                 {
                     title: 'Activity Statement',
-                    name: 'setactivitystatement',
+                    name: 'set-activity-statement',  /* unique to workflow */
                     description: 'Set the Activity Statement',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -40,7 +42,7 @@ define([
                 },
                 {
                     title: 'Activity Timespan',
-                    name: 'setactivitytimespan',
+                    name: 'set-activity-timespan',  /* unique to workflow */
                     description: 'Consultation Dates',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -54,7 +56,7 @@ define([
                 },
                 {
                     title: 'Project Team',
-                    name: 'setprojectteam',
+                    name: 'set-project-team',  /* unique to workflow */
                     description: 'Consultation Details',
                     component: 'views/components/workflows/new-tile-step',
                     componentname: 'new-tile-step',
@@ -67,13 +69,16 @@ define([
                 },
                 {
                     title: 'Add Things to Your Set',
-                    name: 'objectsearchstep',
+                    name: 'object-search-step',  /* unique to workflow */
                     description: 'Add Physical Things to Your Set',
                     component: 'views/components/workflows/research-collection-step',
                     componentname: 'research-collection-step',
                     graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a',
                     nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
                     nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
+                    externalstepdata: { 
+                        researchactivitystep: 'set-activity-name',
+                    },
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
@@ -81,6 +86,7 @@ define([
                 },
                 {
                     title: 'Add Project Complete',
+                    name: 'add-project-complete',  /* unique to workflow */
                     description: 'Choose an option below',
                     component: 'views/components/workflows/afs-final-step',
                     componentname: 'afs-final-step',
@@ -95,8 +101,6 @@ define([
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
             self.getJSON('research-activity-workflow');
-
-            self.activeStep.subscribe(this.updateState);
 
             self.ready(true);
         },

@@ -7,13 +7,14 @@ define([
     'views/components/workflows/new-tile-step',
     'bindings/select2-query',
 ], function($, _, ko, koMapping, arches, NewTileStep) {
-
     function viewModel(params) {
+        var self = this;
 
         this.visualworkInstanceRef;
         this.digitalresourceInstanceRef;
+
         NewTileStep.apply(this, [params]);
-        var self = this;
+
         this.onSaveSuccess = function(tile) {
             params.resourceid(tile.resourceinstance_id);
             params.tileid(tile.tileid);
@@ -88,10 +89,6 @@ define([
                         console.log('Added "used image" of the digital resource to the visual work:', data);
                     });
 
-                    self.setStateProperties();
-                    if (params.workflow) {
-                        params.workflow.updateUrl();
-                    }
                     if (self.completeOnSave === true) { self.complete(true); }
                 });
             });

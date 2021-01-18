@@ -81,11 +81,10 @@ define([
                     parenttileid: null
                 }
             ];
+            
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
             self.getJSON('upload-dataset-workflow');
-
-            self.activeStep.subscribe(this.updateState);
 
             self.ready(true);
         },
