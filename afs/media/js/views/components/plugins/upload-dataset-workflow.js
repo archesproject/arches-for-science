@@ -22,8 +22,6 @@ define([
                     parenttileid: null,
                     required: false, // temporarily false for ease of development on other steps
                     // required: true,
-                    icon: 'fa-search',
-                    class: 'fa-search',
                     wastebin: {resourceid: null, description: 'a sampling activity instance'}
                 },
                 {
@@ -40,8 +38,6 @@ define([
                     parenttileid: null,
                     required: false, // temporarily false for ease of development on other steps
                     // required: true,
-                    icon: 'fa-calendar',
-                    class: 'fa-calendar'
                 },
                 {
                     title: 'Sample Location',
@@ -57,8 +53,6 @@ define([
                     parenttileid: null,
                     required: false, // temporarily false for ease of development on other steps
                     // required: true,
-                    icon: 'fa-calendar',
-                    class: 'fa-calendar'
                 },
                 {
                     title: 'File Interpretation',
@@ -74,8 +68,6 @@ define([
                     parenttileid: null,
                     required: false, // temporarily false for ease of development on other steps
                     // required: true,
-                    icon: 'fa-calendar',
-                    class: 'fa-calendar'
                 },
                 {
                     title: 'Summary',
@@ -84,7 +76,6 @@ define([
                     componentname: '',
                     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
                     nodegroupid: '',
-                    icon: 'fa-check',
                     resourceid: null,
                     tileid: null,
                     parenttileid: null
