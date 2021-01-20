@@ -46,6 +46,7 @@ CELERY_BROKER_URL = "amqp://{}:{}@rabbitmq_afs".format(
     get_env_variable("RABBITMQ_USER"), get_env_variable("RABBITMQ_PASS")
 )  # RabbitMQ --> "amqp://guest:guest@localhost",  Redis --> "redis://localhost:6379/0"
 
+CANTALOUPE_HTTP_ENDPOINT = "http://{}:{}".format(get_env_variable("CANTALOUPE_HOST"), get_env_variable("CANTALOUPE_PORT"))
 ELASTICSEARCH_HTTP_PORT = get_env_variable("ESPORT")
 ELASTICSEARCH_HOSTS = [{"host": get_env_variable("ESHOST"), "port": ELASTICSEARCH_HTTP_PORT}]
 

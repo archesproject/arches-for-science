@@ -11,11 +11,11 @@ services:
       volumes:
         - ../arches/:/web_root/arches
         - ./:/web_root/afs
+        - cantaloupe-data:/web_root/afs/afs/cantaloupe
       env_file:
         - ./docker/env_file.env
       ports:
-        - 8000:8000
-      # command: python3 manage.py runserver 0.0.0.0:8000
+        - 8001:8000
       depends_on:
         - db_afs
         - elasticsearch_afs
@@ -31,7 +31,7 @@ services:
           - postgres-log:/var/log/postgresql
           - ../arches/arches/install/init-unix.sql:/docker-entrypoint-initdb.d/init.sql # to set up the DB template
       ports:
-        - '5432:5432'
+        - '5433:5432'
       env_file: 
         - ./docker/env_file.env
 
@@ -39,7 +39,7 @@ services:
       container_name: couchdb_afs
       image: couchdb:2.1.1
       ports:
-        - "5984:5984"
+        - "5985:5984"
       env_file: 
         - ./docker/env_file.env
       volumes:
@@ -65,8 +65,20 @@ services:
         - rabbitmq-data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
         - rabbitmq-logs:/var/log/rabbitmq/log
       ports:
-        - 5672:5672
-        - 15672:15672
+        - 5673:5672
+        - 15673:15672
+
+    # for documentation on using the uclalibrary cantaloupe image:        
+    # https://gitlab.com/ucla-library/docker-cantaloupe/-/blob/master/configs/cantaloupe.properties.default-dev
+    cantaloupe_afs:
+      container_name: cantaloupe_afs
+      image: uclalibrary/cantaloupe
+      volumes:
+        - cantaloupe-data:/imageroot
+      ports:
+        - 8183:8182
+      env_file:
+        - ./docker/env_file.env
 
 volumes:
     arches-log:
@@ -78,3 +90,4 @@ volumes:
     elasticsearch-data:
     rabbitmq-logs:
     rabbitmq-data:
+    cantaloupe-data:
