@@ -94,6 +94,8 @@ class FileToIIIF(BaseFunction):
                 )
             else:
                 logger.warn("filetype unacceptable: " + f.path.name)
+                return
+
         pres_dict = {
             "@context": "http://iiif.io/api/presentation/2/context.json",
             "@type": "sc:Manifest",
