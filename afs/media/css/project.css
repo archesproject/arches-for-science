@@ -248,6 +248,15 @@
     padding-left: 35px;
 }
 
+.tabbed-workflow-step-body .physical-thing-search-list-container {
+    width: calc(100vw - 50px);  /* side-nav width */
+}
+
+.tabbed-workflow-step-body .physical-thing-search-list {
+    margin: unset;
+    padding: unset;
+}
+
 .physical-thing-search-list .resource-report {
     border-bottom: 1px solid #ddd;
 }
