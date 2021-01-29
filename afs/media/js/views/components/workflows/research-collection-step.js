@@ -220,6 +220,9 @@ define([
                 self.tile()._tileData(koMapping.toJSON(data.data));
             });
         };
+        if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
+            params.preSaveCallback(self.submit);
+        }
 
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
