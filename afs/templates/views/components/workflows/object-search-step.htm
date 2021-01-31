@@ -61,7 +61,16 @@
                         </div>
                     </div>
                     <div class="wf-multi-tile-step-card-controls">
-                        <span><i class="fa fa-times-circle"></i></span><span class="" data-bind="click: function(){$parent.updateTileData($data.resourceinstanceid)}">Remove</span>
+                        <span
+                            data-bind="click: function(){$parent.updateTileData($data.resourceinstanceid)}"
+                        >
+                            <span>
+                                <i class="fa fa-times-circle"></i>
+                            </span>
+                            <span class="">
+                                Remove
+                            </span>
+                        </span>
                     </div>
                  </div>
                 <!-- /ko -->
