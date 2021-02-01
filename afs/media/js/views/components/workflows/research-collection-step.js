@@ -15,6 +15,7 @@ define([
 ], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
 
     var graph = ko.observable();
+
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
     var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a';
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
@@ -181,14 +182,21 @@ define([
             var val = self.value().find(function(item) {
                 return item['resourceId'] === resourceid;
             });
+
             if (!!val) {
                 // remove item, we don't want users to add the same item twice
                 self.value.remove(val);
             } else {
-                var nodeConfig = self.nodeLookup[params.nodeid()].config.graphs().find(function(config) {
-                    return config.graphid === graphId;
-                });
-                self.value.push({'resourceId': resourceid, 'ontologyProperty': nodeConfig['ontologyProperty'], 'inverseOntologyProperty': nodeConfig['inverseOntologyProperty']});
+                var nodeConfig;
+                var nodeData = self.nodeLookup[params.nodeid()];
+                
+                if (nodeData) {
+                    nodeConfig = nodeData.config.graphs().find(function(config) {
+                        return config.graphid === graphId;
+                    });
+
+                    self.value.push({'resourceId': resourceid, 'ontologyProperty': nodeConfig['ontologyProperty'], 'inverseOntologyProperty': nodeConfig['inverseOntologyProperty']});
+                }
             }
             if (self.value().length === 0 && self.startValue === null) {
                 tilevalue(null);
@@ -338,16 +346,16 @@ define([
         this.updateSearchResults = function(termFilter, pagingFilter) {
             params.loading(true);
 
-            if (graph()) {
-                getResultData(termFilter, graph(), pagingFilter);
-            } else {
-                graph.subscribe(function(graph) {
-                    getResultData(termFilter, graph, pagingFilter);
-                });
+            if (ko.unwrap(graph)) {
+                getResultData(termFilter, ko.unwrap(graph), pagingFilter);
             }
         };
 
-        this.updateSearchResults();
+        graph.subscribe(function(graph) {
+            if (ko.unwrap(graph)) {
+                getResultData(null, ko.unwrap(graph));
+            }
+        });
 
         this.selectedTerm.subscribe(function(val) {
             var termFilter = self.termOptions[val];
@@ -357,14 +365,6 @@ define([
         this.query.subscribe(function(query) {
             self.updateSearchResults(null, query['paging-filter']);
         });
-
-        // params.defineStateProperties = function() {
-        //     return {
-        //         resourceid: ko.unwrap(params.resourceid),
-        //         tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
-        //         tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid) : undefined,
-        //     };
-        // };
     }
 
     ko.components.register('research-collection-step', {

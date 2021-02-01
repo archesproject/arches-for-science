@@ -10,12 +10,17 @@
     margin-bottom: -10px;
 }
 
+.tabbed-workflow .sampling-activity {
+    width: calc(100% - 50px);
+    margin: unset;
+}
 
 .sampling-activity {
     display: flex;
     flex-direction: column;
     margin-left: -25px;
     height: 100%;
+    overflow-y: hidden;
 }
 
 .sampling-activity .selected-instance {
@@ -39,6 +44,10 @@
     display: inline-flex;
     align-items: center;
     z-index: 10;
+}
+
+.tabbed-workflow-step-body .workflow-search-panel {
+    padding-left: 22px;
 }
 
 .workflow-search-panel .search-bar {
@@ -72,6 +81,10 @@
     width: 100%
 }
 
+.tabbed-workflow-step-body .object-search-step .search-results-footer {
+    bottom: 0px;
+}
+
 .object-search-step .wf-multi-tile-step-list {
     /* border-left: 0px; */
     background-color: #f3f3f3;
@@ -79,7 +92,7 @@
 
 .object-search-step .workflow-search-results {
     margin-top: 55px;
-    height: 100%;
+    height: calc(100% - 55px);
 }
 
 .object-search-step .search-selection-controls {
@@ -119,6 +132,14 @@
 .workflow-search-list .resource-report {
     padding-left: 35px;
     border-bottom: 1px solid #ddd;
+}
+
+.tabbed-workflow-step-body .wf-multi-tile-step-list {
+    padding-bottom: 60px !important;  /* overwrites manual style setting */
+}
+
+.tabbed-workflow-step-body .workflow-search-list .resource-report {
+    padding-left: unset;
 }
 
 .workflow-search-list .resource-report:hover {
@@ -225,6 +246,15 @@
 .physical-thing-search-list {
     margin-left: -25px;
     padding-left: 35px;
+}
+
+.tabbed-workflow-step-body .physical-thing-search-list-container {
+    width: calc(100vw - 50px);  /* side-nav width */
+}
+
+.tabbed-workflow-step-body .physical-thing-search-list {
+    margin: unset;
+    padding: unset;
 }
 
 .physical-thing-search-list .resource-report {
