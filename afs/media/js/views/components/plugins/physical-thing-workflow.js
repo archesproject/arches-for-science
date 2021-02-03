@@ -38,8 +38,7 @@ define([
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
-                    required: true,
-                    wastebin: {resourceid: null, description: 'a physical thing instance'}
+                    required: true
                 },
                 {
                     title: 'Physical Thing Type',
@@ -52,8 +51,7 @@ define([
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
-                    required: true,
-                    wastebin: {resourceid: null, description: 'a physical thing instance'}
+                    required: true
                 },
                 {
                     title: 'Digital Resource File',
