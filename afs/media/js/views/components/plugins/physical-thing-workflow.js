@@ -25,7 +25,7 @@ define([
                     parenttileid: null,
                     required: true,
                     shouldtrackresource: true,
-                    wastebin: {resourceid: null, description: 'a physical thing instance'}
+                    wastebin: {resources:[]}
                 },
                 {
                     title: 'Physical Thing Statement',
@@ -67,8 +67,7 @@ define([
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
-                    required: true,
-                    wastebin: {resourceid: null, description: 'a digital resource instance'}
+                    required: true
                 },
                 {
                     title: 'IIIF',
@@ -85,8 +84,7 @@ define([
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
-                    required: true,
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    required: true
                 },
                 {
                     title: 'Physical Thing Workflow Complete',
