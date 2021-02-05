@@ -11,33 +11,81 @@ define([
             params.steps = [
                 {
                     title: 'Project Info',
-                    name: 'upoaddatasetselect',
-                    description: 'Provide a name for the sample',
-                    component: 'views/components/workflows/project-object-select-step',
-                    componentname: 'project-object-select-step',
-                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
-                    nodegroupid: null,
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: false, // temporarily false for ease of development on other steps
-                    // required: true,
-                    wastebin: {resourceid: null, description: 'a sampling activity instance'}
+                    name: 'project-info',
+                    description: 'Information about the Project',
+                    informationboxdata: {
+                        heading: 'Workflow Step: Project and related object',
+                        text: 'Select the project and object that you\'re sampling',
+                    },
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    autoAdvance: false,
+                    required: true,
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Project',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'project-resource-instance', /* unique to step */
+                                    parameters: {
+                                        graphids: [
+                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a', /* Activity */
+                                        ],
+                                        renderContext: 'workflow', 
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                        {
+                            sectionTitle: 'Sample Object',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'sample-object-resource-instance', /* unique to step */
+                                    parameters: {
+                                        graphids: [
+                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Physical Thing */
+                                        ],  
+                                        renderContext: 'workflow',
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'Instrument',
-                    name: 'uploaddataset',
-                    description: 'Upload the dataset',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
-                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
-                    nodegroupid: '7c486328-d380-11e9-b88e-a4d18cec433a',
-                    hiddenNodes: [],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: false, // temporarily false for ease of development on other steps
-                    // required: true,
+                    name: 'select-instrument-and-files',
+                    description: 'Select the instrument and corresponding files',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    autoAdvance: false,
+                    informationboxdata: {
+                        heading: 'Select the instrument used for the analysis',
+                        text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
+                    },
+                    required: true,
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Instrument',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'instrument-type', /* unique to step */
+                                    parameters: {
+                                        graphids: [
+                                            'b6c819b8-99f6-11ea-a9b7-3af9d3b32b71', /* Instrument */
+                                        ],
+                                        renderContext: 'workflow',
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'Sample Location',
