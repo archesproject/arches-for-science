@@ -3,7 +3,8 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
-    'viewmodels/workflow-step'
+    'viewmodels/workflow-step',
+    'views/components/file-upload'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
@@ -85,6 +86,19 @@ define([
                                 },
                             ], 
                         },
+                        // {
+                        //     sectionTitle: 'Upload Files',
+                        //     componentConfigs: [
+                        //         { 
+                        //             componentName: 'file-upload',
+                        //             component: 'views/components/file-upload',
+                        //             required: true,
+                        //             parameters: {
+                        //                 mouse: 'cat'
+                        //             }
+                        //         },
+                        //     ], 
+                        // },
                     ],
                 },
                 {
