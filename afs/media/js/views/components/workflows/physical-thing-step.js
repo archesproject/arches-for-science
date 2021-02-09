@@ -98,15 +98,15 @@ define([
             var tileid = undefined;
 
             var wastebin = !!(ko.unwrap(params.wastebin)) ? koMapping.toJS(params.wastebin) : undefined;
-            if (wastebin && ko.unwrap(wastebin.hasOwnProperty('resources'))) {
+            if (wastebin && 'resources' in wastebin) {
                 wastebin.resources.push({'resourceid': ko.unwrap(params.resourceid), 'description':'a physical thing instance'});
                 wastebin.resources.push({'resourceid': self.digitalresourceInstanceRef[0].resourceId, 'description':'a digital resource instance'});
                 wastebin.resources.push({'resourceid': self.visualworkInstanceRef[0].resourceId, 'description':'a visual work instance'});
             }
-            if (wastebin && ko.unwrap(wastebin.hasOwnProperty('resourceid'))) {
+            if (wastebin && 'resourceid' in wastebin) {
                 wastebin.resourceid = ko.unwrap(params.resourceid);
             }
-            if (wastebin && ko.unwrap(wastebin.hasOwnProperty('tile'))) {
+            if (wastebin && 'tile' in wastebin) {
                 if (!!ko.unwrap(params.tile)) {
                     wastebin.tile = koMapping.toJS(params.tile().data);
                     wastebin.tile.tileid = (ko.unwrap(params.tile)).tileid;
