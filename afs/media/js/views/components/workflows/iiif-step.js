@@ -45,6 +45,7 @@ define([
                     wastebin.tile.resourceinstance_id = (ko.unwrap(params.tile)).resourceinstance_id;
                 }
             }
+            ko.mapping.fromJS(wastebin, {}, params.wastebin);
             return {
                 resourceid: params.resourceid(),
                 tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
