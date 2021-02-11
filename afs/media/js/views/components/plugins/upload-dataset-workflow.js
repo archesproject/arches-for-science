@@ -103,10 +103,10 @@ define([
                 },
                 {
                     title: 'Sample Location',
-                    name: 'objectsamplelocation',
+                    name: 'object-sample-location',
                     description: '',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
+                    component: 'views/components/workflows/select-dataset-files-step',
+                    componentname: 'select-dataset-files-step',
                     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
                     nodegroupid: '',
                     hiddenNodes: [],
