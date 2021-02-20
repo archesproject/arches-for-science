@@ -35,8 +35,33 @@
         <!--/ko-->
     </div>
     <!--/ko-->
-
 </div>
+
+
+
+<div class="iiif-image-tools" style="margin-top: 20px;">
+    <!-- ko if: files().length > 0 -->
+    <label class="control-label">{% trans "Associated Files" %}</label>
+    <div class="file-workbench-files" data-bind="foreach: {data: files, as: 'file'}">
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: false}">
+            <input type="checkbox" style="width: 15px; height: 15px; margin: 0px" data-bind="value: file, checked: false">
+            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name, click: function(){console.log(file)}, clickBubble: false"></span>
+        </div>
+    </div>
+    <!--/ko-->
+        
+    <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+        <div class="file-workbench-buttons">
+            <button class="btn btn-primary btn-lg btn-block btn-labeled btn-workbench fa fa-upload upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                <span>{% trans "Add Files" %}</span>
+            </button>
+        </div>
+        <div style="min-height: 100%;">
+            <div id="hidden-dz-previews" style="display:none"></div>
+        </div>
+    </div>
+</div>
+
 <!--/ko-->
 <!--/ko-->
 {{ block.super }}
