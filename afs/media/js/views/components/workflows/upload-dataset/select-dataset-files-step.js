@@ -7,14 +7,15 @@ define([
     'utils/physical-thing',
     'viewmodels/alert-json',
     'views/components/iiif-viewer',
+    'views/components/workflows/component-based-step',
     'bindings/dropzone'
 ], function(ko, koMapping, uuid, arches, resourceUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
-            var self = this;
+            IIIFViewerViewmodel.apply(this, [params]);
             var annotationNodeGroupId = "b3e171a7-1d9d-11eb-a29f-024e0d439fdb";
             var defaultColor;
-            IIIFViewerViewmodel.apply(this, [params]);
+            var self = this;
             this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb"
             this.annotationNameNodeId = "b3e171ac-1d9d-11eb-a29f-024e0d439fdb"
             this.selectedAnnotationTile = ko.observable();
@@ -123,6 +124,13 @@ define([
                     .then(
                         function(samples){
                             self.samples(samples.related_resources);
+                            self.samples().forEach(function(sample){
+                                sample.datasetFiles = ko.observableArray([]);
+                                sample.datasetName = ko.observable();
+                                sample.datasetName.subscribe(function(val){
+                                    console.log(val)
+                                })
+                            });
                             self.selectedSample(self.samples()[0]);
                             self.annotationNodes.subscribe(function(val){
                                 var overlay = val.find(n => n.name.includes('Sampling Activity'));
