@@ -86,19 +86,6 @@ define([
                                 },
                             ], 
                         },
-                        // {
-                        //     sectionTitle: 'Upload Files',
-                        //     componentConfigs: [
-                        //         { 
-                        //             componentName: 'file-upload',
-                        //             component: 'views/components/file-upload',
-                        //             required: true,
-                        //             parameters: {
-                        //                 mouse: 'cat'
-                        //             }
-                        //         },
-                        //     ], 
-                        // },
                     ],
                 },
                 {
@@ -113,8 +100,7 @@ define([
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
-                    required: false, // temporarily false for ease of development on other steps
-                    // required: true,
+                    required: true
                 },
                 {
                     title: 'File Interpretation',
