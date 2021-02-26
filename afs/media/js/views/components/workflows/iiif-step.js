@@ -22,7 +22,6 @@ define([
         this.tile.subscribe(function(t){
             if (t) {
                 t.dirty.subscribe(function(dirty) {
-                    console.log(dirty)
                     params.hasDirtyTile(dirty);
                 });
 

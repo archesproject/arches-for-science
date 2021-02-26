@@ -214,7 +214,7 @@ define([
             if (params.hasDirtyTile) {
                 params.hasDirtyTile(dirty);
             }
-        })
+        });
 
         this.submit = function() {
             $.ajax({
