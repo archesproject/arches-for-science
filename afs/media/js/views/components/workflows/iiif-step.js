@@ -16,18 +16,30 @@ define([
         params.resourceid(self.physicalThingIdStepData.physicalthingid);
 
         NewTileStep.apply(this, [params]);
-        
+
+        params.hasDirtyTile(false);
+
         this.tile.subscribe(function(t){
             if (t) {
-                var physicalthingInstanceRef = [{
-                    'resourceId': self.physicalThingIdStepData.physicalthingid,  // resourceid of the visual work
-                    'ontologyProperty': '',
-                    'inverseOntologyProperty':'',
-                    'resourceXresourceId':''
-                }];
-                t.data["b240c366-8594-11ea-97eb-acde48001122"](physicalthingInstanceRef); // set resourceid from physical thing
-                if(self.visualWorkIdStepData && self.visualWorkIdStepData.visualworkInstanceRef) {
-                    t.data["5d440fea-8651-11ea-97eb-acde48001122"](self.visualWorkIdStepData.visualworkInstanceRef); // set resourceid from related visual work
+                t.dirty.subscribe(function(dirty) {
+                    console.log(dirty)
+                    params.hasDirtyTile(dirty);
+                });
+
+                if (!t.data["b240c366-8594-11ea-97eb-acde48001122"]()) {
+                    var physicalthingInstanceRef = [{
+                        'resourceId': self.physicalThingIdStepData.physicalthingid,  // resourceid of the visual work
+                        'ontologyProperty': '',
+                        'inverseOntologyProperty':'',
+                        'resourceXresourceId':''
+                    }];
+                    t.data["b240c366-8594-11ea-97eb-acde48001122"](physicalthingInstanceRef); // set resourceid from physical thing
+                }
+
+                if (!t.data["5d440fea-8651-11ea-97eb-acde48001122"]()) {
+                    if(self.visualWorkIdStepData && self.visualWorkIdStepData.visualworkInstanceRef) {
+                        t.data["5d440fea-8651-11ea-97eb-acde48001122"](self.visualWorkIdStepData.visualworkInstanceRef); // set resourceid from related visual work
+                    }
                 }
             }
         });
