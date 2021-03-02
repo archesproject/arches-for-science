@@ -112,6 +112,7 @@ define([
                 tileid: tileid,
             };
         };
+        params.defineStateProperties();
     }
 
     ko.components.register('physical-thing-list', {
