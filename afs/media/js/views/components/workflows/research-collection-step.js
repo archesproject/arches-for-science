@@ -136,6 +136,8 @@ define([
         this.selectedResources = ko.observableArray([]);
         this.startValue = null;
 
+        params.hasDirtyTile(Boolean(self.value().length));
+
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
                 if (action.status === 'added') {
@@ -207,6 +209,11 @@ define([
 
         this.dirty = ko.pureComputed(function() {
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
+        });
+        this.dirty.subscribe(function(dirty) {
+            if (params.hasDirtyTile) {
+                params.hasDirtyTile(dirty);
+            }
         });
 
         this.submit = function() {
