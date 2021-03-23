@@ -20,6 +20,7 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
+                    autoAdvance: false,
                     required: true,
                     layoutSections: [
                         {
@@ -34,6 +35,7 @@ define([
                                         ],
                                         renderContext: 'workflow',
                                     },
+                                    required: true,
                                 },
                             ], 
                         },
@@ -49,6 +51,7 @@ define([
                                         ],
                                         renderContext: 'workflow',
                                     },
+                                    required: true,
                                 },
                             ], 
                         },
