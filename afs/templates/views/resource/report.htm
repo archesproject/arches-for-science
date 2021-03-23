@@ -2,8 +2,14 @@
 
 <!-- hack to adjust the height of the report container -->
 {% block main_content %}
-<div style="display:none" data-bind="text: console.log($data)"></div>
+<!-- ko if: ko.unwrap(report.templateId) === "c560f22a-99b9-4a1c-b805-0891bbe63ada" -->
 <div class='thematic-report-container'>
     {{ block.super }}
 </div>
+<!-- /ko -->
+
+<!-- ko ifnot: ko.unwrap(report.templateId) === "c560f22a-99b9-4a1c-b805-0891bbe63ada" -->
+{{ block.super }}
+<!-- /ko -->
+
 {% endblock main_content %}
