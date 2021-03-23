@@ -1,0 +1,101 @@
+{% extends "views/report-templates/default.htm" %}
+{% load i18n %}
+
+<!-- hack to adjust height of report preview container -->
+{% block report %}
+<div class="thematic-report-container">
+    {{ block.super }}
+</div>
+{% endblock report %}
+
+
+{% block report_title_bar %}
+{% endblock report_title_bar %}
+
+{% block header %}
+<div class="thematic-nav-tab-container">
+    <ul class="nav nav-tabs thematic-nav-tab-list">
+        <!-- ko foreach: TAB_DATA -->
+            <li 
+                class="thematic-nav-tab-list-item" 
+                data-bind="
+                    container: '.thematic-nav-tab-container',
+                    scrollDirection: 'horizontal',
+                    scrollTo: $index() === $parent.activeTabIndex(),
+                "
+            >
+                <div
+                    class='thematic-nav-tab'
+                    data-bind="{
+                        css: { active: $index() === $parent.activeTabIndex() },
+                        click: function() { 
+                            if (
+                                $index() !== $parent.activeTabIndex() 
+                            ) { 
+                                $parent.activeTabIndex($index()); 
+                                $parent.activeTab($data);
+                            }
+                        },
+                    }" 
+                >
+                    <div 
+                        style="
+                            display: flex; 
+                            flex-direction: row; 
+                            justify-content: center; 
+                            align-items: center;
+                        "
+                    >
+                        <span 
+                            style="font-size: 14px;"
+                            data-bind="text: $data.title"
+                        ></span>
+                    </div>
+                </div>
+            </li>
+        <!-- /ko -->
+    </ul>
+</div>
+{% endblock header %}
+
+{% block body %}
+<div class="thematic-report-body-container">
+    <div class="thematic-report-body">
+    </div>
+</div>
+{% endblock body %}
+
+{% block related_resources %}
+{% endblock related_resources %}
+
+{% block footer %}
+<div 
+    class="thematic-report-footer"
+>
+    <div style="display: flex;">
+        <div class="tab-counter">
+            <span 
+                style="padding-right: 2px;"
+                data-bind="text: activeTabIndex() + 1"
+            ></span>
+            <span data-bind="text:`/ ${TAB_DATA.length}`"></span>
+            
+        </div>
+
+        <div
+            data-bind="{
+                component: { 
+                    name: 'views/components/simple-switch', 
+                    params: {
+                        value: hideEmptyReportSections, 
+                        config:{
+                            label: '{% trans "Hide empty report sections" %}',
+                        }
+                    }
+                }
+            }"
+        ></div>
+    </div>
+
+</div>
+{% endblock footer %}

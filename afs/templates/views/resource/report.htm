@@ -1,0 +1,9 @@
+{% extends "views/resource/report.htm" %}
+
+<!-- hack to adjust the height of the report container -->
+{% block main_content %}
+<div style="display:none" data-bind="text: console.log($data)"></div>
+<div class='thematic-report-container'>
+    {{ block.super }}
+</div>
+{% endblock main_content %}
