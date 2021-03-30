@@ -272,7 +272,12 @@
 }
 
 .thematic-report-container {
-    height: 100%;
+    width: 100%;
+    height: inherit;
+}
+
+.graph-designer .thematic-report-container {
+    padding-top: 50px;
 }
 
 .thematic-report-container .scroll-y {
@@ -301,6 +306,8 @@
 
 .thematic-nav-tab-container {
     overflow-x: scroll;
+    position: relative;
+    min-height: 40px;
 }
 
 .thematic-nav-tab-list {
@@ -308,6 +315,7 @@
     background-color: #fafafa;
     display: flex;
     min-width: max-content;
+    position: absolute;
 }
 
 .thematic-nav-tab-list-item {
