@@ -174,6 +174,7 @@ ONTOLOGY_NAMESPACES = {
     "https://linked.art/ns/terms/": "la",
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#": "rdf",
     "http://www.cidoc-crm.org/cidoc-crm/": "",
+    "http://www.ics.forth.gr/isl/CRMdig/": "",
     "http://www.ics.forth.gr/isl/CRMgeo/": "geo",
     "http://www.ics.forth.gr/isl/CRMsci/": "sci",
 }
