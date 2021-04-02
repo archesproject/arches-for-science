@@ -62,39 +62,43 @@ define([
         }
     ];
 
-    var ReportTab = function(title, sections) {
+    var ThematicReportTab = function(title, sections) {
         var self = this;
 
         /* BEGIN page layout source-of-truth */ 
         this.title = title;
         this.sections = ko.observableArray();
-
-        sections.forEach(function(section) {
-            var displayedChildNodeIds = section.displayedChildNodeIds || [];
-            var hiddenChildNodeIds = section.hiddenChildNodeIds || [];
-
-            self.sections.push({
-                title: section.sectionTitle,
-                data: Object.values(section.data).reduce(function(acc, datum) {
-                    if (displayedChildNodeIds.length) {
-                        if (datum[NODE_ID] && displayedChildNodeIds.includes(datum[NODE_ID])) {
-                            acc.push(datum);
-                        }
-                    }
-                    else if (hiddenChildNodeIds.length) {
-                        if (datum[NODE_ID] && !hiddenChildNodeIds.includes(datum[NODE_ID])) {
-                            acc.push(datum);
-                        }
-                    }
-                    else {
-                        acc.push(datum);
-                    }
-    
-                    return acc;
-                }, [])
-            });
-        });
         /* END page layout source-of-truth */ 
+
+        this.initialize = function() {
+            sections.forEach(function(section) {
+                var displayedChildNodeIds = section.displayedChildNodeIds || [];
+                var hiddenChildNodeIds = section.hiddenChildNodeIds || [];
+    
+                self.sections.push({
+                    title: section.sectionTitle,
+                    data: Object.values(section.data).reduce(function(acc, datum) {
+                        if (displayedChildNodeIds.length) {
+                            if (datum[NODE_ID] && displayedChildNodeIds.includes(datum[NODE_ID])) {
+                                acc.push(datum);
+                            }
+                        }
+                        else if (hiddenChildNodeIds.length) {
+                            if (datum[NODE_ID] && !hiddenChildNodeIds.includes(datum[NODE_ID])) {
+                                acc.push(datum);
+                            }
+                        }
+                        else {
+                            acc.push(datum);
+                        }
+        
+                        return acc;
+                    }, [])
+                });
+            });
+        };
+
+        this.initialize();
     };
 
     var viewModel = function(params) {
@@ -122,7 +126,7 @@ define([
                     });
 
                     self.reportTabs.push(
-                        new ReportTab(tabDatum.title, tabDatum.sections)
+                        new ThematicReportTab(tabDatum.title, tabDatum.sections)
                     );
                 });
             });
