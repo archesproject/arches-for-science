@@ -10,7 +10,6 @@ define([
     NODE_ID = "@node_id";
     TILE_ID = "@tile_id";
     VALUE = "@value";
-
     TAB_DATA = [
         {
             title: "Names/Classification",
@@ -79,7 +78,7 @@ define([
                 data: Object.values(section.data).reduce(function(acc, datum) {
                     if (displayedChildNodeIds.length) {
                         if (datum[NODE_ID] && displayedChildNodeIds.includes(datum[NODE_ID])) {
-                            acc.push(datum)
+                            acc.push(datum);
                         }
                     }
                     else if (hiddenChildNodeIds.length) {
