@@ -109,7 +109,6 @@ define([
                 }
             };
 
-            //  eslint-disable-next-line
             var childNodes = Object.entries(sectionData).reduce(function(acc, [key, value]) {
                 if (!_.isObject(value)) {  /* if resource node-level value */ 
                     topLevelData[key] = value;
