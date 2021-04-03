@@ -11,7 +11,7 @@ define([
     TILE_ID = "@tile_id";
     VALUE = "@value";
     NON_DATA_COLLECTING_NODE = "NON_DATA_COLLECTING_NODE";
-    
+
     TAB_DATA = [
         {
             title: "Names/Classification",
@@ -80,7 +80,7 @@ define([
                         section.data,
                         section.displayedChildNodeIds,
                         section.hiddenChildNodeIds,
-                    ),
+                    )
                 });
             });
         };
