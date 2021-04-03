@@ -79,8 +79,8 @@ define([
                     data: self.getSectionData(
                         section.data,
                         section.displayedChildNodeIds,
-                        section.hiddenChildNodeIds,
-                    )
+                        section.hiddenChildNodeIds
+                    ),
                 });
             });
         };
