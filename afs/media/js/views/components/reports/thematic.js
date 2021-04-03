@@ -10,6 +10,8 @@ define([
     NODE_ID = "@node_id";
     TILE_ID = "@tile_id";
     VALUE = "@value";
+    NON_DATA_COLLECTING_NODE = "NON_DATA_COLLECTING_NODE";
+    
     TAB_DATA = [
         {
             title: "Names/Classification",
@@ -71,31 +73,63 @@ define([
         /* END page layout source-of-truth */ 
 
         this.initialize = function() {
-            sections.forEach(function(section) {
-                var displayedChildNodeIds = section.displayedChildNodeIds || [];
-                var hiddenChildNodeIds = section.hiddenChildNodeIds || [];
-    
+            sections.forEach(function(section) {    
                 self.sections.push({
                     title: section.sectionTitle,
-                    data: Object.values(section.data).reduce(function(acc, datum) {
-                        if (displayedChildNodeIds.length) {
-                            if (datum[NODE_ID] && displayedChildNodeIds.includes(datum[NODE_ID])) {
-                                acc.push(datum);
-                            }
-                        }
-                        else if (hiddenChildNodeIds.length) {
-                            if (datum[NODE_ID] && !hiddenChildNodeIds.includes(datum[NODE_ID])) {
-                                acc.push(datum);
-                            }
-                        }
-                        else {
-                            acc.push(datum);
-                        }
-        
-                        return acc;
-                    }, [])
+                    data: self.getSectionData(
+                        section.data,
+                        section.displayedChildNodeIds,
+                        section.hiddenChildNodeIds,
+                    ),
                 });
             });
+        };
+
+        this.getSectionData = function(sectionData, displayedChildNodeIds, hiddenChildNodeIds) {
+            var displayedChildNodeIds = displayedChildNodeIds || [];
+            var hiddenChildNodeIds = hiddenChildNodeIds || [];
+
+            var topLevelData = {};
+
+            var filterData = function(data) {
+                if (data[VALUE] !== NON_DATA_COLLECTING_NODE) {
+                    if (displayedChildNodeIds.length) {
+                        if (displayedChildNodeIds.includes(data[NODE_ID])) {
+                            return data;
+                        }
+                    }
+                    else if (hiddenChildNodeIds.length) {
+                        if (!hiddenChildNodeIds.includes(data[NODE_ID])) {
+                            return data;
+                        }
+                    }
+                    else {
+                        return data;
+                    }
+                }
+            };
+
+            var childNodes = Object.entries(sectionData).reduce(function(acc, [key, value]) {
+                if (!_.isObject(value)) {  /* if resource node-level value */ 
+                    topLevelData[key] = value;
+                }
+                else {
+                    var filteredValue = filterData(value);
+                    if (filteredValue) {
+                        acc.push(filteredValue);
+                    }
+                }
+
+                return acc;
+            }, []);
+
+            var filteredTopLevelData = filterData(topLevelData);
+
+            if (filteredTopLevelData) {
+                childNodes.unshift(filteredTopLevelData);
+            } 
+                
+            return childNodes;
         };
 
         this.initialize();
@@ -115,7 +149,7 @@ define([
         this.hideEmptyReportSections = ko.observable(false);
         
         this.initialize = function() {
-            var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false&hide_empty_node=true';
+            var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false';
 
             $.get(url, function(data) {
                 self.disambiguatedResourceGraph(data);
@@ -129,6 +163,8 @@ define([
                         new ThematicReportTab(tabDatum.title, tabDatum.sections)
                     );
                 });
+
+                console.log('vm init, reportTabs', self.reportTabs())
             });
         };
 
