@@ -109,25 +109,29 @@ define([
                 }
             };
 
-            var childNodes = Object.entries(sectionData).reduce(function(acc, [key, value]) {
-                if (!_.isObject(value)) {  /* if resource node-level value */ 
-                    topLevelData[key] = value;
-                }
-                else {
-                    var filteredValue = filterData(value);
-                    if (filteredValue) {
-                        acc.push(filteredValue);
+            var childNodes;
+            
+            if (sectionData) {
+                childNodes = Object.entries(sectionData).reduce(function(acc, [key, value]) {
+                    if (!_.isObject(value)) {  /* if resource node-level value */ 
+                        topLevelData[key] = value;
                     }
-                }
-
-                return acc;
-            }, []);
-
-            var filteredTopLevelData = filterData(topLevelData);
-
-            if (filteredTopLevelData) {
-                childNodes.unshift(filteredTopLevelData);
-            } 
+                    else {
+                        var filteredValue = filterData(value);
+                        if (filteredValue) {
+                            acc.push(filteredValue);
+                        }
+                    }
+    
+                    return acc;
+                }, []);
+    
+                var filteredTopLevelData = filterData(topLevelData);
+    
+                if (filteredTopLevelData) {
+                    childNodes.unshift(filteredTopLevelData);
+                } 
+            }
                 
             return childNodes;
         };
@@ -169,9 +173,15 @@ define([
         };
 
         this.getNodeDataFromDisambiguatedGraph = function(nodeId) {
-            return Object.values(self.disambiguatedResourceGraph().resource).find(function(topLevelNode) {
-                return topLevelNode[NODE_ID] === nodeId;
-            });
+            var nodeData;
+
+            if (self.disambiguatedResourceGraph().resource) {
+                nodeData = Object.values(self.disambiguatedResourceGraph().resource).find(function(topLevelNode) {
+                    return topLevelNode[NODE_ID] === nodeId;
+                });
+            }
+
+            return nodeData;
         };
 
         this.initialize();
