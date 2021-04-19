@@ -33,7 +33,6 @@
                                 $index() !== $parent.activeTabIndex() 
                             ) { 
                                 $parent.activeTabIndex($index()); 
-                                $parent.activeTab($data);
                             }
                         },
                     }" 
@@ -61,6 +60,43 @@
 {% block body %}
 <div class="thematic-report-body-container">
     <div class="thematic-report-body">
+        <!-- ko if: activeTab() && activeTab().sections().length -->
+        <!-- ko foreach: activeTab().sections() -->
+            <div 
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    padding: 18px 20px 26px 20px;
+                "
+                class="thematic-section"
+                data-bind="style: { 'border-bottom': $data.data.length ? '1px solid #ddd' : 'none' }" 
+            >
+                <div
+                    class="thematic-section-title"
+                    style="
+                        display: flex;
+                        justify-content: center;
+                        width: 220px;
+                        background-color: #fafafa;
+                        border: 1px solid #ddd;
+
+                    "
+                >
+                    <h5 data-bind="text: title"></h5>
+                </div>
+
+                <!-- ko if: $data.data.length -->
+                <!-- /ko -->
+                <!-- ko ifnot: $data.data.length -->
+                    <div 
+                        style="padding: 8px 0px"
+                    >
+                        <span>{% trans 'No data has been added yet.' %}</span>
+                    </div>
+                <!-- /ko -->
+            </div>
+        <!-- /ko -->
+        <!-- /ko -->
     </div>
 </div>
 {% endblock body %}

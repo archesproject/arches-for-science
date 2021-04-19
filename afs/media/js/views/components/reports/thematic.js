@@ -148,7 +148,11 @@ define([
         this.reportTabs = ko.observableArray();
 
         this.activeTabIndex = ko.observable(0);
-        this.activeTab = ko.observable(TAB_DATA[self.activeTabIndex()]);
+        this.activeTab = ko.computed(function() {
+            if (self.reportTabs().length) {
+                return self.reportTabs()[self.activeTabIndex()];
+            }
+        });
 
         this.hideEmptyReportSections = ko.observable(false);
         
