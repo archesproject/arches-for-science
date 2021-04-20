@@ -68,7 +68,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Activity Known For",
                     "nodegroup_id": "08dca39e-d287-11e9-aa00-a4d18cec433a",
                     "sortorder": 11,
@@ -266,27 +266,20 @@
                 },
                 {
                     "active": true,
-                    "cardid": "753d3240-0d78-11ea-b439-acde48001122",
+                    "cardid": "110f8721-d289-11e9-bbc2-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "753d3240-0d78-11ea-b439-acde48001122",
-                            "constraintid": "4037f461-edb3-4d08-b65a-5bc47057d964",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
+                    "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nThe resource that references this assignment was assigned to its parent resource by this activity. This is especially useful for distinguishing the context of when a piece of data was known or asserted, for example when a measurement took place or the organization that assigned an identifier. For example, a dimension of an object was assigned by the activity that measured the object, carried out by the curator (or other), or the accession number of the object was assigned to it by the registrar.\n\n# Arches Note:\n\n\n* BranchId: la-assignment\n* FieldId: \n",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Identifier_Attribute Assignment ",
-                    "nodegroup_id": "753d2fb6-0d78-11ea-b439-acde48001122",
+                    "name": "Name for Duration",
+                    "nodegroup_id": "110f828f-d289-11e9-b5b6-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
                 },
@@ -617,21 +610,28 @@
                 },
                 {
                     "active": true,
-                    "cardid": "753d3a24-0d78-11ea-b439-acde48001122",
+                    "cardid": "110fb087-d289-11e9-aec4-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "110fb087-d289-11e9-aec4-a4d18cec433a",
+                            "constraintid": "809b98ee-e325-4fe6-8de4-6e4cd2da5ec1",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Identifier_Attribute Assignment _Name",
-                    "nodegroup_id": "753d38bc-0d78-11ea-b439-acde48001122",
-                    "sortorder": 1,
+                    "name": "Left Group_Left Group",
+                    "nodegroup_id": "110fac30-d289-11e9-a8dd-a4d18cec433a",
+                    "sortorder": 13,
                     "visible": true
                 },
                 {
@@ -1133,7 +1133,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Internal Label",
                     "nodegroup_id": "a877c540-b2e1-11e9-944a-a4d18cec433a",
                     "sortorder": 14,
@@ -1241,25 +1241,6 @@
                     "nodegroup_id": "110f992b-d289-11e9-92fd-a4d18cec433a",
                     "sortorder": null,
                     "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Profession Activity_Statement",
-                    "nodegroup_id": "08dc8b2e-d287-11e9-9a25-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true
                 },
                 {
                     "active": true,
@@ -1436,51 +1417,83 @@
                 },
                 {
                     "active": true,
-                    "cardid": "110f8721-d289-11e9-bbc2-a4d18cec433a",
+                    "cardid": "753d3a24-0d78-11ea-b439-acde48001122",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Duration",
-                    "nodegroup_id": "110f828f-d289-11e9-b5b6-a4d18cec433a",
-                    "sortorder": null,
+                    "name": "Name for Data Assignment",
+                    "nodegroup_id": "753d38bc-0d78-11ea-b439-acde48001122",
+                    "sortorder": 1,
                     "visible": true
                 },
                 {
                     "active": true,
-                    "cardid": "110fb087-d289-11e9-aec4-a4d18cec433a",
+                    "cardid": "753d3240-0d78-11ea-b439-acde48001122",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
                     "constraints": [
                         {
-                            "card_id": "110fb087-d289-11e9-aec4-a4d18cec433a",
-                            "constraintid": "809b98ee-e325-4fe6-8de4-6e4cd2da5ec1",
+                            "card_id": "753d3240-0d78-11ea-b439-acde48001122",
+                            "constraintid": "4037f461-edb3-4d08-b65a-5bc47057d964",
                             "nodes": [],
                             "uniquetoallinstances": false
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": "# Specific:\n\n\n# General:\nThe resource that references this assignment was assigned to its parent resource by this activity. This is especially useful for distinguishing the context of when a piece of data was known or asserted, for example when a measurement took place or the organization that assigned an identifier. For example, a dimension of an object was assigned by the activity that measured the object, carried out by the curator (or other), or the accession number of the object was assigned to it by the registrar.\n\n# Arches Note:\n\n\n* BranchId: la-assignment\n* FieldId: \n",
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Left Group_Left Group",
-                    "nodegroup_id": "110fac30-d289-11e9-a8dd-a4d18cec433a",
-                    "sortorder": 13,
+                    "name": "Data Assignment",
+                    "nodegroup_id": "753d2fb6-0d78-11ea-b439-acde48001122",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Statement about Professional Activity",
+                    "nodegroup_id": "08dc8b2e-d287-11e9-9a25-a4d18cec433a",
+                    "sortorder": 1,
                     "visible": true
                 }
             ],
             "cards_x_nodes_x_widgets": [
+                {
+                    "card_id": "2d533dcf-d286-11e9-9bee-a4d18cec433a",
+                    "config": {
+                        "label": "source",
+                        "placeholder": ""
+                    },
+                    "id": "2d53b651-d286-11e9-a5e3-a4d18cec433a",
+                    "label": "source",
+                    "node_id": "2d53636e-d286-11e9-bb9a-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
                 {
                     "card_id": "c93b24e1-d286-11e9-929e-a4d18cec433a",
                     "config": {
@@ -1516,6 +1529,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b72f8-d286-11e9-a062-a4d18cec433a",
@@ -1545,6 +1559,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "111013e8-d289-11e9-b7ce-a4d18cec433a",
@@ -1597,6 +1612,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11101919-d289-11e9-a230-a4d18cec433a",
@@ -1619,6 +1635,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "1110145e-d289-11e9-b172-a4d18cec433a",
@@ -1641,6 +1658,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11100a61-d289-11e9-b043-a4d18cec433a",
@@ -1649,86 +1667,6 @@
                     "sortorder": 4,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
-                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
-                    "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "08dcfe85-d287-11e9-972c-a4d18cec433a",
-                    "label": "source",
-                    "node_id": "08dcb24f-d287-11e9-9277-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Statement Text",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "08dcef87-d287-11e9-a36e-a4d18cec433a",
-                    "label": "Statement Text",
-                    "node_id": "08dccae3-d287-11e9-a976-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "08dcf633-d287-11e9-872a-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "08dcded9-d287-11e9-95d4-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
-                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
-                        ],
-                        "label": "Type of Statement",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "08dcf3fa-d287-11e9-8cc2-a4d18cec433a",
-                    "label": "Type of Statement",
-                    "node_id": "08dce145-d287-11e9-b268-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Statement Text",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "08dd020a-d287-11e9-9069-a4d18cec433a",
-                    "label": "Language of Statement Text",
-                    "node_id": "08dce266-d287-11e9-9e24-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "9f1559b0-bfb4-11e9-aa80-a4d18cec433a",
@@ -1767,6 +1705,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b7dd4-d286-11e9-8b52-a4d18cec433a",
@@ -1819,6 +1758,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b7e57-d286-11e9-96ef-a4d18cec433a",
@@ -1827,6 +1767,19 @@
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "753d49c4-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "label": "source",
+                        "placeholder": ""
+                    },
+                    "id": "753d6d28-0d78-11ea-b439-acde48001122",
+                    "label": "source",
+                    "node_id": "753d6210-0d78-11ea-b439-acde48001122",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "c93b1561-d286-11e9-8d0d-a4d18cec433a",
@@ -1841,6 +1794,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b7457-d286-11e9-babe-a4d18cec433a",
@@ -1898,6 +1852,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "09270351-d2b9-11e9-abdc-a4d18cec433a",
@@ -1914,6 +1869,7 @@
                         "label": "Text of Contact Point",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "09233733-d2b9-11e9-a5ce-a4d18cec433a",
@@ -1981,6 +1937,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11100be6-d289-11e9-8b9c-a4d18cec433a",
@@ -2033,6 +1990,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcedb0-d287-11e9-a236-a4d18cec433a",
@@ -2049,6 +2007,7 @@
                         "label": "Value of Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcff63-d287-11e9-8db8-a4d18cec433a",
@@ -2106,6 +2065,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11100499-d289-11e9-86fa-a4d18cec433a",
@@ -2122,6 +2082,7 @@
                         "label": "Value of Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "111017ba-d289-11e9-8208-a4d18cec433a",
@@ -2166,6 +2127,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b6f2e-d286-11e9-9fc9-a4d18cec433a",
@@ -2216,6 +2178,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b7bf3-d286-11e9-a7cb-a4d18cec433a",
@@ -2314,6 +2277,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcf1c0-d287-11e9-baba-a4d18cec433a",
@@ -2394,6 +2358,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53ab75-d286-11e9-9b2a-a4d18cec433a",
@@ -2446,6 +2411,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b6ea3-d286-11e9-ab13-a4d18cec433a",
@@ -2462,6 +2428,7 @@
                         "label": "Value of Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b819e-d286-11e9-a171-a4d18cec433a",
@@ -2506,6 +2473,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e654-d288-11e9-83ac-a4d18cec433a",
@@ -2558,6 +2526,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863ea33-d288-11e9-8506-a4d18cec433a",
@@ -2580,6 +2549,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e6ae-d288-11e9-8e90-a4d18cec433a",
@@ -2602,6 +2572,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863df42-d288-11e9-83f1-a4d18cec433a",
@@ -2648,6 +2619,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcf5c5-d287-11e9-9455-a4d18cec433a",
@@ -2664,6 +2636,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcec97-d287-11e9-96f6-a4d18cec433a",
@@ -2710,6 +2683,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53a43d-d286-11e9-9cc4-a4d18cec433a",
@@ -2726,6 +2700,7 @@
                         "label": "Value of Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53b742-d286-11e9-9da0-a4d18cec433a",
@@ -2800,6 +2775,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53acde-d286-11e9-8983-a4d18cec433a",
@@ -2816,6 +2792,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53a323-d286-11e9-9882-a4d18cec433a",
@@ -2849,6 +2826,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863dac5-d288-11e9-b2f1-a4d18cec433a",
@@ -2865,6 +2843,7 @@
                         "label": "Value of Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e923-d288-11e9-8544-a4d18cec433a",
@@ -2926,6 +2905,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "eb6310b5-d2b8-11e9-9374-a4d18cec433a",
@@ -2942,6 +2922,7 @@
                         "label": "Text of Statement Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "eb604180-d2b8-11e9-a17c-a4d18cec433a",
@@ -2988,6 +2969,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6b0c-0d78-11ea-b439-acde48001122",
@@ -3051,6 +3033,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6b2a-0d78-11ea-b439-acde48001122",
@@ -3097,6 +3080,7 @@
                         "label": "Text of Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6bb6-0d78-11ea-b439-acde48001122",
@@ -3113,6 +3097,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6bfc-0d78-11ea-b439-acde48001122",
@@ -3138,50 +3123,6 @@
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "753d3240-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "753d6c7e-0d78-11ea-b439-acde48001122",
-                    "label": "_label",
-                    "node_id": "753d4a8c-0d78-11ea-b439-acde48001122",
-                    "sortorder": null,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "753d3240-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Type of Assignment",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "753d6ca6-0d78-11ea-b439-acde48001122",
-                    "label": "Type of Assignment",
-                    "node_id": "753d4b54-0d78-11ea-b439-acde48001122",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "753d3240-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "label": "Assigning Person or Organization",
-                        "placeholder": ""
-                    },
-                    "id": "753d6c60-0d78-11ea-b439-acde48001122",
-                    "label": "Assigning Person or Organization",
-                    "node_id": "753d4bea-0d78-11ea-b439-acde48001122",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "c93b2942-d286-11e9-9487-a4d18cec433a",
@@ -3237,6 +3178,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b7a94-d286-11e9-8f79-a4d18cec433a",
@@ -3253,6 +3195,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b8463-d286-11e9-bc75-a4d18cec433a",
@@ -3269,6 +3212,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e110c38f-d2ba-11e9-b5e6-a4d18cec433a",
@@ -3285,6 +3229,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e114b66b-d2ba-11e9-9f04-a4d18cec433a",
@@ -3395,6 +3340,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53b02e-d286-11e9-b552-a4d18cec433a",
@@ -3411,6 +3357,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53ba07-d286-11e9-95f9-a4d18cec433a",
@@ -3427,6 +3374,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53ad54-d286-11e9-ac07-a4d18cec433a",
@@ -3439,23 +3387,11 @@
                 {
                     "card_id": "2d533dcf-d286-11e9-9bee-a4d18cec433a",
                     "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "2d53b651-d286-11e9-a5e3-a4d18cec433a",
-                    "label": "source",
-                    "node_id": "2d53636e-d286-11e9-bb9a-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "2d533dcf-d286-11e9-9bee-a4d18cec433a",
-                    "config": {
                         "defaultValue": "",
                         "label": "Statement Text",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53a623-d286-11e9-b548-a4d18cec433a",
@@ -3524,6 +3460,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "9029ae9c-d2b8-11e9-ab43-a4d18cec433a",
@@ -3553,6 +3490,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "902764fd-d2b8-11e9-a373-a4d18cec433a",
@@ -3586,6 +3524,7 @@
                         "label": "External URI",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "72d1f5f8-d289-11e9-9086-a4d18cec433a",
@@ -3619,6 +3558,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e15e-d288-11e9-8887-a4d18cec433a",
@@ -3635,6 +3575,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863d9d4-d288-11e9-ba60-a4d18cec433a",
@@ -3698,6 +3639,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b7745-d286-11e9-9595-a4d18cec433a",
@@ -3714,6 +3656,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b6d8a-d286-11e9-bde2-a4d18cec433a",
@@ -3773,6 +3716,7 @@
                         "label": "Text of Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11100697-d289-11e9-a2f3-a4d18cec433a",
@@ -3789,6 +3733,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11100dc5-d289-11e9-8a53-a4d18cec433a",
@@ -3886,6 +3831,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcf8d1-d287-11e9-bd24-a4d18cec433a",
@@ -3902,6 +3848,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dd037a-d287-11e9-9b54-a4d18cec433a",
@@ -3918,6 +3865,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6cc4-0d78-11ea-b439-acde48001122",
@@ -3934,6 +3882,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6d50-0d78-11ea-b439-acde48001122",
@@ -3978,25 +3927,13 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "753d49c4-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "753d6d28-0d78-11ea-b439-acde48001122",
-                    "label": "source",
-                    "node_id": "753d6210-0d78-11ea-b439-acde48001122",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
                     "card_id": "753d44c4-0d78-11ea-b439-acde48001122",
                     "config": {
                         "defaultValue": "",
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6dd2-0d78-11ea-b439-acde48001122",
@@ -4060,6 +3997,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6db4-0d78-11ea-b439-acde48001122",
@@ -4091,6 +4029,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcfbe6-d287-11e9-bb1b-a4d18cec433a",
@@ -4128,6 +4067,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dd0263-d287-11e9-a0a5-a4d18cec433a",
@@ -4150,6 +4090,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcfc57-d287-11e9-9014-a4d18cec433a",
@@ -4172,6 +4113,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcf31e-d287-11e9-beff-a4d18cec433a",
@@ -4214,6 +4156,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863db33-d288-11e9-9e20-a4d18cec433a",
@@ -4264,6 +4207,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e4f8-d288-11e9-978e-a4d18cec433a",
@@ -4280,6 +4224,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6a12-0d78-11ea-b439-acde48001122",
@@ -4326,6 +4271,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d69f4-0d78-11ea-b439-acde48001122",
@@ -4351,39 +4297,6 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Text",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "753d6ae4-0d78-11ea-b439-acde48001122",
-                    "label": "Language of Text",
-                    "node_id": "753d5112-0d78-11ea-b439-acde48001122",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "753d6a58-0d78-11ea-b439-acde48001122",
-                    "label": "_label",
-                    "node_id": "753d519e-0d78-11ea-b439-acde48001122",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "c93b24e1-d286-11e9-929e-a4d18cec433a",
@@ -4425,50 +4338,6 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Text of Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "753d6a80-0d78-11ea-b439-acde48001122",
-                    "label": "Text of Name",
-                    "node_id": "753d5220-0d78-11ea-b439-acde48001122",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "753d6a9e-0d78-11ea-b439-acde48001122",
-                    "label": "source",
-                    "node_id": "753d5856-0d78-11ea-b439-acde48001122",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Type of Name",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "753d6ac6-0d78-11ea-b439-acde48001122",
-                    "label": "Type of Name",
-                    "node_id": "753d58d8-0d78-11ea-b439-acde48001122",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
                     "card_id": "741dc68f-bfb4-11e9-a26a-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -4505,6 +4374,7 @@
                         "label": "Name for Timespan",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "cf591a8f-d2b9-11e9-b529-a4d18cec433a",
@@ -4521,6 +4391,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "cf5ac7f8-d2b9-11e9-a7f9-a4d18cec433a",
@@ -4610,6 +4481,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53a891-d286-11e9-abc6-a4d18cec433a",
@@ -4705,6 +4577,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcf470-d287-11e9-be3e-a4d18cec433a",
@@ -4852,6 +4725,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863de33-d288-11e9-a6d1-a4d18cec433a",
@@ -4894,6 +4768,7 @@
                         "label": "Statement Text",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863dc4a-d288-11e9-9fd8-a4d18cec433a",
@@ -4910,6 +4785,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e1b5-d288-11e9-9d90-a4d18cec433a",
@@ -4974,6 +4850,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53a4bd-d286-11e9-a490-a4d18cec433a",
@@ -5024,6 +4901,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53b197-d286-11e9-ac30-a4d18cec433a",
@@ -5053,6 +4931,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11100526-d289-11e9-ae6a-a4d18cec433a",
@@ -5103,6 +4982,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11101207-d289-11e9-b551-a4d18cec433a",
@@ -5214,6 +5094,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "111008f8-d289-11e9-8965-a4d18cec433a",
@@ -5262,6 +5143,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d65ee-0d78-11ea-b439-acde48001122",
@@ -5293,6 +5175,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d6616-0d78-11ea-b439-acde48001122",
@@ -5328,6 +5211,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d665c-0d78-11ea-b439-acde48001122",
@@ -5365,6 +5249,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d65c6-0d78-11ea-b439-acde48001122",
@@ -5412,6 +5297,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d66c0-0d78-11ea-b439-acde48001122",
@@ -5428,6 +5314,7 @@
                         "label": "Text of Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d66de-0d78-11ea-b439-acde48001122",
@@ -5530,6 +5417,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11101a82-d289-11e9-b764-a4d18cec433a",
@@ -5546,6 +5434,7 @@
                         "label": "Text of Name Part",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b4389854-d2b8-11e9-b532-a4d18cec433a",
@@ -5562,6 +5451,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b43ae44c-d2b8-11e9-b75c-a4d18cec433a",
@@ -5636,6 +5526,7 @@
                         "label": "Statement Text",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b7094-d286-11e9-b3fa-a4d18cec433a",
@@ -5652,6 +5543,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b77ba-d286-11e9-8aeb-a4d18cec433a",
@@ -5763,6 +5655,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e3de-d288-11e9-b589-a4d18cec433a",
@@ -5779,6 +5672,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863eb35-d288-11e9-bd78-a4d18cec433a",
@@ -5846,6 +5740,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b75bd-d286-11e9-9c89-a4d18cec433a",
@@ -5898,6 +5793,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53b378-d286-11e9-bf56-a4d18cec433a",
@@ -5950,6 +5846,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53b894-d286-11e9-a1a1-a4d18cec433a",
@@ -5972,6 +5869,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53b3f0-d286-11e9-81b5-a4d18cec433a",
@@ -5994,6 +5892,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2d53a9ee-d286-11e9-96b6-a4d18cec433a",
@@ -6023,6 +5922,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "1c466b28-d2ba-11e9-870e-a4d18cec433a",
@@ -6039,6 +5939,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "1c4a22f5-d2ba-11e9-8784-a4d18cec433a",
@@ -6153,6 +6054,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e863e04f-d288-11e9-a3ba-a4d18cec433a",
@@ -6205,6 +6107,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e5ac3bf3-d2bb-11e9-8e52-a4d18cec433a",
@@ -6221,6 +6124,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e5afc8b5-d2bb-11e9-ac81-a4d18cec433a",
@@ -6267,6 +6171,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "6ea77182-d2ba-11e9-a63f-a4d18cec433a",
@@ -6424,6 +6329,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "2c81115c-d2b8-11e9-a1a7-a4d18cec433a",
@@ -6446,6 +6352,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c93b82fd-d286-11e9-b090-a4d18cec433a",
@@ -6480,6 +6387,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "753d67d8-0d78-11ea-b439-acde48001122",
@@ -6509,6 +6417,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcee28-d287-11e9-a5b8-a4d18cec433a",
@@ -6559,6 +6468,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "08dcfa30-d287-11e9-8cd4-a4d18cec433a",
@@ -6622,6 +6532,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "111010a1-d289-11e9-b658-a4d18cec433a",
@@ -6670,6 +6581,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "53cf9551-d2b9-11e9-965c-a4d18cec433a",
@@ -6686,6 +6598,7 @@
                         "label": "Value of Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "53cc3740-d2b9-11e9-8ae6-a4d18cec433a",
@@ -6732,6 +6645,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11100d4c-d289-11e9-9b2c-a4d18cec433a",
@@ -6748,6 +6662,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "1110036b-d289-11e9-bc9f-a4d18cec433a",
@@ -6807,6 +6722,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "e0f24ae3-d285-11e9-91d7-a4d18cec433a",
@@ -6823,6 +6739,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "6e9ecf26-d2ba-11e9-b847-a4d18cec433a",
@@ -6830,6 +6747,212 @@
                     "node_id": "08dcba99-d287-11e9-a6b3-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Text of Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "753d6a80-0d78-11ea-b439-acde48001122",
+                    "label": "Text of Name",
+                    "node_id": "753d5220-0d78-11ea-b439-acde48001122",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Type of Name",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "753d6ac6-0d78-11ea-b439-acde48001122",
+                    "label": "Type of Name",
+                    "node_id": "753d58d8-0d78-11ea-b439-acde48001122",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Language of Text",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "753d6ae4-0d78-11ea-b439-acde48001122",
+                    "label": "Language of Text",
+                    "node_id": "753d5112-0d78-11ea-b439-acde48001122",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "label": "source",
+                        "placeholder": ""
+                    },
+                    "id": "753d6a9e-0d78-11ea-b439-acde48001122",
+                    "label": "source",
+                    "node_id": "753d5856-0d78-11ea-b439-acde48001122",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "753d3a24-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "753d6a58-0d78-11ea-b439-acde48001122",
+                    "label": "_label",
+                    "node_id": "753d519e-0d78-11ea-b439-acde48001122",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "753d3240-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "753d6c7e-0d78-11ea-b439-acde48001122",
+                    "label": "_label",
+                    "node_id": "753d4a8c-0d78-11ea-b439-acde48001122",
+                    "sortorder": null,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "753d3240-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Data Assignment Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "753d6ca6-0d78-11ea-b439-acde48001122",
+                    "label": "Data Assignment Type",
+                    "node_id": "753d4b54-0d78-11ea-b439-acde48001122",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "753d3240-0d78-11ea-b439-acde48001122",
+                    "config": {
+                        "label": "Assigner",
+                        "placeholder": ""
+                    },
+                    "id": "753d6c60-0d78-11ea-b439-acde48001122",
+                    "label": "Assigner",
+                    "node_id": "753d4bea-0d78-11ea-b439-acde48001122",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "08dcef87-d287-11e9-a36e-a4d18cec433a",
+                    "label": "Statement",
+                    "node_id": "08dccae3-d287-11e9-a976-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
+                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
+                        ],
+                        "label": "Type of Statement",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "08dcf3fa-d287-11e9-8cc2-a4d18cec433a",
+                    "label": "Type of Statement",
+                    "node_id": "08dce145-d287-11e9-b268-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Language of Statement Text",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "08dd020a-d287-11e9-9069-a4d18cec433a",
+                    "label": "Language of Statement Text",
+                    "node_id": "08dce266-d287-11e9-9e24-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
+                    "config": {
+                        "label": "source",
+                        "placeholder": ""
+                    },
+                    "id": "08dcfe85-d287-11e9-972c-a4d18cec433a",
+                    "label": "source",
+                    "node_id": "08dcb24f-d287-11e9-9277-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "08dc8e19-d287-11e9-9e0f-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "08dcf633-d287-11e9-872a-a4d18cec433a",
+                    "label": "_label",
+                    "node_id": "08dcded9-d287-11e9-95d4-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 }
             ],
@@ -7237,15 +7360,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "rangenode_id": "753d5220-0d78-11ea-b439-acde48001122"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "753d2fb6-0d78-11ea-b439-acde48001122",
-                    "edgeid": "753ea490-0d78-11ea-b439-acde48001122",
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "753d38bc-0d78-11ea-b439-acde48001122"
                 },
                 {
                     "description": null,
@@ -8362,15 +8476,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "753d3dda-0d78-11ea-b439-acde48001122"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "2d4b4c23-bfb2-11e9-ba92-a4d18cec433a",
-                    "edgeid": "753ea9a4-0d78-11ea-b439-acde48001122",
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P141i_was_assigned_by",
-                    "rangenode_id": "753d2fb6-0d78-11ea-b439-acde48001122"
                 },
                 {
                     "description": null,
@@ -10147,15 +10252,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "08dca39e-d287-11e9-aa00-a4d18cec433a",
-                    "edgeid": "08dff4e3-d287-11e9-a994-a4d18cec433a",
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "rangenode_id": "08dc8b2e-d287-11e9-9a25-a4d18cec433a"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "c93b1307-d286-11e9-bc48-a4d18cec433a",
                     "edgeid": "c93eabf8-d286-11e9-aee1-a4d18cec433a",
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
@@ -10432,6 +10528,33 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "rangenode_id": "e863ca51-d288-11e9-922f-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "753d2fb6-0d78-11ea-b439-acde48001122",
+                    "edgeid": "753ea490-0d78-11ea-b439-acde48001122",
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "753d38bc-0d78-11ea-b439-acde48001122"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "2d4b4c23-bfb2-11e9-ba92-a4d18cec433a",
+                    "edgeid": "753ea9a4-0d78-11ea-b439-acde48001122",
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P141i_was_assigned_by",
+                    "rangenode_id": "753d2fb6-0d78-11ea-b439-acde48001122"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "08dca39e-d287-11e9-aa00-a4d18cec433a",
+                    "edgeid": "08dff4e3-d287-11e9-a994-a4d18cec433a",
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "rangenode_id": "08dc8b2e-d287-11e9-9a25-a4d18cec433a"
                 }
             ],
             "functions_x_graphs": [
@@ -10453,7 +10576,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "id": "598c08ce-caaa-11ea-a667-dca90488358a"
+                    "id": "20e13f30-a18a-11eb-a29f-024e0d439fdb"
                 }
             ],
             "graphid": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
@@ -10887,24 +11010,6 @@
             ],
             "nodes": [
                 {
-                    "config": null,
-                    "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Death_Statement_name",
-                    "nodegroup_id": "c93b26a3-d286-11e9-b89c-a4d18cec433a",
-                    "nodeid": "c93b26a3-d286-11e9-b89c-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "sortorder": 0
-                },
-                {
                     "config": {
                         "graphid": null,
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
@@ -10941,6 +11046,24 @@
                     "nodeid": "c93b5f14-d286-11e9-b4f3-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "semantic",
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Death_Statement_name",
+                    "nodegroup_id": "c93b26a3-d286-11e9-b89c-a4d18cec433a",
+                    "nodeid": "c93b26a3-d286-11e9-b89c-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "sortorder": 0
                 },
                 {
@@ -11545,7 +11668,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -11601,7 +11726,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -11691,7 +11818,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -11806,7 +11935,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -11824,7 +11955,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -12423,7 +12556,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -12499,7 +12634,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -12815,7 +12952,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -12963,7 +13102,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -12981,7 +13122,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -13093,7 +13236,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -13220,6 +13365,24 @@
                 },
                 {
                     "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Left Group_Statement_content",
+                    "nodegroup_id": "110f8ec7-d289-11e9-aa72-a4d18cec433a",
+                    "nodeid": "110fdf99-d289-11e9-b282-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -13277,7 +13440,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -13441,7 +13606,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -13515,7 +13682,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -13696,24 +13865,6 @@
                     "nodeid": "110fe859-d289-11e9-8f3d-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Left Group_Statement_content",
-                    "nodegroup_id": "110f8ec7-d289-11e9-aa72-a4d18cec433a",
-                    "nodeid": "110fdf99-d289-11e9-b282-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -14162,7 +14313,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -14362,7 +14515,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -14418,7 +14573,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -14474,7 +14631,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -14492,7 +14651,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -15169,6 +15330,24 @@
                     "nodeid": "c93b557a-d286-11e9-8f30-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "number",
+                    "description": "# Specific:\n\n\n# General:\nThis is the numeric value of the dimension, e.g. _6_ (inches long) See: https://linked.art/api/1.0/shared/dimension/\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Profession Activity_time_duration_value",
+                    "nodegroup_id": "08dc952b-d287-11e9-b259-a4d18cec433a",
+                    "nodeid": "08dcc88a-d287-11e9-bbb7-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90_has_value",
                     "sortorder": 0
                 },
                 {
@@ -16086,7 +16265,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -16196,7 +16377,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -16214,7 +16397,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -16232,7 +16417,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -16692,6 +16879,24 @@
                     "nodeid": "08dcba99-d287-11e9-a6b3-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Profession Activity_Statement_label",
+                    "nodegroup_id": "08dc8b2e-d287-11e9-9a25-a4d18cec433a",
+                    "nodeid": "08dcded9-d287-11e9-95d4-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
                 },
                 {
@@ -17448,42 +17653,6 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Profession Activity_Statement_label",
-                    "nodegroup_id": "08dc8b2e-d287-11e9-9a25-a4d18cec433a",
-                    "nodeid": "08dcded9-d287-11e9-95d4-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "number",
-                    "description": "# Specific:\n\n\n# General:\nThis is the numeric value of the dimension, e.g. _6_ (inches long) See: https://linked.art/api/1.0/shared/dimension/\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Profession Activity_time_duration_value",
-                    "nodegroup_id": "08dc952b-d287-11e9-b259-a4d18cec433a",
-                    "nodeid": "08dcc88a-d287-11e9-bbb7-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90_has_value",
-                    "sortorder": 0
-                },
-                {
                     "config": {
                         "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
                     },
@@ -17881,6 +18050,42 @@
                 },
                 {
                     "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Death_name_label",
+                    "nodegroup_id": "c93b0e11-d286-11e9-9100-a4d18cec433a",
+                    "nodeid": "c93b41f0-d286-11e9-9d0b-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Left Group_time_duration_label",
+                    "nodegroup_id": "110f992b-d289-11e9-92fd-a4d18cec433a",
+                    "nodeid": "110fbe47-d289-11e9-8d3e-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
                     "exportable": false,
@@ -18132,42 +18337,6 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Death_name_label",
-                    "nodegroup_id": "c93b0e11-d286-11e9-9100-a4d18cec433a",
-                    "nodeid": "c93b41f0-d286-11e9-9d0b-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Left Group_time_duration_label",
-                    "nodegroup_id": "110f992b-d289-11e9-92fd-a4d18cec433a",
-                    "nodeid": "110fbe47-d289-11e9-8d3e-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
                     "config": {
                         "rdmCollection": "7a8d3213-0a64-4f31-92a4-191b41236ae9"
                     },
@@ -18188,7 +18357,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -18880,5 +19051,11 @@
             "template_id": "50000000-0000-0000-0000-000000000004",
             "version": ""
         }
-    ]
+    ],
+    "metadata": {
+        "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
+        "git hash": "173edf02d 2021-04-16 16:58:02 -0700",
+        "os": "Linux",
+        "os version": "4.15.0-1051-aws"
+    }
 }
