@@ -83,8 +83,10 @@ define([
         }
     ];
 
-    var ThematicReportTab = function(tabData) {
+    var ThematicReportTab = function(tabData, hideEmptySections) {
         var self = this;
+
+        this.hideEmptySections = hideEmptySections;  /* READ-ONLY on this level */
 
         /* BEGIN page layout source-of-truth */ 
         this.title = tabData.title;
@@ -114,7 +116,7 @@ define([
             }
         });
 
-        this.hideEmptyReportSections = ko.observable(false);
+        this.emptyReportSectionsHidden = ko.observable(false);
 
         this.initialize = function() {
             var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false';
@@ -154,7 +156,7 @@ define([
                     });
 
                     self.reportTabs.push(
-                        new ThematicReportTab(tabDatum)
+                        new ThematicReportTab(tabDatum, self.emptyReportSectionsHidden)
                     );
                 });
 
@@ -172,6 +174,10 @@ define([
             }
 
             return nodeData;
+        };
+
+        this.toggleEmptyReportSections = function() {
+            self.emptyReportSectionsHidden(!self.emptyReportSectionsHidden());
         };
 
         this.initialize();

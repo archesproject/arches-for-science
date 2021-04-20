@@ -63,76 +63,78 @@
         <!-- ko if: activeTab() -->
             <!-- ko with: activeTab() -->
                 <!-- ko foreach: sections() -->
-                    <div 
-                        style="
-                            display: flex;
-                            flex-direction: column;
-                            padding: 18px 20px 26px 20px;
-                        "
-                        class="thematic-section"
-                        data-bind="style: { 'border-bottom': !$parent.isSectionEmpty($data) ? '1px solid #ddd' : 'none' }" 
-
-                    >
-                        <div
+                    <!-- ko if: !$parent.isSectionEmpty($data) || ( $parent.isSectionEmpty($data) && !$parent.hideEmptySections() ) -->
+                        <div 
                             style="
                                 display: flex;
-                                justify-content: space-between;
-                                width: 220px;
-                                background-color: #fafafa;
-                                border: 1px solid #ddd;
-
+                                flex-direction: column;
+                                padding: 18px 20px 26px 20px;
                             "
-                            class="thematic-section-title"
-                        >
-                            <!-- ko if: $data['hasPlusSign'] -->
-                            <button style="border: none;">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                            <!-- /ko -->
+                            class="thematic-section"
+                            data-bind="style: { 'border-bottom': !$parent.isSectionEmpty($data) ? '1px solid #ddd' : 'none' }" 
 
+                        >
                             <div
                                 style="
                                     display: flex;
-                                    justify-content: center;
-                                    width: 100%;
+                                    justify-content: space-between;
+                                    width: 220px;
+                                    background-color: #fafafa;
+                                    border: 1px solid #ddd;
+
                                 "
+                                class="thematic-section-title"
                             >
-                                <h5 data-bind="text: sectionTitle"></h5>
+                                <!-- ko if: $data['hasPlusSign'] -->
+                                <button style="border: none;">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <!-- /ko -->
+
+                                <div
+                                    style="
+                                        display: flex;
+                                        justify-content: center;
+                                        width: 100%;
+                                    "
+                                >
+                                    <h5 data-bind="text: sectionTitle"></h5>
+                                </div>
                             </div>
+
+                            <div style="display:none" data-bind="text: console.log($data, $parent)"></div>
+
+                            <!-- ko if: childNodeData.length -->
+                            <table>
+                                <thead>
+                                    <tr data-bind="foreach: childNodeData">
+                                        <th data-bind="text: columnName"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-bind="foreach: childNodeData">
+                                        <td data-bind="text: $data.data[VALUE]"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- /ko -->
+                            <!-- ko ifnot: childNodeData.length -->
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td data-bind="text: $data.data[VALUE]"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- /ko -->
+
+                            <!-- ko if: $parent.isSectionEmpty($data) -->
+                            <div style="padding: 8px 0px">
+                                <span>{% trans 'No data has been added yet.' %}</span>
+                            </div>
+                            <!-- /ko -->
                         </div>
-
-                        <div style="display:none" data-bind="text: console.log($data, $parent)"></div>
-
-                        <!-- ko if: childNodeData.length -->
-                        <table>
-                            <thead>
-                                <tr data-bind="foreach: childNodeData">
-                                    <th data-bind="text: columnName"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-bind="foreach: childNodeData">
-                                    <td data-bind="text: $data.data[VALUE]"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- /ko -->
-                        <!-- ko ifnot: childNodeData.length -->
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td data-bind="text: $data.data[VALUE]"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- /ko -->
-
-                        <!-- ko if: $parent.isSectionEmpty($data) -->
-                        <div style="padding: 8px 0px">
-                            <span>{% trans 'No data has been added yet.' %}</span>
-                        </div>
-                        <!-- /ko -->
-                    </div>
+                    <!-- /ko -->
                 <!-- /ko -->
             <!-- /ko -->
         <!-- /ko -->
@@ -162,9 +164,11 @@
                 component: { 
                     name: 'views/components/simple-switch', 
                     params: {
-                        value: hideEmptyReportSections, 
+                        value:  emptyReportSectionsHidden, 
                         config:{
                             label: '{% trans "Hide empty report sections" %}',
+                            setvalue: toggleEmptyReportSections,
+                            getvalue: emptyReportSectionsHidden,
                         }
                     }
                 }
