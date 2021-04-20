@@ -17,23 +17,42 @@ define([
             title: "Names/Classification",
             sections: [
                 {
-                    sectionTitle: "Name(s) of Thing",
                     nodeId: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',  /* assumes each section contains a single node */
-                    hiddenChildNodeIds: [  /* displays all child nodes by default */
-                        'b9c1d69e-b497-11e9-8408-a4d18cec433a',
-                        'b9c1d570-b497-11e9-8315-a4d18cec433a',
+                    sectionTitle: "Name(s) of Thing",
+                    hasPlusSign: true,
+                    childNodeData: [
+                        { 
+                            nodeId: 'b9c1d8a6-b497-11e9-876b-a4d18cec433a',
+                            columnName: 'Name',
+                            
+                        },
+                        { 
+                            nodeId: 'b9c1d7ab-b497-11e9-9ab7-a4d18cec433a',
+                            columnName: 'Name Type',
+                        },
+                        { 
+                            nodeId:'b9c1d400-b497-11e9-90ea-a4d18cec433a', 
+                            columnName: 'Language',
+                        },
                     ],
                 },
                 {
-                    sectionTitle: "Type of Object",
                     nodeId: '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a',  /* assumes each section contains a single node */
+                    sectionTitle: "Type of Object",
                 },
                 {
-                    sectionTitle: "Identifiers",
                     nodeId: '22c150ca-b498-11e9-9adc-a4d18cec433a',  /* assumes each section contains a single node */
-                    displayedChildNodeIds: [  /* displays all child nodes by default */
-                        '22c169b5-b498-11e9-bdad-a4d18cec433a',
-                        '22c15cfa-b498-11e9-b5e3-a4d18cec433a',
+                    sectionTitle: "Identifiers",
+                    hasPlusSign: true,
+                    childNodeData: [
+                        { 
+                            nodeId: '22c169b5-b498-11e9-bdad-a4d18cec433a',
+                            columnName: 'Identifier',
+                        },
+                        { 
+                            nodeId: '22c15cfa-b498-11e9-b5e3-a4d18cec433a',
+                            columnName: 'Identifier Type',
+                        },
                     ],
                 }
             ],
@@ -64,79 +83,20 @@ define([
         }
     ];
 
-    var ThematicReportTab = function(title, sections) {
+    var ThematicReportTab = function(tabData) {
         var self = this;
 
         /* BEGIN page layout source-of-truth */ 
-        this.title = title;
-        this.sections = ko.observableArray();
+        this.title = tabData.title;
+        this.sections = ko.observableArray(tabData.sections);
         /* END page layout source-of-truth */ 
 
-        this.initialize = function() {
-            sections.forEach(function(section) {    
-                self.sections.push({
-                    title: section.sectionTitle,
-                    data: self.getSectionData(
-                        section.data,
-                        section.displayedChildNodeIds,
-                        section.hiddenChildNodeIds
-                    ),
-                });
-            });
-        };
+        this.isSectionEmpty = function(section) {
+            return _.isEmpty(section.data) && !section.childNodeData.length;
+        }
 
-        this.getSectionData = function(sectionData, displayedChildNodeIds, hiddenChildNodeIds) {
-            var displayedChildNodeIds = displayedChildNodeIds || [];
-            var hiddenChildNodeIds = hiddenChildNodeIds || [];
 
-            var topLevelData = {};
-
-            var filterData = function(data) {
-                if (data[VALUE] !== NON_DATA_COLLECTING_NODE) {
-                    if (displayedChildNodeIds.length) {
-                        if (displayedChildNodeIds.includes(data[NODE_ID])) {
-                            return data;
-                        }
-                    }
-                    else if (hiddenChildNodeIds.length) {
-                        if (!hiddenChildNodeIds.includes(data[NODE_ID])) {
-                            return data;
-                        }
-                    }
-                    else {
-                        return data;
-                    }
-                }
-            };
-
-            var childNodes;
-            
-            if (sectionData) {
-                childNodes = Object.entries(sectionData).reduce(function(acc, [key, value]) {
-                    if (!_.isObject(value)) {  /* if resource node-level value */ 
-                        topLevelData[key] = value;
-                    }
-                    else {
-                        var filteredValue = filterData(value);
-                        if (filteredValue) {
-                            acc.push(filteredValue);
-                        }
-                    }
-    
-                    return acc;
-                }, []);
-    
-                var filteredTopLevelData = filterData(topLevelData);
-    
-                if (filteredTopLevelData) {
-                    childNodes.unshift(filteredTopLevelData);
-                } 
-            }
-                
-            return childNodes;
-        };
-
-        this.initialize();
+        // this.initialize();
     };
 
     var viewModel = function(params) {
@@ -155,20 +115,46 @@ define([
         });
 
         this.hideEmptyReportSections = ko.observable(false);
-        
+
         this.initialize = function() {
             var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false';
+
+            var mapChildNodeDataToSection = function(nodeData, section) {
+                section.childNodeData.forEach(function(childNodeDatum) {
+                    childNodeDatum['data'] = Object.values(nodeData).find(function(nodeDatum) {
+                        return _.isObject(nodeDatum) && nodeDatum[NODE_ID] === childNodeDatum.nodeId
+                    });
+                });
+            };
 
             $.get(url, function(data) {
                 self.disambiguatedResourceGraph(data);
 
                 TAB_DATA.forEach(function(tabDatum) {
                     tabDatum.sections.forEach(function(section) {
-                        section['data'] = self.getNodeDataFromDisambiguatedGraph(section.nodeId);
+                        var nodeData = self.getNodeDataFromDisambiguatedGraph(section.nodeId);
+
+                        if (nodeData && section.childNodeData) {
+                            mapChildNodeDataToSection(nodeData, section);
+                        }
+                        else {
+                            section['childNodeData'] = [];
+                        }
+
+                        if (nodeData) {
+                            section['data'] = {
+                                [NODE_ID]: nodeData[NODE_ID],
+                                [TILE_ID]: nodeData[TILE_ID],
+                                [VALUE]: nodeData[VALUE],
+                            };
+                        }
+                        else {
+                            section['data'] = {};
+                        }
                     });
 
                     self.reportTabs.push(
-                        new ThematicReportTab(tabDatum.title, tabDatum.sections)
+                        new ThematicReportTab(tabDatum)
                     );
                 });
 
