@@ -97,6 +97,29 @@ define([
             return _.isEmpty(section.data) && !section.childNodeData.length;
         }
 
+        // this.initialize = function() {
+
+        //     tabDatum.sections.forEach(function(section) {
+        //             var nodeData = self.getNodeDataFromDisambiguatedGraph(section.nodeId);
+
+        //             console.log("AASIODFIOSF", data, section, nodeData)
+
+        //             if (nodeData.length && section.childNodeData) {
+        //                 mapChildNodeDataToSection(nodeData, section);
+        //             }
+        //             else {
+        //                 section['childNodeData'] = [];
+        //             }
+
+        //             if (nodeData.length) {
+
+        //             }
+        //             else {
+        //                 section['data'] = {};
+        //             }
+        //         });
+        // };
+
 
         // this.initialize();
     };
@@ -121,6 +144,25 @@ define([
         this.initialize = function() {
             var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false';
 
+            $.get(url, function(data) {
+                self.disambiguatedResourceGraph(data);
+
+                TAB_DATA.forEach(function(tabDatum) {
+                    self.mapResourceDataToTabData(tabDatum)
+
+                    self.reportTabs.push(
+                        new ThematicReportTab(
+                            tabDatum,
+                            self.emptyReportSectionsHidden
+                        )
+                    );
+                });
+            });
+        };
+
+        this.mapResourceDataToTabData = function(tabData) {
+            var disambiguatedResourceData = self.disambiguatedResourceGraph().resource;
+
             var mapChildNodeDataToSection = function(nodeData, section) {
                 section.childNodeData.forEach(function(childNodeDatum) {
                     childNodeDatum['data'] = Object.values(nodeData).find(function(nodeDatum) {
@@ -129,51 +171,44 @@ define([
                 });
             };
 
-            $.get(url, function(data) {
-                self.disambiguatedResourceGraph(data);
+            tabData.sections.forEach(function(section) {
+                var resourceInstanceData = Object.values(disambiguatedResourceData).find(function(topLevelData) {
+                    if (topLevelData instanceof Array) {
+                        return topLevelData[0][NODE_ID] === section.nodeId;  /* all data has same nodeId */
+                    }
+                    return topLevelData[NODE_ID] === section.nodeId;
+                });
 
-                TAB_DATA.forEach(function(tabDatum) {
-                    tabDatum.sections.forEach(function(section) {
-                        var nodeData = self.getNodeDataFromDisambiguatedGraph(section.nodeId);
+                if (!(resourceInstanceData instanceof Array)) {
+                    resourceInstanceData = [ resourceInstanceData ];
+                }
 
-                        if (nodeData && section.childNodeData) {
-                            mapChildNodeDataToSection(nodeData, section);
-                        }
-                        else {
-                            section['childNodeData'] = [];
-                        }
+                var topLevelData = [];
 
-                        if (nodeData) {
-                            section['data'] = {
-                                [NODE_ID]: nodeData[NODE_ID],
-                                [TILE_ID]: nodeData[TILE_ID],
-                                [VALUE]: nodeData[VALUE],
-                            };
-                        }
-                        else {
-                            section['data'] = {};
-                        }
+                if (resourceInstanceData.length) {
+                    resourceInstanceData.forEach(function(resourceInstanceDatum) {
+                        topLevelData.push(
+                            {
+                                [NODE_ID]: resourceInstanceDatum[NODE_ID],
+                                [TILE_ID]: resourceInstanceDatum[TILE_ID],
+                                [VALUE]: resourceInstanceDatum[VALUE],
+                            }
+                        )
                     });
+                }
 
-                    self.reportTabs.push(
-                        new ThematicReportTab(tabDatum, self.emptyReportSectionsHidden)
-                    );
-                });
+                section['data'] = topLevelData;
+                
 
-                console.log('vm init, reportTabs', self.reportTabs())
+                console.log('sdfdsf', section)
+
+                if (resourceInstanceData.length && section.childNodeData) {
+                    mapChildNodeDataToSection(resourceInstanceData, section);
+                }
+                else {
+                    section['childNodeData'] = [];
+                }
             });
-        };
-
-        this.getNodeDataFromDisambiguatedGraph = function(nodeId) {
-            var nodeData;
-
-            if (self.disambiguatedResourceGraph().resource) {
-                nodeData = Object.values(self.disambiguatedResourceGraph().resource).find(function(topLevelNode) {
-                    return topLevelNode[NODE_ID] === nodeId;
-                });
-            }
-
-            return nodeData;
         };
 
         this.toggleEmptyReportSections = function() {
