@@ -261,6 +261,25 @@
                 },
                 {
                     "active": true,
+                    "cardid": "bed04f59-d341-11e9-8464-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Identifier",
+                    "nodegroup_id": "bed04b8f-d341-11e9-b4e5-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": false
+                },
+                {
+                    "active": true,
                     "cardid": "e24301ae-b2f2-11e9-9f3b-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -279,7 +298,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Internal Label",
                     "nodegroup_id": "e2426eb8-b2f2-11e9-9aa6-a4d18cec433a",
                     "sortorder": 13,
@@ -516,7 +535,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": "Referred to Works",
                     "nodegroup_id": "218d2142-c074-11e9-9137-a4d18cec433a",
                     "sortorder": 11,
@@ -632,30 +651,11 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": "Creation",
                     "nodegroup_id": "11747d2e-c073-11e9-bca3-a4d18cec433a",
                     "sortorder": 8,
                     "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "bed04f59-d341-11e9-8464-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Identifier",
-                    "nodegroup_id": "bed04b8f-d341-11e9-b4e5-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": false
                 },
                 {
                     "active": true,
@@ -926,7 +926,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": "Language",
                     "nodegroup_id": "2db7af66-c077-11e9-ae4d-a4d18cec433a",
                     "sortorder": 6,
@@ -941,6 +941,7 @@
                         "label": "External URI",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "9127fca8-d340-11e9-9d22-a4d18cec433a",
@@ -957,6 +958,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "5b6caaca-d34a-11e9-acc6-a4d18cec433a",
@@ -973,6 +975,7 @@
                         "label": "Value",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "5b6831d4-d34a-11e9-8105-a4d18cec433a",
@@ -1203,6 +1206,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a4935b11-c077-11e9-8f08-a4d18cec433a",
@@ -1245,6 +1249,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "6f7c22f3-d348-11e9-bd24-a4d18cec433a",
@@ -1276,6 +1281,7 @@
                         "label": "Value",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "6f790128-d348-11e9-aea4-a4d18cec433a",
@@ -1305,6 +1311,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "d1a1b1e1-d34a-11e9-bc65-a4d18cec433a",
@@ -1368,6 +1375,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "d1a812a6-d34a-11e9-a022-a4d18cec433a",
@@ -1418,6 +1426,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "4d0bb28f-d348-11e9-9aea-a4d18cec433a",
@@ -1434,6 +1443,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "4d0cf46e-d348-11e9-9cfd-a4d18cec433a",
@@ -1476,6 +1486,7 @@
                         "label": "Text of Name Part",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f5ad8eee-d340-11e9-b092-a4d18cec433a",
@@ -1507,6 +1518,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f5afd178-d340-11e9-89c5-a4d18cec433a",
@@ -1555,6 +1567,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f076b99c-d340-11e9-a452-a4d18cec433a",
@@ -1571,6 +1584,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f0783219-d340-11e9-9e47-a4d18cec433a",
@@ -1617,6 +1631,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "9676c84c-d34a-11e9-b1af-a4d18cec433a",
@@ -1667,6 +1682,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "967a3645-d34a-11e9-8421-a4d18cec433a",
@@ -1732,6 +1748,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b44977b5-d34a-11e9-9e65-a4d18cec433a",
@@ -1748,6 +1765,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b44aa8d4-d34a-11e9-a2b6-a4d18cec433a",
@@ -1770,6 +1788,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b44be76e-d34a-11e9-a8b7-a4d18cec433a",
@@ -1807,6 +1826,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b44e3a59-d34a-11e9-b389-a4d18cec433a",
@@ -1857,6 +1877,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0f14c-d341-11e9-aef2-a4d18cec433a",
@@ -1886,6 +1907,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0e63d-d341-11e9-a1a3-a4d18cec433a",
@@ -1902,6 +1924,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "3d871d11-d34a-11e9-b86e-a4d18cec433a",
@@ -1948,6 +1971,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "3d8a666e-d34a-11e9-9be1-a4d18cec433a",
@@ -1994,6 +2018,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a384475e-d349-11e9-a2bf-a4d18cec433a",
@@ -2027,6 +2052,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a38680de-d349-11e9-a167-a4d18cec433a",
@@ -2090,6 +2116,7 @@
                         "label": "Text of Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "ed30f500-d348-11e9-a2de-a4d18cec433a",
@@ -2106,6 +2133,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "ed322980-d348-11e9-832b-a4d18cec433a",
@@ -2153,6 +2181,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "3048b3c5-d349-11e9-847d-a4d18cec433a",
@@ -2203,6 +2232,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "304c3e07-d349-11e9-9959-a4d18cec433a",
@@ -2238,6 +2268,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "5b764397-d343-11e9-8071-a4d18cec433a",
@@ -2275,6 +2306,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "5b79970a-d343-11e9-af94-a4d18cec433a",
@@ -2297,6 +2329,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "5b7a99f0-d343-11e9-9b82-a4d18cec433a",
@@ -2328,6 +2361,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "5b7893fa-d343-11e9-b8b5-a4d18cec433a",
@@ -2359,6 +2393,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0f87d-d341-11e9-97e7-a4d18cec433a",
@@ -2396,6 +2431,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0fea8-d341-11e9-b07d-a4d18cec433a",
@@ -2418,6 +2454,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0ee5e-d341-11e9-9d2f-a4d18cec433a",
@@ -2440,6 +2477,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0f8fd-d341-11e9-bba0-a4d18cec433a",
@@ -2500,6 +2538,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "79b634e1-d34a-11e9-bb47-a4d18cec433a",
@@ -2585,6 +2624,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "88de97b5-d340-11e9-b1bd-a4d18cec433a",
@@ -2632,6 +2672,7 @@
                         "label": "Statement Text",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0e9cc-d341-11e9-a756-a4d18cec433a",
@@ -2648,6 +2689,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0f1d7-d341-11e9-84c8-a4d18cec433a",
@@ -2744,6 +2786,19 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
+                    "card_id": "bed07651-d341-11e9-bca2-a4d18cec433a",
+                    "config": {
+                        "label": "during",
+                        "placeholder": ""
+                    },
+                    "id": "bed0edc7-d341-11e9-828a-a4d18cec433a",
+                    "label": "during",
+                    "node_id": "bed0b011-d341-11e9-86c2-a4d18cec433a",
+                    "sortorder": 10,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "117489a6-c073-11e9-888a-a4d18cec433a",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
@@ -2768,6 +2823,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "812ec6b5-d348-11e9-91ba-a4d18cec433a",
@@ -2797,6 +2853,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "799c1a6e-d343-11e9-b579-a4d18cec433a",
@@ -2813,6 +2870,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "79a1c1b3-d343-11e9-ae2d-a4d18cec433a",
@@ -2881,6 +2939,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0efc7-d341-11e9-8a5e-a4d18cec433a",
@@ -2979,6 +3038,7 @@
                         "label": "Text of Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "ccb9e0f5-d349-11e9-be3f-a4d18cec433a",
@@ -2995,6 +3055,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "ccbb815c-d349-11e9-ab59-a4d18cec433a",
@@ -3080,6 +3141,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0f4d1-d341-11e9-b971-a4d18cec433a",
@@ -3096,6 +3158,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed10075-d341-11e9-8774-a4d18cec433a",
@@ -3142,6 +3205,7 @@
                         "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0f642-d341-11e9-843e-a4d18cec433a",
@@ -3175,6 +3239,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0e84f-d341-11e9-9148-a4d18cec433a",
@@ -3219,6 +3284,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a54d3240-d340-11e9-8710-a4d18cec433a",
@@ -3250,6 +3316,7 @@
                         "label": "Value",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a54acbca-d340-11e9-90be-a4d18cec433a",
@@ -3270,19 +3337,6 @@
                     "node_id": "218d2142-c074-11e9-9137-a4d18cec433a",
                     "sortorder": null,
                     "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "bed07651-d341-11e9-bca2-a4d18cec433a",
-                    "config": {
-                        "label": "during",
-                        "placeholder": ""
-                    },
-                    "id": "bed0edc7-d341-11e9-828a-a4d18cec433a",
-                    "label": "during",
-                    "node_id": "bed0b011-d341-11e9-86c2-a4d18cec433a",
-                    "sortorder": 10,
-                    "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
@@ -3400,6 +3454,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0ece1-d341-11e9-9cba-a4d18cec433a",
@@ -3432,6 +3487,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c3dd51b8-d348-11e9-9196-a4d18cec433a",
@@ -3448,6 +3504,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "c3defbdc-d348-11e9-957d-a4d18cec433a",
@@ -3513,6 +3570,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a437af68-d348-11e9-bc02-a4d18cec433a",
@@ -3535,6 +3593,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a439110a-d348-11e9-a918-a4d18cec433a",
@@ -3585,6 +3644,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a43c7002-d348-11e9-a042-a4d18cec433a",
@@ -3601,6 +3661,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "a43d94e3-d348-11e9-9160-a4d18cec433a",
@@ -3712,6 +3773,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "48165f11-d347-11e9-8f37-a4d18cec433a",
@@ -3812,6 +3874,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0e7cf-d341-11e9-a7a9-a4d18cec433a",
@@ -3828,6 +3891,7 @@
                         "label": "Value of Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "bed0fd02-d341-11e9-8edf-a4d18cec433a",
@@ -3874,6 +3938,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "d6070c6b-d340-11e9-a560-a4d18cec433a",
@@ -3890,6 +3955,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "d6030ae1-d340-11e9-b2b6-a4d18cec433a",
@@ -3936,6 +4002,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b53fb3b0-d340-11e9-a4c1-a4d18cec433a",
@@ -6286,7 +6353,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                    "id": "7de4281c-8d57-11eb-81ec-faffc265b501"
+                    "id": "17ca0d5e-a18a-11eb-a29f-024e0d439fdb"
                 }
             ],
             "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
@@ -11550,9 +11617,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 12.3 on x86_64-apple-darwin16.7.0, compiled by Apple LLVM version 8.1.0 (clang-802.0.42), 64-bit",
-        "git hash": "1bd122944 2020-09-15 09:30:50 -0700",
-        "os": "Darwin",
-        "os version": "19.6.0"
+        "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
+        "git hash": "173edf02d 2021-04-16 16:58:02 -0700",
+        "os": "Linux",
+        "os version": "4.15.0-1051-aws"
     }
 }
