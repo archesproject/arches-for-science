@@ -59,6 +59,7 @@
 
 {% block body %}
 <div class="thematic-report-body-container">
+    <!-- ko if: !loading() -->
     <div class="thematic-report-body">
         <!-- ko if: activeTab() -->
             <!-- ko with: activeTab() -->
@@ -102,36 +103,36 @@
                                 </div>
                             </div>
 
-                            <div style="display:none" data-bind="text: console.log($data, $parent)"></div>
 
-                            <!-- ko if: childNodeData.length -->
+                            <!-- ko if: resourceInstanceData.length -->
                             <table>
                                 <thead>
-                                    <tr data-bind="foreach: childNodeData">
+                                    <tr data-bind="foreach: $data.childNodeInformation">
                                         <th data-bind="text: columnName"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr data-bind="foreach: resourceInstanceData">
-                                        <td data-bind="text: $data.data[VALUE]"></td>
+                                    <tr data-bind="foreach: $data.resourceInstanceData">
+                                        <div style="display:none" data-bind="text: console.log($data, $parent)"></div>
+
                                     </tr>
                                 </tbody>
                             </table>
                             <!-- /ko -->
-                            <!-- ko ifnot: childNodeData.length -->
-                            <table>
+                            <!-- ko ifnot: resourceInstanceData.length -->
+                            <!-- <table>
                                 <tbody>
                                     <tr>
                                         <td data-bind="text: $data.data[VALUE]"></td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
                             <!-- /ko -->
 
                             <!-- ko if: $parent.isSectionEmpty($data) -->
-                            <div style="padding: 8px 0px">
+                            <!-- <div style="padding: 8px 0px">
                                 <span>{% trans 'No data has been added yet.' %}</span>
-                            </div>
+                            </div> -->
                             <!-- /ko -->
                         </div>
                     <!-- /ko -->
@@ -139,6 +140,7 @@
             <!-- /ko -->
         <!-- /ko -->
     </div>
+    <!-- /ko -->
 </div>
 {% endblock body %}
 

@@ -20,7 +20,7 @@ define([
                     nodeId: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',  /* assumes each section contains a single node */
                     sectionTitle: "Name(s) of Thing",
                     hasPlusSign: true,
-                    childNodeData: [
+                    childNodeInformation: [
                         { 
                             nodeId: 'b9c1d8a6-b497-11e9-876b-a4d18cec433a',
                             columnName: 'Name',
@@ -44,7 +44,7 @@ define([
                     nodeId: '22c150ca-b498-11e9-9adc-a4d18cec433a',  /* assumes each section contains a single node */
                     sectionTitle: "Identifiers",
                     hasPlusSign: true,
-                    childNodeData: [
+                    childNodeInformation: [
                         { 
                             nodeId: '22c169b5-b498-11e9-bdad-a4d18cec433a',
                             columnName: 'Identifier',
@@ -83,33 +83,58 @@ define([
         }
     ];
 
-    var ThematicReportTab = function(tabData, disambiguatedResourceGraph, hideEmptySections) {
+    var ThematicReportTab = function(tabDatum, disambiguatedResourceGraph, hideEmptySections) {
         var self = this;
 
         this.hideEmptySections = hideEmptySections;  /* READ-ONLY on this level */
 
         /* BEGIN page layout source-of-truth */ 
-        this.title = tabData.title;
-        this.sections = ko.observableArray(tabData.sections);
+        this.title = tabDatum.title;
+        this.sections = ko.observableArray(tabDatum.sections);
         /* END page layout source-of-truth */ 
 
-        this.isSectionEmpty = function(section) {
-            return _.isEmpty(section.data) && !section.childNodeData.length;
-        }
-
-        
         this.initialize = function() {
-            console.log("IN THEMATIC REPORT TAB", tabData, disambiguatedResourceGraph)
+            // console.log("IN THEMATIC REPORT TAB", tabDatum)
+            self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph)
 
         };
 
+        this.isSectionEmpty = function(section) {
+            return _.isEmpty(section.data) && (!section.childNodeInformation || !section.childNodeInformation.length);
+        }
 
+        this.mapResourceInstanceDataToSections = function(tabDatum, disambiguatedResourceGraph) {
+            tabDatum.sections.forEach(function(section) {
+                /* BEGIN normalize resourceInstanceData shape */ 
+                var resourceInstanceData = Object.values(disambiguatedResourceGraph.resource).find(function(topLevelData) {
+                    if (topLevelData instanceof Array) {
+                        return topLevelData[0][NODE_ID] === section.nodeId;  /* all data has same nodeId */
+                    }
+                    return topLevelData[NODE_ID] === section.nodeId;
+                });
+
+                if (!(resourceInstanceData instanceof Array)) {
+                    if (!resourceInstanceData) {
+                        resourceInstanceData = [];
+                    }
+                    else {
+                        resourceInstanceData = [ resourceInstanceData ];
+                    }
+                }
+                /* END normalize resourceInstanceData shape */ 
+
+                section['resourceInstanceData'] = resourceInstanceData;
+            });
+        };
+        
         this.initialize();
     };
 
     var viewModel = function(params) {
         var self = this;
         ReportViewModel.apply(this, [params]);
+
+        this.loading = ko.observable();
 
         this.disambiguatedResourceGraph = ko.observable();
 
@@ -125,14 +150,14 @@ define([
         this.emptyReportSectionsHidden = ko.observable(false);
 
         this.initialize = function() {
+            self.loading(true);
+
             var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false';
 
             $.get(url, function(data) {
                 self.disambiguatedResourceGraph(data);
 
                 TAB_DATA.forEach(function(tabDatum) {
-                    // self.mapResourceDataToTabData(tabDatum)
-
                     self.reportTabs.push(
                         new ThematicReportTab(
                             tabDatum,
@@ -141,72 +166,8 @@ define([
                         )
                     );
                 });
-            });
-        };
 
-        this.mapResourceDataToTabData = function(tabData) {
-            var disambiguatedResourceData = self.disambiguatedResourceGraph().resource;
-
-            var mapChildNodeDataToSection = function(resourceInstanceData, section) {
-                section.childNodeData.forEach(function(childNodeDatum) {
-                    childNodeDatum['data'] = resourceInstanceData.reduce(function(acc, resourceInstanceDatum) {
-                        var matchingResourceInstanceDatumValue = Object.values(resourceInstanceDatum).find(function(resourceInstanceDatumValue) {
-                            if (_.isObject(resourceInstanceDatumValue) && resourceInstanceDatumValue[NODE_ID] === childNodeDatum.nodeId) {
-                                return resourceInstanceDatumValue;
-                            }
-                        });
-
-                        if (matchingResourceInstanceDatumValue) {
-                            acc.push(matchingResourceInstanceDatumValue);
-                        }
-
-                        return acc;
-                    }, []);
-                });
-            };
-
-            tabData.sections.forEach(function(section) {
-                var resourceInstanceData = Object.values(disambiguatedResourceData).find(function(topLevelData) {
-                    if (topLevelData instanceof Array) {
-                        return topLevelData[0][NODE_ID] === section.nodeId;  /* all data has same nodeId */
-                    }
-                    return topLevelData[NODE_ID] === section.nodeId;
-                });
-
-                if (!(resourceInstanceData instanceof Array)) {
-                    if (!resourceInstanceData) {
-                        resourceInstanceData = [];
-                    }
-                    else {
-                        resourceInstanceData = [ resourceInstanceData ];
-                    }
-                }
-
-                var topLevelData = [];
-
-                if (resourceInstanceData.length) {
-                    resourceInstanceData.forEach(function(resourceInstanceDatum) {
-                        topLevelData.push(
-                            {
-                                [NODE_ID]: resourceInstanceDatum[NODE_ID],
-                                [TILE_ID]: resourceInstanceDatum[TILE_ID],
-                                [VALUE]: resourceInstanceDatum[VALUE],
-                            }
-                        )
-                    });
-                }
-
-                section['data'] = topLevelData;
-                
-
-                console.log('sdfdsf', section)
-
-                if (resourceInstanceData.length && section.childNodeData) {
-                    mapChildNodeDataToSection(resourceInstanceData, section);
-                }
-                else {
-                    section['childNodeData'] = [];
-                }
+                self.loading(false);
             });
         };
 
