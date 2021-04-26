@@ -5,171 +5,41 @@
             "cards": [
                 {
                     "active": true,
-                    "cardid": "c07db919-c457-11e9-adef-a4d18cec433a",
+                    "cardid": "8ec306dc-c457-11e9-aa23-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "c07db919-c457-11e9-adef-a4d18cec433a",
-                            "constraintid": "29033b90-133a-4463-96b2-abe908730c9e",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
+                    "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names  Arches note: In Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content. This value could be used to override the default card title.\n\n# Arches Note:\n\n\n* BranchId: la-name\n* FieldId: \n",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Technique",
-                    "nodegroup_id": "c07d2e07-c457-11e9-bbe0-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
-                            "constraintid": "43589cf9-b2f8-492e-a501-6890d3e7eca4",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        },
-                        {
-                            "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
-                            "constraintid": "9ff0630f-e3e0-48cb-b14e-6465f69a1449",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": false,
-                    "name": "part of",
-                    "nodegroup_id": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "f55d25ca-7844-11ea-a33b-acde48001122",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
-                            "constraintid": "349b6429-4102-4312-9fdd-3d6a914cd385",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        },
-                        {
-                            "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
-                            "constraintid": "405e08a4-bf30-45d2-b454-9a8ce3fea381",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": false,
-                    "name": "Described in File",
-                    "nodegroup_id": "f55c6932-7844-11ea-a33b-acde48001122",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                            "constraintid": "ded41081-9c50-4219-b627-715b9ddb1447",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name.\nDifferent types of name can be distinguished using classifications.\nSee: https://linked.art/model/base/#names\n\n# Arches Note:\nWhen used at the top level of a resource model, this node's content should be the value for the title descriptor function.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": false,
                     "name": "Name",
-                    "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
-                    "sortorder": 0,
+                    "nodegroup_id": "8ec2efee-c457-11e9-a1f1-a4d18cec433a",
+                    "sortorder": null,
                     "visible": true
                 },
                 {
                     "active": true,
-                    "cardid": "a77c6b45-c457-11e9-8ece-a4d18cec433a",
+                    "cardid": "89f0600a-c457-11e9-aa64-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "a77c6b45-c457-11e9-8ece-a4d18cec433a",
-                            "constraintid": "38e4f501-3f0c-4bb7-bc17-69414d44563f",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
+                    "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": false,
-                    "name": "Carried out by",
-                    "nodegroup_id": "a77be70c-c457-11e9-a965-a4d18cec433a",
-                    "sortorder": 9,
+                    "is_editable": true,
+                    "name": "Name",
+                    "nodegroup_id": "89f05c87-c457-11e9-b9e3-a4d18cec433a",
+                    "sortorder": null,
                     "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "6fa417a1-c457-11e9-8e21-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "6fa417a1-c457-11e9-8e21-a4d18cec433a",
-                            "constraintid": "f9ce7286-f5a3-44eb-ae19-4a4bd5557b51",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data.\nSee:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": false,
-                    "name": "Internal Label",
-                    "nodegroup_id": "6fa38a05-c457-11e9-8ce4-a4d18cec433a",
-                    "sortorder": 13,
-                    "visible": false
                 },
                 {
                     "active": true,
@@ -199,129 +69,13 @@
                 },
                 {
                     "active": true,
-                    "cardid": "8fce45e6-c457-11e9-b78e-a4d18cec433a",
+                    "cardid": "c07db919-c457-11e9-adef-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
                     "constraints": [
                         {
-                            "card_id": "8fce45e6-c457-11e9-b78e-a4d18cec433a",
-                            "constraintid": "e9cbca16-5085-4f25-9ded-303369aabb11",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them.\nSee: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Identifier",
-                    "nodegroup_id": "8fce3ed4-c457-11e9-b300-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "8ec306dc-c457-11e9-aa23-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names  Arches note: In Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content. This value could be used to override the default card title.\n\n# Arches Note:\n\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Name",
-                    "nodegroup_id": "8ec2efee-c457-11e9-a1f1-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "8ec31138-c457-11e9-a987-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "8ec31138-c457-11e9-a987-a4d18cec433a",
-                            "constraintid": "b67e8096-ca8c-42b1-85d7-1e59d253593a",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text.\nSee: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\nWhen used at the top level of a resource model, this node's content should be the value for the description function.\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": false,
-                    "name": "Statement",
-                    "nodegroup_id": "8ec30d3a-c457-11e9-81dc-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "89f06f00-c457-11e9-b138-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "89f06f00-c457-11e9-b138-a4d18cec433a",
-                            "constraintid": "a97da2fe-143c-454a-913e-fac1e0ab9549",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year.\nSee: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "TimeSpan",
-                    "nodegroup_id": "89f06cba-c457-11e9-916e-a4d18cec433a",
-                    "sortorder": 12,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "89f0600a-c457-11e9-aa64-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Name",
-                    "nodegroup_id": "89f05c87-c457-11e9-b9e3-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "51426161-c458-11e9-acd8-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "51426161-c458-11e9-acd8-a4d18cec433a",
-                            "constraintid": "de7aba8d-639b-4c06-8e81-bdf9546b62d5",
+                            "card_id": "c07db919-c457-11e9-adef-a4d18cec433a",
+                            "constraintid": "29033b90-133a-4463-96b2-abe908730c9e",
                             "nodes": [],
                             "uniquetoallinstances": false
                         }
@@ -334,35 +88,9 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Procedure",
-                    "nodegroup_id": "51416e9c-c458-11e9-b70e-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "dd59f53a-c457-11e9-a54d-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "dd59f53a-c457-11e9-a54d-a4d18cec433a",
-                            "constraintid": "21358c47-0fcb-4ec0-aa94-25e71647dc0f",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": false,
-                    "name": "Recorded Value",
-                    "nodegroup_id": "dd596aae-c457-11e9-956b-a4d18cec433a",
-                    "sortorder": 7,
+                    "name": "Technique",
+                    "nodegroup_id": "c07d2e07-c457-11e9-bbe0-a4d18cec433a",
+                    "sortorder": 4,
                     "visible": true
                 },
                 {
@@ -408,32 +136,6 @@
                     "name": "Used Instrument / Tool",
                     "nodegroup_id": "1acc9d59-c458-11e9-99e4-a4d18cec433a",
                     "sortorder": 10,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "2121ed87-d383-11e9-8a2d-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "2121ed87-d383-11e9-8a2d-a4d18cec433a",
-                            "constraintid": "7cff8a48-d877-499a-88c7-56e86ee69900",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Used Digital Resource",
-                    "nodegroup_id": "212161cc-d383-11e9-b096-a4d18cec433a",
-                    "sortorder": 11,
                     "visible": true
                 },
                 {
@@ -544,100 +246,366 @@
                     "nodegroup_id": "cd412ac5-c457-11e9-9644-a4d18cec433a",
                     "sortorder": 6,
                     "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                            "constraintid": "ded41081-9c50-4219-b627-715b9ddb1447",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name.\nDifferent types of name can be distinguished using classifications.\nSee: https://linked.art/model/base/#names\n\n# Arches Note:\nWhen used at the top level of a resource model, this node's content should be the value for the title descriptor function.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Name",
+                    "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "8ec31138-c457-11e9-a987-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "8ec31138-c457-11e9-a987-a4d18cec433a",
+                            "constraintid": "b67e8096-ca8c-42b1-85d7-1e59d253593a",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text.\nSee: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\nWhen used at the top level of a resource model, this node's content should be the value for the description function.\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Statement",
+                    "nodegroup_id": "8ec30d3a-c457-11e9-81dc-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "8fce45e6-c457-11e9-b78e-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "8fce45e6-c457-11e9-b78e-a4d18cec433a",
+                            "constraintid": "e9cbca16-5085-4f25-9ded-303369aabb11",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them.\nSee: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Identifier",
+                    "nodegroup_id": "8fce3ed4-c457-11e9-b300-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "51426161-c458-11e9-acd8-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "51426161-c458-11e9-acd8-a4d18cec433a",
+                            "constraintid": "de7aba8d-639b-4c06-8e81-bdf9546b62d5",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Procedure",
+                    "nodegroup_id": "51416e9c-c458-11e9-b70e-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "dd59f53a-c457-11e9-a54d-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "dd59f53a-c457-11e9-a54d-a4d18cec433a",
+                            "constraintid": "21358c47-0fcb-4ec0-aa94-25e71647dc0f",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Recorded Value",
+                    "nodegroup_id": "dd596aae-c457-11e9-956b-a4d18cec433a",
+                    "sortorder": 7,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "a77c6b45-c457-11e9-8ece-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "a77c6b45-c457-11e9-8ece-a4d18cec433a",
+                            "constraintid": "38e4f501-3f0c-4bb7-bc17-69414d44563f",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Carried out by",
+                    "nodegroup_id": "a77be70c-c457-11e9-a965-a4d18cec433a",
+                    "sortorder": 9,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "2121ed87-d383-11e9-8a2d-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "2121ed87-d383-11e9-8a2d-a4d18cec433a",
+                            "constraintid": "7cff8a48-d877-499a-88c7-56e86ee69900",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Used Digital Resource",
+                    "nodegroup_id": "212161cc-d383-11e9-b096-a4d18cec433a",
+                    "sortorder": 11,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "89f06f00-c457-11e9-b138-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "89f06f00-c457-11e9-b138-a4d18cec433a",
+                            "constraintid": "a97da2fe-143c-454a-913e-fac1e0ab9549",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year.\nSee: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "TimeSpan",
+                    "nodegroup_id": "89f06cba-c457-11e9-916e-a4d18cec433a",
+                    "sortorder": 12,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "6fa417a1-c457-11e9-8e21-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "6fa417a1-c457-11e9-8e21-a4d18cec433a",
+                            "constraintid": "f9ce7286-f5a3-44eb-ae19-4a4bd5557b51",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data.\nSee:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Internal Label",
+                    "nodegroup_id": "6fa38a05-c457-11e9-8ce4-a4d18cec433a",
+                    "sortorder": 13,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
+                            "constraintid": "43589cf9-b2f8-492e-a501-6890d3e7eca4",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        },
+                        {
+                            "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
+                            "constraintid": "9ff0630f-e3e0-48cb-b14e-6465f69a1449",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Part Of",
+                    "nodegroup_id": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
+                    "sortorder": 14,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0ae14b68-8e30-11eb-a9c4-faffc265b501",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Digital Reference",
+                    "nodegroup_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "sortorder": 15,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "f55d25ca-7844-11ea-a33b-acde48001122",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
+                            "constraintid": "349b6429-4102-4312-9fdd-3d6a914cd385",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        },
+                        {
+                            "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
+                            "constraintid": "405e08a4-bf30-45d2-b454-9a8ce3fea381",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Described in File",
+                    "nodegroup_id": "f55c6932-7844-11ea-a33b-acde48001122",
+                    "sortorder": 16,
+                    "visible": true
                 }
             ],
             "cards_x_nodes_x_widgets": [
                 {
-                    "card_id": "51426161-c458-11e9-acd8-a4d18cec433a",
+                    "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
                     "config": {
-                        "label": "used process",
-                        "placeholder": ""
+                        "label": "Select digital resource(s)",
+                        "placeholder": null
                     },
-                    "id": "71fa45c0-d383-11e9-b79a-a4d18cec433a",
-                    "label": "used process",
-                    "node_id": "51416e9c-c458-11e9-b70e-a4d18cec433a",
-                    "sortorder": 0,
+                    "id": "5d03d4d0-7845-11ea-a33b-acde48001122",
+                    "label": "Select digital resource(s)",
+                    "node_id": "f55c6932-7844-11ea-a33b-acde48001122",
+                    "sortorder": null,
                     "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "card_id": "89f067e3-c457-11e9-95c9-a4d18cec433a",
                     "config": {
                         "label": "source",
                         "placeholder": ""
                     },
-                    "id": "b6669be6-d383-11e9-909e-a4d18cec433a",
+                    "id": "20802ac7-d385-11e9-880d-a4d18cec433a",
                     "label": "source",
-                    "node_id": "87e3fccc-c457-11e9-b64d-a4d18cec433a",
-                    "sortorder": 4,
+                    "node_id": "89f09e6b-c457-11e9-b3ee-a4d18cec433a",
+                    "sortorder": 3,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "card_id": "c07db919-c457-11e9-adef-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "b662e00a-d383-11e9-90fd-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "87e4053d-c457-11e9-85c4-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Text",
+                        "label": "Activity Technique",
                         "options": [],
                         "placeholder": "Select an option"
                     },
-                    "id": "b6644351-d383-11e9-b4e2-a4d18cec433a",
-                    "label": "Language of Text",
-                    "node_id": "87e3ec82-c457-11e9-89d8-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Type of Name",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "b66554dc-d383-11e9-b128-a4d18cec433a",
-                    "label": "Type of Name",
-                    "node_id": "87e4092e-c457-11e9-8036-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Text of Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "b6679957-d383-11e9-86cc-a4d18cec433a",
-                    "label": "Text of Name",
-                    "node_id": "87e40cc5-c457-11e9-8933-a4d18cec433a",
+                    "id": "94df0cae-d383-11e9-8363-a4d18cec433a",
+                    "label": "Activity Technique",
+                    "node_id": "c07d2e07-c457-11e9-bbe0-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "a77c6b45-c457-11e9-8ece-a4d18cec433a",
@@ -659,6 +627,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "87b8d263-d383-11e9-86a4-a4d18cec433a",
@@ -703,6 +672,7 @@
                         "label": "Value",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11ea9f07-d384-11e9-b715-a4d18cec433a",
@@ -719,6 +689,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "11ebf97a-d384-11e9-999a-a4d18cec433a",
@@ -750,6 +721,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f245d35c-d383-11e9-8303-a4d18cec433a",
@@ -766,6 +738,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f2475ea1-d383-11e9-bc6b-a4d18cec433a",
@@ -864,6 +837,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "d4862eab-d383-11e9-a3d8-a4d18cec433a",
@@ -945,6 +919,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "de807ae1-d384-11e9-be5a-a4d18cec433a",
@@ -1006,34 +981,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
-                    "card_id": "c07db919-c457-11e9-adef-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "technique",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "94df0cae-d383-11e9-8363-a4d18cec433a",
-                    "label": "technique",
-                    "node_id": "c07d2e07-c457-11e9-bbe0-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
-                    "config": {
-                        "label": "Select digital resource(s)",
-                        "placeholder": null
-                    },
-                    "id": "5d03d4d0-7845-11ea-a33b-acde48001122",
-                    "label": "Select digital resource(s)",
-                    "node_id": "f55c6932-7844-11ea-a33b-acde48001122",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
                     "card_id": "89f0600a-c457-11e9-aa64-a4d18cec433a",
                     "config": {
                         "label": "source",
@@ -1087,6 +1034,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "77e93ae8-d385-11e9-b4ce-a4d18cec433a",
@@ -1103,6 +1051,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "77ef244f-d385-11e9-b5bf-a4d18cec433a",
@@ -1111,6 +1060,19 @@
                     "sortorder": 4,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "51426161-c458-11e9-acd8-a4d18cec433a",
+                    "config": {
+                        "label": "used process",
+                        "placeholder": ""
+                    },
+                    "id": "71fa45c0-d383-11e9-b79a-a4d18cec433a",
+                    "label": "used process",
+                    "node_id": "51416e9c-c458-11e9-b70e-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "dd59f53a-c457-11e9-a54d-a4d18cec433a",
@@ -1132,6 +1094,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "208355a3-d385-11e9-8f4d-a4d18cec433a",
@@ -1148,6 +1111,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "207e86dc-d385-11e9-b2e8-a4d18cec433a",
@@ -1156,19 +1120,6 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "89f067e3-c457-11e9-95c9-a4d18cec433a",
-                    "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "20802ac7-d385-11e9-880d-a4d18cec433a",
-                    "label": "source",
-                    "node_id": "89f09e6b-c457-11e9-b3ee-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "89f067e3-c457-11e9-95c9-a4d18cec433a",
@@ -1250,6 +1201,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "0ff1dcd7-d385-11e9-b04d-a4d18cec433a",
@@ -1296,6 +1248,7 @@
                         "label": "Text of Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "0fef95f3-d385-11e9-b082-a4d18cec433a",
@@ -1346,6 +1299,7 @@
                         "label": "Text of Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "06f289a1-d385-11e9-b0e8-a4d18cec433a",
@@ -1375,6 +1329,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "06f516b8-d385-11e9-b99e-a4d18cec433a",
@@ -1422,6 +1377,7 @@
                         "label": "_label",
                         "maxLength": null,
                         "placeholder": "Enter text",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f987a914-d384-11e9-b711-a4d18cec433a",
@@ -1444,6 +1400,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f989afd4-d384-11e9-aa31-a4d18cec433a",
@@ -1481,6 +1438,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f98c0002-d384-11e9-b93a-a4d18cec433a",
@@ -1503,6 +1461,7 @@
                         "prefix": "",
                         "step": "",
                         "suffix": "",
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "f98ed0c2-d384-11e9-bbc7-a4d18cec433a",
@@ -1537,6 +1496,128 @@
                     "label": "observed",
                     "node_id": "cd412ac5-c457-11e9-9644-a4d18cec433a",
                     "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0ae14b68-8e30-11eb-a9c4-faffc265b501",
+                    "config": {
+                        "label": "Digital Source",
+                        "placeholder": ""
+                    },
+                    "id": "0ae14d8e-8e30-11eb-a9c4-faffc265b501",
+                    "label": "Digital Source",
+                    "node_id": "0ae14d2a-8e30-11eb-a9c4-faffc265b501",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "0ae14b68-8e30-11eb-a9c4-faffc265b501",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Digital Reference Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "0ae14dc0-8e30-11eb-a9c4-faffc265b501",
+                    "label": "Digital Reference Type",
+                    "node_id": "0ae14c58-8e30-11eb-a9c4-faffc265b501",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "b6679957-d383-11e9-86cc-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "87e40cc5-c457-11e9-8933-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "b66554dc-d383-11e9-b128-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "87e4092e-c457-11e9-8036-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "b6644351-d383-11e9-b4e2-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "87e3ec82-c457-11e9-89d8-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "b662e00a-d383-11e9-90fd-a4d18cec433a",
+                    "label": "Name Label",
+                    "node_id": "87e4053d-c457-11e9-85c4-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
+                    "config": {
+                        "label": "Source Reference Work for Name",
+                        "placeholder": ""
+                    },
+                    "id": "b6669be6-d383-11e9-909e-a4d18cec433a",
+                    "label": "Source Reference Work for Name",
+                    "node_id": "87e3fccc-c457-11e9-b64d-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
+                    "config": {
+                        "label": "Part of Event",
+                        "placeholder": ""
+                    },
+                    "id": "229ee393-a1e9-11eb-a29f-024e0d439fdb",
+                    "label": "Part of Event",
+                    "node_id": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
+                    "sortorder": null,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 }
@@ -2241,6 +2322,33 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "rangenode_id": "8ec30d3a-c457-11e9-81dc-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "edgeid": "0ae150f4-8e30-11eb-a9c4-faffc265b501",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67.1_has_type",
+                    "rangenode_id": "0ae14c58-8e30-11eb-a9c4-faffc265b501"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "edgeid": "0ae15162-8e30-11eb-a9c4-faffc265b501",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P01_has_domain",
+                    "rangenode_id": "0ae14d2a-8e30-11eb-a9c4-faffc265b501"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "615b0c30-c457-11e9-8875-a4d18cec433a",
+                    "edgeid": "0ae15220-8e30-11eb-a9c4-faffc265b501",
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P02i_is_range_of",
+                    "rangenode_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501"
                 }
             ],
             "functions_x_graphs": [
@@ -2262,7 +2370,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "id": "0367245e-cacf-11ea-b38f-dca90488358a"
+                    "id": "3beb8b92-a18a-11eb-a29f-024e0d439fdb"
                 }
             ],
             "graphid": "615b11ee-c457-11e9-910c-a4d18cec433a",
@@ -2404,9 +2512,41 @@
                     "legacygroupid": null,
                     "nodegroupid": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
                     "parentnodegroup_id": null
+                },
+                {
+                    "cardinality": "n",
+                    "legacygroupid": null,
+                    "nodegroupid": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "parentnodegroup_id": null
                 }
             ],
             "nodes": [
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "source",
+                    "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
+                    "nodeid": "87e3fccc-c457-11e9-b64d-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
                 {
                     "config": null,
                     "datatype": "string",
@@ -2446,7 +2586,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -2464,7 +2606,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -2690,7 +2834,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -2818,7 +2964,9 @@
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD"
+                    },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -3057,32 +3205,6 @@
                     "name": "source",
                     "nodegroup_id": "8ec2efee-c457-11e9-a1f1-a4d18cec433a",
                     "nodeid": "8ec3330a-c457-11e9-a032-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphs": [
-                            {
-                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                                "inverseOntologyProperty": "",
-                                "ontologyProperty": ""
-                            }
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "source",
-                    "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
-                    "nodeid": "87e3fccc-c457-11e9-b64d-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0
@@ -3952,6 +4074,71 @@
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E22_Human-Made_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
                     "sortorder": 0
+                },
+                {
+                    "config": {
+                        "rdmCollection": null
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Digital Reference Type",
+                    "nodegroup_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "nodeid": "0ae14c58-8e30-11eb-a9c4-faffc265b501",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67.1_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
+                                "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+                                "name": "Digital Resources",
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by"
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Digital Source",
+                    "nodegroup_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "nodeid": "0ae14d2a-8e30-11eb-a9c4-faffc265b501",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P01_has_domain",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "semantic",
+                    "description": "",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Digital Reference",
+                    "nodegroup_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "nodeid": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/PC67_refers_to",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P02i_is_range_of",
+                    "sortorder": 0
                 }
             ],
             "ontology_id": "0b1f5462-faa7-11e9-8f09-3af9d3b32b71",
@@ -3981,9 +4168,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 12.1 on x86_64-apple-darwin16.7.0, compiled by Apple LLVM version 8.1.0 (clang-802.0.42), 64-bit",
-        "git hash": "d054ee0f0 2020-07-20 12:07:20 -0700",
-        "os": "Darwin",
-        "os version": "19.5.0"
+        "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
+        "git hash": "173edf02d 2021-04-16 16:58:02 -0700",
+        "os": "Linux",
+        "os version": "4.15.0-1051-aws"
     }
 }
