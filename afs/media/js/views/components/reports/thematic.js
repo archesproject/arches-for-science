@@ -94,14 +94,9 @@ define([
         /* END page layout source-of-truth */ 
 
         this.initialize = function() {
-            // console.log("IN THEMATIC REPORT TAB", tabDatum)
             self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph)
 
         };
-
-        this.isSectionEmpty = function(section) {
-            return _.isEmpty(section.data) && (!section.childNodeInformation || !section.childNodeInformation.length);
-        }
 
         this.mapResourceInstanceDataToSections = function(tabDatum, disambiguatedResourceGraph) {
             tabDatum.sections.forEach(function(section) {
