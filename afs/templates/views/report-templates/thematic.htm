@@ -64,7 +64,7 @@
         <!-- ko if: activeTab() -->
             <!-- ko with: activeTab() -->
                 <!-- ko foreach: sections() -->
-                    <!-- ko if: !$parent.isSectionEmpty($data) || ( $parent.isSectionEmpty($data) && !$parent.hideEmptySections() ) -->
+                    <!-- ko if: $data.resourceInstanceData.length || !$parents[1].emptyReportSectionsHidden() -->
                         <div 
                             style="
                                 display: flex;
@@ -72,7 +72,7 @@
                                 padding: 18px 20px 26px 20px;
                             "
                             class="thematic-section"
-                            data-bind="style: { 'border-bottom': !$parent.isSectionEmpty($data) ? '1px solid #ddd' : 'none' }" 
+                            data-bind="style: { 'border-bottom': $data.resourceInstanceData.length ? '1px solid #ddd' : 'none' }" 
 
                         >
                             <div
@@ -104,35 +104,41 @@
                             </div>
 
 
-                            <!-- ko if: resourceInstanceData.length -->
-                            <table>
-                                <thead>
-                                    <tr data-bind="foreach: $data.childNodeInformation">
-                                        <th data-bind="text: columnName"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr data-bind="foreach: $data.resourceInstanceData">
-                                        <div style="display:none" data-bind="text: console.log($data, $parent)"></div>
-
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <!-- ko if: $data.resourceInstanceData.length -->
+                                <!-- ko if: $data.childNodeInformation -->
+                                <table>
+                                    <thead>
+                                        <tr data-bind="foreach: $data.childNodeInformation">
+                                            <th data-bind="text: columnName"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- ko foreach: $data.resourceInstanceData -->
+                                        <tr>
+                                            <!-- ko foreach: $parent.childNodeInformation -->
+                                            <td data-bind="text: $parents[2].getResourceInstanceNodeData($data.nodeId, $parent)[VALUE]"></td>
+                                            <!-- /ko -->
+                                        </tr>
+                                        <!-- /ko -->
+                                    </tbody>
+                                </table>
+                                <!-- /ko -->
+                                <!-- ko ifnot: $data.childNodeInformation -->
+                                <table>
+                                    <tbody>
+                                        <!-- ko foreach: $data.resourceInstanceData -->
+                                        <tr>
+                                            <td data-bind="text: $data[VALUE]"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                    </tbody>
+                                </table>
+                                <!-- /ko -->
                             <!-- /ko -->
-                            <!-- ko ifnot: resourceInstanceData.length -->
-                            <!-- <table>
-                                <tbody>
-                                    <tr>
-                                        <td data-bind="text: $data.data[VALUE]"></td>
-                                    </tr>
-                                </tbody>
-                            </table> -->
-                            <!-- /ko -->
-
-                            <!-- ko if: $parent.isSectionEmpty($data) -->
-                            <!-- <div style="padding: 8px 0px">
+                            <!-- ko ifnot: $data.resourceInstanceData.length -->
+                            <div style="padding: 8px 0px">
                                 <span>{% trans 'No data has been added yet.' %}</span>
-                            </div> -->
+                            </div>
                             <!-- /ko -->
                         </div>
                     <!-- /ko -->

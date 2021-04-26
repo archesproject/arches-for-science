@@ -126,6 +126,17 @@ define([
                 section['resourceInstanceData'] = resourceInstanceData;
             });
         };
+
+        this.getResourceInstanceNodeData = function(nodeId, resourceInstanceData) {
+            if (resourceInstanceData[NODE_ID] === nodeId) {
+                return resourceInstanceData[NODE_ID];
+            }
+            else {
+                return Object.values(resourceInstanceData).find(function(resourceInstanceChildNodeData) {
+                    return resourceInstanceChildNodeData[NODE_ID] === nodeId;
+                })
+            }
+        };
         
         this.initialize();
     };
