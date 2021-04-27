@@ -644,17 +644,9 @@
                     "card_id": "9c0ada28-8e30-11eb-a9c4-faffc265b501",
                     "config": {
                         "defaultValue": "",
-<<<<<<< HEAD
                         "label": "Digital Reference Type",
                         "options": [],
                         "placeholder": "Select an option"
-=======
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     },
                     "id": "9c0adc9e-8e30-11eb-a9c4-faffc265b501",
                     "label": "Digital Reference Type",
@@ -1080,11 +1072,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
-<<<<<<< HEAD
                     "id": "ec52bf18-a27b-11eb-a29f-024e0d439fdb"
-=======
-                    "id": "7770cb8c-a18a-11eb-a29f-024e0d439fdb"
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                 }
             ],
             "graphid": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
@@ -1165,7 +1153,6 @@
             "nodes": [
                 {
                     "config": {
-<<<<<<< HEAD
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
                     },
                     "datatype": "concept-list",
@@ -1212,8 +1199,6 @@
                 },
                 {
                     "config": {
-=======
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                         "graphs": [
                             {
                                 "graphid": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
@@ -1386,55 +1371,6 @@
                 },
                 {
                     "config": {
-<<<<<<< HEAD
-=======
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\nThe language of the name, selected from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "language",
-                    "nodegroup_id": "1be4c387-c071-11e9-ba22-a4d18cec433a",
-                    "nodeid": "1be4c80f-c071-11e9-82cd-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E56_Language",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P72_has_language",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphs": [
-                            {
-                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                                "inverseOntologyProperty": "",
-                                "ontologyProperty": ""
-                            }
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "source",
-                    "nodegroup_id": "229e120f-c071-11e9-bc35-a4d18cec433a",
-                    "nodeid": "229e1b02-c071-11e9-add1-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                         "graphs": [
                             {
                                 "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
@@ -1939,11 +1875,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-<<<<<<< HEAD
         "git hash": "c3b705b11 2021-04-20 15:05:23 -0700",
-=======
-        "git hash": "173edf02d 2021-04-16 16:58:02 -0700",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }

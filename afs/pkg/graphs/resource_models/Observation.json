@@ -17,11 +17,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-<<<<<<< HEAD
                     "name": "Name for Statement",
-=======
-                    "name": "Name",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "nodegroup_id": "8ec2efee-c457-11e9-a1f1-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -40,11 +36,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-<<<<<<< HEAD
                     "name": "Name for Duration of TimeSpan of Observation Event",
-=======
-                    "name": "Name",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "nodegroup_id": "89f05c87-c457-11e9-b9e3-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -115,11 +107,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-<<<<<<< HEAD
                     "name": "Name for TimeSpan of Observation Event",
-=======
-                    "name": "Name",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "nodegroup_id": "89f065a1-c457-11e9-98b5-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true
@@ -190,11 +178,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-<<<<<<< HEAD
                     "name": "Name for Statement about TimeSpan of Observation Event",
-=======
-                    "name": "Name",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "nodegroup_id": "89f07035-c457-11e9-a69f-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -213,11 +197,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-<<<<<<< HEAD
                     "name": "Statement about TimeSpan of Observation Event",
-=======
-                    "name": "Statement",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "nodegroup_id": "89f061de-c457-11e9-893c-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true
@@ -236,11 +216,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-<<<<<<< HEAD
                     "name": "Duration of TimeSpan of Observation Event",
-=======
-                    "name": "Duration",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "nodegroup_id": "89f06938-c457-11e9-a7fd-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true
@@ -468,7 +444,6 @@
                     ],
                     "cssclass": null,
                     "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year.\nSee: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
-<<<<<<< HEAD
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
@@ -527,111 +502,12 @@
                     ],
                     "cssclass": null,
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-=======
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-<<<<<<< HEAD
-                    "is_editable": false,
-                    "name": "Part Of",
-                    "nodegroup_id": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
-                    "sortorder": 14,
-=======
-                    "is_editable": true,
-                    "name": "TimeSpan",
-                    "nodegroup_id": "89f06cba-c457-11e9-916e-a4d18cec433a",
-                    "sortorder": 12,
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
-                    "visible": true
-                },
-                {
-                    "active": true,
-<<<<<<< HEAD
-                    "cardid": "0ae14b68-8e30-11eb-a9c4-faffc265b501",
-=======
-                    "cardid": "6fa417a1-c457-11e9-8e21-a4d18cec433a",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "6fa417a1-c457-11e9-8e21-a4d18cec433a",
-                            "constraintid": "f9ce7286-f5a3-44eb-ae19-4a4bd5557b51",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-<<<<<<< HEAD
-                    "description": "",
-=======
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data.\nSee:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-<<<<<<< HEAD
-                    "is_editable": true,
-                    "name": "Digital Reference",
-                    "nodegroup_id": "0ae149ba-8e30-11eb-a9c4-faffc265b501",
-                    "sortorder": 15,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "f55d25ca-7844-11ea-a33b-acde48001122",
-=======
-                    "is_editable": false,
-                    "name": "Internal Label",
-                    "nodegroup_id": "6fa38a05-c457-11e9-8ce4-a4d18cec433a",
-                    "sortorder": 13,
-                    "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-<<<<<<< HEAD
-                            "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
-                            "constraintid": "349b6429-4102-4312-9fdd-3d6a914cd385",
-=======
-                            "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
-                            "constraintid": "43589cf9-b2f8-492e-a501-6890d3e7eca4",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        },
-                        {
-<<<<<<< HEAD
-                            "card_id": "f55d25ca-7844-11ea-a33b-acde48001122",
-                            "constraintid": "405e08a4-bf30-45d2-b454-9a8ce3fea381",
-=======
-                            "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
-                            "constraintid": "9ff0630f-e3e0-48cb-b14e-6465f69a1449",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": false,
-<<<<<<< HEAD
-=======
                     "name": "Part Of",
                     "nodegroup_id": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
                     "sortorder": 14,
@@ -683,7 +559,6 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": false,
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "name": "Described in File",
                     "nodegroup_id": "f55c6932-7844-11ea-a33b-acde48001122",
                     "sortorder": 16,
@@ -734,20 +609,12 @@
                     "card_id": "c07db919-c457-11e9-adef-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-<<<<<<< HEAD
                         "label": "Observation Event Procedure",
-=======
-                        "label": "Activity Technique",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "94df0cae-d383-11e9-8363-a4d18cec433a",
-<<<<<<< HEAD
                     "label": "Observation Event Procedure",
-=======
-                    "label": "Activity Technique",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "node_id": "c07d2e07-c457-11e9-bbe0-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
@@ -965,108 +832,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
                 {
-<<<<<<< HEAD
-=======
-                    "card_id": "8ec31138-c457-11e9-a987-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Text",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "d483e7ab-d383-11e9-aa31-a4d18cec433a",
-                    "label": "Language of Text",
-                    "node_id": "8ec31780-c457-11e9-9543-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "8ec31138-c457-11e9-a987-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "d4862eab-d383-11e9-a3d8-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "8ec326e3-c457-11e9-b43c-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "8ec31138-c457-11e9-a987-a4d18cec433a",
-                    "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "d4875cf8-d383-11e9-a286-a4d18cec433a",
-                    "label": "source",
-                    "node_id": "8ec31e91-c457-11e9-b1bd-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "8ec31138-c457-11e9-a987-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Text of Statement",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "width": "100%"
-                    },
-                    "id": "d4850228-d383-11e9-98b0-a4d18cec433a",
-                    "label": "Text of Statement",
-                    "node_id": "8ec331a1-c457-11e9-8d7a-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000005"
-                },
-                {
-                    "card_id": "89f06f00-c457-11e9-b138-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Beginning of the beginning",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "de7e4361-d384-11e9-804d-a4d18cec433a",
-                    "label": "Beginning of the beginning",
-                    "node_id": "89f08768-c457-11e9-94db-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "89f06f00-c457-11e9-b138-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "End of the beginning",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "de7f76d9-d384-11e9-92c8-a4d18cec433a",
-                    "label": "End of the beginning",
-                    "node_id": "89f077f0-c457-11e9-b043-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "card_id": "89f06f00-c457-11e9-b138-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -1227,28 +992,7 @@
                     "card_id": "89f067e3-c457-11e9-95c9-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-<<<<<<< HEAD
                         "label": "Name",
-=======
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "208355a3-d385-11e9-8f4d-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "89f0a859-c457-11e9-bce4-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "89f067e3-c457-11e9-95c9-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Text of Name",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
@@ -1867,110 +1611,7 @@
                 {
                     "card_id": "89f06b0f-c457-11e9-b64e-a4d18cec433a",
                     "config": {
-<<<<<<< HEAD
                         "label": "Source Reference Work for Duration of TimeSpan of Observation Event",
-=======
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Lowest possible value",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "f989afd4-d384-11e9-aa31-a4d18cec433a",
-                    "label": "Lowest possible value",
-                    "node_id": "89f07502-c457-11e9-9671-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
-                    "card_id": "89f06b0f-c457-11e9-b64e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "f98ade7a-d384-11e9-8e64-a4d18cec433a",
-                    "label": "type",
-                    "node_id": "89f0a394-c457-11e9-9ab2-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "89f06b0f-c457-11e9-b64e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Value",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "f98c0002-d384-11e9-b93a-a4d18cec433a",
-                    "label": "Value",
-                    "node_id": "89f08b1e-c457-11e9-91e7-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
-                    "card_id": "89f06b0f-c457-11e9-b64e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Highest possible value",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "f98ed0c2-d384-11e9-bbc7-a4d18cec433a",
-                    "label": "Highest possible value",
-                    "node_id": "89f073c2-c457-11e9-8990-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
-                    "card_id": "89f06b0f-c457-11e9-b64e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Unit",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "f9902c38-d384-11e9-be94-a4d18cec433a",
-                    "label": "Unit",
-                    "node_id": "89f07ba8-c457-11e9-8e8e-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "cd41a621-c457-11e9-8818-a4d18cec433a",
-                    "config": {
-                        "label": "observed",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                         "placeholder": ""
                     },
                     "id": "f98da580-d384-11e9-b29a-a4d18cec433a",
@@ -1979,131 +1620,6 @@
                     "sortorder": 6,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-<<<<<<< HEAD
-=======
-                },
-                {
-                    "card_id": "0ae14b68-8e30-11eb-a9c4-faffc265b501",
-                    "config": {
-                        "label": "Digital Source",
-                        "placeholder": ""
-                    },
-                    "id": "0ae14d8e-8e30-11eb-a9c4-faffc265b501",
-                    "label": "Digital Source",
-                    "node_id": "0ae14d2a-8e30-11eb-a9c4-faffc265b501",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "0ae14b68-8e30-11eb-a9c4-faffc265b501",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Digital Reference Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "0ae14dc0-8e30-11eb-a9c4-faffc265b501",
-                    "label": "Digital Reference Type",
-                    "node_id": "0ae14c58-8e30-11eb-a9c4-faffc265b501",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "b6679957-d383-11e9-86cc-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "87e40cc5-c457-11e9-8933-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "b66554dc-d383-11e9-b128-a4d18cec433a",
-                    "label": "Name Type",
-                    "node_id": "87e4092e-c457-11e9-8036-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "b6644351-d383-11e9-b4e2-a4d18cec433a",
-                    "label": "Name Language",
-                    "node_id": "87e3ec82-c457-11e9-89d8-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "b662e00a-d383-11e9-90fd-a4d18cec433a",
-                    "label": "Name Label",
-                    "node_id": "87e4053d-c457-11e9-85c4-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "87e3dee8-c457-11e9-9e0e-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Name",
-                        "placeholder": ""
-                    },
-                    "id": "b6669be6-d383-11e9-909e-a4d18cec433a",
-                    "label": "Source Reference Work for Name",
-                    "node_id": "87e3fccc-c457-11e9-b64d-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "736f06a6-c54d-11ea-9f58-024e0d439fdb",
-                    "config": {
-                        "label": "Part of Event",
-                        "placeholder": ""
-                    },
-                    "id": "229ee393-a1e9-11eb-a29f-024e0d439fdb",
-                    "label": "Part of Event",
-                    "node_id": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                 }
             ],
             "color": "rgba(131,160,214,0.75)",
@@ -2854,11 +2370,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-<<<<<<< HEAD
                     "id": "af307580-a27b-11eb-a29f-024e0d439fdb"
-=======
-                    "id": "3beb8b92-a18a-11eb-a29f-024e0d439fdb"
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                 }
             ],
             "graphid": "615b11ee-c457-11e9-910c-a4d18cec433a",
@@ -4657,11 +4169,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-<<<<<<< HEAD
         "git hash": "c3b705b11 2021-04-20 15:05:23 -0700",
-=======
-        "git hash": "173edf02d 2021-04-16 16:58:02 -0700",
->>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }
