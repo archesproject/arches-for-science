@@ -344,6 +344,14 @@
     flex-direction: column;
 }
 
+.thematic-report-table-head {
+    background: #fafafa;
+}
+
+.thematic-report-table-body > :nth-child(even) {
+    background: #F5FAFE;
+}
+
 .thematic-report-footer {
     background-color: #fafafa;
     border-top: 1px solid #ddd;
