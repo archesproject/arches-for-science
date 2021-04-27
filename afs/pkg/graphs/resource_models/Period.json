@@ -17,7 +17,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name",
+                    "name": "Name for Duration of TimeSpan Duration of TimeSpan",
                     "nodegroup_id": "4db4a7e1-c072-11e9-a32d-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -36,7 +36,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Statement",
+                    "name": "Statement about Statement",
                     "nodegroup_id": "4db4ad0a-c072-11e9-987a-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true
@@ -178,7 +178,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name",
+                    "name": "Name for TimeSpan",
                     "nodegroup_id": "4db4b0e6-c072-11e9-b353-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true
@@ -347,20 +347,20 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
-                    "card_id": "4db4af4c-c072-11e9-81fa-a4d18cec433a",
+                    "card_id": "4db4bd99-c072-11e9-af2d-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
+                        "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
-                    "id": "79508235-d323-11e9-8a1f-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "4db4d302-c072-11e9-94f8-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
+                    "id": "55bc52cc-d324-11e9-abe2-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "4db4c163-c072-11e9-acf9-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
@@ -383,11 +383,11 @@
                 {
                     "card_id": "4db4ab02-c072-11e9-9658-a4d18cec433a",
                     "config": {
-                        "label": "source",
+                        "label": "Source Reference Work for Name for Duration of TimeSpan Duration of TimeSpan",
                         "placeholder": ""
                     },
                     "id": "9d03101c-d324-11e9-99b2-a4d18cec433a",
-                    "label": "source",
+                    "label": "Source Reference Work for Name for Duration of TimeSpan Duration of TimeSpan",
                     "node_id": "4db4c52e-c072-11e9-8282-a4d18cec433a",
                     "sortorder": 4,
                     "visible": false,
@@ -397,14 +397,14 @@
                     "card_id": "4db4ab02-c072-11e9-9658-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Text of Name",
+                        "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "9d0077e6-d324-11e9-a65b-a4d18cec433a",
-                    "label": "Text of Name",
+                    "label": "Name",
                     "node_id": "4db4db21-c072-11e9-9578-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
@@ -414,14 +414,14 @@
                     "card_id": "4db4ab02-c072-11e9-9658-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
+                        "label": "Name Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "9d01faa6-d324-11e9-b1ff-a4d18cec433a",
-                    "label": "_label",
+                    "label": "Name Label",
                     "node_id": "4db4ce66-c072-11e9-97b0-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -433,12 +433,12 @@
                         "defaultValue": [
                             "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
-                        "label": "Type of Name",
+                        "label": "Name Type",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "9d040468-d324-11e9-bad3-a4d18cec433a",
-                    "label": "Type of Name",
+                    "label": "Name Type",
                     "node_id": "4db4d03a-c072-11e9-9a22-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
@@ -450,12 +450,12 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
-                        "label": "Language of Text",
+                        "label": "Name Language",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "9d04fdd1-d324-11e9-9f99-a4d18cec433a",
-                    "label": "Language of Text",
+                    "label": "Name Language",
                     "node_id": "4db4cd6b-c072-11e9-b8bb-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
@@ -465,14 +465,14 @@
                     "card_id": "4db4af4c-c072-11e9-81fa-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Text of Statement",
+                        "label": "Statement",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "794dbf73-d323-11e9-a4c8-a4d18cec433a",
-                    "label": "Text of Statement",
+                    "label": "Statement",
                     "node_id": "4db4d5b3-c072-11e9-9a36-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
@@ -481,11 +481,11 @@
                 {
                     "card_id": "4db4af4c-c072-11e9-81fa-a4d18cec433a",
                     "config": {
-                        "label": "source",
+                        "label": "Source Reference Work for TimeSpan",
                         "placeholder": ""
                     },
                     "id": "794f45e1-d323-11e9-a5af-a4d18cec433a",
-                    "label": "source",
+                    "label": "Source Reference Work for TimeSpan",
                     "node_id": "4db4d12b-c072-11e9-bba5-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -498,12 +498,12 @@
                             "72202a9f-1551-4cbc-9c7a-73c02321f3ea",
                             "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0"
                         ],
-                        "label": "Type of Statement",
+                        "label": "Statement Type",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "7951c64f-d323-11e9-a770-a4d18cec433a",
-                    "label": "Type of Statement",
+                    "label": "Statement Type",
                     "node_id": "4db4da3d-c072-11e9-a7db-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
@@ -515,98 +515,16 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
-                        "label": "Language of Text",
+                        "label": "Statement Language",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "7953048c-d323-11e9-aa98-a4d18cec433a",
-                    "label": "Language of Text",
+                    "label": "Statement Language",
                     "node_id": "4db4dc1c-c072-11e9-9ff1-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Text",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "a9580ae8-d322-11e9-a539-a4d18cec433a",
-                    "label": "Language of Text",
-                    "node_id": "53888094-c072-11e9-9638-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea",
-                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0"
-                        ],
-                        "label": "Type of Statement",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "a95b7278-d322-11e9-a1d0-a4d18cec433a",
-                    "label": "Type of Statement",
-                    "node_id": "53888507-c072-11e9-8455-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Text of Statement",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "a95c634c-d322-11e9-a904-a4d18cec433a",
-                    "label": "Text of Statement",
-                    "node_id": "53888fd1-c072-11e9-ba01-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "a95a86b0-d322-11e9-8b49-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "53888a00-c072-11e9-a85b-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
-                    "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "a9594c78-d322-11e9-941c-a4d18cec433a",
-                    "label": "source",
-                    "node_id": "53888828-c072-11e9-9faf-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "3f3f51a8-c072-11e9-aa1e-a4d18cec433a",
@@ -641,35 +559,18 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "4db4bd99-c072-11e9-af2d-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "55bc52cc-d324-11e9-abe2-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "4db4c163-c072-11e9-acf9-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Beginning of the beginning",
+                        "label": "Earliest Begin",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
                     },
                     "id": "081d13d7-d323-11e9-9778-a4d18cec433a",
-                    "label": "Beginning of the beginning",
+                    "label": "Earliest Begin",
                     "node_id": "4db4c9ca-c072-11e9-a22e-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
@@ -680,14 +581,14 @@
                     "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "Beginning of the end",
+                        "label": "Earliest End",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
                     },
                     "id": "081e50ab-d323-11e9-a1f0-a4d18cec433a",
-                    "label": "Beginning of the end",
+                    "label": "Earliest End",
                     "node_id": "4db4d6a3-c072-11e9-ab9a-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
@@ -696,68 +597,18 @@
                 {
                     "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "Type of Timespan",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "081fbd97-d323-11e9-a20d-a4d18cec433a",
-                    "label": "Type of Timespan",
-                    "node_id": "4db4d4cf-c072-11e9-8019-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "0820d480-d323-11e9-b4fc-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "4db4d870-c072-11e9-a674-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
-                    "config": {
                         "dateFormat": "YYYY-MM-DD",
                         "defaultValue": "",
-                        "label": "End of the beginning",
+                        "label": "Latest Begin",
                         "maxDate": false,
                         "minDate": false,
                         "placeholder": "Enter date",
                         "viewMode": "days"
                     },
                     "id": "0821e3b8-d323-11e9-a906-a4d18cec433a",
-                    "label": "End of the beginning",
+                    "label": "Latest Begin",
                     "node_id": "4db4c34f-c072-11e9-9b6b-a4d18cec433a",
                     "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "End of the end",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "0822db7a-d323-11e9-835b-a4d18cec433a",
-                    "label": "End of the end",
-                    "node_id": "4db4d211-c072-11e9-9651-a4d18cec433a",
-                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
                 },
@@ -765,14 +616,14 @@
                     "card_id": "4db4b32e-c072-11e9-9e10-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Text of Name",
+                        "label": "Name",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "24859d73-d323-11e9-8dc3-a4d18cec433a",
-                    "label": "Text of Name",
+                    "label": "Name",
                     "node_id": "4db4dd0c-c072-11e9-b5fc-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
@@ -781,11 +632,11 @@
                 {
                     "card_id": "4db4b32e-c072-11e9-9e10-a4d18cec433a",
                     "config": {
-                        "label": "source",
+                        "label": "Source Reference Work for Name for TimeSpan",
                         "placeholder": ""
                     },
                     "id": "248711b5-d323-11e9-9ad7-a4d18cec433a",
-                    "label": "source",
+                    "label": "Source Reference Work for Name for TimeSpan",
                     "node_id": "4db4d3e6-c072-11e9-96fe-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -797,12 +648,12 @@
                         "defaultValue": [
                             "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
-                        "label": "Type of Name",
+                        "label": "Name Type",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "24883619-d323-11e9-9dfa-a4d18cec433a",
-                    "label": "Type of Name",
+                    "label": "Name Type",
                     "node_id": "4db4c440-c072-11e9-be11-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
@@ -812,14 +663,14 @@
                     "card_id": "4db4b32e-c072-11e9-9e10-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
+                        "label": "Name Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "24892b7a-d323-11e9-88c3-a4d18cec433a",
-                    "label": "_label",
+                    "label": "Name Label",
                     "node_id": "4db4d954-c072-11e9-83e5-a4d18cec433a",
                     "sortorder": 4,
                     "visible": false,
@@ -831,97 +682,16 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
-                        "label": "Language of Text",
+                        "label": "Name Language",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "248a35cf-d323-11e9-a384-a4d18cec433a",
-                    "label": "Language of Text",
+                    "label": "Name Language",
                     "node_id": "4db4c8d9-c072-11e9-98d6-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Type of Name",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "7619ee78-d322-11e9-af49-a4d18cec433a",
-                    "label": "Type of Name",
-                    "node_id": "50dc7c42-c072-11e9-87e1-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
-                    "config": {
-                        "label": "source",
-                        "placeholder": ""
-                    },
-                    "id": "761de01c-d322-11e9-8f05-a4d18cec433a",
-                    "label": "source",
-                    "node_id": "50dc77f5-c072-11e9-a25d-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Text of Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "761c9ed1-d322-11e9-91c2-a4d18cec433a",
-                    "label": "Text of Name",
-                    "node_id": "50dc7d6e-c072-11e9-aa25-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Language of Text",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "7618988f-d322-11e9-ab2a-a4d18cec433a",
-                    "label": "Language of Text",
-                    "node_id": "50dc7470-c072-11e9-bcf6-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "761b138c-d322-11e9-ac4f-a4d18cec433a",
-                    "label": "_label",
-                    "node_id": "50dc7a6b-c072-11e9-adce-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "7e3f0575-c072-11e9-8e7f-a4d18cec433a",
@@ -940,14 +710,14 @@
                     "card_id": "529441c7-c072-11e9-b3e8-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "_label",
+                        "label": "Identifier Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "93407d97-d322-11e9-8c34-a4d18cec433a",
-                    "label": "_label",
+                    "label": "Identifier Label",
                     "node_id": "5294460a-c072-11e9-9e05-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -956,11 +726,11 @@
                 {
                     "card_id": "529441c7-c072-11e9-b3e8-a4d18cec433a",
                     "config": {
-                        "label": "source",
+                        "label": "Source Reference Work for Identifier",
                         "placeholder": ""
                     },
                     "id": "933e60b8-d322-11e9-8cc6-a4d18cec433a",
-                    "label": "source",
+                    "label": "Source Reference Work for Identifier",
                     "node_id": "52944aba-c072-11e9-b558-a4d18cec433a",
                     "sortorder": 2,
                     "visible": false,
@@ -970,12 +740,12 @@
                     "card_id": "529441c7-c072-11e9-b3e8-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Type of Identifier",
+                        "label": "Identifier Type",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "933f7657-d322-11e9-91ed-a4d18cec433a",
-                    "label": "Type of Identifier",
+                    "label": "Identifier Type",
                     "node_id": "5294445c-c072-11e9-be1b-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
@@ -985,14 +755,14 @@
                     "card_id": "529441c7-c072-11e9-b3e8-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Value",
+                        "label": "Identifier",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "933cf626-d322-11e9-903a-a4d18cec433a",
-                    "label": "Value",
+                    "label": "Identifier",
                     "node_id": "52944811-c072-11e9-8f5e-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
@@ -1193,6 +963,19 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
+                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
+                    "config": {
+                        "label": "Source Reference Work for Name",
+                        "placeholder": ""
+                    },
+                    "id": "761de01c-d322-11e9-8f05-a4d18cec433a",
+                    "label": "Source Reference Work for Name",
+                    "node_id": "50dc77f5-c072-11e9-a25d-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "4db4bd99-c072-11e9-af2d-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -1299,6 +1082,223 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "a95c634c-d322-11e9-a904-a4d18cec433a",
+                    "label": "Statement",
+                    "node_id": "53888fd1-c072-11e9-ba01-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea",
+                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0"
+                        ],
+                        "label": "Statement Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "a95b7278-d322-11e9-a1d0-a4d18cec433a",
+                    "label": "Statement Type",
+                    "node_id": "53888507-c072-11e9-8455-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Statement Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "a9580ae8-d322-11e9-a539-a4d18cec433a",
+                    "label": "Statement Language",
+                    "node_id": "53888094-c072-11e9-9638-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
+                    "config": {
+                        "label": "Source Reference Work for Statement",
+                        "placeholder": ""
+                    },
+                    "id": "a9594c78-d322-11e9-941c-a4d18cec433a",
+                    "label": "Source Reference Work for Statement",
+                    "node_id": "53888828-c072-11e9-9faf-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "53887d57-c072-11e9-acb1-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "a95a86b0-d322-11e9-8b49-a4d18cec433a",
+                    "label": "Statement Label",
+                    "node_id": "53888a00-c072-11e9-a85b-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "4db4af4c-c072-11e9-81fa-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "79508235-d323-11e9-8a1f-a4d18cec433a",
+                    "label": "Statement Label",
+                    "node_id": "4db4d302-c072-11e9-94f8-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "761c9ed1-d322-11e9-91c2-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "50dc7d6e-c072-11e9-aa25-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "7619ee78-d322-11e9-af49-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "50dc7c42-c072-11e9-87e1-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "7618988f-d322-11e9-ab2a-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "50dc7470-c072-11e9-bcf6-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "50dc6e3a-c072-11e9-922e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "761b138c-d322-11e9-ac4f-a4d18cec433a",
+                    "label": "Name Label",
+                    "node_id": "50dc7a6b-c072-11e9-adce-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Latest End",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "0822db7a-d323-11e9-835b-a4d18cec433a",
+                    "label": "Latest End",
+                    "node_id": "4db4d211-c072-11e9-9651-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "TimeSpan Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "081fbd97-d323-11e9-a20d-a4d18cec433a",
+                    "label": "TimeSpan Type",
+                    "node_id": "4db4d4cf-c072-11e9-8019-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "4db4ba66-c072-11e9-8c79-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "TimeSpan Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "0820d480-d323-11e9-b4fc-a4d18cec433a",
+                    "label": "TimeSpan Label",
+                    "node_id": "4db4d870-c072-11e9-a674-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 }
             ],
             "color": null,
@@ -1531,15 +1531,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "4db4d78a-c072-11e9-8d94-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "52c406ca-b25c-11e9-9ad1-a4d18cec433a",
-                    "edgeid": "50dc8b75-c072-11e9-8261-a4d18cec433a",
-                    "graph_id": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "50dc6228-c072-11e9-8040-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -1927,6 +1918,15 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "4db4bb9c-c072-11e9-80b5-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "52c406ca-b25c-11e9-9ad1-a4d18cec433a",
+                    "edgeid": "50dc8b75-c072-11e9-8261-a4d18cec433a",
+                    "graph_id": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "50dc6228-c072-11e9-8040-a4d18cec433a"
                 }
             ],
             "functions_x_graphs": [
@@ -1948,7 +1948,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
-                    "id": "7a5f147e-a18a-11eb-a29f-024e0d439fdb"
+                    "id": "ef671979-a27b-11eb-a29f-024e0d439fdb"
                 }
             ],
             "graphid": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
@@ -2051,6 +2051,42 @@
                 }
             ],
             "nodes": [
+                {
+                    "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "content",
+                    "nodegroup_id": "52943a97-c072-11e9-a3c4-a4d18cec433a",
+                    "nodeid": "52944811-c072-11e9-8f5e-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "number",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "lowest possible value",
+                    "nodegroup_id": "4db4b480-c072-11e9-bb63-a4d18cec433a",
+                    "nodeid": "4db4c068-c072-11e9-8a6b-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90a_has_lower_value_limit",
+                    "sortorder": 0
+                },
                 {
                     "config": null,
                     "datatype": "string",
@@ -2451,42 +2487,6 @@
                     "nodeid": "50dc7a6b-c072-11e9-adce-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "content",
-                    "nodegroup_id": "52943a97-c072-11e9-a3c4-a4d18cec433a",
-                    "nodeid": "52944811-c072-11e9-8f5e-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "number",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "52c40a30-b25c-11e9-92cf-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "lowest possible value",
-                    "nodegroup_id": "4db4b480-c072-11e9-bb63-a4d18cec433a",
-                    "nodeid": "4db4c068-c072-11e9-8a6b-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90a_has_lower_value_limit",
                     "sortorder": 0
                 },
                 {
@@ -3479,7 +3479,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "173edf02d 2021-04-16 16:58:02 -0700",
+        "git hash": "c3b705b11 2021-04-20 15:05:23 -0700",
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }
