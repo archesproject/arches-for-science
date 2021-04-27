@@ -95,7 +95,6 @@ define([
 
         this.initialize = function() {
             self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph)
-
         };
 
         this.mapResourceInstanceDataToSections = function(tabDatum, disambiguatedResourceGraph) {
