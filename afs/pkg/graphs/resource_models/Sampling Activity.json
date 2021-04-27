@@ -651,8 +651,17 @@
                 {
                     "card_id": "03357863-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
+<<<<<<< HEAD
                         "label": "Location of Sampling Activity",
                         "placeholder": null
+=======
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+>>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     },
                     "id": "033578e8-1d9d-11eb-a29f-024e0d439fdb",
                     "label": "Location of Sampling Activity",
@@ -1201,6 +1210,73 @@
                 {
                     "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
+<<<<<<< HEAD
+=======
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name language",
+                        "options": [],
+                        "placeholder": "Select one or more languages of the content"
+                    },
+                    "id": "033578f0-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name language",
+                    "node_id": "03357898-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Referenced In Work",
+                        "placeholder": "Select one or more reference works"
+                    },
+                    "id": "033578f1-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Referenced In Work",
+                    "node_id": "033578a4-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578f2-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "_label",
+                    "node_id": "03357890-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": null,
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter name of research project or task.",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578f3-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name",
+                    "node_id": "033578c0-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+>>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                         "label": "Referenced in Work",
                         "placeholder": ""
                     },
@@ -1279,6 +1355,56 @@
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
+<<<<<<< HEAD
+=======
+                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578d3-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "_label",
+                    "node_id": "033578ad-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357863-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Location of Sampling Activity",
+                        "placeholder": null
+                    },
+                    "id": "033578e8-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Location of Sampling Activity",
+                    "node_id": "03357861-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578c5-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Language",
+                    "node_id": "03357895-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+>>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
@@ -1313,6 +1439,39 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+<<<<<<< HEAD
+=======
+                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578c8-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "_label",
+                    "node_id": "033578b0-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Referenced in Work",
+                        "placeholder": ""
+                    },
+                    "id": "033578c9-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Referenced in Work",
+                    "node_id": "033578aa-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+>>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                     "card_id": "0335785d-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "label": "Occurs Before Event",
@@ -2627,7 +2786,11 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+<<<<<<< HEAD
                     "id": "2e91ef05-a27c-11eb-a29f-024e0d439fdb"
+=======
+                    "id": "b88ae29e-a18a-11eb-a29f-024e0d439fdb"
+>>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
                 }
             ],
             "graphid": "03357848-1d9d-11eb-a29f-024e0d439fdb",
@@ -4597,7 +4760,11 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
+<<<<<<< HEAD
         "git hash": "c3b705b11 2021-04-20 15:05:23 -0700",
+=======
+        "git hash": "173edf02d 2021-04-16 16:58:02 -0700",
+>>>>>>> c5c41636f9dfba2183f8d94b067069bac1614cf2
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }
