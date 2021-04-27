@@ -5,7 +5,7 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step'
 ], function(ko, $, arches, Workflow) {
-    return ko.components.register('physical-thing-workflow', {
+    return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
             var self = this;
 
@@ -102,10 +102,10 @@ define([
 
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('physical-thing-workflow');
+            self.getJSON('review-dataset-workflow');
 
             self.ready(true);
         },
-        template: { require: 'text!templates/views/components/plugins/physical-thing-workflow.htm' }
+        template: { require: 'text!templates/views/components/plugins/review-dataset-workflow.htm' }
     });
 });
