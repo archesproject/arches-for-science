@@ -94,7 +94,7 @@ define([
         /* END page layout source-of-truth */ 
 
         this.initialize = function() {
-            self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph)
+            self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph);
         };
 
         this.mapResourceInstanceDataToSections = function(tabDatum, disambiguatedResourceGraph) {
@@ -128,7 +128,7 @@ define([
             else {
                 return Object.values(resourceInstanceData).find(function(resourceInstanceChildNodeData) {
                     return resourceInstanceChildNodeData[NODE_ID] === nodeId;
-                })
+                });
             }
         };
         
