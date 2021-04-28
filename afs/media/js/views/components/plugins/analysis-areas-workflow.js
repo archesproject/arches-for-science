@@ -5,7 +5,7 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step'
 ], function(ko, $, arches, Workflow) {
-    return ko.components.register('sample-workflow', {
+    return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
             var self = this;
 
@@ -87,10 +87,10 @@ define([
 
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('sample-workflow');
+            self.getJSON('analysis-areas-workflow');
 
             self.ready(true);
         },
-        template: { require: 'text!templates/views/components/plugins/sample-workflow.htm' }
+        template: { require: 'text!templates/views/components/plugins/analysis-areas-workflow.htm' }
     });
 });
