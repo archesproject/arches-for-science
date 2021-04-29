@@ -8,9 +8,17 @@ define([
     function viewModel(params) {
         var self = this;
 
-        console.log("DS()D", params)
+        this.manifestManagerUrl = arches.urls.plugin('image-service-manager');
+        
+        this.isManifestManagerHidden = ko.observable(true);
 
-        this.foo = 'bar';
+        this.initialize = function() {};
+
+        this.toggleManifestManagerHidden = function() {
+            self.isManifestManagerHidden(!self.isManifestManagerHidden());
+        };
+
+        this.initialize();
     };
 
     ko.components.register('workflow-manifest-manager', {
