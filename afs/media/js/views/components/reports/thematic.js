@@ -17,23 +17,42 @@ define([
             title: "Names/Classification",
             sections: [
                 {
-                    sectionTitle: "Name(s) of Thing",
                     nodeId: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',  /* assumes each section contains a single node */
-                    hiddenChildNodeIds: [  /* displays all child nodes by default */
-                        'b9c1d69e-b497-11e9-8408-a4d18cec433a',
-                        'b9c1d570-b497-11e9-8315-a4d18cec433a',
+                    sectionTitle: "Name(s) of Thing",
+                    hasPlusSign: true,
+                    childNodeInformation: [
+                        { 
+                            nodeId: 'b9c1d8a6-b497-11e9-876b-a4d18cec433a',
+                            columnName: 'Name',
+                            
+                        },
+                        { 
+                            nodeId: 'b9c1d7ab-b497-11e9-9ab7-a4d18cec433a',
+                            columnName: 'Name Type',
+                        },
+                        { 
+                            nodeId:'b9c1d400-b497-11e9-90ea-a4d18cec433a', 
+                            columnName: 'Language',
+                        },
                     ],
                 },
                 {
-                    sectionTitle: "Type of Object",
                     nodeId: '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a',  /* assumes each section contains a single node */
+                    sectionTitle: "Type of Object",
                 },
                 {
-                    sectionTitle: "Identifiers",
                     nodeId: '22c150ca-b498-11e9-9adc-a4d18cec433a',  /* assumes each section contains a single node */
-                    displayedChildNodeIds: [  /* displays all child nodes by default */
-                        '22c169b5-b498-11e9-bdad-a4d18cec433a',
-                        '22c15cfa-b498-11e9-b5e3-a4d18cec433a',
+                    sectionTitle: "Identifiers",
+                    hasPlusSign: true,
+                    childNodeInformation: [
+                        { 
+                            nodeId: '22c169b5-b498-11e9-bdad-a4d18cec433a',
+                            columnName: 'Identifier',
+                        },
+                        { 
+                            nodeId: '22c15cfa-b498-11e9-b5e3-a4d18cec433a',
+                            columnName: 'Identifier Type',
+                        },
                     ],
                 }
             ],
@@ -64,74 +83,55 @@ define([
         }
     ];
 
-    var ThematicReportTab = function(title, sections) {
+    var ThematicReportTab = function(tabDatum, disambiguatedResourceGraph, hideEmptySections) {
         var self = this;
 
+        this.hideEmptySections = hideEmptySections;  /* READ-ONLY on this level */
+
         /* BEGIN page layout source-of-truth */ 
-        this.title = title;
-        this.sections = ko.observableArray();
+        this.title = tabDatum.title;
+        this.sections = ko.observableArray(tabDatum.sections);
         /* END page layout source-of-truth */ 
 
         this.initialize = function() {
-            sections.forEach(function(section) {    
-                self.sections.push({
-                    title: section.sectionTitle,
-                    data: self.getSectionData(
-                        section.data,
-                        section.displayedChildNodeIds,
-                        section.hiddenChildNodeIds
-                    ),
+            self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph);
+        };
+
+        this.mapResourceInstanceDataToSections = function(tabDatum, disambiguatedResourceGraph) {
+            tabDatum.sections.forEach(function(section) {
+                /* BEGIN normalize resourceInstanceData shape */ 
+                var resourceInstanceData = Object.values(disambiguatedResourceGraph.resource).find(function(topLevelData) {
+                    if (topLevelData instanceof Array) {
+                        return topLevelData[0][NODE_ID] === section.nodeId;  /* all data has same nodeId */
+                    }
+                    return topLevelData[NODE_ID] === section.nodeId;
                 });
+
+                if (!(resourceInstanceData instanceof Array)) {
+                    if (!resourceInstanceData) {
+                        resourceInstanceData = [];
+                    }
+                    else {
+                        resourceInstanceData = [ resourceInstanceData ];
+                    }
+                }
+                /* END normalize resourceInstanceData shape */ 
+
+                section['resourceInstanceData'] = resourceInstanceData;
             });
         };
 
-        this.getSectionData = function(sectionData, displayedChildNodeIds, hiddenChildNodeIds) {
-            var displayedChildNodeIds = displayedChildNodeIds || [];
-            var hiddenChildNodeIds = hiddenChildNodeIds || [];
-
-            var topLevelData = {};
-
-            var filterData = function(data) {
-                if (data[VALUE] !== NON_DATA_COLLECTING_NODE) {
-                    if (displayedChildNodeIds.length) {
-                        if (displayedChildNodeIds.includes(data[NODE_ID])) {
-                            return data;
-                        }
-                    }
-                    else if (hiddenChildNodeIds.length) {
-                        if (!hiddenChildNodeIds.includes(data[NODE_ID])) {
-                            return data;
-                        }
-                    }
-                    else {
-                        return data;
-                    }
-                }
-            };
-
-            var childNodes = Object.entries(sectionData).reduce(function(acc, [key, value]) {
-                if (!_.isObject(value)) {  /* if resource node-level value */ 
-                    topLevelData[key] = value;
-                }
-                else {
-                    var filteredValue = filterData(value);
-                    if (filteredValue) {
-                        acc.push(filteredValue);
-                    }
-                }
-
-                return acc;
-            }, []);
-
-            var filteredTopLevelData = filterData(topLevelData);
-
-            if (filteredTopLevelData) {
-                childNodes.unshift(filteredTopLevelData);
-            } 
-                
-            return childNodes;
+        this.getResourceInstanceNodeData = function(nodeId, resourceInstanceData) {
+            if (resourceInstanceData[NODE_ID] === nodeId) {
+                return resourceInstanceData[NODE_ID];
+            }
+            else {
+                return Object.values(resourceInstanceData).find(function(resourceInstanceChildNodeData) {
+                    return resourceInstanceChildNodeData[NODE_ID] === nodeId;
+                });
+            }
         };
-
+        
         this.initialize();
     };
 
@@ -139,39 +139,45 @@ define([
         var self = this;
         ReportViewModel.apply(this, [params]);
 
+        this.loading = ko.observable();
+
         this.disambiguatedResourceGraph = ko.observable();
 
         this.reportTabs = ko.observableArray();
 
         this.activeTabIndex = ko.observable(0);
-        this.activeTab = ko.observable(TAB_DATA[self.activeTabIndex()]);
+        this.activeTab = ko.computed(function() {
+            if (self.reportTabs().length) {
+                return self.reportTabs()[self.activeTabIndex()];
+            }
+        });
 
-        this.hideEmptyReportSections = ko.observable(false);
-        
+        this.emptyReportSectionsHidden = ko.observable(false);
+
         this.initialize = function() {
+            self.loading(true);
+
             var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false';
 
             $.get(url, function(data) {
                 self.disambiguatedResourceGraph(data);
 
                 TAB_DATA.forEach(function(tabDatum) {
-                    tabDatum.sections.forEach(function(section) {
-                        section['data'] = self.getNodeDataFromDisambiguatedGraph(section.nodeId);
-                    });
-
                     self.reportTabs.push(
-                        new ThematicReportTab(tabDatum.title, tabDatum.sections)
+                        new ThematicReportTab(
+                            tabDatum,
+                            self.disambiguatedResourceGraph(),
+                            self.emptyReportSectionsHidden
+                        )
                     );
                 });
 
-                console.log('vm init, reportTabs', self.reportTabs())
+                self.loading(false);
             });
         };
 
-        this.getNodeDataFromDisambiguatedGraph = function(nodeId) {
-            return Object.values(self.disambiguatedResourceGraph().resource).find(function(topLevelNode) {
-                return topLevelNode[NODE_ID] === nodeId;
-            });
+        this.toggleEmptyReportSections = function() {
+            self.emptyReportSectionsHidden(!self.emptyReportSectionsHidden());
         };
 
         this.initialize();
