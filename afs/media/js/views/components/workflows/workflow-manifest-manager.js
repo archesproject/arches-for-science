@@ -19,7 +19,7 @@ define([
         };
 
         this.initialize();
-    };
+    }
 
     ko.components.register('workflow-manifest-manager', {
         viewModel: viewModel,
