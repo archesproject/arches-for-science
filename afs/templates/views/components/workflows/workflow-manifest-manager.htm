@@ -1,0 +1,29 @@
+<button
+    class="btn btn-success"
+    data-bind="click: toggleManifestManagerHidden"
+>
+    <i class="ion-android-cloud-done"></i>
+    <span>
+        Create new Image Service
+    </span>
+</button>
+
+<iframe
+    style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        border: none;
+        transition: all .5s;
+    "
+    data-bind="
+        style: {
+            transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(100%,0)'
+        },
+        attr: {
+            src: manifestManagerUrl,
+        }
+    "
+></iframe>
