@@ -23,14 +23,14 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                 }, this.report.get('tiles'), this.report.graph);
 
                 this.artists = ko.observableArray([]);
-                this.artistIds = resourceUtils.getNodeValues({
+                this.artistObjects = resourceUtils.getNodeValues({
                     nodeId: CreatorProductionEvent,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
-                this.artistIds.forEach(function(resourceid) {
-                    resourceUtils.lookupResourceInstanceData(resourceid)
+                this.artistObjects.forEach(function(artistObject) {
+                    resourceUtils.lookupResourceInstanceData(artistObject['resourceId'])
                         .then(function(data) {
-                            self.artists.push({ name: data._source.displayname, link: arches.urls.resource + '/' + resourceid });
+                            self.artists.push({ name: data._source.displayname, link: arches.urls.resource + '/' + artistObject['resourceId'] });
                         });
                 });
 
