@@ -12,7 +12,7 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                 var CreatorProductionEvent = 'cc16893d-b497-11e9-94b0-a4d18cec433a';
                 var Statement = '1953016e-b498-11e9-9445-a4d18cec433a';
                 var PartOfSet = '63e49254-c444-11e9-afbe-a4d18cec433a';
-
+                var StatementType = '1952e470-b498-11e9-b261-a4d18cec433a';
                 this.gallerySystemsTMSid = resourceUtils.getNodeValues({
                     nodeId: IdentifierContentnodeid,
                     where: {
@@ -38,7 +38,7 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                 this.description = resourceUtils.getNodeValues({
                     nodeId: Statement,
                     where: {
-                        widgetLabel: 'Statement about Thing.Type of Statement',
+                        nodeid: StatementType,
                         contains: DescriptionConceptvalueid
                     },
                     returnTiles: false
