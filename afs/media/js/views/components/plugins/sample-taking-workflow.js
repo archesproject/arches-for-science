@@ -26,6 +26,41 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: false,
+                    shoudltrackresource: true,
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Project',
+                            componentConfigs: [
+                                {
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'project-resource-instance', /* unique to step */
+                                    parameters: {
+                                        graphids: [
+                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a', /* Project; this will be mapped to '03357879-1d9d-11eb-a29f-024e0d439fdb' */
+                                        ],
+                                        renderContext: 'workflow',
+                                    },
+                                    required: false,
+                                },
+                            ], 
+                        },
+                        {
+                            sectionTitle: 'Sampled Object',
+                            componentConfigs: [
+                                {
+                                    componentName: 'resource-instance-select-widget',
+                                    uniqueInstanceName: 'physical-thing-resource-instance', /* unique to step */
+                                    parameters: {
+                                        graphids: [
+                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Physical Thing: mapped to 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb' */
+                                        ],
+                                        renderContext: 'workflow',
+                                    },
+                                    required: false,
+                                },
+                            ], 
+                        },
+                    ],
                     wastebin: {resourceid: null, description: 'a sampling activity instance'}
                 },
                 {
