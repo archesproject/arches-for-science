@@ -16,10 +16,10 @@ define([
 
     var graph = ko.observable();
 
-    var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
-    var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a';
-    var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
-    var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a";
+    var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a'; // Physical Thing graph
+    var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a'; // Name_content in Collection resource
+    var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
+    var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
 
     $.getJSON(arches.urls.graphs_api + graphId, function(data) {
         var graphModel = new GraphModel({
@@ -71,7 +71,7 @@ define([
         this.researchActivityResourceId(researchActivityStepData.resourceid);
 
         this.saveNewSet = function() {
-            $.ajax({
+            $.ajax({ //this saves the collection name in Collection
                 url: arches.urls.api_node_value,
                 type: 'POST',
                 dataType: 'json',
@@ -139,9 +139,9 @@ define([
         params.hasDirtyTile(Boolean(self.value().length));
 
         this.value.subscribe(function(a) {
-            a.forEach(function(action) {
+            a.forEach(function(action) { //this is individual physical thing resource to be saved in Collection
                 if (action.status === 'added') {
-                    $.ajax({
+                    $.ajax({ //getting resource information and add to selected resources
                         url: arches.urls.api_resources(ko.unwrap(action.value['resourceId'])),
                         data: {
                             format: 'json',
@@ -217,7 +217,7 @@ define([
         });
 
         this.submit = function() {
-            $.ajax({
+            $.ajax({  //this creates Collection resource instance
                 url: arches.urls.api_node_value,
                 type: 'POST',
                 data: {
@@ -246,7 +246,7 @@ define([
             multiple: false,
             closeOnSlect: false,
             allowClear: true,
-            ajax: {
+            ajax: { //something to do with search probably irrelevant
                 url: arches.urls.search_terms,
                 dataType: 'json',
                 quietMillis: 250,
@@ -310,7 +310,7 @@ define([
             }
 
             params.loading(true);
-            $.ajax({
+            $.ajax({ //something to do with search probably irrelevant
                 url: arches.urls.physical_thing_search_results,
                 data: filters
             }).done(function(data) {
