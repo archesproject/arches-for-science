@@ -10,12 +10,11 @@
     margin-bottom: -10px;
 }
 
-.tabbed-workflow .sampling-activity {
-    width: calc(100% - 50px);
+.tabbed-workflow .object-search-step {
     margin: unset;
 }
 
-.sampling-activity {
+.object-search-step {
     display: flex;
     flex-direction: column;
     margin-left: -25px;
@@ -23,16 +22,8 @@
     overflow-y: hidden;
 }
 
-.sampling-activity .selected-instance {
-    background-color: #fff;
-}
-
-.sampling-activity-search-panel {
-    height: 55px;
-    background-color: #f3f3f3;
-    border-bottom: #ddd solid 1px;
-    position: fixed;
-    width: 100%;
+.object-search-step .selected-instance {
+    background-color: lightgrey;
 }
 
 .workflow-search-panel {
@@ -131,7 +122,8 @@
 
 .workflow-search-list .resource-report {
     padding-left: 35px;
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd;
+    margin: 10px;
 }
 
 .tabbed-workflow-step-body .wf-multi-tile-step-list {
@@ -144,11 +136,10 @@
 
 .workflow-search-list .resource-report:hover {
     cursor: pointer;
-    background: #fff;
 }
 
 .workflow-search-list .resource-report .summary-report-related-panel {
-    /*display: none;*/
+    display: none;
 }
 
 .wf-multi-tile-btn-complete {
@@ -276,10 +267,6 @@
     height: inherit;
 }
 
-.graph-designer .thematic-report-container {
-    padding-top: 50px;
-}
-
 .thematic-report-container .scroll-y {
     height: calc(100vh - 50px);
 }
@@ -344,6 +331,56 @@
     background-color: #fff;
     height: 100%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.thematic-report-section {
+    display: flex;
+    flex-direction: column;
+    padding-top: 18px;
+    padding-bottom: 26px;
+    margin: 0 20px;
+}
+
+.thematic-report-section-title-container {
+    display: flex;
+    justify-content: space-between;
+    width: 220px;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+}
+
+.thematic-report-section-title {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.thematic-report-table-head {
+    background: #fafafa;
+    border: 1px solid #ddd;
+}
+
+.thematic-report-table-head th {
+    padding: 6px;
+}
+
+.thematic-report-table-body {
+    border: 1px solid #ddd;
+}
+
+.thematic-report-table-body > :nth-child(even) {
+    background: #F5FAFE;
+}
+
+.thematic-report-table-body td {
+    padding: 6px;
+}
+
+.thematic-report-table-body-button-container {
+    width: 75px;
+    border-right: 1px solid #ddd;
 }
 
 .thematic-report-footer {

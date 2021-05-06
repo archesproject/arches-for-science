@@ -9,6 +9,10 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                 var IdentifierContentnodeid = '22c169b5-b498-11e9-bdad-a4d18cec433a';
                 var IdentifierType = '22c15cfa-b498-11e9-b5e3-a4d18cec433a';
                 var GallerySystemsTMSid = '26094e9c-2702-4963-adee-19ad118f0f5a';
+                var CreatorProductionEvent = 'cc16893d-b497-11e9-94b0-a4d18cec433a';
+                var Statement = '1953016e-b498-11e9-9445-a4d18cec433a';
+                var PartOfSet = '63e49254-c444-11e9-afbe-a4d18cec433a';
+                var StatementType = '1952e470-b498-11e9-b261-a4d18cec433a';
                 this.gallerySystemsTMSid = resourceUtils.getNodeValues({
                     nodeId: IdentifierContentnodeid,
                     where: {
@@ -19,22 +23,22 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                 }, this.report.get('tiles'), this.report.graph);
 
                 this.artists = ko.observableArray([]);
-                this.artistIds = resourceUtils.getNodeValues({
-                    widgetLabel: 'Production (partitioned).carried out by',
+                this.artistObjects = resourceUtils.getNodeValues({
+                    nodeId: CreatorProductionEvent,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
-                this.artistIds.forEach(function(resourceid) {
-                    resourceUtils.lookupResourceInstanceData(resourceid)
+                this.artistObjects.forEach(function(artistObject) {
+                    resourceUtils.lookupResourceInstanceData(artistObject['resourceId'])
                         .then(function(data) {
-                            self.artists.push({ name: data._source.displayname, link: arches.urls.resource + '/' + resourceid });
+                            self.artists.push({ name: data._source.displayname, link: arches.urls.resource + '/' + artistObject['resourceId'] });
                         });
                 });
 
                 var DescriptionConceptvalueid = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
                 this.description = resourceUtils.getNodeValues({
-                    widgetLabel: 'Statement about Thing.Text of Statement',
+                    nodeId: Statement,
                     where: {
-                        widgetLabel: 'Statement about Thing.Type of Statement',
+                        nodeid: StatementType,
                         contains: DescriptionConceptvalueid
                     },
                     returnTiles: false
@@ -43,7 +47,7 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
 
                 this.activities = ko.observableArray();
                 var collectionSet = resourceUtils.getNodeValues({
-                    widgetLabel: 'In Collection or Set.member of',
+                    nodeId: PartOfSet,
                     returnTiles: false
                 }, this.report.get('tiles'), this.report.graph);
                 collectionSet.forEach(function(relatedResourceItem) {
