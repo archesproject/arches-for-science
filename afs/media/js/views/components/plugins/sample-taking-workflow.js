@@ -3,7 +3,8 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
-    'viewmodels/workflow-step'
+    'viewmodels/workflow-step',
+    'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('sample-taking-workflow', {
         viewModel: function(params) {
@@ -138,7 +139,21 @@ define([
                     nodegroupid: '',
                     resourceid: null,
                     tileid: null,
-                    parenttileid: null
+                    parenttileid: null,
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'sample-taking-final-step',
+                                    uniqueInstanceName: 'sample-taking-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+
                 }
             ];
 

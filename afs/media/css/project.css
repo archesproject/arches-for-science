@@ -416,3 +416,41 @@
 .thematic-report-footer .toggle-container .arches-toggle-subtitle{
     display: none;
 }
+
+
+.final-step .summary-label {
+    padding-right: 5px; 
+    color: #777;
+}
+
+.final-step .summary-value {
+    color: #2b547c;
+}
+
+.final-step .file-list .file-upload-card {
+    border-bottom: 1px solid #D3E5F4;
+    border-radius: 2px;
+    padding: 7px 8px 5px 15px;
+    background: #fff;
+    color: #666;
+    height: 30px;
+}
+
+.final-step .file-list {
+    border: 1px solid #ddd;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.final-step .file-list .file-upload-card:nth-child(odd) {
+    background: #F5FAFE;
+}
+
+.final-step .summary-image {
+    max-height: 240px;
+}
+
+.final-step .summary-image-container {
+    margin: 15px;
+    display: inline-flex;
+}
