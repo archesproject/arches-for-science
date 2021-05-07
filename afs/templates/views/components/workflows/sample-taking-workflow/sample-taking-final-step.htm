@@ -53,25 +53,31 @@
     </div>
     <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
         <h5 class="summary-value">{% trans 'Sampling Activity' %}</h5>
-        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
-            <div class="file-list" style="display: flex; flex-direction: column;">
-                <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;">
-                    <div class="summary-label">id</div>
-                    <div class="summary-label">canvas</div>
-                    <div class="summary-label">coordinates</div>
-                </div>
-                <!-- ko foreach: reportVals.annotations -->
-                <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;" data-bind="style: {'border-width': $index() === ($parent.reportVals.annotations.length - 1) ? '0px' : '1px'}">
-                    <div class="summary-value" data-bind="text: id.value"></div>
-                    <div class="summary-value" data-bind="text: canvas.value"></div>
-                    <div class="summary-value" data-bind="text: coordinates.value"></div>
-                </div>
-                <!-- /ko -->
+        <div style="display: inline-flex;">
+            <div style="border: solid 1px #ddd">
+                <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 300px; width: 400px"></div>
             </div>
-        </div>
-        <div style="display: inline-flex; padding: 15px;">
-            <div class="summary-label">{% trans 'Sampled locations: ' %}</div>
-            <div class="summary-value" data-bind='text: reportVals.annotations.length'></div>
+            <div>
+                <div class="file-list" style="display: flex; flex-direction: column;">
+                    <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;">
+                        <div class="summary-label">Observation Name</div>
+                        <div class="summary-label">Description</div>
+                        <div class="summary-label">Sampling Motivation</div>
+                    </div>
+                    <!-- ko foreach: reportVals.annotations -->
+                    <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;" 
+                        data-bind="style: {'border-width': $index() === ($parent.reportVals.annotations.length - 1) ? '0px' : '1px'}">
+                        <div class="summary-value" data-bind="text: manifest.value"></div>
+                        <div class="summary-value" data-bind="text: id.value"></div>
+                        <div class="summary-value" data-bind="text: type.value"></div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <div style="display: inline-flex; padding: 15px;">
+                    <div class="summary-label">{% trans 'Sampled locations: ' %}</div>
+                    <div class="summary-value" data-bind='text: reportVals.annotations.length'></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

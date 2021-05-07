@@ -3,7 +3,11 @@ define([
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
-], function(ko, uuid, arches, SummaryStep) {
+    'geojson-extent',
+    'leaflet',
+    'leaflet-iiif',
+    'bindings/leaflet'
+], function(ko, uuid, arches, SummaryStep, geojsonExtent, L) {
 
     function viewModel(params) {
         var self = this;
@@ -20,19 +24,47 @@ define([
                 samplingActivityName: {'name': 'Sampling Activity Name', 'value': this.getResourceValue(val.resource, ['Name','Name_content','@value'])},
             };
 
-            var annotationValues = val.resource['Sampling Unit'][0]['Sampling Area']['Sampling Area Identification']['Sampling Area Visualization']['@value']
+            var annotationJson = JSON.parse(self.getResourceValue(val.resource['Sampling Unit'][0],['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@value']).replaceAll("'",'"'))
             try {
-                this.reportVals.annotations = JSON.parse(annotationValues.replaceAll("'",'"')).features.map(function(val){
+                this.reportVals.annotations = annotationJson.features.map(function(val){
                     return {
                         id:  {'name': 'id', 'value': self.getResourceValue(val, ['id'])},
-                        canvas: {'name': 'canvas', 'value': self.getResourceValue(val, ['properties', 'canvas'])},
-                        coordinates: {'name': 'coordinates', 'value': self.getResourceValue(val, ['geometry', 'coordinates'])},
+                        manifest: {'name': 'manifest', 'value': self.getResourceValue(val, ['properties', 'manifest'])},
+                        type: {'name': 'type', 'value': self.getResourceValue(val, ['geometry', 'type'])},
                     };
                 })
             } catch(e) {
                 console.log(e)
                 this.reportVals.annotations = [];
             }
+
+            this.leafletConfig = {
+                center: [0, 0],
+                crs: L.CRS.Simple,
+                zoom: 0,
+                afterRender: function(map) {
+                    var canvas = annotationJson.features[0].properties.canvas;
+
+                    L.tileLayer.iiif(canvas + '/info.json').addTo(map);
+                    var extent = geojsonExtent(annotationJson);
+                    map.addLayer(L.geoJson(annotationJson, {
+                        pointToLayer: function(feature, latlng) {
+                            return L.circleMarker(latlng, feature.properties);
+                        },
+                        style: function(feature) {
+                            return feature.properties;
+                        }
+                    }));
+                    L.control.fullscreen().addTo(map);
+                    setTimeout(function() {
+                        map.fitBounds([
+                            [extent[1]-1, extent[0]-1],
+                            [extent[3]+1, extent[2]+1]
+                        ]);
+                    }, 250);
+                }
+            };
+        
             this.loading(false);
         }, this);
     }
