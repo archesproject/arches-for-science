@@ -3,11 +3,7 @@ define([
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
-    'geojson-extent',
-    'leaflet',
-    'leaflet-iiif',
-    'bindings/leaflet'
-], function(ko, uuid, arches, SummaryStep, geojsonExtent, L) {
+], function(ko, uuid, arches, SummaryStep) {
 
     function viewModel(params) {
         var self = this;

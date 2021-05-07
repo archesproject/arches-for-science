@@ -2,10 +2,12 @@ define([
     'knockout',
     'views/components/workflows/final-step',
     'geojson-extent',
+    'leaflet',
     'views/components/map',
     'views/components/cards/select-feature-layers',
-    'viewmodels/alert'
-], function(ko, FinalStep, geojsonExtent, MapComponentViewModel, selectFeatureLayersFactory, AlertViewModel) {
+    'viewmodels/alert',
+    'bindings/leaflet'
+], function(ko, FinalStep, geojsonExtent, L, MapComponentViewModel, selectFeatureLayersFactory, AlertViewModel) {
 
     function viewModel(params) {
         FinalStep.apply(this, [params]);
