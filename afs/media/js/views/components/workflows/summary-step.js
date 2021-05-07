@@ -68,6 +68,35 @@ define([
             this.sources = mapParams.sources;
         };
 
+        this.prepareAnnotation = function(featureCollection) {
+            var canvas = featureCollection.features[0].properties.canvas;
+
+            this.leafletConfig = {
+                center: [0, 0],
+                crs: L.CRS.Simple,
+                zoom: 0,
+                afterRender: function(map) {
+                    L.tileLayer.iiif(canvas + '/info.json').addTo(map);
+                    var extent = geojsonExtent(featureCollection);
+                    map.addLayer(L.geoJson(featureCollection, {
+                        pointToLayer: function(feature, latlng) {
+                            return L.circleMarker(latlng, feature.properties);
+                        },
+                        style: function(feature) {
+                            return feature.properties;
+                        }
+                    }));
+                    L.control.fullscreen().addTo(map);
+                    setTimeout(function() {
+                        map.fitBounds([
+                            [extent[1]-1, extent[0]-1],
+                            [extent[3]+1, extent[2]+1]
+                        ]);
+                    }, 250);
+                }
+            };
+        }
+
         this.init();
     }
     

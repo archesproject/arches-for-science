@@ -24,7 +24,12 @@ define([
                 samplingActivityName: {'name': 'Sampling Activity Name', 'value': this.getResourceValue(val.resource, ['Name','Name_content','@value'])},
             };
 
-            var annotationJson = JSON.parse(self.getResourceValue(val.resource['Sampling Unit'][0],['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@value']).replaceAll("'",'"'))
+            var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][0],['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@value'])
+            if (annotationStr){
+                var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+                this.prepareAnnotation(annotationJson);
+            };
+
             try {
                 this.reportVals.annotations = annotationJson.features.map(function(val){
                     return {
@@ -37,33 +42,6 @@ define([
                 console.log(e)
                 this.reportVals.annotations = [];
             }
-
-            this.leafletConfig = {
-                center: [0, 0],
-                crs: L.CRS.Simple,
-                zoom: 0,
-                afterRender: function(map) {
-                    var canvas = annotationJson.features[0].properties.canvas;
-
-                    L.tileLayer.iiif(canvas + '/info.json').addTo(map);
-                    var extent = geojsonExtent(annotationJson);
-                    map.addLayer(L.geoJson(annotationJson, {
-                        pointToLayer: function(feature, latlng) {
-                            return L.circleMarker(latlng, feature.properties);
-                        },
-                        style: function(feature) {
-                            return feature.properties;
-                        }
-                    }));
-                    L.control.fullscreen().addTo(map);
-                    setTimeout(function() {
-                        map.fitBounds([
-                            [extent[1]-1, extent[0]-1],
-                            [extent[3]+1, extent[2]+1]
-                        ]);
-                    }, 250);
-                }
-            };
         
             this.loading(false);
         }, this);
