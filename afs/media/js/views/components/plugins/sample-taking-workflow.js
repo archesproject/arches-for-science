@@ -35,6 +35,7 @@ define([
                                 {
                                     componentName: 'resource-instance-select-widget',
                                     uniqueInstanceName: 'project-resource-instance', /* unique to step */
+                                    tilesManaged: 'none',
                                     parameters: {
                                         graphids: [
                                             '0b9235d9-ca85-11e9-9fa2-a4d18cec433a', /* Project; this will be mapped to '03357879-1d9d-11eb-a29f-024e0d439fdb' */
@@ -51,6 +52,7 @@ define([
                                 {
                                     componentName: 'resource-instance-select-widget',
                                     uniqueInstanceName: 'physical-thing-resource-instance', /* unique to step */
+                                    tilesManaged: 'none',
                                     parameters: {
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Physical Thing: mapped to 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb' */
@@ -74,10 +76,59 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '0b925e3a-ca85-11e9-a308-a4d18cec433a',
-                    hiddenNodes: ['0b92f57d-ca85-11e9-a353-a4d18cec433a', '0b931623-ca85-11e9-b235-a4d18cec433a', '0b930905-ca85-11e9-8aca-a4d18cec433a'],
-                    resourceid: null,
+                    externalstepdata: {
+                        selectprojectstep: 'select-project',
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Samplers',
+                            componentConfigs: [
+                                {
+                                    componentName: 'default-card',
+                                    uniqueInstanceName: 'samplers',
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
+                                        nodegroupid: '03357870-1d9d-11eb-a29f-024e0d439fdb',
+                                    },
+                                    required: false,
+                                },
+                            ], 
+                        },
+                        {
+                            sectionTitle: 'Sampling Date',
+                            componentConfigs: [
+                                {
+                                    componentName: 'default-card',
+                                    uniqueInstanceName: 'sampling-date',
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
+                                        nodegroupid: '03357852-1d9d-11eb-a29f-024e0d439fdb',
+                                        hiddenNodes: ['033578a1-1d9d-11eb-a29f-024e0d439fdb', '0335789d-1d9d-11eb-a29f-024e0d439fdb','033578c2-1d9d-11eb-a29f-024e0d439fdb'],
+                                    },
+                                    required: false,
+                                },
+                            ], 
+                        },
+                        {
+                            sectionTitle: 'Sampling Technique',
+                            componentConfigs: [
+                                {
+                                    componentName: 'default-card',
+                                    uniqueInstanceName: 'sampling-technique',
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
+                                        nodegroupid: '0335786d-1d9d-11eb-a29f-024e0d439fdb',
+                                        hiddenNodes: ['033578b7-1d9d-11eb-a29f-024e0d439fdb','0335789a-1d9d-11eb-a29f-024e0d439fdb']
+                                    },
+                                    required: false,
+                                },
+                            ], 
+                        },
+                    ],
+                    resourceid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
                     tileid: null,
                     parenttileid: null,
                     required: false,
