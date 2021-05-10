@@ -4,7 +4,8 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/file-upload'
+    'views/components/file-upload',
+    'views/components/workflows/upload-dataset/select-phys-thing-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
@@ -18,38 +19,24 @@ define([
                         heading: 'Workflow Step: Project and related object',
                         text: 'Select the project and object that you\'re sampling',
                     },
-                    component: 'views/components/workflows/upload-dataset/select-project-step',
-                    componentname: 'select-project-step',
-                    autoAdvance: false,
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    autoAdvance: true,
                     required: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Project',
+                            sectionTitle: 'Select Phys Thing',
                             componentConfigs: [
                                 { 
-                                    componentName: 'resource-instance-select-widget',
-                                    uniqueInstanceName: 'project-resource-instance', /* unique to step */
+                                    componentName: 'select-phys-thing-step',
+                                    uniqueInstanceName: 'select-phys-thing-step', /* unique to step */
                                     parameters: {
                                         graphids: [
-                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a', /* Activity */
-                                        ],
-                                        renderContext: 'workflow', 
-                                    },
-                                    required: true,
-                                },
-                            ], 
-                        },
-                        {
-                            sectionTitle: 'Sample Object',
-                            componentConfigs: [
-                                { 
-                                    componentName: 'resource-instance-select-widget',
-                                    uniqueInstanceName: 'sample-object-resource-instance', /* unique to step */
-                                    parameters: {
-                                        graphids: [
-                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Physical Thing */
+                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
+                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
                                         ],  
                                         renderContext: 'workflow',
+                                        value: null
                                     },
                                     required: true,
                                 },

@@ -1,0 +1,25 @@
+{% load i18n %}
+<div style="height: 100%; padding: 10px 24px;">
+    <div class="msm-map-container">
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                graphids: [
+                    projectGraphId,
+                ],
+                renderContext: 'workflow', 
+                value: projectValue,
+            }
+        }"></div>
+        <!--ko if: termFilter() -->
+        <div data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+            termFilter: termFilter(),
+            renderContext: 'workflow', 
+            value: physicalThingValue,
+        }
+        }"></div>
+        <!--/ko-->
+    </div>
+</div>
