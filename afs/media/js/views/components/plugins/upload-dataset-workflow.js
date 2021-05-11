@@ -25,7 +25,7 @@ define([
                     required: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Select Phys Thing',
+                            sectionTitle: null,
                             componentConfigs: [
                                 { 
                                     componentName: 'select-phys-thing-step',

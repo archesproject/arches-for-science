@@ -15,6 +15,7 @@ define([
         this.projectValue = ko.observable();
         this.physicalThingValue = ko.observable();
         this.physicalThingSetValue = ko.observable();
+        this.hasSetWithPhysicalThing = ko.observable();
         if (params.value()) { 
             this.physicalThingValue(params.value().physicalThing);
             this.physicalThingSetValue(params.value().physicalThingSet);
@@ -29,12 +30,16 @@ define([
                         var setTile = data._source.tiles.find(function(tile){
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
                         });
-                        self.physicalThingSetValue(null);
-                        setTileResourceInstanceId = setTile.data[self.physThingSetNodegroupId][0].resourceId;
-                        if (setTileResourceInstanceId) {
-                            self.physicalThingSetValue(setTileResourceInstanceId);
+                        if (setTile) {
+                            self.physicalThingSetValue(null);
+                            setTileResourceInstanceId = setTile.data[self.physThingSetNodegroupId][0].resourceId;
+                            if (setTileResourceInstanceId) {
+                                self.physicalThingSetValue(setTileResourceInstanceId);
+                            }
+                            self.physicalThingValue(null);
+                        } else {
+                            self.hasSetWithPhysicalThing(false);
                         }
-                        self.physicalThingValue(null);
                     }
                 );
             }
@@ -42,6 +47,7 @@ define([
 
         this.termFilter = ko.pureComputed(function(){
             if (ko.unwrap(self.physicalThingSetValue)) {
+                self.hasSetWithPhysicalThing(true);
                 var query = {"op": "and"};
                 query['63e49254-c444-11e9-afbe-a4d18cec433a'] = {
                     "op": "",
@@ -60,6 +66,7 @@ define([
 
         this.projectValue.subscribe(function(val) {
             if (!val) {
+                self.hasSetWithPhysicalThing(null);
                 self.physicalThingSetValue(null);
                 self.physicalThingValue(null);
             }
