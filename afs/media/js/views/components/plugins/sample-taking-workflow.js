@@ -4,6 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
+    'views/components/workflows/sample-taking-workflow/sampling-date-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('sample-taking-workflow', {
@@ -99,7 +100,7 @@ define([
                             sectionTitle: 'Sampling Date',
                             componentConfigs: [
                                 {
-                                    componentName: 'default-card',
+                                    componentName: 'sampling-date-step',
                                     uniqueInstanceName: 'sampling-date',
                                     tilesManaged: 'one',
                                     parameters: {
