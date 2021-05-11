@@ -10,11 +10,11 @@
     margin-bottom: -10px;
 }
 
-.tabbed-workflow .sampling-activity {
+.tabbed-workflow .object-search-step {
     margin: unset;
 }
 
-.sampling-activity {
+.object-search-step {
     display: flex;
     flex-direction: column;
     margin-left: -25px;
@@ -22,16 +22,8 @@
     overflow-y: hidden;
 }
 
-.sampling-activity .selected-instance {
-    background-color: #fff;
-}
-
-.sampling-activity-search-panel {
-    height: 55px;
-    background-color: #f3f3f3;
-    border-bottom: #ddd solid 1px;
-    position: fixed;
-    width: 100%;
+.object-search-step .selected-instance {
+    background-color: lightgrey;
 }
 
 .workflow-search-panel {
@@ -144,11 +136,10 @@
 
 .workflow-search-list .resource-report:hover {
     cursor: pointer;
-    background: #fff;
 }
 
 .workflow-search-list .resource-report .summary-report-related-panel {
-    /*display: none;*/
+    display: none;
 }
 
 .wf-multi-tile-btn-complete {
