@@ -62,20 +62,19 @@
                     <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;">
                         <div class="summary-label">Observation Name</div>
                         <div class="summary-label">Description</div>
-                        <div class="summary-label">Sampling Motivation</div>
+                        <!--div class="summary-label">Sampling Motivation</div-->
                     </div>
-                    <!-- ko foreach: reportVals.annotations -->
+                    <!-- ko foreach: reportVals.samplingUnits -->
                     <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;" 
-                        data-bind="style: {'border-width': $index() === ($parent.reportVals.annotations.length - 1) ? '0px' : '1px'}">
-                        <div class="summary-value" data-bind="text: manifest.value"></div>
-                        <div class="summary-value" data-bind="text: id.value"></div>
-                        <div class="summary-value" data-bind="text: type.value"></div>
+                        data-bind="style: {'border-width': $index() === ($parent.reportVals.samplingUnits.length - 1) ? '0px' : '1px'}">
+                        <div class="summary-value" data-bind="text: obsName.value"></div>
+                        <div class="summary-value" data-bind="text: samplingArea.value"></div>
                     </div>
                     <!-- /ko -->
                 </div>
                 <div style="display: inline-flex; padding: 15px;">
                     <div class="summary-label">{% trans 'Sampled locations: ' %}</div>
-                    <div class="summary-value" data-bind='text: reportVals.annotations.length'></div>
+                    <div class="summary-value" data-bind='text: reportVals.samplingUnits.length'></div>
                 </div>
             </div>
         </div>

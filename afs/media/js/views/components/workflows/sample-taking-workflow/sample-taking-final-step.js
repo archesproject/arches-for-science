@@ -27,11 +27,10 @@ define([
             };
 
             try {
-                this.reportVals.annotations = annotationJson.features.map(function(val){
+                this.reportVals.samplingUnits = val.resource['Sampling Unit'].map(function(val){
                     return {
-                        id:  {'name': 'id', 'value': self.getResourceValue(val, ['id'])},
-                        manifest: {'name': 'manifest', 'value': self.getResourceValue(val, ['properties', 'manifest'])},
-                        type: {'name': 'type', 'value': self.getResourceValue(val, ['geometry', 'type'])},
+                        obsName:  {'name': 'Observation Name', 'value': self.getResourceValue(val, ['Sample Created','@value'])},
+                        samplingArea: {'name': 'Sampling Area', 'value': self.getResourceValue(val, ['Sampling Area','Overall Object Sampled','@value'])}
                     };
                 })
             } catch(e) {
