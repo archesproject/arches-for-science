@@ -4,6 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
+    'views/components/workflows/sample-taking-workflow/select-phys-thing-to-sample',
     'views/components/workflows/sample-taking-workflow/sampling-date-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
@@ -31,36 +32,20 @@ define([
                     shoudltrackresource: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Project',
+                            sectionTitle: null,
                             componentConfigs: [
-                                {
-                                    componentName: 'resource-instance-select-widget',
-                                    uniqueInstanceName: 'project-resource-instance', /* unique to step */
-                                    tilesManaged: 'none',
+                                { 
+                                    componentName: 'select-phys-thing-to-sample',
+                                    uniqueInstanceName: 'select-phys-thing-to-sample', /* unique to step */
                                     parameters: {
                                         graphids: [
-                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a', /* Project; this will be mapped to '03357879-1d9d-11eb-a29f-024e0d439fdb' */
-                                        ],
+                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
+                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
+                                        ],  
                                         renderContext: 'workflow',
+                                        value: null
                                     },
-                                    required: false,
-                                },
-                            ], 
-                        },
-                        {
-                            sectionTitle: 'Sampled Object',
-                            componentConfigs: [
-                                {
-                                    componentName: 'resource-instance-select-widget',
-                                    uniqueInstanceName: 'physical-thing-resource-instance', /* unique to step */
-                                    tilesManaged: 'none',
-                                    parameters: {
-                                        graphids: [
-                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Physical Thing: mapped to 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb' */
-                                        ],
-                                        renderContext: 'workflow',
-                                    },
-                                    required: false,
+                                    required: true,
                                 },
                             ], 
                         },
