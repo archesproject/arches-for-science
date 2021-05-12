@@ -8,22 +8,43 @@
     </span>
 </button>
 
-<iframe
+<div 
     style="
         position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        border: none;
+        top: 50px;
+        left: 50px;
+        height: calc(100vh - 50px);
+        width: calc(100vw - 50px);
         transition: all .5s;
     "
     data-bind="
         style: {
-            transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(100%,0)'
+            transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(100vw,0)'
         },
-        attr: {
-            src: manifestManagerUrl,
+        component: {
+            name: 'manifest-manager',
+            params: {
+                report: $data.report,
+                summary: true
+            }
         }
     "
-></iframe>
+></div>
+
+<button
+    class="btn btn-warning"
+    style="
+        position: fixed;
+        top: 4px;
+        left: calc(100vw - 450px);
+        height: 42px;
+        width: 180px;
+        transition: all .5s;
+    "
+    data-bind="
+        style: {
+            transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
+        },
+        click: toggleManifestManagerHidden
+    "
+>BAIL FROM THE PLUGIN</button>

@@ -4,12 +4,11 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
+    'views/components/plugins/manifest-manager',
 ], function(_, $, arches, ko, koMapping) {
     function viewModel(params) {
         var self = this;
 
-        this.manifestManagerUrl = arches.urls.plugin('image-service-manager');
-        
         this.isManifestManagerHidden = ko.observable(true);
 
         this.initialize = function() {};
