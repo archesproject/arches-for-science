@@ -1,0 +1,108 @@
+{% extends "views/components/iiif-viewer.htm" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block tabs %}
+<div class="workbench-card-sidebar-tab" data-bind="click: function() {
+    toggleTab('dataset');
+}, css: {
+    'active': activeTab() === 'dataset'
+}">
+    <i class="fa fa-book"></i>
+    <span class="map-sidebar-text">{% trans "Dataset" %}</span>
+</div>
+{{ block.super }}
+{% endblock tabs %}
+
+{% block sidepanel %}
+<!--ko foreach: { data: [$data], as: 'self' }-->
+<!--ko if: activeTab() === 'dataset'-->
+<div class="workbench-header-buffer">
+    <div class="workbench-card-sidepanel-header-container">
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">{% trans 'Manage Dataset' %}</h4>
+    </div>
+</div>
+
+<div class="iiif-image-tools" style="margin-top: 20px;">
+    <!--ko if: annotations().length > 0-->
+    <label class="control-label">{% trans "Sampled Locations" %}</label>
+    <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: sampleFilter">
+    <div class="file-workbench-files" data-bind="foreach: {data: samples, as: 'sample'}">
+        <!--ko if: self.sampleFilter() === "" || sample.displayname.toLowerCase().includes(self.sampleFilter().toLowerCase()) -->
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: sample.resourceinstanceid === self.selectedSample().resourceinstanceid }">
+            <span class='file-name manifest-manager-canvas-name' data-bind="text: sample.displayname, click: function(){self.selectedSample(sample)}, clickBubble: false"></span>
+        </div>
+        <!--/ko-->
+    </div>
+    <!--/ko-->
+</div>
+
+
+<div class="iiif-image-tools" style="margin-top: 5px;">
+    <label class="control-label">{% trans "Dataset Name" %}</label>
+    <input type="text" class="form-control" style="width: 100%;" placeholder="Dataset name" data-bind="textInput: selectedSample().datasetName">
+</div>
+
+<div class="iiif-image-tools" style="margin-top: 12px;">
+    <!-- ko if: files().length > 0 -->
+    <label class="control-label">{% trans "Associated Files" %}</label>
+    <div class="file-workbench-files" style="margin-top: 0" data-bind="foreach: {data: files, as: 'file'}">
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: false}">
+            <input type="checkbox" style="width: 15px; height: 15px; margin: 0px" data-bind="value: file, checked: $parent.selectedSample().datasetFiles">
+            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name, click: function(){console.log(file)}, clickBubble: false"></span>
+        </div>
+    </div>
+    <!--/ko-->
+        
+    <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+        <div class="file-workbench-buttons">
+            <button class="btn btn-primary btn-lg btn-block btn-labeled btn-workbench fa fa-upload upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                <span>{% trans "Add Files" %}</span>
+            </button>
+        </div>
+        <div style="min-height: 100%;">
+            <div id="hidden-dz-previews" style="display:none"></div>
+        </div>
+    </div>
+</div>
+
+<!--/ko-->
+<!--/ko-->
+{{ block.super }}
+{% endblock sidepanel %}
+
+{% block main_menu %}
+
+<div class="file-chart-upload-panel">
+    <div class="gallery-controls new-tile">
+        <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+            <div class="file-select-window">
+                <div class="bord-top pad-ver file-select">
+                    <div class="" style="padding: 5px">
+                        <h2>{% trans 'Upload Files' %}</h2>
+                        <h4>{% trans 'Drag & Drop your files onto this panel to upload' %}</h4>
+                    </div>
+                    <button type="button" class="btn btn-lg btn-file-select upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                        <i class="fa fa-file"></i>
+                        <span>{% trans "Select Files" %}</span>
+                    </button>
+                    <br>
+                    <div style="padding: 10px">{% trans "Adding files to this record is " %}
+                        <span><strong>{% trans "optional." %}</strong></span>
+                        <br>
+                        {% trans "You may upload as many files as you wish; check with the site admin on the maximum file size." %}
+                    </div>
+
+                </div>
+                <div class="file-upload-footer">
+                    <span data-bind="text: ('The following file formats may be uploaded: csv')"></span>
+                </div>
+            </div>
+
+        </div>
+        <div style="min-height: 100%;">
+            <div id="hidden-dz-previews" style="display:none"></div>
+        </div>
+    </div>
+</div>
+{% endblock main_menu %}
