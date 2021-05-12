@@ -30,7 +30,7 @@ define([
                         var setTile = data._source.tiles.find(function(tile){
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
                         });
-                        if (setTile && Object.keys(setTile.data).includes(self.physThingSetNodegroupId)) {
+                        if (setTile && Object.keys(setTile.data).includes(self.physThingSetNodegroupId) && setTile.data[self.physThingSetNodegroupId].length) {
                             self.physicalThingSetValue(null);
                             setTileResourceInstanceId = setTile.data[self.physThingSetNodegroupId][0].resourceId;
                             if (setTileResourceInstanceId) {
