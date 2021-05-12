@@ -15,7 +15,7 @@
         left: 50px;
         height: calc(100vh - 50px);
         width: calc(100vw - 50px);
-        transition: all linear .4s;
+        transition: all linear .3s;
     "
     data-bind="
         style: {
@@ -24,8 +24,8 @@
         component: {
             name: 'manifest-manager',
             params: {
-                report: $data.report,
-                summary: true
+                summary: true,
+                manifestData: manifestData,
             }
         }
     "
@@ -39,7 +39,7 @@
         left: calc(100vw - 450px);
         height: 42px;
         width: 180px;
-        transition: all linear .4s;
+        transition: all linear .3s;
     "
     data-bind="
         style: {

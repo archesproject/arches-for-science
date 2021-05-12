@@ -81,6 +81,7 @@ INSTALLED_APPS = (
     "oauth2_provider",
     "django_celery_results",
     "afs",
+    "compressor",
     # "debug_toolbar"
 )
 
@@ -106,7 +107,7 @@ ALLOWED_HOSTS = ["10.0.2.2", "localhost"]
 
 SYSTEM_SETTINGS_LOCAL_PATH = os.path.join(APP_ROOT, "system_settings", "System_Settings.json")
 WSGI_APPLICATION = "afs.wsgi.application"
-STATIC_ROOT = "/var/www/media"
+STATIC_ROOT = ""
 
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, "logs", "resource_import.log")
 
