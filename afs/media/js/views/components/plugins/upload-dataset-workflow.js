@@ -5,7 +5,8 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step',
     'views/components/file-upload',
-    'views/components/workflows/upload-dataset/select-phys-thing-step'
+    'views/components/workflows/upload-dataset/select-phys-thing-step',
+    'views/components/workflows/upload-dataset/instrument-info-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
@@ -61,12 +62,9 @@ define([
                             sectionTitle: 'Instrument',
                             componentConfigs: [
                                 { 
-                                    componentName: 'resource-instance-select-widget',
+                                    componentName: 'instrument-info-step',
                                     uniqueInstanceName: 'instrument-type', /* unique to step */
                                     parameters: {
-                                        graphids: [
-                                            'b6c819b8-99f6-11ea-a9b7-3af9d3b32b71', /* Instrument */
-                                        ],
                                         renderContext: 'workflow',
                                     },
                                     required: true,
