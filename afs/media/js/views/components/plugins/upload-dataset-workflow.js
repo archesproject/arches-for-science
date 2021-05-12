@@ -57,9 +57,12 @@ define([
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
                     },
                     required: true,
+                    externalstepdata: {
+                        projectinfo: 'project-info',
+                    },
                     layoutSections: [
                         {
-                            sectionTitle: 'Instrument',
+                            sectionTitle: null,
                             componentConfigs: [
                                 { 
                                     componentName: 'instrument-info-step',
