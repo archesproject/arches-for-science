@@ -70,6 +70,8 @@ COPY --from=wheelbuilder ${WHEELS} /wheels
 # a minimised build of GDAL could remove several hundred MB from the container layer.
 RUN set -ex \
     && RUN_DEPS=" \
+        build-essential \
+        python3.8-dev \
         mime-support \
         libgdal-dev \
         python3-venv \
