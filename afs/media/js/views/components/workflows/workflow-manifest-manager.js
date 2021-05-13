@@ -4,57 +4,103 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
-    'utils/resource',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, resourceUtils) {
+], function(_, $, arches, ko, koMapping) {
     function viewModel(params) {
         var self = this;
 
-        console.log("!", self, params, arches.urls)
+        var objectStepData = params.form.externalStepData['objectstep']['data'];
+        this.physicalThingData = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1][0]);
 
-
-
-        var objectStepData = params.form.externalStepData['objectstep'];
-
-
-        console.log("@@@", objectStepData)
-
-
-        // var physicalThing = objectStepData['sample-object-resource-instance'][0];
-        // var physicalThingResourceId = foo[1].resourceId();
-
-        // var visualWorkGraphId = 'ba892214-b25b-11e9-bf3e-a4d18cec433a';
-        // this.graphUrl = arches.urls.graphs_api + visualWorkGraphId;
+        console.log("physicalThingData", this.physicalThingData)
 
         this.isManifestManagerHidden = ko.observable(true);
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(foo) {
-            // console.log("AAAAAA", foo, params, physicalThingResourceId)
-
-            // var bar = resourceUtils.getNodeValues({
-            //     nodeId: statementTextId,
-            //     where: {
-            //         nodeId: statementTypeId,
-            //         contains: descriptionConceptValueId
-            //     },
-            //     returnTiles: false
-            // }, this.report.get('tiles'), this.report.graph);
+            console.log("manifestData", foo, params)
         })
 
         this.initialize = function() {
+            var visualWorkPromise = this.createVisualWork(self.physicalThingData);
 
-            // $.ajax({
-            //     url: self.graphUrl,
-            //     success: function(response) {
-            //         // console.log(response)
-            //     }
-            // })
+            visualWorkPromise.then(function(visualWorkData) {
+                console.log("visualWorkData", visualWorkData)
 
+                var physicalThingUpdatePromise = self.updatePhysicalThingWithVisualWork(visualWorkData);
+
+                physicalThingUpdatePromise.then(function(physicalThingUpdateData) {
+                    console.log("physicalThingUpdateData", physicalThingUpdateData);
+                });
+
+                var createDigitalResourcePromise = self.createDigitalResource(visualWorkData);
+
+                createDigitalResourcePromise.then(function(digitalResourceData) {
+                    console.log("digitalResourceData", digitalResourceData)
+
+                    var digitalResourceUpdatePromise = self.updateDigitalResourceWithVisualWork(digitalResourceData);
+
+                    digitalResourceUpdatePromise.then(function(digitalResourceUpdateData) {
+                        console.log("digitalResourceUpdateData", digitalResourceUpdateData)
+                    });
+                });
+                
+            });
         };
 
         this.toggleManifestManagerHidden = function() {
             self.isManifestManagerHidden(!self.isManifestManagerHidden());
+        };
+
+        this.createVisualWork = function(physicalThingData) {
+            return $.ajax({
+                url: arches.urls.api_node_value,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'nodeid': 'a298ee52-8d59-11eb-a9c4-faffc265b501', // Digital Source (E73) (physical thing)
+                    'data': physicalThingData, 
+                    'tileid': null 
+                }
+            })
+        };
+
+        this.updatePhysicalThingWithVisualWork = function(visualWorkData) {
+            return $.ajax({
+                url: arches.urls.api_node_value,
+                type: 'POST',
+                data: {
+                    'resourceinstanceid': self.physicalThingData.resourceId,
+                    'nodeid': 'a298ee52-8d59-11eb-a9c4-faffc265b501', // Digital Source (E73) (physical thing)
+                    'data': visualWorkData,
+                    'tileid': null,
+                }
+            })
+        };
+
+        this.createDigitalResource = function(visualWorkData) {
+            return $.ajax({
+                url: arches.urls.api_node_value,
+                type: 'POST',
+                data: {
+                    'nodeid': 'c1e732b0-ca7a-11e9-b369-a4d18cec433a', // shows (visual work)
+                    'data': visualWorkData,
+                    'tileid': null,
+                }
+            });
+        };
+
+        this.updateDigitalResourceWithVisualWork = function(visualWorkData) {
+            return $.ajax({
+                url: arches.urls.api_node_value,
+                type: 'POST',
+                data: {
+                    'resourceinstanceid': visualWorkData.resourceinstance_id,
+                    'nodeid': '9743a1b2-8591-11ea-97eb-acde48001122', // Used image (visual work)
+                    'data': visualWorkData,
+                    'tileid': null,
+                }
+            })
         };
 
         this.initialize();
