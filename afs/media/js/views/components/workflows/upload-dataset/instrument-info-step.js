@@ -5,10 +5,6 @@ define([
 ], function(ko, resourceUtils) {
    
     function viewModel(params) {
-        var self = this;
-        var componentParams = params.form.componentData.parameters;
-        params.value;
-        this.save = params.form.save;
         this.instrumentValue = ko.observable();
         this.procedureValue = ko.observable();
         this.parametersValue = ko.observable();
