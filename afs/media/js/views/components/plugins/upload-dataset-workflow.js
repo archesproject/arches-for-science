@@ -5,7 +5,7 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step',
     'views/components/file-upload',
-    'views/components/workflows/upload-dataset/select-phys-thing-step',
+    'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/upload-dataset/instrument-info-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
