@@ -23,23 +23,19 @@ define([
 
         this.initialize = function() {
             var visualWorkPromise = this.createVisualWork(self.physicalThingData);
-
             visualWorkPromise.then(function(visualWorkData) {
                 console.log("visualWorkData", visualWorkData)
 
                 var physicalThingUpdatePromise = self.updatePhysicalThingWithVisualWork(visualWorkData);
-
                 physicalThingUpdatePromise.then(function(physicalThingUpdateData) {
                     console.log("physicalThingUpdateData", physicalThingUpdateData);
                 });
 
                 var createDigitalResourcePromise = self.createDigitalResource(visualWorkData);
-
                 createDigitalResourcePromise.then(function(digitalResourceData) {
                     console.log("digitalResourceData", digitalResourceData)
 
                     var digitalResourceUpdatePromise = self.updateDigitalResourceWithVisualWork(digitalResourceData);
-
                     digitalResourceUpdatePromise.then(function(digitalResourceUpdateData) {
                         console.log("digitalResourceUpdateData", digitalResourceUpdateData)
                     });
