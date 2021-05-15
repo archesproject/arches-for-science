@@ -67,8 +67,7 @@ define([
         })
 
         this.projectValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["project"];
-        this.physicalThingNameValue = "Physical Thing 1";
-        //this.physicalThingNameValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["projectName"];
+        this.physicalThingNameValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["physThingName"];
         this.physicalThingValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["physicalThing"];
 
         this.saveSamplingActivity = function() {

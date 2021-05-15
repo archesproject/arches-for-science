@@ -4,7 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/workflows/upload-dataset/select-phys-thing-step',
+    'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/sample-taking-workflow/sampling-info-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
