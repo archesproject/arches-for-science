@@ -11,8 +11,6 @@ define([
         this.samplingActivityValue = ko.observable();
         this.projectTile = ko.observable();
         this.physicalThingTile = ko.observable();
-        var parentProjectNode = '03357879-1d9d-11eb-a29f-024e0d439fdb'; //related project
-        var overallObjectSampleNode = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb'; //related phys thing
 
         if (params.value()) {
             console.log(params.value())
@@ -35,46 +33,6 @@ define([
             });
             self.save();
         });
-
-        this.save = function() {
-            console.log("before saving",self.samplingActivityValue())
-            $.ajax({
-                url: arches.urls.api_node_value,
-                type: 'POST',
-                data: {
-                    'nodeid': parentProjectNode,
-                    'data': JSON.stringify([{
-                        'resourceId': ko.unwrap(self.projectValue),  // resourceid of the project
-                        'ontologyProperty': '',
-                        'inverseOntologyProperty':'',
-                        'resourceXresourceId':''
-                    }]),
-                    'resourceinstanceid': ko.unwrap(self.samplingActivityValue),
-                    'tileid': self.projectTile()
-                }
-            }).done(function(data) {
-                self.samplingActivityValue(data.resourceinstance_id);
-                self.projectTile(data.tileid);
-                console.log("after saved",self.samplingActivityValue())
-                $.ajax({
-                    url: arches.urls.api_node_value,
-                    type: 'POST',
-                    data: {
-                        'nodeid': overallObjectSampleNode,
-                        'data': JSON.stringify([{
-                            'resourceId': ko.unwrap(self.physicalThingValue),  // resourceid of the physical thing
-                            'ontologyProperty': '',
-                            'inverseOntologyProperty':'',
-                            'resourceXresourceId':''
-                        }]),
-                        'resourceinstanceid': ko.unwrap(self.samplingActivityValue),
-                        'tileid': self.physicalThingTile()
-                    }
-                }).done(function(data) {
-                    self.physicalThingTile(data.tileid);
-                });
-            })
-        }
     }
 
     ko.components.register('select-phys-thing-to-sample', {

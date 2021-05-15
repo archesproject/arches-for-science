@@ -1,0 +1,50 @@
+{% load i18n %}
+<div style="height: 100%; padding: 10px 24px;">
+    <div style="padding: 5px">
+        <div class="widget-input-label">Samplers</div>
+        <div data-bind="component: {
+            name: 'resource-instance-multiselect-widget',
+            params: {
+                graphids: [
+                    'f71f7b9c-b25b-11e9-901e-a4d18cec433a',
+                ],
+                renderContext: 'workflow', 
+                value: samplers,
+            }
+        }"></div>
+    </div>
+    <div style="padding: 5px">
+        <div class="widget-input-label">Sampling Date</div>
+        <div data-bind="component: {
+            name: 'datepicker-widget',
+            params: {
+                node: {'config': {'dateFormat': 'YYYY-MM-DD'}},
+                renderContext: 'workflow', 
+                value: samplingDate,
+            }
+        }"></div>
+    </div>
+    <div style="padding: 5px">
+        <div class="widget-input-label">Sampling Technique</div>
+        <div style="margin: -10px -5px;" data-bind="component: {
+            name: 'rich-text-widget',
+            params: {
+                renderContext: 'workflow', 
+                value: samplingTechnique,
+            }
+        }"></div>
+    </div>
+    <div style="padding: 5px">
+        <div style="color:#2b547c; cursor: pointer;" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide experiment name' : 'Show experiment name'"></div>
+        <div data-bind="visible: showName">
+            <div class="widget-input-label">Sampling Activity Name</div>
+            <div style="margin: -10px -5px;" data-bind="component: {
+                name: 'text-widget',
+                params: {
+                    renderContext: 'workflow', 
+                    value: samplingName,
+                }
+            }"></div>
+        </div>
+    </div>
+</div>

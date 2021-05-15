@@ -4,8 +4,8 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/workflows/sample-taking-workflow/select-phys-thing-to-sample',
-    'views/components/workflows/sample-taking-workflow/sampling-date-step',
+    'views/components/workflows/upload-dataset/select-phys-thing-step',
+    'views/components/workflows/sample-taking-workflow/sampling-info-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('sample-taking-workflow', {
@@ -35,8 +35,8 @@ define([
                             sectionTitle: null,
                             componentConfigs: [
                                 { 
-                                    componentName: 'select-phys-thing-to-sample',
-                                    uniqueInstanceName: 'select-phys-thing-to-sample', /* unique to step */
+                                    componentName: 'select-phys-thing-step',
+                                    uniqueInstanceName: 'select-phys-thing', /* unique to step */
                                     parameters: {
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
@@ -62,62 +62,28 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
+                    resourceid: null,
+                    tileid: null,
+                    parenttileid: null,
+                    required: false,
                     externalstepdata: {
                         selectprojectstep: 'select-project',
                     },
                     layoutSections: [
                         {
-                            sectionTitle: 'Samplers',
+                            sectionTitle: null,
                             componentConfigs: [
-                                {
-                                    componentName: 'default-card',
-                                    uniqueInstanceName: 'samplers',
-                                    tilesManaged: 'one',
+                                { 
+                                    componentName: 'sampling-info-step',
+                                    uniqueInstanceName: 'sampling-info', /* unique to step */
                                     parameters: {
-                                        graphid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
-                                        nodegroupid: '03357870-1d9d-11eb-a29f-024e0d439fdb',
+                                        renderContext: 'workflow',
                                     },
-                                    required: false,
-                                },
-                            ], 
-                        },
-                        {
-                            sectionTitle: 'Sampling Date',
-                            componentConfigs: [
-                                {
-                                    componentName: 'sampling-date-step',
-                                    uniqueInstanceName: 'sampling-date',
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
-                                        nodegroupid: '03357852-1d9d-11eb-a29f-024e0d439fdb',
-                                        hiddenNodes: ['033578a1-1d9d-11eb-a29f-024e0d439fdb', '0335789d-1d9d-11eb-a29f-024e0d439fdb','033578c2-1d9d-11eb-a29f-024e0d439fdb'],
-                                    },
-                                    required: false,
-                                },
-                            ], 
-                        },
-                        {
-                            sectionTitle: 'Sampling Technique',
-                            componentConfigs: [
-                                {
-                                    componentName: 'default-card',
-                                    uniqueInstanceName: 'sampling-technique',
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
-                                        nodegroupid: '0335786d-1d9d-11eb-a29f-024e0d439fdb',
-                                        hiddenNodes: ['033578b7-1d9d-11eb-a29f-024e0d439fdb','0335789a-1d9d-11eb-a29f-024e0d439fdb']
-                                    },
-                                    required: false,
+                                    required: true,
                                 },
                             ], 
                         },
                     ],
-                    resourceid: '03357848-1d9d-11eb-a29f-024e0d439fdb',
-                    tileid: null,
-                    parenttileid: null,
-                    required: false,
                 },
                 {
                     title: 'Image',
