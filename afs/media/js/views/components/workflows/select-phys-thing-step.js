@@ -9,7 +9,6 @@ define([
         var componentParams = params.form.componentData.parameters;
         this.physThingSetNodegroupId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
         this.physicalThingPartOfSetNodeId = '63e49254-c444-11e9-afbe-a4d18cec433a';
-        this.save = params.form.save;
         this.physicalThingGraphId = componentParams.graphids[0];
         this.projectGraphId = componentParams.graphids[1];
         this.projectValue = ko.observable();
