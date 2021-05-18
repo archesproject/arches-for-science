@@ -9,17 +9,27 @@ define([
 ], function($, _, ko, koMapping, arches, ReportViewModel) {
     var viewModel = function(params) {
         var self = this;
-        ReportViewModel.apply(this, [params]);
 
-        this.foo = ko.observable();
+        /* 
+            prevents unneccesary VM load, should be removed
+            if/when ReportViewModel is refactored to be more generic.
+        */ 
+        // if (!params.summary) {
+        //     ReportViewModel.apply(this, [params]);
+        // }
+
+        console.log(self, params)
+
+        this.configForm = false; // legacy artifact
+
+        this.summary = params.summary;
+        this.resourceData = ko.observable();
 
         var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json';
 
-        console.log("ADF(D)S", this, params)
-
         $.get(url, function(data) {
-            console.log("WHOOOWHO", data, self)
-            self.foo(data);
+            console.log("WHOOOHO", self, params)
+            self.resourceData(data);
         });
     };
 

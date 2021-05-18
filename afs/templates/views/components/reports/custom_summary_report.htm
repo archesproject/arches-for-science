@@ -1,9 +1,14 @@
 {% extends "views/report-templates/default.htm" %}
 {% load i18n %} 
 
+{% block report %}
+<!-- ko if: resourceData() -->
+<div data-bind="text: $data.resourceData().resource.Name[0].Name_content"></div>
+<!-- /ko -->
+{% endblock report %}
 
 {% block summary %}
-
-<div data-bind="text: foo()"></div>
-
+<!-- ko if: resourceData() -->
+<div data-bind="text: $data.resourceData().resource.Name[0].Name_content"></div>
+<!-- /ko -->
 {% endblock summary %}
