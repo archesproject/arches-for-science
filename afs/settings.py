@@ -108,10 +108,6 @@ ALLOWED_HOSTS = ["10.0.2.2", "localhost"]
 
 SYSTEM_SETTINGS_LOCAL_PATH = os.path.join(APP_ROOT, "system_settings", "System_Settings.json")
 WSGI_APPLICATION = "afs.wsgi.application"
-<<<<<<< HEAD
-STATIC_ROOT = ""
-=======
->>>>>>> 9ce927849f09b6a72a681158d93f8256b1dfddd8
 
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, "logs", "resource_import.log")
 
