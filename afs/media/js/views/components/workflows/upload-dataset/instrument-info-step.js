@@ -34,23 +34,25 @@ define([
         };
 
         this.instrumentValue.subscribe(function(val){
-            var instrumentData = resourceUtils.lookupResourceInstanceData(val);
-            self.instrumentInstance({
-                resourceId: val,
-                ontologyProperty: "",
-                inverseOntologyProperty: ""
-            });
-            instrumentData.then(function(data){
-                self.nameValue("Observation of " + physThingName + " with " + data._source.displayname);
-            });
+            if (val) {
+                var instrumentData = resourceUtils.lookupResourceInstanceData(val);
+                self.instrumentInstance([{
+                    resourceId: val,
+                    ontologyProperty: "",
+                    inverseOntologyProperty: ""
+                }]);
+                instrumentData.then(function(data){
+                    self.nameValue("Observation of " + physThingName + " with " + data._source.displayname);
+                });
+            }
         });
 
         this.procedureValue.subscribe(function(val){
-            self.procedureInstance({
+            self.procedureInstance([{
                 resourceId: val,
                 ontologyProperty: "",
                 inverseOntologyProperty: ""
-            });
+            }]);
         });
 
         this.updatedValue = ko.pureComputed(function(){
