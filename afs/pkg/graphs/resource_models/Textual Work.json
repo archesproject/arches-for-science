@@ -255,7 +255,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Language",
                     "nodegroup_id": "2db7af66-c077-11e9-ae4d-a4d18cec433a",
                     "sortorder": 6,
@@ -281,7 +281,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Name",
                     "nodegroup_id": "0807541e-c073-11e9-b0d6-a4d18cec433a",
                     "sortorder": 0,
@@ -689,7 +689,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Internal Label",
                     "nodegroup_id": "e2426eb8-b2f2-11e9-9aa6-a4d18cec433a",
                     "sortorder": 13,
@@ -926,7 +926,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Creation",
                     "nodegroup_id": "11747d2e-c073-11e9-bca3-a4d18cec433a",
                     "sortorder": 8,
@@ -6501,18 +6501,18 @@
                         },
                         "name": {
                             "nodegroup_id": "0807541e-c073-11e9-b0d6-a4d18cec433a",
-                            "string_template": "<content>"
+                            "string_template": "<Name_content>"
                         },
                         "triggering_nodegroups": []
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                    "id": "e331277e-a726-11eb-a29f-024e0d439fdb"
+                    "id": "7b7aa55a-b885-11eb-a29f-024e0d439fdb"
                 }
             ],
             "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
             "iconclass": "fa fa-book",
-            "is_editable": true,
+            "is_editable": false,
             "isactive": true,
             "isresource": true,
             "jsonldcontext": null,
@@ -7496,6 +7496,24 @@
                 },
                 {
                     "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Creation (partitioned)_time_name_content",
+                    "nodegroup_id": "11745273-c073-11e9-a508-a4d18cec433a",
+                    "nodeid": "1174f391-c073-11e9-941a-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -7949,24 +7967,6 @@
                     "nodeid": "1174e6f5-c073-11e9-aef7-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Creation (partitioned)_time_name_content",
-                    "nodegroup_id": "11745273-c073-11e9-a508-a4d18cec433a",
-                    "nodeid": "1174f391-c073-11e9-941a-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -11772,7 +11772,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "c3b705b11 2021-04-20 15:05:23 -0700",
+        "git hash": "19d4ce482 2021-05-13 17:32:15 -0700",
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }
