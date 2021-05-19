@@ -83,7 +83,8 @@ define([
             return res;
         };
 
-        this.saveTile = function(tile) {
+        this.saveTile = function(value, nodeId, nodeGroupId, resourceid, tileid) {
+            var tile = self.buildTile(value, nodeId, nodeGroupId, resourceid, tileid);
             return window.fetch(arches.urls.api_tiles(uuid.generate()), {
                 method: 'POST',
                 credentials: 'include',
@@ -99,23 +100,18 @@ define([
         };
 
         params.form.save = function() {
-            var nameTile = self.buildTile(self.nameValue, nameNodeId, nameNodeGroupId);
-            self.saveTile(nameTile).then(
-                function(nameData){
-                    var instrumentTile = self.buildTile(self.instrumentInstance, instrumentNodeId, instrumentNodeId, nameData.resourceinstance_id);
-                    self.saveTile(instrumentTile).then(
-                        function(instrumentData){
-                            var procedureTile = self.buildTile(self.procedureInstance, procedureNodeId, procedureNodeId, instrumentData.resourceinstance_id);
-                            self.saveTile(procedureTile).then(
-                                function(procedureData){
-                                    params.form.complete(true);
-                                    params.form.savedData(params.form.addedData());
-                                }
-                            );
-                        }
-                    );
-                }
-            );
+            self.saveTile(self.nameValue, nameNodeId, nameNodeGroupId)
+                .then(function(data) {
+                    return self.saveTile(self.instrumentInstance, instrumentNodeId, instrumentNodeId, data.resourceinstance_id);
+                })
+                .then(function(data) {
+                    return self.saveTile(self.procedureInstance, procedureNodeId, procedureNodeId, data.resourceinstance_id);
+                })
+                .then(function() {
+                    params.form.complete(true);
+                    params.form.savedData(params.form.addedData());
+                });
+            
         };
 
         this.init();
