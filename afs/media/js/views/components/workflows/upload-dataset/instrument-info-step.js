@@ -15,7 +15,7 @@ define([
         var parametersNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a';
         var parameterTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         var nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
-        var nameNodeId = '87e4053d-c457-11e9-85c4-a4d18cec433a';
+        var nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
         var physThingName = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physThingName;
         this.instrumentValue = ko.observable(params.value().instrumentValue || null);
         this.procedureValue = ko.observable(params.value().procedureValue || null);
