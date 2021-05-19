@@ -132,7 +132,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Used Instrument / Tool",
                     "nodegroup_id": "1acc9d59-c458-11e9-99e4-a4d18cec433a",
                     "sortorder": 10,
@@ -222,7 +222,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Name",
                     "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
                     "sortorder": 0,
@@ -248,7 +248,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Statement",
                     "nodegroup_id": "8ec30d3a-c457-11e9-81dc-a4d18cec433a",
                     "sortorder": 1,
@@ -352,7 +352,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Carried out by",
                     "nodegroup_id": "a77be70c-c457-11e9-a965-a4d18cec433a",
                     "sortorder": 9,
@@ -404,7 +404,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Observed Object",
                     "nodegroup_id": "cd412ac5-c457-11e9-9644-a4d18cec433a",
                     "sortorder": 6,
@@ -475,7 +475,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Internal Label",
                     "nodegroup_id": "6fa38a05-c457-11e9-8ce4-a4d18cec433a",
                     "sortorder": 13,
@@ -507,7 +507,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Part Of",
                     "nodegroup_id": "736f06a4-c54d-11ea-9f58-024e0d439fdb",
                     "sortorder": 14,
@@ -558,7 +558,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Described in File",
                     "nodegroup_id": "f55c6932-7844-11ea-a33b-acde48001122",
                     "sortorder": 16,
@@ -2364,18 +2364,18 @@
                         },
                         "name": {
                             "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
-                            "string_template": "<content>"
+                            "string_template": "<Name_content>"
                         },
                         "triggering_nodegroups": []
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "id": "07d12d1a-a727-11eb-a29f-024e0d439fdb"
+                    "id": "9fcbc937-b885-11eb-a29f-024e0d439fdb"
                 }
             ],
             "graphid": "615b11ee-c457-11e9-910c-a4d18cec433a",
             "iconclass": "fa fa-eye",
-            "is_editable": true,
+            "is_editable": false,
             "isactive": true,
             "isresource": true,
             "jsonldcontext": "",
@@ -2521,6 +2521,24 @@
                 }
             ],
             "nodes": [
+                {
+                    "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Name_content",
+                    "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
+                    "nodeid": "87e40cc5-c457-11e9-8933-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
+                    "sortorder": 0
+                },
                 {
                     "config": null,
                     "datatype": "semantic",
@@ -2888,24 +2906,6 @@
                     "nodeid": "8ec3330a-c457-11e9-a032-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Name_content",
-                    "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
-                    "nodeid": "87e40cc5-c457-11e9-8933-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -3301,6 +3301,32 @@
                     "name": "Identifier_source",
                     "nodegroup_id": "8fce3ed4-c457-11e9-b300-a4d18cec433a",
                     "nodeid": "8fce4cc5-c457-11e9-8965-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "graphs": [
+                            {
+                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
+                                "inverseOntologyProperty": "",
+                                "ontologyProperty": ""
+                            }
+                        ]
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Statement_source",
+                    "nodegroup_id": "8ec30d3a-c457-11e9-81dc-a4d18cec433a",
+                    "nodeid": "8ec31e91-c457-11e9-b1bd-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "sortorder": 0
@@ -3995,32 +4021,6 @@
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Statement_source",
-                    "nodegroup_id": "8ec30d3a-c457-11e9-81dc-a4d18cec433a",
-                    "nodeid": "8ec31e91-c457-11e9-b1bd-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "graphs": [
-                            {
-                                "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                                "inverseOntologyProperty": "",
-                                "ontologyProperty": ""
-                            }
-                        ]
-                    },
-                    "datatype": "resource-instance-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
                     "name": "Name_source",
                     "nodegroup_id": "87e3d6a1-c457-11e9-9ec9-a4d18cec433a",
                     "nodeid": "87e3fccc-c457-11e9-b64d-a4d18cec433a",
@@ -4169,7 +4169,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "c3b705b11 2021-04-20 15:05:23 -0700",
+        "git hash": "19d4ce482 2021-05-13 17:32:15 -0700",
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }
