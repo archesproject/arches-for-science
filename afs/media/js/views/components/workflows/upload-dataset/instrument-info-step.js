@@ -17,10 +17,13 @@ define([
         var nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         var nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
         var physThingName = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physThingName;
-        this.instrumentValue = ko.observable(params.value().instrumentValue || null);
-        this.procedureValue = ko.observable(params.value().procedureValue || null);
-        this.parameterValue = ko.observable(params.value().parameterValue || null);
-        this.nameValue = ko.observable(params.value().parameterValue || null);
+        var getValue = function(key) {
+            return ko.unwrap(params.value) ? params.value()[key] : null; 
+        }
+        this.instrumentValue = ko.observable(getValue('instrumentValue'));
+        this.procedureValue = ko.observable(getValue('procedureValue'));
+        this.parameterValue = ko.observable(getValue('parameterValue'));
+        this.nameValue = ko.observable(getValue('nameValue'));
         this.observationInstanceId = ko.observable();
         this.showName = ko.observable(false);
         this.instrumentInstance = ko.observable(null);
