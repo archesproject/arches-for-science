@@ -7,24 +7,23 @@ define([
 
     function viewModel(params) {
         var self = this;
-        params.form.resourceId('c05e4213-dc08-46e5-bb8a-b72bae96f2cb')
         SummaryStep.apply(this, [params]);
 
         this.resourceData.subscribe(function(val){
             this.reportVals = {
                 projectName: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@value'])},
-                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Sampling Unit'][0], [,'Sampling Area','Overall Object Sampled','@value'])},
+                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Sampling Unit'][0], ['Sampling Area','Overall Object Sampled','@value'])},
                 samplers: {'name': 'Samplers', 'value': this.getResourceValue(val.resource, ['carried out by','@value'])},
                 samplingDate: {'name': 'Sampling Date', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@value'])},
                 statement: {'name': 'Technique', 'value': this.getResourceValue(val.resource['Statement'][0], ['Statement_content','@value'])},
                 samplingActivityName: {'name': 'Sampling Activity Name', 'value': this.getResourceValue(val.resource, ['Name','Name_content','@value'])},
             };
 
-            var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][0],['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@value'])
+            var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][0],['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@value']);
             if (annotationStr){
                 var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
                 this.prepareAnnotation(annotationJson);
-            };
+            }
 
             try {
                 this.reportVals.samplingUnits = val.resource['Sampling Unit'].map(function(val){
@@ -32,9 +31,9 @@ define([
                         obsName:  {'name': 'Observation Name', 'value': self.getResourceValue(val, ['Sample Created','@value'])},
                         samplingArea: {'name': 'Sampling Area', 'value': self.getResourceValue(val, ['Sampling Area','Overall Object Sampled','@value'])}
                     };
-                })
+                });
             } catch(e) {
-                console.log(e)
+                console.log(e);
                 this.reportVals.annotations = [];
             }
         
