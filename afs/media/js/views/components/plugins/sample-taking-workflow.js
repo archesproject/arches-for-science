@@ -30,6 +30,9 @@ define([
                     parenttileid: null,
                     required: false,
                     shoudltrackresource: true,
+                    externalstepdata: {
+                        sampleinfostep: 'sample-info',
+                    },
                     layoutSections: [
                         {
                             sectionTitle: null,
@@ -43,18 +46,22 @@ define([
                                             '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
                                         ],  
                                         renderContext: 'workflow',
-                                        value: null
+                                        value: null,
+                                        relatedResource: {
+                                            step: 'sampleinfostep',
+                                            stepName: 'sampling-info',
+                                            object: 'samplingActivityResourceId'
+                                        }
                                     },
                                     required: true,
                                 },
                             ], 
                         },
                     ],
-                    wastebin: {resourceid: null, description: 'a sampling activity instance'}
                 },
                 {
                     title: 'Sample Info',
-                    name: 'object-sample-info',  /* unique to workflow */
+                    name: 'sample-info',  /* unique to workflow */
                     description: 'The date that the sample was taken',
                     informationboxdata: {
                         heading: 'Sampling Information',
