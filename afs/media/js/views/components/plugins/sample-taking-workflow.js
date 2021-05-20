@@ -108,9 +108,6 @@ define([
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
                     nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
-                    externalstepdata: { 
-                        relatedsetstep: 'activity-collection',
-                    },
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
@@ -129,10 +126,6 @@ define([
                     componentname: 'component-based-step',
                     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
                     nodegroupid: 'fec59582-8593-11ea-97eb-acde48001122',
-                    externalstepdata: { 
-                        physicalthingidstep: 'select-physical-thing',
-                        visualworkidstep: 'activity-collection',
-                    },
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
