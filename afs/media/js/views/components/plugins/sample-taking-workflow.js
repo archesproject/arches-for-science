@@ -30,9 +30,6 @@ define([
                     parenttileid: null,
                     required: false,
                     shoudltrackresource: true,
-                    externalstepdata: {
-                        sampleinfostep: 'sample-info',
-                    },
                     layoutSections: [
                         {
                             sectionTitle: null,
@@ -47,11 +44,6 @@ define([
                                         ],  
                                         renderContext: 'workflow',
                                         value: null,
-                                        relatedResource: {
-                                            step: 'sampleinfostep',
-                                            stepName: 'sampling-info',
-                                            object: 'samplingActivityResourceId'
-                                        }
                                     },
                                     required: true,
                                 },
