@@ -21,6 +21,9 @@ define([
             this.physicalThingSetValue(params.value().physicalThingSet);
             this.projectValue(params.value().project);
         }
+
+        this.locked = params.form.locked;
+
         this.projectValue.subscribe(function(val){
             if (val) {
                 var res = resourceUtils.lookupResourceInstanceData(val);
