@@ -9,90 +9,63 @@ define([
     function viewModel(params) {
         var self = this;
 
+        var digitalResourcesNameNodegroupId = 'd2fdae3d-ca7a-11e9-ad84-a4d18cec433a';
+        var digitalResourceNameCard = params.form.topCards.find(function(topCard) {
+            return topCard.nodegroupid === digitalResourcesNameNodegroupId;
+        });
+        this.digitalResourceNameTile = digitalResourceNameCard.getNewTile();
+
+        
+        var digitalResourcesStatementNodegroupId = 'da1fac57-ca7a-11e9-86a3-a4d18cec433a';
+        var digitalResourceStatementCard = params.form.topCards.find(function(topCard) {
+            return topCard.nodegroupid === digitalResourcesStatementNodegroupId;
+        });
+        this.digitalResourceStatementTile = digitalResourceStatementCard.getNewTile();
+
+        var digitalResourcesNameContentNodeId = 'd2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a';
+        var digitalResourcesStatementContentNodeId = 'da1fbca1-ca7a-11e9-8256-a4d18cec433a';
+        
         var objectStepData = params.form.externalStepData['objectstep']['data'];
         this.physicalThingData = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1][0]);
-
-        console.log("physicalThingData", this.physicalThingData)
 
         this.isManifestManagerHidden = ko.observable(true);
 
         this.manifestData = ko.observable();
-        this.manifestData.subscribe(function(foo) {
-            console.log("manifestData", foo, params)
-        })
+        this.manifestData.subscribe(function(manifestData) {
+            params.dirty(true)
+            self.digitalResourceNameTile.data[digitalResourcesNameContentNodeId](manifestData.label);
+            self.digitalResourceStatementTile.data[digitalResourcesStatementContentNodeId](manifestData.description);
+        });
+
+
+        this.topCards = params.form.topCards;
+        this.tiles = params.form.tiles;
+
+        params.saveFunction(function() {
+            /* saving a tile without a resourceinstance_id creates a new resources */ 
+            self.digitalResourceNameTile.save().then(function(data) {
+                self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
+
+                self.digitalResourceStatementTile.save().then(function(data) {
+                    console.log("MABYE", data, self.digitalResourceStatementTile, params)
+                });
+            });
+        });
 
         this.initialize = function() {
-            var visualWorkPromise = this.createVisualWork(self.physicalThingData);
-            visualWorkPromise.then(function(visualWorkData) {
-                console.log("visualWorkData", visualWorkData)
-
-                var physicalThingUpdatePromise = self.updatePhysicalThingWithVisualWork(visualWorkData);
-                physicalThingUpdatePromise.then(function(physicalThingUpdateData) {
-                    console.log("physicalThingUpdateData", physicalThingUpdateData);
-                });
-
-                var createDigitalResourcePromise = self.createDigitalResource(visualWorkData);
-                createDigitalResourcePromise.then(function(digitalResourceData) {
-                    console.log("digitalResourceData", digitalResourceData)
-
-                    var digitalResourceUpdatePromise = self.updateDigitalResourceWithVisualWork(digitalResourceData);
-                    digitalResourceUpdatePromise.then(function(digitalResourceUpdateData) {
-                        console.log("digitalResourceUpdateData", digitalResourceUpdateData)
-                    });
-                });
-                
-            });
         };
 
         this.toggleManifestManagerHidden = function() {
             self.isManifestManagerHidden(!self.isManifestManagerHidden());
         };
 
-        this.createVisualWork = function(physicalThingData) {
-            return $.ajax({
-                url: arches.urls.api_node_value,
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    'nodeid': 'a298ee52-8d59-11eb-a9c4-faffc265b501', // Digital Source (E73) (physical thing)
-                    'data': physicalThingData, 
-                    'tileid': null 
-                }
-            })
-        };
-
-        this.updatePhysicalThingWithVisualWork = function(visualWorkData) {
+        this.updatePhysicalThingWithDigitalResource = function(digitalResourceData) {
             return $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
                 data: {
                     'resourceinstanceid': self.physicalThingData.resourceId,
                     'nodeid': 'a298ee52-8d59-11eb-a9c4-faffc265b501', // Digital Source (E73) (physical thing)
-                    'data': visualWorkData,
-                    'tileid': null,
-                }
-            })
-        };
-
-        this.createDigitalResource = function(visualWorkData) {
-            return $.ajax({
-                url: arches.urls.api_node_value,
-                type: 'POST',
-                data: {
-                    'nodeid': 'c1e732b0-ca7a-11e9-b369-a4d18cec433a', // shows (visual work)
-                    'data': visualWorkData,
-                    'tileid': null,
-                }
-            });
-        };
-
-        this.updateDigitalResourceWithVisualWork = function(visualWorkData) {
-            return $.ajax({
-                url: arches.urls.api_node_value,
-                type: 'POST',
-                data: {
-                    'resourceinstanceid': visualWorkData.resourceinstance_id,
-                    'nodeid': '9743a1b2-8591-11ea-97eb-acde48001122', // Used image (visual work)
                     'data': visualWorkData,
                     'tileid': null,
                 }

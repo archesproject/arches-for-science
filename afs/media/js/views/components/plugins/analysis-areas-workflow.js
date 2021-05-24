@@ -64,7 +64,7 @@ define([
                                     uniqueInstanceName: 'image-service-instance', /* unique to step */
                                     tilesManaged: 'one',
                                     parameters: {
-                                        graphid: 'ba892214-b25b-11e9-bf3e-a4d18cec433a'  /* visual work */
+                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
                                     },
                                 },
                             ], 
