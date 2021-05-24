@@ -32,22 +32,29 @@ define([
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
+            console.log(manifestData)
             params.dirty(true)
             self.digitalResourceNameTile.data[digitalResourcesNameContentNodeId](manifestData.label);
             self.digitalResourceStatementTile.data[digitalResourcesStatementContentNodeId](manifestData.description);
         });
 
-
-        this.topCards = params.form.topCards;
-        this.tiles = params.form.tiles;
+        console.log("AAA", self)
 
         params.saveFunction(function() {
             /* saving a tile without a resourceinstance_id creates a new resources */ 
             self.digitalResourceNameTile.save().then(function(data) {
+
+
+                console.log('digitalResourceNameData', data)
+
                 self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
 
                 self.digitalResourceStatementTile.save().then(function(data) {
-                    console.log("MABYE", data, self.digitalResourceStatementTile, params)
+                    console.log("digitalResourceStatementData", data, self.digitalResourceStatementTile, params)
+
+                    self.updatePhysicalThingWithDigitalResource(data).then(function(data) {
+                        console.log("updatePhysicalThingData", data)
+                    });
                 });
             });
         });
@@ -66,7 +73,7 @@ define([
                 data: {
                     'resourceinstanceid': self.physicalThingData.resourceId,
                     'nodeid': 'a298ee52-8d59-11eb-a9c4-faffc265b501', // Digital Source (E73) (physical thing)
-                    'data': visualWorkData,
+                    'data': digitalResourceData,
                     'tileid': null,
                 }
             })
