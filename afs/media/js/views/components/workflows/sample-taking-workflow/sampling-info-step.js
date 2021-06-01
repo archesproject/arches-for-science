@@ -23,18 +23,20 @@ define([
         this.samplingTechniqueTile = ko.observable();
         this.showName = ko.observable(false);
 
-        if (params.value()){
-            self.samplingActivityResourceId(ko.unwrap(params.value).samplingActivityResourceId);
-            self.samplers(ko.unwrap(params.value).samplers);
-            self.samplingDate(ko.unwrap(params.value).samplingDate);
-            self.samplingTechnique(ko.unwrap(params.value).samplingTechnique);
-            self.samplingName(ko.unwrap(params.value).samplingName);
-            self.projectTile(ko.unwrap(params.value).projectTile);
-            self.physicalThingTile(ko.unwrap(params.value).physicalThingTile);
-            self.samplingNameTile(ko.unwrap(params.value).samplingNameTile);
-            self.samplersTile(ko.unwrap(params.value).samplersTile);
-            self.samplingDateTile(ko.unwrap(params.value).samplingDateTile);
-            self.samplingTechniqueTile(ko.unwrap(params.value).samplingTechniqueTile);
+        this.loadValueFromLocalStorage = function(){
+            if (params.value()){
+                self.samplingActivityResourceId(ko.unwrap(params.value).samplingActivityResourceId);
+                self.samplers(ko.unwrap(params.value).samplers);
+                self.samplingDate(ko.unwrap(params.value).samplingDate);
+                self.samplingTechnique(ko.unwrap(params.value).samplingTechnique);
+                self.samplingName(ko.unwrap(params.value).samplingName);
+                self.projectTile(ko.unwrap(params.value).projectTile);
+                self.physicalThingTile(ko.unwrap(params.value).physicalThingTile);
+                self.samplingNameTile(ko.unwrap(params.value).samplingNameTile);
+                self.samplersTile(ko.unwrap(params.value).samplersTile);
+                self.samplingDateTile(ko.unwrap(params.value).samplingDateTile);
+                self.samplingTechniqueTile(ko.unwrap(params.value).samplingTechniqueTile);
+            }
         }
 
         var samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
@@ -197,6 +199,13 @@ define([
             var samplingTechniqueTileid = ko.unwrap(self.samplingTechniqueTile) || uuid.generate();
             return self.saveTile(samplingTechniqueTileid, samplingTechniqueTileData);
         }
+
+        params.form.reset = function() {
+            params.value(params.form.previouslyPersistedComponentData ? params.form.previouslyPersistedComponentData[0][1] : null);
+            self.loadValuesFromLocalStorage();
+            params.form.addedData.removeAll();
+            params.form.hasUnsavedData(false);
+        };
     }
 
     ko.components.register('sampling-info-step', {
