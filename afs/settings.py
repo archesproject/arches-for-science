@@ -13,6 +13,7 @@ except ImportError:
 
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 STATICFILES_DIRS = (os.path.join(APP_ROOT, "media"),) + STATICFILES_DIRS
+STATIC_ROOT = ""
 
 DATATYPE_LOCATIONS.append("afs.datatypes")
 FUNCTION_LOCATIONS.append("afs.functions")
@@ -23,7 +24,7 @@ TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
 
 APP_PATHNAME = ""
 
-CANTALOUPE_DIR = os.path.join(APP_ROOT, "cantaloupe")
+CANTALOUPE_DIR = os.path.join(APP_ROOT, "uploadedfiles")
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, "locale"))
@@ -81,6 +82,7 @@ INSTALLED_APPS = (
     "oauth2_provider",
     "django_celery_results",
     "afs",
+    "compressor",
     # "debug_toolbar"
 )
 
@@ -106,7 +108,6 @@ ALLOWED_HOSTS = ["10.0.2.2", "localhost"]
 
 SYSTEM_SETTINGS_LOCAL_PATH = os.path.join(APP_ROOT, "system_settings", "System_Settings.json")
 WSGI_APPLICATION = "afs.wsgi.application"
-STATIC_ROOT = "/var/www/media"
 
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, "logs", "resource_import.log")
 
