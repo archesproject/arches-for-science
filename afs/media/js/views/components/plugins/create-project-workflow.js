@@ -25,7 +25,7 @@ define([
                     parenttileid: null,
                     required: true,
                     shouldtrackresource: true,
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    wastebin: {resourceid: null, description: 'a project instance'}
                 },
                 {
                     title: 'Project Statement',
@@ -83,6 +83,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
+                    wastebin: {resourceid: null, description: 'a collection instance'}
                 },
                 {
                     title: 'Add Project Complete',
