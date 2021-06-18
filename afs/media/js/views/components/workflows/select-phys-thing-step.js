@@ -16,11 +16,25 @@ define([
         this.physicalThingValue = ko.observable();
         this.physicalThingSetValue = ko.observable();
         this.hasSetWithPhysicalThing = ko.observable();
+        
+        this.updateValues = function(val){
+            if (val === null) {
+                this.projectValue(null);
+            } else {
+                this.physicalThingValue(val.physicalThing);
+                this.physicalThingSetValue(val.physicalThingSet);
+                this.projectValue(val.project);
+            }
+        };
+
         if (params.value()) { 
-            this.physicalThingValue(params.value().physicalThing);
-            this.physicalThingSetValue(params.value().physicalThingSet);
-            this.projectValue(params.value().project);
+            this.updateValues(params.value());
         }
+
+        params.form.value.subscribe(function(val){
+            this.updateValues(val);
+        }, this);
+        
         this.projectValue.subscribe(function(val){
             if (val) {
                 var res = resourceUtils.lookupResourceInstanceData(val);
@@ -42,6 +56,8 @@ define([
                         }
                     }
                 );
+            } else {
+                this.updateValues(null);
             }
         });
 
@@ -61,14 +77,6 @@ define([
                 };
             } else {
                 return null;
-            }
-        });
-
-        this.projectValue.subscribe(function(val) {
-            if (!val) {
-                self.hasSetWithPhysicalThing(null);
-                self.physicalThingSetValue(null);
-                self.physicalThingValue(null);
             }
         });
 
