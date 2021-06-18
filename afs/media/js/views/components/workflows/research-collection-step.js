@@ -64,7 +64,7 @@ define([
         this.projectResourceId(researchActivityStepData.resourceid);
 
         if (ko.unwrap(params.value)){
-            cachedValue = ko.unwrap(params.value);
+            var cachedValue = ko.unwrap(params.value);
             if (cachedValue['collectionResourceId']){
                 self.collectionResourceId(cachedValue['collectionResourceId']);
                 params.resourceid(self.collectionResourceId());
