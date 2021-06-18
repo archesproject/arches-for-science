@@ -53,36 +53,41 @@ define([
     };
     
     function viewModel(params) {
-        if (!params.resourceid()) { 
-            if (ko.unwrap(params.workflow.resourceId)) {
-                params.resourceid(ko.unwrap(params.workflow.resourceId));
-            }
-        }
-
-        NewTileStep.apply(this, [params]);
-
-        this.researchActivityResourceId = ko.observable();
-
-        var limit = 10;
         var self = this;
+        var limit = 10;
+
+        this.projectResourceId = ko.observable();
+        this.collectionResourceId = ko.observable();
 
         var researchActivityStepData = params.externalStepData['researchactivitystep']['data'];
         var researchActivityName = researchActivityStepData.tile[activityNameNodeId];
-        this.researchActivityResourceId(researchActivityStepData.resourceid);
+        this.projectResourceId(researchActivityStepData.resourceid);
+
+        if (ko.unwrap(params.value)){
+            cachedValue = ko.unwrap(params.value);
+            if (cachedValue['collectionResourceId']){
+                self.collectionResourceId(cachedValue['collectionResourceId']);
+                params.resourceid(self.collectionResourceId());
+            }
+        }
+
+        params.getJSONOnLoad = ko.observable(true);
+        NewTileStep.apply(this, [params]);
 
         this.saveNewSet = function() {
-            $.ajax({ //this saves the collection name in Collection
+            $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
                 dataType: 'json',
                 data: {
                     'nodeid': collectionNameNodeId,
                     'data':  ("Collection for " + researchActivityName),
-                    'tileid': null
+                    'tileid': null,
+                    'resourceinstanceid': ko.unwrap(self.collectionResourceId)
                 }
             }).done(function(data) {
                 if (data.resourceinstance_id) {
-                    params.resourceid(data.resourceinstance_id);
+                    self.collectionResourceId(data.resourceinstance_id);
                     $.ajax({
                         url: arches.urls.api_node_value,
                         type: 'POST',
@@ -98,15 +103,19 @@ define([
                                 }]
                             ), 
                             'tileid': null,
-                            'resourceinstanceid': self.researchActivityResourceId()
+                            'resourceinstanceid': self.projectResourceId()
                         }
                     });
                 }
             });
         };
-        this.saveNewSet();
+
+        if (!ko.unwrap(self.collectionResourceId)) {
+            this.saveNewSet();
+        }
+
         params.getJSONOnLoad = ko.observable(false);
-        
+
         NewTileStep.apply(this, [params]);
         self.getCardResourceIdOrGraphId = function() {
             return ko.unwrap(params.graphid);
@@ -139,9 +148,9 @@ define([
         params.hasDirtyTile(Boolean(self.value().length));
 
         this.value.subscribe(function(a) {
-            a.forEach(function(action) { //this is individual physical thing resource to be saved in Collection
+            a.forEach(function(action) {
                 if (action.status === 'added') {
-                    $.ajax({ //getting resource information and add to selected resources
+                    $.ajax({
                         url: arches.urls.api_resources(ko.unwrap(action.value['resourceId'])),
                         data: {
                             format: 'json',
@@ -182,7 +191,7 @@ define([
         this.updateTileData = function(resourceid) {
             var tilevalue = self.tile().data[params.nodeid()];
             var val = self.value().find(function(item) {
-                return item['resourceId'] === resourceid;
+                return ko.unwrap(item['resourceId']) === resourceid;
             });
 
             if (!!val) {
@@ -217,13 +226,13 @@ define([
         });
 
         this.submit = function() {
-            $.ajax({  //this creates Collection resource instance
+            $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
                 data: {
                     'nodeid': params.nodeid(),
                     'data': koMapping.toJSON(self.value()),
-                    'resourceinstanceid': ko.unwrap(params.resourceid),
+                    'resourceinstanceid': ko.unwrap(self.collectionResourceId),
                     'tileid': self.tile().tileid
                 }
             }).done(function(data) {
@@ -246,7 +255,7 @@ define([
             multiple: false,
             closeOnSlect: false,
             allowClear: true,
-            ajax: { //something to do with search probably irrelevant
+            ajax: {
                 url: arches.urls.search_terms,
                 dataType: 'json',
                 quietMillis: 250,
@@ -310,7 +319,7 @@ define([
             }
 
             params.loading(true);
-            $.ajax({ //something to do with search probably irrelevant
+            $.ajax({
                 url: arches.urls.physical_thing_search_results,
                 data: filters
             }).done(function(data) {
@@ -363,6 +372,28 @@ define([
                 getResultData(null, ko.unwrap(graph));
             }
         });
+
+        params.defineStateProperties = function(){
+            var wastebin = !!(ko.unwrap(params.wastebin)) ? koMapping.toJS(params.wastebin) : undefined;
+            var resourceId = ko.unwrap(self.collectionResourceId);
+
+            if (resourceId) {
+                if (wastebin && 'resourceid' in wastebin) {
+                    wastebin.resourceid = resourceId;
+                }
+            }
+            
+            ko.mapping.fromJS(wastebin, {}, params.wastebin);
+            
+            return {
+                resourceid: resourceId,
+                tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
+                tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
+                wastebin: wastebin,
+                projectResourceId: ko.unwrap(self.projectResourceId),
+                collectionResourceId: ko.unwrap(self.collectionResourceId),        
+            };
+        };
 
         this.selectedTerm.subscribe(function(val) {
             var termFilter = self.termOptions[val];
