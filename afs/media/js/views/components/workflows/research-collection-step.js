@@ -173,7 +173,7 @@ define([
             self.startValue = tile.data[params.nodeid()]();
             if (self.startValue) {
                 self.startValue.forEach(function(item) {
-                    self.value.push(item);
+                    self.value.push(koMapping.toJS(item));
                 });
             }
         });
@@ -183,7 +183,7 @@ define([
             self.value.removeAll();
             if (self.startValue) {
                 self.startValue.forEach(function(item) {
-                    self.value.push(item);
+                    self.value.push(koMapping.toJS(item));
                 });
             }
         };
@@ -242,6 +242,7 @@ define([
                 self.onSaveSuccess([data]);
                 self.startValue = data.data[params.nodeid()];
                 self.tile()._tileData(koMapping.toJSON(data.data));
+                params.hasDirtyTile(false);
             });
         };
         if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
