@@ -19,11 +19,13 @@ define([
         
         this.updateValues = function(val){
             if (val === null) {
-                this.projectValue(null);
+                self.physicalThingValue(null);
+                self.physicalThingSetValue(null);
+                self.projectValue(null);
             } else {
-                this.physicalThingValue(val.physicalThing);
-                this.physicalThingSetValue(val.physicalThingSet);
-                this.projectValue(val.project);
+                self.physicalThingValue(val.physicalThing);
+                self.physicalThingSetValue(val.physicalThingSet);
+                self.projectValue(val.project);
             }
         };
 
@@ -57,7 +59,7 @@ define([
                     }
                 );
             } else {
-                this.updateValues(null);
+                self.updateValues(null);
             }
         });
 
