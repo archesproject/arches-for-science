@@ -35,7 +35,7 @@ define([
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
-            console.log(manifestData)
+            console.log('manifestData', manifestData)
             params.dirty(true)
             self.digitalResourceNameTile.data[digitalResourcesNameContentNodeId](manifestData.label);
             self.digitalResourceStatementTile.data[digitalResourcesStatementContentNodeId](manifestData.description);
@@ -45,8 +45,6 @@ define([
 
         params.saveFunction(function() {
             self.digitalResourceNameTile.save().then(function(data) {
-
-
                 console.log('digitalResourceNameData', data)
 
                 self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
@@ -104,12 +102,12 @@ define([
                     card: digitalReferenceCardData,
                     graphModel: graphModel,
                     tile: null,
-                    resourceId: ko.observable(digitalResourceData.resourceinstance_id),
+                    resourceId: ko.observable(self.physicalThingData.resourceId),
                     displayname: data.displayname,
                     handlers: handlers,
                     cards: data.cards,
                     tiles: data.tiles,
-                    // provisionalTileViewModel: provisionalTileViewModel,
+                    provisionalTileViewModel: null,
                     cardwidgets: data.cardwidgets,
                     userisreviewer: data.userisreviewer,
                 });
@@ -117,11 +115,11 @@ define([
                 var digitalReferenceTile = digitalReferenceCard.getNewTile();
 
                 var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
-                digitalReferenceTile.data[digitalSourceNodeId] = {
-                    "resourceId": self.physicalThingData.resourceId,
+                digitalReferenceTile.data[digitalSourceNodeId] = [{
+                    "resourceId": digitalResourceData.resourceinstance_id,
                     "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
-                }
+                }]
                 
                 var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
                 digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept
