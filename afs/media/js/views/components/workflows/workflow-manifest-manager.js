@@ -12,69 +12,116 @@ define([
     function viewModel(params) {
         var self = this;
 
-        var digitalResourcesNameNodegroupId = 'd2fdae3d-ca7a-11e9-ad84-a4d18cec433a';
+        this.isManifestManagerHidden = ko.observable(true);
+
+        var objectStepData = params.form.externalStepData['objectstep']['data'];
+        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
+
+        this.physicalThingDigitalReferenceTile = ko.observable();
+
+
+        var digitalResourceNameNodegroupId = 'd2fdae3d-ca7a-11e9-ad84-a4d18cec433a';
         var digitalResourceNameCard = params.form.topCards.find(function(topCard) {
-            return topCard.nodegroupid === digitalResourcesNameNodegroupId;
+            return topCard.nodegroupid === digitalResourceNameNodegroupId;
         });
         this.digitalResourceNameTile = digitalResourceNameCard.getNewTile();
 
         
-        var digitalResourcesStatementNodegroupId = 'da1fac57-ca7a-11e9-86a3-a4d18cec433a';
+        var digitalResourceStatementNodegroupId = 'da1fac57-ca7a-11e9-86a3-a4d18cec433a';
         var digitalResourceStatementCard = params.form.topCards.find(function(topCard) {
-            return topCard.nodegroupid === digitalResourcesStatementNodegroupId;
+            return topCard.nodegroupid === digitalResourceStatementNodegroupId;
         });
         this.digitalResourceStatementTile = digitalResourceStatementCard.getNewTile();
-
-        var digitalResourcesNameContentNodeId = 'd2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a';
-        var digitalResourcesStatementContentNodeId = 'da1fbca1-ca7a-11e9-8256-a4d18cec433a';
         
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        this.physicalThingData = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1][0]);
+        
+        var digitalResourceServiceNodegroupId = '29c8c76e-ca7c-11e9-9e11-a4d18cec433a';
+        var digitalResourceServiceCard = params.form.topCards.find(function(topCard) {
+            return topCard.nodegroupid === digitalResourceServiceNodegroupId;
+        });
+        this.digitalResourceServiceTile = digitalResourceServiceCard.getNewTile();
 
-        this.isManifestManagerHidden = ko.observable(true);
+
+        var digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
+        var digitalResourceServiceIdentifierCard = digitalResourceServiceCard.cards().find(function(topCard) {
+            return topCard.nodegroupid === digitalResourceServiceIdentifierNodegroupId;
+        });
+        this.digitalResourceServiceIdentifierTile = digitalResourceServiceIdentifierCard.getNewTile();
+
+
+        var digitalResourceNameContentNodeId = 'd2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a';
+        var digitalResourceStatementContentNodeId = 'da1fbca1-ca7a-11e9-8256-a4d18cec433a';
+        var digitalResourceServiceTypeConformanceNodeId = 'cec360bd-ca7f-11e9-9ab7-a4d18cec433a';
+        var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+        var digitalResourceServiceIdentifierTypeNodeId = '56f8e759-ca7c-11e9-bda1-a4d18cec433a';
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
             console.log('manifestData', manifestData)
             params.dirty(true)
-            self.digitalResourceNameTile.data[digitalResourcesNameContentNodeId](manifestData.label);
-            self.digitalResourceStatementTile.data[digitalResourcesStatementContentNodeId](manifestData.description);
+            self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
+            self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
+
+            self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId]((function() {
+                // TO BE REFACTORED ONCE MANIFEST_MANAGER RETURNS PROPER FORMAT FOR UPLOADED FILES
+
+                if (manifestData['@id']) {
+                    return manifestData['@id']
+                }
+                else {
+                    return 'IIIF FROM UPLOADED FILES DOES NOT CONTAIN A DIRECT REFERENCE TO MANIFEST'
+                }
+            })()); // IIFE
+
+            self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
+            self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](manifestData['@context']);
         });
 
-        console.log("AAA", self)
+        
+        this.initialize = function() {
+            if (!ko.unwrap(params.saveFunction)) {
+                params.saveFunction(function() {
+                    self.digitalResourceNameTile.save().then(function(data) {
+                        self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
+        
+                        self.digitalResourceStatementTile.save().then(function(data) {
+                            self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
+        
+                            self.digitalResourceServiceTile.save().then(function(data) {
+                                self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
+                                self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
+        
+                                self.digitalResourceServiceIdentifierTile.save().then(function(data) {
+                                    var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
-        params.saveFunction(function() {
-            self.digitalResourceNameTile.save().then(function(data) {
-                console.log('digitalResourceNameData', data)
-
-                self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
-
-                self.digitalResourceStatementTile.save().then(function(data) {
-                    console.log("digitalResourceStatementData", data, self.digitalResourceStatementTile, params)
-
-                    console.log("b", self, this)
-
-
-                    self.updatePhysicalThingWithDigitalResource(data).then(function(data) {
-                        console.log("updatePhysicalThingData", data)
+                                    var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+                                    digitalReferenceTile.data[digitalSourceNodeId] = [{
+                                        "resourceId": data.resourceinstance_id,
+                                        "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                                        "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                                    }]
+                                    
+                                    var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
+                                    digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
+                        
+                                    digitalReferenceTile.save()
+                                });
+                            });
+                        });
                     });
                 });
-            });
-        });
+            }
 
-        this.initialize = function() {
+            if (!self.physicalThingDigitalReferenceTile()) {
+                self.getPhysicalThingDigitalReferenceTile();
+            }
         };
 
         this.toggleManifestManagerHidden = function() {
             self.isManifestManagerHidden(!self.isManifestManagerHidden());
         };
 
-        this.updatePhysicalThingWithDigitalResource = function(digitalResourceData) {
-            console.log("in updatePhysicalTHingWIthDR", digitalResourceData, self, this)
-
-
-
-            $.getJSON( arches.urls.api_card + self.physicalThingData.resourceId ).then(function(data) {
+        this.getPhysicalThingDigitalReferenceTile = function() {
+            $.getJSON( arches.urls.api_card + self.physicalThingResourceId ).then(function(data) {
                 var digitalReferenceCardData = data.cards.find(function(card) {
                     return card.nodegroup_id === '8a4ad932-8d59-11eb-a9c4-faffc265b501';
                 });
@@ -93,93 +140,22 @@ define([
                     datatypes: data.datatypes
                 });
 
-                // var provisionalTileViewModel = new ProvisionalTileViewModel({
-                //     tile: null,
-                //     reviewer: data.userisreviewer
-                // });
-
                 var digitalReferenceCard = new CardViewModel({
                     card: digitalReferenceCardData,
                     graphModel: graphModel,
                     tile: null,
-                    resourceId: ko.observable(self.physicalThingData.resourceId),
-                    displayname: data.displayname,
+                    resourceId: ko.observable(self.physicalThingResourceId),
+                    displayname: ko.observable(data.displayname),
                     handlers: handlers,
                     cards: data.cards,
                     tiles: data.tiles,
-                    provisionalTileViewModel: null,
                     cardwidgets: data.cardwidgets,
                     userisreviewer: data.userisreviewer,
                 });
 
-                var digitalReferenceTile = digitalReferenceCard.getNewTile();
-
-                var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
-                digitalReferenceTile.data[digitalSourceNodeId] = [{
-                    "resourceId": digitalResourceData.resourceinstance_id,
-                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
-                }]
-                
-                var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
-                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept
-
-
-                console.log("digitalReferenceTile", digitalReferenceTile)
-
-                digitalReferenceTile.save().then(function(tileData) {
-                    console.log("dsds tiledata", tileData)
-
-                //     var resourceInstanceIdFrom = self.physicalThingData.resourceId;
-                //     var resourceInstanceIdTo = digitalResourceData.resourceinstance_id;
-        
-                //     var relationshipType = 'http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by';
-                //     var inverseRelationshipType = 'http://www.cidoc-crm.org/cidoc-crm/P67_refers_to';
-        
-                //     var nodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
-        
-                //     $.ajax({
-                //         url: arches.urls.api_related_resources,
-                //         type: 'POST',
-                //         data: {
-                //             'resourceinstanceid_from': resourceInstanceIdFrom,
-                //             'resourceinstanceid_to': resourceInstanceIdTo,
-                //             'relationship_type': relationshipType,
-                //             'inverse_relationship_type': inverseRelationshipType,
-                //             'node_id': nodeId,
-                //             'tile_id': tileData.tileid,
-                //         }
-                //     }).then(function(data) {
-                //         console.log('in importn resp', data)
-                //     })
-                })
-
-                
-
-
-
-
-                // tile.save().then(function(tileData) {
-
-                // });
-
-
-
-                
-                console.log('dsoi', data, foo, tile)
+                self.physicalThingDigitalReferenceTile(digitalReferenceCard.getNewTile());
             });
-
-            // return $.ajax({
-            //     url: arches.urls.api_node_value,
-            //     type: 'POST',
-            //     data: {
-            //         'resourceinstanceid': self.physicalThingData.resourceId,
-            //         'nodeid': 'a298ee52-8d59-11eb-a9c4-faffc265b501', // Digital Source (E73) (physical thing)
-            //         'data': digitalResourceData,
-            //         'tileid': null,
-            //     }
-            // })
-        };
+        }
 
         this.initialize();
     }
