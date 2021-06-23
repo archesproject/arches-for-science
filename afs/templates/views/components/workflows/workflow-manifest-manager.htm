@@ -1,3 +1,39 @@
+
+<div
+    style="padding-bottom: 8px;"
+>
+    <p>
+        Select an existing image service for your object that you can use to draw the locations of your observations.
+        Or upload image(s) to create a new service.
+    </p>
+
+    <!-- ko foreach: physicalThingDigitalReferencePreferredManifestResourceData() -->
+        <div
+            style="
+                display: flex;
+                cursor: pointer;
+            "
+            data-bind="click: function() { $parent.foo($data.displayname) }"
+        >
+            <input 
+                style="
+                    cursor: pointer;
+                    margin-right: 5px;
+                "
+                type="radio" 
+                data-bind="{
+                    value: $data.displayname,
+                    checked: $parent.foo,
+                }"
+            />
+            <label 
+                style="cursor: pointer;"
+                data-bind="text: $data.displayname"
+            ></label>
+        </div>
+    <!-- /ko -->
+</div>
+
 <button
     class="btn btn-success"
     data-bind="click: toggleManifestManagerHidden"

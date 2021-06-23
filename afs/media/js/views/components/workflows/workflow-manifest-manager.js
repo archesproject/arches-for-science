@@ -14,10 +14,20 @@ define([
 
         this.isManifestManagerHidden = ko.observable(true);
 
+        this.foo = ko.observable();
+        this.foo.subscribe(function(bar) {
+            console.log(bar)
+        });
+
         var objectStepData = params.form.externalStepData['objectstep']['data'];
         this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
 
+        this.physicalThingDigitalReferenceCard = ko.observable();
+        this.physicalThingDigitalReferenceCard.subscribe(function(card) {
+            self.getPhysicalThingRelatedDigitalReferenceData(card);
+        });
         this.physicalThingDigitalReferenceTile = ko.observable();
+        this.physicalThingDigitalReferencePreferredManifestResourceData = ko.observableArray();
 
 
         var digitalResourceNameNodegroupId = 'd2fdae3d-ca7a-11e9-ad84-a4d18cec433a';
@@ -56,7 +66,6 @@ define([
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
-            console.log('manifestData', manifestData)
             params.dirty(true)
             self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
             self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
@@ -94,11 +103,12 @@ define([
                                     var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
                                     var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+
                                     digitalReferenceTile.data[digitalSourceNodeId] = [{
                                         "resourceId": data.resourceinstance_id,
                                         "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                                         "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
-                                    }]
+                                    }];
                                     
                                     var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
                                     digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
@@ -111,8 +121,8 @@ define([
                 });
             }
 
-            if (!self.physicalThingDigitalReferenceTile()) {
-                self.getPhysicalThingDigitalReferenceTile();
+            if (!self.physicalThingDigitalReferenceCard() || !self.physicalThingDigitalReferenceTile()) {
+                self.getPhysicalThingDigitalReferenceData();
             }
         };
 
@@ -120,7 +130,7 @@ define([
             self.isManifestManagerHidden(!self.isManifestManagerHidden());
         };
 
-        this.getPhysicalThingDigitalReferenceTile = function() {
+        this.getPhysicalThingDigitalReferenceData = function() {
             $.getJSON( arches.urls.api_card + self.physicalThingResourceId ).then(function(data) {
                 var digitalReferenceCardData = data.cards.find(function(card) {
                     return card.nodegroup_id === '8a4ad932-8d59-11eb-a9c4-faffc265b501';
@@ -153,9 +163,28 @@ define([
                     userisreviewer: data.userisreviewer,
                 });
 
+                self.physicalThingDigitalReferenceCard(digitalReferenceCard);
                 self.physicalThingDigitalReferenceTile(digitalReferenceCard.getNewTile());
             });
-        }
+        };
+
+        /* function used for getting the names of digital resources already related to physical thing */ 
+        this.getPhysicalThingRelatedDigitalReferenceData = function(card) {
+            var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
+            
+            var tiles = card.tiles() || [];
+            tiles.forEach(function(tile) {
+                if (ko.unwrap(tile.data[digitalReferenceTypeNodeId]) === '1497d15a-1c3b-4ee9-a259-846bbab012ed')  { // Preferred Manifest concept value
+                    var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+                    var physicalThingPreferredManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
+                    
+                    $.getJSON( arches.urls.api_card + physicalThingPreferredManifestResourceId ).then(function(data) {
+                        self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
+                    });
+                }
+            });
+        };
+
 
         this.initialize();
     }

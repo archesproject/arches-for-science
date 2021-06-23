@@ -50,6 +50,13 @@ define([
                 {
                     title: 'Image',
                     name: 'image-step', /* unique to workflow */
+                    informationboxdata: {
+                        heading: 'Image Services',
+                        text: `
+                            Image Services provide you with picture(s) of an object, often from multiple vantage points, that can be annotated to indicate the location or region of an observation. 
+                            If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
+                        `,
+                    },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
                     required: true,
