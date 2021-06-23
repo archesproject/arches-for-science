@@ -80,7 +80,7 @@ define([
             const sampelingNameResponse = await self.saveName();
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
-            params.form.setLock('select-project', true);
+            params.form.setSourceStepLock(true);
 
             $.when(
                 self.saveProject(),

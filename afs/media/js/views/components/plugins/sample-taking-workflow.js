@@ -67,6 +67,7 @@ define([
                     required: false,
                     externalstepdata: {
                         selectprojectstep: 'select-project',
+                        sourcesteptolock: 'select-project',
                     },
                     layoutSections: [
                         {
