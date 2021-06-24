@@ -14,8 +14,9 @@ define([
 
         this.isManifestManagerHidden = ko.observable(true);
 
-        this.foo = ko.observable();
-        this.foo.subscribe(function(bar) {
+        this.selectedPhysicalThingImageService = ko.observable();
+        this.selectedPhysicalThingImageService.subscribe(function(bar) {
+            params.dirty(true)
             console.log(bar)
         });
 
@@ -66,7 +67,6 @@ define([
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
-            params.dirty(true)
             self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
             self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
 
@@ -88,37 +88,7 @@ define([
         
         this.initialize = function() {
             if (!ko.unwrap(params.saveFunction)) {
-                params.saveFunction(function() {
-                    self.digitalResourceNameTile.save().then(function(data) {
-                        self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
-        
-                        self.digitalResourceStatementTile.save().then(function(data) {
-                            self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
-        
-                            self.digitalResourceServiceTile.save().then(function(data) {
-                                self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
-                                self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
-        
-                                self.digitalResourceServiceIdentifierTile.save().then(function(data) {
-                                    var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
-
-                                    var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
-
-                                    digitalReferenceTile.data[digitalSourceNodeId] = [{
-                                        "resourceId": data.resourceinstance_id,
-                                        "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                                        "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
-                                    }];
-                                    
-                                    var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
-                                    digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
-                        
-                                    digitalReferenceTile.save()
-                                });
-                            });
-                        });
-                    });
-                });
+                params.saveFunction(self.save);
             }
 
             if (!self.physicalThingDigitalReferenceCard() || !self.physicalThingDigitalReferenceTile()) {
@@ -126,8 +96,51 @@ define([
             }
         };
 
-        this.toggleManifestManagerHidden = function() {
-            self.isManifestManagerHidden(!self.isManifestManagerHidden());
+        this.save = function() {
+            self.digitalResourceNameTile.save().then(function(data) {
+                self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
+
+                self.digitalResourceStatementTile.save().then(function(data) {
+                    self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
+
+                    self.digitalResourceServiceTile.save().then(function(data) {
+                        self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
+                        self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
+
+                        self.digitalResourceServiceIdentifierTile.save().then(function(data) {
+                            var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
+
+                            var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+
+                            digitalReferenceTile.data[digitalSourceNodeId] = [{
+                                "resourceId": data.resourceinstance_id,
+                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                                "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                            }];
+                            
+                            var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
+                            digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
+                
+                            digitalReferenceTile.save()
+                        });
+                    });
+                });
+            });
+        };
+
+        this.openManifestManager = function() {
+            self.isManifestManagerHidden(false);
+
+        };
+
+        this.handleExitFromManifestManager = function() {
+            self.isManifestManagerHidden(true);
+
+            self.physicalThingDigitalReferencePreferredManifestResourceData.push({
+                'displayname': self.manifestData()['label']
+            });
+            
+            self.selectedPhysicalThingImageService(self.manifestData()['label']);
         };
 
         this.getPhysicalThingDigitalReferenceData = function() {
@@ -189,9 +202,9 @@ define([
         this.initialize();
     }
 
-    ko.components.register('workflow-manifest-manager', {
+    ko.components.register('analysis-areas-image-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/workflow-manifest-manager.htm' }
+        template: { require: 'text!templates/views/components/workflows/analysis-areas-image-step.htm' }
     });
     return viewModel;
 });

@@ -13,7 +13,7 @@
                 display: flex;
                 cursor: pointer;
             "
-            data-bind="click: function() { $parent.foo($data.displayname) }"
+            data-bind="click: function() { $parent.selectedPhysicalThingImageService($data.displayname) }"
         >
             <input 
                 style="
@@ -23,7 +23,7 @@
                 type="radio" 
                 data-bind="{
                     value: $data.displayname,
-                    checked: $parent.foo,
+                    checked: $parent.selectedPhysicalThingImageService,
                 }"
             />
             <label 
@@ -36,7 +36,7 @@
 
 <button
     class="btn btn-success"
-    data-bind="click: toggleManifestManagerHidden"
+    data-bind="click: openManifestManager"
 >
     <i class="ion-android-cloud-done"></i>
     <span>
@@ -81,6 +81,6 @@
         style: {
             transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
         },
-        click: toggleManifestManagerHidden
+        click: handleExitFromManifestManager
     "
 >BAIL FROM THE PLUGIN</button>

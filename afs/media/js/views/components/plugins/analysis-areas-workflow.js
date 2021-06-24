@@ -4,7 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/workflows/workflow-manifest-manager',
+    'views/components/workflows/analysis-areas-image-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
@@ -68,7 +68,7 @@ define([
                             sectionTitle: 'Image Service',
                             componentConfigs: [
                                 { 
-                                    componentName: 'workflow-manifest-manager',
+                                    componentName: 'analysis-areas-image-step',
                                     uniqueInstanceName: 'image-service-instance', /* unique to step */
                                     tilesManaged: 'one',
                                     parameters: {
