@@ -11,27 +11,31 @@ define([
         var self = this;
         var instrumentNodeId = '1acc9d59-c458-11e9-99e4-a4d18cec433a';
         var procedureNodeId =  '51416e9c-c458-11e9-b70e-a4d18cec433a';
-        var parametersNodeId = '8ec331a1-c457-11e9-8d7a-a4d18cec433a';
-        var parametersNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a';
+        var parameterNodeId = '8ec331a1-c457-11e9-8d7a-a4d18cec433a';
+        var parameterNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a'; // parameter are 'Statement' cards
         var parameterTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         var nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         var nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
         var physThingName = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physThingName;
-        var getValue = function(key) {
-            return ko.unwrap(params.value) ? params.value()[key] : null; 
-        }
-        this.instrumentValue = ko.observable(getValue('instrumentValue'));
-        this.procedureValue = ko.observable(getValue('procedureValue'));
-        this.parameterValue = ko.observable(getValue('parameterValue'));
-        this.nameValue = ko.observable(getValue('nameValue'));
-        this.observationInstanceId = ko.observable();
+        var getProp = function(key, prop) {
+            if (ko.unwrap(params.value) && params.value()[key])
+                return params.value()[key][prop] || params.value()[key];
+            else {
+                return null;
+            } 
+        };
+        var parameterTileId = getProp('parameter', 'tileid');
+        var instrumentTileId = getProp('instrument', 'tileid');
+        var procedureTileId = getProp('procedure', 'tileid');
+        var nameTileId = getProp('name', 'tileid');
+        this.instrumentValue = ko.observable(getProp('instrument', 'value'));
+        this.procedureValue = ko.observable(getProp('procedure', 'value'));
+        this.parameterValue = ko.observable(getProp('parameter', 'value'));
+        this.nameValue = ko.observable(getProp('name', 'value'));
+        this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
         this.instrumentInstance = ko.observable(null);
         this.procedureInstance = ko.observable(null);
-
-        this.init = function(){
-            this.instrumentValue.valueHasMutated(); // call this to get the instrument display name to reconstruct the nameValue. See instrumentValue subscription.
-        };
 
         this.instrumentValue.subscribe(function(val){
             if (val) {
@@ -57,10 +61,10 @@ define([
 
         this.updatedValue = ko.pureComputed(function(){
             return {
-                instrumentValue: self.instrumentValue(),
-                procedureValue: self.procedureValue(),
-                parameterValue: self.parameterValue(),
-                nameValue: self.nameValue(),
+                instrument: {value: self.instrumentValue(), tileid: instrumentTileId},
+                procedure: {value: self.procedureValue(), tileid: procedureTileId},
+                parameter: {value: self.parameterValue(), tileid: parameterTileId},
+                name: {value: self.nameValue(), tileid: nameTileId},
                 observationInstanceId: self.observationInstanceId()
             };
         });
@@ -69,7 +73,7 @@ define([
             params.value(val);
         });
 
-        this.buildTile = function(value, nodeId, nodeGroupId, resourceid, tileid) {
+        this.buildTile = function(data, nodeGroupId, resourceid, tileid) {
             var res = {
                 "tileid": tileid || "",
                 "nodegroup_id": nodeGroupId,
@@ -79,12 +83,12 @@ define([
                 "tiles": {},
                 "data": {}
             };
-            res.data[nodeId] = value();
+            res.data = data;
             return res;
         };
 
-        this.saveTile = function(value, nodeId, nodeGroupId, resourceid, tileid) {
-            var tile = self.buildTile(value, nodeId, nodeGroupId, resourceid, tileid);
+        this.saveTile = function(data, nodeGroupId, resourceid, tileid) {
+            var tile = self.buildTile(data, nodeGroupId, resourceid, tileid);
             return window.fetch(arches.urls.api_tiles(uuid.generate()), {
                 method: 'POST',
                 credentials: 'include',
@@ -100,22 +104,34 @@ define([
         };
 
         params.form.save = function() {
-            self.saveTile(self.nameValue, nameNodeId, nameNodeGroupId)
+            var nameData = {};
+            nameData[nameNodeId] =  self.nameValue();
+            self.saveTile(nameData, nameNodeGroupId, self.observationInstanceId())
                 .then(function(data) {
-                    return self.saveTile(self.instrumentInstance, instrumentNodeId, instrumentNodeId, data.resourceinstance_id);
+                    var instrumentData = {};
+                    instrumentData[instrumentNodeId] = self.instrumentInstance();
+                    nameTileId = data.tileid;
+                    return self.saveTile(instrumentData, instrumentNodeId, data.resourceinstance_id);
                 })
                 .then(function(data) {
-                    return self.saveTile(self.procedureInstance, procedureNodeId, procedureNodeId, data.resourceinstance_id);
+                    var procedureData = {};
+                    instrumentTileId = data.tileid;
+                    procedureData[procedureNodeId] = self.procedureInstance();
+                    return self.saveTile(procedureData, procedureNodeId, data.resourceinstance_id);
                 })
-                .then(function() {
+                .then(function(data) {
+                    var parameterData = {};
+                    procedureTileId = data.tileid;
+                    parameterData[parameterNodeId] = self.parameterValue();
+                    return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id);
+                })
+                .then(function(data) {
+                    parameterTileId = data.tileid;
+                    self.observationInstanceId(data.resourceinstance_id);
                     params.form.complete(true);
                     params.form.savedData(params.form.addedData());
                 });
-            
         };
-
-        this.init();
-
     }
 
     ko.components.register('instrument-info-step', {
