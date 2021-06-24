@@ -26,7 +26,7 @@ define([
                         resourceid: rr.resourceinstanceid,
                         name: rr.displayname,
                     });
-                };
+                }
             });
             this.collectionLoading(false);
             if (!this.resourceLoading()){
