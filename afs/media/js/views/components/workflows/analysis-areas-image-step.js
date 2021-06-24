@@ -126,40 +126,61 @@ define([
             params.form.complete(false);
             params.form.saving(true);
 
-            self.digitalResourceNameTile.save().then(function(data) {
-                self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
-
-                self.digitalResourceStatementTile.save().then(function(data) {
-                    self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
-
-                    self.digitalResourceServiceTile.save().then(function(data) {
-                        self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
-                        self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
-
-                        self.digitalResourceServiceIdentifierTile.save().then(function(data) {
-                            params.form.savedData.push(data);
-
-                            var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
-
-                            var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
-
-                            digitalReferenceTile.data[digitalSourceNodeId] = [{
-                                "resourceId": data.resourceinstance_id,
-                                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                                "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
-                            }];
-                            
-                            var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
-                            digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
-                
-                            digitalReferenceTile.save().then(function(data) {
-                                params.form.complete(true);
-                                params.form.saving(false);
+            if (self.manifestData()) {
+                self.digitalResourceNameTile.save().then(function(data) {
+                    self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
+    
+                    self.digitalResourceStatementTile.save().then(function(data) {
+                        self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
+    
+                        self.digitalResourceServiceTile.save().then(function(data) {
+                            self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
+                            self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
+    
+                            self.digitalResourceServiceIdentifierTile.save().then(function(data) {
+                                params.form.savedData.push(data);
+    
+                                var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
+    
+                                var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+    
+                                digitalReferenceTile.data[digitalSourceNodeId] = [{
+                                    "resourceId": data.resourceinstance_id,
+                                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                                }];
+                                
+                                var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
+                                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
+                    
+                                digitalReferenceTile.save().then(function(data) {
+                                    params.form.complete(true);
+                                    params.form.saving(false);
+                                });
                             });
                         });
                     });
                 });
-            });
+            }
+            else {
+                var preferredManifestResourceData = self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.selectedPhysicalThingImageServiceName(); });
+                var alternateManifestResourceData = self.physicalThingDigitalReferenceAlternateManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.selectedPhysicalThingImageServiceName(); });
+    
+                var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
+
+                if (manifestResourceData && manifestResourceData.tiles) {
+                    var digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
+                    
+                    var matchingTile = manifestResourceData.tiles.find(function(tile) {
+                        return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+                    });
+    
+                    params.form.savedData.push(matchingTile);
+                }
+
+                params.form.complete(true);
+                params.form.saving(false);        
+            }
         };
 
         this.openManifestManager = function() {
