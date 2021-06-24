@@ -3,7 +3,8 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
-    'viewmodels/workflow-step'
+    'viewmodels/workflow-step',
+    'views/components/workflows/create-project-workflow/create-project-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('create-project-workflow', {
         viewModel: function(params) {
@@ -85,16 +86,32 @@ define([
                     required: true,
                 },
                 {
-                    title: 'Add Project Complete',
+                    title: 'Summary',
                     name: 'add-project-complete',  /* unique to workflow */
-                    description: 'Choose an option below',
-                    component: 'views/components/workflows/afs-final-step',
-                    componentname: 'afs-final-step',
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '',
                     resourceid: null,
                     tileid: null,
-                    parenttileid: null
+                    parenttileid: null,
+                    externalstepdata: { 
+                        addphysthingstep: 'object-search-step',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'create-project-final-step',
+                                    uniqueInstanceName: 'create-project-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
                 }
             ];
 
