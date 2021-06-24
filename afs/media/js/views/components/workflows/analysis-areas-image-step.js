@@ -12,6 +12,8 @@ define([
     function viewModel(params) {
         var self = this;
 
+        console.log("SSS", self, params)
+
         this.isManifestManagerHidden = ko.observable(true);
 
         this.selectedPhysicalThingImageService = ko.observable();
@@ -87,9 +89,9 @@ define([
 
         
         this.initialize = function() {
-            if (!ko.unwrap(params.saveFunction)) {
-                params.saveFunction(self.save);
-            }
+            // if (!ko.unwrap(params.saveFunction)) {
+                params.form.save = self.save;
+            // }
 
             if (!self.physicalThingDigitalReferenceCard() || !self.physicalThingDigitalReferenceTile()) {
                 self.getPhysicalThingDigitalReferenceData();
@@ -97,6 +99,9 @@ define([
         };
 
         this.save = function() {
+            params.form.complete(false);
+            params.form.saving(true);
+
             self.digitalResourceNameTile.save().then(function(data) {
                 self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
 
@@ -121,7 +126,10 @@ define([
                             var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
                             digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
                 
-                            digitalReferenceTile.save()
+                            digitalReferenceTile.save().then(function(data) {
+                                params.form.complete(true);
+                                params.form.saving(false);
+                            });
                         });
                     });
                 });
@@ -136,11 +144,13 @@ define([
         this.handleExitFromManifestManager = function() {
             self.isManifestManagerHidden(true);
 
-            self.physicalThingDigitalReferencePreferredManifestResourceData.push({
-                'displayname': self.manifestData()['label']
-            });
-            
-            self.selectedPhysicalThingImageService(self.manifestData()['label']);
+            if (self.manifestData()) {
+                self.physicalThingDigitalReferencePreferredManifestResourceData.push({
+                    'displayname': self.manifestData()['label']
+                });
+                
+                self.selectedPhysicalThingImageService(self.manifestData()['label']);
+            }
         };
 
         this.getPhysicalThingDigitalReferenceData = function() {

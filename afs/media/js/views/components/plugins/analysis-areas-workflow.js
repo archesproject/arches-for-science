@@ -79,6 +79,29 @@ define([
                         },
                     ],
                 },
+                {
+                    title: 'Regions',
+                    name: 'regions-step', /* unique to workflow */
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    required: true,
+                    externalstepdata: {
+                        imagestep: 'image-step'
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'iiif-viewer',
+                                    uniqueInstanceName: 'foo', /* unique to step */
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                },
             ];
 
             Workflow.apply(this, [params]);
