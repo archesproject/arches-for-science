@@ -34,17 +34,21 @@ define([
         this.nameValue = ko.observable(getProp('name', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
-        this.instrumentInstance = ko.observable(null);
-        this.procedureInstance = ko.observable(null);
+        this.createRelatedInstance = function(val){
+            return [{
+                resourceId: val,
+                ontologyProperty: "",
+                inverseOntologyProperty: ""
+            }];
+        };
+        this.instrumentInstance = ko.observable(this.instrumentValue() ? this.createRelatedInstance(this.instrumentValue()) : null);
+        this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
+
 
         this.instrumentValue.subscribe(function(val){
             if (val) {
                 var instrumentData = resourceUtils.lookupResourceInstanceData(val);
-                self.instrumentInstance([{
-                    resourceId: val,
-                    ontologyProperty: "",
-                    inverseOntologyProperty: ""
-                }]);
+                self.instrumentInstance(this.createRelatedInstance(val));
                 instrumentData.then(function(data){
                     self.nameValue("Observation of " + physThingName + " with " + data._source.displayname);
                 });
@@ -52,11 +56,7 @@ define([
         });
 
         this.procedureValue.subscribe(function(val){
-            self.procedureInstance([{
-                resourceId: val,
-                ontologyProperty: "",
-                inverseOntologyProperty: ""
-            }]);
+            self.procedureInstance(this.createRelatedInstance(val));
         });
 
         this.updatedValue = ko.pureComputed(function(){
