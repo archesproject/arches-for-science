@@ -25,7 +25,7 @@ define([
                     parenttileid: null,
                     required: true,
                     shouldtrackresource: true,
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    wastebin: {resourceid: null, description: 'a project instance'}
                 },
                 {
                     title: 'Project Statement',
@@ -73,9 +73,9 @@ define([
                     description: 'Add Physical Things to Your Set',
                     component: 'views/components/workflows/research-collection-step',
                     componentname: 'research-collection-step',
-                    graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a',
-                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
-                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
+                    graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
+                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
+                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)
                     externalstepdata: { 
                         researchactivitystep: 'set-project-name',
                     },
@@ -83,6 +83,7 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
+                    wastebin: {resourceid: null, description: 'a collection instance'}
                 },
                 {
                     title: 'Add Project Complete',
