@@ -106,24 +106,24 @@ define([
         params.form.save = function() {
             var nameData = {};
             nameData[nameNodeId] =  self.nameValue();
-            self.saveTile(nameData, nameNodeGroupId, self.observationInstanceId())
+            self.saveTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId)
                 .then(function(data) {
                     var instrumentData = {};
                     instrumentData[instrumentNodeId] = self.instrumentInstance();
                     nameTileId = data.tileid;
-                    return self.saveTile(instrumentData, instrumentNodeId, data.resourceinstance_id);
+                    return self.saveTile(instrumentData, instrumentNodeId, data.resourceinstance_id, instrumentTileId);
                 })
                 .then(function(data) {
                     var procedureData = {};
                     instrumentTileId = data.tileid;
                     procedureData[procedureNodeId] = self.procedureInstance();
-                    return self.saveTile(procedureData, procedureNodeId, data.resourceinstance_id);
+                    return self.saveTile(procedureData, procedureNodeId, data.resourceinstance_id, procedureTileId);
                 })
                 .then(function(data) {
                     var parameterData = {};
                     procedureTileId = data.tileid;
                     parameterData[parameterNodeId] = self.parameterValue();
-                    return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id);
+                    return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
                 })
                 .then(function(data) {
                     parameterTileId = data.tileid;
