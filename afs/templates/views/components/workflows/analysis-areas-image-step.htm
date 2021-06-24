@@ -9,11 +9,7 @@
 
     <!-- ko foreach: [...physicalThingDigitalReferencePreferredManifestResourceData(), ...physicalThingDigitalReferenceAlternateManifestResourceData()] -->
         <div
-            style="
-                display: flex;
-                cursor: pointer;
-            "
-            data-bind="click: function() { $parent.selectedPhysicalThingImageServiceName($data.displayname) }"
+            style="display: flex;"
         >
             <input 
                 style="
@@ -28,7 +24,10 @@
             />
             <label 
                 style="cursor: pointer;"
-                data-bind="text: $data.displayname"
+                data-bind="
+                    text: $data.displayname,
+                    click: function() { $parent.selectedPhysicalThingImageServiceName($data.displayname) }
+                "
             ></label>
         </div>
     <!-- /ko -->

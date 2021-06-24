@@ -6,13 +6,10 @@ define([
     'knockout-mapping',
     'models/graph',
     'viewmodels/card',
-    'viewmodels/provisional-tile',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, ProvisionalTileViewModel) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel) {
     function viewModel(params) {
         var self = this;
-
-        console.log("SSS", self, params)
 
         this.isManifestManagerHidden = ko.observable(true);
 
@@ -21,8 +18,8 @@ define([
             params.dirty(true);
 
             if (imageServiceName) {
-                var foo = self.foobar(imageServiceName);
-                if (foo) { params.dirty(false); }
+                var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(imageServiceName);
+                if (resourceData) { params.dirty(false); }
             }
         });
 
@@ -82,10 +79,10 @@ define([
                 // TO BE REFACTORED ONCE MANIFEST_MANAGER RETURNS PROPER FORMAT FOR UPLOADED FILES
 
                 if (manifestData['@id']) {
-                    return manifestData['@id']
+                    return manifestData['@id'];
                 }
                 else {
-                    return 'IIIF FROM UPLOADED FILES DOES NOT CONTAIN A DIRECT REFERENCE TO MANIFEST'
+                    return 'IIIF FROM UPLOADED FILES DOES NOT CONTAIN A DIRECT REFERENCE TO MANIFEST';
                 }
             })()); // IIFE
 
@@ -102,7 +99,7 @@ define([
             }
         };
 
-        this.foobar = function(imageServiceName) {
+        this.getResourceDataAssociatedWithPreviouslyPersistedTile = function(imageServiceName) {
             var preferredManifestResourceData = self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === imageServiceName; });
             var alternateManifestResourceData = self.physicalThingDigitalReferenceAlternateManifestResourceData().find(function(manifestData) { return manifestData.displayname === imageServiceName; });
 
@@ -120,7 +117,7 @@ define([
                     return manifestResourceData;
                 }
             }
-        }
+        };
 
         this.save = function() {
             params.form.complete(false);
@@ -151,9 +148,9 @@ define([
                                 }];
                                 
                                 var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
-                                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed' // Preferred Manifest concept value
+                                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
                     
-                                digitalReferenceTile.save().then(function(data) {
+                                digitalReferenceTile.save().then(function() {
                                     params.form.complete(true);
                                     params.form.saving(false);
                                 });
@@ -194,7 +191,7 @@ define([
             if (
                 self.manifestData() 
                 && self.manifestData()['label']
-                && !self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.manifestData()['label'] })
+                && !self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.manifestData()['label']; })
             ) {
                 self.physicalThingDigitalReferencePreferredManifestResourceData.push({
                     'displayname': self.manifestData()['label']
@@ -266,9 +263,9 @@ define([
                             self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
                         }
                         
-                        var foo = self.foobar(data.displayname);
-                        if (foo) {
-                            self.selectedPhysicalThingImageServiceName(foo.displayname);
+                        var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
+                        if (resourceData) {
+                            self.selectedPhysicalThingImageServiceName(resourceData.displayname);
                         }
                         else if (!self.selectedPhysicalThingImageServiceName()) {
                             self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
