@@ -34,6 +34,7 @@ define([
         this.nameValue = ko.observable(getProp('name', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
+
         this.createRelatedInstance = function(val){
             return [{
                 resourceId: val,
@@ -41,14 +42,14 @@ define([
                 inverseOntologyProperty: ""
             }];
         };
+
         this.instrumentInstance = ko.observable(this.instrumentValue() ? this.createRelatedInstance(this.instrumentValue()) : null);
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
-
 
         this.instrumentValue.subscribe(function(val){
             if (val) {
                 var instrumentData = resourceUtils.lookupResourceInstanceData(val);
-                self.instrumentInstance(this.createRelatedInstance(val));
+                self.instrumentInstance(self.createRelatedInstance(val));
                 instrumentData.then(function(data){
                     self.nameValue("Observation of " + physThingName + " with " + data._source.displayname);
                 });
@@ -56,7 +57,7 @@ define([
         });
 
         this.procedureValue.subscribe(function(val){
-            self.procedureInstance(this.createRelatedInstance(val));
+            self.procedureInstance(self.createRelatedInstance(val));
         });
 
         this.updatedValue = ko.pureComputed(function(){
@@ -89,7 +90,7 @@ define([
 
         this.saveTile = function(data, nodeGroupId, resourceid, tileid) {
             var tile = self.buildTile(data, nodeGroupId, resourceid, tileid);
-            return window.fetch(arches.urls.api_tiles(uuid.generate()), {
+            return window.fetch(arches.urls.api_tiles(tileid || uuid.generate()), {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(tile),
@@ -105,7 +106,7 @@ define([
 
         params.form.save = function() {
             var nameData = {};
-            nameData[nameNodeId] =  self.nameValue();
+            nameData[nameNodeId] = self.nameValue();
             self.saveTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId)
                 .then(function(data) {
                     var instrumentData = {};
@@ -115,19 +116,19 @@ define([
                 })
                 .then(function(data) {
                     var procedureData = {};
-                    instrumentTileId = data.tileid;
                     procedureData[procedureNodeId] = self.procedureInstance();
+                    instrumentTileId = data.tileid;
                     return self.saveTile(procedureData, procedureNodeId, data.resourceinstance_id, procedureTileId);
                 })
                 .then(function(data) {
                     var parameterData = {};
-                    procedureTileId = data.tileid;
                     parameterData[parameterNodeId] = self.parameterValue();
+                    procedureTileId = data.tileid;
                     return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
                 })
                 .then(function(data) {
                     parameterTileId = data.tileid;
-                    self.observationInstanceId(data.resourceinstance_id);
+                    self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
                     params.form.complete(true);
                     params.form.savedData(params.form.addedData());
                 });
