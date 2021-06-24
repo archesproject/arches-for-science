@@ -13,7 +13,6 @@ define([
         var procedureNodeId =  '51416e9c-c458-11e9-b70e-a4d18cec433a';
         var parameterNodeId = '8ec331a1-c457-11e9-8d7a-a4d18cec433a';
         var parameterNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a'; // parameter are 'Statement' cards
-        var parameterTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         var nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         var nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
         var physThingName = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physThingName;
