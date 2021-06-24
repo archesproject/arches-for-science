@@ -65,9 +65,9 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: false,
+                    lockableExternalSteps: ['select-project'],
                     externalstepdata: {
                         selectprojectstep: 'select-project',
-                        sourcesteptolock: 'select-project',
                     },
                     layoutSections: [
                         {
@@ -101,6 +101,7 @@ define([
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
                     nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
+                    lockableExternalSteps: ['select-project'],
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
