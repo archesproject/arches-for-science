@@ -16,7 +16,7 @@ define([
         this.collectionData = ko.observableArray();
         this.collectionOfPhysThings = ko.observableArray();
 
-        this.getRelatedResources('908d0d84-d46b-11eb-830d-acde48001122', this.collectionData);
+        this.getRelatedResources(this.collectionResourceId, this.collectionData);
 
         this.collectionData.subscribe(function(val){
             var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
