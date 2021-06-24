@@ -41,7 +41,7 @@ define([
                 projectStatement: {'name': 'Project Statement', 'value': this.getResourceValue(val.resource['Statement'][0], ['Statement_content','@value'])},
                 projectTimespan: {'name': 'Project Timespan', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@value'])},
                 projectTeam: {'name': 'Project Team', 'value': this.getResourceValue(val.resource, ['carried out by','@value'])},
-                collection: {'name': 'Related Collection', 'value': this.getResourceValue(val.resource['Used Set'][0], ['@value'])},
+                collection: {'name': 'Related Collection', 'value': this.getResourceValue(val.resource['Used Set'], ['@value'])},
             };
             this.resourceLoading(false);
             if (!this.collectionLoading()){
