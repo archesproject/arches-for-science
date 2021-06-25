@@ -89,6 +89,7 @@ define([
                     externalstepdata: {
                         imagestep: 'image-step'
                     },
+                    workflowstepclass: 'analysis-areas-workflow-regions-step',
                     layoutSections: [
                         {
                             componentConfigs: [
