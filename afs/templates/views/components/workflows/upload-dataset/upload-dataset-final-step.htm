@@ -61,21 +61,24 @@
             <div>
                 <div class="file-list" style="display: flex; flex-direction: column;">
                     <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;">
-                        <div class="summary-label">Observation Name</div>
-                        <div class="summary-label">Description</div>
-                        <!--div class="summary-label">Sampling Motivation</div-->
+                        <div class="summary-label">File Name:</div>
+                        <div class="summary-label">Interpretation</div>
+                        <div class="summary-label">File Parameters</div>
                     </div>
-                    <!-- ko foreach: reportVals.samplingUnits -->
+                    <!-- ko foreach: reportVals.fileList -->
                     <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;" 
-                        data-bind="style: {'border-width': $index() === ($parent.reportVals.samplingUnits.length - 1) ? '0px' : '1px'}">
-                        <div class="summary-value" data-bind="text: obsName.value"></div>
-                        <div class="summary-value" data-bind="text: samplingArea.value"></div>
+                        data-bind="style: {'border-width': $index() === ($parent.reportVals.fileList.length - 1) ? '0px' : '1px'}">
+                        <div class="summary-value" data-bind="text: fileName.value"></div>
+                        <div class="summary-value" data-bind="text: interpretation.value"></div>
+                        <div class="summary-value" data-bind="text: fileParameter.value"></div>
                     </div>
                     <!-- /ko -->
                 </div>
-                <div style="display: inline-flex; padding: 15px;">
-                    <div class="summary-label">{% trans 'Sampled locations: ' %}</div>
-                    <div class="summary-value" data-bind='text: reportVals.samplingUnits.length'></div>
+                <div class="final-step-section-block-item">
+                    <div class="block-item files-metadata">
+                        <div class="summary-label">{% trans 'Files: ' %}</div>
+                        <div class="summary-value" data-bind='text: reportVals.fileList.length + "{% trans ' files uploaded' %}"'></div>
+                    </div>
                 </div>
             </div>
         </div>
