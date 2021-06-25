@@ -6,7 +6,8 @@ define([
     'viewmodels/workflow-step',
     'views/components/file-upload',
     'views/components/workflows/select-phys-thing-step',
-    'views/components/workflows/upload-dataset/instrument-info-step'
+    'views/components/workflows/upload-dataset/instrument-info-step',
+    'views/components/workflows/upload-dataset/upload-dataset-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
@@ -107,14 +108,27 @@ define([
                 },
                 {
                     title: 'Summary',
-                    description: 'Choose an option below',
-                    component: '',
-                    componentname: '',
+                    name: 'upload-dataset-complete',  /* unique to workflow */
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
                     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
                     nodegroupid: '',
                     resourceid: null,
                     tileid: null,
-                    parenttileid: null
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'upload-dataset-final-step',
+                                    uniqueInstanceName: 'upload-dataset-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
                 }
             ];
             
