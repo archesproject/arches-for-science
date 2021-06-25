@@ -5,6 +5,7 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step',
     'views/components/workflows/analysis-areas-image-step',
+    'views/components/workflows/analysis-areas-annotation-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
@@ -92,10 +93,11 @@ define([
                         {
                             componentConfigs: [
                                 { 
-                                    componentName: 'iiif-viewer',
-                                    uniqueInstanceName: 'foo', /* unique to step */
-                                    tilesManaged: 'none',
+                                    componentName: 'analysis-areas-annotation-step',
+                                    uniqueInstanceName: 'annotation-instance', /* unique to step */
+                                    tilesManaged: 'one',
                                     parameters: {
+                                        graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                     },
                                 },
                             ], 
