@@ -15,7 +15,13 @@ define([
         var parameterNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a'; // parameter are 'Statement' cards
         var nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         var nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
-        var physThingName = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physThingName;
+        var projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
+        var physThingName = projectInfo.physThingName;
+        var observedThingNodeId = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
+        var observedThingInstanceId = projectInfo.physicalThing;
+        var projectInstanceId = projectInfo.project;
+        var projectNodeId = '736f06a4-c54d-11ea-9f58-024e0d439fdb';
+
         var getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key])
                 return params.value()[key][prop] || params.value()[key];
@@ -23,10 +29,14 @@ define([
                 return null;
             } 
         };
+
         var parameterTileId = getProp('parameter', 'tileid');
         var instrumentTileId = getProp('instrument', 'tileid');
         var procedureTileId = getProp('procedure', 'tileid');
+        var projectTileId = getProp('project', 'tileid');
+        var observedThingTileid = getProp('observedThing', 'tileid');
         var nameTileId = getProp('name', 'tileid');
+
         this.instrumentValue = ko.observable(getProp('instrument', 'value'));
         this.procedureValue = ko.observable(getProp('procedure', 'value'));
         this.parameterValue = ko.observable(getProp('parameter', 'value'));
@@ -65,6 +75,8 @@ define([
                 procedure: {value: self.procedureValue(), tileid: procedureTileId},
                 parameter: {value: self.parameterValue(), tileid: parameterTileId},
                 name: {value: self.nameValue(), tileid: nameTileId},
+                observedThing: {tileid: observedThingTileid},
+                project: {tileid: projectTileId},
                 observationInstanceId: self.observationInstanceId()
             };
         });
@@ -104,9 +116,21 @@ define([
         };
 
         params.form.save = function() {
-            var nameData = {};
-            nameData[nameNodeId] = self.nameValue();
-            self.saveTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId)
+            var observedThingData = {};
+            observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
+            return self.saveTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid)
+                .then(function(data) {
+                    var partOfProjectData = {};
+                    observedThingTileid = data.tileid;
+                    partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId);
+                    return self.saveTile(partOfProjectData, projectNodeId, data.resourceinstance_id, projectTileId);
+                })
+                .then(function(data) {
+                    var nameData = {};
+                    nameData[nameNodeId] = self.nameValue();
+                    projectTileId = data.tileid;
+                    return self.saveTile(nameData, nameNodeGroupId, data.resourceinstance_id, nameTileId);
+                })
                 .then(function(data) {
                     var instrumentData = {};
                     instrumentData[instrumentNodeId] = self.instrumentInstance();
@@ -131,6 +155,7 @@ define([
                     params.form.complete(true);
                     params.form.savedData(params.form.addedData());
                 });
+    
         };
     }
 
