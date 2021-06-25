@@ -251,11 +251,12 @@ define([
 
         params.saveOnQuit = function() {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
-            rrTemplate = [{ "resourceId": ko.unwrap(self.collectionResourceId),
-                            "ontologyProperty": "",
-                            "resourceXresourceId": "",
-                            "inverseOntologyProperty": ""
-                        }]
+            var rrTemplate = [{ 
+                "resourceId": ko.unwrap(self.collectionResourceId),
+                "ontologyProperty": "",
+                "resourceXresourceId": "",
+                "inverseOntologyProperty": ""
+            }];
             self.value().forEach(function(value) {
                 console.log(value.resourceId);
                 $.ajax({
@@ -267,11 +268,11 @@ define([
                         'resourceinstanceid': value.resourceId,
                         'tileid': ''
                     }
-                }).done(function(data) {
+                }).done(function() {
                     console.log(value.resourceId, "related resource is created");
-                })
+                });
             });
-        }
+        };
 
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
