@@ -7,14 +7,22 @@ define([
     'views/components/iiif-annotation',
 ], function(_, $, arches, ko, koMapping, IIIFAnnotationViewmodel) {
     function viewModel(params) {
-        // var self = this;
-
-
+        var self = this;
         _.extend(this, params)
 
+        var partIdentifierAssignmentNodeId =  'fec59582-8593-11ea-97eb-acde48001122';  // Part Identifier Assignment (E13) 
+
+        var partIdentifierAssignmentCard = this.form.topCards.find(function(card) {
+            return card.nodegroupid === partIdentifierAssignmentNodeId;
+        });
+
+        this.card = partIdentifierAssignmentCard;
+        
+        
         IIIFAnnotationViewmodel.apply(this, [params]);
         
-        // console.log('load', self, params)
+        this.showStylingTools(true);
+        console.log('load', self, params)
 
         
         this.initialize = function() {
