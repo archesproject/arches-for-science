@@ -258,7 +258,6 @@ define([
                 "inverseOntologyProperty": ""
             }];
             self.value().forEach(function(value) {
-                console.log(value.resourceId);
                 $.ajax({
                     url: arches.urls.api_node_value,
                     type: 'POST',
@@ -269,6 +268,7 @@ define([
                         'tileid': ''
                     }
                 }).done(function() {
+                    // eslint-disable-next-line no-console
                     console.log(value.resourceId, "related resource is created");
                 });
             });
