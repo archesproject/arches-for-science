@@ -249,6 +249,31 @@ define([
             params.preSaveCallback(self.submit);
         }
 
+        params.saveOnQuit = function() {
+            var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
+            var rrTemplate = [{ 
+                "resourceId": ko.unwrap(self.collectionResourceId),
+                "ontologyProperty": "",
+                "resourceXresourceId": "",
+                "inverseOntologyProperty": ""
+            }];
+            self.value().forEach(function(value) {
+                $.ajax({
+                    url: arches.urls.api_node_value,
+                    type: 'POST',
+                    data: {
+                        'nodeid': memberOfSetNodeid,
+                        'data': koMapping.toJSON(rrTemplate),
+                        'resourceinstanceid': value.resourceId,
+                        'tileid': ''
+                    }
+                }).done(function() {
+                    // eslint-disable-next-line no-console
+                    console.log(value.resourceId, "related resource is created");
+                });
+            });
+        };
+
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
             placeholder: 'find a physical thing: enter an artist, object name, artwork title or object number',
