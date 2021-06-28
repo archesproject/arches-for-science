@@ -73,22 +73,31 @@ define([
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
-            self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
-            self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
-
-            self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId]((function() {
-                // TO BE REFACTORED ONCE MANIFEST_MANAGER RETURNS PROPER FORMAT FOR UPLOADED FILES
-
-                if (manifestData['@id']) {
-                    return manifestData['@id'];
-                }
-                else {
-                    return 'IIIF FROM UPLOADED FILES DOES NOT CONTAIN A DIRECT REFERENCE TO MANIFEST';
-                }
-            })()); // IIFE
-
-            self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
-            self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](manifestData['@context']);
+            if (manifestData) {
+                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
+                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
+    
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId]((function() {
+                    // TO BE REFACTORED ONCE MANIFEST_MANAGER RETURNS PROPER FORMAT FOR UPLOADED FILES
+    
+                    if (manifestData['@id']) {
+                        return manifestData['@id'];
+                    }
+                    else {
+                        return 'IIIF FROM UPLOADED FILES DOES NOT CONTAIN A DIRECT REFERENCE TO MANIFEST';
+                    }
+                })()); // IIFE
+    
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
+                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](manifestData['@context']);
+            }
+            else {
+                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](null);
+                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](null);
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](null); // IIFE
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](null); // uniform resource locators concept value id
+                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](null);
+            }
         });
 
         
