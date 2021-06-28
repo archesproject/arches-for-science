@@ -12,6 +12,7 @@ define([
         var self = this;
 
         this.isManifestManagerHidden = ko.observable(true);
+        this.shouldShowEditService = ko.observable(false);
 
         this.selectedPhysicalThingImageServiceName = ko.observable();
         this.selectedPhysicalThingImageServiceName.subscribe(function(imageServiceName) {
