@@ -14,21 +14,21 @@ define([
         this.resourceData = ko.observable();
         this.relatedResources = ko.observableArray();
 
-        this.getResourceData = function() {
-            window.fetch(this.urls.api_resources(this.resourceid) + '?format=json&compact=false')
+        this.getResourceData = function(resourceid, resourceData) {
+            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false')
             .then(response => response.json())
-            .then(data => this.resourceData(data))
+            .then(data => resourceData(data))
         };
 
-        this.getRelatedResources = function() {
-            window.fetch(this.urls.related_resources + this.resourceid + "?paginate=false")
+        this.getRelatedResources = function(resourceid, relatedResources) {
+            window.fetch(this.urls.related_resources + resourceid + "?paginate=false")
             .then(response => response.json())
-            .then(data => this.relatedResources(data))
+            .then(data => relatedResources(data))
         };
 
         this.init = function(){
-            this.getResourceData();
-            this.getRelatedResources()
+            this.getResourceData(this.resourceid, this.resourceData);
+            this.getRelatedResources(this.resourceid, this.relatedResources)
         };
 
         this.getResourceValue = function(obj, attrs, missingValue='none') {
