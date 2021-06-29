@@ -80,9 +80,7 @@ define([
             const sampelingNameResponse = await self.saveName();
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
-            if (params.form.lockableExternalSteps.indexOf('select-project') > -1){
-                params.form.lockExternalStep("select-project", true);
-            }
+            params.form.lockExternalStep("select-project", true);
 
             $.when(
                 self.saveProject(),
