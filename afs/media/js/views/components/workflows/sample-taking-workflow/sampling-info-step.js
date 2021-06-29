@@ -37,7 +37,7 @@ define([
                 self.samplingDateTile(ko.unwrap(params.value).samplingDateTile);
                 self.samplingTechniqueTile(ko.unwrap(params.value).samplingTechniqueTile);
             }
-        }
+        };
 
         this.loadValueFromLocalStorage();
 
@@ -46,7 +46,7 @@ define([
         var samplingNameNode = '033578c0-1d9d-11eb-a29f-024e0d439fdb';
         var parentProjectNode = '03357879-1d9d-11eb-a29f-024e0d439fdb'; //related project
         var overallObjectSampleNode = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb'; //related phys thing
-        var samplingDateNodegroup = '03357852-1d9d-11eb-a29f-024e0d439fdb'
+        var samplingDateNodegroup = '03357852-1d9d-11eb-a29f-024e0d439fdb';
 
         this.updatedValue = ko.pureComputed(function(){
             return {
@@ -97,8 +97,8 @@ define([
 
                 params.form.complete(true);
                 params.form.savedData(params.form.addedData());
-            })
-        }
+            });
+        };
 
         this.saveNodeValue = function(nodeid, data, resourceinstanceid, tileid) {
             return $.ajax({
@@ -111,7 +111,7 @@ define([
                     'tileid': tileid
                 }
             });
-        }
+        };
 
         this.saveTile = function(tileid, tile){
             return $.ajax({
@@ -120,31 +120,31 @@ define([
                 dataType: 'json',
                 data: JSON.stringify(tile)
             });
-        }
+        };
 
         this.saveName = function(){
             return self.saveNodeValue(samplingNameNode,self.samplingName(), self.samplingActivityResourceId(),self.samplingNameTile());
-        }
+        };
 
         this.saveProject = function() {
-            data = [{
+            var data = [{
                 'resourceId': self.projectValue,  // resourceid of the project
                 'ontologyProperty': '',
                 'inverseOntologyProperty':'',
                 'resourceXresourceId':''
             }];
             return self.saveNodeValue(parentProjectNode, JSON.stringify(data), self.samplingActivityResourceId(), self.projectTile());
-        }
+        };
 
         this.savePhysicalThing = function() {
-            data = [{
+            var data = [{
                 'resourceId': self.physicalThingValue,  // resourceid of the physical thing
                 'ontologyProperty': '',
                 'inverseOntologyProperty':'',
                 'resourceXresourceId':''
             }];
             return self.saveNodeValue(overallObjectSampleNode, JSON.stringify(data), self.samplingActivityResourceId(), self.physicalThingTile());
-        }
+        };
 
         this.saveSamplers = function() {
             var samplersData = [];
@@ -159,7 +159,7 @@ define([
                 }); 
             }
             return self.saveNodeValue(samplersNode, JSON.stringify(samplersData), self.samplingActivityResourceId(), self.samplersTile());
-        }
+        };
 
         this.saveSamplingDate = function() {
             var samplingDateTileData = {
@@ -180,7 +180,7 @@ define([
             };
             var samplingDateTileid = ko.unwrap(self.samplingDateTile) || uuid.generate();
             return self.saveTile(samplingDateTileid, samplingDateTileData);
-        }
+        };
 
         this.saveSamplingTechnique = function() {
             var samplingTechniqueTileData = {
@@ -200,7 +200,7 @@ define([
             };
             var samplingTechniqueTileid = ko.unwrap(self.samplingTechniqueTile) || uuid.generate();
             return self.saveTile(samplingTechniqueTileid, samplingTechniqueTileData);
-        }
+        };
 
         params.form.reset = function() {
             params.value(params.form.previouslyPersistedComponentData ? params.form.previouslyPersistedComponentData[0][1] : null);
