@@ -29,7 +29,7 @@
     <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: sampleFilter">
     <div class="file-workbench-files" data-bind="foreach: {data: samples, as: 'sample'}">
         <!--ko if: self.sampleFilter() === "" || sample.displayname.toLowerCase().includes(self.sampleFilter().toLowerCase()) -->
-        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: sample.resourceinstanceid === self.selectedSample().resourceinstanceid }">
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: sample.tileid === self.selectedSample().tileid }">
             <span class='file-name manifest-manager-canvas-name' data-bind="text: sample.displayname, click: function(){self.selectedSample(sample)}, clickBubble: false"></span>
         </div>
         <!--/ko-->
@@ -40,11 +40,13 @@
 
 <div class="iiif-image-tools" style="margin-top: 5px;">
     <label class="control-label">{% trans "Dataset Name" %}</label>
+    <!--ko if: selectedSample -->
     <input type="text" class="form-control" style="width: 100%;" placeholder="Dataset name" data-bind="textInput: selectedSample().datasetName">
+    <!--/ko -->
 </div>
 
 <div class="iiif-image-tools" style="margin-top: 12px;">
-    <!-- ko if: files().length > 0 -->
+    <!-- ko if: files().length > 0 && selectedSample() -->
     <label class="control-label">{% trans "Associated Files" %}</label>
     <div class="file-workbench-files" style="margin-top: 0" data-bind="foreach: {data: files, as: 'file'}">
         <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: false}">
@@ -63,6 +65,17 @@
         <div style="min-height: 100%;">
             <div id="hidden-dz-previews" style="display:none"></div>
         </div>
+    </div>
+    <div>
+
+    <div class="">
+        <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times" data-bind="click: function(){console.log('cancelling')}">{% trans "Cancel" %}</button>
+        <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: function(){console.log('saving'); save();}, css: {
+            disabled: false,
+            'btn-mint': true
+        }">{% trans "Save" %}</button>
+    </div>
+
     </div>
 </div>
 
