@@ -33,6 +33,8 @@ define([
             this.updateValues(params.value());
         }
 
+        this.locked = params.form.locked;
+
         params.form.value.subscribe(function(val){
             this.updateValues(val);
         }, this);
