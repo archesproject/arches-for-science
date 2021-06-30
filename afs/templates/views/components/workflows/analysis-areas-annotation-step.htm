@@ -1,3 +1,5 @@
-<!-- ko with: $data, as: 'self' -->
-{% include 'views/components/iiif-annotation.htm' %}
+<!-- ko if: $data.hasLoaded() -->
+    <!-- ko with: $data, as: 'self' -->
+    {% include 'views/components/iiif-annotation.htm' %}
+    <!-- /ko -->
 <!-- /ko -->

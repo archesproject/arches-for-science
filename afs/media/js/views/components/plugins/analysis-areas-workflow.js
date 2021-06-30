@@ -87,6 +87,7 @@ define([
                     componentname: 'component-based-step',
                     required: true,
                     externalstepdata: {
+                        objectstep: 'object-step',
                         imagestep: 'image-step'
                     },
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
