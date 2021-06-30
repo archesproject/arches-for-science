@@ -22,5 +22,12 @@ module.exports = {
         "location": false,
         "Promise": false,
         "setTimeout": false
+    },
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+
+    "env": {
+        "es6": true
     }
 };
