@@ -3,10 +3,8 @@ define([
     'jquery',
     'arches',
     'knockout',
-    'knockout-mapping',
     'uuid',
-    'viewmodels/card-component'
-], function(_, $, arches, ko, koMapping, uuid, CardComponentViewModel) {
+], function(_, $, arches, ko, uuid) {
     function viewModel(params) {
         var self = this;
 
