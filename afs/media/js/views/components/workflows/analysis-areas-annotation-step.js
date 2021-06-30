@@ -16,6 +16,11 @@ define([
 
         this.hasLoaded = ko.observable(false);
 
+
+        this.partIdentifierAssignmentLabelWidget = ko.observable();
+
+
+
         /* inheritence chain conflicts with `loading`, so added functionality is behind `hasLoaded`  */ 
         this.hasLoaded.subscribe(function(loaded) {
             if (loaded) {
@@ -49,7 +54,7 @@ define([
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
         
         this.initialize = function() {
-            self.getPhysicalThingPartIdentifierAssignmentData()
+            self.getPhysicalThingPartIdentifierAssignmentData();
         };
 
         this.getPhysicalThingPartIdentifierAssignmentData = function() {
@@ -115,6 +120,13 @@ define([
                 
                 self.hasLoaded(true)
                 self.activeTab('dataset');
+
+                var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+                self.partIdentifierAssignmentLabelWidget(self.card.widgets().find(function(widget) {
+                    return ko.unwrap(widget.node_id) === partIdentifierAssignmentLabelNodeId;
+                }));
+
+                console.log("FDSSDIO", partIdentifierAssignmentLabelWidget)
             });
         };
 
