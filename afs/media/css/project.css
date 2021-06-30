@@ -462,3 +462,14 @@
 .analysis-areas-workflow-regions-step .style-tools-wrapper {
     padding: inherit;
 }
+
+.analysis-areas-workflow-regions-step .dataset-table > :nth-child(even) {
+    background: #F5FAFE;
+}
+
+.analysis-areas-workflow-regions-step .dataset-table tr {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+}

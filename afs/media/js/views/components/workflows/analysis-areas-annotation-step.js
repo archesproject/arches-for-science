@@ -26,10 +26,17 @@ define([
             }
         });
 
-        params.form.save = function() {
+        this.saveTile = function() {
             console.log("SV", self, params)
             self.tile.save().then(function(data) {
-                console.log("DATA", data)
+                var tile = self.card.getNewTile(true);  /* true flag forces new tile generation */
+                
+                self.physicalThingPartIdentifierAssignmentTile(tile);
+
+                self.tile = tile;
+                params.tile = tile;
+
+                console.log("DATA", data, tile)
             })
         };
 
