@@ -1,5 +1,11 @@
+{% extends 'views/components/iiif-annotation.htm' %}
+
+{% block workbench %}
 <!-- ko if: $data.hasLoaded() -->
     <!-- ko with: $data, as: 'self' -->
-    {% include 'views/components/iiif-annotation.htm' %}
+        {{ block.super }}
     <!-- /ko -->
 <!-- /ko -->
+{% endblock workbench %}
+
+
