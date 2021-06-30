@@ -103,8 +103,7 @@ define([
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
-                    required: false, // temporarily false for ease of development on other steps
-                    // required: true,
+                    required: true,
                 },
                 {
                     title: 'Summary',
@@ -114,8 +113,12 @@ define([
                     componentname: 'component-based-step',
                     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
                     nodegroupid: '',
-                    resourceid: null,
+                    resourceid: '4c645746-d544-11eb-9aa1-acde48001122', // hard coded for testing
                     tileid: null,
+                    externalstepdata: {
+                        projectinfo: 'project-info',
+                        digitalresource: 'object-sample-location',
+                    },
                     layoutSections: [
                         {
                             componentConfigs: [
