@@ -1,5 +1,6 @@
 {% extends 'views/components/iiif-annotation.htm' %}
 
+
 {% block workbench %}
 <!-- ko if: $data.hasLoaded() -->
     <!-- ko with: $data, as: 'self' -->
@@ -8,4 +9,13 @@
 <!-- /ko -->
 {% endblock workbench %}
 
-
+{% block tabs %}
+<div class="workbench-card-sidebar-tab" data-bind="click: function() {
+    toggleTab('dataset');
+}, css: {
+    'active': activeTab() === 'dataset'
+}">
+    <i class="fa fa-file"></i>
+    <span class="map-sidebar-text">Dataset</span>
+</div>
+{% endblock tabs %}

@@ -12,6 +12,8 @@ define([
         var self = this;
         _.extend(this, params)
 
+        this.activeTab = ko.observable('dataset');
+
         this.hasLoaded = ko.observable(false);
 
         /* inheritence chain conflicts with `loading`, so added functionality is behind `hasLoaded`  */ 
@@ -101,8 +103,11 @@ define([
                     console.log('tile diry', dirty, self.tile)
                 })
 
-                    
+                
+                
+                
                 self.hasLoaded(true)
+                self.activeTab('dataset');
             });
         };
 
