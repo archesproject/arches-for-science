@@ -18,6 +18,9 @@ define([
 
 
         this.partIdentifierAssignmentLabelWidget = ko.observable();
+        this.partIdentifierAssignmentPolygonIdentifierWidget = ko.observable();
+        this.partIdentifierAssignmentPhysicalPartOfObjectWidget = ko.observable();
+        this.partIdentifierAssignmentAnnotatorWidget = ko.observable();
 
 
 
@@ -126,7 +129,22 @@ define([
                     return ko.unwrap(widget.node_id) === partIdentifierAssignmentLabelNodeId;
                 }));
 
-                console.log("FDSSDIO", partIdentifierAssignmentLabelWidget)
+                var partIdentifierAssignmentPolygonIdentifierNodeId = '97c30c42-8594-11ea-97eb-acde48001122';
+                self.partIdentifierAssignmentPolygonIdentifierWidget(self.card.widgets().find(function(widget) {
+                    return ko.unwrap(widget.node_id) === partIdentifierAssignmentPolygonIdentifierNodeId;
+                }));                
+
+                var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';
+                self.partIdentifierAssignmentPhysicalPartOfObjectWidget(self.card.widgets().find(function(widget) {
+                    return ko.unwrap(widget.node_id) === partIdentifierAssignmentPhysicalPartOfObjectNodeId;
+                }));                
+                
+                var partIdentifierAssignmentAnnotatorNodeId = 'a623eaf4-8599-11ea-97eb-acde48001122';
+                self.partIdentifierAssignmentAnnotatorWidget(self.card.widgets().find(function(widget) {
+                    return ko.unwrap(widget.node_id) === partIdentifierAssignmentAnnotatorNodeId;
+                }));
+                
+                console.log("FDSSDIO", partIdentifierAssignmentPhysicalPartOfObjectWidget)
             });
         };
 
