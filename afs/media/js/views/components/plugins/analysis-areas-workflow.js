@@ -5,6 +5,7 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step',
     'views/components/workflows/workflow-manifest-manager',
+    'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
@@ -26,7 +27,7 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    required: true,
+                    required: false,
                     shouldtrackresource: true,
                     layoutSections: [
                         {
@@ -51,7 +52,7 @@ define([
                     name: 'image-step', /* unique to workflow */
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    required: true,
+                    required: false,
                     layoutSections: [
                         {
                             sectionTitle: 'Image Service',
@@ -68,6 +69,30 @@ define([
                         },
                     ],
                 },
+                {
+                    title: 'Summary',
+                    name: 'analysis-areas-complete',  /* unique to workflow */
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', //physical thing graph
+                    nodegroupid: '',
+                    resourceid: '2b8293dd-d5c1-4934-8664-0c3d51764689',
+                    tileid: null,
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'analysis-areas-final-step',
+                                    uniqueInstanceName: 'analysis-areas-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                }
             ];
 
             Workflow.apply(this, [params]);
