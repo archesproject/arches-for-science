@@ -25,9 +25,20 @@ define([
 
         this.tileDirty = ko.observable();
         this.observationInstances = ko.observableArray();
-        this.observationInstances.subscribe(function(foo) {
-            console.log('obs', foo)
-        })
+
+        this.observationFilterTerm = ko.observable();
+        
+        this.filteredObservationInstances = ko.computed(function() {
+            if (self.observationFilterTerm()) {
+                return self.observationInstances().filter(function(observationInstance) {
+                    var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+                    return observationInstance.data[partIdentifierAssignmentLabelNodeId]().includes(self.observationFilterTerm());
+                });
+            }
+            else {
+                return self.observationInstances();
+            }
+        });
 
         this.activeTab = ko.observable('dataset');
         this.hasLoaded = ko.observable(false);
@@ -54,6 +65,8 @@ define([
 
         this.saveObservationTile = function() {
             self.tile.save().then(function(data) {
+                self.observationInstances(self.card.tiles())
+
                 console.log('saved the tile', data)
             });
         };

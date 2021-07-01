@@ -18,6 +18,7 @@
     <i class="fa fa-file"></i>
     <span class="map-sidebar-text">{% trans 'Dataset' %}</span>
 </div>
+    {{ block.super }}
 {% endblock tabs %}
 
 {% block sidepanel %}
@@ -51,6 +52,7 @@
                                 border: 1px solid #ddd;
                                 border-bottom: none;
                             "
+                            data-bind="textInput: $data.observationFilterTerm"
                         >
 
                         <div
@@ -74,7 +76,7 @@
                                         flex-direction: column;
                                     "
                                 >
-                                    <!-- ko foreach: $data.observationInstances()-->
+                                    <!-- ko foreach: $data.filteredObservationInstances -->
                                         <tr
                                             data-bind="text: (function(){
                                                 var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
