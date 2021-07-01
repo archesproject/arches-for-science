@@ -10,12 +10,13 @@ define([
 ], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
     function viewModel(params) {
         var self = this;
-        _.extend(this, params)
+        _.extend(this, params);
 
-        this.activeTab = ko.observable('dataset');
+        var objectStepData = params.form.externalStepData['objectstep']['data'];
+        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
 
-        this.hasLoaded = ko.observable(false);
-
+        this.physicalThingPartIdentifierAssignmentCard = ko.observable();
+        this.physicalThingPartIdentifierAssignmentTile = ko.observable();
 
         this.partIdentifierAssignmentLabelWidget = ko.observable();
         this.partIdentifierAssignmentPolygonIdentifierWidget = ko.observable();
@@ -24,6 +25,8 @@ define([
 
         this.tileDirty = ko.observable();
 
+        this.activeTab = ko.observable('dataset');
+        this.hasLoaded = ko.observable(false);
 
         /* inheritence chain conflicts with `loading`, so added functionality is behind `hasLoaded`  */ 
         this.hasLoaded.subscribe(function(loaded) {
@@ -35,13 +38,6 @@ define([
             }
         });
 
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
-
-
-        this.physicalThingPartIdentifierAssignmentCard = ko.observable();
-        this.physicalThingPartIdentifierAssignmentTile = ko.observable();
-        
         this.initialize = function() {
             self.getPhysicalThingPartIdentifierAssignmentData();
         };
@@ -52,6 +48,16 @@ define([
             });
         };
 
+        this.loadNewObservationTile = function() {
+            var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
+                
+            self.physicalThingPartIdentifierAssignmentTile(newTile);
+
+            self.tile = newTile;
+            params.tile = newTile;
+
+            self.tile.reset();
+        };
 
         this.saveTile = function() {
             console.log("SV", self, params)
