@@ -24,6 +24,10 @@ define([
         this.partIdentifierAssignmentAnnotatorWidget = ko.observable();
 
         this.tileDirty = ko.observable();
+        this.observationInstances = ko.observableArray();
+        this.observationInstances.subscribe(function(foo) {
+            console.log('obs', foo)
+        })
 
         this.activeTab = ko.observable('dataset');
         this.hasLoaded = ko.observable(false);
@@ -39,6 +43,12 @@ define([
         });
 
         this.initialize = function() {
+            console.log("INIT", self, params)
+
+
+
+            
+
             self.getPhysicalThingPartIdentifierAssignmentData();
         };
 
@@ -125,11 +135,13 @@ define([
                 self.physicalThingPartIdentifierAssignmentCard(card);
                 self.physicalThingPartIdentifierAssignmentTile(tile);
 
+                self.observationInstances(card.tiles())
+
 
                 self.tile.dirty.subscribe(function(dirty) {
                     self.tileDirty(dirty);
                     // params.dirty(dirty)
-                    console.log('tile diry', dirty, self.tile)
+                    console.log('tile diry', dirty, self.tile, self.card.tiles())
                 })
 
                 
