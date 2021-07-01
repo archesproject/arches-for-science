@@ -33,11 +33,7 @@
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
             <div class="card">
-                <div
-                    style="
-                        padding: 10px 0;
-                    "
-                >
+                <div style="padding: 10px 0;">
                     <h5>{% trans 'Region locations' %}</h5>
             
                     <div
@@ -59,7 +55,7 @@
 
                         <div
                             style="
-                                height: 120px;
+                                height: 100px;
                                 border: 1px solid #ddd;
                                 overflow-y: scroll;
                             "
@@ -420,8 +416,32 @@
                 <!-- /ko -->
 
                 {% block form_buttons %}
-                    <button>a</button>
-                    <button>b</button>
+                    <!-- ko if: $data.tileDirty() -->
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 0 5px;
+                        "
+                    >
+                        <button 
+                            class="btn btn-success" 
+                            style="width: 48%;"
+                            data-bind="click: $data.saveObservationTile"
+                        >
+                            <i class="ion-android-cloud-done"></i>
+                            <span style="padding-left: 4px">{% trans 'Save' %}</span>
+                        </button>
+                        <button 
+                            class="btn btn-danger" 
+                            style="width: 48%;"
+                            data-bind="click: $data.tile.reset"
+                        >
+                            <i class="ion-android-cancel"></i>
+                            <span style="padding-left: 4px">{% trans 'Cancel' %}</span>
+                        </button>
+                    </div>
+                    <!-- /ko -->
                 {% endblock form_buttons %}
             </div>
         </div>

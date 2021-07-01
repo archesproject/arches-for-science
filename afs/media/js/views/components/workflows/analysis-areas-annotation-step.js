@@ -22,6 +22,7 @@ define([
         this.partIdentifierAssignmentPhysicalPartOfObjectWidget = ko.observable();
         this.partIdentifierAssignmentAnnotatorWidget = ko.observable();
 
+        this.tileDirty = ko.observable();
 
 
         /* inheritence chain conflicts with `loading`, so added functionality is behind `hasLoaded`  */ 
@@ -33,6 +34,24 @@ define([
                 self.getManifestData();
             }
         });
+
+        var objectStepData = params.form.externalStepData['objectstep']['data'];
+        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
+
+
+        this.physicalThingPartIdentifierAssignmentCard = ko.observable();
+        this.physicalThingPartIdentifierAssignmentTile = ko.observable();
+        
+        this.initialize = function() {
+            self.getPhysicalThingPartIdentifierAssignmentData();
+        };
+
+        this.saveObservationTile = function() {
+            self.tile.save().then(function(data) {
+                console.log('saved the tile', data)
+            });
+        };
+
 
         this.saveTile = function() {
             console.log("SV", self, params)
@@ -46,18 +65,6 @@ define([
 
                 console.log("DATA", data, tile)
             })
-        };
-
-
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
-
-
-        this.physicalThingPartIdentifierAssignmentCard = ko.observable();
-        this.physicalThingPartIdentifierAssignmentTile = ko.observable();
-        
-        this.initialize = function() {
-            self.getPhysicalThingPartIdentifierAssignmentData();
         };
 
         this.getPhysicalThingPartIdentifierAssignmentData = function() {
@@ -114,7 +121,8 @@ define([
 
 
                 self.tile.dirty.subscribe(function(dirty) {
-                    params.dirty(dirty)
+                    self.tileDirty(dirty);
+                    // params.dirty(dirty)
                     console.log('tile diry', dirty, self.tile)
                 })
 
