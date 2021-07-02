@@ -24,20 +24,56 @@ define([
         this.partIdentifierAssignmentPhysicalPartOfObjectWidget = ko.observable();
         this.partIdentifierAssignmentAnnotatorWidget = ko.observable();
 
-        this.tileDirty = ko.observable();
+        this.activeTab = ko.observable('dataset');
+        this.hasLoaded = ko.observable(false);
+
+        ko.bindingHandlers.scrollTo = {
+            update: function (element, valueAccessor) {
+                var _value = valueAccessor();
+                var _valueUnwrapped = ko.unwrap(_value);
+                if (_valueUnwrapped) {
+                    element.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+                }
+            }
+        };
 
         this.observationInstances = ko.observableArray();
+        
         this.selectedObservationInstance = ko.observable();
-        this.selectedObservationInstance.subscribe(function(foo) {
-            console.log("fofffffff", foo)
-            /* TODO: switchCanvas logic */ 
-            // self.switchCanvas(self.getAnnotationProperty(foo, "canvas"));
-
+        this.selectedObservationInstance.subscribe(function(selectedObservationInstance) {
             self.highlightAnnotation();
-        })
+
+            if (selectedObservationInstance) {
+                /* TODO: switchCanvas logic */ 
+                // self.switchCanvas(self.getAnnotationProperty(foo, "canvas"));
+    
+                console.log("FFDSDSS", selectedObservationInstance)
+    
+                
+                self.tile = selectedObservationInstance;
+                params.tile = selectedObservationInstance;
+                self.physicalThingPartIdentifierAssignmentTile(selectedObservationInstance);
+            }
+        });
+
+        this.tileDirty = ko.computed(function() {
+            if (self.physicalThingPartIdentifierAssignmentTile()) {
+                return self.physicalThingPartIdentifierAssignmentTile().dirty();
+            }
+        });
+
+        this.selectedObservationInstanceFeatures = ko.computed(function() {
+            var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
+
+            if (self.selectedObservationInstance()) {
+                if (ko.unwrap(self.selectedObservationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])) {
+                    var partIdentifierAssignmentPolygonIdentifierData = ko.unwrap(self.selectedObservationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId]);
+                    return ko.unwrap(partIdentifierAssignmentPolygonIdentifierData.features);
+                }
+            }
+        });
 
         this.observationFilterTerm = ko.observable();
-        
         this.filteredObservationInstances = ko.computed(function() {
             if (self.observationFilterTerm()) {
                 return self.observationInstances().filter(function(observationInstance) {
@@ -50,56 +86,28 @@ define([
             }
         });
 
-        this.activeTab = ko.observable('dataset');
-        this.hasLoaded = ko.observable(false);
-
-        ko.bindingHandlers.scrollTo = {
-            update: function (element, valueAccessor, allBindings) {
-                var _value = valueAccessor();
-                var _valueUnwrapped = ko.unwrap(_value);
-                if (_valueUnwrapped) {
-                    element.scrollIntoView();
-                }
-            }
-        };
-
         /* inheritence chain conflicts with `loading`, so added functionality is behind `hasLoaded`  */ 
         this.hasLoaded.subscribe(function(loaded) {
             if (loaded) {
-                var highlight = {
-                    'fillColor': 'yellow',
-                    'weight': 2,
-                    'opacity': 1
-                };
-                
-                /* param used by IIIFAnnotationViewmodel only */ 
-                params.onEachFeature = function(feature, layer) {
-                    layer.on({
-                        click: function(e) {
-                            // layer.setStyle(highlight)
-                            self.selectedObservationInstance(self.getObservationTileFromFeatureId(feature.id));
-                            console.log("CLICK", e, feature)
-                        },
-                    })
-                };
-
-                IIIFAnnotationViewmodel.apply(self, [params]);
+                IIIFAnnotationViewmodel.apply(self, [{
+                    ...params,
+                    onEachFeature: function(feature, layer) {
+                        layer.on({
+                            click: function() {
+                                self.selectObservationInstance(self.getObservationTileFromFeatureId(feature.id));
+                            },
+                        })
+                    }
+                }]);
 
                 self.manifest("/manifest/38"); /* hardcoded until we can pass data between these two steps */ 
                 self.getManifestData();
 
-                self.annotationNodes.subscribe(function(annotationNodes) {
-                    var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
-                    var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
-                        return annotationNode.name === physicalThingAnnotationNodeName;
-                    });
-
-                    physicalThingAnnotationNode.active(true); /* sets all Physical Thing geometries to visible */
- 
-                    console.log("ANNOTATION NODES", physicalThingAnnotationNode)
+                /* sets all Physical Thing geometries to visible */
+                var physicalThingGeometriestAnnotationSubscription = self.annotationNodes.subscribe(function(annotationNodes) {
+                    self.setPhysicalThingGeometriesToVisible(annotationNodes);
+                    physicalThingGeometriestAnnotationSubscription.dispose(); /* self-disposing subscription only runs once */
                 });
-
-                console.log("LOADED", self, params, self.annotationNodes(), self.map())
             }
         });
 
@@ -132,7 +140,7 @@ define([
 
         this.getAnnotationProperty = function(tile, property){
             return tile.data[self.annotationNodeId].features[0].properties[property]
-        }
+        };
 
         this.highlightAnnotation = function(){
             if (self.map()) {
@@ -141,11 +149,9 @@ define([
                         layer.eachLayer(function(features){
                             if (features.eachLayer) {
                                 features.eachLayer(function(feature) {
-
-                                    console.log("HMMM FEATURE", feature)
                                     var defaultColor = feature.feature.properties.color;
                                     
-                                    if (!self.selectedObservationInstance() || self.selectedObservationInstance().tileid === feature.feature.properties.tileId) {
+                                    if (self.selectedObservationInstance() && self.selectedObservationInstance().tileid === feature.feature.properties.tileId) {
                                         feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
                                     } else {
                                         feature.setStyle({color: defaultColor, fillColor: defaultColor});
@@ -158,36 +164,46 @@ define([
             } 
         };
 
+        this.selectObservationInstance = function(observationInstance) {
+            var previouslySelectedObservationInstance = self.selectedObservationInstance();
+
+            /* resets any changes not explicity saved to the tile */ 
+            if (previouslySelectedObservationInstance) {
+                previouslySelectedObservationInstance.reset();
+            }
+
+            self.selectedObservationInstance(observationInstance);
+        };
+
+        this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
+            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+            physicalThingAnnotationNode.active(true); 
+        };
+
         this.saveObservationTile = function() {
             self.tile.save().then(function(data) {
-                self.observationInstances(self.card.tiles())
+                self.observationInstances(self.card.tiles());
+                self.selectObservationInstance(self.tile);
 
-                console.log('saved the tile', data)
+                console.log('saved the tile', data, self)
             });
         };
 
         this.loadNewObservationTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-                
-            self.physicalThingPartIdentifierAssignmentTile(newTile);
-
-            self.tile = newTile;
-            params.tile = newTile;
-
-            self.tile.reset();
+            self.selectObservationInstance(newTile);
         };
 
         this.saveTile = function() {
             console.log("SV", self, params)
             self.tile.save().then(function(data) {
-                var tile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-                
-                self.physicalThingPartIdentifierAssignmentTile(tile);
-
-                self.tile = tile;
-                params.tile = tile;
+                self.loadNewObservationTile();
 
                 console.log("DATA", data, tile)
+                self.observationInstances(self.card.tiles())
             })
         };
 
@@ -244,14 +260,7 @@ define([
 
             self.observationInstances(card.tiles())
 
-
-            self.tile.dirty.subscribe(function(dirty) {
-                self.tileDirty(dirty);
-                // params.dirty(dirty)
-                console.log('tile diry', dirty, self.tile, self.card.tiles())
-            })
-            
-            self.hasLoaded(true)
+            self.hasLoaded(true);
             self.activeTab('dataset');
 
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
