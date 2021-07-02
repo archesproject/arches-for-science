@@ -18,7 +18,6 @@
     <i class="fa fa-file"></i>
     <span class="map-sidebar-text">{% trans 'Dataset' %}</span>
 </div>
-    {{ block.super }}
 {% endblock tabs %}
 
 {% block sidepanel %}
@@ -78,11 +77,26 @@
                                 >
                                     <!-- ko foreach: $data.filteredObservationInstances -->
                                         <tr
-                                            data-bind="text: (function(){
-                                                var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                                                return $data.data[partIdentifierAssignmentLabelNodeId]();
-                                            })()"
-                                        ></tr>
+                                            style="cursor: pointer;"
+                                            data-bind="
+                                                scrollTo: $parent.selectedObservationInstance() && $parent.selectedObservationInstance().tileid === $data.tileid,
+                                                click: function() { $parent.selectedObservationInstance($data); },
+                                                style: {
+                                                    background: (function() {
+                                                        if ($parent.selectedObservationInstance() && $parent.selectedObservationInstance().tileid === $data.tileid) {
+                                                            return '#afd7f7';
+                                                        }
+                                                    })()
+                                                },
+                                            "
+                                        >
+                                            <td 
+                                                data-bind="text: (function(){
+                                                    var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+                                                    return $data.data[partIdentifierAssignmentLabelNodeId]();
+                                                })()"
+                                            ></td>
+                                        </tr>
                                     <!-- /ko -->
                                 </tbody>
                             </table>
@@ -313,7 +327,7 @@
                         </div>
 
                         <!-- ko if: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget() -->
-                            <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Image Service' %}</h5>
+                            <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Object Part' %}</h5>
                             <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().node_id()].isrequired}"></i>
 
                             <div 
