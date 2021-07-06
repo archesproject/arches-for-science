@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block workbench %}
-<!-- ko if: $data.hasLoaded() -->
+<!-- ko if: $data.hasExternalCardData() -->
     <!-- ko with: $data, as: 'self' -->
         {{ block.super }}
     <!-- /ko -->

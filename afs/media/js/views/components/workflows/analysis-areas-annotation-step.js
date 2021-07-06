@@ -24,18 +24,8 @@ define([
         this.partIdentifierAssignmentPhysicalPartOfObjectWidget = ko.observable();
         this.partIdentifierAssignmentAnnotatorWidget = ko.observable();
 
-        this.activeTab = ko.observable('dataset');
-        this.hasLoaded = ko.observable(false);
-
-        ko.bindingHandlers.scrollTo = {
-            update: function (element, valueAccessor) {
-                var _value = valueAccessor();
-                var _valueUnwrapped = ko.unwrap(_value);
-                if (_valueUnwrapped) {
-                    element.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
-                }
-            }
-        };
+        this.activeTab = ko.observable();
+        this.hasExternalCardData = ko.observable(false);
 
         this.observationInstances = ko.observableArray();
         
@@ -45,10 +35,6 @@ define([
 
             if (selectedObservationInstance) {
                 /* TODO: switchCanvas logic */ 
-                // self.switchCanvas(self.getAnnotationProperty(foo, "canvas"));
-    
-                console.log("FFDSDSS", selectedObservationInstance)
-    
                 
                 self.tile = selectedObservationInstance;
                 params.tile = selectedObservationInstance;
@@ -86,36 +72,26 @@ define([
             }
         });
 
-        /* inheritence chain conflicts with `loading`, so added functionality is behind `hasLoaded`  */ 
-        this.hasLoaded.subscribe(function(loaded) {
-            if (loaded) {
-                IIIFAnnotationViewmodel.apply(self, [{
-                    ...params,
-                    onEachFeature: function(feature, layer) {
-                        layer.on({
-                            click: function() {
-                                self.selectObservationInstance(self.getObservationTileFromFeatureId(feature.id));
-                            },
-                        })
-                    }
-                }]);
-
-                self.manifest("/manifest/38"); /* hardcoded until we can pass data between these two steps */ 
-                self.getManifestData();
+        this.hasExternalCardData.subscribe(function(hasExternalCardData) {
+            if (hasExternalCardData) {
+                self.handleExternalCardData();
 
                 /* sets all Physical Thing geometries to visible */
                 var physicalThingGeometriestAnnotationSubscription = self.annotationNodes.subscribe(function(annotationNodes) {
                     self.setPhysicalThingGeometriesToVisible(annotationNodes);
                     physicalThingGeometriestAnnotationSubscription.dispose(); /* self-disposing subscription only runs once */
                 });
+
+                self.activeTab('dataset');
+
+                self.manifest("/manifest/38"); /* hardcoded until we can pass data between these two steps */ 
+                self.getManifestData();
             }
         });
 
         this.initialize = function() {
-            console.log("INIT", self, params)
-
             $.getJSON( arches.urls.api_card + self.physicalThingResourceId ).then(function(data) {
-                self.barfoo(data);
+                self.loadExternalCardData(data);
             });
         };
 
@@ -126,7 +102,7 @@ define([
                 var observationInstanceFeatures = observationInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId].features();
 
                 return observationInstanceFeatures.find(function(observationInstanceFeature) {
-                    return observationInstanceFeature.id() === featureId;
+                    return ko.unwrap(observationInstanceFeature.id) === featureId;
                 });
             });
         };
@@ -139,7 +115,7 @@ define([
         };
 
         this.getAnnotationProperty = function(tile, property){
-            return tile.data[self.annotationNodeId].features[0].properties[property]
+            return tile.data[self.annotationNodeId].features[0].properties[property];
         };
 
         this.highlightAnnotation = function(){
@@ -187,8 +163,6 @@ define([
             self.tile.save().then(function(data) {
                 self.observationInstances(self.card.tiles());
                 self.selectObservationInstance(self.tile);
-
-                console.log('saved the tile', data, self)
             });
         };
 
@@ -197,17 +171,13 @@ define([
             self.selectObservationInstance(newTile);
         };
 
-        this.saveTile = function() {
-            console.log("SV", self, params)
-            self.tile.save().then(function(data) {
-                self.loadNewObservationTile();
+        // this.saveTile = function() {
+        //     self.tile.save().then(function(data) {
+        //         self.observationInstances(self.card.tiles())
+        //     });
+        // };
 
-                console.log("DATA", data, tile)
-                self.observationInstances(self.card.tiles())
-            })
-        };
-
-        this.barfoo = function(data) {
+        this.loadExternalCardData = function(data) {
             var partIdentifierAssignmentNodeGroupId =  'fec59582-8593-11ea-97eb-acde48001122';  // Part Identifier Assignment (E13) 
 
             var partIdentifierAssignmentCardData = data.cards.find(function(card) {
@@ -258,11 +228,12 @@ define([
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
-            self.observationInstances(card.tiles())
+            self.observationInstances(card.tiles());
 
-            self.hasLoaded(true);
-            self.activeTab('dataset');
+            self.hasExternalCardData(true);
+        };
 
+        this.handleExternalCardData = function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             self.partIdentifierAssignmentLabelWidget(self.card.widgets().find(function(widget) {
                 return ko.unwrap(widget.node_id) === partIdentifierAssignmentLabelNodeId;
@@ -282,6 +253,34 @@ define([
             self.partIdentifierAssignmentAnnotatorWidget(self.card.widgets().find(function(widget) {
                 return ko.unwrap(widget.node_id) === partIdentifierAssignmentAnnotatorNodeId;
             }));
+
+            IIIFAnnotationViewmodel.apply(self, [{
+                ...params,
+                onEachFeature: function(feature, layer) {
+                    layer.on({
+                        click: function() {
+                            var observationInstance = self.getObservationTileFromFeatureId(feature.id);
+
+                            if (!self.selectedObservationInstance() || self.selectedObservationInstance().tileid !== observationInstance.tileid ) {
+                                self.selectObservationInstance(observationInstance);
+                            }
+                            else if (self.selectedObservationInstance() && self.selectedObservationInstance().tileid === observationInstance.tileid) {
+                                console.log("dbl click")
+                            }
+                        },
+                    })
+                }
+            }]);
+        };
+
+        ko.bindingHandlers.scrollTo = {
+            update: function (element, valueAccessor) {
+                var _value = valueAccessor();
+                var _valueUnwrapped = ko.unwrap(_value);
+                if (_valueUnwrapped) {
+                    element.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+                }
+            }
         };
 
         this.initialize();
