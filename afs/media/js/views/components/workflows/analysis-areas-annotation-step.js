@@ -4,11 +4,10 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
-    'leaflet',
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
-], function(_, $, arches, ko, koMapping, L, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
