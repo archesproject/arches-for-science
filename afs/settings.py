@@ -36,7 +36,7 @@ SECRET_KEY = "(hdj_k6s^6*+ve_y9i(&$jo4cj4&jb=ryedo$2jh56bi82ye%*"
 DEBUG = True
 
 ROOT_URLCONF = "afs.urls"
-
+FILE_UPLOAD_PERMISSIONS = 0o644
 # a prefix to append to all elasticsearch indexes, note: must be lower case
 ELASTICSEARCH_PREFIX = "afs"
 
