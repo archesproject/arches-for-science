@@ -9,6 +9,10 @@ define([
 
     function viewModel(params) {
         var self = this;
+
+        var objectStepData = params.form.externalStepData['objectstep']['data'];
+        params.form.resourceId = objectStepData['sample-object-resource-instance'][0][1];
+
         SummaryStep.apply(this, [params]);
 
         this.objectAnnotations = ko.observableArray();
