@@ -12,24 +12,23 @@ define([
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
             IIIFViewerViewmodel.apply(this, [params]);
-            const annotationNodeGroupId = "b3e171a7-1d9d-11eb-a29f-024e0d439fdb";
             var defaultColor;
             var self = this;
-            this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb";
-            this.samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
             const physicalThingPartNameNodeId = "3e541cc6-859b-11ea-97eb-acde48001122";
             const physicalThingPartNodeGroupId = "fec59582-8593-11ea-97eb-acde48001122";
             const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
             const physicalThingPartNodeId = "b240c366-8594-11ea-97eb-acde48001122";
+            const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
+            this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb";
+            this.samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
             this.selectedAnnotationTile = ko.observable();
-            this.selectedSample = ko.observable();
-            this.sampleFilter = ko.observable("");
+            this.selectedPart = ko.observable();
+            this.partFilter = ko.observable("");
             this.alert = params.alert;
             this.annotations = ko.observableArray([]);
-            this.samples = ko.observableArray([]);
+            this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
             this.formData = new window.FormData();
-            const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
             this.physicalThing = projectInfo.physicalThing;
             this.uniqueidClass = ko.computed(function() {
                 return "unique_id_" + self.uniqueId;
@@ -73,7 +72,7 @@ define([
                 return tile.data[physicalThingPartAnnotationNodeId].features[0].properties[property];
             };
 
-            this.selectedSample.subscribe(function(data){
+            this.selectedPart.subscribe(function(data){
                 self.annotations([data]);
                 if (self.annotations().length) {
                     self.selectedAnnotationTile(self.annotations()[0]);
@@ -106,7 +105,7 @@ define([
                 }
             };
 
-            this.saveDatasetName = function(sample){
+            this.saveDatasetName = function(part){
                 //Tile structure for the Digital Resource 'Name' nodegroup
                 let nameTemplate = {
                     "tileid": "",
@@ -124,7 +123,7 @@ define([
                     "tiles": {}
                 };
 
-                nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = sample.datasetName() || "";
+                nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = part.datasetName() || "";
 
                 return window.fetch(arches.urls.api_tiles(uuid.generate()), {
                     method: 'POST',
@@ -140,7 +139,7 @@ define([
                 });
             };
 
-            this.saveDatasetFiles = function(sample, datasetNameTile){
+            this.saveDatasetFiles = function(part, datasetNameTile){
                 //Tile structure for the Digital Resource 'File' nodegroup
                 let fileTemplate = {
                     "tileid": "",
@@ -157,10 +156,10 @@ define([
                     "tiles": {}
                 };
 
-                return sample.datasetFiles().forEach(function(file, i){
+                return part.datasetFiles().forEach(function(file, i){
                     // eslint-disable-next-line camelcase
                     fileTemplate.resourceinstance_id = datasetNameTile.resourceinstance_id;
-                    sample.datasetId(datasetNameTile.resourceinstance_id);
+                    part.datasetId(datasetNameTile.resourceinstance_id);
                     fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [{
                         name: file.name,
                         accepted: file.accepted,
@@ -193,13 +192,13 @@ define([
                 });
             };
 
-            this.saveDigitalResourceToChildPhysThing = function(sample){
-                const partResourceInstanceId = sample.data[physicalThingPartNodeId][0].resourceId; 
+            this.saveDigitalResourceToChildPhysThing = function(part){
+                const partResourceInstanceId = part.data[physicalThingPartNodeId][0].resourceId; 
                 const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
                 const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501";  
                 const tileid = uuid.generate();
                 let payload = [{
-                    "resourceId": sample.datasetId(),
+                    "resourceId": part.datasetId(),
                     "ontologyProperty": "",
                     "inverseOntologyProperty": ""
                 }];
@@ -228,16 +227,16 @@ define([
             };
 
             this.save = function() {
-                self.samples().forEach(function(sample){
+                self.parts().forEach(function(part){
                     // For each part of parent phys thing, create a digital resource with a Name tile
-                    self.saveDatasetName(sample)
+                    self.saveDatasetName(part)
                         .then(function(data) {
                             // Then save a file tile to the digital resource for each associated file
-                            self.saveDatasetFiles(sample, data);
+                            self.saveDatasetFiles(part, data);
                         })
                         .then(function(){
                             // Then save a relationship tile on the part that points to the digital resource
-                            self.saveDigitalResourceToChildPhysThing(sample);
+                            self.saveDigitalResourceToChildPhysThing(part);
                         })
                         .catch(function(err) {
                             // eslint-disable-next-line no-console
@@ -292,19 +291,19 @@ define([
                                     return tile.nodegroup_id === physicalThingPartNodeGroupId;
                                 }
                             );
-                            self.samples(parts);
-                            self.samples().forEach(function(sample){
-                                sample.datasetFiles = ko.observableArray([]);
-                                sample.datasetName = ko.observable();
-                                sample.datasetId = ko.observable();
-                                sample.displayname = sample.data[physicalThingPartNameNodeId];
-                                sample.datasetId.subscribe(function(val){
+                            self.parts(parts);
+                            self.parts().forEach(function(part){
+                                part.datasetFiles = ko.observableArray([]);
+                                part.datasetName = ko.observable();
+                                part.datasetId = ko.observable();
+                                part.displayname = part.data[physicalThingPartNameNodeId];
+                                part.datasetId.subscribe(function(val){
                                     if (val) {
                                         params.form.complete(true);
                                     }
                                 });
                             });
-                            self.selectedSample(self.samples()[0]);
+                            self.selectedPart(self.parts()[0]);
                         }
                     }
                 );

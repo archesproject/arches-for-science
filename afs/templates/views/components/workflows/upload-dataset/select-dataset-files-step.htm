@@ -26,11 +26,11 @@
 <div class="iiif-image-tools" style="margin-top: 20px;">
     <!--ko if: annotations().length > 0-->
     <label class="control-label">{% trans "Sampled Locations" %}</label>
-    <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: sampleFilter">
-    <div class="file-workbench-files" data-bind="foreach: {data: samples, as: 'sample'}">
-        <!--ko if: self.sampleFilter() === "" || sample.displayname.toLowerCase().includes(self.sampleFilter().toLowerCase()) -->
-        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: sample.tileid === self.selectedSample().tileid }">
-            <span class='file-name manifest-manager-canvas-name' data-bind="text: sample.displayname, click: function(){self.selectedSample(sample)}, clickBubble: false"></span>
+    <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
+    <div class="file-workbench-files" data-bind="foreach: {data: parts, as: 'part'}">
+        <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: part.tileid === self.selectedPart().tileid }">
+            <span class='file-name manifest-manager-canvas-name' data-bind="text: part.displayname, click: function(){self.selectedPart(part)}, clickBubble: false"></span>
         </div>
         <!--/ko-->
     </div>
@@ -40,17 +40,17 @@
 
 <div class="iiif-image-tools" style="margin-top: 5px;">
     <label class="control-label">{% trans "Dataset Name" %}</label>
-    <!--ko if: selectedSample -->
-    <input type="text" class="form-control" style="width: 100%;" placeholder="Dataset name" data-bind="textInput: selectedSample().datasetName">
+    <!--ko if: selectedPart -->
+    <input type="text" class="form-control" style="width: 100%;" placeholder="Dataset name" data-bind="textInput: selectedPart().datasetName">
     <!--/ko -->
 </div>
 
 <div class="iiif-image-tools" style="margin-top: 12px;">
-    <!-- ko if: files().length > 0 && selectedSample() -->
+    <!-- ko if: files().length > 0 && selectedPart() -->
     <label class="control-label">{% trans "Associated Files" %}</label>
     <div class="file-workbench-files" style="margin-top: 0" data-bind="foreach: {data: files, as: 'file'}">
         <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {staged: false}">
-            <input type="checkbox" style="width: 15px; height: 15px; margin: 0px" data-bind="value: file, checked: $parent.selectedSample().datasetFiles">
+            <input type="checkbox" style="width: 15px; height: 15px; margin: 0px" data-bind="value: file, checked: $parent.selectedPart().datasetFiles">
             <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name, click: function(){console.log(file)}, clickBubble: false"></span>
         </div>
     </div>
