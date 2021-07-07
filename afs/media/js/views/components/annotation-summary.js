@@ -6,7 +6,7 @@ define([
     'views/components/iiif-viewer',
     'bindings/leaflet',
     'bindings/datatable'
-], function (ko, geojsonExtent, L, WidgetViewModel, IIIFViewerViewmodel) {
+], function(ko, geojsonExtent, L, WidgetViewModel, IIIFViewerViewmodel) {
     return ko.components.register('views/components/annotation-summary', {
         viewModel: function(params) {
             var self = this;
@@ -16,7 +16,7 @@ define([
             var defaultColor;
 
             if (params.annotation.info[0]){
-                columns = Object.keys(params.annotation.info[0]).length
+                columns = Object.keys(params.annotation.info[0]).length;
             }
             this.annotationTableConfig = {
                 "info": false,
@@ -59,7 +59,7 @@ define([
                         ]);
                     }, 250);
                     self.map(map);
-                }
+                };
 
                 return {
                     center: [0, 0],
@@ -67,9 +67,9 @@ define([
                     zoom: 0,
                     afterRender: afterRender
                 };
-            }
+            };
 
-            this.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection)
+            this.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection);
 
             this.highlightAnnotation = function(tileId){
                 if (tileId !== self.selectedAnnotationTileId()){
@@ -82,7 +82,7 @@ define([
                         if (layer.eachLayer) {
                             layer.eachLayer(function(feature){
                                 if (!defaultColor) {
-                                    defaultColor = feature.feature.properties.color
+                                    defaultColor = feature.feature.properties.color;
                                 }
                                 if (self.selectedAnnotationTileId() === feature.feature.properties.tileId) {
                                     feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
@@ -91,7 +91,7 @@ define([
                                 }
                             });
                         }
-                    })
+                    });
                 } 
             };
         },

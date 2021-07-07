@@ -25,38 +25,35 @@ define([
 
             var annotationCollection = {};
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                var currentAnnotationNames = [];
                 var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@value']);
-                //if (annotationName in currentAnnotationNames) {
-                    var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
-                    var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
-                    var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
-                    var tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
-                    if (annotationStr) {
-                        var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
-                        var canvas = annotationJson.features[0].properties.canvas;
-                        annotationJson.features.forEach(function(feature){
-                            feature.properties.tileId = tileId;
+                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
+                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
+                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
+                var tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
+                if (annotationStr) {
+                    var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+                    var canvas = annotationJson.features[0].properties.canvas;
+                    annotationJson.features.forEach(function(feature){
+                        feature.properties.tileId = tileId;
+                    })
+                    if (canvas in annotationCollection) {
+                        annotationCollection[canvas].push({
+                            tileId: tileId,
+                            annotationName: annotationName,
+                            annotationLabel: annotationLabel,
+                            annotator: annotator,
+                            annotationJson: annotationJson,
                         })
-                        if (canvas in annotationCollection) {
-                            annotationCollection[canvas].push({
-                                tileId: tileId,
-                                annotationName: annotationName,
-                                annotationLabel: annotationLabel,
-                                annotator: annotator,
-                                annotationJson: annotationJson,
-                            })
-                        } else {
-                            annotationCollection[canvas] = [{
-                                tileId: tileId,
-                                annotationName: annotationName,
-                                annotationLabel: annotationLabel,
-                                annotator: annotator,
-                                annotationJson: annotationJson,
-                            }]
-                        }
+                    } else {
+                        annotationCollection[canvas] = [{
+                            tileId: tileId,
+                            annotationName: annotationName,
+                            annotationLabel: annotationLabel,
+                            annotator: annotator,
+                            annotationJson: annotationJson,
+                        }]
                     }
-                //}
+                }
             });
 
             for (canvas in annotationCollection) {
