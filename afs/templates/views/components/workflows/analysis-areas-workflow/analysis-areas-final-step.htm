@@ -37,31 +37,8 @@
     </div>
 
     <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
-        <!-- ko foreach: objectAnnotations -->
-        <h5 class="summary-value" data-bind="text: name"></h5>
-        <div style="display: inline-flex;">
-            <div style="border: solid 1px #ddd">
-                <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 300px; width: 400px"></div>
-            </div>
-            <div class="file-list" style="display: flex; flex-direction: column;">
-                <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;">
-                    <div class="summary-label">Region Name:</div>
-                    <div class="summary-label">Annotator</div>
-                </div>
-                <!-- ko foreach: info -->
-                <div class="file-upload-card" style="display: inline-flex; justify-content: space-between;" 
-                    data-bind="style: {'border-width': $index() === ($parent.info.length - 1) ? '0px' : '1px'}">
-                    <div class="summary-value" data-bind="text: label"></div>
-                    <div class="summary-value" data-bind="text: annotator"></div>
-                </div>
-                <!-- /ko -->
-                <div class="final-step-section-block-item">
-                    <div class="block-item files-metadata">
-                        <div class="summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + info.length'></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- ko foreach: {data: objectAnnotations, as: 'annotation'} -->
+        <div data-bind="component: { name: 'views/components/annotation-summary', params: {annotation: annotation}}"></div>
         <!-- /ko -->
     </div>
 </div>

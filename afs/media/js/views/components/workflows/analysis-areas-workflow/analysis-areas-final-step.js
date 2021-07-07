@@ -4,6 +4,7 @@ define([
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
+    'views/components/annotation-summary',
 ], function(ko, _, uuid, arches, SummaryStep) {
 
     function viewModel(params) {
@@ -26,11 +27,16 @@ define([
                     var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
                     var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
                     var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
+                    var tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
                     if (annotationStr) {
                         var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
                         var canvas = annotationJson.features[0].properties.canvas;
+                        annotationJson.features.forEach(function(feature){
+                            feature.properties.tileId = tileId;
+                        })
                         if (canvas in annotationCollection) {
                             annotationCollection[canvas].push({
+                                tileId: tileId,
                                 annotationName: annotationName,
                                 annotationLabel: annotationLabel,
                                 annotator: annotator,
@@ -38,6 +44,7 @@ define([
                             })
                         } else {
                             annotationCollection[canvas] = [{
+                                tileId: tileId,
                                 annotationName: annotationName,
                                 annotationLabel: annotationLabel,
                                 annotator: annotator,
@@ -49,16 +56,18 @@ define([
             });
 
             for (canvas in annotationCollection) {
-                var info = [];
+                var name;
                 let annotationCombined;
+                var info = [];
                 annotationCollection[canvas].forEach(function(annotation){
+                    name = annotation.annotationName;
                     if (annotationCombined) {
-                        annotationCombined.features.push(annotation.annotationJson.features);
+                        annotationCombined.features = annotationCombined.features.concat(annotation.annotationJson.features);
                     } else {
                         annotationCombined = annotation.annotationJson;
-                    }                    
+                    }
                     info.push({
-                        name: annotation.annotationName,
+                        tileId: annotation.tileId,
                         label: annotation.annotationLabel,
                         annotator: annotation.annotator,
                     })
@@ -66,8 +75,10 @@ define([
 
                 var leafletConfig = self.prepareAnnotation(annotationCombined);
                 self.objectAnnotations.push({
+                    name: name,
                     info: info,
                     leafletConfig: leafletConfig,
+                    featureCollection: annotationCombined,
                 });
             }
             this.loading(false);
