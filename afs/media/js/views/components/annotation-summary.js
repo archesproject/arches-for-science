@@ -6,7 +6,7 @@ define([
     'views/components/iiif-viewer',
     'bindings/leaflet',
     'bindings/datatable'
-], function(ko, geojsonExtent, L, WidgetViewModel, IIIFViewerViewmodel) {
+], function(ko, geojsonExtent, L) {
     return ko.components.register('views/components/annotation-summary', {
         viewModel: function(params) {
             var self = this;
