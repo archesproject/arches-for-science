@@ -20,7 +20,7 @@ define([
             const physicalThingPartNameNodeId = "3e541cc6-859b-11ea-97eb-acde48001122";
             const physicalThingPartNodeGroupId = "fec59582-8593-11ea-97eb-acde48001122";
             const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
-            const physicalThingPartDigitalResourceNodeId = "b240c366-8594-11ea-97eb-acde48001122";
+            const physicalThingPartNodeId = "b240c366-8594-11ea-97eb-acde48001122";
             this.selectedAnnotationTile = ko.observable();
             this.selectedSample = ko.observable();
             this.sampleFilter = ko.observable("");
@@ -106,7 +106,7 @@ define([
                 }
             };
 
-            this.save = function() {
+            this.saveDatasetName = function(sample){
                 //Tile structure for the Digital Resource 'Name' nodegroup
                 let nameTemplate = {
                     "tileid": "",
@@ -124,6 +124,23 @@ define([
                     "tiles": {}
                 };
 
+                nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = sample.datasetName() || "";
+
+                return window.fetch(arches.urls.api_tiles(uuid.generate()), {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: JSON.stringify(nameTemplate),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                });
+            };
+
+            this.saveDatasetFiles = function(sample, datasetNameTile){
                 //Tile structure for the Digital Resource 'File' nodegroup
                 let fileTemplate = {
                     "tileid": "",
@@ -140,12 +157,30 @@ define([
                     "tiles": {}
                 };
 
-                self.samples().forEach(function(sample){
-                    nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = sample.datasetName() || "";
+                return sample.datasetFiles().forEach(function(file, i){
+                    // eslint-disable-next-line camelcase
+                    fileTemplate.resourceinstance_id = datasetNameTile.resourceinstance_id;
+                    sample.datasetId(datasetNameTile.resourceinstance_id);
+                    fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [{
+                        name: file.name,
+                        accepted: file.accepted,
+                        height: file.height,
+                        lastModified: file.lastModified,
+                        size: file.size,
+                        status: file.status,
+                        type: file.type,
+                        width: file.width,
+                        url: null,
+                        // eslint-disable-next-line camelcase
+                        file_id: null,
+                        index: i,
+                        content: window.URL.createObjectURL(file),
+                        error: file.error
+                    }];
                     window.fetch(arches.urls.api_tiles(uuid.generate()), {
                         method: 'POST',
                         credentials: 'include',
-                        body: JSON.stringify(nameTemplate),
+                        body: JSON.stringify(fileTemplate),
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -154,76 +189,62 @@ define([
                             if (response.ok) {
                                 return response.json();
                             }
+                        });
+                });
+            };
+
+            this.saveDigitalResourceToChildPhysThing = function(sample){
+                const partResourceInstanceId = sample.data[physicalThingPartNodeId][0].resourceId; 
+                const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
+                const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501";  
+                const tileid = uuid.generate();
+                let payload = [{
+                    "resourceId": sample.datasetId(),
+                    "ontologyProperty": "",
+                    "inverseOntologyProperty": ""
+                }];
+                let digitalReferenceTile = {
+                    "tileid": "",
+                    "data": {},
+                    "nodegroup_id": digitalReferenceNodeGroupId,
+                    "parenttile_id": null,
+                    "resourceinstance_id": partResourceInstanceId,
+                    "sortorder": 1,
+                    "tiles": {}
+                };
+                digitalReferenceTile.data[digitalReferenceNodeId] = payload;
+                window.fetch(arches.urls.api_tiles(tileid), {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: JSON.stringify(digitalReferenceTile),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(
+                    function(data){
+                        console.log('digital resource saved to physical thing', data);
+                    }
+                );
+            };
+
+            this.save = function() {
+                self.samples().forEach(function(sample){
+                    // For each part of parent phys thing, create a digital resource with a Name tile
+                    self.saveDatasetName(sample)
+                        .then(function(data) {
+                            // Then save a file tile to the digital resource for each associated file
+                            self.saveDatasetFiles(sample, data);
                         })
-                        .then(function(json) {
-                            sample.datasetFiles().forEach(function(file, i){
-                                // eslint-disable-next-line camelcase
-                                fileTemplate.resourceinstance_id = json.resourceinstance_id;
-                                sample.datasetId(json.resourceinstance_id);
-                                fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [{
-                                    name: file.name,
-                                    accepted: file.accepted,
-                                    height: file.height,
-                                    lastModified: file.lastModified,
-                                    size: file.size,
-                                    status: file.status,
-                                    type: file.type,
-                                    width: file.width,
-                                    url: null,
-                                    // eslint-disable-next-line camelcase
-                                    file_id: null,
-                                    index: i,
-                                    content: window.URL.createObjectURL(file),
-                                    error: file.error
-                                }];
-                                window.fetch(arches.urls.api_tiles(uuid.generate()), {
-                                    method: 'POST',
-                                    credentials: 'include',
-                                    body: JSON.stringify(fileTemplate),
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                })
-                                    .then(function(response) {
-                                        if (response.ok) {
-                                            return response.json();
-                                        }
-                                    })
-                                    .then(function(fileJson) {
-                                        // eslint-disable-next-line no-console
-                                        console.log(fileJson);
-                                    });
-                            });
-                        }).then(
-                            function(){
-                                let partResourceInstanceTile = sample.data[physicalThingPartDigitalResourceNodeId].resourceId;
-                                sample.data[physicalThingPartDigitalResourceNodeId] = [{
-                                    resourceId: partResourceInstanceTile,
-                                    ontologyProperty: "",
-                                    inverseOntologyProperty: ""
-                                }];
-                                window.fetch(arches.urls.api_tiles(sample.tileid), {
-                                    method: 'POST',
-                                    credentials: 'include',
-                                    body: JSON.stringify(sample),
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                }).then(
-                                    function(data){
-                                        console.log('we have a result', data);
-                                    }
-                                );
-                            }
-                        )
+                        .then(function(){
+                            // Then save a relationship tile on the part that points to the digital resource
+                            self.saveDigitalResourceToChildPhysThing(sample);
+                        })
                         .catch(function(err) {
                             // eslint-disable-next-line no-console
                             console.log('Tile update failed', err);
                             params.form.loading(false);
                         });
                 });
-
-
             };
 
             params.save = this.save;
@@ -271,7 +292,6 @@ define([
                                     return tile.nodegroup_id === physicalThingPartNodeGroupId;
                                 }
                             );
-                            // eslint-disable-next-line no-console
                             self.samples(parts);
                             self.samples().forEach(function(sample){
                                 sample.datasetFiles = ko.observableArray([]);
