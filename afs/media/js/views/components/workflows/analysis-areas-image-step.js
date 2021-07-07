@@ -76,26 +76,15 @@ define([
             if (manifestData) {
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
                 self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
-    
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId]((function() {
-                    // TO BE REFACTORED ONCE MANIFEST_MANAGER RETURNS PROPER FORMAT FOR UPLOADED FILES
-    
-                    if (manifestData['@id']) {
-                        return manifestData['@id'];
-                    }
-                    else {
-                        return 'IIIF FROM UPLOADED FILES DOES NOT CONTAIN A DIRECT REFERENCE TO MANIFEST';
-                    }
-                })()); // IIFE
-    
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](manifestData['@id']);
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
                 self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](manifestData['@context']);
             }
             else {
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](null);
                 self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](null);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](null); // IIFE
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](null); // uniform resource locators concept value id
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](null);
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](null);
                 self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](null);
             }
         });
@@ -103,6 +92,7 @@ define([
         
         this.initialize = function() {
             params.form.save = self.save;
+            params.form.reset = self.reset;
 
             if (!self.physicalThingDigitalReferenceCard() || !self.physicalThingDigitalReferenceTile()) {
                 self.getPhysicalThingDigitalReferenceData();
@@ -133,7 +123,7 @@ define([
             params.form.complete(false);
             params.form.saving(true);
 
-            if (self.manifestData()) {
+            if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
                 self.digitalResourceNameTile.save().then(function(data) {
                     self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
     
@@ -160,7 +150,7 @@ define([
                                 var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
                                 digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
                     
-                                digitalReferenceTile.save().then(function() {
+                                digitalReferenceTile.save().then(function(data) {
                                     params.form.complete(true);
                                     params.form.saving(false);
                                 });
@@ -187,6 +177,21 @@ define([
 
                 params.form.complete(true);
                 params.form.saving(false);        
+            }
+        };
+
+        this.reset = function() {
+            if (params.form.previouslyPersistedComponentData) {
+                var previouslyPersistedResourceId = params.form.previouslyPersistedComponentData[0].resourceinstance_id;
+
+                var preferredManifestResourceData = self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });
+                var alternateManifestResourceData = self.physicalThingDigitalReferenceAlternateManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });
+    
+                var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
+
+                if (manifestResourceData) {
+                    self.selectedPhysicalThingImageServiceName(manifestResourceData.displayname);
+                }
             }
         };
 
