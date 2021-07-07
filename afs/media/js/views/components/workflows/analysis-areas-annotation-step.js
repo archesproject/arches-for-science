@@ -14,6 +14,10 @@ define([
 
         var objectStepData = params.form.externalStepData['objectstep']['data'];
         this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
+        
+        var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+        var imageStepData = params.form.externalStepData['imagestep']['data']['image-service-instance'][0];
+        this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
 
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
@@ -83,7 +87,7 @@ define([
 
                 self.activeTab('dataset');
 
-                self.manifest("/manifest/38"); /* hardcoded until we can pass data between these two steps */ 
+                self.manifest(self.manifestUrl());
                 self.getManifestData();
             }
         });
