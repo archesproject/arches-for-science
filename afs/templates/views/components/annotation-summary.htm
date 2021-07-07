@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<div>
+    <h5 class="summary-value" data-bind="text: annotation.name"></h5>
+    <div style="display: inline-flex;">
+        <div style="border: solid 1px #ddd">
+            <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 300px; width: 400px"></div>
+        </div>
+        <div style="width: 600px; padding-left: 30px;">
+            <table data-bind="datatable: annotationTableConfig" class="table table-striped table-bordered" width="100%">
+                <thead>
+                    <tr>
+                        <th>{% trans "Region Name:" %}</th>
+                        <th>{% trans "Annotator" %}</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: {data: annotation.info, as: 'part'}">
+                    <tr style="cursor: pointer" 
+                        data-bind="
+                        css:
+                            {'selected': $parent.selectedAnnotationTileId() === part.tileId }, 
+                        click: function() {
+                            $parent.highlightAnnotation(part.tileId);
+                        }">
+                        <td><div class="summary-value" data-bind="text: part.label"></div></td>
+                        <td><div class="summary-value" data-bind="text: part.annotator"></div></td>
+                    </tr>
+                <tbody>
+            </table>
+            <div class="final-step-section-block-item">
+                <div class="block-item files-metadata">
+                    <div class="summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div>
