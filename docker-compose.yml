@@ -11,7 +11,7 @@ services:
       volumes:
         - ../arches/:/web_root/arches
         - ./:/web_root/afs
-        - cantaloupe-data:/web_root/afs/afs/cantaloupe
+        - cantaloupe-data:/web_root/afs/afs/uploadedfiles
       env_file:
         - ./docker/env_file.env
       ports:

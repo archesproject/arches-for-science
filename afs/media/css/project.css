@@ -459,3 +459,42 @@
     height: 100%;
     padding: 0px;
 }
+
+.analysis-areas-workflow-regions-step {
+    height: 100%;
+    width: 100%;
+}
+
+.analysis-areas-workflow-regions-step .style-tools-wrapper {
+    padding: inherit;
+}
+
+.analysis-areas-workflow-regions-step .dataset-table > :nth-child(even) {
+    background: #F5FAFE;
+}
+
+.analysis-areas-workflow-regions-step .dataset-table tr {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+}
+
+.analysis-areas-workflow-regions-step .row.widget-wrapper {
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+.analysis-areas-annotation-step-widget-title {
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+.analysis-areas-workflow-regions-step .new-provisional-edit-card-container {
+    padding-bottom: 0px;
+}
+
+.analysis-areas-workflow-regions-step .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+}
