@@ -35,7 +35,7 @@ define([
                     var canvas = annotationJson.features[0].properties.canvas;
                     annotationJson.features.forEach(function(feature){
                         feature.properties.tileId = tileId;
-                    })
+                    });
                     if (canvas in annotationCollection) {
                         annotationCollection[canvas].push({
                             tileId: tileId,
@@ -43,7 +43,7 @@ define([
                             annotationLabel: annotationLabel,
                             annotator: annotator,
                             annotationJson: annotationJson,
-                        })
+                        });
                     } else {
                         annotationCollection[canvas] = [{
                             tileId: tileId,
@@ -51,12 +51,12 @@ define([
                             annotationLabel: annotationLabel,
                             annotator: annotator,
                             annotationJson: annotationJson,
-                        }]
+                        }];
                     }
                 }
             });
 
-            for (canvas in annotationCollection) {
+            for (var canvas in annotationCollection) {
                 var name;
                 let annotationCombined;
                 var info = [];
@@ -71,8 +71,8 @@ define([
                         tileId: annotation.tileId,
                         label: annotation.annotationLabel,
                         annotator: annotation.annotator,
-                    })
-                })
+                    });
+                });
 
                 var leafletConfig = self.prepareAnnotation(annotationCombined);
                 self.objectAnnotations.push({

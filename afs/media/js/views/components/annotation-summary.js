@@ -15,9 +15,6 @@ define([
             this.selectedAnnotationTileId = ko.observable();
             var defaultColor;
 
-            if (params.annotation.info[0]){
-                columns = Object.keys(params.annotation.info[0]).length;
-            }
             this.annotationTableConfig = {
                 "info": false,
                 "paging": false,
