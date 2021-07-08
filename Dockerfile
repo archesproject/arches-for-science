@@ -11,57 +11,8 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y make software-properties-common
 
-FROM base as wheelbuilder
-
-WORKDIR ${WHEELS}
-
-# Install pip requirements files
-COPY ./arches/arches/install/requirements.txt ${WHEELS}/requirements.txt
-COPY ./arches/arches/install/requirements_dev.txt ${WHEELS}/requirements_dev.txt
-
-# Install packages required to build the python libs, then remove them
-RUN set -ex \
-    && BUILD_DEPS=" \
-        build-essential \
-        libxml2-dev \
-        libproj-dev \
-        libjson-c-dev \
-        xsltproc \
-        docbook-xsl \
-        docbook-mathml \
-        libgdal-dev \
-        libpq-dev \
-        python3.8 \
-        python3.8-dev \
-        curl \
-        python3.8-distutils \
-        libldap2-dev libsasl2-dev ldap-utils \
-        dos2unix \
-        " \
-    && apt-get update -y \
-    && apt-get install -y --no-install-recommends $BUILD_DEPS \
-    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python3.8 get-pip.py
-
-RUN pip3 wheel --no-cache-dir -b /tmp -r ${WHEELS}/requirements.txt  \
-    && pip3 wheel --no-cache-dir -b /tmp gunicorn \
-    && pip3 wheel --no-cache-dir -b /tmp django-auth-ldap
-
-COPY ./afs/afs/install/requirements.txt ${WHEELS}/project_requirements.txt
-
-RUN pip3 wheel --no-cache-dir -b /tmp -r ${WHEELS}/project_requirements.txt
-
-# Add Docker-related files
-COPY /afs/docker/entrypoint.sh ${WHEELS}/entrypoint.sh
-RUN chmod -R 700 ${WHEELS} &&\
-  dos2unix ${WHEELS}/*.sh
-
-FROM base 
-
 # Get the pre-built python wheels from the build environment
 RUN mkdir ${WEB_ROOT}
-
-COPY --from=wheelbuilder ${WHEELS} /wheels
 
 # Install packages required to run Arches
 # Note that the ubuntu/debian package for libgdal1-dev pulls in libgdal1i, which is built
@@ -79,6 +30,7 @@ RUN set -ex \
         python3.8 \
         python3.8-distutils \
         python3.8-venv \
+        dos2unix \
     " \
     && apt-get install -y --no-install-recommends curl \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
@@ -96,20 +48,9 @@ RUN mkdir -p ${APP_ROOT}/afs/app/media/packages
 WORKDIR ${APP_ROOT}/afs
 RUN yarn install
 
-## Install virtualenv
 WORKDIR ${WEB_ROOT}
 
-RUN mv ${WHEELS}/entrypoint.sh entrypoint.sh
-
-# RUN python3.8 -m venv ENV \
-#     && . ENV/bin/activate \
-RUN pip install requests \
-    # && pip install -f ${WHEELS} django-auth-ldap \
-    # && pip install -f ${WHEELS} gunicorn \
-    # && pip install -r ${WHEELS}/project_requirements.txt \
-                #    -f ${WHEELS} \
-    && rm -rf ${WHEELS} \
-    && rm -rf /root/.cache/pip/*
+RUN rm -rf /root/.cache/pip/*
 
 # Install the Arches application
 # FIXME: ADD from github repository instead?
@@ -118,10 +59,11 @@ COPY ./arches ${ARCHES_ROOT}
 # From here, run commands from ARCHES_ROOT
 WORKDIR ${ARCHES_ROOT}
 
-# RUN . ../ENV/bin/activate \
-    # && 
+RUN pip install -e . && pip install -r arches/install/requirements_dev.txt
 
-RUN pip install -e .
+COPY /afs/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
+RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh &&\
+  dos2unix ${WEB_ROOT}/entrypoint.sh
 
 RUN mkdir /var/log/supervisor
 RUN mkdir /var/log/celery

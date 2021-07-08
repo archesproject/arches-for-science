@@ -16,6 +16,8 @@ services:
         - ./docker/env_file.env
       ports:
         - 8001:8000
+        - 5678:5678
+        - 35729:35729
       depends_on:
         - db_afs
         - elasticsearch_afs

@@ -158,8 +158,9 @@ run_django_server() {
 	echo "----- *** RUNNING DJANGO DEVELOPMENT SERVER *** -----"
 	echo ""
 	cd ${APP_FOLDER}
-    echo "Running Django with livereload."
-	exec python3 manage.py runserver 0.0.0.0:${DJANGO_PORT}
+    echo "Running Django with livereload"
+    python3 manage.py developer livereload --livereloadhost 0.0.0.0 &
+	exec sh -c "pip install debugpy -t /tmp && python3 /tmp/debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:${DJANGO_PORT} --noreload"
 }
 
 activate_virtualenv() {
