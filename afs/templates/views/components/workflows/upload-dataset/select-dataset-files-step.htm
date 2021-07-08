@@ -39,7 +39,7 @@
 
 
 <div class="iiif-image-tools" style="margin-top: 5px;">
-    <label class="control-label">{% trans "Dataset Name" %}</label>
+    <label class="control-label">{% trans "Dataset Name (required)" %}</label>
     <!--ko if: selectedPart -->
     <input type="text" class="form-control" style="width: 100%;" placeholder="Dataset name" data-bind="textInput: selectedPart().datasetName">
     <!--/ko -->
@@ -68,10 +68,12 @@
     </div>
     <div>
 
-    <div class="">
-        <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times" data-bind="click: function(){console.log('cancelling')}">{% trans "Cancel" %}</button>
-        <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: function(){console.log('saving'); save();}, css: {
-            disabled: false,
+    <div>
+        <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times" data-bind="click: function(){console.log('cancelling')}, css: {
+            disabled: !requiredInputsComplete(),
+        }">{% trans "Cancel" %}</button>
+        <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: function(){save();}, css: {
+            disabled: !requiredInputsComplete(),
             'btn-mint': true
         }">{% trans "Save" %}</button>
     </div>

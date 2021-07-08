@@ -227,23 +227,25 @@ define([
             };
 
             this.save = function() {
-                self.parts().forEach(function(part){
-                    // For each part of parent phys thing, create a digital resource with a Name tile
-                    self.saveDatasetName(part)
-                        .then(function(data) {
-                            // Then save a file tile to the digital resource for each associated file
-                            self.saveDatasetFiles(part, data);
-                        })
-                        .then(function(){
-                            // Then save a relationship tile on the part that points to the digital resource
-                            self.saveDigitalResourceToChildPhysThing(part);
-                        })
-                        .catch(function(err) {
-                            // eslint-disable-next-line no-console
-                            console.log('Tile update failed', err);
-                            params.form.loading(false);
-                        });
-                });
+                if (self.requiredInputsComplete()) {
+                    self.parts().forEach(function(part){
+                        // For each part of parent phys thing, create a digital resource with a Name tile
+                        self.saveDatasetName(part)
+                            .then(function(data) {
+                                // Then save a file tile to the digital resource for each associated file
+                                self.saveDatasetFiles(part, data);
+                            })
+                            .then(function(){
+                                // Then save a relationship tile on the part that points to the digital resource
+                                self.saveDigitalResourceToChildPhysThing(part);
+                            })
+                            .catch(function(err) {
+                                // eslint-disable-next-line no-console
+                                console.log('Tile update failed', err);
+                                params.form.loading(false);
+                            });
+                    });
+                }
             };
 
             params.save = this.save;
@@ -267,6 +269,10 @@ define([
                     });    
                 }
             };
+
+            this.requiredInputsComplete = ko.pureComputed(function(){
+                return self.parts().every(part => !!ko.unwrap(part.datasetName));
+            });
 
             this.init = function(){
                 this.selectedAnnotationTile.subscribe(this.highlightAnnotation);
