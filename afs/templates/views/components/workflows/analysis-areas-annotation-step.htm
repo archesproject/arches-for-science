@@ -303,7 +303,7 @@
                                     <table class="table">
                                         <tbody>
                                             <!-- ko foreach: {data: self.selectedObservationInstanceFeatures, as: 'feature'} -->
-                                            <tr class="map-card-feature-item" data-bind="css: {'active': self.selectedFeatureIds().indexOf(feature.id) >= 0}, click: function() { self.showFeature(feature); }">
+                                            <tr class="map-card-feature-item" data-bind="css: {'active': self.selectedFeatureIds().indexOf(feature.id) >= 0}, click: function() { self.showFeature(ko.toJS(feature)); }">
                                                 <td>
                                                     <span class="map-card-feature-name" data-bind="text: feature.geometry.type"></span>
                                                 </td>

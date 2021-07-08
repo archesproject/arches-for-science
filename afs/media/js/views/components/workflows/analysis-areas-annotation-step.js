@@ -179,10 +179,6 @@ define([
             self.selectObservationInstance(newTile);
         };
 
-        this.updateTiles = function() {
-            console.log("FOO")
-        }
-
         // this.saveTile = function() {
         //     self.tile.save().then(function(data) {
         //         self.observationInstances(self.card.tiles())
