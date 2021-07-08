@@ -47,9 +47,6 @@ define([
 
         this.tileDirty = ko.computed(function() {
             if (self.physicalThingPartIdentifierAssignmentTile()) {
-                if (self.physicalThingPartIdentifierAssignmentTile().dirty()) {
-                    self.selectObservationInstance(self.tile)
-                }
                 return self.physicalThingPartIdentifierAssignmentTile().dirty();
             }
         });
@@ -237,6 +234,16 @@ define([
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
             self.observationInstances(card.tiles());
+
+            /* 
+                subscription to features lives here because we _only_ want it to run once, on blank starting tile, when a user places a feature on the map
+            */
+            var tileFeatureGeometrySubscription = tile.data[partIdentifierAssignmentPolygonIdentifierNodeId].subscribe(function(data) {
+                if (data) {
+                    self.selectObservationInstance(tile);
+                    tileFeatureGeometrySubscription.dispose();
+                }
+            });
 
             self.hasExternalCardData(true);
         };
