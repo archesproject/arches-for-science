@@ -89,8 +89,6 @@ define([
 
                 self.manifest(self.manifestUrl());
                 self.getManifestData();
-
-                console.log("SOS", self, params)
             }
         });
 
