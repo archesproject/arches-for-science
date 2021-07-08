@@ -6,6 +6,7 @@ define([
     'viewmodels/workflow-step',
     'views/components/workflows/analysis-areas-image-step',
     'views/components/workflows/analysis-areas-annotation-step',
+    'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
@@ -106,6 +107,33 @@ define([
                         },
                     ],
                 },
+                {
+                    title: 'Summary',
+                    name: 'analysis-areas-complete',  /* unique to workflow */
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', //physical thing graph
+                    nodegroupid: '',
+                    resourceid: null,
+                    externalstepdata: {
+                        objectstep: 'object-step',
+                    },
+                    tileid: null,
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'analysis-areas-final-step',
+                                    uniqueInstanceName: 'analysis-areas-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                }
             ];
 
             Workflow.apply(this, [params]);
