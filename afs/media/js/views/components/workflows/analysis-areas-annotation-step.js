@@ -47,6 +47,9 @@ define([
 
         this.tileDirty = ko.computed(function() {
             if (self.physicalThingPartIdentifierAssignmentTile()) {
+                if (self.physicalThingPartIdentifierAssignmentTile().dirty()) {
+                    self.selectObservationInstance(self.tile)
+                }
                 return self.physicalThingPartIdentifierAssignmentTile().dirty();
             }
         });
@@ -89,6 +92,8 @@ define([
 
                 self.manifest(self.manifestUrl());
                 self.getManifestData();
+
+                console.log("SOS", self, params)
             }
         });
 
@@ -173,6 +178,10 @@ define([
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
             self.selectObservationInstance(newTile);
         };
+
+        this.updateTiles = function() {
+            console.log("FOO")
+        }
 
         // this.saveTile = function() {
         //     self.tile.save().then(function(data) {
