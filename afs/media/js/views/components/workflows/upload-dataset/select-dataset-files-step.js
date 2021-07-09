@@ -21,9 +21,9 @@ define([
             const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
             const observationInfo = params.form.externalStepData.observationinfo.data['instrument-info'][0][1];
             const rendererByInstrumentLookup = {
-                "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader"},
-                "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader"},
-                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "raman-reader"}
+                "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+                "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
+                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"}
             };
             this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb";
             this.samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
@@ -183,16 +183,16 @@ define([
                         error: file.error
                     };
                     if (file.name.split('.').pop() === 'txt'){
-                        fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].renderer;
+                        fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].rendererid;
                     }
                     fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
+                    var formData = new window.FormData();
+                    formData.append('data', JSON.stringify(fileTemplate));
+                    formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
                     window.fetch(arches.urls.api_tiles(uuid.generate()), {
                         method: 'POST',
                         credentials: 'include',
-                        body: JSON.stringify(fileTemplate),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        body: formData
                     })
                         .then(function(response) {
                             if (response.ok) {
