@@ -73,7 +73,7 @@ define([
         this.prepareAnnotation = function(featureCollection) {
             var canvas = featureCollection.features[0].properties.canvas;
 
-            this.leafletConfig = {
+            return {
                 center: [0, 0],
                 crs: L.CRS.Simple,
                 zoom: 0,
