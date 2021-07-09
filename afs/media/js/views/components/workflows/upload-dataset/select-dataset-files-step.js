@@ -19,6 +19,12 @@ define([
             const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
             const physicalThingPartNodeId = "b240c366-8594-11ea-97eb-acde48001122";
             const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
+            const observationInfo = params.form.externalStepData.observationinfo.data['instrument-info'][0][1];
+            const rendererByInstrumentLookup = {
+                "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader"},
+                "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader"},
+                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "raman-reader"}
+            };
             this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb";
             this.samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
             this.selectedAnnotationTile = ko.observable();
@@ -160,7 +166,7 @@ define([
                     // eslint-disable-next-line camelcase
                     fileTemplate.resourceinstance_id = datasetNameTile.resourceinstance_id;
                     part.datasetId(datasetNameTile.resourceinstance_id);
-                    fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [{
+                    let fileInfo = {
                         name: file.name,
                         accepted: file.accepted,
                         height: file.height,
@@ -175,7 +181,11 @@ define([
                         index: i,
                         content: window.URL.createObjectURL(file),
                         error: file.error
-                    }];
+                    };
+                    if (file.name.split('.').pop() === 'txt'){
+                        fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].renderer;
+                    }
+                    fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
                     window.fetch(arches.urls.api_tiles(uuid.generate()), {
                         method: 'POST',
                         credentials: 'include',
