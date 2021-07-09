@@ -92,8 +92,9 @@ define([
             }
         });
 
-        this.initialize = function() {
-            $.getJSON( arches.urls.api_card + self.physicalThingResourceId ).then(function(data) {
+        this.initialize = function () {
+            params.form.save = self.saveAnalysisArea;
+            $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function (data) {
                 self.loadExternalCardData(data);
             });
         };
@@ -162,8 +163,9 @@ define([
             physicalThingAnnotationNode.active(true); 
         };
 
-        this.saveAnalysisAreaTile = function() {
-            self.tile.save().then(function(data) {
+        this.saveAnalysisAreaTile = function () {
+            self.tile.save().then(function (data) {
+                params.dirty(true);
                 self.analysisAreaInstances(self.card.tiles());
                 self.selectAnalysisAreaInstance(self.tile);
             });
@@ -174,11 +176,15 @@ define([
             self.selectAnalysisAreaInstance(newTile);
         };
 
-        // this.saveTile = function() {
-        //     self.tile.save().then(function(data) {
-        //         self.observationInstances(self.card.tiles())
-        //     });
-        // };
+        this.saveAnalysisArea = function () {
+            params.form.complete(false);
+            params.form.saving(true);
+            self.analysisAreaInstances().forEach(
+                instance => params.form.savedData.push({ "data": instance.data })
+            );
+            params.form.complete(true);
+            params.form.saving(false);
+        };
 
         this.loadExternalCardData = function(data) {
             var partIdentifierAssignmentNodeGroupId =  'fec59582-8593-11ea-97eb-acde48001122';  // Part Identifier Assignment (E13) 
