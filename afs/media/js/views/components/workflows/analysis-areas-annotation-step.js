@@ -163,15 +163,81 @@ define([
         };
 
         this.saveAnalysisAreaTile = function() {
-            self.tile.save().then(function(data) {
-                self.analysisAreaInstances(self.card.tiles());
-                self.selectAnalysisAreaInstance(self.tile);
+            var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+            var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
+
+            self.fetchCard(null, physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
+                var physicalThingNameTile = physicalThingNameCard.getNewTile();
+                
+                var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+                var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
+                
+                var physicalThingNameContentNodeId =  'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
+                physicalThingNameTile.data[physicalThingNameContentNodeId]('autogen region foo ' + selectedAnalysisAreaInstanceLabel);
+
+                physicalThingNameTile.save().then(function(data) {
+                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                    self.fetchCard(data.resourceinstance_id, null, physicalThingPartOfNodeId).then(function(physicalThingPartOfCard) {
+                        var physicalThingPartOfTile = physicalThingPartOfCard.getNewTile();
+
+                        // TODO: save breaks
+
+                        // physicalThingPartOfTile.data[physicalThingPartOfNodeId](self.physicalThingResourceId);
+                        // physicalThingPartOfTile.save().then(function(data) {
+                        //     console.log("DDDD", data)
+                        // });
+                    });
+                });
             });
+
+            // self.tile.save().then(function(data) {
+            //     self.analysisAreaInstances(self.card.tiles());
+            //     self.selectAnalysisAreaInstance(self.tile);
+            // });
         };
 
         this.loadNewAnalysisAreaTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
             self.selectAnalysisAreaInstance(newTile);
+        };
+
+        this.fetchCard = function(resourceId, graphId, nodegroupId) {
+            return new Promise(function(resolve, _reject) {
+                $.getJSON( arches.urls.api_card + ( resourceId || graphId ) ).then(function(data) {
+                    var cardData = data.cards.find(function(card) {
+                        return card.nodegroup_id === nodegroupId;
+                    });
+    
+                    var handlers = {
+                        'after-update': [],
+                        'tile-reset': []
+                    };
+        
+                    var graphModel = new GraphModel({
+                        data: {
+                            nodes: data.nodes,
+                            nodegroups: data.nodegroups,
+                            edges: []
+                        },
+                        datatypes: data.datatypes
+                    });
+    
+                    var card = new CardViewModel({
+                        card: cardData,
+                        graphModel: graphModel,
+                        tile: null,
+                        resourceId: ko.observable(ko.unwrap(resourceId)),
+                        displayname: ko.observable(data.displayname),
+                        handlers: handlers,
+                        cards: data.cards,
+                        tiles: data.tiles,
+                        cardwidgets: data.cardwidgets,
+                        userisreviewer: data.userisreviewer,
+                    });
+
+                    resolve(card);
+                });
+            });
         };
 
         // this.saveTile = function() {
