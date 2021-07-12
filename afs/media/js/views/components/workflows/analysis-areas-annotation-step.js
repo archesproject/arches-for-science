@@ -7,8 +7,7 @@ define([
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
-    'viewmodels/widget',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel, WidgetViewModel) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -163,24 +162,22 @@ define([
         };
 
         this.saveAnalysisAreaTile = function() {
-            var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
-            var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
-
-            self.fetchCard(null, physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
-                /* creates new Physical Thing name tile, and in the process a new Physical Thing resource */ 
-                var physicalThingNameTile = physicalThingNameCard.getNewTile();
-                
+            var foobar = function(physicalThingNameTile) {
                 var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                 var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
+
+
+                console.log('afds', self.selectedAnalysisAreaInstance())
                 
                 var physicalThingNameContentNodeId =  'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
-                physicalThingNameTile.data[physicalThingNameContentNodeId]('autogen region foo ' + selectedAnalysisAreaInstanceLabel);
+                physicalThingNameTile.data[physicalThingNameContentNodeId] = 'autogen region foo ' + selectedAnalysisAreaInstanceLabel;
 
                 physicalThingNameTile.save().then(function(physicalThingNameData) {
                     /* updates newly created Physical Thing `part of` tile */ 
                     var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
 
                     self.fetchCard(physicalThingNameData.resourceinstance_id, null, physicalThingPartOfNodeId).then(function(physicalThingPartOfCard) {
+                        console.log("card here", physicalThingPartOfCard)
                         var physicalThingPartOfTile = physicalThingPartOfCard.getNewTile();
 
                         physicalThingPartOfTile.data[physicalThingPartOfNodeId] = [{
@@ -209,7 +206,36 @@ define([
                         });
                     });
                 });
-            });
+            }
+            
+            var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
+
+            var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
+
+
+
+
+
+            // TODO: clean this, currently it creates an additional name tile on edit, instead of editing the current one.
+
+
+            if (ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])) { /* if editing Physical Thing */
+
+                console.log("ASAAA", ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]), self.tile)
+                self.fetchCard(ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0]['resourceId'](), null, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
+                    var physicalThingNameTile = physicalThingNameCard.getNewTile();
+
+                    console.log("HMMM", physicalThingNameTile)
+                    foobar(physicalThingNameTile);
+                });
+            }
+            else {  /* if creating new Physical Thing */
+                var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+                self.fetchCard(null, physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
+                    var physicalThingNameTile = physicalThingNameCard.getNewTile();
+                    foobar(physicalThingNameTile);
+                });
+            }
         };
 
         this.loadNewAnalysisAreaTile = function() {
