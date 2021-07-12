@@ -7,7 +7,8 @@ define([
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
+    'viewmodels/widget',
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel, WidgetViewModel) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -24,7 +25,6 @@ define([
 
         this.partIdentifierAssignmentLabelWidget = ko.observable();
         this.partIdentifierAssignmentPolygonIdentifierWidget = ko.observable();
-        this.partIdentifierAssignmentPhysicalPartOfObjectWidget = ko.observable();
         this.partIdentifierAssignmentAnnotatorWidget = ko.observable();
 
         this.activeTab = ko.observable();
@@ -167,6 +167,7 @@ define([
             var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
 
             self.fetchCard(null, physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
+                /* creates new Physical Thing name tile, and in the process a new Physical Thing resource */ 
                 var physicalThingNameTile = physicalThingNameCard.getNewTile();
                 
                 var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
@@ -175,25 +176,40 @@ define([
                 var physicalThingNameContentNodeId =  'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
                 physicalThingNameTile.data[physicalThingNameContentNodeId]('autogen region foo ' + selectedAnalysisAreaInstanceLabel);
 
-                physicalThingNameTile.save().then(function(data) {
+                physicalThingNameTile.save().then(function(physicalThingNameData) {
+                    /* updates newly created Physical Thing `part of` tile */ 
                     var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
-                    self.fetchCard(data.resourceinstance_id, null, physicalThingPartOfNodeId).then(function(physicalThingPartOfCard) {
+
+                    self.fetchCard(physicalThingNameData.resourceinstance_id, null, physicalThingPartOfNodeId).then(function(physicalThingPartOfCard) {
                         var physicalThingPartOfTile = physicalThingPartOfCard.getNewTile();
 
-                        // TODO: save breaks
+                        physicalThingPartOfTile.data[physicalThingPartOfNodeId] = [{
+                            "resourceId": self.physicalThingResourceId,
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": ""
+                        }];
 
-                        // physicalThingPartOfTile.data[physicalThingPartOfNodeId](self.physicalThingResourceId);
-                        // physicalThingPartOfTile.save().then(function(data) {
-                        //     console.log("DDDD", data)
-                        // });
+                        physicalThingPartOfTile.save().then(function(data) {
+                            /* assigns newly created Physical Thing to be the Part Identifier on the parent Physical Thing  */ 
+                            var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
+                            var physicalThingPartOfResourceXResourceId = data.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
+
+                            self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
+                                "resourceId": data.resourceinstance_id,
+                                "resourceXresourceId": physicalThingPartOfResourceXResourceId,
+                                "ontologyProperty": "",
+                                "inverseOntologyProperty": ""
+                            }]);
+
+
+                            self.tile.save().then(function(data) {
+                                self.analysisAreaInstances(self.card.tiles());
+                                self.selectAnalysisAreaInstance(self.tile);
+                            });
+                        });
                     });
                 });
             });
-
-            // self.tile.save().then(function(data) {
-            //     self.analysisAreaInstances(self.card.tiles());
-            //     self.selectAnalysisAreaInstance(self.tile);
-            // });
         };
 
         this.loadNewAnalysisAreaTile = function() {
@@ -321,11 +337,6 @@ define([
             var partIdentifierAssignmentPolygonIdentifierNodeId = '97c30c42-8594-11ea-97eb-acde48001122';
             self.partIdentifierAssignmentPolygonIdentifierWidget(self.card.widgets().find(function(widget) {
                 return ko.unwrap(widget.node_id) === partIdentifierAssignmentPolygonIdentifierNodeId;
-            }));                
-
-            var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';
-            self.partIdentifierAssignmentPhysicalPartOfObjectWidget(self.card.widgets().find(function(widget) {
-                return ko.unwrap(widget.node_id) === partIdentifierAssignmentPhysicalPartOfObjectNodeId;
             }));                
             
             var partIdentifierAssignmentAnnotatorNodeId = 'a623eaf4-8599-11ea-97eb-acde48001122';
