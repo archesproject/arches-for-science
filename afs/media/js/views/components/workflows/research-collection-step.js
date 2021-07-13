@@ -296,10 +296,10 @@ define([
                 },
                 results: function(data, page) {
                     var results = data.terms;
-                    var filtered_results = _.filter(results, function(result){ return result.context_label.includes("Physical Thing"); });
+                    var filteredResults = _.filter(results, function(result){ return result.context_label.includes("Physical Thing"); });
                     self.termOptions = results;
                     return {
-                        results: filtered_results,
+                        results: filteredResults,
                         more: data.count >= (page * limit)
                     };
                 }
