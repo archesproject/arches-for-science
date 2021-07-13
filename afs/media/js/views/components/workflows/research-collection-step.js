@@ -296,9 +296,10 @@ define([
                 },
                 results: function(data, page) {
                     var results = data.terms;
+                    var filteredResults = results.filter(function(result){ return result.context_label.includes("Physical Thing"); });
                     self.termOptions = results;
                     return {
-                        results: results,
+                        results: filteredResults,
                         more: data.count >= (page * limit)
                     };
                 }
