@@ -296,7 +296,7 @@ define([
                 },
                 results: function(data, page) {
                     var results = data.terms;
-                    var filteredResults = _.filter(results, function(result){ return result.context_label.includes("Physical Thing"); });
+                    var filteredResults = results.filter(function(result){ return result.context_label.includes("Physical Thing"); });
                     self.termOptions = results;
                     return {
                         results: filteredResults,
