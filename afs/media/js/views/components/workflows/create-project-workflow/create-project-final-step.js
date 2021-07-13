@@ -1,9 +1,9 @@
 define([
     'knockout',
-    'uuid',
+    'underscore',
     'arches',
     'views/components/workflows/summary-step',
-], function(ko, uuid, arches, SummaryStep) {
+], function(ko, _, arches, SummaryStep) {
 
     function viewModel(params) {
         var self = this;
@@ -58,9 +58,9 @@ define([
                 }
                 var foundStatement = _.find(self.reportVals.statements, function(statement) {
                     return statement.type.value.split(",").indexOf(type) > -1;
-                })
+                });
                 return foundStatement ? foundStatement.content : {'name': 'Project Statement', 'value': 'None'};
-            }
+            };
 
             this.reportVals.projectStatement = findStatement('description');
 
