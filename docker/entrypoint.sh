@@ -158,9 +158,17 @@ run_django_server() {
 	echo "----- *** RUNNING DJANGO DEVELOPMENT SERVER *** -----"
 	echo ""
 	cd ${APP_FOLDER}
-    echo "Running Django with livereload"
-    python3 manage.py developer livereload --livereloadhost 0.0.0.0 &
+    echo "Running Django"
 	exec sh -c "pip install debugpy -t /tmp && python3 /tmp/debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:${DJANGO_PORT}"
+}
+
+run_livereload_server() {
+	echo ""
+	echo "----- *** RUNNING LIVERELOAD SERVER *** -----"
+	echo ""
+	cd ${APP_FOLDER}
+    echo "Running livereload"
+    exec sh -c "python3 manage.py developer livereload --livereloadhost 0.0.0.0"
 }
 
 activate_virtualenv() {
@@ -174,7 +182,9 @@ run_arches() {
 	run_django_server
 }
 
-### Starting point ###
+run_livereload() {
+	run_livereload_server
+}
 
 # trying not to use virtualenv???
 # activate_virtualenv
