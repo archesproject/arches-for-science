@@ -24,10 +24,8 @@ define([
             }
         });
 
-        // var objectStepData = params.form.externalStepData['objectstep']['data'];
-        // this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
-
-        this.physicalThingResourceId = '150f0ff6-9b34-45b4-bbf5-8102a6262168'; // TODO: replace hardcoding with data read from previous step
+        var selectProjectStepData = params.form.externalStepData['selectprojectstep']['data'];
+        this.physicalThingResourceId = koMapping.toJS(selectProjectStepData['select-phys-thing'][0][1]['physicalThing']);
 
         this.physicalThingDigitalReferenceCard = ko.observable();
         this.physicalThingDigitalReferenceCard.subscribe(function(card) {
