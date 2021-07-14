@@ -179,9 +179,8 @@ define([
         this.saveWorkflowStep = function() {
             params.form.complete(false);
             params.form.saving(true);
-            self.analysisAreaInstances().forEach(
-                instance => params.form.savedData.push({"data": instance.data})
-            );
+            let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
+            params.form.savedData(mappedInstances);
             params.form.complete(true);
             params.form.saving(false);
         };
