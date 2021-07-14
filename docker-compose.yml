@@ -16,10 +16,34 @@ services:
         - ./docker/env_file.env
       ports:
         - 8001:8000
+        - 5678:5678
+        - 35729:35729
       depends_on:
         - db_afs
         - elasticsearch_afs
         - couchdb_afs
+      stdin_open: true
+      tty: true
+
+    afs_livereload:
+      profiles:
+        - livereload
+      container_name: afs_livereload
+      image: fargeo/afs
+      build:
+        context: ..
+        dockerfile: afs/Dockerfile
+      command: run_livereload
+      volumes:
+        - ../arches/:/web_root/arches
+        - ./:/web_root/afs
+        - cantaloupe-data:/web_root/afs/afs/uploadedfiles
+      env_file:
+        - ./docker/env_file.env
+      ports:
+        - 35729:35729      
+      depends_on:
+          - afs
       stdin_open: true
       tty: true
 
