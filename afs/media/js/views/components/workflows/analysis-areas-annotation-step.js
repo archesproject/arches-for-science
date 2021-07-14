@@ -93,7 +93,8 @@ define([
         });
 
         this.initialize = function() {
-            $.getJSON( arches.urls.api_card + self.physicalThingResourceId ).then(function(data) {
+            params.form.save = self.saveWorkflowStep;
+            $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
         };
@@ -174,14 +175,17 @@ define([
             self.selectAnalysisAreaInstance(newTile);
         };
 
-        // this.saveTile = function() {
-        //     self.tile.save().then(function(data) {
-        //         self.observationInstances(self.card.tiles())
-        //     });
-        // };
+        this.saveWorkflowStep = function() {
+            params.form.complete(false);
+            params.form.saving(true);
+            let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
+            params.form.savedData(mappedInstances);
+            params.form.complete(true);
+            params.form.saving(false);
+        };
 
         this.loadExternalCardData = function(data) {
-            var partIdentifierAssignmentNodeGroupId =  'fec59582-8593-11ea-97eb-acde48001122';  // Part Identifier Assignment (E13) 
+            var partIdentifierAssignmentNodeGroupId = 'fec59582-8593-11ea-97eb-acde48001122';  // Part Identifier Assignment (E13) 
 
             var partIdentifierAssignmentCardData = data.cards.find(function(card) {
                 return card.nodegroup_id === partIdentifierAssignmentNodeGroupId;
