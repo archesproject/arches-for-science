@@ -100,6 +100,7 @@ define([
                     componentname: 'component-based-step',
                     required: true,
                     externalstepdata: {
+                        selectprojectstep: 'select-project',
                     },
                     layoutSections: [
                         {
