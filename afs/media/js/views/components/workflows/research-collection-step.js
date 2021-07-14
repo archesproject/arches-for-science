@@ -219,7 +219,7 @@ define([
                         'resourceinstanceid': self.projectResourceId()
                     }
                 }).done(function(data){
-                    self.usedSetTileId(data.tileid)
+                    self.usedSetTileId(data.tileid);
                     $.ajax({
                         url: arches.urls.api_node_value,
                         type: 'POST',
