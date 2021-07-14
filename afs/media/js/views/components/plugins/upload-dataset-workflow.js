@@ -51,7 +51,7 @@ define([
                     description: 'Select the instrument and corresponding files',
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    autoAdvance: false,
+                    autoAdvance: true,
                     informationboxdata: {
                         heading: 'Select the instrument used for the analysis',
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',

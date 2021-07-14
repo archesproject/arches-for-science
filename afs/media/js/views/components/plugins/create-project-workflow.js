@@ -3,7 +3,8 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
-    'viewmodels/workflow-step'
+    'viewmodels/workflow-step',
+    'views/components/workflows/create-project-workflow/create-project-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('create-project-workflow', {
         viewModel: function(params) {
@@ -25,7 +26,7 @@ define([
                     parenttileid: null,
                     required: true,
                     shouldtrackresource: true,
-                    wastebin: {resourceid: null, description: 'an activity instance'}
+                    wastebin: {resourceid: null, description: 'a project instance'}
                 },
                 {
                     title: 'Project Statement',
@@ -73,9 +74,9 @@ define([
                     description: 'Add Physical Things to Your Set',
                     component: 'views/components/workflows/research-collection-step',
                     componentname: 'research-collection-step',
-                    graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a',
-                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
-                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
+                    graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
+                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
+                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)
                     externalstepdata: { 
                         researchactivitystep: 'set-project-name',
                     },
@@ -83,18 +84,35 @@ define([
                     tileid: null,
                     parenttileid: null,
                     required: true,
+                    wastebin: {resourceid: null, description: 'a collection instance'}
                 },
                 {
-                    title: 'Add Project Complete',
+                    title: 'Summary',
                     name: 'add-project-complete',  /* unique to workflow */
-                    description: 'Choose an option below',
-                    component: 'views/components/workflows/afs-final-step',
-                    componentname: 'afs-final-step',
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '',
                     resourceid: null,
                     tileid: null,
-                    parenttileid: null
+                    parenttileid: null,
+                    externalstepdata: { 
+                        addphysthingstep: 'object-search-step',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'create-project-final-step',
+                                    uniqueInstanceName: 'create-project-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
                 }
             ];
 

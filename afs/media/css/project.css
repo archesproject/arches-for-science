@@ -407,3 +407,92 @@
 .thematic-report-footer .toggle-container .arches-toggle-subtitle{
     display: none;
 }
+
+
+.final-step .summary-label {
+    padding-right: 5px; 
+    color: #777;
+}
+
+.final-step .summary-value {
+    color: #2b547c;
+}
+
+.final-step .file-list .file-upload-card {
+    border-bottom: 1px solid #D3E5F4;
+    border-radius: 2px;
+    padding: 7px 8px 5px 15px;
+    background: #fff;
+    color: #666;
+    height: 30px;
+}
+
+.final-step .file-list {
+    border: 1px solid #ddd;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.final-step .file-list .file-upload-card:nth-child(odd) {
+    background: #F5FAFE;
+}
+
+.final-step .summary-image {
+    max-height: 240px;
+}
+
+.final-step .summary-image-container {
+    margin: 15px;
+    display: inline-flex;
+}
+
+.final-step table .selected {
+    background: #92ecfc !important;
+}
+
+.tabbed-workflow-step-body .form-group>label {
+    display:none;
+}
+
+.tabbed-workflow-step-body .card-help {
+    display:none;
+}
+
+.analysis-areas-workflow-regions-step {
+    height: 100%;
+    width: 100%;
+}
+
+.analysis-areas-workflow-regions-step .style-tools-wrapper {
+    padding: inherit;
+}
+
+.analysis-areas-workflow-regions-step .dataset-table > :nth-child(even) {
+    background: #F5FAFE;
+}
+
+.analysis-areas-workflow-regions-step .dataset-table tr {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+}
+
+.analysis-areas-workflow-regions-step .row.widget-wrapper {
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+.analysis-areas-annotation-step-widget-title {
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+.analysis-areas-workflow-regions-step .new-provisional-edit-card-container {
+    padding-bottom: 0px;
+}
+
+.analysis-areas-workflow-regions-step .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+}

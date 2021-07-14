@@ -1,50 +1,48 @@
 {% load i18n %}
 <div style="height: 100%; padding: 10px 24px;">
     <div style="padding: 5px">
-        <div class="widget-input-label">Instrument</div>
+        <div class="widget-input-label">Samplers</div>
         <div data-bind="component: {
-            name: 'resource-instance-select-widget',
+            name: 'resource-instance-multiselect-widget',
             params: {
                 graphids: [
-                    'b6c819b8-99f6-11ea-a9b7-3af9d3b32b71',
+                    'f71f7b9c-b25b-11e9-901e-a4d18cec433a',
                 ],
                 renderContext: 'workflow', 
-                value: instrumentValue,
+                value: samplers,
             }
         }"></div>
     </div>
     <div style="padding: 5px">
-        <div class="widget-input-label">Procedure Used</div>
+        <div class="widget-input-label">Sampling Date</div>
         <div data-bind="component: {
-            name: 'resource-instance-select-widget',
+            name: 'datepicker-widget',
             params: {
-                graphids: [
-                    'a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a',
-                ],
+                node: {'config': {'dateFormat': 'YYYY-MM-DD'}},
                 renderContext: 'workflow', 
-                value: procedureValue,
+                value: samplingDate,
             }
         }"></div>
     </div>
     <div style="padding: 5px">
-        <div class="widget-input-label">Instrument Parameters</div>
+        <div class="widget-input-label">Sampling Technique</div>
         <div style="margin: -10px -5px;" data-bind="component: {
             name: 'rich-text-widget',
             params: {
                 renderContext: 'workflow', 
-                value: parameterValue,
+                value: samplingTechnique,
             }
         }"></div>
     </div>
     <div style="padding: 5px">
-        <div style="color:#2b547c" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide experiment name' : 'Show experiment name'"></div>
+        <div style="color:#2b547c; cursor: pointer;" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide experiment name' : 'Show experiment name'"></div>
         <div data-bind="visible: showName">
-            <div class="widget-input-label">Observation Name</div>
+            <div class="widget-input-label">Sampling Activity Name</div>
             <div style="margin: -10px -5px;" data-bind="component: {
                 name: 'text-widget',
                 params: {
                     renderContext: 'workflow', 
-                    value: nameValue,
+                    value: samplingName,
                 }
             }"></div>
         </div>
