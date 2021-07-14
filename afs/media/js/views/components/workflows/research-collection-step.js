@@ -110,10 +110,6 @@ define([
             });
         };
 
-        if (!ko.unwrap(self.collectionResourceId)) {
-            this.saveNewSet();
-        }
-
         params.getJSONOnLoad = ko.observable(false);
 
         NewTileStep.apply(this, [params]);
@@ -200,7 +196,7 @@ define([
             } else {
                 var nodeConfig;
                 var nodeData = self.nodeLookup[params.nodeid()];
-                
+
                 if (nodeData) {
                     nodeConfig = nodeData.config.graphs().find(function(config) {
                         return config.graphid === graphId;
@@ -229,20 +225,54 @@ define([
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
+                dataType: 'json',
                 data: {
-                    'nodeid': params.nodeid(),
-                    'data': koMapping.toJSON(self.value()),
-                    'resourceinstanceid': ko.unwrap(self.collectionResourceId),
-                    'tileid': self.tile().tileid
+                    'nodeid': collectionNameNodeId,
+                    'data':  ("Collection for " + researchActivityName),
+                    'tileid': null,
+                    'resourceinstanceid': ko.unwrap(self.collectionResourceId)
                 }
             }).done(function(data) {
-                if (data.tileid && params.tile().tileid === "") {
-                    params.tile().tileid = data.tileid;
-                }
-                self.onSaveSuccess([data]);
-                self.startValue = data.data[params.nodeid()];
-                self.tile()._tileData(koMapping.toJSON(data.data));
-                params.hasDirtyTile(false);
+                if (data.resourceinstance_id) {
+                    self.collectionResourceId(data.resourceinstance_id);
+                    $.ajax({
+                        url: arches.urls.api_node_value,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            'nodeid': activityUsedSetNodeId, // used_set (of Activity)
+                            'data': JSON.stringify(
+                                [{
+                                    'resourceId': data.resourceinstance_id,
+                                    'ontologyProperty': '',
+                                    'inverseOntologyProperty':'',
+                                    'resourceXresourceId':''
+                                }]
+                            ), 
+                            'tileid': null,
+                            'resourceinstanceid': self.projectResourceId()
+                        }
+                    }).done(function(){
+                        $.ajax({
+                            url: arches.urls.api_node_value,
+                            type: 'POST',
+                            data: {
+                                'nodeid': params.nodeid(),
+                                'data': koMapping.toJSON(self.value()),
+                                'resourceinstanceid': ko.unwrap(self.collectionResourceId),
+                                'tileid': self.tile().tileid
+                            }
+                        }).done(function(data) {
+                            if (data.tileid && params.tile().tileid === "") {
+                                params.tile().tileid = data.tileid;
+                            }
+                            self.onSaveSuccess([data]);
+                            self.startValue = data.data[params.nodeid()];
+                            self.tile()._tileData(koMapping.toJSON(data.data));
+                            params.hasDirtyTile(false);
+                        });            
+                    });
+                };
             });
         };
         if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
