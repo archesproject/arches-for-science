@@ -272,7 +272,7 @@ define([
                             params.hasDirtyTile(false);
                         });            
                     });
-                };
+                }
             });
         };
         if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
