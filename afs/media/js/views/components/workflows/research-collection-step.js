@@ -58,6 +58,7 @@ define([
 
         this.projectResourceId = ko.observable();
         this.collectionResourceId = ko.observable();
+        this.usedSetTileId = ko.observable();
 
         var researchActivityStepData = params.externalStepData['researchactivitystep']['data'];
         var researchActivityName = researchActivityStepData.tile[activityNameNodeId];
@@ -69,53 +70,15 @@ define([
                 self.collectionResourceId(cachedValue['collectionResourceId']);
                 params.resourceid(self.collectionResourceId());
             }
+            if (cachedValue['usedSetTileId']){
+                self.usedSetTileId(cachedValue['usedSetTileId']);
+            }
         }
 
         params.getJSONOnLoad = ko.observable(true);
         NewTileStep.apply(this, [params]);
 
-        this.saveNewSet = function() {
-            $.ajax({
-                url: arches.urls.api_node_value,
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    'nodeid': collectionNameNodeId,
-                    'data':  ("Collection for " + researchActivityName),
-                    'tileid': null,
-                    'resourceinstanceid': ko.unwrap(self.collectionResourceId)
-                }
-            }).done(function(data) {
-                if (data.resourceinstance_id) {
-                    self.collectionResourceId(data.resourceinstance_id);
-                    $.ajax({
-                        url: arches.urls.api_node_value,
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            'nodeid': activityUsedSetNodeId, // used_set (of Activity)
-                            'data': JSON.stringify(
-                                [{
-                                    'resourceId': data.resourceinstance_id,
-                                    'ontologyProperty': '',
-                                    'inverseOntologyProperty':'',
-                                    'resourceXresourceId':''
-                                }]
-                            ), 
-                            'tileid': null,
-                            'resourceinstanceid': self.projectResourceId()
-                        }
-                    });
-                }
-            });
-        };
-
-        if (!ko.unwrap(self.collectionResourceId)) {
-            this.saveNewSet();
-        }
-
         params.getJSONOnLoad = ko.observable(false);
-
         NewTileStep.apply(this, [params]);
         self.getCardResourceIdOrGraphId = function() {
             return ko.unwrap(params.graphid);
@@ -200,7 +163,7 @@ define([
             } else {
                 var nodeConfig;
                 var nodeData = self.nodeLookup[params.nodeid()];
-                
+
                 if (nodeData) {
                     nodeConfig = nodeData.config.graphs().find(function(config) {
                         return config.graphid === graphId;
@@ -229,20 +192,53 @@ define([
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
+                dataType: 'json',
                 data: {
-                    'nodeid': params.nodeid(),
-                    'data': koMapping.toJSON(self.value()),
-                    'resourceinstanceid': ko.unwrap(self.collectionResourceId),
-                    'tileid': self.tile().tileid
+                    'nodeid': collectionNameNodeId,
+                    'data':  ("Collection for " + researchActivityName),
+                    'tileid': null,
+                    'resourceinstanceid': ko.unwrap(self.collectionResourceId)
                 }
             }).done(function(data) {
-                if (data.tileid && params.tile().tileid === "") {
-                    params.tile().tileid = data.tileid;
-                }
-                self.onSaveSuccess([data]);
-                self.startValue = data.data[params.nodeid()];
-                self.tile()._tileData(koMapping.toJSON(data.data));
-                params.hasDirtyTile(false);
+                self.collectionResourceId(data.resourceinstance_id);
+                $.ajax({
+                    url: arches.urls.api_node_value,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'nodeid': activityUsedSetNodeId, // used_set (of Activity)
+                        'data': JSON.stringify(
+                            [{
+                                'resourceId': data.resourceinstance_id,
+                                'ontologyProperty': '',
+                                'inverseOntologyProperty':'',
+                                'resourceXresourceId':''
+                            }]
+                        ), 
+                        'tileid': ko.unwrap(self.usedSetTileId),
+                        'resourceinstanceid': self.projectResourceId()
+                    }
+                }).done(function(data){
+                    self.usedSetTileId(data.tileid);
+                    $.ajax({
+                        url: arches.urls.api_node_value,
+                        type: 'POST',
+                        data: {
+                            'nodeid': params.nodeid(),
+                            'data': koMapping.toJSON(self.value),
+                            'resourceinstanceid': ko.unwrap(self.collectionResourceId),
+                            'tileid': self.tile().tileid
+                        }
+                    }).done(function(data) {
+                        if (data.tileid && params.tile().tileid === "") {
+                            params.tile().tileid = data.tileid;
+                        }
+                        self.onSaveSuccess([data]);
+                        self.startValue = data.data[params.nodeid()];
+                        self.tile()._tileData(koMapping.toJSON(data.data));
+                        params.hasDirtyTile(false);
+                    });
+                });
             });
         };
         if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
@@ -418,7 +414,8 @@ define([
                 tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
                 wastebin: wastebin,
                 projectResourceId: ko.unwrap(self.projectResourceId),
-                collectionResourceId: ko.unwrap(self.collectionResourceId),        
+                collectionResourceId: ko.unwrap(self.collectionResourceId),
+                usedSetTileId: ko.unwrap(self.usedSetTileId)
             };
         };
 
