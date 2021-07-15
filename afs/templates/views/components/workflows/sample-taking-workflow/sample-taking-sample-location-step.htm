@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block workbench %}
+<div class='loading-mask' data-bind="visible: $data.savingTile()"></div>
 <!-- ko if: $data.hasExternalCardData() -->
     <!-- ko with: $data, as: 'self' -->
         {{ block.super }}
@@ -51,7 +52,7 @@
                                 border: 1px solid #ddd;
                                 border-bottom: none;
                             "
-                            data-bind="textInput: $data.observationFilterTerm"
+                            data-bind="textInput: $data.analysisAreaFilterTerm"
                         >
 
                         <div
@@ -75,15 +76,15 @@
                                         flex-direction: column;
                                     "
                                 >
-                                    <!-- ko foreach: $data.filteredObservationInstances -->
+                                    <!-- ko foreach: $data.filteredAnalysisAreaInstances -->
                                         <tr
                                             style="cursor: pointer;"
                                             data-bind="
-                                                scrollTo: $parent.selectedObservationInstance() && $parent.selectedObservationInstance().tileid === $data.tileid,
-                                                click: function() { $parent.selectObservationInstance($data); },
+                                                scrollTo: $parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid,
+                                                click: function() { $parent.selectAnalysisAreaInstance($data); },
                                                 style: {
                                                     background: (function() {
-                                                        if ($parent.selectedObservationInstance() && $parent.selectedObservationInstance().tileid === $data.tileid) {
+                                                        if ($parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid) {
                                                             return '#afd7f7';
                                                         }
                                                     })()
@@ -111,11 +112,11 @@
                                 color: #eee;
                                 width: 100%;
                             "
-                            data-bind="click: $data.loadNewObservationTile"
+                            data-bind="click: $data.loadNewAnalysisAreaTile"
                         >
                             <i class="fa fa-folder"></i>
                             <span>
-                                {% trans 'Add New Observation' %}
+                                {% trans 'Add New Analysis Area' %}
                             </span>
                         </button>
                     </div>
@@ -302,7 +303,7 @@
                                     </div>
                                     <table class="table">
                                         <tbody>
-                                            <!-- ko foreach: {data: self.selectedObservationInstanceFeatures, as: 'feature'} -->
+                                            <!-- ko foreach: {data: self.selectedAnalysisAreaInstanceFeatures, as: 'feature'} -->
                                             <tr class="map-card-feature-item" data-bind="css: {'active': self.selectedFeatureIds().indexOf(feature.id) >= 0}, click: function() { self.showFeature(ko.toJS(feature)); }">
                                                 <td>
                                                     <span class="map-card-feature-name" data-bind="text: feature.geometry.type"></span>
@@ -326,49 +327,6 @@
                                 </div>
                             <!-- /ko -->
                         </div>
-
-                        <!-- ko if: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget() -->
-                            <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Object Part' %}</h5>
-                            <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().node_id()].isrequired}"></i>
-
-                            <div 
-                                data-bind='
-                                    component: {
-                                        name: self.form.widgetLookup[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().widget_id()].name,
-                                        params: {
-                                            formData: self.physicalThingPartIdentifierAssignmentTile().formData,
-                                            tile: self.physicalThingPartIdentifierAssignmentTile(),
-                                            form: self.form,
-                                            config: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().configJSON,
-                                            label: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().label(),
-                                            value: self.physicalThingPartIdentifierAssignmentTile().data[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().node_id()],
-                                            node: self.form.nodeLookup[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().node_id()],
-                                            expanded: self.expanded,
-                                            graph: self.form.graph,
-                                            type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
-                                        }
-                                    }, 
-                                    css:{
-                                        "active": $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().selected,
-                                        "hover": $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().hovered,
-                                        "$data.partIdentifierAssignmentPhysicalPartOfObjectWidget()-preview": self.preview
-                                    }, 
-                                    click: function(data, e) {
-                                        if (!$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().selected() && self.preview) $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().selected(true);
-                                    }, 
-                                    event: {
-                                        mouseover: function(){
-                                            if (self.preview) $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().hovered(true);
-                                        },
-                                        mouseout: function(){
-                                            if (self.preview) $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().hovered(null);
-                                        }
-                                    }, 
-                                    visible: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().visible
-                                '
-                            ></div>
-                        <!-- /ko -->
 
                         <!-- ko if: $data.partIdentifierAssignmentAnnotatorWidget() -->
                             <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Annotator' %}</h5>
@@ -428,7 +386,7 @@
                         <button 
                             class="btn btn-success" 
                             style="width: 48%;"
-                            data-bind="click: $data.saveObservationTile"
+                            data-bind="click: $data.saveAnalysisAreaTile"
                         >
                             <i class="ion-android-cloud-done"></i>
                             <span style="padding-left: 4px">{% trans 'Save' %}</span>

@@ -126,6 +126,8 @@ define([
                     componentname: 'component-based-step',
                     required: true,
                     externalstepdata: {
+                        selectprojectstep: 'select-project',
+                        imagestep: 'image-step',
                     },
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
                     layoutSections: [
