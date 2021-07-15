@@ -33,18 +33,18 @@ define([
         this.activeTab = ko.observable();
         this.hasExternalCardData = ko.observable(false);
 
-        this.analysisAreaInstances = ko.observableArray();
+        this.sampleLocationInstances = ko.observableArray();
         
-        this.selectedAnalysisAreaInstance = ko.observable();
-        this.selectedAnalysisAreaInstance.subscribe(function(selectedAnalysisAreaInstance) {
+        this.selectedSampleLocationInstance = ko.observable();
+        this.selectedSampleLocationInstance.subscribe(function(selectedSampleLocationInstance) {
             self.highlightAnnotation();
 
-            if (selectedAnalysisAreaInstance) {
+            if (selectedSampleLocationInstance) {
                 /* TODO: switchCanvas logic */ 
                 
-                self.tile = selectedAnalysisAreaInstance;
-                params.tile = selectedAnalysisAreaInstance;
-                self.physicalThingPartIdentifierAssignmentTile(selectedAnalysisAreaInstance);
+                self.tile = selectedSampleLocationInstance;
+                params.tile = selectedSampleLocationInstance;
+                self.physicalThingPartIdentifierAssignmentTile(selectedSampleLocationInstance);
             }
         });
 
@@ -54,27 +54,27 @@ define([
             }
         });
 
-        this.selectedAnalysisAreaInstanceFeatures = ko.computed(function() {
+        this.selectedSampleLocationInstanceFeatures = ko.computed(function() {
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
 
-            if (self.selectedAnalysisAreaInstance()) {
-                if (ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])) {
-                    var partIdentifierAssignmentPolygonIdentifierData = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId]);
+            if (self.selectedSampleLocationInstance()) {
+                if (ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])) {
+                    var partIdentifierAssignmentPolygonIdentifierData = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId]);
                     return ko.unwrap(partIdentifierAssignmentPolygonIdentifierData.features);
                 }
             }
         });
 
-        this.analysisAreaFilterTerm = ko.observable();
-        this.filteredAnalysisAreaInstances = ko.computed(function() {
-            if (self.analysisAreaFilterTerm()) {
-                return self.analysisAreaInstances().filter(function(analysisAreaInstance) {
+        this.sampleLocationFilterTerm = ko.observable();
+        this.filteredSampleLocationInstances = ko.computed(function() {
+            if (self.sampleLocationFilterTerm()) {
+                return self.sampleLocationInstances().filter(function(sampleLocationInstance) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    return analysisAreaInstance.data[partIdentifierAssignmentLabelNodeId]().includes(self.analysisAreaFilterTerm());
+                    return sampleLocationInstance.data[partIdentifierAssignmentLabelNodeId]().includes(self.sampleLocationFilterTerm());
                 });
             }
             else {
-                return self.analysisAreaInstances();
+                return self.sampleLocationInstances();
             }
         });
 
@@ -102,14 +102,14 @@ define([
             });
         };
 
-        this.getAnalysisAreaTileFromFeatureId = function(featureId) {
+        this.getSampleLocationTileFromFeatureId = function(featureId) {
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
 
-            return self.analysisAreaInstances().find(function(analysisAreaInstance) {
-                var analysisAreaInstanceFeatures = analysisAreaInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId].features();
+            return self.sampleLocationInstances().find(function(sampleLocationInstance) {
+                var sampleLocationInstanceFeatures = sampleLocationInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId].features();
 
-                return analysisAreaInstanceFeatures.find(function(analysisAreaInstanceFeature) {
-                    return ko.unwrap(analysisAreaInstanceFeature.id) === featureId;
+                return sampleLocationInstanceFeatures.find(function(sampleLocationInstanceFeature) {
+                    return ko.unwrap(sampleLocationInstanceFeature.id) === featureId;
                 });
             });
         };
@@ -134,7 +134,7 @@ define([
                                 features.eachLayer(function(feature) {
                                     var defaultColor = feature.feature.properties.color;
                                     
-                                    if (self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid === feature.feature.properties.tileId) {
+                                    if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid === feature.feature.properties.tileId) {
                                         feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
                                     } else {
                                         feature.setStyle({color: defaultColor, fillColor: defaultColor});
@@ -147,16 +147,16 @@ define([
             } 
         };
 
-        this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
-            var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
+        this.selectSampleLocationInstance = function(sampleLocationInstance) {
+            var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
-            if (previouslySelectedAnalysisAreaInstance) {
-                previouslySelectedAnalysisAreaInstance.reset();
+            if (previouslySelectedSampleLocationInstance) {
+                previouslySelectedSampleLocationInstance.reset();
                 self.drawFeatures([]);
             }
 
-            self.selectedAnalysisAreaInstance(analysisAreaInstance);
+            self.selectedSampleLocationInstance(sampleLocationInstance);
         };
 
         this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
@@ -167,14 +167,14 @@ define([
             physicalThingAnnotationNode.active(true); 
         };
 
-        this.saveAnalysisAreaTile = function() {
+        this.saveSampleLocationTile = function() {
             var savePhysicalThingNameTile = function(physicalThingNameTile) {
                 return new Promise(function(resolve, _reject) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
+                    var selectedSampleLocationInstanceLabel = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]);
                     
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
-                    physicalThingNameTile.data[physicalThingNameContentNodeId] = 'autogen region foo ' + selectedAnalysisAreaInstanceLabel;
+                    physicalThingNameTile.data[physicalThingNameContentNodeId] = 'autogen region foo ' + selectedSampleLocationInstanceLabel;
     
                     physicalThingNameTile.save().then(function(physicalThingNameData) {
                         resolve(physicalThingNameData);
@@ -198,26 +198,26 @@ define([
                 });
             };
 
-            var updateSelectedAnalysisAreaInstance = function(physicalThingPartOfData) {
+            var updateSelectedSampleLocationInstance = function(physicalThingPartOfData) {
                 /* assigns Physical Thing to be the Part Identifier on the parent selected Physical Thing  */ 
                 var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
                 var physicalThingPartOfResourceXResourceId = physicalThingPartOfData.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
                 
-                var selectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
+                var selectedSampleLocationInstance = self.selectedSampleLocationInstance();
                 
                 var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
 
-                selectedAnalysisAreaInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
+                selectedSampleLocationInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
                     "resourceId": physicalThingPartOfData.resourceinstance_id,
                     "resourceXresourceId": physicalThingPartOfResourceXResourceId,
                     "ontologyProperty": "",
                     "inverseOntologyProperty": ""
                 }]);
 
-                selectedAnalysisAreaInstance.save().then(function(data) {
+                selectedSampleLocationInstance.save().then(function(data) {
                     // forces refresh
-                    self.analysisAreaInstances(self.card.tiles());
-                    self.selectAnalysisAreaInstance(selectedAnalysisAreaInstance);
+                    self.sampleLocationInstances(self.card.tiles());
+                    self.selectSampleLocationInstance(selectedSampleLocationInstance);
                     self.savingTile(false);
                 });
             };
@@ -242,7 +242,7 @@ define([
                         }
     
                         savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(physicalThingPartOfData) {
-                            updateSelectedAnalysisAreaInstance(physicalThingPartOfData);
+                            updateSelectedSampleLocationInstance(physicalThingPartOfData);
                         });
                     });
                 });
@@ -285,15 +285,15 @@ define([
             }
         };
 
-        this.loadNewAnalysisAreaTile = function() {
+        this.loadNewSampleLocationTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-            self.selectAnalysisAreaInstance(newTile);
+            self.selectSampleLocationInstance(newTile);
         };
 
         this.saveWorkflowStep = function() {
             params.form.complete(false);
             params.form.saving(true);
-            let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
+            let mappedInstances = self.sampleLocationInstances().map((instance) => { return { "data": instance.data }});
             params.form.savedData(mappedInstances);
             params.form.complete(true);
             params.form.saving(false);
@@ -350,14 +350,14 @@ define([
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
-            self.analysisAreaInstances(card.tiles());
+            self.sampleLocationInstances(card.tiles());
 
             /* 
                 subscription to features lives here because we _only_ want it to run once, on blank starting tile, when a user places a feature on the map
             */
             var tileFeatureGeometrySubscription = tile.data[partIdentifierAssignmentPolygonIdentifierNodeId].subscribe(function(data) {
                 if (data) {
-                    self.selectAnalysisAreaInstance(tile);
+                    self.selectSampleLocationInstance(tile);
                     tileFeatureGeometrySubscription.dispose();
                 }
             });
@@ -388,12 +388,12 @@ define([
                 onEachFeature: function(feature, layer) {
                     layer.on({
                         click: function() {
-                            var analysisAreaInstance = self.getAnalysisAreaTileFromFeatureId(feature.id);
+                            var sampleLocationInstance = self.getSampleLocationTileFromFeatureId(feature.id);
 
-                            if (!self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid !== analysisAreaInstance.tileid ) {
-                                self.selectAnalysisAreaInstance(analysisAreaInstance);
+                            if (!self.selectedSampleLocationInstance() || self.selectedSampleLocationInstance().tileid !== sampleLocationInstance.tileid ) {
+                                self.selectSampleLocationInstance(sampleLocationInstance);
                             }
-                            else if (self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid === analysisAreaInstance.tileid) {
+                            else if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid === sampleLocationInstance.tileid) {
                                 // self.editFeature(ko.toJS(feature));
                                 console.log(self, params)
                                 console.log("dbl click")

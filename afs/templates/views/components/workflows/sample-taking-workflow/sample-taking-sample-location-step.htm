@@ -52,7 +52,7 @@
                                 border: 1px solid #ddd;
                                 border-bottom: none;
                             "
-                            data-bind="textInput: $data.analysisAreaFilterTerm"
+                            data-bind="textInput: $data.sampleLocationFilterTerm"
                         >
 
                         <div
@@ -76,15 +76,15 @@
                                         flex-direction: column;
                                     "
                                 >
-                                    <!-- ko foreach: $data.filteredAnalysisAreaInstances -->
+                                    <!-- ko foreach: $data.filteredSampleLocationInstances -->
                                         <tr
                                             style="cursor: pointer;"
                                             data-bind="
-                                                scrollTo: $parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid,
-                                                click: function() { $parent.selectAnalysisAreaInstance($data); },
+                                                scrollTo: $parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid,
+                                                click: function() { $parent.selectSampleLocationInstance($data); },
                                                 style: {
                                                     background: (function() {
-                                                        if ($parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid) {
+                                                        if ($parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid) {
                                                             return '#afd7f7';
                                                         }
                                                     })()
@@ -112,7 +112,7 @@
                                 color: #eee;
                                 width: 100%;
                             "
-                            data-bind="click: $data.loadNewAnalysisAreaTile"
+                            data-bind="click: $data.loadNewSampleLocationTile"
                         >
                             <i class="fa fa-folder"></i>
                             <span>
@@ -303,7 +303,7 @@
                                     </div>
                                     <table class="table">
                                         <tbody>
-                                            <!-- ko foreach: {data: self.selectedAnalysisAreaInstanceFeatures, as: 'feature'} -->
+                                            <!-- ko foreach: {data: self.selectedSampleLocationInstanceFeatures, as: 'feature'} -->
                                             <tr class="map-card-feature-item" data-bind="css: {'active': self.selectedFeatureIds().indexOf(feature.id) >= 0}, click: function() { self.showFeature(ko.toJS(feature)); }">
                                                 <td>
                                                     <span class="map-card-feature-name" data-bind="text: feature.geometry.type"></span>
@@ -386,7 +386,7 @@
                         <button 
                             class="btn btn-success" 
                             style="width: 48%;"
-                            data-bind="click: $data.saveAnalysisAreaTile"
+                            data-bind="click: $data.saveSampleLocationTile"
                         >
                             <i class="ion-android-cloud-done"></i>
                             <span style="padding-left: 4px">{% trans 'Save' %}</span>
