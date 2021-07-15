@@ -7,6 +7,7 @@ define([
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/sample-taking-workflow/sampling-info-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-sample-location',
+    'views/components/workflows/sample-taking-workflow/sample-taking-image-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('sample-taking-workflow', {
@@ -88,8 +89,7 @@ define([
                 },
                 {
                     title: 'Image',
-                    name: 'select-physical-thing',  /* unique to workflow */
-                    description: 'Select a physical thing from the set to annotate',
+                    name: 'image-step',  /* unique to workflow */
                     informationboxdata: {
                         heading: 'Image Services',
                         text: 'Image services provide you with picture(s) of an object, often from multiple vantage points, \
@@ -99,14 +99,25 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
-                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
-                    lockableExternalSteps: ['select-project'],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: false,
+                    required: true,
+                    externalstepdata: {
+                        selectprojectstep: 'select-project',
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Image Service',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'sample-taking-image-step',
+                                    uniqueInstanceName: 'image-service-instance', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'Sample Location',
