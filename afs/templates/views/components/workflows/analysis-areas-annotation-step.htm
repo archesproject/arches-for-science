@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block workbench %}
+<div class='loading-mask' data-bind="visible: $data.savingTile()"></div>
 <!-- ko if: $data.hasExternalCardData() -->
     <!-- ko with: $data, as: 'self' -->
         {{ block.super }}
@@ -326,49 +327,6 @@
                                 </div>
                             <!-- /ko -->
                         </div>
-
-                        <!-- ko if: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget() -->
-                            <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Object Part' %}</h5>
-                            <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().node_id()].isrequired}"></i>
-
-                            <div 
-                                data-bind='
-                                    component: {
-                                        name: self.form.widgetLookup[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().widget_id()].name,
-                                        params: {
-                                            formData: self.physicalThingPartIdentifierAssignmentTile().formData,
-                                            tile: self.physicalThingPartIdentifierAssignmentTile(),
-                                            form: self.form,
-                                            config: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().configJSON,
-                                            label: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().label(),
-                                            value: self.physicalThingPartIdentifierAssignmentTile().data[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().node_id()],
-                                            node: self.form.nodeLookup[$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().node_id()],
-                                            expanded: self.expanded,
-                                            graph: self.form.graph,
-                                            type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
-                                        }
-                                    }, 
-                                    css:{
-                                        "active": $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().selected,
-                                        "hover": $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().hovered,
-                                        "$data.partIdentifierAssignmentPhysicalPartOfObjectWidget()-preview": self.preview
-                                    }, 
-                                    click: function(data, e) {
-                                        if (!$data.partIdentifierAssignmentPhysicalPartOfObjectWidget().selected() && self.preview) $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().selected(true);
-                                    }, 
-                                    event: {
-                                        mouseover: function(){
-                                            if (self.preview) $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().hovered(true);
-                                        },
-                                        mouseout: function(){
-                                            if (self.preview) $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().hovered(null);
-                                        }
-                                    }, 
-                                    visible: $data.partIdentifierAssignmentPhysicalPartOfObjectWidget().visible
-                                '
-                            ></div>
-                        <!-- /ko -->
 
                         <!-- ko if: $data.partIdentifierAssignmentAnnotatorWidget() -->
                             <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Annotator' %}</h5>
