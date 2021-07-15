@@ -6,7 +6,7 @@ define([
     'viewmodels/workflow-step',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/sample-taking-workflow/sampling-info-step',
-    'views/components/workflows/sample-taking-workflow/sample-taking-sample-location',
+    'views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-image-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
@@ -132,7 +132,7 @@ define([
                         {
                             componentConfigs: [
                                 { 
-                                    componentName: 'sample-taking-sample-location',
+                                    componentName: 'sample-taking-sample-location-step',
                                     uniqueInstanceName: 'sample-location-instance', /* unique to step */
                                     tilesManaged: 'one',
                                     parameters: {

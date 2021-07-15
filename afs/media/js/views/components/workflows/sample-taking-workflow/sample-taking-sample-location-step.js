@@ -306,11 +306,11 @@ define([
         };
 
         this.initialize();
-    }
+    };
 
-    ko.components.register('sample-taking-sample-location', {
+    ko.components.register('sample-taking-sample-location-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location.htm' }
+        template: { require: 'text!templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step.htm' }
     });
     return viewModel;
 });
