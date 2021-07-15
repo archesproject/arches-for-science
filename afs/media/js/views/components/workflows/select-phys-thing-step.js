@@ -44,15 +44,15 @@ define([
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
                     function(data){
-                        var setTileResourceInstanceId;
-                        var setTile = data._source.tiles.find(function(tile){
+                        let setTileResourceInstanceIds;
+                        let setTile = data._source.tiles.find(function(tile){
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
                         });
                         if (setTile && Object.keys(setTile.data).includes(self.physThingSetNodegroupId) && setTile.data[self.physThingSetNodegroupId].length) {
                             self.physicalThingSetValue(null);
-                            setTileResourceInstanceId = setTile.data[self.physThingSetNodegroupId][0].resourceId;
-                            if (setTileResourceInstanceId) {
-                                self.physicalThingSetValue(setTileResourceInstanceId);
+                            setTileResourceInstanceIds = setTile.data[self.physThingSetNodegroupId].map((instance) => instance.resourceId);
+                            if (setTileResourceInstanceIds) {
+                                self.physicalThingSetValue(setTileResourceInstanceIds);
                             }
                             self.physicalThingValue(null);
                         } else {
@@ -70,8 +70,8 @@ define([
                 self.hasSetWithPhysicalThing(true);
                 var query = {"op": "and"};
                 query[self.physicalThingPartOfSetNodeId] = {
-                    "op": "",
-                    "val":  [ko.unwrap(self.physicalThingSetValue)]
+                    "op": "or",
+                    "val":  ko.unwrap(self.physicalThingSetValue)
                 };
                 return function(term, data) {
                     data["advanced-search"] = JSON.stringify([query]);
