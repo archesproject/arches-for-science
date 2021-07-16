@@ -43,6 +43,7 @@ define([
         this.nameValue = ko.observable(getProp('name', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
+        this.locked = params.form.locked;
 
         this.createRelatedInstance = function(val){
             return [{
@@ -118,6 +119,7 @@ define([
         params.form.save = function() {
             let observedThingData = {};
             observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
+            params.form.lockExternalStep("project-info", true);
             return self.saveTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid)
                 .then(function(data) {
                     let partOfProjectData = {};

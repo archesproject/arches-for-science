@@ -58,6 +58,7 @@ define([
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
                     },
                     required: true,
+                    lockableExternalSteps: ['project-info'],
                     externalstepdata: {
                         projectinfo: 'project-info',
                     },
@@ -86,6 +87,7 @@ define([
                     required: true,
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
                     autoAdvance: false,
+                    lockableExternalSteps: ['select-instrument-and-files'],
                     externalstepdata: {
                         projectinfo: 'project-info',
                         observationinfo: 'select-instrument-and-files',

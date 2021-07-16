@@ -238,6 +238,7 @@ define([
 
             this.save = function() {
                 if (self.requiredInputsComplete()) {
+                    params.form.lockExternalStep("select-instrument-and-files", true);
                     self.parts().forEach(function(part){
                         // For each part of parent phys thing, create a digital resource with a Name tile
                         self.saveDatasetName(part)
