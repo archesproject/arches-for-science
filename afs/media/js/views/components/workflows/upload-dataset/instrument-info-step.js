@@ -126,7 +126,7 @@ define([
             self.procedureValue(snapshot.procedureValue);
             self.parameterValue(snapshot.parameterValue);
             params.form.hasUnsavedData(false);
-        }
+        };
 
         params.form.save = function() {
             let observedThingData = {};
