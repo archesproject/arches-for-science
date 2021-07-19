@@ -41,7 +41,7 @@ define([
             samplingNameTile: self.samplingNameTile(),
             samplingDateTile: self.samplingDateTile(),
             samplingTechniqueTile: self.samplingTechniqueTile() 
-        }
+        };
 
         var samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
         var sampleTechniqueNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
