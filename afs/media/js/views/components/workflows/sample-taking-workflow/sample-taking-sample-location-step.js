@@ -19,6 +19,11 @@ define([
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         var imageStepData = params.form.externalStepData['imagestep']['data']['image-service-instance'][0];
         this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
+
+
+
+        // TODO: remove hardcoding
+        this.samplingActivityResourceId = '1ed93068-1d80-4cd2-9428-a1858723420c';
         
         console.log("AAAA", self, params, this.manifestUrl())
         this.savingTile = ko.observable();
@@ -241,27 +246,110 @@ define([
                 return tile;
             };
 
-            var handleSaveChain = function(physicalThingNameCard) {
-                var physicalThingNameTile = getWorkingTile(physicalThingNameCard);
+            var getWorkingSamplingActivityUnitTile = function(samplingActivitySamplingUnitCard, regionPhysicalThingNameData) {
+                var samplingAreaNodeId = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Area (E22)
 
-                savePhysicalThingNameTile(physicalThingNameTile).then(function(physicalThingNameData) {
-                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                var samplingActivitySamplingUnitTile;
+                if (samplingActivitySamplingUnitCard.tiles() && samplingActivitySamplingUnitCard.tiles().length) {
+                    var previouslySavedTile = samplingActivitySamplingUnitCard.tiles().find(function(tile) {
+                        return ko.unwrap(tile.data[samplingAreaNodeId])[0].resourceId() === regionPhysicalThingNameData.resourceinstance_id;
+                    });
 
-                    self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(physicalThingPartOfCard) {
-                        var physicalThingPartOfTile = getWorkingTile(physicalThingPartOfCard);
+                    if (previouslySavedTile) {
+                        samplingActivitySamplingUnitTile = previouslySavedTile;
+                    }
+                    else {
+                        samplingActivitySamplingUnitTile = samplingActivitySamplingUnitCard.getNewTile();
+                    }
+                }
+                else {
+                    samplingActivitySamplingUnitTile = samplingActivitySamplingUnitCard.getNewTile();
+                }
 
-                        savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(physicalThingPartOfData) {
-                            updateSelectedSampleLocationInstance(physicalThingPartOfData);
-                        });
+                return samplingActivitySamplingUnitTile;
+            };
+
+            var saveSamplingActivitySamplingUnitTile = function(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData) {
+                return new Promise(function(resolve, _reject) {
+                    var samplingAreaNodeId = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Area (E22)
+                    samplingActivitySamplingUnitTile.data[samplingAreaNodeId] = [{
+                        "resourceId": regionPhysicalThingNameData.resourceinstance_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": ""
+                    }];
+
+                    var samplingAreaOverallObjectSampledNodeId = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb';  //  Overall Object Sampled (E22)
+                    samplingActivitySamplingUnitTile.data[samplingAreaOverallObjectSampledNodeId] = [{
+                        "resourceId": self.physicalThingResourceId,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": ""
+                    }];
+
+                    samplingActivitySamplingUnitTile.save().then(function(data) {
+                        resolve(data);
                     });
                 });
             };
 
-            self.savingTile(true);
+            var getSamplePhysicalThingNameCard = function(samplingActivitySamplingUnitTile) {
+                return new Promise(function(resolve, _reject) {
+                    var samplingUnitSampleCreatedNodeId = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb';  // Sample Created (E22)
+                    var samplingUnitSampleCreatedData = ko.unwrap(samplingActivitySamplingUnitTile.data[samplingUnitSampleCreatedNodeId]);
+    
+                    var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
+
+                    if (samplingUnitSampleCreatedData) {
+                        /* name card of physical thing representing sample */ 
+                        self.fetchCardFromResourceId(samplingUnitSampleCreatedData[0].resourceId(), physicalThingNameNodegroupId).then(function(samplingUnitSampleCreatedCard) {
+                            resolve(samplingUnitSampleCreatedCard);
+                        });
+                    }
+                    else {
+                        var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+    
+                        self.fetchCardFromGraphId(physicalThingGraphId, physicalThingNameNodegroupId).then(function(samplingUnitSampleCreatedCard) { 
+                            resolve(samplingUnitSampleCreatedCard);
+                        });
+                    }
+                });              
+            };
+
+            var handleSaveChain = function(regionPhysicalThingNameCard) {
+                var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
+
+                savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(regionPhysicalThingNameData) {
+                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+
+                    self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
+                        var physicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+
+                        savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
+                            var samplingUnitNodegroupId = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Unit (E80)
+                
+                            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
+                                var samplingActivitySamplingUnitTile = getWorkingSamplingActivityUnitTile(samplingActivitySamplingUnitCard, regionPhysicalThingNameData);
+            
+                                getSamplePhysicalThingNameCard(samplingActivitySamplingUnitTile).then(function(samplePhysicalThingNameCard) {
+                                    var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
+
+                                    savePhysicalThingNameTile(samplePhysicalThingNameTile).then(function(samplePhysicalThingNameData) {
+                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(baz) {
+                                            console.log("DDSDDDD", baz)
+                                            updateSelectedSampleLocationInstance(regionPhysicalThingPartOfData);
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            };
             
             var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
             var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
             var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
+            
+            self.savingTile(true);
 
             if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
                 var partIdentifierAssignmentPhysicalPartOfObjectResourceId = partIdentifierAssignmentPhysicalPartOfObjectData[0]['resourceId']();
