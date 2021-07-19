@@ -27,10 +27,7 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: false,
+                    required: true,
                     shoudltrackresource: true,
                     layoutSections: [
                         {
@@ -63,9 +60,6 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
                     required: false,
                     lockableExternalSteps: ['select-project'],
                     externalstepdata: {
@@ -81,7 +75,6 @@ define([
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -127,6 +120,7 @@ define([
                     required: true,
                     externalstepdata: {
                         selectprojectstep: 'select-project',
+                        sampleinfostep: 'sample-info',
                         imagestep: 'image-step',
                     },
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
