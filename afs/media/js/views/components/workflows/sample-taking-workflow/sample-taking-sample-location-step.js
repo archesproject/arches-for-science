@@ -285,9 +285,40 @@ define([
                         "inverseOntologyProperty": ""
                     }];
 
+                    var samplingAreaSampleCreatedNodeId = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb';  // Sample Created (E22)
+                    samplingActivitySamplingUnitTile.data[samplingAreaSampleCreatedNodeId] = [{
+                        "resourceId": samplePhysicalThingNameData.resourceinstance_id,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": ""
+                    }];
+
                     samplingActivitySamplingUnitTile.save().then(function(data) {
                         resolve(data);
                     });
+                });
+            };
+
+            var getRegionPhysicalThingNameCard = function() {
+                return new Promise(function(resolve, _reject) {
+                    var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
+                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
+                    var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
+        
+                    if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
+                        var partIdentifierAssignmentPhysicalPartOfObjectResourceId = partIdentifierAssignmentPhysicalPartOfObjectData[0]['resourceId']();
+        
+                        self.fetchCardFromResourceId(partIdentifierAssignmentPhysicalPartOfObjectResourceId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
+                            resolve(physicalThingNameCard);
+                        });
+                    }
+                    else {
+                        var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+        
+                        self.fetchCardFromGraphId(physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) { 
+                            resolve(physicalThingNameCard);
+                        });
+                    }
+
                 });
             };
 
@@ -314,7 +345,8 @@ define([
                 });              
             };
 
-            var handleSaveChain = function(regionPhysicalThingNameCard) {
+            self.savingTile(true);
+            getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
                 savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(regionPhysicalThingNameData) {
@@ -333,8 +365,7 @@ define([
                                     var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
 
                                     savePhysicalThingNameTile(samplePhysicalThingNameTile).then(function(samplePhysicalThingNameData) {
-                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(baz) {
-                                            console.log("DDSDDDD", baz)
+                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_data) {
                                             updateSelectedSampleLocationInstance(regionPhysicalThingPartOfData);
                                         });
                                     });
@@ -343,28 +374,7 @@ define([
                         });
                     });
                 });
-            };
-            
-            var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
-            var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
-            var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
-            
-            self.savingTile(true);
-
-            if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
-                var partIdentifierAssignmentPhysicalPartOfObjectResourceId = partIdentifierAssignmentPhysicalPartOfObjectData[0]['resourceId']();
-
-                self.fetchCardFromResourceId(partIdentifierAssignmentPhysicalPartOfObjectResourceId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
-                    handleSaveChain(physicalThingNameCard);
-                });
-            }
-            else {
-                var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
-
-                self.fetchCardFromGraphId(physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) { 
-                    handleSaveChain(physicalThingNameCard);
-                });
-            }
+            });
         };
 
         this.loadNewSampleLocationTile = function() {
