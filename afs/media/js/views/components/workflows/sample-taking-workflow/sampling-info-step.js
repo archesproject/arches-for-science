@@ -112,11 +112,14 @@ define([
         };
 
         this.saveTile = function(tileid, tile){
+            let formData = new window.FormData();
+            formData.append('data', JSON.stringify(tile));
             return $.ajax({
                 url: arches.urls.api_tiles(tileid),
                 type: 'POST',
-                dataType: 'json',
-                data: JSON.stringify(tile)
+                processData: false,
+                contentType: false,
+                data: formData
             });
         };
 
