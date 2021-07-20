@@ -33,7 +33,9 @@ define([
 
         this.partIdentifierAssignmentLabelWidget = ko.observable();
         this.partIdentifierAssignmentPolygonIdentifierWidget = ko.observable();
-        this.partIdentifierAssignmentAnnotatorWidget = ko.observable();
+
+        this.sampleDescriptionWidgetValue = ko.observable();
+        this.motivationForSamplingWidgetValue = ko.observable();
 
         this.activeTab = ko.observable();
         this.hasExternalCardData = ko.observable(false);
@@ -203,27 +205,26 @@ define([
                 });
             };
 
-            var updateSelectedSampleLocationInstance = function(physicalThingPartOfData) {
-                /* assigns Physical Thing to be the Part Identifier on the parent selected Physical Thing  */ 
-                var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
-                var physicalThingPartOfResourceXResourceId = physicalThingPartOfData.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
-                
-                var selectedSampleLocationInstance = self.selectedSampleLocationInstance();
-                
-                var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
-
-                selectedSampleLocationInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
-                    "resourceId": physicalThingPartOfData.resourceinstance_id,
-                    "resourceXresourceId": physicalThingPartOfResourceXResourceId,
-                    "ontologyProperty": "",
-                    "inverseOntologyProperty": ""
-                }]);
-
-                selectedSampleLocationInstance.save().then(function(data) {
-                    // forces refresh
-                    self.sampleLocationInstances(self.card.tiles());
-                    self.selectSampleLocationInstance(selectedSampleLocationInstance);
-                    self.savingTile(false);
+            var saveSelectedSampleLocationInstance = function(physicalThingPartOfData) {
+                return new Promise(function(resolve, _reject) {
+                    /* assigns Physical Thing to be the Part Identifier on the parent selected Physical Thing  */ 
+                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                    var physicalThingPartOfResourceXResourceId = physicalThingPartOfData.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
+                    
+                    var selectedSampleLocationInstance = self.selectedSampleLocationInstance();
+                    
+                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
+    
+                    selectedSampleLocationInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
+                        "resourceId": physicalThingPartOfData.resourceinstance_id,
+                        "resourceXresourceId": physicalThingPartOfResourceXResourceId,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": ""
+                    }]);
+    
+                    selectedSampleLocationInstance.save().then(function(data) {
+                        resolve(data);
+                    });
                 });
             };
 
@@ -352,6 +353,79 @@ define([
                 });              
             };
 
+            var getWorkingPhysicalThingStatementTile = function(physicalThingStatementCard, conceptTypeId) {
+                if (physicalThingStatementCard.tiles() && physicalThingStatementCard.tiles().length) {
+                    var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
+
+                    var previouslySavedTile = physicalThingStatementCard.tiles().find(function(tile) {
+                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(conceptTypeId);
+                    });
+
+                    if (previouslySavedTile) {
+                        return previouslySavedTile;
+                    }
+                    else {
+                        return physicalThingStatementCard.getNewTile();
+                    }
+                }
+                else {
+                    return physicalThingStatementCard.getNewTile();
+                }
+            };
+
+            var savePhysicalThingSampleDescriptionStatementTile = function(physicalThingStatementTile) {
+                var fooNodeId = "5f54a27c-111e-470f-a888-f18bfef32f25"; // TODO: refactor to use proper concept type
+
+                return new Promise(function(resolve, _reject) {
+                    /* statment content logic */ 
+                    var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
+                    physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.sampleDescriptionWidgetValue();
+
+                    /* statement type logic */ 
+                    var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
+
+                    var physicalThingStatementTypeData = ko.unwrap(physicalThingStatementTile.data[physicalThingStatementTypeNodeId]);
+
+                    if (!physicalThingStatementTypeData.includes(fooNodeId)) {
+                        physicalThingStatementTypeData.push(fooNodeId);
+                    }
+
+                    physicalThingStatementTile.data[physicalThingStatementTypeNodeId] = physicalThingStatementTypeData;
+
+                    physicalThingStatementTile.save().then(function(data) {
+                        resolve(data);
+                    });
+                });
+            };
+
+            var savePhysicalThingMotivationForSamplingStatementTile = function(physicalThingStatementTile) {
+                var barNodeId = "8f86681e-cbdd-4cc5-9569-28b2171aebd7"; // TODO: refactor to use proper concept type
+
+                return new Promise(function(resolve, _reject) {
+                    /* statment content logic */ 
+                    var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
+                    physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.motivationForSamplingWidgetValue();
+
+                    /* statement type logic */ 
+                    var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
+
+                    var physicalThingStatementTypeData = ko.unwrap(physicalThingStatementTile.data[physicalThingStatementTypeNodeId]);
+                    if (!physicalThingStatementTypeData.includes(barNodeId)) {
+                        physicalThingStatementTypeData.push(barNodeId);
+                    }
+                    
+                    /* edge case where card persists selection as default */ 
+                    var fooNodeId = "5f54a27c-111e-470f-a888-f18bfef32f25"; // TODO: refactor to use proper concept type
+                    physicalThingStatementTile.data[physicalThingStatementTypeNodeId] = physicalThingStatementTypeData.filter(function(data) {
+                        return data !== fooNodeId;
+                    });
+
+                    physicalThingStatementTile.save().then(function(data) {
+                        resolve(data);
+                    });
+                });
+            };
+
             self.savingTile(true);
             getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
@@ -372,8 +446,26 @@ define([
                                     var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
 
                                     savePhysicalThingNameTile(samplePhysicalThingNameTile).then(function(samplePhysicalThingNameData) {
-                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_data) {
-                                            updateSelectedSampleLocationInstance(regionPhysicalThingPartOfData);
+                                        var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
+                                        
+                                        self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
+                                            var fooNodeId = "5f54a27c-111e-470f-a888-f18bfef32f25"; // TODO: refactor to use proper concept type
+                                            var physicalThingSampleDescriptionStatementTile = getWorkingPhysicalThingStatementTile(physicalThingStatementCard, fooNodeId);
+
+                                            savePhysicalThingSampleDescriptionStatementTile(physicalThingSampleDescriptionStatementTile).then(function(_physicalThingStatmentSampleDescriptionData) {
+                                                var barNodeId = "8f86681e-cbdd-4cc5-9569-28b2171aebd7"; // TODO: refactor to use proper concept type
+                                                var physicalThingMotivationForSamplingStatementTile = getWorkingPhysicalThingStatementTile(physicalThingStatementCard, barNodeId);
+
+                                                savePhysicalThingMotivationForSamplingStatementTile(physicalThingMotivationForSamplingStatementTile).then(function(_physicalThingMotivationForSamplingStatementData){
+                                                    saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
+                                                        saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function() {
+                                                            self.sampleLocationInstances(self.card.tiles());
+                                                            self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
+                                                            self.savingTile(false);
+                                                        });
+                                                    });
+                                                });
+                                            });
                                         });
                                     });
                                 });
@@ -475,13 +567,6 @@ define([
                 return ko.unwrap(widget.node_id) === partIdentifierAssignmentPolygonIdentifierNodeId;
             }));                
             
-            var partIdentifierAssignmentAnnotatorNodeId = 'a623eaf4-8599-11ea-97eb-acde48001122';
-            self.partIdentifierAssignmentAnnotatorWidget(self.card.widgets().find(function(widget) {
-                return ko.unwrap(widget.node_id) === partIdentifierAssignmentAnnotatorNodeId;
-            }));
-
-
-
             IIIFAnnotationViewmodel.apply(self, [{
                 ...params,
                 onEachFeature: function(feature, layer) {
