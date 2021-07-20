@@ -25,7 +25,6 @@ define([
         // TODO: remove hardcoding
         this.samplingActivityResourceId = '1ed93068-1d80-4cd2-9428-a1858723420c';
         
-        console.log("AAAA", self, params, this.manifestUrl())
         this.savingTile = ko.observable();
 
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
@@ -586,9 +585,6 @@ define([
                     })
                 }
             }]);
-
-            console.log("HMM", self, params)
-
 
             /* overwrites iiif-annotation method */ 
             self.updateTiles = function() {
