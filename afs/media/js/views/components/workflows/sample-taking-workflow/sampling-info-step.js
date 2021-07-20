@@ -8,36 +8,40 @@ define([
     function viewModel(params) {
         var self = this;
 
-        this.samplingActivityResourceId = ko.observable();
-        this.samplers = ko.observable();
-        this.samplingDate = ko.observable();
-        this.samplingTechnique = ko.observable();
-        this.samplingName = ko.observable();
-        this.projectTile = ko.observable();
-        this.physicalThingTile = ko.observable();
-        this.samplersTile = ko.observable();
-        this.samplingNameTile = ko.observable();
-        this.samplingDateTile = ko.observable();
-        this.samplingTechniqueTile = ko.observable();
-        this.showName = ko.observable(false);
-
-        this.loadValueFromLocalStorage = function(){
-            if (params.value()){
-                self.samplingActivityResourceId(ko.unwrap(params.value).samplingActivityResourceId);
-                self.samplers(ko.unwrap(params.value).samplers);
-                self.samplingDate(ko.unwrap(params.value).samplingDate);
-                self.samplingTechnique(ko.unwrap(params.value).samplingTechnique);
-                self.samplingName(ko.unwrap(params.value).samplingName);
-                self.projectTile(ko.unwrap(params.value).projectTile);
-                self.physicalThingTile(ko.unwrap(params.value).physicalThingTile);
-                self.samplingNameTile(ko.unwrap(params.value).samplingNameTile);
-                self.samplersTile(ko.unwrap(params.value).samplersTile);
-                self.samplingDateTile(ko.unwrap(params.value).samplingDateTile);
-                self.samplingTechniqueTile(ko.unwrap(params.value).samplingTechniqueTile);
-            }
+        const getProp = function(key, prop) {
+            if (ko.unwrap(params.value) && params.value()[key])
+                return params.value()[key][prop] || params.value()[key];
+            else {
+                return undefined;
+            } 
         };
 
-        this.loadValueFromLocalStorage();
+        this.samplingActivityResourceId = ko.observable(getProp("samplingActivityResourceId"));
+        this.samplers = ko.observable(getProp("samplers"));
+        this.samplingDate = ko.observable(getProp("samplingDate"));
+        this.samplingTechnique = ko.observable(getProp("samplingTechnique"));
+        this.samplingName = ko.observable(getProp("samplingName"));
+        this.projectTile = ko.observable(getProp("projectTile"));
+        this.physicalThingTile = ko.observable(getProp("physicalThingTile"));
+        this.samplersTile = ko.observable(getProp("samplersTile"));
+        this.samplingNameTile = ko.observable(getProp("samplingNameTile"));
+        this.samplingDateTile = ko.observable(getProp("samplingDateTile"));
+        this.samplingTechniqueTile = ko.observable(getProp("samplingTechniqueTile"));
+        this.showName = ko.observable(false);
+
+        const snapshot = {
+            samplingActivityResourceId: self.samplingActivityResourceId(),
+            samplingDate: self.samplingDate(),
+            samplers: self.samplers(),
+            samplingTechnique: self.samplingTechnique(),
+            samplingName: self.samplingName(),
+            projectTile: self.projectTile(),
+            physicalThingTile: self.physicalThingTile(),
+            samplersTile: self.samplersTile(),
+            samplingNameTile: self.samplingNameTile(),
+            samplingDateTile: self.samplingDateTile(),
+            samplingTechniqueTile: self.samplingTechniqueTile() 
+        };
 
         var samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
         var sampleTechniqueNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
@@ -106,7 +110,7 @@ define([
                     'nodeid': nodeid,
                     'data': data,
                     'resourceinstanceid': resourceinstanceid,
-                    'tileid': tileid
+                    'tileid': tileid,
                 }
             });
         };
@@ -204,10 +208,17 @@ define([
         };
 
         params.form.reset = function() {
-            params.value(params.form.previouslyPersistedComponentData ? params.form.previouslyPersistedComponentData[0][1] : null);
-            self.loadValuesFromLocalStorage();
-            params.form.addedData.removeAll();
-            params.form.hasUnsavedData(false);
+            self.samplingActivityResourceId(snapshot.samplingActivityResourceId);
+            self.samplers(snapshot.samplers);
+            self.samplingDate(snapshot.samplingDate);
+            self.samplingTechnique(snapshot.samplingTechnique);
+            self.samplingName(snapshot.samplingName);
+            self.projectTile(snapshot.projectTile);
+            self.physicalThingTile(snapshot.physicalThingTile);
+            self.samplersTile(snapshot.samplersTile);
+            self.samplingNameTile(snapshot.samplingNameTile);
+            self.samplingDateTile(snapshot.samplingDateTile);
+            self.samplingTechniqueTile(snapshot.samplingTechniqueTile);
         };
     }
 
