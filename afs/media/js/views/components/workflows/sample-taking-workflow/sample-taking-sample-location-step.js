@@ -74,36 +74,44 @@ define([
                     return ko.unwrap(tile.data[samplingAreaNodeId])[0].resourceId() === selectedSampleLocationParentPhysicalThingResourceId;
                 });
 
-                var samplingAreaSampleCreatedNodeId = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb';  // Sample Created (E22)
-                var samplingAreaSampleCreatedParentPhysicalThingResourceId = ko.unwrap(samplingActivitySamplingUnitTile.data[samplingAreaSampleCreatedNodeId])[0].resourceId();
+                if (samplingActivitySamplingUnitTile) {
+                    var samplingAreaSampleCreatedNodeId = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb';  // Sample Created (E22)
+                    var samplingAreaSampleCreatedParentPhysicalThingResourceId = ko.unwrap(samplingActivitySamplingUnitTile.data[samplingAreaSampleCreatedNodeId])[0].resourceId();
 
-                return samplingAreaSampleCreatedParentPhysicalThingResourceId;
+                    return samplingAreaSampleCreatedParentPhysicalThingResourceId;
+                }
             }
         });
         this.selectedSampleSamplingAreaSampleCreatedParentPhysicalThingResourceId.subscribe(function(foo) {
+            self.sampleDescriptionWidgetValue('');
+            self.motivationForSamplingWidgetValue('');
+
             var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
-            self.fetchCardFromResourceId(foo, physicalThingStatementNodegroupId).then(function(samplingAreaSampleCreatedParentPhysicalThingStatementCard) {
-                var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
-                var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
 
-                var fooNodeId = "5f54a27c-111e-470f-a888-f18bfef32f25"; // TODO: refactor to use proper concept type
-                var sampleDescriptionTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
-                    return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(fooNodeId);
+            if (foo) {
+                self.fetchCardFromResourceId(foo, physicalThingStatementNodegroupId).then(function(samplingAreaSampleCreatedParentPhysicalThingStatementCard) {
+                    var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
+                    var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
+    
+                    var fooNodeId = "5f54a27c-111e-470f-a888-f18bfef32f25"; // TODO: refactor to use proper concept type
+                    var sampleDescriptionTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
+                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(fooNodeId);
+                    });
+    
+                    if (sampleDescriptionTile) {
+                        self.sampleDescriptionWidgetValue(ko.unwrap(sampleDescriptionTile.data[physicalThingStatementContentNodeId]));
+                    }
+                    
+                    var barNodeId = "8f86681e-cbdd-4cc5-9569-28b2171aebd7"; // TODO: refactor to use proper concept type
+                    var motivationForSamplingTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
+                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(barNodeId);
+                    });
+    
+                    if (motivationForSamplingTile) {
+                        self.motivationForSamplingWidgetValue(ko.unwrap(motivationForSamplingTile.data[physicalThingStatementContentNodeId]));
+                    }
                 });
-
-                if (sampleDescriptionTile) {
-                    self.sampleDescriptionWidgetValue(ko.unwrap(sampleDescriptionTile.data[physicalThingStatementContentNodeId]));
-                }
-                
-                var barNodeId = "8f86681e-cbdd-4cc5-9569-28b2171aebd7"; // TODO: refactor to use proper concept type
-                var motivationForSamplingTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
-                    return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(barNodeId);
-                });
-
-                if (motivationForSamplingTile) {
-                    self.motivationForSamplingWidgetValue(ko.unwrap(motivationForSamplingTile.data[physicalThingStatementContentNodeId]));
-                }
-            });
+            }
         });
 
 
