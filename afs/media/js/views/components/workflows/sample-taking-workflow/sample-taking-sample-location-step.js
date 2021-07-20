@@ -21,9 +21,9 @@ define([
         this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
 
 
-
         // TODO: remove hardcoding
         this.samplingActivityResourceId = '1ed93068-1d80-4cd2-9428-a1858723420c';
+        this.samplingActivitySamplingUnitCard = ko.observable();
         
         this.savingTile = ko.observable();
 
@@ -51,6 +51,9 @@ define([
                 self.tile = selectedSampleLocationInstance;
                 params.tile = selectedSampleLocationInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedSampleLocationInstance);
+
+
+                console.log("AAAAA", selectedSampleLocationInstance, self, params)
             }
         });
 
@@ -59,6 +62,51 @@ define([
                 return self.physicalThingPartIdentifierAssignmentTile().dirty();
             }
         });
+
+
+        this.selectedSampleSamplingAreaSampleCreatedParentPhysicalThingResourceId = ko.computed(function() {
+            if (self.selectedSampleLocationInstance() && self.samplingActivitySamplingUnitCard()) {
+                var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
+                var selectedSampleLocationParentPhysicalThingResourceId = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId();
+
+                var samplingAreaNodeId = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Area (E22)
+                var samplingActivitySamplingUnitTile = self.samplingActivitySamplingUnitCard().tiles().find(function(tile) {
+                    return ko.unwrap(tile.data[samplingAreaNodeId])[0].resourceId() === selectedSampleLocationParentPhysicalThingResourceId;
+                });
+
+                var samplingAreaSampleCreatedNodeId = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb';  // Sample Created (E22)
+                var samplingAreaSampleCreatedParentPhysicalThingResourceId = ko.unwrap(samplingActivitySamplingUnitTile.data[samplingAreaSampleCreatedNodeId])[0].resourceId();
+
+                return samplingAreaSampleCreatedParentPhysicalThingResourceId;
+            }
+        });
+        this.selectedSampleSamplingAreaSampleCreatedParentPhysicalThingResourceId.subscribe(function(foo) {
+            var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
+            self.fetchCardFromResourceId(foo, physicalThingStatementNodegroupId).then(function(samplingAreaSampleCreatedParentPhysicalThingStatementCard) {
+                var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
+                var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
+
+                var fooNodeId = "5f54a27c-111e-470f-a888-f18bfef32f25"; // TODO: refactor to use proper concept type
+                var sampleDescriptionTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
+                    return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(fooNodeId);
+                });
+
+                if (sampleDescriptionTile) {
+                    self.sampleDescriptionWidgetValue(ko.unwrap(sampleDescriptionTile.data[physicalThingStatementContentNodeId]));
+                }
+                
+                var barNodeId = "8f86681e-cbdd-4cc5-9569-28b2171aebd7"; // TODO: refactor to use proper concept type
+                var motivationForSamplingTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
+                    return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(barNodeId);
+                });
+
+                if (motivationForSamplingTile) {
+                    self.motivationForSamplingWidgetValue(ko.unwrap(motivationForSamplingTile.data[physicalThingStatementContentNodeId]));
+                }
+            });
+        });
+
+
 
         this.selectedSampleLocationInstanceFeatures = ko.computed(function() {
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
@@ -103,8 +151,15 @@ define([
 
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
+
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
+            });
+
+            var samplingUnitNodegroupId = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Unit (E80)
+                
+            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
+                self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
             });
         };
 
