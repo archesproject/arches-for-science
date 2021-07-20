@@ -292,6 +292,13 @@ define([
                         "inverseOntologyProperty": ""
                     }];
 
+                    var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
+                    var samplingAreaVisualizationNodeId = 'b3e171ae-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Area Visualization (E42)
+
+                    samplingActivitySamplingUnitTile.data[samplingAreaVisualizationNodeId] = ko.toJS(
+                        self.physicalThingPartIdentifierAssignmentTile().data[partIdentifierAssignmentPolygonIdentifierNodeId]
+                    );
+
                     samplingActivitySamplingUnitTile.save().then(function(data) {
                         resolve(data);
                     });
