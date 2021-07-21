@@ -23,7 +23,6 @@
                     disable: $parent.locked
                 }"
             />
-            <span data-bind="text: console.log($parent.locked())"></span>
             <label 
                 style="cursor: pointer;"
                 data-bind="
@@ -37,7 +36,7 @@
 
 <button
     class="btn btn-success"
-    data-bind="click: openManifestManager"
+    data-bind="click: openManifestManager, disable: $parent.locked"
 >
     <i class="ion-android-cloud-done"></i>
     <span>
