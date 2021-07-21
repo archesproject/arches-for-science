@@ -20,8 +20,9 @@ define([
         this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
 
 
-        // TODO: remove hardcoding
-        this.samplingActivityResourceId = '1ed93068-1d80-4cd2-9428-a1858723420c';
+        var sampleInfoStepData = params.form.externalStepData['sampleinfostep']['data'];
+        this.samplingActivityResourceId = koMapping.toJS(sampleInfoStepData['sampling-info'][0][1]['samplingActivityResourceId']);
+
         this.samplingActivitySamplingUnitCard = ko.observable();
         
         this.savingTile = ko.observable();
@@ -202,7 +203,10 @@ define([
                 var samplingAreaNodeId = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Area (E22)
                 var samplingActivitySamplingUnitTile = self.samplingActivitySamplingUnitCard().tiles().find(function(tile) {
                     var data = ko.unwrap(tile.data[samplingAreaNodeId]);
-                    return ko.unwrap(data[0].resourceId) === selectedSampleLocationParentPhysicalThingResourceId;
+
+                    if (data) {
+                        return ko.unwrap(data[0].resourceId) === selectedSampleLocationParentPhysicalThingResourceId;
+                    }
                 });
 
                 if (samplingActivitySamplingUnitTile) {
@@ -333,7 +337,11 @@ define([
                 var samplingActivitySamplingUnitTile;
                 if (samplingActivitySamplingUnitCard.tiles() && samplingActivitySamplingUnitCard.tiles().length) {
                     var previouslySavedTile = samplingActivitySamplingUnitCard.tiles().find(function(tile) {
-                        return ko.unwrap(tile.data[samplingAreaNodeId])[0].resourceId() === regionPhysicalThingNameData.resourceinstance_id;
+                        var data = ko.unwrap(tile.data[samplingAreaNodeId]);
+
+                        if (data) {
+                            return ko.unwrap(data[0].resourceId) === regionPhysicalThingNameData.resourceinstance_id;
+                        }
                     });
 
                     if (previouslySavedTile) {
