@@ -44,6 +44,12 @@ define([
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
 
+        const snapshot = {
+            instrumentValue: self.instrumentValue(),
+            procedureValue: self.procedureValue(),
+            parameterValue: self.parameterValue()
+        };
+
         this.createRelatedInstance = function(val){
             return [{
                 resourceId: val,
@@ -113,6 +119,13 @@ define([
                     return response.json();
                 }
             });
+        };
+
+        params.form.reset = function(){
+            self.instrumentValue(snapshot.instrumentValue);
+            self.procedureValue(snapshot.procedureValue);
+            self.parameterValue(snapshot.parameterValue);
+            params.form.hasUnsavedData(false);
         };
 
         params.form.save = function() {
