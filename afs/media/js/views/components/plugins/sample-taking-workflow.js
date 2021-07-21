@@ -6,6 +6,7 @@ define([
     'viewmodels/workflow-step',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/sample-taking-workflow/sampling-info-step',
+    'views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-image-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
@@ -26,10 +27,7 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: false,
+                    required: true,
                     shoudltrackresource: true,
                     layoutSections: [
                         {
@@ -62,9 +60,6 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
                     required: false,
                     lockableExternalSteps: ['select-project'],
                     externalstepdata: {
@@ -80,7 +75,6 @@ define([
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -120,22 +114,30 @@ define([
                 },
                 {
                     title: 'Sample Location',
-                    name: 'iiif-step',  /* unique to workflow */
-                    description: 'annotate image',
-                    informationboxdata: {
-                        heading: 'Draw Sample Locations',
-                        text: 'Draw the location of each sample that you took from the object. \
-                        Use the drawing tools to indicate a point, line, or polygon for each sample location',
-                    },
+                    name: 'sample-location-step', /* unique to workflow */
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
-                    nodegroupid: 'fec59582-8593-11ea-97eb-acde48001122',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: false,
-                    wastebin: {tile: null, description: 'an annotation'}
+                    required: true,
+                    externalstepdata: {
+                        selectprojectstep: 'select-project',
+                        sampleinfostep: 'sample-info',
+                        imagestep: 'image-step',
+                    },
+                    workflowstepclass: 'analysis-areas-workflow-regions-step',
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'sample-taking-sample-location-step',
+                                    uniqueInstanceName: 'sample-location-instance', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'Summary',
