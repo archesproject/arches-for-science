@@ -167,7 +167,7 @@ hello
             $parent.selectedDigitalResource(ri);
         }, container: '.file-workbench-files'">
         <i role="presentation" data-bind="class: 'fa fa-file'"></i>
-        <div class='file-name' data-bind="text: digitalResource.resource.Name.Name_content"></div>
+        <div class='file-name' data-bind="text: digitalResource.resource.Name.Name_content['@value'].display_value"></div>
     </div>
     <!-- /ko -->
 </div>
@@ -186,58 +186,27 @@ hello
             $parent.selectFile(f);
         }, container: '.file-workbench-files'">
         <i role="presentation" data-bind="class: 'fa fa-file'"></i>
-        <div class='file-name' data-bind="text: file.File_Name.File_Name_content"></div>
+        <div class='file-name' data-bind="text: file.File_Name.File_Name_content['@value'].display_value"></div>
     </div>
     <!-- /ko -->
 </div>
 
 <div class="file-workbench-filter">
     <h2 class="file-workbench-filter-header">{% trans 'File Parameters' %}</h2>
-    <textarea rows="4" class="form-control" style="width: 100%; height:initial" 
+    <textarea data-bind="textInput: fileStatementParameter" rows="4" class="form-control" style="width: 100%; height:initial" 
         placeholder="{% trans 'e.g.: .txt' %}"></textarea>
 </div>
 
 <div class="file-workbench-filter">
     <h2 class="file-workbench-filter-header">{% trans 'File Interpretation' %}</h2>
-    <textarea rows="4" class="form-control" style="width: 100%; height:initial"
+    <textarea data-bind="textInput: fileStatementInterpretation" rows="4" class="form-control" style="width: 100%; height:initial"
         placeholder="{% trans 'e.g.: .txt' %}"></textarea>
 </div>
-<div class="install-buttons">
-    <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times" data-bind="click: function(){}">{% trans
-        'Cancel' %}</button>
-
-    <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: function(){}">{% trans 'Save'
-        %}</button>
-
-</div>
-
-
-<div class="workbench-sidepanel-card-container">
-    <div class="new-provisional-edit-card-container">
-        
-        <div class="card">
-            {% block form_header %}
-            Header...
-            {% endblock form_header %}
-            
-            {% block form_widgets %}
-            File interpretations here...
-            {% endblock form_widgets %}
-            
-            {% block form_buttons %}
-            
-            <div class="install-buttons">
-                <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times"
-                    data-bind="click: function(){}">{% trans 'Cancel' %}</button>
-
-                <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: function(){}">{% trans 'Save' %}</button>
-                
-            </div>
-
-            {% endblock form_buttons %}
-
-        </div>
-    </div>
+<div>
+    <!-- ko if: dirty -->
+    <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times" data-bind="click: reset">{% trans 'Cancel' %}</button>
+    <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: save">{% trans 'Save'%}</button>
+    <!-- /ko -->
 </div>
 
 <!-- /ko -->
