@@ -60,8 +60,8 @@ define([
         this.collectionResourceId = ko.observable();
         this.usedSetTileId = ko.observable();
 
-        var researchActivityStepData = params.externalStepData['researchactivitystep']['data'];
-        var researchActivityName = researchActivityStepData.tile[activityNameNodeId];
+        var researchActivityStepData = JSON.parse(params.externalStepData.researchactivitystep.data["project-name"][0].tileData);
+        var researchActivityName = researchActivityStepData[activityNameNodeId];
         this.projectResourceId(researchActivityStepData.resourceid);
 
         if (ko.unwrap(params.value)){
