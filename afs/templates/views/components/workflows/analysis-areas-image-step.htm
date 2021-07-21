@@ -20,8 +20,10 @@
                 data-bind="{
                     value: $data.displayname,
                     checked: $parent.selectedPhysicalThingImageServiceName,
+                    disable: $parent.locked
                 }"
             />
+            <span data-bind="text: console.log($parent.locked())"></span>
             <label 
                 style="cursor: pointer;"
                 data-bind="

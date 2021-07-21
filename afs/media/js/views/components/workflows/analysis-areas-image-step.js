@@ -42,7 +42,7 @@ define([
             return topCard.nodegroupid === digitalResourceNameNodegroupId;
         });
         this.digitalResourceNameTile = digitalResourceNameCard.getNewTile();
-
+        this.locked = params.form.locked;
         
         var digitalResourceStatementNodegroupId = 'da1fac57-ca7a-11e9-86a3-a4d18cec433a';
         var digitalResourceStatementCard = params.form.topCards.find(function(topCard) {
@@ -123,6 +123,7 @@ define([
             params.form.complete(false);
             params.form.saving(true);
 
+            params.form.lockExternalStep("object-step", true);
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
                 self.digitalResourceNameTile.save().then(function(data) {
                     self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
@@ -174,7 +175,6 @@ define([
     
                     params.form.savedData.push(matchingTile);
                 }
-
                 params.form.complete(true);
                 params.form.saving(false);        
             }

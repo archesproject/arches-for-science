@@ -291,6 +291,7 @@ define([
         this.saveWorkflowStep = function() {
             params.form.complete(false);
             params.form.saving(true);
+            params.form.lockExternalStep('image-step', true);
             let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
             params.form.savedData(mappedInstances);
             params.form.complete(true);
