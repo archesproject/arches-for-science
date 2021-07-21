@@ -20,6 +20,7 @@
                 data-bind="{
                     value: $data.displayname,
                     checked: $parent.selectedPhysicalThingImageServiceName,
+                    disable: $parent.locked
                 }"
             />
             <label 
@@ -35,7 +36,7 @@
 
 <button
     class="btn btn-success"
-    data-bind="click: openManifestManager"
+    data-bind="click: openManifestManager, disable: $parent.locked"
 >
     <i class="ion-android-cloud-done"></i>
     <span>

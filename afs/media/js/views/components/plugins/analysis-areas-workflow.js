@@ -13,6 +13,7 @@ define([
             var self = this;
 
             this.resourceId = ko.observable();
+            
 
             params.steps = [
                 {
@@ -42,7 +43,7 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         ],
-                                        renderContext: 'workflow',
+                                        renderContext: 'workflow'
                                     },
                                 },
                             ], 
@@ -62,6 +63,7 @@ define([
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
                     required: true,
+                    lockableExternalSteps: ['object-step'],
                     externalstepdata: {
                         objectstep: 'object-step'
                     },
@@ -87,6 +89,7 @@ define([
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
                     required: true,
+                    lockableExternalSteps: ['image-step'],
                     externalstepdata: {
                         objectstep: 'object-step',
                         imagestep: 'image-step'
