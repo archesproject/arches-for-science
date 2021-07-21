@@ -76,7 +76,6 @@ define([
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    hiddenNodes: ['0b92f57d-ca85-11e9-a353-a4d18cec433a', '0b931623-ca85-11e9-b235-a4d18cec433a', '0b930905-ca85-11e9-8aca-a4d18cec433a'],
                     required: true,
                     layoutSections: [
                         {
