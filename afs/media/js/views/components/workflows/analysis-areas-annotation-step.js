@@ -166,6 +166,7 @@ define([
         };
 
         this.saveAnalysisAreaTile = function() {
+            params.form.lockExternalStep('image-step', true);
             var savePhysicalThingNameTile = function(physicalThingNameTile) {
                 return new Promise(function(resolve, _reject) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
@@ -291,7 +292,6 @@ define([
         this.saveWorkflowStep = function() {
             params.form.complete(false);
             params.form.saving(true);
-            params.form.lockExternalStep('image-step', true);
             let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
             params.form.savedData(mappedInstances);
             params.form.complete(true);
