@@ -1,4 +1,5 @@
 define([
+    'jquery',
     'knockout',
     'knockout-mapping',
     'uuid',
@@ -8,7 +9,7 @@ define([
     'viewmodels/alert-json',
     'views/components/iiif-viewer',
     'bindings/dropzone'
-], function(ko, koMapping, uuid, arches, resourceUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel) {
+], function($, ko, koMapping, uuid, arches, resourceUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
             IIIFViewerViewmodel.apply(this, [params]);
