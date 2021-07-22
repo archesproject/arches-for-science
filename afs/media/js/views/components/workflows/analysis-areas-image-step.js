@@ -151,6 +151,7 @@ define([
                                 var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
                                 digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
 
+                                digitalReferenceTile.transactionId = params.form.workflowId;
                                 digitalReferenceTile.save().then(function(data) {
                                     params.form.complete(true);
                                     params.form.saving(false);
