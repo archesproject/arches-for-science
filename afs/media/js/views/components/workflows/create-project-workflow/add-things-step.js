@@ -54,7 +54,13 @@ define([
     
     function viewModel(params) {
         var self = this;
+
         _.extend(this, params.form);
+
+        this.getCardResourceIdOrGraphId = function() {
+            return ko.unwrap(params.graphid);
+        };
+        this.getJSON();
 
         console.log("loading...")
 
@@ -101,29 +107,16 @@ define([
         this.selectedResources = ko.observableArray([]);
         this.startValue = null;
 
-        params.hasDirtyTile = ko.observable(Boolean(self.value().length));
-
-        graph.subscribe(function(val){console.log("graph:",val);});
-        this.selectedTab.subscribe(function(val){console.log("selectedTab:",val);});
-        this.targetResources.subscribe(function(val){console.log("targetResources:",val);});
-        this.toggleRelationshipCandidacy.subscribe(function(val){console.log("toggleRelationshipCandidacy:",val);});
-        this.isResourceRelatable.subscribe(function(val){console.log("isResourceRelatable:",val);});
-        this.value.subscribe(function(val){console.log("value:",val);});
-        this.tile.subscribe(function(val){
-            console.log("tile:",val,
-                        "\ngrpah:",ko.unwrap(graph),
-                        "\ntotalResults:",ko.unwrap(self.totalResults),
-                        "\nselectedTab:",self.selectedTab(),
-                        "\ntargetResources:",self.targetResources(),
-                        "\ntoggleRelationshipCandidacy:",self.toggleRelationshipCandidacy(),
-                        "\nisResourceRelatable:",self.isResourceRelatable(),
-                        "\nvalue:",self.value(),
-                        //"\nquery:",self.query(),
-            );});
-        this.totalResults.subscribe(function(val){console.log("totalResults:",val);});
+        this.dirty = ko.pureComputed(function() {
+            return ko.unwrap(self.tile) ? self.tile().dirty() : false;
+        });
+        this.dirty.subscribe(function(dirty) {
+            if (self.hasUnsavedData) {
+                self.hasUnsavedData(dirty);
+            }
+        });
 
         this.value.subscribe(function(a) {
-            console.log(a);
             a.forEach(function(action) {
                 if (action.status === 'added') {
                     $.ajax({
@@ -145,11 +138,6 @@ define([
             });
         }, null, "arrayChange");
 
-        this.getCardResourceIdOrGraphId = function() {
-            return ko.unwrap(params.graphid);
-        };
-        this.getJSON();
-
         this.tile.subscribe(function(tile) {
             self.startValue = tile.data[ko.unwrap(params.nodeid)]();
             if (self.startValue) {
@@ -170,7 +158,6 @@ define([
         };
 
         this.updateTileData = function(resourceid) {
-            console.log(resourceid)
             var tilevalue = self.tile().data[ko.unwrap(params.nodeid)];
             var val = self.value().find(function(item) {
                 return ko.unwrap(item['resourceId']) === resourceid;
@@ -181,8 +168,7 @@ define([
                 self.value.remove(val);
             } else {
                 var nodeConfig;
-                console.log(self.nodeLookup)
-                var nodeData = self.nodeLookup[ko.unwrap(params.nodeid)];
+                var nodeData = ko.unwrap(self.nodeLookup)[ko.unwrap(params.nodeid)];
 
                 if (nodeData) {
                     nodeConfig = nodeData.config.graphs().find(function(config) {
@@ -199,16 +185,8 @@ define([
             }
         };
 
-        this.dirty = ko.pureComputed(function() {
-            return ko.unwrap(self.tile) ? self.tile().dirty() : false;
-        });
-        this.dirty.subscribe(function(dirty) {
-            if (params.hasDirtyTile) {
-                params.hasDirtyTile(dirty);
-            }
-        });
-
         this.submit = function() {
+            console.log("is this run?")
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
@@ -220,6 +198,7 @@ define([
                     'resourceinstanceid': ko.unwrap(self.collectionResourceId)
                 }
             }).done(function(data) {
+                console.log(data)
                 self.collectionResourceId(data.resourceinstance_id);
                 $.ajax({
                     url: arches.urls.api_node_value,
@@ -239,6 +218,7 @@ define([
                         'resourceinstanceid': self.projectResourceId()
                     }
                 }).done(function(data){
+                    console.log(data)
                     self.usedSetTileId(data.tileid);
                     $.ajax({
                         url: arches.urls.api_node_value,
@@ -250,6 +230,7 @@ define([
                             'tileid': self.tile().tileid
                         }
                     }).done(function(data) {
+                        console.log(data)
                         if (data.tileid && params.tile().tileid === "") {
                             params.tile().tileid = data.tileid;
                         }
@@ -261,9 +242,10 @@ define([
                 });
             });
         };
-        if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
-            params.preSaveCallback(self.submit);
-        }
+        params.form.saveFunction(self.submit);
+        // if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
+        //     params.preSaveCallback(self.submit);
+        // }
 
         params.saveOnQuit = function() {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
@@ -383,14 +365,12 @@ define([
             } else {
                 filters['paging-filter'] = 1;
             }
-            console.log("getResultData is running")
 
-            // params.loading(true);
+            //params.loading(true);
             $.ajax({
                 url: arches.urls.physical_thing_search_results,
                 data: filters
             }).done(function(data) {
-                console.log("getResultData",data)
                 _.each(this.searchResults, function(_value, key) {
                     if (key !== 'timestamp') {
                         delete self.searchResults[key];
@@ -423,7 +403,7 @@ define([
                     return source;
                 });
                 self.targetResources(resources);
-                params.loading(false);
+                //params.loading(false);
             });
         };
         
