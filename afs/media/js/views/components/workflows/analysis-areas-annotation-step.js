@@ -148,9 +148,34 @@ define([
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
             var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
 
-            /* resets any changes not explicity saved to the tile */ 
             if (previouslySelectedAnalysisAreaInstance) {
+                /* resets any changes not explicity saved to the tile */ 
                 previouslySelectedAnalysisAreaInstance.reset();
+
+                /* updates selected annotations */ 
+                var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
+                    return annotationNode.name === physicalThingAnnotationNodeName;
+                });
+
+                var physicalThingAnnotations = physicalThingAnnotationNode.annotations();
+
+                self.drawFeatures().forEach(function(drawFeature) {
+                    var annotationFeature = physicalThingAnnotations.find(function(annotation) {
+                        return annotation.id === drawFeature;
+                    });
+
+                    drawFeature.properties.nodegroupId = self.tile.nodegroup_id;
+                    drawFeature.properties.resourceId = self.tile.resourceinstance_id;
+                    drawFeature.properties.tileId = self.tile.tileid;
+
+                    if (!annotationFeature) {
+                        physicalThingAnnotations.push(drawFeature);
+                    }
+                });
+
+                physicalThingAnnotationNode.annotations(physicalThingAnnotations);
+
                 self.drawFeatures([]);
             }
 
