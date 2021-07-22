@@ -31,6 +31,7 @@ RUN set -ex \
         python3.8-distutils \
         python3.8-venv \
         dos2unix \
+        supervisor \
     " \
     && apt-get install -y --no-install-recommends curl \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
@@ -65,7 +66,6 @@ COPY /afs/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
 RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh &&\
   dos2unix ${WEB_ROOT}/entrypoint.sh
 
-RUN mkdir /var/log/supervisor
 RUN mkdir /var/log/celery
 
 # Set default workdir
