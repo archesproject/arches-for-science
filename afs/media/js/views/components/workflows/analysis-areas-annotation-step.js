@@ -282,6 +282,7 @@ define([
                     handleSaveChain(physicalThingNameTile);
                 });
             }
+            params.dirty(true);
         };
 
         this.loadNewAnalysisAreaTile = function() {
