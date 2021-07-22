@@ -316,8 +316,10 @@ define([
         };
 
         this.loadNewAnalysisAreaTile = function() {
-            var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-            self.selectAnalysisAreaInstance(newTile);
+            if (!self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid) {
+                var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
+                self.selectAnalysisAreaInstance(newTile);
+            }
         };
 
         this.saveWorkflowStep = function() {
