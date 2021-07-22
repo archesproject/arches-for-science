@@ -80,7 +80,6 @@ define([
             if (hasExternalCardData) {
                 self.handleExternalCardData();
 
-                /* sets all Physical Thing geometries to visible */
                 var physicalThingGeometriestAnnotationSubscription = self.annotationNodes.subscribe(function(annotationNodes) {
                     self.setPhysicalThingGeometriesToVisible(annotationNodes);
                     physicalThingGeometriestAnnotationSubscription.dispose(); /* self-disposing subscription only runs once */
@@ -145,6 +144,30 @@ define([
             } 
         };
 
+        this.updateAnalysisAreaInstances = function() {
+            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+
+            if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
+                var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
+                    return annotation.properties.tileId;
+                });
+                self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+            }
+            else {
+                var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
+                    var annotationTileIds = annotations.map(function(annotation) {
+                        return annotation.properties.tileId;
+                    });
+                    self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+    
+                    physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
+                });
+            }
+        };
+
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
             var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
 
@@ -163,7 +186,9 @@ define([
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
+
             physicalThingAnnotationNode.active(true); 
+            self.updateAnalysisAreaInstances();
         };
 
         this.saveAnalysisAreaTile = function() {
@@ -222,29 +247,33 @@ define([
             };
 
             var updateAnnotations = function() {
-                /* updates selected annotations */ 
-                var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
-                var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
-                    return annotationNode.name === physicalThingAnnotationNodeName;
-                });
-
-                var physicalThingAnnotations = physicalThingAnnotationNode.annotations();
-
-                self.drawFeatures().forEach(function(drawFeature) {
-                    var annotationFeature = physicalThingAnnotations.find(function(annotation) {
-                        return annotation.id === drawFeature;
+                return new Promise(function(resolve, _reject) {
+                    /* updates selected annotations */ 
+                    var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                    var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
+                        return annotationNode.name === physicalThingAnnotationNodeName;
                     });
+    
+                    var physicalThingAnnotations = physicalThingAnnotationNode.annotations();
+    
+                    self.drawFeatures().forEach(function(drawFeature) {
+                        var annotationFeature = physicalThingAnnotations.find(function(annotation) {
+                            return annotation.id === drawFeature;
+                        });
+    
+                        drawFeature.properties.nodegroupId = self.tile.nodegroup_id;
+                        drawFeature.properties.resourceId = self.tile.resourceinstance_id;
+                        drawFeature.properties.tileId = self.tile.tileid;
+    
+                        if (!annotationFeature) {
+                            physicalThingAnnotations.push(drawFeature);
+                        }
+                    });
+    
+                    physicalThingAnnotationNode.annotations(physicalThingAnnotations);
 
-                    drawFeature.properties.nodegroupId = self.tile.nodegroup_id;
-                    drawFeature.properties.resourceId = self.tile.resourceinstance_id;
-                    drawFeature.properties.tileId = self.tile.tileid;
-
-                    if (!annotationFeature) {
-                        physicalThingAnnotations.push(drawFeature);
-                    }
+                    resolve(physicalThingAnnotationNode)
                 });
-
-                physicalThingAnnotationNode.annotations(physicalThingAnnotations);
             };
 
             var getWorkingTile = function(card) {
@@ -302,12 +331,12 @@ define([
 
                         savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
                             updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
-                                updateAnnotations();
-
-                                // forces refresh
-                                self.analysisAreaInstances(self.card.tiles());
-                                self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
-                                self.savingTile(false);
+                                updateAnnotations().then(function(_physicalThingAnnotationNode) {
+                                    self.updateAnalysisAreaInstances();
+    
+                                    self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
+                                    self.savingTile(false);
+                                });
                             });
                         });
                     });
@@ -381,8 +410,6 @@ define([
 
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
-
-            self.analysisAreaInstances(card.tiles());
 
             /* 
                 subscription to features lives here because we _only_ want it to run once, on blank starting tile, when a user places a feature on the map
