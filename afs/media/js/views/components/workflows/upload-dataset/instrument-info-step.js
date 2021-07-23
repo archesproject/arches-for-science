@@ -103,6 +103,7 @@ define([
                 "data": {}
             };
             res.data = data;
+            res.transaction_id = params.form.workflowId
             return res;
         };
 
