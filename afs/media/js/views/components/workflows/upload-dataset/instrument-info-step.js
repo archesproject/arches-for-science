@@ -15,8 +15,6 @@ define([
         const parameterNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a'; // parameter are 'Statement' cards
         const nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         const nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
-        // TODO: the default name type concept value needs to change/be confirmed.  
-        const nameTypeConceptValue = ['ec635afd-beb1-426e-a21c-09866ea94d25'];
         const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
         const physThingName = projectInfo.physThingName;
         const observedThingNodeId = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
@@ -24,6 +22,8 @@ define([
         const projectInstanceId = projectInfo.project;
         const projectNodeId = '736f06a4-c54d-11ea-9f58-024e0d439fdb';
         const nameTypeNodeId = '87e4092e-c457-11e9-8036-a4d18cec433a';
+        // TODO: the default name type concept value needs to change/be confirmed.  
+        const nameTypeConceptValue = ['ec635afd-beb1-426e-a21c-09866ea94d25'];
         const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
 
