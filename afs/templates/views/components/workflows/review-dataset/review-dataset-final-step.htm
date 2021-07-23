@@ -1,15 +1,28 @@
 {% load i18n %}
 <!-- ko if: loading() === false -->
-<div class="padded-workflow-step">
-    <div class="final-cons-step-splash">
+<div class="final-step">
+    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
+        <h5 class="summary-value">{% trans 'Created or Modified Resource Instance' %}</h5>
+        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+            <div style="display: flex; flex-direction: column;">
+                <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
+                    <div class="summary-value">
+                        {% trans 'Physical Thing Resource Instance' %}
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
         <h5 class="summary-value">{% trans 'Object' %}</h5>
-        <div class="final-step-section-block">
-            <div class="final-step-section-block-item">
-                <div class="block-item">
+        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: 'Object Name' + ':'"></div>
                     <div class="summary-value" data-bind="text: reportVals.objectName"></div>
                 </div>
-                <div class="block-item">
+                <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: 'Sampled Object' + ':'"></div>
                     <div class="summary-value" data-bind="text: 'test'"></div>
                 </div>
@@ -18,11 +31,11 @@
     </div>
 
     <!-- ko foreach: {data: selectedDatasetData, as: 'selectedDataset'} -->
-    <div class="final-cons-step-splash">
+    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
         <h5 class="summary-value">{% trans 'Dataset Name and Associated Files' %}</h5>
-        <div class="final-step-section-block">
-            <div class="final-step-section-block-item">
-                <div class="block-item">
+        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: 'Name: '"></div>
                     <div class="summary-value" data-bind="text: selectedDataset.displayname"></div>
                 </div>
@@ -30,41 +43,5 @@
         </div>
     </div>
     <!-- /ko -->
-
-    <div class="final-cons-step-splash">
-        <h4>Workflow Complete</h4>
-        <a data-bind="attr: { href: urls.resource + '/' + resourceid}"><button class="btn btn-success btn-shim btn-labeled btn-lg fa fa-step-forward">Jump to this resource</button></a>
-        <!-- <div>
-            <a href="#" target="_self" type="button" class="btn btn-primary"
-                data-bind="attr: { href: urls.plugin(workflowid)}">
-                <i class="fa fa-plus"></i>
-                <span>New</span>
-            </a>
-            <a href="#" target="_self" type="button" class="btn btn-primary"
-                data-bind="attr: { href: urls.resource + '/' + resourceid}">
-                <i class="fa fa-pencil"></i>
-                <span>Edit</span>
-            </a>
-        </div> -->
-    </div>
-    <div class="final-cons-step-separator">
-        <hr>
-        <h4>or Start a New Workflow</h4>
-        <hr>
-    </div>
-    <div>
-        <div class="workflow-select-card-container">
-            <!-- ko foreach: {data: workflows, as: 'workflow'} -->
-            <a data-bind="attr: {href: workflow.url, title: workflow.name}" href="#"><div data-bind="style: {'background-color': workflow.bgColor}" class="workflow-select-card">
-                <h4 class="workflow-select-title" data-bind="text: workflow.name"></h4>
-                <div data-bind="style: {'background-color': workflow.circleColor}" class="workflow-select-wf-circle">
-                    <span><i data-bind="attr:{class: ('fa '+workflow.icon +' workflow-select-wf-icon')}"></i></span>
-                </div>
-                <p data-bind="text: workflow.desc" class="workflow-select-desc"></p>
-            </div></a>
-            <!-- /ko -->
-        </div>
-    </div>
-
 </div>
 <!-- /ko -->
