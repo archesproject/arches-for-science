@@ -341,7 +341,8 @@ define([
                         });
                     });
                 });
-            });
+            }
+            params.dirty(true);
         };
 
         this.loadNewAnalysisAreaTile = function() {
