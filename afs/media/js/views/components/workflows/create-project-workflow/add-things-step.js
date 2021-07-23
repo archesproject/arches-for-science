@@ -107,6 +107,19 @@ define([
         this.selectedResources = ko.observableArray([]);
         this.startValue = null;
 
+        params.value= ko.observable();
+        this.updatedValue = ko.pureComputed(function(){
+            return {
+                projectResourceId: self.projectResourceId(),
+                collectionResourceId: self.collectionResourceId(),
+                usedSetTileId: self.usedSetTileId()
+            };
+        });
+        this.updatedValue.subscribe(function(val){
+            console.log("some value changed",val)
+            params.value(val);
+        });
+
         this.dirty = ko.pureComputed(function() {
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
         });
@@ -231,13 +244,13 @@ define([
                         }
                     }).done(function(data) {
                         console.log(data)
-                        if (data.tileid && params.tile().tileid === "") {
-                            params.tile().tileid = data.tileid;
-                        }
-                        self.onSaveSuccess([data]);
+                        // if (data.tileid && params.tile().tileid === "") {
+                        //     params.tile().tileid = data.tileid;
+                        // }
+                        //self.onSaveSuccess([data]);
                         self.startValue = data.data[ko.unwrap(params.nodeid)];
-                        self.tile()._tileData(koMapping.toJSON(data.data));
-                        params.hasDirtyTile(false);
+                        //self.tile()._tileData(koMapping.toJSON(data.data));
+                        self.hasUnsavedData(false);
                     });
                 });
             });
