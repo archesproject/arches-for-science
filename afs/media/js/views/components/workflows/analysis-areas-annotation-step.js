@@ -442,6 +442,7 @@ define([
 
             IIIFAnnotationViewmodel.apply(self, [{
                 ...params,
+                hideEditorTab: ko.observable(true),
                 onEachFeature: function(feature, layer) {
                     layer.on({
                         click: function() {
