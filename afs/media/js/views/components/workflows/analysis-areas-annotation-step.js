@@ -341,7 +341,7 @@ define([
                         });
                     });
                 });
-            }
+            });
             params.dirty(true);
         };
 
