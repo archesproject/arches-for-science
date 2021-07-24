@@ -10,6 +10,11 @@ define([
     function viewModel(params) {
         var self = this;
 
+        this.loading = ko.observable(true);
+        this.digitalResourceLoading = ko.observable();
+        this.resourceLoading = ko.observable();
+        this.fileLists = ko.observableArray()
+
         this.tableConfig = {
             "info": false,
             "paging": false,
@@ -23,59 +28,69 @@ define([
             ]
         };
 
-        this.digitalResourceLoading = ko.observable()
-        this.resourceLoading = ko.observable()
 
         params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId)
         SummaryStep.apply(this, [params]);
         this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function (val) {
             return val[1][0]['resourceid']
         });
-        this.selectedDatasetData = ko.observableArray();
-        this.fileList = ko.observableArray();
 
-        this.getResourceData(this.selectedDatasets[0], this.selectedDatasetData);
-        this.selectedDatasetData.subscribe(function(val){
-            var findStatementType= function(statements, type){
-                var foundStatement = _.find(statements, function(statement) {
-                    return statement.type.indexOf(type) > -1;
-                })
-                return foundStatement ? foundStatement.statement : "None";
-            }
+        this.selectedDatasets.forEach(function(resourceid){
+            var selectedDatasetData = ko.observableArray();
+            var fileList = ko.observableArray();
+    
+            self.getResourceData(resourceid, selectedDatasetData);
+            selectedDatasetData.subscribe(function(val){
+                var findStatementType= function(statements, type){
+                    var foundStatement = _.find(statements, function(statement) {
+                        return statement.type.indexOf(type) > -1;
+                    })
+                    return foundStatement ? foundStatement.statement : "None";
+                }
 
-            var files = val.resource['File'].map(function(file){
-                var fileName = self.getResourceValue(file, ['File_Name', 'File_Name_content','@value']);
-                var statements = file["FIle_Statement"].map(function(statement){
+                var digitalResourceName = val.displayname;
+
+                var files = val.resource['File'].map(function(file){
+                    var fileName = self.getResourceValue(file, ['File_Name', 'File_Name_content','@value']);
+                    var statements = file["FIle_Statement"].map(function(statement){
+                        return {
+                            statement: self.getResourceValue(statement, ['FIle_Statement_content','@value']),                        
+                            type: self.getResourceValue(statement, ['FIle_Statement_type','@value'])
+                        };
+                    })
                     return {
-                        statement: self.getResourceValue(statement, ['FIle_Statement_content','@value']),                        
-                        type: self.getResourceValue(statement, ['FIle_Statement_type','@value'])
-                    };
+                        fileName: fileName,
+                        statements: statements,
+                    }
                 })
-                return {
-                    fileName: fileName,
-                    statements: statements,
+    
+                files.forEach(function(file){
+                    var fileName = file.fileName;
+                    var fileInterpretation = findStatementType(file.statements, 'interpretation');
+                    var fileParameter = findStatementType(file.statements, 'materials/technique description');    
+                    fileList.push({
+                        name: fileName,
+                        interpretation: fileInterpretation,
+                        parameter: fileParameter,
+                    });
+                });
+
+                self.fileLists.push({
+                    digitalResourceName: digitalResourceName,
+                    fileList: fileList,
+                })
+                console.log(this.fileLLists)
+                self.digitalResourceLoading(false);
+                if (!self.resourceLoading()){
+                    self.loading(false);
                 }
             })
-
-            files.forEach(function(file){
-                var fileName = file.fileName;
-                var fileInterpretation = findStatementType(file.statements, 'interpretation');
-                var fileParameter = findStatementType(file.statements, 'materials/technique description');    
-                self.fileList.push({
-                    name: fileName,
-                    interpretation: fileInterpretation,
-                    parameter: fileParameter,
-                });
-            });
-            this.digitalResourceLoading(false);
-            if (!this.resourceLoading()){
-                this.loading(false);
-            }
         }, this);
 
         this.resourceData.subscribe(function(val){
             var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
-            self.displayName = val.displayname;
+            this.displayName = val.displayname;
+            console.log(this.displayName)
             this.reportVals = {
                 objectName: val['displayname'],
             };

@@ -30,6 +30,7 @@
         </div>
     </div>
 
+    <!-- ko foreach: {data:fileLists, as: 'fileList'} -->
     <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
         <h5 class="summary-value">{% trans 'Dataset Name and Associated Files' %}</h5>
         <div>
@@ -57,5 +58,6 @@
             </div>
         </div>
     </div>
+    <!-- /ko -->
 </div>
 <!-- /ko -->
