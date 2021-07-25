@@ -60,9 +60,10 @@ define([
         this.collectionResourceId = ko.observable();
         this.usedSetTileId = ko.observable();
 
-        var researchActivityStepData = JSON.parse(params.externalStepData.researchactivitystep.data["project-name"][0].tileData);
+        var projectInfoData = params.externalStepData.researchactivitystep.data["project-name"][0];
+        var researchActivityStepData = projectInfoData.tileData;
         var researchActivityName = researchActivityStepData[activityNameNodeId];
-        this.projectResourceId(researchActivityStepData.resourceid);
+        this.projectResourceId(projectInfoData.resourceInstanceId);
 
         if (ko.unwrap(params.value)){
             var cachedValue = ko.unwrap(params.value);
