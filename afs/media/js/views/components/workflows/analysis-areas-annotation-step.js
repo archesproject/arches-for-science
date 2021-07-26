@@ -391,13 +391,14 @@ define([
     
                                     self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
                                     self.savingTile(false);
+
+                                    params.dirty(true);
                                 });
                             });
                         });
                     });
                 });
             });
-            params.dirty(true);
         };
 
         this.loadNewAnalysisAreaTile = function() {
