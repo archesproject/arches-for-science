@@ -19,6 +19,9 @@
     <i class="fa fa-file"></i>
     <span class="map-sidebar-text">{% trans 'Dataset' %}</span>
 </div>
+
+{{ block.super }}
+
 {% endblock tabs %}
 
 {% block sidepanel %}
@@ -105,24 +108,30 @@
         
                         <button
                             type="button"
-                            class="btn"
                             style="
                                 margin-top: 6px;
                                 background: #9490EE;
                                 color: #eee;
                                 width: 100%;
                             "
-                            data-bind="click: $data.loadNewAnalysisAreaTile"
+                            data-bind="{
+                                click: $data.loadNewAnalysisAreaTile,
+                                attr: {
+                                    class: ( $data.selectedAnalysisAreaInstance() && !$data.selectedAnalysisAreaInstance().tileid ) ? 'btn disabled' : 'btn'
+                                }
+                            }"
                         >
                             <i class="fa fa-folder"></i>
                             <span>
                                 {% trans 'Add New Analysis Area' %}
                             </span>
                         </button>
+
+
                     </div>
                 </div>
 
-                <!-- ko if: card.widgets().length > 0 -->
+                <!-- ko if: $data.selectedAnalysisAreaInstance() -->
                 {% block form_widgets %}
                     <form class="widgets" style="margin-bottom: 20px;">
                         <!-- ko if: $data.partIdentifierAssignmentLabelWidget() -->

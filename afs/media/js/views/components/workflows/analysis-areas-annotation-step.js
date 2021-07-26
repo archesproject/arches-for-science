@@ -80,7 +80,6 @@ define([
             if (hasExternalCardData) {
                 self.handleExternalCardData();
 
-                /* sets all Physical Thing geometries to visible */
                 var physicalThingGeometriestAnnotationSubscription = self.annotationNodes.subscribe(function(annotationNodes) {
                     self.setPhysicalThingGeometriesToVisible(annotationNodes);
                     physicalThingGeometriestAnnotationSubscription.dispose(); /* self-disposing subscription only runs once */
@@ -145,14 +144,39 @@ define([
             } 
         };
 
+        this.updateAnalysisAreaInstances = function() {
+            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+
+            if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
+                var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
+                    return annotation.properties.tileId;
+                });
+                self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+            }
+            else {
+                var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
+                    var annotationTileIds = annotations.map(function(annotation) {
+                        return annotation.properties.tileId;
+                    });
+                    self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+    
+                    physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
+                });
+            }
+        };
+
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
             var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
 
-            /* resets any changes not explicity saved to the tile */ 
             if (previouslySelectedAnalysisAreaInstance) {
+                /* resets any changes not explicity saved to the tile */ 
                 previouslySelectedAnalysisAreaInstance.reset();
-                self.drawFeatures([]);
             }
+
+            self.drawFeatures([]);
 
             self.selectedAnalysisAreaInstance(analysisAreaInstance);
         };
@@ -162,7 +186,9 @@ define([
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
+
             physicalThingAnnotationNode.active(true); 
+            self.updateAnalysisAreaInstances();
         };
 
         this.saveAnalysisAreaTile = function() {
@@ -198,96 +224,132 @@ define([
             };
 
             var updateSelectedAnalysisAreaInstance = function(physicalThingPartOfData) {
-                /* assigns Physical Thing to be the Part Identifier on the parent selected Physical Thing  */ 
-                var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
-                var physicalThingPartOfResourceXResourceId = physicalThingPartOfData.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
-                
-                var selectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
-                
-                var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
-
-                selectedAnalysisAreaInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
-                    "resourceId": physicalThingPartOfData.resourceinstance_id,
-                    "resourceXresourceId": physicalThingPartOfResourceXResourceId,
-                    "ontologyProperty": "",
-                    "inverseOntologyProperty": ""
-                }]);
-
-                selectedAnalysisAreaInstance.save().then(function(data) {
-                    // forces refresh
-                    self.analysisAreaInstances(self.card.tiles());
-                    self.selectAnalysisAreaInstance(selectedAnalysisAreaInstance);
-                    self.savingTile(false);
-                });
-            };
-
-            var handleSaveChain = function(physicalThingNameTile) {
-                savePhysicalThingNameTile(physicalThingNameTile).then(function(physicalThingNameData) {
+                return new Promise(function(resolve, _reject) {
+                    /* assigns Physical Thing to be the Part Identifier on the parent selected Physical Thing  */ 
                     var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                    var physicalThingPartOfResourceXResourceId = physicalThingPartOfData.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
+                    
+                    var selectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
+                    
+                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
     
-                    self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(physicalThingPartOfCard) {
-                        /* 
-                            Since this is an autogenerated resource, we can assume only one `physicalThingPartOf` tile.
-                            Here we look if `physicalThingPartOfCard` already has a `partOf` tile. If so, we grab the first tile
-                            in the array and change the value.
-                        */ 
-                        var physicalThingPartOfTile = null;
+                    selectedAnalysisAreaInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
+                        "resourceId": physicalThingPartOfData.resourceinstance_id,
+                        "resourceXresourceId": physicalThingPartOfResourceXResourceId,
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": ""
+                    }]);
     
-                        if (physicalThingPartOfCard.tiles() && physicalThingPartOfCard.tiles().length) {
-                            physicalThingPartOfTile = physicalThingPartOfCard.tiles()[0];
-                        }
-                        else {
-                            physicalThingPartOfTile = physicalThingPartOfCard.getNewTile();
-                        }
-    
-                        savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(physicalThingPartOfData) {
-                            updateSelectedAnalysisAreaInstance(physicalThingPartOfData);
-                        });
+                    selectedAnalysisAreaInstance.save().then(function(data) {
+                        resolve(data);
                     });
                 });
             };
 
-            self.savingTile(true);
-            
-            var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
-            var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
-            var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
+            var updateAnnotations = function() {
+                return new Promise(function(resolve, _reject) {
+                    /* updates selected annotations */ 
+                    var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                    var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
+                        return annotationNode.name === physicalThingAnnotationNodeName;
+                    });
+    
+                    var physicalThingAnnotations = physicalThingAnnotationNode.annotations();
+    
+                    self.drawFeatures().forEach(function(drawFeature) {
+                        var annotationFeature = physicalThingAnnotations.find(function(annotation) {
+                            return annotation.id === drawFeature;
+                        });
+    
+                        drawFeature.properties.nodegroupId = self.tile.nodegroup_id;
+                        drawFeature.properties.resourceId = self.tile.resourceinstance_id;
+                        drawFeature.properties.tileId = self.tile.tileid;
+    
+                        if (!annotationFeature) {
+                            physicalThingAnnotations.push(drawFeature);
+                        }
+                    });
+    
+                    physicalThingAnnotationNode.annotations(physicalThingAnnotations);
 
-            if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
-                var partIdentifierAssignmentPhysicalPartOfObjectResourceId = partIdentifierAssignmentPhysicalPartOfObjectData[0]['resourceId']();
+                    resolve(physicalThingAnnotationNode)
+                });
+            };
 
-                self.fetchCardFromResourceId(partIdentifierAssignmentPhysicalPartOfObjectResourceId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
-                    var physicalThingNameTile = null;
-                    
-                    /* 
-                        Since this is an autogenerated resource, we can assume only one `physicalThingName` tile.
-                        Here we look if `physicalThingNameCard` already has a `name` tile. If so, we grab the first tile
-                        in the array and change the value.
-                    */ 
-                    if (physicalThingNameCard.tiles() && physicalThingNameCard.tiles().length) {
-                        physicalThingNameTile = physicalThingNameCard.tiles()[0];
+            var getWorkingTile = function(card) {
+                /* 
+                    If an auto-generated resource has a tile with data, this will return it.
+                    Otherwise it returns a new tile for the card.
+                */ 
+
+                var tile = null;
+                
+                /* Since this is an autogenerated resource, we can assume only one associated tile. */ 
+                if (card.tiles() && card.tiles().length) {
+                    tile = card.tiles()[0];
+                }
+                else {
+                    tile = card.getNewTile();
+                }
+
+                return tile;
+            };
+
+            var getRegionPhysicalThingNameCard = function() {
+                return new Promise(function(resolve, _reject) {
+                    var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
+                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
+                    var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
+        
+                    if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
+                        var partIdentifierAssignmentPhysicalPartOfObjectResourceId = partIdentifierAssignmentPhysicalPartOfObjectData[0]['resourceId']();
+        
+                        self.fetchCardFromResourceId(partIdentifierAssignmentPhysicalPartOfObjectResourceId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
+                            resolve(physicalThingNameCard);
+                        });
                     }
                     else {
-                        physicalThingNameTile = physicalThingNameCard.getNewTile();
+                        var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+        
+                        self.fetchCardFromGraphId(physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) { 
+                            resolve(physicalThingNameCard);
+                        });
                     }
 
-                    handleSaveChain(physicalThingNameTile);
                 });
-            }
-            else {  /* if creating new Physical Thing */
-                var physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+            };
 
-                self.fetchCardFromGraphId(physicalThingGraphId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
-                    var physicalThingNameTile = physicalThingNameCard.getNewTile();
-                    handleSaveChain(physicalThingNameTile);
+            self.savingTile(true);
+            getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
+                var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
+
+                savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(physicalThingNameData) {
+                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+    
+                    self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
+                        var regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+
+                        savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
+                            updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
+                                updateAnnotations().then(function(_physicalThingAnnotationNode) {
+                                    self.updateAnalysisAreaInstances();
+    
+                                    self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
+                                    self.savingTile(false);
+                                });
+                            });
+                        });
+                    });
                 });
-            }
+            });
             params.dirty(true);
         };
 
         this.loadNewAnalysisAreaTile = function() {
-            var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-            self.selectAnalysisAreaInstance(newTile);
+            if (!self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid) {
+                var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
+                self.selectAnalysisAreaInstance(newTile);
+            }
         };
 
         this.saveWorkflowStep = function() {
@@ -350,8 +412,6 @@ define([
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
-            self.analysisAreaInstances(card.tiles());
-
             /* 
                 subscription to features lives here because we _only_ want it to run once, on blank starting tile, when a user places a feature on the map
             */
@@ -383,6 +443,7 @@ define([
 
             IIIFAnnotationViewmodel.apply(self, [{
                 ...params,
+                hideEditorTab: ko.observable(true),
                 onEachFeature: function(feature, layer) {
                     layer.on({
                         click: function() {
