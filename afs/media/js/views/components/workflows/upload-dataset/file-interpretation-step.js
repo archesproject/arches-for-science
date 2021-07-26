@@ -132,13 +132,13 @@ define([
                             var fileStatement;
                             try {
                                 fileStatement = datafile.FIle_Statement.find(function(statement){
-                                    return statement.FIle_Statement_type['@value'][0].valueid === valueid;
+                                    return statement.FIle_Statement_type['concept_details'][0].valueid === valueid;
                                 });
                             } catch(err) {}
 
                             if(fileStatement){
                                 return new FileStatement(
-                                    fileStatement['@tile_id'], fileTileid, resourceid, fileStatement.FIle_Statement_content['@value'].display_value, valueid
+                                    fileStatement['@tile_id'], fileTileid, resourceid, fileStatement.FIle_Statement_content['@display_value'], valueid
                                 );
                             } else {
                                 return new FileStatement(
@@ -163,7 +163,7 @@ define([
         }, this);
         this.filteredDigitalResources = ko.pureComputed(function(){
             return this.digitalResources().filter(function(dr){
-                return dr.resource.Name.Name_content['@value'].display_value.toLowerCase().includes(this.digitalResourceFilter().toLowerCase());
+                return dr.resource.Name.Name_content['@display_value'].toLowerCase().includes(this.digitalResourceFilter().toLowerCase());
             }, this);
         }, this);
 
@@ -174,8 +174,8 @@ define([
         this.selectedFile = ko.observable();
         this.selectFile = function(selectedFile){
             self.selected(true);
-            self.displayContent = self.getDisplayContent(selectedFile['@value'].raw_value[0]);
-            self.selectedRenderer(self.getFileFormatRenderer(selectedFile['@value'].raw_value[0].renderer));
+            self.displayContent = self.getDisplayContent(selectedFile.file_details[0]);
+            self.selectedRenderer(self.getFileFormatRenderer(selectedFile.file_details[0].renderer));
             self.selectedFile(selectedFile);
             var file = params.value()[selectedFile['@tile_id']];
             self.fileStatementParameter(file.fileStatementParameter.fileStatement());
@@ -186,7 +186,7 @@ define([
         });
         this.filteredFiles = ko.pureComputed(function(){
             return this.files().filter(function(file){
-                return file.File_Name.File_Name_content['@value'].display_value.toLowerCase().includes(this.fileFilter().toLowerCase());
+                return file.File_Name.File_Name_content['@display_value'].toLowerCase().includes(this.fileFilter().toLowerCase());
             }, this);
         }, this);
         this.fileStatementInterpretation = ko.observable();

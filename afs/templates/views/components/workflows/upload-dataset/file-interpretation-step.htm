@@ -167,7 +167,7 @@ hello
             $parent.selectedDigitalResource(ri);
         }, container: '.file-workbench-files'">
         <i role="presentation" data-bind="class: 'fa fa-file'"></i>
-        <div class='file-name' data-bind="text: digitalResource.resource.Name.Name_content['@value'].display_value"></div>
+        <div class='file-name' data-bind="text: digitalResource.resource.Name.Name_content['@display_value']"></div>
     </div>
     <!-- /ko -->
 </div>
@@ -186,7 +186,7 @@ hello
             $parent.selectFile(f);
         }, container: '.file-workbench-files'">
         <i role="presentation" data-bind="class: 'fa fa-file'"></i>
-        <div class='file-name' data-bind="text: file.File_Name.File_Name_content['@value'].display_value"></div>
+        <div class='file-name' data-bind="text: file.file_details[0].name"></div>
     </div>
     <!-- /ko -->
 </div>
