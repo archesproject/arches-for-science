@@ -152,8 +152,8 @@ define([
                 .then(function(data) {
                     parameterTileId = data.tileid;
                     self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
-                    params.form.complete(true);
                     params.form.savedData(params.form.addedData());
+                    params.form.complete(true);
                 });
     
         };
