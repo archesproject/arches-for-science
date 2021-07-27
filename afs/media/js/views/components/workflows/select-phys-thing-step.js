@@ -16,25 +16,43 @@ define([
         this.physicalThingValue = ko.observable();
         this.physicalThingSetValue = ko.observable();
         this.hasSetWithPhysicalThing = ko.observable();
+        
+        this.updateValues = function(val){
+            if (val === null) {
+                self.physicalThingValue(null);
+                self.physicalThingSetValue(null);
+                self.projectValue(null);
+            } else {
+                self.physicalThingValue(val.physicalThing);
+                self.physicalThingSetValue(val.physicalThingSet);
+                self.projectValue(val.project);
+            }
+        };
+
         if (params.value()) { 
-            this.physicalThingValue(params.value().physicalThing);
-            this.physicalThingSetValue(params.value().physicalThingSet);
-            this.projectValue(params.value().project);
+            this.updateValues(params.value());
         }
+
+        this.locked = params.form.locked;
+
+        params.form.value.subscribe(function(val){
+            this.updateValues(val);
+        }, this);
+        
         this.projectValue.subscribe(function(val){
             if (val) {
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
                     function(data){
-                        var setTileResourceInstanceId;
-                        var setTile = data._source.tiles.find(function(tile){
+                        let setTileResourceInstanceIds;
+                        let setTile = data._source.tiles.find(function(tile){
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
                         });
                         if (setTile && Object.keys(setTile.data).includes(self.physThingSetNodegroupId) && setTile.data[self.physThingSetNodegroupId].length) {
                             self.physicalThingSetValue(null);
-                            setTileResourceInstanceId = setTile.data[self.physThingSetNodegroupId][0].resourceId;
-                            if (setTileResourceInstanceId) {
-                                self.physicalThingSetValue(setTileResourceInstanceId);
+                            setTileResourceInstanceIds = setTile.data[self.physThingSetNodegroupId].map((instance) => instance.resourceId);
+                            if (setTileResourceInstanceIds) {
+                                self.physicalThingSetValue(setTileResourceInstanceIds);
                             }
                             self.physicalThingValue(null);
                         } else {
@@ -42,6 +60,8 @@ define([
                         }
                     }
                 );
+            } else {
+                self.updateValues(null);
             }
         });
 
@@ -50,25 +70,17 @@ define([
                 self.hasSetWithPhysicalThing(true);
                 var query = {"op": "and"};
                 query[self.physicalThingPartOfSetNodeId] = {
-                    "op": "",
-                    "val":  [ko.unwrap(self.physicalThingSetValue)]
+                    "op": "or",
+                    "val":  ko.unwrap(self.physicalThingSetValue)
                 };
-                return function(term, data) {
-                    data["advanced-search"] = JSON.stringify([query]);
+                return function(term, queryString) {
+                    queryString.set('advanced-search', JSON.stringify([query]));
                     if (term) {
-                        data["term-filter"]=JSON.stringify([{"context":"", "id": term,"text": term,"type":"term","value": term,"inverted":false}]);
+                        queryString.set('term-filter', JSON.stringify([{"context":"", "id": term,"text": term,"type":"term","value": term,"inverted":false}]));
                     }
                 };
             } else {
                 return null;
-            }
-        });
-
-        this.projectValue.subscribe(function(val) {
-            if (!val) {
-                self.hasSetWithPhysicalThing(null);
-                self.physicalThingSetValue(null);
-                self.physicalThingValue(null);
             }
         });
 

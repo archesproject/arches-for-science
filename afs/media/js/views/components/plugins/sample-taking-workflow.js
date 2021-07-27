@@ -3,7 +3,12 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
-    'viewmodels/workflow-step'
+    'viewmodels/workflow-step',
+    'views/components/workflows/select-phys-thing-step',
+    'views/components/workflows/sample-taking-workflow/sampling-info-step',
+    'views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step',
+    'views/components/workflows/sample-taking-workflow/sample-taking-image-step',
+    'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('sample-taking-workflow', {
         viewModel: function(params) {
@@ -13,107 +18,152 @@ define([
 
             params.steps = [
                 {
-                    title: 'Sample Name',
-                    name: 'object-sample-name',  /* unique to workflow */
-                    description: 'Provide a name for the sample',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '0b926359-ca85-11e9-ac9c-a4d18cec433a',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
+                    title: 'Project Info',
+                    name: 'select-project',  /* unique to workflow */
+                    description: 'Select the project and object',
+                    informationboxdata: {
+                        heading: 'Projects and related object',
+                        text: 'Select the project and object that your are sampling',
+                    },
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
                     required: true,
-                    shouldtrackresource: true,
-                    wastebin: {resourceid: null, description: 'a sampling activity instance'}
+                    shoudltrackresource: true,
+                    layoutSections: [
+                        {
+                            sectionTitle: null,
+                            componentConfigs: [
+                                { 
+                                    componentName: 'select-phys-thing-step',
+                                    uniqueInstanceName: 'select-phys-thing', /* unique to step */
+                                    parameters: {
+                                        graphids: [
+                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
+                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
+                                        ],  
+                                        renderContext: 'workflow',
+                                        value: null,
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
-                    title: 'Sample Date',
-                    name: 'object-sample-date',  /* unique to workflow */
+                    title: 'Sample Info',
+                    name: 'sample-info',  /* unique to workflow */
                     description: 'The date that the sample was taken',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '0b925e3a-ca85-11e9-a308-a4d18cec433a',
-                    hiddenNodes: ['0b92f57d-ca85-11e9-a353-a4d18cec433a', '0b931623-ca85-11e9-b235-a4d18cec433a', '0b930905-ca85-11e9-8aca-a4d18cec433a'],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                },
-                {
-                    title: 'Sample Taker',
-                    name: 'object-sample-taker',  /* unique to workflow */
-                    description: 'Who took the sample?',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: 'dbaa2022-9ae7-11ea-ab62-dca90488358a',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                },
-                {
-                    title: 'Set or Collection',
-                    customCardLabel: 'Set or Collection Used in Sampling Activity',
-                    name: 'activity-collection',  /* unique to workflow */
-                    description: 'What set or collection is related?',
-                    component: 'views/components/workflows/related-set-step',
-                    componentname: 'related-set-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: 'cc5d6df3-d477-11e9-9f59-a4d18cec433a',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                },
-                {
-                    title: 'Select Physical Thing',
-                    name: 'select-physical-thing',  /* unique to workflow */
-                    description: 'Select a physical thing from the set to annotate',
-                    component: 'views/components/workflows/physical-thing-list',
-                    componentname: 'physical-thing-list',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a',
-                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a',
-                    externalstepdata: { 
-                        relatedsetstep: 'activity-collection',
+                    informationboxdata: {
+                        heading: 'Sampling Information',
+                        text: 'Enter the people, date, method, and notes describing the sampling activities on the object',
                     },
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                },
-                {
-                    title: 'IIIF',
-                    name: 'iiif-step',  /* unique to workflow */
-                    description: 'annotate image',
-                    component: 'views/components/workflows/iiif-step',
-                    componentname: 'iiif-step',
-                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
-                    nodegroupid: 'fec59582-8593-11ea-97eb-acde48001122',
-                    externalstepdata: { 
-                        physicalthingidstep: 'select-physical-thing',
-                        visualworkidstep: 'activity-collection',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    required: false,
+                    lockableExternalSteps: ['select-project'],
+                    externalstepdata: {
+                        selectprojectstep: 'select-project',
                     },
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                    wastebin: {tile: null, description: 'an annotation'}
+                    layoutSections: [
+                        {
+                            sectionTitle: null,
+                            componentConfigs: [
+                                { 
+                                    componentName: 'sampling-info-step',
+                                    uniqueInstanceName: 'sampling-info', /* unique to step */
+                                    parameters: {
+                                        renderContext: 'workflow',
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
-                    title: 'Add Project Complete',
+                    title: 'Image',
+                    name: 'image-step',  /* unique to workflow */
+                    informationboxdata: {
+                        heading: 'Image Services',
+                        text: 'Image services provide you with picture(s) of an object, often from multiple vantage points, \
+                        that can be annotated to indicate the location or region of an observation. \
+                        If you wish, you can upload photographs and automatically create a new image service \
+                        to document the location of your observations of an object',
+                    },
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    required: true,
+                    externalstepdata: {
+                        selectprojectstep: 'select-project',
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Image Service',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'sample-taking-image-step',
+                                    uniqueInstanceName: 'image-service-instance', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Sample Location',
+                    name: 'sample-location-step', /* unique to workflow */
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    required: true,
+                    externalstepdata: {
+                        selectprojectstep: 'select-project',
+                        sampleinfostep: 'sample-info',
+                        imagestep: 'image-step',
+                    },
+                    workflowstepclass: 'analysis-areas-workflow-regions-step',
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'sample-taking-sample-location-step',
+                                    uniqueInstanceName: 'sample-location-instance', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Summary',
                     name: 'add-project-complete',  /* unique to workflow */
-                    description: 'Choose an option below',
-                    component: 'views/components/workflows/afs-final-step',
-                    componentname: 'afs-final-step',
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     nodegroupid: '',
                     resourceid: null,
                     tileid: null,
-                    parenttileid: null
+                    parenttileid: null,
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'sample-taking-final-step',
+                                    uniqueInstanceName: 'sample-taking-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+
                 }
             ];
 
