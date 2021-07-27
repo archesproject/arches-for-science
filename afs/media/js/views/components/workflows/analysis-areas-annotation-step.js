@@ -46,9 +46,10 @@ define([
             }
         });
 
+        this.selectedFeature = ko.observable();
+
         this.tileDirty = ko.computed(function() {
             if (self.physicalThingPartIdentifierAssignmentTile()) {
-                console.log("DDDDD", self.physicalThingPartIdentifierAssignmentTile())
                 return self.physicalThingPartIdentifierAssignmentTile().dirty();
             }
         });
@@ -226,9 +227,7 @@ define([
         };
 
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
-            console.log("AAAAAAA", analysisAreaInstance)
             var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
-            
             
             if (previouslySelectedAnalysisAreaInstance && previouslySelectedAnalysisAreaInstance.tileid !== analysisAreaInstance.tileid) {
                 /* resets any changes not explicity saved to the tile */ 
@@ -498,7 +497,7 @@ define([
             self.hasExternalCardData(true);
         };
 
-        this.foo = ko.observableArray();
+        this.featureLayers = ko.observableArray();
         this.isFeatureBeingEdited = ko.observable(false);
 
         this.handleExternalCardData = function() {
@@ -521,31 +520,37 @@ define([
                 ...params,
                 hideEditorTab: ko.observable(true),
                 onEachFeature: function(feature, layer) {
-                    var bar = self.foo().find(function(foobar) {
-                        return foobar.feature.id === layer.feature.id;
+                    var featureLayer = self.featureLayers().find(function(featureLayer) {
+                        return featureLayer.feature.id === layer.feature.id;
                     });
 
-                    if (!bar) {
-                        self.foo.push(layer)
+                    if (!featureLayer) {
+                        self.featureLayers.push(layer)
                     }
 
                     layer.on({
                         click: function(e) {
+                            self.drawFeatures([]);
+                            self.featureClick = true;
+                            
                             var analysisAreaInstance = self.getAnalysisAreaTileFromFeatureId(feature.id);
                             
                             if ( !self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid !== analysisAreaInstance.tileid ) {
-                                self.isFeatureBeingEdited(false);
                                 self.selectAnalysisAreaInstance(analysisAreaInstance);
                             }
-                            else if ( self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid === analysisAreaInstance.tileid ) {
-                                self.isFeatureBeingEdited(true);
-
+                            else  {
+                                self.tile.reset();
                                 self.resetCanvasFeatures();
-                                self.drawFeatures([feature]);
-                                self.enableEditing(e.target);
-                                self.removeFeatureFromCanvas(feature);
-                            }
 
+                                var selectedFeature = ko.toJS(self.selectedAnalysisAreaInstanceFeatures().find(function(selectedAnalysisAreaInstanceFeature) {
+                                    return ko.unwrap(selectedAnalysisAreaInstanceFeature.id) === feature.id;
+                                }));
+
+                                self.selectedFeature(selectedFeature);
+                                self.removeFeatureFromCanvas(self.selectedFeature());
+
+                                self.drawFeatures([selectedFeature]);
+                            } 
                         },
                     })
                 }
@@ -553,11 +558,9 @@ define([
 
             /* overwrites iiif-annotation methods */ 
             self.updateTiles = function() {
-                if (!self.isFeatureBeingEdited()) {
-                    _.each(self.featureLookup, function(value) {
-                        value.selectedTool(null);
-                    });
-                }
+                _.each(self.featureLookup, function(value) {
+                    value.selectedTool(null);
+                });
 
                 var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
 
@@ -570,19 +573,15 @@ define([
                         });
                     });
 
-                    if (self.drawFeatures() && self.drawFeatures().length) {
-                        var featureId = self.drawFeatures()[0].id;  // assumes 1 feature being edited
-
+                    self.drawFeatures().forEach(function(drawFeature) {
                         var editedFeatureIndex = tileFeatures.findIndex(function(feature) {
-                            return feature.id === featureId;
+                            return feature.id === drawFeature.id;
                         });
 
-                        if (editedFeatureIndex) {
-                            tileFeatures[editedFeatureIndex] = self.drawFeatures()[0];
+                        if (editedFeatureIndex > -1) {
+                            tileFeatures[editedFeatureIndex] = drawFeature;
                         }
-                    }
-
-                    console.log('MEHBEH', tileFeatures, featuresNotInTile, self.drawFeatures())
+                    });
 
                     self.tile.data[partIdentifierAssignmentPolygonIdentifierNodeId].features([...tileFeatures, ...featuresNotInTile]);
                 }
@@ -616,7 +615,7 @@ define([
                 var selectedAnalysisAreaInstanceFeaturesNode = ko.unwrap(selectedAnalysisAreaInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId]);
                 
                 var updatedSelectedAnalysisAreaInstanceFeatures = selectedAnalysisAreaInstanceFeaturesNode.features().filter(function(selectedFeature) {
-                    return ko.unwrap(selectedFeature.id) !== feature.id();
+                    return ko.unwrap(selectedFeature.id) !== ko.unwrap(feature.id);
                 });
                 
                 selectedAnalysisAreaInstanceFeaturesNode.features(updatedSelectedAnalysisAreaInstanceFeatures);
@@ -626,17 +625,26 @@ define([
                 /* END update table */ 
 
                 /* BEGIN update canvas */ 
+                self.drawFeatures([])
                 self.removeFeatureFromCanvas(feature);
                 /* END update canvas */ 
             }
 
             self.editFeature = function(feature) {
-                self.foo().forEach(function(fooFeature) {
-                    if (fooFeature.feature.id === ko.unwrap(feature.id)) {
-                        fooFeature.fireEvent('click')
+                self.featureLayers().forEach(function(featureLayer) {
+                    if (featureLayer.feature.id === ko.unwrap(feature.id)) {
+                        featureLayer.fireEvent('click')
                     }
                 });
             };
+
+            self.drawLayer.subscribe(function(drawLayer) {
+                drawLayer.getLayers().forEach(function(layer) {
+                    if (self.selectedFeature() && self.selectedFeature().id === layer.feature.id) {
+                        layer.editing.enable();
+                    }
+                });
+            })
         };
 
         this.fetchCardFromResourceId = function(resourceId, nodegroupId) {
