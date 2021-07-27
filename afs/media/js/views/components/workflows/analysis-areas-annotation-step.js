@@ -248,6 +248,7 @@ define([
         this.resetAnalysisAreasTile = function() {
             self.tile.reset();
             self.resetCanvasFeatures();
+            self.drawFeatures([]);
         };
 
         this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
@@ -538,7 +539,7 @@ define([
                             if ( !self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid !== analysisAreaInstance.tileid ) {
                                 self.selectAnalysisAreaInstance(analysisAreaInstance);
                             }
-                            else  {
+                            else {
                                 self.tile.reset();
                                 self.resetCanvasFeatures();
 
@@ -625,8 +626,15 @@ define([
                 /* END update table */ 
 
                 /* BEGIN update canvas */ 
-                self.drawFeatures([])
                 self.removeFeatureFromCanvas(feature);
+
+                var drawFeature = self.drawFeatures().find(function(drawFeature) {
+                    return ko.unwrap(drawFeature.id) === ko.unwrap(feature.id);
+                });
+
+                if (drawFeature) {
+                    self.drawFeatures([]);
+                }
                 /* END update canvas */ 
             }
 
@@ -642,6 +650,7 @@ define([
                 drawLayer.getLayers().forEach(function(layer) {
                     if (self.selectedFeature() && self.selectedFeature().id === layer.feature.id) {
                         layer.editing.enable();
+                        layer.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
                     }
                 });
             })
