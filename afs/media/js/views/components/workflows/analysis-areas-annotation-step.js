@@ -173,31 +173,33 @@ define([
         this.resetCanvasFeatures = function() {
             var annotationNodes = self.annotationNodes();
             
-            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
-            var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
-                return annotationNode.name === physicalThingAnnotationNodeName;
-            });
-
-            var physicalThingAnnotationNodeAnnotationIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
-                return ko.unwrap(annotation.id);
-            });
-            
-            var unaddedSelectedAnalysisAreaInstanceFeatures = self.selectedAnalysisAreaInstanceFeatures().reduce(function(acc, feature) {
-                if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id))) {
-                    feature.properties.tileId = self.selectedAnalysisAreaInstance().tileid;
-                    acc.push(ko.toJS(feature));
-                }
-
-                return acc;
-            }, []);
-
-            physicalThingAnnotationNode.annotations([...physicalThingAnnotationNode.annotations(), ...unaddedSelectedAnalysisAreaInstanceFeatures]);
-
-            var physicalThingAnnotationNodeIndex = annotationNodes.findIndex(function(annotationNode) {
-                return annotationNode.name === physicalThingAnnotationNodeName;
-            });
-
-            annotationNodes[physicalThingAnnotationNodeIndex] = physicalThingAnnotationNode;
+            if (self.selectedAnalysisAreaInstanceFeatures()) {
+                var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
+                    return annotationNode.name === physicalThingAnnotationNodeName;
+                });
+    
+                var physicalThingAnnotationNodeAnnotationIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
+                    return ko.unwrap(annotation.id);
+                });
+                
+                var unaddedSelectedAnalysisAreaInstanceFeatures = self.selectedAnalysisAreaInstanceFeatures().reduce(function(acc, feature) {
+                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id))) {
+                        feature.properties.tileId = self.selectedAnalysisAreaInstance().tileid;
+                        acc.push(ko.toJS(feature));
+                    }
+    
+                    return acc;
+                }, []);
+    
+                physicalThingAnnotationNode.annotations([...physicalThingAnnotationNode.annotations(), ...unaddedSelectedAnalysisAreaInstanceFeatures]);
+    
+                var physicalThingAnnotationNodeIndex = annotationNodes.findIndex(function(annotationNode) {
+                    return annotationNode.name === physicalThingAnnotationNodeName;
+                });
+    
+                annotationNodes[physicalThingAnnotationNodeIndex] = physicalThingAnnotationNode;
+            }
 
             self.annotationNodes(annotationNodes);
         };
@@ -249,6 +251,7 @@ define([
             self.tile.reset();
             self.resetCanvasFeatures();
             self.drawFeatures([]);
+            self.highlightAnnotation();
         };
 
         this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
