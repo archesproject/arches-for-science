@@ -73,10 +73,10 @@ define([
                     "op": "or",
                     "val":  ko.unwrap(self.physicalThingSetValue)
                 };
-                return function(term, data) {
-                    data["advanced-search"] = JSON.stringify([query]);
+                return function(term, queryString) {
+                    queryString.set('advanced-search', JSON.stringify([query]));
                     if (term) {
-                        data["term-filter"]=JSON.stringify([{"context":"", "id": term,"text": term,"type":"term","value": term,"inverted":false}]);
+                        queryString.set('term-filter', JSON.stringify([{"context":"", "id": term,"text": term,"type":"term","value": term,"inverted":false}]));
                     }
                 };
             } else {
