@@ -32,7 +32,7 @@ define([
             this.partFilter = ko.observable("");
             this.alert = params.alert;
             this.annotations = ko.observableArray([]);
-            this.parts = ko.observableArray(params.value()?.parts || []);
+            this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
             this.formData = new window.FormData();
             this.physicalThing = projectInfo.physicalThing;
