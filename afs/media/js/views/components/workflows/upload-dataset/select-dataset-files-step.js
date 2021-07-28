@@ -32,7 +32,7 @@ define([
             this.partFilter = ko.observable("");
             this.alert = params.alert;
             this.annotations = ko.observableArray([]);
-            this.parts = ko.observableArray([]);
+            this.parts = ko.observableArray(params.value()?.parts || []);
             this.uniqueId = uuid.generate();
             this.formData = new window.FormData();
             this.physicalThing = projectInfo.physicalThing;
@@ -162,7 +162,7 @@ define([
                     "tiles": {}
                 };
 
-                return part.datasetFiles().forEach(function(file, i){
+                part.datasetFiles().forEach(function(file, i){
                     // eslint-disable-next-line camelcase
                     fileTemplate.resourceinstance_id = datasetNameTile.resourceinstance_id;
                     part.datasetId(datasetNameTile.resourceinstance_id);
@@ -236,27 +236,32 @@ define([
                 );
             };
 
-            this.save = function() {
-                if (self.requiredInputsComplete()) {
-                    params.form.lockExternalStep("select-instrument-and-files", true);
-                    self.parts().forEach(function(part){
+            this.save = async () => {
+                if (!self.requiredInputsComplete()) { return; }
+                params.form.lockExternalStep("select-instrument-and-files", true);
+                const parts = self.parts();
+                const datasets = []
+                for (const part of parts) {
+                    try {
                         // For each part of parent phys thing, create a digital resource with a Name tile
-                        self.saveDatasetName(part)
-                            .then(function(data) {
-                                // Then save a file tile to the digital resource for each associated file
-                                self.saveDatasetFiles(part, data);
-                            })
-                            .then(function(){
-                                // Then save a relationship tile on the part that points to the digital resource
-                                self.saveDigitalResourceToChildPhysThing(part);
-                            })
-                            .catch(function(err) {
-                                // eslint-disable-next-line no-console
-                                console.log('Tile update failed', err);
-                                params.form.loading(false);
-                            });
-                    });
-                }
+                        const dataset = await self.saveDatasetName(part)
+                        datasets.push(dataset);
+                        // Then save a file tile to the digital resource for each associated file
+                        self.saveDatasetFiles(part, dataset);
+                    
+                        // Then save a relationship tile on the part that points to the digital resource
+                        self.saveDigitalResourceToChildPhysThing(part);
+                    } catch(err) {
+                        // eslint-disable-next-line no-console
+                        console.log('Tile update failed', err);
+                        params.form.loading(false);
+                    }
+                };
+                self.datasets(datasets);
+                params.value({ datasets: self.datasets() });
+                params.form.savedData(params.form.addedData());
+                params.form.complete(true);
+                
             };
 
             params.save = this.save;
