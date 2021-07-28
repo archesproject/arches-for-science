@@ -252,6 +252,7 @@ define([
             self.resetCanvasFeatures();
             self.drawFeatures([]);
             self.highlightAnnotation();
+            self.selectedFeature(null);
         };
 
         this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
@@ -272,7 +273,7 @@ define([
                     var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
                     
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
-                    physicalThingNameTile.data[physicalThingNameContentNodeId] = 'autogen region foo ' + selectedAnalysisAreaInstanceLabel;
+                    physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedAnalysisAreaInstanceLabel;
     
                     physicalThingNameTile.save().then(function(physicalThingNameData) {
                         resolve(physicalThingNameData);
@@ -617,13 +618,21 @@ define([
 
                 var selectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
                 var selectedAnalysisAreaInstanceFeaturesNode = ko.unwrap(selectedAnalysisAreaInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId]);
-                
-                var updatedSelectedAnalysisAreaInstanceFeatures = selectedAnalysisAreaInstanceFeaturesNode.features().filter(function(selectedFeature) {
-                    return ko.unwrap(selectedFeature.id) !== ko.unwrap(feature.id);
-                });
-                
-                selectedAnalysisAreaInstanceFeaturesNode.features(updatedSelectedAnalysisAreaInstanceFeatures);
-                selectedAnalysisAreaInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId] = selectedAnalysisAreaInstanceFeaturesNode;
+
+                if (selectedAnalysisAreaInstanceFeaturesNode) {
+                    var updatedSelectedAnalysisAreaInstanceFeatures = ko.unwrap(selectedAnalysisAreaInstanceFeaturesNode.features).filter(function(selectedFeature) {
+                        return ko.unwrap(selectedFeature.id) !== ko.unwrap(feature.id);
+                    });
+                    
+                    if (ko.isObservable(selectedAnalysisAreaInstanceFeaturesNode.features)) {
+                        selectedAnalysisAreaInstanceFeaturesNode.features(updatedSelectedAnalysisAreaInstanceFeatures);
+                    }
+                    else {
+                        selectedAnalysisAreaInstanceFeaturesNode.features = updatedSelectedAnalysisAreaInstanceFeatures;
+                    }
+
+                    selectedAnalysisAreaInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId] = selectedAnalysisAreaInstanceFeaturesNode;
+                }
 
                 self.selectedAnalysisAreaInstance(selectedAnalysisAreaInstance);
                 /* END update table */ 
@@ -644,19 +653,23 @@ define([
             self.editFeature = function(feature) {
                 self.featureLayers().forEach(function(featureLayer) {
                     if (featureLayer.feature.id === ko.unwrap(feature.id)) {
-                        featureLayer.fireEvent('click')
+                        featureLayer.fireEvent('click');
                     }
                 });
             };
 
             self.drawLayer.subscribe(function(drawLayer) {
                 drawLayer.getLayers().forEach(function(layer) {
-                    if (self.selectedFeature() && self.selectedFeature().id === layer.feature.id) {
-                        layer.editing.enable();
-                        layer.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
-                    }
+                    layer.editing.enable();
+                    layer.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
                 });
-            })
+            });
+        };
+
+        this.clearEditedGeometries = function() {
+            if (self.tile.tileid && self.selectedFeature()) {
+                self.resetAnalysisAreasTile();
+            }
         };
 
         this.fetchCardFromResourceId = function(resourceId, nodegroupId) {

@@ -250,7 +250,7 @@
                                             class="add-new-feature" 
                                             data-bind="{
                                                 visible: !self.disableDrawing(),
-                                                click: function() { self.tile.reset(); self.resetCanvasFeatures(); self.drawFeatures([]); self.highlightAnnotation(); },
+                                                click: self.clearEditedGeometries,
                                             }"
                                         >
                                             <select data-placeholder="{% trans "Add a new feature..." %}" data-bind="
