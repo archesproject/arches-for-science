@@ -236,15 +236,15 @@ define([
                 );
             };
 
-            this.save = async () => {
+            this.save = async() => {
                 if (!self.requiredInputsComplete()) { return; }
                 params.form.lockExternalStep("select-instrument-and-files", true);
                 const parts = self.parts();
-                const datasets = []
+                const datasets = [];
                 for (const part of parts) {
                     try {
                         // For each part of parent phys thing, create a digital resource with a Name tile
-                        const dataset = await self.saveDatasetName(part)
+                        const dataset = await self.saveDatasetName(part);
                         datasets.push(dataset);
                         // Then save a file tile to the digital resource for each associated file
                         self.saveDatasetFiles(part, dataset);
@@ -256,7 +256,7 @@ define([
                         console.log('Tile update failed', err);
                         params.form.loading(false);
                     }
-                };
+                }
                 self.datasets(datasets);
                 params.value({ datasets: self.datasets() });
                 params.form.savedData(params.form.addedData());
