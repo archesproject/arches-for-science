@@ -18,6 +18,9 @@ define([
         this.fileFormatRenderers = fileRenderers;
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
+        const datasetFilesStepData = params.form.externalStepData.selectdatasetfiles.data?.['select-dataset-files-step']?.[0]?.[1]
+        this.datasetIds = datasetFilesStepData?.parts.map(x => x.datasetId);
+        
         params.value({});
         this.dirty = ko.computed(function(){
             for (var value of Object.values(params.value())) {
@@ -107,7 +110,6 @@ define([
             };
         };
 
-        var mockDigitalResourceIds = ['02663e53-8918-4631-bc00-e9a34685d321'];
         this.digitalResources = ko.observableArray();
         this.getDigitalResource = function(resourceid) {
             window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
@@ -153,7 +155,8 @@ define([
                     });
                 });
         };
-        this.getDigitalResource(mockDigitalResourceIds[0]);
+        
+        this.datasetIds.forEach(x => this.getDigitalResource(x));
 
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
