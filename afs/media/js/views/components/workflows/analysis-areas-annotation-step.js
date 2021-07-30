@@ -316,7 +316,16 @@ define([
     
                     selectedAnalysisAreaInstance.save().then(function(data) {
                         resolve(data);
-                    });
+                    }).catch(exc => {
+                        params.form.alert("");
+                        if(/This card requires values for the following\: Name for Part/.test(exc.responseJSON.message)) {
+                            params.form.alert(new params.form.AlertViewModel('ep-alert-red', "Name required", "Providing a name is required"));
+                        }
+                        if(/This card requires values for the following\: Geometric Annotation/.test(exc.responseJSON.message)) {
+                            params.form.alert(new params.form.AlertViewModel('ep-alert-red', "Geometry required", "Providing a geometric annotation is required"));
+                        }
+                        self.savingTile(false);
+                    })
                 });
             };
 
@@ -376,7 +385,7 @@ define([
                     var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
         
                     if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
-                        var partIdentifierAssignmentPhysicalPartOfObjectResourceId = partIdentifierAssignmentPhysicalPartOfObjectData[0]['resourceId']();
+                        var partIdentifierAssignmentPhysicalPartOfObjectResourceId = ko.unwrap(partIdentifierAssignmentPhysicalPartOfObjectData[0]['resourceId']);
         
                         self.fetchCardFromResourceId(partIdentifierAssignmentPhysicalPartOfObjectResourceId, physicalThingNameNodegroupId).then(function(physicalThingNameCard) {
                             resolve(physicalThingNameCard);
@@ -410,9 +419,8 @@ define([
     
                                     self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
                                     self.savingTile(false);
-
+                                    params.form.alert("")
                                     self.drawFeatures([]);
-
                                     params.dirty(true);
                                 });
                             });
