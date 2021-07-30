@@ -460,6 +460,50 @@
     padding: 0px;
 }
 
+.upload-dataset-select-dataset-files {
+    margin-top: 20px;
+}
+
+.upload-dataset-select-dataset-files .file-workbench-files {
+    margin-top: 0; 
+    overflow-y: auto;
+}
+
+.upload-dataset-select-dataset-files .file-workbench-file {
+    display: inline-flex;
+}
+
+.upload-dataset-select-dataset-files .panel {
+    box-shadow: none; 
+    -webkit-box-shadow:none;
+}
+
+.upload-dataset-select-dataset-files #parts-panel {
+    padding:20px 0px;
+}
+.upload-dataset-select-dataset-files #parts-panel a .file-workbench-file {
+    width: 100%;
+}
+
+.upload-dataset-select-dataset-files #parts-panel .panel {
+    margin-bottom:0px; 
+    border-right: 1px solid #ddd; 
+    border-left: 1px solid #ddd; 
+    border-bottom: 1px solid #ddd;
+}
+
+.upload-dataset-select-dataset-files #parts-panel .panel-collapse {
+    padding: 0px 5px;
+}
+
+.upload-dataset-select-dataset-files #parts-panel .dataset-name {
+    margin: 5px 0px;
+}
+
+.upload-dataset-select-dataset-files #parts-panel .dataset-name {
+    width: 100%;
+}
+
 .analysis-areas-workflow-regions-step {
     height: 100%;
     width: 100%;
