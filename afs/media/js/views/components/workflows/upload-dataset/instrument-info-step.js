@@ -108,6 +108,8 @@ define([
                 "data": {}
             };
             res.data = data;
+            // eslint-disable-next-line camelcase
+            res.transaction_id = params.form.workflowId;
             return res;
         };
 
