@@ -13,8 +13,9 @@ define([
     function viewModel(params) {
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
         var self = this;
-        var interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
-        var briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
+        const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
+        const briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
+        const datasetIds = params.form.externalStepData.datasetinfo.data["select-dataset-files-step"][0][1];
         this.fileFormatRenderers = fileRenderers;
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
@@ -107,7 +108,6 @@ define([
             };
         };
 
-        var mockDigitalResourceIds = ['02663e53-8918-4631-bc00-e9a34685d321'];
         this.digitalResources = ko.observableArray();
         this.getDigitalResource = function(resourceid) {
             window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
@@ -153,7 +153,7 @@ define([
                     });
                 });
         };
-        this.getDigitalResource(mockDigitalResourceIds[0]);
+        this.getDigitalResource(datasetIds[0]);
 
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
@@ -186,7 +186,7 @@ define([
         });
         this.filteredFiles = ko.pureComputed(function(){
             return this.files().filter(function(file){
-                return file.File_Name.File_Name_content['@display_value'].toLowerCase().includes(this.fileFilter().toLowerCase());
+                return file.file_details[0].name.toLowerCase().includes(this.fileFilter().toLowerCase());
             }, this);
         }, this);
         this.fileStatementInterpretation = ko.observable();

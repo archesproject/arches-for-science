@@ -296,18 +296,7 @@ define([
                     }
                 }
 
-                params.form.value({ 
-                    parts: self.parts().map(x => 
-                        {
-                            return {
-                                datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
-                                datasetId: x.datasetId(),
-                                datasetName: x.datasetName(),
-                                resourceReferenceId: x.resourceReferenceId(),
-                                tileid: x.tileid
-                            };
-                        }
-                    )});
+                params.form.value(self.parts().map(x => x.datasetId()));
                 params.form.savedData(params.form.addedData());
                 params.form.complete(true);
                 
@@ -315,7 +304,7 @@ define([
 
             params.save = this.save;
             this.datasets.subscribe(function(){
-                params.form.complete(true);
+                params.value(self.datasets());
             });
 
             this.dropzoneOptions = {
