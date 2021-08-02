@@ -246,7 +246,13 @@
                                         </div>
                                     </div>
                                     <div class="map-card-feature-list">
-                                        <div class="add-new-feature" data-bind="visible: !self.disableDrawing()">
+                                        <div 
+                                            class="add-new-feature" 
+                                            data-bind="{
+                                                visible: !self.disableDrawing(),
+                                                click: self.clearEditedGeometries,
+                                            }"
+                                        >
                                             <select data-placeholder="{% trans "Add a new feature..." %}" data-bind="
                                                 value: self.featureLookup[widget.node_id()].selectedTool,
                                                 valueAllowUnset: true,
@@ -403,7 +409,7 @@
                         <button 
                             class="btn btn-danger" 
                             style="width: 48%;"
-                            data-bind="click: $data.tile.reset"
+                            data-bind="click: $data.resetAnalysisAreasTile"
                         >
                             <i class="ion-android-cancel"></i>
                             <span style="padding-left: 4px">{% trans 'Cancel' %}</span>

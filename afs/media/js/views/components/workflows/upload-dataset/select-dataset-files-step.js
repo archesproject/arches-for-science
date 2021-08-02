@@ -111,9 +111,27 @@ define([
                 }
             };
 
-            this.saveDatasetName = function(part){
+            this.addFileToPart = (file) => {
+                if(self.selectedPart) {
+                    file.tileId = ko.observable();
+                    self.selectedPart().datasetFiles.push(file);
+                    self.files.remove(file);
+                }
+            }
+
+            this.removeFileFromPart = (file) => {
+                if(self.selectedPart) {
+                    self.selectedPart().datasetFiles.remove(file);
+                    self.files.push(file);
+                }
+            }
+
+            this.saveDatasetName = async (part) => {
+                // don't recreate datasets that already exist
+                if(part.datasetId()){ return part.datasetId(); }
+
                 //Tile structure for the Digital Resource 'Name' nodegroup
-                let nameTemplate = {
+                const nameTemplate = {
                     "tileid": "",
                     "data": {
                         "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a": null,
@@ -131,23 +149,24 @@ define([
 
                 nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = part.datasetName() || "";
 
-                return window.fetch(arches.urls.api_tiles(uuid.generate()), {
+                const tile = await window.fetch(arches.urls.api_tiles(uuid.generate()), {
                     method: 'POST',
                     credentials: 'include',
                     body: JSON.stringify(nameTemplate),
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                }).then(function(response) {
-                    if (response.ok) {
-                        return response.json();
-                    }
                 });
+
+                if(tile.ok){
+                    const json = await tile.json();
+                    return json?.resourceinstance_id;
+                }
             };
 
-            this.saveDatasetFiles = function(part, datasetNameTile){
+            this.saveDatasetFiles = async (part, datasetNameTileResourceId) => {
                 //Tile structure for the Digital Resource 'File' nodegroup
-                let fileTemplate = {
+                const fileTemplate = {
                     "tileid": "",
                     "data": {
                         "29d5ecb8-79a5-11ea-8ae2-acde48001122": null,
@@ -162,11 +181,15 @@ define([
                     "tiles": {}
                 };
 
-                return part.datasetFiles().forEach(function(file, i){
+                const datasetFilesArray = part.datasetFiles();
+                for(let i = 0; i < datasetFilesArray.length; ++i){
+                    const file = datasetFilesArray[i];
+                    // file has already been uploaded
+                    if(file.tileId()){ continue; }
                     // eslint-disable-next-line camelcase
-                    fileTemplate.resourceinstance_id = datasetNameTile.resourceinstance_id;
-                    part.datasetId(datasetNameTile.resourceinstance_id);
-                    let fileInfo = {
+                    fileTemplate.resourceinstance_id = datasetNameTileResourceId;
+                    
+                    const fileInfo = {
                         name: file.name,
                         accepted: file.accepted,
                         height: file.height,
@@ -186,33 +209,34 @@ define([
                         fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].rendererid;
                     }
                     fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
-                    var formData = new window.FormData();
+                    const formData = new window.FormData();
                     formData.append('data', JSON.stringify(fileTemplate));
                     formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
-                    window.fetch(arches.urls.api_tiles(uuid.generate()), {
+                    const tile = await window.fetch(arches.urls.api_tiles(uuid.generate()), {
                         method: 'POST',
                         credentials: 'include',
                         body: formData
                     })
-                        .then(function(response) {
-                            if (response.ok) {
-                                return response.json();
-                            }
-                        });
-                });
+                        
+                    if (tile.ok) {
+                        json = await tile.json();
+                        file.tileId(json.tileid);
+                    }
+                }  
             };
 
-            this.saveDigitalResourceToChildPhysThing = function(part){
+            this.saveDigitalResourceToChildPhysThing = async (part) => {
+                if(part.resourceReferenceId()) { return part.resourceReferenceId(); }
                 const partResourceInstanceId = part.data[physicalThingPartNodeId][0].resourceId; 
                 const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
                 const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501";  
                 const tileid = uuid.generate();
-                let payload = [{
+                const payload = [{
                     "resourceId": part.datasetId(),
                     "ontologyProperty": "",
                     "inverseOntologyProperty": ""
                 }];
-                let digitalReferenceTile = {
+                const digitalReferenceTile = {
                     "tileid": "",
                     "data": {},
                     "nodegroup_id": digitalReferenceNodeGroupId,
@@ -222,41 +246,71 @@ define([
                     "tiles": {}
                 };
                 digitalReferenceTile.data[digitalReferenceNodeId] = payload;
-                window.fetch(arches.urls.api_tiles(tileid), {
+                const result = await window.fetch(arches.urls.api_tiles(tileid), {
                     method: 'POST',
                     credentials: 'include',
                     body: JSON.stringify(digitalReferenceTile),
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                }).then(
-                    function(data){
-                        console.log('digital resource saved to physical thing', data);
-                    }
-                );
+                });
+
+                if(result.ok){
+                    const json = await result.json();
+                    part.resourceReferenceId(json?.tileid);
+                    return part.resourceReferenceId();
+                }
             };
 
-            this.save = function() {
-                if (self.requiredInputsComplete()) {
-                    params.form.lockExternalStep("select-instrument-and-files", true);
-                    self.parts().forEach(function(part){
-                        // For each part of parent phys thing, create a digital resource with a Name tile
-                        self.saveDatasetName(part)
-                            .then(function(data) {
-                                // Then save a file tile to the digital resource for each associated file
-                                self.saveDatasetFiles(part, data);
-                            })
-                            .then(function(){
-                                // Then save a relationship tile on the part that points to the digital resource
-                                self.saveDigitalResourceToChildPhysThing(part);
-                            })
-                            .catch(function(err) {
-                                // eslint-disable-next-line no-console
-                                console.log('Tile update failed', err);
-                                params.form.loading(false);
-                            });
-                    });
+            this.save = async() => {
+                const incompleteInputs = self.getIncompleteInputs();
+                if(incompleteInputs.length) { 
+                    params.form.alert(new params.form.AlertViewModel(
+                        'ep-alert-red', 
+                        "Dataset Name Required", 
+                        `A dataset name was not provided for parts: ${incompleteInputs.map(x => x.displayname).join(', ')}`
+                    ));
+                    return;
+                } else {
+                    params.form.alert('');
                 }
+                
+                params.form.lockExternalStep("select-instrument-and-files", true);
+                const parts = self.parts();
+                for (const part of parts) {
+                    if(!part.datasetName()) { continue; }
+                    try {
+                        // For each part of parent phys thing, create a digital resource with a Name tile
+                        const datasetResourceId = (await self.saveDatasetName(part));
+
+                        part.datasetId(datasetResourceId);
+                        // Then save a file tile to the digital resource for each associated file
+                        await self.saveDatasetFiles(part, datasetResourceId);
+                    
+                        // Then save a relationship tile on the part that points to the digital resource
+                        await self.saveDigitalResourceToChildPhysThing(part);
+                    } catch(err) {
+                        // eslint-disable-next-line no-console
+                        console.log('Tile update failed', err);
+                        params.form.loading(false);
+                    }
+                }
+
+                params.form.value({ 
+                    parts: self.parts().map(x => 
+                        {
+                            return {
+                                datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
+                                datasetId: x.datasetId(),
+                                datasetName: x.datasetName(),
+                                resourceReferenceId: x.resourceReferenceId(),
+                                tileid: x.tileid
+                            };
+                        }
+                    )});
+                params.form.savedData(params.form.addedData());
+                params.form.complete(true);
+                
             };
 
             params.save = this.save;
@@ -281,11 +335,17 @@ define([
                 }
             };
 
-            this.requiredInputsComplete = ko.pureComputed(function(){
-                return self.parts().every(part => !!ko.unwrap(part.datasetName));
+            this.getIncompleteInputs = ko.pureComputed(function() {
+                return self.parts().filter(part => {
+                    return !part.datasetName() && part.datasetFiles().length;
+                })
+            });
+            
+            this.canBeSaved = ko.pureComputed(function() {
+                return self.parts().some(part => part.datasetName);
             });
 
-            this.init = function(){
+            this.init = async() => {
                 this.selectedAnnotationTile.subscribe(this.highlightAnnotation);
                 self.annotationNodes.subscribe(function(val){
                     var overlay = val.find(n => n.name.includes('Physical Thing'));
@@ -300,31 +360,38 @@ define([
                     }
                 });
 
-                resourceUtils.lookupResourceInstanceData(this.physicalThing).then(
-                    function(data){
-                        if (data._source) {
-                            let parts = data._source.tiles.filter(
-                                function(tile) {
-                                    return tile.nodegroup_id === physicalThingPartNodeGroupId;
-                                }
-                            );
-                            self.parts(parts);
-                            self.parts().forEach(function(part){
-                                part.datasetFiles = ko.observableArray([]);
-                                part.datasetName = ko.observable();
-                                part.datasetId = ko.observable();
-                                part.displayname = part.data[physicalThingPartNameNodeId];
-                                part.datasetId.subscribe(function(val){
-                                    if (val) {
-                                        params.form.complete(true);
-                                    }
-                                });
-                            });
-                            self.selectedPart(self.parts()[0]);
+                const thingResource = await resourceUtils.lookupResourceInstanceData(this.physicalThing);
+        
+                const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
+                self.parts(parts);
+                self.parts().forEach(async(part) => {
+                    part.datasetFiles = ko.observableArray([]);
+                    part.datasetName = ko.observable();
+                    part.datasetId = ko.observable();
+                    part.resourceReferenceId = ko.observable();
+                    part.displayname = part.data[physicalThingPartNameNodeId];
+                    part.datasetId.subscribe(function(val){
+                        if (val) {
+                            params.form.complete(true);
+                        }
+                    });
+                    const savedValue = params.form.value()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
+                    if(savedValue) {
+                        
+                        part.datasetFiles(savedValue.datasetFiles.map(x => { return {...x, tileId:ko.observable(x.tileId)}}));
+                        part.datasetName(savedValue.datasetName);
+                        part.datasetId(savedValue.datasetId);
+                        part.resourceReferenceId(savedValue.resourceReferenceId);
+                        if(self.activeTab() != 'dataset') {
+                            self.mainMenu(false);
+                            self.activeTab('dataset');
+                            self.annotationNodes.valueHasMutated();
                         }
                     }
-                );
-            };
+                });
+                self.selectedPart(self.parts()[0]);
+            }
+     
             this.init();
         },
         template: { require: 'text!templates/views/components/workflows/upload-dataset/select-dataset-files-step.htm' }

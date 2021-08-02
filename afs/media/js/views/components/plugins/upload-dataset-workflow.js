@@ -69,7 +69,7 @@ define([
                             componentConfigs: [
                                 { 
                                     componentName: 'instrument-info-step',
-                                    uniqueInstanceName: 'instrument-type', /* unique to step */
+                                    uniqueInstanceName: 'instrument-info', /* unique to step */
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
@@ -123,6 +123,7 @@ define([
                     required: true,
                     externalstepdata: {
                         projectinfo: 'project-info',
+                        selectdatasetfiles: 'select-dataset-files-step',
                     },
                     layoutSections: [
                         {
