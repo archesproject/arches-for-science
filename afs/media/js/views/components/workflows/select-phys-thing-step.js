@@ -50,6 +50,7 @@ define([
         }, this);
         
         this.projectValue.subscribe(function(val){
+            self.isPhysicalThingValid("");
             if (val) {
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
