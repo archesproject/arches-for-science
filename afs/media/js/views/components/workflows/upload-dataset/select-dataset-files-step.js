@@ -34,6 +34,7 @@ define([
             this.annotations = ko.observableArray([]);
             this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
+            this.observationReferenceTileId = ko.observable();
             this.formData = new window.FormData();
             this.physicalThing = projectInfo.physicalThing;
             this.uniqueidClass = ko.computed(function() {
@@ -160,7 +161,48 @@ define([
 
                 if(tile.ok){
                     const json = await tile.json();
-                    return json?.resourceinstance_id;
+
+                    const datasetResourceId = json?.resourceinstance_id;
+                    
+                    return datasetResourceId;
+                }
+            };
+
+            this.createObservationCrossReferences = async () => {
+                const recordedValueNodeId = "dd596aae-c457-11e9-956b-a4d18cec433a";
+                const tileid = self.observationReferenceTileId() || "";
+                const digitalReferenceTile = {
+                    "tileid": self.observationReferenceTileId() || "",
+                    "data": {},
+                    "nodegroup_id": recordedValueNodeId,
+                    "parenttile_id": null,
+                    "resourceinstance_id": observationInfo.observationInstanceId,
+                    "sortorder": 1,
+                    "tiles": {}
+                };
+                
+                digitalReferenceTile.data[recordedValueNodeId] = 
+                    self.parts().filter(x => x.datasetId()).map(part => { 
+                        return {
+                            "resourceId": part.datasetId(),
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": ""
+                        };
+                    });
+
+                const result = await window.fetch(arches.urls.api_tiles(tileid), {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: JSON.stringify(digitalReferenceTile),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+                if(result.ok){
+                    const json = await result.json();
+                    self.observationReferenceTileId(json?.tileid);
+                    return json;
                 }
             };
 
@@ -284,6 +326,7 @@ define([
                         const datasetResourceId = (await self.saveDatasetName(part));
 
                         part.datasetId(datasetResourceId);
+
                         // Then save a file tile to the digital resource for each associated file
                         await self.saveDatasetFiles(part, datasetResourceId);
                     
@@ -296,7 +339,14 @@ define([
                     }
                 }
 
+                try{
+                    await self.createObservationCrossReferences();
+                } catch(err) {
+                    console.log('Couldn\'t create observation cross references.');
+                }
+
                 params.form.value({ 
+                    observationReferenceTileId: self.observationReferenceTileId(),
                     parts: self.parts().map(x => 
                         {
                             return {
@@ -364,6 +414,8 @@ define([
         
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
                 self.parts(parts);
+
+                self.observationReferenceTileId(params.form.value()?.observationReferenceTileId);               
                 self.parts().forEach(async(part) => {
                     part.datasetFiles = ko.observableArray([]);
                     part.datasetName = ko.observable();
