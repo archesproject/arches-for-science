@@ -38,8 +38,7 @@ define([
                                 },
                             ], 
                         },
-                    ],
-                    wastebin: {resourceid: null, description: 'a project instance'}
+                    ]
                 },
                 {
                     title: 'Project Statement',
