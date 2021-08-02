@@ -7,6 +7,7 @@ define([
     'views/components/file-upload',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/upload-dataset/instrument-info-step',
+    'views/components/workflows/upload-dataset/file-interpretation-step',
     'views/components/workflows/upload-dataset/select-dataset-files-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
@@ -110,18 +111,35 @@ define([
                 },
                 {
                     title: 'File Interpretation',
-                    name: 'fileinterpretation',
+                    name: 'file-interpretation',
                     description: 'The date that the sample was taken',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
-                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
-                    nodegroupid: '812c7086-9471-11ea-ae26-3af9d3b32b71',
-                    hiddenNodes: [],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: false, // temporarily false for ease of development on other steps
-                    // required: true,
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    autoAdvance: true,
+                    informationboxdata: {
+                        heading: 'Select the instrument used for the analysis',
+                        text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
+                    },
+                    required: true,
+                    externalstepdata: {
+                        projectinfo: 'project-info',
+                        selectdatasetfiles: 'select-dataset-files-step',
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: null,
+                            componentConfigs: [
+                                { 
+                                    componentName: 'file-interpretation-step',
+                                    uniqueInstanceName: 'file-interpretation', /* unique to step */
+                                    parameters: {
+                                        renderContext: 'workflow',
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'Summary',

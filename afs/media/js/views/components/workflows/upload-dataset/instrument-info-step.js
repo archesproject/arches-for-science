@@ -21,6 +21,11 @@ define([
         const observedThingInstanceId = projectInfo.physicalThing;
         const projectInstanceId = projectInfo.project;
         const projectNodeId = '736f06a4-c54d-11ea-9f58-024e0d439fdb';
+        const nameTypeNodeId = '87e4092e-c457-11e9-8036-a4d18cec433a';
+        // TODO: the default name type concept value needs to change/be confirmed.  
+        const nameTypeConceptValue = ['ec635afd-beb1-426e-a21c-09866ea94d25'];
+        const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
+        const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
 
         const getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key])
@@ -149,6 +154,7 @@ define([
                 .then(function(data) {
                     let nameData = {};
                     nameData[nameNodeId] = self.nameValue();
+                    nameData[nameTypeNodeId] = nameTypeConceptValue;
                     projectTileId = data.tileid;
                     return self.saveTile(nameData, nameNodeGroupId, data.resourceinstance_id, nameTileId);
                 })
@@ -167,6 +173,7 @@ define([
                 .then(function(data) {
                     let parameterData = {};
                     parameterData[parameterNodeId] = self.parameterValue();
+                    parameterData[statementTypeNodeId] = statementTypeConceptValue;
                     procedureTileId = data.tileid;
                     return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
                 })
