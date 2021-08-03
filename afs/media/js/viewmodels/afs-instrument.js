@@ -79,7 +79,7 @@ define(['jquery',
         this.seriesStyles = this.commonData.seriesStyles;
         this.colorHolder = this.commonData.colorHolder;
         this.compatibleSeries = this.commonData.compatibleSeries;
-        this.primarySeriesColor =  this.fileViewer ? JSON.parse(localStore.getItem(renderer + 'series' + this.fileViewer.tile.tileid)).color : "#3333ff";
+        this.primarySeriesColor = this.fileViewer ? JSON.parse(localStore.getItem(renderer + 'series' + this.fileViewer.tile.tileid)).color : "#3333ff";
 
 
         this.selectedSeriesTile.subscribe(function(tile){
