@@ -26,31 +26,25 @@ define([
         this.physicalThingSetValue = ko.observable();
         this.hasSetWithPhysicalThing = ko.observable();
         this.isPhysicalThingValid = ko.observable();
+        this.originalValue = params.form.value();
         
         this.updateValues = function(val){
-            if (val === null) {
-                self.physicalThingValue(null);
-                self.physicalThingSetValue(null);
-                self.projectValue(null);
-            } else {
+            if (val !== null) {
                 self.physicalThingValue(val.physicalThing);
                 self.physicalThingSetValue(val.physicalThingSet);
                 self.projectValue(val.project);
             }
         };
 
+        // update with saved values
         if (params.value()) { 
             this.updateValues(params.value());
         }
 
         this.locked = params.form.locked;
-
-        params.form.value.subscribe(function(val){
-            this.updateValues(val);
-        }, this);
         
         this.projectValue.subscribe(function(val){
-            self.isPhysicalThingValid("");
+            self.isPhysicalThingValid(null);
             if (val) {
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
@@ -71,8 +65,6 @@ define([
                         }
                     }
                 );
-            } else {
-                self.updateValues(null);
             }
         });
 
@@ -96,7 +88,12 @@ define([
         });
 
         this.physicalThingValue.subscribe(async (val) => {
-            if (!val) { return; }
+            // if the physical thing value isn't set correctly, return step value
+            // to original value
+            if (!val) { 
+                params.value(self.originalValue); 
+                return; 
+            }
             const physThing = (await resourceUtils.lookupResourceInstanceData(val))?._source;
             
             const digitalReferencesWithManifest = physThing.tiles.
