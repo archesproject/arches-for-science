@@ -145,7 +145,8 @@ define([
                     "parenttile_id": null,
                     "resourceinstance_id": "",
                     "sortorder": 0,
-                    "tiles": {}
+                    "tiles": {},
+                    "transaction_id": params.form.workflowId
                 };
 
                 nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = part.datasetName() || "";
@@ -178,7 +179,8 @@ define([
                     "parenttile_id": null,
                     "resourceinstance_id": observationInfo.observationInstanceId,
                     "sortorder": 1,
-                    "tiles": {}
+                    "tiles": {},
+                    "transaction_id": params.form.workflowId
                 };
                 
                 digitalReferenceTile.data[recordedValueNodeId] = 
@@ -220,7 +222,8 @@ define([
                     "parenttile_id": null,
                     "resourceinstance_id": "",
                     "sortorder": 1,
-                    "tiles": {}
+                    "tiles": {},
+                    "transaction_id": params.form.workflowId
                 };
 
                 const datasetFilesArray = part.datasetFiles();
@@ -252,6 +255,7 @@ define([
                     }
                     fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
                     const formData = new window.FormData();
+                    formData.append('transaction_id', params.form.workflowId);
                     formData.append('data', JSON.stringify(fileTemplate));
                     formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
                     const tile = await window.fetch(arches.urls.api_tiles(uuid.generate()), {
@@ -285,7 +289,8 @@ define([
                     "parenttile_id": null,
                     "resourceinstance_id": partResourceInstanceId,
                     "sortorder": 1,
-                    "tiles": {}
+                    "tiles": {},
+                    "transaction_id": params.form.workflowId
                 };
                 digitalReferenceTile.data[digitalReferenceNodeId] = payload;
                 const result = await window.fetch(arches.urls.api_tiles(tileid), {

@@ -105,11 +105,11 @@ define([
                 "resourceinstance_id": resourceid,
                 "sortorder": 0,
                 "tiles": {},
-                "data": {}
+                "data": {},
+                "transaction_id": params.form.workflowId
             };
             res.data = data;
-            // eslint-disable-next-line camelcase
-            res.transaction_id = params.form.workflowId;
+
             return res;
         };
 
