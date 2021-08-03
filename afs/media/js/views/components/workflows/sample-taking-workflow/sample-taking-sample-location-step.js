@@ -266,7 +266,8 @@ define([
                     
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedSampleLocationInstanceLabel;
-    
+                    physicalThingNameTile.transactionId = params.form.workflowId;
+
                     physicalThingNameTile.save().then(function(physicalThingNameData) {
                         resolve(physicalThingNameData);
                     });
@@ -282,6 +283,7 @@ define([
                         "ontologyProperty": "",
                         "inverseOntologyProperty": ""
                     }];
+                    physicalThingPartOfTile.transactionId = params.form.workflowId;
 
                     physicalThingPartOfTile.save().then(function(physicalThingPartOfData) {
                         resolve(physicalThingPartOfData);
@@ -305,6 +307,7 @@ define([
                         "ontologyProperty": "",
                         "inverseOntologyProperty": ""
                     }]);
+                    selectedSampleLocationInstance.transactionId = params.form.workflowId
     
                     selectedSampleLocationInstance.save().then(function(data) {
                         resolve(data);
@@ -361,6 +364,7 @@ define([
             var saveSamplingActivitySamplingUnitTile = function(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData) {
                 return new Promise(function(resolve, _reject) {
                     var samplingAreaNodeId = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Area (E22)
+                    
                     samplingActivitySamplingUnitTile.data[samplingAreaNodeId] = [{
                         "resourceId": regionPhysicalThingNameData.resourceinstance_id,
                         "ontologyProperty": "",
@@ -387,6 +391,7 @@ define([
                     samplingActivitySamplingUnitTile.data[samplingAreaVisualizationNodeId] = ko.toJS(
                         self.physicalThingPartIdentifierAssignmentTile().data[partIdentifierAssignmentPolygonIdentifierNodeId]
                     );
+                    samplingActivitySamplingUnitTile.transactionId = params.form.workflowId;
 
                     samplingActivitySamplingUnitTile.save().then(function(data) {
                         resolve(data);
@@ -480,7 +485,8 @@ define([
                         }
     
                         physicalThingStatementTile.data[physicalThingStatementTypeNodeId] = physicalThingStatementTypeData;
-    
+                        physicalThingStatementTile.transactionId = params.form.workflowId;
+
                         physicalThingStatementTile.save().then(function(data) {
                             resolve(data);
                         });
@@ -514,7 +520,8 @@ define([
                         physicalThingStatementTile.data[physicalThingStatementTypeNodeId] = physicalThingStatementTypeData.filter(function(data) {
                             return data !== fooNodeId;
                         });
-    
+                        physicalThingStatementTile.transactionId = params.form.workflowId;
+
                         physicalThingStatementTile.save().then(function(data) {
                             resolve(data);
                         });

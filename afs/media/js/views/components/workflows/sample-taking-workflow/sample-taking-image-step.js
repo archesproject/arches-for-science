@@ -124,16 +124,21 @@ define([
             params.form.saving(true);
 
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
+                self.digitalResourceNameTile.transactionId = params.form.workflowId;
+
                 self.digitalResourceNameTile.save().then(function(data) {
                     self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
-    
+                    self.digitalResourceStatementTile.transactionId = params.form.workflowId;
+
                     self.digitalResourceStatementTile.save().then(function(data) {
                         self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
-    
+                        self.digitalResourceServiceTile.transactionId = params.form.workflowId;
+
                         self.digitalResourceServiceTile.save().then(function(data) {
                             self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
                             self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
-    
+                            self.digitalResourceServiceIdentifierTile.transactionId = params.form.workflowId;
+
                             self.digitalResourceServiceIdentifierTile.save().then(function(data) {
                                 params.form.savedData.push(data);
     
@@ -149,7 +154,8 @@ define([
                                 
                                 var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
                                 digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
-                    
+                                digitalReferenceTile.transactionId = params.form.workflowId;
+
                                 digitalReferenceTile.save().then(function(data) {
                                     params.form.complete(true);
                                     params.form.saving(false);

@@ -111,6 +111,7 @@ define([
                     'data': data,
                     'resourceinstanceid': resourceinstanceid,
                     'tileid': tileid,
+                    'transaction_id': params.form.workflowId
                 }
             });
         };
@@ -118,6 +119,7 @@ define([
         this.saveTile = function(tileid, tile){
             let formData = new window.FormData();
             formData.append('data', JSON.stringify(tile));
+            formData.append('transaction_id', params.form.workflowId);
             return $.ajax({
                 url: arches.urls.api_tiles(tileid),
                 type: 'POST',
@@ -181,7 +183,8 @@ define([
                     "033578ae-1d9d-11eb-a29f-024e0d439fdb": null,  //label
                     "033578af-1d9d-11eb-a29f-024e0d439fdb": null,  //type
                     "033578c2-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate()  //end of the end
-                }
+                },
+                'transaction_id': params.form.workflowId
             };
             var samplingDateTileid = ko.unwrap(self.samplingDateTile) || uuid.generate();
             return self.saveTile(samplingDateTileid, samplingDateTileData);
@@ -201,7 +204,8 @@ define([
                     '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['df8e4cf6-9b0b-472f-8986-83d5b2ca28a0','72202a9f-1551-4cbc-9c7a-73c02321f3ea'],
                     '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingTechnique()
-                }        
+                },
+                'transaction_id': params.form.workflowId        
             };
             var samplingTechniqueTileid = ko.unwrap(self.samplingTechniqueTile) || uuid.generate();
             return self.saveTile(samplingTechniqueTileid, samplingTechniqueTileData);
