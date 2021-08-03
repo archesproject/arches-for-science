@@ -29,17 +29,12 @@ define([
             return false;
         });
         params.form.save = function(){
-            var updateTileId = function(request, status, tileModel){
-                if(status === 'success'){
-                    tileModel.set('tileid', request.responseJSON.tileid);
-                }
-            };
             for (var value of Object.values(params.value())) {
                 if(value.fileStatementParameter.dirty()){
-                    value.fileStatementParameter.tile.save(updateTileId);
+                    value.fileStatementParameter.save();
                 }
                 if(value.fileStatementInterpretation.dirty()){
-                    value.fileStatementInterpretation.tile.save(updateTileId);
+                    value.fileStatementInterpretation.save();
                 }
             }
         };
@@ -52,6 +47,7 @@ define([
             }
             var file = params.value()[self.selectedFile()['@tile_id']];
             self.fileStatementParameter(file.fileStatementParameter.fileStatement());
+            self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
         };
         this.reset = params.form.reset;
         
@@ -59,6 +55,12 @@ define([
             var obj = params.value();
             var tileid = this.selectedFile()['@tile_id'];
             obj[tileid].fileStatementParameter.updateStatement(fp);
+            params.value.valueHasMutated();
+        }, this);
+        this.fileStatementInterpretation.subscribe(function(fp) {
+            var obj = params.value();
+            var tileid = this.selectedFile()['@tile_id'];
+            obj[tileid].fileStatementInterpretation.updateStatement(fp);
             params.value.valueHasMutated();
         }, this);
         
@@ -94,17 +96,24 @@ define([
             };
             this.tile = new TileModel(tileObj);
             this.fileStatement = ko.observable(fileStatement);
-            this._fs = fileStatement;
+            this._fs = ko.observable(fileStatement);
             this.updateStatement = function(newStatement){
                 self.tile.get('data')['ca227726-78ed-11ea-a33b-acde48001122'] = newStatement;
                 self.fileStatement(newStatement);
             };
+            this.save = function(){
+                self.tile.save(function(request, status, tileModel){
+                    if(status === 'success'){
+                        tileModel.set('tileid', request.responseJSON.tileid);
+                        self._fs(self.fileStatement());
+                    }
+                });
+            };
             this.dirty = ko.computed(function(){
-                return this._fs !== this.fileStatement();
+                return this._fs() !== this.fileStatement();
             }, this);
             this.reset = function(){
-                self.updateStatement(self._fs);
-
+                self.updateStatement(self._fs());
             };
         };
 
@@ -148,7 +157,7 @@ define([
                         };
 
                         obj[fileTileid].fileStatementParameter = getStatement(briefTextValueid);
-                        obj[fileTileid]['fileStatementInterpretation'] = getStatement(interpretationValueid);
+                        obj[fileTileid].fileStatementInterpretation = getStatement(interpretationValueid);
                         params.value(obj);    
                     });
                 });
@@ -179,6 +188,7 @@ define([
             self.selectedFile(selectedFile);
             var file = params.value()[selectedFile['@tile_id']];
             self.fileStatementParameter(file.fileStatementParameter.fileStatement());
+            self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
             console.log('selected file', self.selectedRenderer().name);
         };
         this.selectedFile.subscribe(function(selectedFile){
@@ -189,7 +199,6 @@ define([
                 return file.file_details[0].name.toLowerCase().includes(this.fileFilter().toLowerCase());
             }, this);
         }, this);
-        this.fileStatementInterpretation = ko.observable();
         this.fileInterpretationTiles = ko.observableArray();
 
         this.getDisplayContent = function(tiledata){

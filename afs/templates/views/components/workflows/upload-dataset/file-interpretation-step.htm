@@ -191,22 +191,24 @@ hello
     <!-- /ko -->
 </div>
 
-<div class="file-workbench-filter">
-    <h2 class="file-workbench-filter-header">{% trans 'File Parameters' %}</h2>
+<div style="display: flex; flex-direction: column;">
+    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end;">
+        <h2 class="file-workbench-filter-header">{% trans 'File Parameters' %}</h2>
+        <div>
+            <!-- ko if: dirty -->
+            <button class="btn btn-shim btn-danger btn-labeled btn-sm fa fa-times" data-bind="click: reset">{% trans 'Cancel' %}</button>
+            <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: save">{% trans 'Save'%}</button>
+            <!-- /ko -->
+        </div>
+    </div>
     <textarea data-bind="textInput: fileStatementParameter" rows="4" class="form-control" style="width: 100%; height:initial" 
         placeholder="{% trans 'e.g.: .txt' %}"></textarea>
 </div>
 
-<div class="file-workbench-filter">
+<div>
     <h2 class="file-workbench-filter-header">{% trans 'File Interpretation' %}</h2>
     <textarea data-bind="textInput: fileStatementInterpretation" rows="4" class="form-control" style="width: 100%; height:initial"
         placeholder="{% trans 'e.g.: .txt' %}"></textarea>
-</div>
-<div>
-    <!-- ko if: dirty -->
-    <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times" data-bind="click: reset">{% trans 'Cancel' %}</button>
-    <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: save">{% trans 'Save'%}</button>
-    <!-- /ko -->
 </div>
 
 <!-- /ko -->
