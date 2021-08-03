@@ -274,7 +274,8 @@ define([
                     
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedAnalysisAreaInstanceLabel;
-    
+                    physicalThingNameTile.transactionId = params.form.workflowId;
+
                     physicalThingNameTile.save().then(function(physicalThingNameData) {
                         resolve(physicalThingNameData);
                     });
@@ -290,6 +291,7 @@ define([
                         "ontologyProperty": "",
                         "inverseOntologyProperty": ""
                     }];
+                    physicalThingPartOfTile.transactionId = params.form.workflowId;
 
                     physicalThingPartOfTile.save().then(function(physicalThingPartOfData) {
                         resolve(physicalThingPartOfData);
@@ -313,7 +315,9 @@ define([
                         "ontologyProperty": "",
                         "inverseOntologyProperty": ""
                     }]);
-    
+                    
+                    selectedAnalysisAreaInstance.transactionId = params.form.workflowId;
+
                     selectedAnalysisAreaInstance.save().then(function(data) {
                         resolve(data);
                     }).catch(exc => {
