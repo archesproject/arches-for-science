@@ -37,7 +37,8 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
                                             '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
-                                        ],  
+                                        ],
+                                        validateThing: true,
                                         renderContext: 'workflow',
                                         value: null
                                     },
