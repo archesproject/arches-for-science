@@ -43,7 +43,6 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(true);
             this.files = ko.observableArray([]);
-            this.datasets = ko.observableArray([]);
 
             this.switchCanvas = function(canvasId){
                 var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasId);
@@ -369,9 +368,6 @@ define([
             };
 
             params.save = this.save;
-            this.datasets.subscribe(function(){
-                params.form.complete(true);
-            });
 
             this.dropzoneOptions = {
                 url: "arches.urls.root",

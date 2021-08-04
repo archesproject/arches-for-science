@@ -13,8 +13,9 @@ define([
     function viewModel(params) {
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
         var self = this;
-        var interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
-        var briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
+        const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
+        const briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
+        const datasetIds = params.form.externalStepData.datasetinfo.data["select-dataset-files-step"][0][1]?.parts.map(x => x.datasetId);
         this.fileFormatRenderers = fileRenderers;
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
@@ -28,17 +29,12 @@ define([
             return false;
         });
         params.form.save = function(){
-            var updateTileId = function(request, status, tileModel){
-                if(status === 'success'){
-                    tileModel.set('tileid', request.responseJSON.tileid);
-                }
-            };
             for (var value of Object.values(params.value())) {
                 if(value.fileStatementParameter.dirty()){
-                    value.fileStatementParameter.tile.save(updateTileId);
+                    value.fileStatementParameter.save();
                 }
                 if(value.fileStatementInterpretation.dirty()){
-                    value.fileStatementInterpretation.tile.save(updateTileId);
+                    value.fileStatementInterpretation.save();
                 }
             }
         };
@@ -51,6 +47,7 @@ define([
             }
             var file = params.value()[self.selectedFile()['@tile_id']];
             self.fileStatementParameter(file.fileStatementParameter.fileStatement());
+            self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
         };
         this.reset = params.form.reset;
         
@@ -60,14 +57,17 @@ define([
             obj[tileid].fileStatementParameter.updateStatement(fp);
             params.value.valueHasMutated();
         }, this);
+        this.fileStatementInterpretation.subscribe(function(fp) {
+            var obj = params.value();
+            var tileid = this.selectedFile()['@tile_id'];
+            obj[tileid].fileStatementInterpretation.updateStatement(fp);
+            params.value.valueHasMutated();
+        }, this);
         
         this.fileFormatRenderers.forEach(function(r){
             r.state = {};
             r.disabled = true;
         });
-        // this.tile = {
-        //     tileid: undefined
-        // };
 
         var FileStatement = function(tileid, parenttileid, resourceInstanceId, fileStatement, statementTypeId){
             var self = this;
@@ -93,21 +93,27 @@ define([
             };
             this.tile = new TileModel(tileObj);
             this.fileStatement = ko.observable(fileStatement);
-            this._fs = fileStatement;
+            this._fs = ko.observable(fileStatement);
             this.updateStatement = function(newStatement){
                 self.tile.get('data')['ca227726-78ed-11ea-a33b-acde48001122'] = newStatement;
                 self.fileStatement(newStatement);
             };
+            this.save = function(){
+                self.tile.save(function(request, status, tileModel){
+                    if(status === 'success'){
+                        tileModel.set('tileid', request.responseJSON.tileid);
+                        self._fs(self.fileStatement());
+                    }
+                });
+            };
             this.dirty = ko.computed(function(){
-                return this._fs !== this.fileStatement();
+                return this._fs() !== this.fileStatement();
             }, this);
             this.reset = function(){
-                self.updateStatement(self._fs);
-
+                self.updateStatement(self._fs());
             };
         };
 
-        var mockDigitalResourceIds = ['02663e53-8918-4631-bc00-e9a34685d321'];
         this.digitalResources = ko.observableArray();
         this.getDigitalResource = function(resourceid) {
             window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
@@ -148,12 +154,12 @@ define([
                         };
 
                         obj[fileTileid].fileStatementParameter = getStatement(briefTextValueid);
-                        obj[fileTileid]['fileStatementInterpretation'] = getStatement(interpretationValueid);
+                        obj[fileTileid].fileStatementInterpretation = getStatement(interpretationValueid);
                         params.value(obj);    
                     });
                 });
         };
-        this.getDigitalResource(mockDigitalResourceIds[0]);
+        this.getDigitalResource(datasetIds[0]);
 
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
@@ -179,6 +185,7 @@ define([
             self.selectedFile(selectedFile);
             var file = params.value()[selectedFile['@tile_id']];
             self.fileStatementParameter(file.fileStatementParameter.fileStatement());
+            self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
             console.log('selected file', self.selectedRenderer().name);
         };
         this.selectedFile.subscribe(function(selectedFile){
@@ -186,10 +193,9 @@ define([
         });
         this.filteredFiles = ko.pureComputed(function(){
             return this.files().filter(function(file){
-                return file.File_Name.File_Name_content['@display_value'].toLowerCase().includes(this.fileFilter().toLowerCase());
+                return file.file_details[0].name.toLowerCase().includes(this.fileFilter().toLowerCase());
             }, this);
         }, this);
-        this.fileStatementInterpretation = ko.observable();
         this.fileInterpretationTiles = ko.observableArray();
 
         this.getDisplayContent = function(tiledata){

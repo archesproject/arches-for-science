@@ -235,6 +235,10 @@ define(['jquery',
                 .done(function(data) {
                     try {
                         self.parse(data, series);
+                        // clear the data before you add new data, this fixes a bug in the 
+                        // afs file-interpretation step where data wouldn't be updated until 
+                        // the file was selected a second time
+                        self.chartData(undefined);  
                         self.chartData(series);
                         if(self.fileViewer){
                             self.loadSeriesDataFromLocalStorage();
