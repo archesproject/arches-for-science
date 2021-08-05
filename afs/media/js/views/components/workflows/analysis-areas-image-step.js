@@ -25,7 +25,6 @@ define([
         });
 
         var objectStepData = params.form.externalStepData['objectstep']['data'];
-        console.log("AAfffffAA", objectStepData, params.form.externalStepData)
         this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
 
         this.physicalThingDigitalReferenceCard = ko.observable();
