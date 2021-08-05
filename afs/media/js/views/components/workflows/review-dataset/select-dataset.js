@@ -1,7 +1,8 @@
 define([
+    'jquery',
     'knockout',
     'arches',
-], function(ko, arches) {
+], function($, ko, arches) {
     function viewModel(params) {
         var self = this;
         this.digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
@@ -14,7 +15,6 @@ define([
             context: this,
             dataType: 'json',
             }).done(function(data) {
-            // console.log(data);
                 self.relatedDigitalResources(data.related_resources.related_resources
                     .filter(function(related_resource) {
                         return related_resource.graph_id == '707cbd78-ca7a-11e9-990b-a4d18cec433a'})

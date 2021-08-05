@@ -13,7 +13,7 @@ define([
         this.loading = ko.observable(true);
         this.digitalResourceLoading = ko.observable();
         this.resourceLoading = ko.observable();
-        this.fileLists = ko.observableArray()
+        this.fileLists = ko.observableArray();
 
         this.tableConfig = {
             "info": false,
@@ -29,10 +29,10 @@ define([
         };
 
 
-        params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId)
+        params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId);
         SummaryStep.apply(this, [params]);
-        this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function (val) {
-            return val[1][0]['resourceid']
+        this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function(val) {
+            return val[1][0]['resourceid'];
         });
 
         this.selectedDatasets.forEach(function(resourceid){
@@ -44,9 +44,9 @@ define([
                 var findStatementType= function(statements, type){
                     var foundStatement = _.find(statements, function(statement) {
                         return statement.type.indexOf(type) > -1;
-                    })
+                    });
                     return foundStatement ? foundStatement.statement : "None";
-                }
+                };
 
                 var digitalResourceName = val.displayname;
 
@@ -57,12 +57,12 @@ define([
                             statement: self.getResourceValue(statement, ['FIle_Statement_content','@value']),                        
                             type: self.getResourceValue(statement, ['FIle_Statement_type','@value'])
                         };
-                    })
+                    });
                     return {
                         fileName: fileName,
                         statements: statements,
-                    }
-                })
+                    };
+                });
     
                 files.forEach(function(file){
                     var fileName = file.fileName;
@@ -78,19 +78,17 @@ define([
                 self.fileLists.push({
                     digitalResourceName: digitalResourceName,
                     fileList: fileList,
-                })
-                console.log(this.fileLLists)
+                });
                 self.digitalResourceLoading(false);
                 if (!self.resourceLoading()){
                     self.loading(false);
                 }
-            })
+            });
         }, this);
 
         this.resourceData.subscribe(function(val){
             var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
             this.displayName = val.displayname;
-            console.log(this.displayName)
             this.reportVals = {
                 objectName: val['displayname'],
             };
@@ -102,7 +100,7 @@ define([
                         referenceType: {'name': 'Reference Type', 'value': self.getResourceValue(ref, ['Agency Identifier', 'Reference Type', '@value'])},
                         agency: {'name': 'Agency', 'value': self.getResourceValue(ref, ['Agency', '@value'])}
                     };
-                })
+                });
             } catch(e) {
                 this.reportVals.references = [];
             }
