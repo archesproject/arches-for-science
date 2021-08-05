@@ -5,7 +5,6 @@ define([
     'viewmodels/workflow',
     'viewmodels/workflow-step',
     'views/components/workflows/review-dataset/select-dataset',
-    'views/components/workflows/review-dataset/review-dataset-step',
     'views/components/workflows/review-dataset/review-dataset-final-step',
 ], function(ko, $, arches, Workflow, SelectDataset) {
     return ko.components.register('review-dataset-workflow', {

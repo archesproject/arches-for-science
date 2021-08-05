@@ -2,10 +2,8 @@ define([
     'jquery',
     'underscore',
     'knockout',
-    'arches',
     'views/components/workflows/summary-step',
-    'utils/resource',
-], function($, _, ko, arches, SummaryStep, resourceUtils) {
+], function($, _, ko, SummaryStep) {
 
     function viewModel(params) {
         var self = this;
