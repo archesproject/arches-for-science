@@ -12,11 +12,10 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('sample-taking-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'sample-taking-workflow';
+            this.v2 = true;
 
-            this.resourceId = ko.observable();
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Project Info',
                     name: 'select-project',  /* unique to workflow */
@@ -25,8 +24,6 @@ define([
                         heading: 'Projects and related object',
                         text: 'Select the project and object that your are sampling',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
                     shoudltrackresource: true,
                     layoutSections: [
@@ -44,7 +41,6 @@ define([
                                         renderContext: 'workflow',
                                         value: null,
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -58,9 +54,7 @@ define([
                         heading: 'Sampling Information',
                         text: 'Enter the people, date, method, and notes describing the sampling activities on the object',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: false,
+                    required: true,
                     lockableExternalSteps: ['select-project'],
                     externalstepdata: {
                         selectprojectstep: 'select-project',
@@ -90,8 +84,6 @@ define([
                         If you wish, you can upload photographs and automatically create a new image service \
                         to document the location of your observations of an object',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
                     externalstepdata: {
                         selectprojectstep: 'select-project',
@@ -115,8 +107,6 @@ define([
                 {
                     title: 'Sample Location',
                     name: 'sample-location-step', /* unique to workflow */
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
                     externalstepdata: {
                         selectprojectstep: 'select-project',
@@ -143,13 +133,7 @@ define([
                     title: 'Summary',
                     name: 'add-project-complete',  /* unique to workflow */
                     description: 'Summary',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -168,10 +152,6 @@ define([
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('sample-taking-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/sample-taking-workflow.htm' }
     });

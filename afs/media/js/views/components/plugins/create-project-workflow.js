@@ -4,15 +4,14 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
+    'views/components/workflows/research-collection-step',
     'views/components/workflows/create-project-workflow/create-project-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('create-project-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'create-project-workflow';
 
-            this.resourceId = ko.observable();
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Project Name',
                     name: 'set-project-name',  /* unique to workflow */
@@ -144,8 +143,6 @@ define([
                     description: 'Summary',
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '',
                     externalstepdata: { 
                         addphysthingstep: 'object-search-step',
                     },
@@ -166,10 +163,6 @@ define([
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('create-project-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/create-project-workflow.htm' }
     });

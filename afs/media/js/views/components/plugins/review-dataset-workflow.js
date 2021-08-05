@@ -9,11 +9,9 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'review-dataset-workflow';
 
-            this.resourceId = ko.observable();
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Object',
                     name: 'review-dataset-object',  /* unique to workflow */
@@ -125,10 +123,6 @@ define([
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('review-dataset-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/review-dataset-workflow.htm' }
     });

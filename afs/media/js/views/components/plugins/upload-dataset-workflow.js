@@ -12,8 +12,10 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
-            var self = this;
-            params.steps = [
+            this.componentName = 'upload-dataset-workflow';
+            this.v2 = true;
+
+            this.stepConfig = [
                 {
                     title: 'Project Info',
                     name: 'project-info',
@@ -22,9 +24,6 @@ define([
                         heading: 'Workflow Step: Project and related object',
                         text: 'Select the project and object that you\'re sampling',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    autoAdvance: true,
                     required: true,
                     layoutSections: [
                         {
@@ -42,7 +41,6 @@ define([
                                         renderContext: 'workflow',
                                         value: null
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -51,10 +49,7 @@ define([
                 {
                     title: 'Instrument',
                     name: 'select-instrument-and-files',
-                    description: 'Select the instrument and corresponding files',
-                    component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    autoAdvance: true,
                     informationboxdata: {
                         heading: 'Select the instrument used for the analysis',
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
@@ -74,7 +69,6 @@ define([
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -84,8 +78,6 @@ define([
                     title: 'Sample Location',
                     name: 'select-dataset-files-step',
                     description: '',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
                     autoAdvance: false,
@@ -104,7 +96,6 @@ define([
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -114,9 +105,6 @@ define([
                     title: 'File Interpretation',
                     name: 'file-interpretation',
                     description: 'The date that the sample was taken',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    autoAdvance: true,
                     informationboxdata: {
                         heading: 'Select the instrument used for the analysis',
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
@@ -136,30 +124,23 @@ define([
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
                     ],
                 },
-                {
-                    title: 'Summary',
-                    description: 'Choose an option below',
-                    component: '',
-                    componentname: '',
-                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
-                    nodegroupid: '',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null
-                }
+                // {
+                //     title: 'Summary',
+                //     description: 'Choose an option below',
+                //     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
+                //     nodegroupid: '',
+                //     resourceid: null,
+                //     tileid: null,
+                //     parenttileid: null
+                // }
             ];
             
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('upload-dataset-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/upload-dataset-workflow.htm' }
     });
