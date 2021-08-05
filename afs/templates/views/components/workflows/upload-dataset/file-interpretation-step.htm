@@ -161,7 +161,7 @@
 <div class='file-workbench-files'>
     <!-- ko foreach: { data: filteredDigitalResources, as:'digitalResource'} -->
     <div class='file-workbench-file' style="display: inline-flex;"
-        data-bind="css: {'selected-photo': ko.unwrap($parent.selectedDigitalResource)}, click: function(ri){
+        data-bind="css: {'selected-photo': ko.unwrap($parent.selectedDigitalResource) === digitalResource}, click: function(ri){
             $parent.selectedDigitalResource(ri);
         }, container: '.file-workbench-files'">
         <i role="presentation" data-bind="class: 'fa fa-file'"></i>
@@ -180,8 +180,8 @@
 </div>
 <div class='file-workbench-files'>
     <!-- ko foreach: { data: filteredFiles, as:'file'} -->
-    <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {'selected-photo': ko.unwrap($parent.selectedDigitalResource)}, click: function(f){
-            $parent.selectFile(f);
+    <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {'selected-photo': ko.unwrap($parent.selectedFile) === file}, click: function(f){
+            $parent.selectedFile(f);
         }, container: '.file-workbench-files'">
         <i role="presentation" data-bind="class: 'fa fa-file'"></i>
         <div class='file-name' data-bind="text: file.file_details[0].name"></div>
