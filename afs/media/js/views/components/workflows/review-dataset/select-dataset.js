@@ -17,8 +17,8 @@ define([
         }).done(function(data) {
             self.relatedDigitalResources(data.related_resources.related_resources
                 .filter(function(relatedResource) {
-                    return relatedResource.graph_id === '707cbd78-ca7a-11e9-990b-a4d18cec433a'})
-            );
+                    return relatedResource.graph_id === self.digitalResourceGraphId;
+                }));
 
             self.relatedDigitalResources().forEach(function(resource) {
                 resource.selected = ko.observable().extend({ deferred: true });
@@ -47,9 +47,6 @@ define([
             self.selectedDigtalResources.subscribe(function(val) {
                 params.value(val);
             });
-
-
-
         });
 
     }

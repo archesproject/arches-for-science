@@ -6,7 +6,7 @@ define([
     'viewmodels/workflow-step',
     'views/components/workflows/review-dataset/select-dataset',
     'views/components/workflows/review-dataset/review-dataset-final-step',
-], function(ko, $, arches, Workflow, SelectDataset) {
+], function(ko, $, arches, Workflow) {
     return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
             var self = this;

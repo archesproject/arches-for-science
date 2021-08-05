@@ -85,7 +85,7 @@ define([
         }, this);
 
         this.resourceData.subscribe(function(val){
-            var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
+            // var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
             this.displayName = val.displayname;
             this.reportVals = {
                 objectName: val['displayname'],
