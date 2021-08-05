@@ -16,8 +16,8 @@ define([
             dataType: 'json',
         }).done(function(data) {
             self.relatedDigitalResources(data.related_resources.related_resources
-                .filter(function(related_resource) {
-                    return related_resource.graph_id == '707cbd78-ca7a-11e9-990b-a4d18cec433a'})
+                .filter(function(relatedResource) {
+                    return relatedResource.graph_id === '707cbd78-ca7a-11e9-990b-a4d18cec433a'})
             );
 
             self.relatedDigitalResources().forEach(function(resource) {
