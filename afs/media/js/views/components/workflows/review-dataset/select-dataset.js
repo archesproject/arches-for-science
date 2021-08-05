@@ -36,13 +36,13 @@ define([
             });
 
             self.selectedDigtalResources = ko.pureComputed(function() {
-                    return self.relatedDigitalResources().map(function(resource){
-                        return {
-                            resourceid: resource.resourceinstanceid,
-                            selected: resource.selected()
-                        };
-                    });
+                return self.relatedDigitalResources().map(function(resource){
+                    return {
+                        resourceid: resource.resourceinstanceid,
+                        selected: resource.selected()
+                    };
                 });
+            });
 
             self.selectedDigtalResources.subscribe(function(val) {
                 params.value(val);
