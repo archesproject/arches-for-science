@@ -87,7 +87,7 @@ define([
                     }).done(function(data) {
                         // eslint-disable-next-line no-console
                         console.log('Added "used image" of the digital resource to the visual work:', data);
-                        params.value(params.defineStateProperties())
+                        params.value(params.defineStateProperties());
                         if (self.completeOnSave === true) { self.complete(true); }
                     });
                 });
