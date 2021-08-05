@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load template_tags %}
+
+<div style="">
+    <div class="upload-dataset-related-widget">
+        <h4>Related Datasets</h4>
+        <p>We found the following datasets for the object you selected</p>
+    </div>
+
+    <div class="col-xs-12">
+        <!-- ko if: dataLoaded() === true -->
+        <div class="pad-hor columns option-input" data-bind="foreach: relatedDigitalResources">
+            <label class="form-checkbox form-normal form-primary form-text" style="overflow: visible;" data-bind="css: {active: $data.selected} ">
+                <input type="checkbox" data-bind="checked: $data.selected">
+                <span data-bind="text:displayname"></span>
+            </label>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
