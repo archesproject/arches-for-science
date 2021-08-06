@@ -8,11 +8,10 @@ define([
     'models/report',
     'models/graph',
     'report-templates',
-    'card-components',
     'bindings/select2-query',
     'views/components/search/paging-filter',
     'views/components/search/search-results'
-], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
+], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup) {
 
     var graph = ko.observable();
 
@@ -21,7 +20,7 @@ define([
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
     var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
 
-    $.getJSON(arches.urls.graphs_api + graphId, function(data) {
+    $.getJSON(`${arches.urls.graphs_api}${graphId}?cards=false&exclude=cards,domain_connections,widgets`, function(data) {
         var graphModel = new GraphModel({
             data: data.graph,
             datatypes: data.datatypes
@@ -29,10 +28,8 @@ define([
 
         graph({
             graphModel: graphModel,
-            cards: data.cards,
             graph: data.graph,
             datatypes: data.datatypes,
-            cardwidgets: data.cardwidgets
         });
     });
 
@@ -367,10 +364,8 @@ define([
                         "displayname": source._source.displayname,
                         "resourceid": source._source.resourceinstanceid
                     };
-                    tileData.cards = [];
                     
                     tileData.templates = reportLookup;
-                    tileData.cardComponents = cardComponents;
                     source.report = new ReportModel(_.extend(tileData, {
                         graphModel: graph.graphModel,
                         graph: graph.graph,
