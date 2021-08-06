@@ -111,8 +111,8 @@ define([
                     ],
                     stepInjectionConfig: {
                         defaultStepChoice: imageStep,  /* optional param to show tab on new workflow creation */ 
-                        injectionLogic: function(persistedStepData) {
-                            /* used to conditionally insert the returned step into the workflow */ 
+                        injectionLogic: function(step) {
+                            /* step = self-introspection */ 
                             return imageStep2;
                         }
                     },
