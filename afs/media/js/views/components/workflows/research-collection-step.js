@@ -10,7 +10,6 @@ define([
     'report-templates',
     'bindings/select2-query',
     'views/components/search/paging-filter',
-    'views/components/search/search-results'
 ], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup) {
 
     var graph = ko.observable();

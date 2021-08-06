@@ -11,20 +11,28 @@
         <div class="workflow-search-results-full-container">
             <div class="workflow-search-list-container"> 
                 <div class="workflow-search-list">
-                    <div data-bind="component: {
-                        name: 'search-results',
-                        params: {
-                            selectedTab,
-                            searchResults,
-                            targetResources,
-                            toggleRelationshipCandidacy,
-                            isResourceRelatable,
-                            reportLookup,
-                            filters,
-                            value,
-                            updateTileData: updateTileData
-                        }
-                    }"></div>
+
+                    <div data-bind="foreach: targetResources">
+                        <div class="resource-report" data-bind="component: {
+                            name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
+                            params: {
+                                report: $data.report,
+                                summary: true
+                            }
+                        }, css: {'selected-instance': $parent.value().map(function(r){return r.resourceId}).indexOf($data['_source']['resourceinstanceid']) >= 0},
+                        click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
+                    </div>
+                    <!-- TODO: Implement resource report abstract once custom phys thing is complete -->
+                    <!-- <div data-bind="foreach: targetResources">
+                        <div data-bind="component: { 
+                            name: 'resource-report-abstract',
+                            params: {
+                                resourceid: $data['_source']['resourceinstanceid'],
+                                summary: true
+                            }
+                        }, css: {'selected-instance': $parent.value().map(function(r){return r.resourceId}).indexOf($data['_source']['resourceinstanceid']) >= 0},
+                        click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
+                    </div> -->
                 </div>
                 
                 <div class="search-results-footer">
