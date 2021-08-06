@@ -19,6 +19,9 @@
     <i class="fa fa-file"></i>
     <span class="map-sidebar-text">{% trans 'Dataset' %}</span>
 </div>
+
+{{ block.super }}
+
 {% endblock tabs %}
 
 {% block sidepanel %}
@@ -195,7 +198,13 @@
                                     </div>
                                 </div>
                                 <div class="map-card-feature-list">
-                                    <div class="add-new-feature" data-bind="visible: !self.disableDrawing()">
+                                    <div 
+                                        class="add-new-feature" 
+                                        data-bind="
+                                            visible: !self.disableDrawing(),
+                                            click: self.clearEditedGeometries,
+                                        "
+                                    >
                                         <select data-placeholder="{% trans "Add a new feature..." %}" data-bind="
                                             value: self.featureLookup[widget.node_id()].selectedTool,
                                             valueAllowUnset: true,

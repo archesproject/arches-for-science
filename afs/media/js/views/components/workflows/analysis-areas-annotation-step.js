@@ -21,6 +21,10 @@ define([
 
         this.savingTile = ko.observable();
 
+        this.selectedFeature = ko.observable();
+        this.featureLayers = ko.observableArray();
+        this.isFeatureBeingEdited = ko.observable(false);
+
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
 
@@ -45,8 +49,6 @@ define([
                 self.physicalThingPartIdentifierAssignmentTile(selectedAnalysisAreaInstance);
             }
         });
-
-        this.selectedFeature = ko.observable();
 
         this.tileDirty = ko.computed(function() {
             if (self.physicalThingPartIdentifierAssignmentTile()) {
@@ -96,6 +98,7 @@ define([
 
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
+
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
@@ -132,6 +135,7 @@ define([
                             if (features.eachLayer) {
                                 features.eachLayer(function(feature) {
                                     var defaultColor = feature.feature.properties.color;
+
                                     if (self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid === feature.feature.properties.tileId) {
                                         feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
                                     } else {
@@ -513,9 +517,6 @@ define([
 
             self.hasExternalCardData(true);
         };
-
-        this.featureLayers = ko.observableArray();
-        this.isFeatureBeingEdited = ko.observable(false);
 
         this.handleExternalCardData = function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';

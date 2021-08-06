@@ -27,6 +27,10 @@ define([
         
         this.savingTile = ko.observable();
 
+        this.selectedFeature = ko.observable();
+        this.featureLayers = ko.observableArray();
+        this.isFeatureBeingEdited = ko.observable(false);
+
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
 
@@ -101,7 +105,6 @@ define([
             if (hasExternalCardData) {
                 self.handleExternalCardData();
 
-                /* sets all Physical Thing geometries to visible */
                 var physicalThingGeometriestAnnotationSubscription = self.annotationNodes.subscribe(function(annotationNodes) {
                     self.setPhysicalThingGeometriesToVisible(annotationNodes);
                     physicalThingGeometriestAnnotationSubscription.dispose(); /* self-disposing subscription only runs once */
@@ -173,6 +176,89 @@ define([
             } 
         };
 
+        this.removeFeatureFromCanvas = function(feature) {
+            var annotationNodes = self.annotationNodes();
+            
+            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+
+            var filteredPhysicalThingAnnotationNodeAnnotations = physicalThingAnnotationNode.annotations().filter(function(annotation) {
+                return ko.unwrap(feature.id) !== annotation.id;
+            });
+
+            physicalThingAnnotationNode.annotations(filteredPhysicalThingAnnotationNodeAnnotations);
+
+            var physicalThingAnnotationNodeIndex = annotationNodes.findIndex(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+
+            annotationNodes[physicalThingAnnotationNodeIndex] = physicalThingAnnotationNode;
+
+            self.annotationNodes(annotationNodes);
+
+            self.highlightAnnotation();
+        }
+
+        this.resetCanvasFeatures = function() {
+            var annotationNodes = self.annotationNodes();
+            
+            if (self.selectedSampleLocationInstanceFeatures()) {
+                var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
+                    return annotationNode.name === physicalThingAnnotationNodeName;
+                });
+    
+                var physicalThingAnnotationNodeAnnotationIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
+                    return ko.unwrap(annotation.id);
+                });
+                
+                var unaddedSelectedSampleLocationInstanceFeatures = self.selectedSampleLocationInstanceFeatures().reduce(function(acc, feature) {
+                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id))) {
+                        feature.properties.tileId = self.selectedSampleLocationInstance().tileid;
+                        acc.push(ko.toJS(feature));
+                    }
+    
+                    return acc;
+                }, []);
+    
+                physicalThingAnnotationNode.annotations([...physicalThingAnnotationNode.annotations(), ...unaddedSelectedSampleLocationInstanceFeatures]);
+    
+                var physicalThingAnnotationNodeIndex = annotationNodes.findIndex(function(annotationNode) {
+                    return annotationNode.name === physicalThingAnnotationNodeName;
+                });
+    
+                annotationNodes[physicalThingAnnotationNodeIndex] = physicalThingAnnotationNode;
+            }
+
+            self.annotationNodes(annotationNodes);
+        };
+
+        this.updateSampleLocationInstances = function() {
+            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+
+            if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
+                var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
+                    return annotation.properties.tileId;
+                });
+                self.sampleLocationInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+            }
+            else {
+                var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
+                    var annotationTileIds = annotations.map(function(annotation) {
+                        return annotation.properties.tileId;
+                    });
+                    self.sampleLocationInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+    
+                    physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
+                });
+            }
+        };
+
         this.selectSampleLocationInstance = function(sampleLocationInstance) {
             self.sampleDescriptionWidgetValue(null);
             self.previouslySavedSampleDescriptionWidgetValue(null);
@@ -183,9 +269,15 @@ define([
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
-            if (previouslySelectedSampleLocationInstance) {
+            if (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid) {
                 previouslySelectedSampleLocationInstance.reset();
+
                 self.drawFeatures([]);
+                self.resetCanvasFeatures();
+            }
+
+            if (self.physicalThingPartIdentifierAssignmentTile()) {
+                self.physicalThingPartIdentifierAssignmentTile().reset();
             }
 
             self.selectedSampleLocationInstance(sampleLocationInstance);
@@ -250,12 +342,22 @@ define([
             }
         };
 
+        this.resetSampleLocationTile = function() {
+            self.tile.reset();
+            self.resetCanvasFeatures();
+            self.drawFeatures([]);
+            self.highlightAnnotation();
+            self.selectedFeature(null);
+        };
+
         this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
             var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
+
             physicalThingAnnotationNode.active(true); 
+            self.updateSampleLocationInstances();
         };
 
         this.saveSampleLocationTile = function() {
@@ -566,14 +668,16 @@ define([
                                                     saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
                                                         saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
                                                             self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
-                                                                self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
-
-                                                                self.sampleLocationInstances(self.card.tiles());
+                                                                self.updateSampleLocationInstances();
                                                                 self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
+                                                                
+                                                                self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
     
                                                                 self.savingTile(false);
+                                                                params.form.alert("")
+                                                                self.drawFeatures([]);
+                                                                params.dirty(true);
                                                             });
-                                                            
                                                         });
                                                     });
                                                 });
@@ -681,19 +785,40 @@ define([
             
             IIIFAnnotationViewmodel.apply(self, [{
                 ...params,
+                hideEditorTab: ko.observable(true),
                 onEachFeature: function(feature, layer) {
+                    var featureLayer = self.featureLayers().find(function(featureLayer) {
+                        return featureLayer.feature.id === layer.feature.id;
+                    });
+
+                    if (!featureLayer) {
+                        self.featureLayers.push(layer)
+                    }
+
                     layer.on({
                         click: function() {
+
+                            self.drawFeatures([]);
+                            self.featureClick = true;
+                            
                             var sampleLocationInstance = self.getSampleLocationTileFromFeatureId(feature.id);
 
                             if (!self.selectedSampleLocationInstance() || self.selectedSampleLocationInstance().tileid !== sampleLocationInstance.tileid ) {
                                 self.selectSampleLocationInstance(sampleLocationInstance);
                             }
-                            else if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid === sampleLocationInstance.tileid) {
-                                // self.editFeature(ko.toJS(feature));
-                                console.log(self, params)
-                                console.log("dbl click")
-                            }
+                            else {
+                                self.tile.reset();
+                                self.resetCanvasFeatures();
+
+                                var selectedFeature = ko.toJS(self.selectedSampleLocationInstanceFeatures().find(function(selectedSampleLocationInstanceFeature) {
+                                    return ko.unwrap(selectedSampleLocationInstanceFeature.id) === feature.id;
+                                }));
+
+                                self.selectedFeature(selectedFeature);
+                                self.removeFeatureFromCanvas(self.selectedFeature());
+
+                                self.drawFeatures([selectedFeature]);
+                            } 
                         },
                     })
                 }
@@ -714,6 +839,16 @@ define([
                         return !tileFeatures.find(function(tileFeature) {
                             return tileFeature.id === drawFeature.id;
                         });
+                    });
+
+                    self.drawFeatures().forEach(function(drawFeature) {
+                        var editedFeatureIndex = tileFeatures.findIndex(function(feature) {
+                            return feature.id === drawFeature.id;
+                        });
+
+                        if (editedFeatureIndex > -1) {
+                            tileFeatures[editedFeatureIndex] = drawFeature;
+                        }
                     });
 
                     self.tile.data[partIdentifierAssignmentPolygonIdentifierNodeId].features([...tileFeatures, ...featuresNotInTile]);
@@ -739,6 +874,66 @@ define([
                     });
                 }
             };
+
+                        
+            self.deleteFeature = function(feature) {
+                /* BEGIN update table */ 
+                var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
+
+                var selectedSampleLocationInstance = self.selectedSampleLocationInstance();
+                var selectedSampleLocationInstanceFeaturesNode = ko.unwrap(selectedSampleLocationInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId]);
+
+                if (selectedSampleLocationInstanceFeaturesNode) {
+                    var updatedSelectedSampleLocationInstanceFeatures = ko.unwrap(selectedSampleLocationInstanceFeaturesNode.features).filter(function(selectedFeature) {
+                        return ko.unwrap(selectedFeature.id) !== ko.unwrap(feature.id);
+                    });
+                    
+                    if (ko.isObservable(selectedSampleLocationInstanceFeaturesNode.features)) {
+                        selectedSampleLocationInstanceFeaturesNode.features(updatedSelectedSampleLocationInstanceFeatures);
+                    }
+                    else {
+                        selectedSampleLocationInstanceFeaturesNode.features = updatedSelectedSampleLocationInstanceFeatures;
+                    }
+
+                    selectedSampleLocationInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId] = selectedSampleLocationInstanceFeaturesNode;
+                }
+
+                self.selectedSampleLocationInstance(selectedSampleLocationInstance);
+                /* END update table */ 
+
+                /* BEGIN update canvas */ 
+                self.removeFeatureFromCanvas(feature);
+
+                var drawFeature = self.drawFeatures().find(function(drawFeature) {
+                    return ko.unwrap(drawFeature.id) === ko.unwrap(feature.id);
+                });
+
+                if (drawFeature) {
+                    self.drawFeatures([]);
+                }
+                /* END update canvas */ 
+            }
+
+            self.editFeature = function(feature) {
+                self.featureLayers().forEach(function(featureLayer) {
+                    if (featureLayer.feature.id === ko.unwrap(feature.id)) {
+                        featureLayer.fireEvent('click');
+                    }
+                });
+            };
+
+            self.drawLayer.subscribe(function(drawLayer) {
+                drawLayer.getLayers().forEach(function(layer) {
+                    layer.editing.enable();
+                    layer.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                });
+            });
+        };
+
+        this.clearEditedGeometries = function() {
+            if (self.tile.tileid && self.selectedFeature()) {
+                self.resetSampleLocationTile();
+            }
         };
 
         this.fetchCardFromResourceId = function(resourceId, nodegroupId) {
