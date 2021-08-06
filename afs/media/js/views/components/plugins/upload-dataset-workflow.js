@@ -105,6 +105,10 @@ define([
                     title: 'File Interpretation',
                     name: 'file-interpretation',
                     description: 'The date that the sample was taken',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
+                    autoAdvance: false,
                     informationboxdata: {
                         heading: 'Select the instrument used for the analysis',
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',

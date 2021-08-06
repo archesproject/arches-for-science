@@ -37,6 +37,7 @@ define([
                     value.fileStatementInterpretation.save();
                 }
             }
+            params.form.complete(true);
         };
         this.save = params.form.save;
 
@@ -52,16 +53,20 @@ define([
         this.reset = params.form.reset;
         
         this.fileStatementParameter.subscribe(function(fp) {
-            var obj = params.value();
-            var tileid = this.selectedFile()['@tile_id'];
-            obj[tileid].fileStatementParameter.updateStatement(fp);
-            params.value.valueHasMutated();
+            if(!!this.selectedFile()){
+                var obj = params.value();
+                var tileid = this.selectedFile()['@tile_id'];
+                obj[tileid].fileStatementParameter.updateStatement(fp);
+                params.value.valueHasMutated();
+            }
         }, this);
         this.fileStatementInterpretation.subscribe(function(fp) {
-            var obj = params.value();
-            var tileid = this.selectedFile()['@tile_id'];
-            obj[tileid].fileStatementInterpretation.updateStatement(fp);
-            params.value.valueHasMutated();
+            if(!!this.selectedFile()){
+                var obj = params.value();
+                var tileid = this.selectedFile()['@tile_id'];
+                obj[tileid].fileStatementInterpretation.updateStatement(fp);
+                params.value.valueHasMutated();
+            }
         }, this);
         
         this.fileFormatRenderers.forEach(function(r){
@@ -159,13 +164,16 @@ define([
                     });
                 });
         };
-        this.getDigitalResource(datasetIds[0]);
+        datasetIds.forEach(function(datasetId){
+            self.getDigitalResource(datasetId);
+        })
 
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
         this.selectedDigitalResource.subscribe(function(selectedDigitalResource){
             console.log('selected digital resource', selectedDigitalResource);
             this.files(selectedDigitalResource.resource.File);
+            this.selectedFile(undefined);
         }, this);
         this.filteredDigitalResources = ko.pureComputed(function(){
             return this.digitalResources().filter(function(dr){
@@ -178,18 +186,24 @@ define([
         this.fileFilter = ko.observable('');
         this.selectedRenderer = ko.observable();
         this.selectedFile = ko.observable();
-        this.selectFile = function(selectedFile){
-            self.selected(true);
-            self.displayContent = self.getDisplayContent(selectedFile.file_details[0]);
-            self.selectedRenderer(self.getFileFormatRenderer(selectedFile.file_details[0].renderer));
-            self.selectedFile(selectedFile);
-            var file = params.value()[selectedFile['@tile_id']];
-            self.fileStatementParameter(file.fileStatementParameter.fileStatement());
-            self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
-            console.log('selected file', self.selectedRenderer().name);
-        };
+        // this.selectFile = function(selectedFile){
+        // };
         this.selectedFile.subscribe(function(selectedFile){
-            console.log('selected file', selectedFile);
+            if(!!selectedFile){
+                self.selected(true);
+                self.displayContent = self.getDisplayContent(selectedFile.file_details[0]);
+                self.selectedRenderer(self.getFileFormatRenderer(selectedFile.file_details[0].renderer));
+                // self.selectedFile(selectedFile);
+                var file = params.value()[selectedFile['@tile_id']];
+                self.fileStatementParameter(file.fileStatementParameter.fileStatement());
+                self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
+                console.log('selected file', self.selectedRenderer().name);
+                console.log('selected file', selectedFile);
+            } else {
+                // self.selectedFile.selected(false);
+                self.fileStatementParameter(undefined);
+                self.fileStatementInterpretation(undefined);
+            }
         });
         this.filteredFiles = ko.pureComputed(function(){
             return this.files().filter(function(file){
