@@ -5,6 +5,374 @@
             "cards": [
                 {
                     "active": true,
+                    "cardid": "0335784b-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0335784b-1d9d-11eb-a29f-024e0d439fdb",
+                            "constraintid": "426bdfe9-80f2-46ad-926c-c9dea1ed64d2",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Instrument(s) Used",
+                    "nodegroup_id": "03357849-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 10,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "03357884-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": "If length is known, but exact dates are not",
+                    "is_editable": true,
+                    "name": "Duration of Timespan",
+                    "nodegroup_id": "03357882-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                            "constraintid": "f7f08452-3077-4434-a9ed-03014f89ae6d",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": true,
+                    "helptext": "<p>Add more information on dates here. (See documentation)</p>\n",
+                    "helptitle": null,
+                    "instructions": "Enter the dates of the project. ",
+                    "is_editable": true,
+                    "name": "Sampling Activity Dates",
+                    "nodegroup_id": "03357852-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 5,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0335788d-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0335788d-1d9d-11eb-a29f-024e0d439fdb",
+                            "constraintid": "01ca13ee-9b6c-4173-be47-4636441575ff",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": "This value is used to briefly name or describe the activity",
+                    "is_editable": true,
+                    "name": "Internal Label",
+                    "nodegroup_id": "0335788b-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 16,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Name of Timespan",
+                    "nodegroup_id": "03357888-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
+                            "constraintid": "9c638496-be1a-4af7-a57b-08cdd7f74a32",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": "Describe the sampling activity in general terms. Add a new statement for additional information (ex. rights statement, etc.)",
+                    "is_editable": true,
+                    "name": "Brief Text or Statement",
+                    "nodegroup_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
+                            "constraintid": "5acd71e5-89ea-43de-a838-31a06163750c",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        },
+                        {
+                            "card_id": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
+                            "constraintid": "59e649a0-b65d-42e7-b16a-276c198f04c6",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": null,
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Procedure Used",
+                    "nodegroup_id": "fec2d45a-1da0-11eb-a29f-024e0d439fdb",
+                    "sortorder": 11,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "03357887-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Name for Duration of Timespan",
+                    "nodegroup_id": "03357885-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0335785d-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0335785d-1d9d-11eb-a29f-024e0d439fdb",
+                            "constraintid": "a6e16c66-1aa8-40ed-9112-ddc201485127",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Occurs Before Event",
+                    "nodegroup_id": "0335785b-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 14,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "0335787e-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Reference in Source Material",
+                    "nodegroup_id": "0335787c-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 18,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Brief Text or Statement about Timespan",
+                    "nodegroup_id": "03357855-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Name for Statement about TimeSpan",
+                    "nodegroup_id": "03357858-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "0335784e-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "0335784e-1d9d-11eb-a29f-024e0d439fdb",
+                            "constraintid": "b961f1e0-803a-4c27-aac1-bcf3d5172d9e",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Occurs After Event",
+                    "nodegroup_id": "0335784c-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 13,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "10ae2f00-cbda-4a0d-8ca2-5af3b46b37ad",
+                    "config": {
+                        "defaultManifest": ""
+                    },
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Sampling Unit",
+                    "nodegroup_id": "b3e171a7-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 12,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "03357860-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
+                            "constraintid": "fc0d40c0-72a3-412c-a090-0538761e7624",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": "Enter any identifiers (ex. accession numbers, bar codes) that refer to the entire project.",
+                    "is_editable": true,
+                    "name": "Identifiers for Sampling Activity",
+                    "nodegroup_id": "0335785e-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 17,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "03357869-1d9d-11eb-a29f-024e0d439fdb",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names  Arches note: In Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content. This value could be used to override the default card title.\n\n# Arches Note:\n\n\n* BranchId: la-name\n* FieldId: \n",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Name for Statement",
+                    "nodegroup_id": "03357867-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": false
+                },
+                {
+                    "active": true,
                     "cardid": "03357878-1d9d-11eb-a29f-024e0d439fdb",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -84,7 +452,7 @@
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
-                    "instructions": "If this is a subproject, select the parent project. Otherwise, leave blank.",
+                    "instructions": "Select the larger project that this sampling activity is a component of. If none, leave blank.",
                     "is_editable": true,
                     "name": "Parent Project",
                     "nodegroup_id": "03357879-1d9d-11eb-a29f-024e0d439fdb",
@@ -110,7 +478,7 @@
                     "helpenabled": false,
                     "helptext": null,
                     "helptitle": null,
-                    "instructions": "Person(s) or group(s) that participated in the project",
+                    "instructions": "Person(s) or group(s) that performed the sampling",
                     "is_editable": true,
                     "name": "Samplers",
                     "nodegroup_id": "03357870-1d9d-11eb-a29f-024e0d439fdb",
@@ -164,58 +532,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "03357854-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
-                            "constraintid": "f7f08452-3077-4434-a9ed-03014f89ae6d",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": true,
-                    "helptext": "<p>Add more information on dates here. (See documentation)</p>\n",
-                    "helptitle": null,
-                    "instructions": "Enter the dates of the project. ",
-                    "is_editable": true,
-                    "name": "Sampling Activity Dates",
-                    "nodegroup_id": "03357852-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 5,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0335788d-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0335788d-1d9d-11eb-a29f-024e0d439fdb",
-                            "constraintid": "01ca13ee-9b6c-4173-be47-4636441575ff",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": "This value is used to briefly name or describe the activity",
-                    "is_editable": true,
-                    "name": "Internal Label",
-                    "nodegroup_id": "0335788b-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 16,
-                    "visible": false
-                },
-                {
-                    "active": true,
                     "cardid": "03357863-1d9d-11eb-a29f-024e0d439fdb",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -239,63 +555,6 @@
                     "nodegroup_id": "03357861-1d9d-11eb-a29f-024e0d439fdb",
                     "sortorder": 8,
                     "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "03357857-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Brief Text or Statement about Timespan",
-                    "nodegroup_id": "03357855-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Name of Timespan",
-                    "nodegroup_id": "03357888-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Name for Statement about TimeSpan",
-                    "nodegroup_id": "03357858-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true
                 },
                 {
                     "active": true,
@@ -363,220 +622,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
-                            "constraintid": "5acd71e5-89ea-43de-a838-31a06163750c",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        },
-                        {
-                            "card_id": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
-                            "constraintid": "59e649a0-b65d-42e7-b16a-276c198f04c6",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": null,
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Procedure Used",
-                    "nodegroup_id": "fec2d45a-1da0-11eb-a29f-024e0d439fdb",
-                    "sortorder": 11,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0335784e-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0335784e-1d9d-11eb-a29f-024e0d439fdb",
-                            "constraintid": "b961f1e0-803a-4c27-aac1-bcf3d5172d9e",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Occurs After Event",
-                    "nodegroup_id": "0335784c-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 13,
-                    "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "10ae2f00-cbda-4a0d-8ca2-5af3b46b37ad",
-                    "config": {
-                        "defaultManifest": ""
-                    },
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Sampling Unit",
-                    "nodegroup_id": "b3e171a7-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 12,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "03357887-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Name for Duration of Timespan",
-                    "nodegroup_id": "03357885-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0335785d-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0335785d-1d9d-11eb-a29f-024e0d439fdb",
-                            "constraintid": "a6e16c66-1aa8-40ed-9112-ddc201485127",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Occurs Before Event",
-                    "nodegroup_id": "0335785b-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 14,
-                    "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "0335787e-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Reference in Source Material",
-                    "nodegroup_id": "0335787c-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 18,
-                    "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "0335784b-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0335784b-1d9d-11eb-a29f-024e0d439fdb",
-                            "constraintid": "426bdfe9-80f2-46ad-926c-c9dea1ed64d2",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Instrument(s) Used",
-                    "nodegroup_id": "03357849-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 10,
-                    "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": "If length is known, but exact dates are not",
-                    "is_editable": true,
-                    "name": "Duration of Timespan",
-                    "nodegroup_id": "03357882-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "03357860-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
-                            "constraintid": "fc0d40c0-72a3-412c-a090-0538761e7624",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": "Enter any identifiers (ex. accession numbers, bar codes) that refer to the entire project.",
-                    "is_editable": true,
-                    "name": "Identifiers for Sampling Activity",
-                    "nodegroup_id": "0335785e-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 17,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "03357875-1d9d-11eb-a29f-024e0d439fdb",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -600,100 +645,75 @@
                     "nodegroup_id": "03357873-1d9d-11eb-a29f-024e0d439fdb",
                     "sortorder": 0,
                     "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
-                            "constraintid": "9c638496-be1a-4af7-a57b-08cdd7f74a32",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": "Describe the project and its objectives. Add a new statement for additional information (ex. rights statement,etc etc)",
-                    "is_editable": true,
-                    "name": "Brief Text or Statement",
-                    "nodegroup_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "03357869-1d9d-11eb-a29f-024e0d439fdb",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names  Arches note: In Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content. This value could be used to override the default card title.\n\n# Arches Note:\n\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Name for Statement",
-                    "nodegroup_id": "03357867-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": false
                 }
             ],
             "cards_x_nodes_x_widgets": [
                 {
-                    "card_id": "03357863-1d9d-11eb-a29f-024e0d439fdb",
+                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "label": "Location of Sampling Activity",
+                        "label": "Source Reference Work for Duration of Timespan",
+                        "placeholder": ""
+                    },
+                    "id": "033578dd-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Source Reference Work for Duration of Timespan",
+                    "node_id": "033578ab-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Unit",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578df-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Unit",
+                    "node_id": "03357896-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "0335787e-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Work",
+                        "placeholder": ""
+                    },
+                    "id": "033578f6-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Work",
+                    "node_id": "0335787c-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Sampled Area Name",
                         "placeholder": null
                     },
-                    "id": "033578e8-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Location of Sampling Activity",
-                    "node_id": "03357861-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
+                    "id": "b3e171b1-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Sampled Area Name",
+                    "node_id": "b3e171ac-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
-                    "card_id": "0335788d-1d9d-11eb-a29f-024e0d439fdb",
+                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "defaultValue": "",
-                        "label": "Internal Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
+                        "label": "Sample Created",
+                        "placeholder": ""
                     },
-                    "id": "033578ca-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Internal Label",
-                    "node_id": "0335788b-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
+                    "id": "b3e171b2-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Sample Created",
+                    "node_id": "b3e171ab-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578f9-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Language",
-                    "node_id": "033578bf-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
                 {
                     "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
@@ -730,572 +750,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "TimeSpan Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578fc-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "TimeSpan Label",
-                    "node_id": "033578b1-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Source Reference Work for Name for Statement about TimeSpan",
-                        "placeholder": ""
-                    },
-                    "id": "033578fe-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Source Reference Work for Name for Statement about TimeSpan",
-                    "node_id": "033578a9-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578ff-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name",
-                    "node_id": "0335789c-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578fd-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Type",
-                    "node_id": "033578a7-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "0335787b-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Part of Event - non-structural",
-                        "placeholder": "Select the parent project, if any."
-                    },
-                    "id": "033578c3-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Part of Event - non-structural",
-                    "node_id": "03357879-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "03357872-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Sampler",
-                        "placeholder": "Add a member"
-                    },
-                    "id": "033578c4-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Sampler",
-                    "node_id": "03357870-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "03357881-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": null,
-                        "label": "Sampling Activity Technique",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578d0-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Sampling Activity Technique",
-                    "node_id": "0335787f-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Type of Timespan",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578ea-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Type of Timespan",
-                    "node_id": "033578af-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578d5-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Language",
-                    "node_id": "033578bc-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Statement Text",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578d6-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Statement Text",
-                    "node_id": "03357893-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Type of Statement",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578d7-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Type of Statement",
-                    "node_id": "03357891-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name for Statement Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578d8-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name for Statement Label",
-                    "node_id": "033578b8-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "_label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578d3-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "_label",
-                    "node_id": "033578ad-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select one or more language"
-                    },
-                    "id": "033578d9-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Language",
-                    "node_id": "033578a0-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Source Reference Work for Name for Statement",
-                        "placeholder": ""
-                    },
-                    "id": "033578da-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Source Reference Work for Name for Statement",
-                    "node_id": "033578ba-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select a type for this name"
-                    },
-                    "id": "033578db-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Type",
-                    "node_id": "033578b9-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter content",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578dc-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name",
-                    "node_id": "0335788f-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "985a7550-1d9e-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": null,
-                        "label": "Sampling Activity Tool Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "a72b63b4-1d9e-11eb-a29f-024e0d439fdb",
-                    "label": "Sampling Activity Tool Type",
-                    "node_id": "985a754e-1d9e-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Source Reference Work for Duration of Timespan",
-                        "placeholder": ""
-                    },
-                    "id": "033578dd-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Source Reference Work for Duration of Timespan",
-                    "node_id": "033578ab-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Value",
-                        "max": "",
-                        "min": "1",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "1",
-                        "suffix": "",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578de-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Value",
-                    "node_id": "03357897-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
-                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Unit",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578df-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Unit",
-                    "node_id": "03357896-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Duration Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578e0-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Duration Type",
-                    "node_id": "033578b2-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Duration of Timespan Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578e1-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Duration of Timespan Label",
-                    "node_id": "033578be-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 6,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Lowest possible value (if value is uncertain)",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578e2-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Lowest possible value (if value is uncertain)",
-                    "node_id": "0335789f-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
-                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Highest possible value (if value is uncertain)",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578e3-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Highest possible value (if value is uncertain)",
-                    "node_id": "03357899-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 4,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
-                    "card_id": "0335784e-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Occurs After Event",
-                        "placeholder": ""
-                    },
-                    "id": "033578d1-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Occurs After Event",
-                    "node_id": "0335784c-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Identifier",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578e7-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Identifier",
-                    "node_id": "033578bb-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Identifier Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578e5-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Identifier Type",
-                    "node_id": "033578a5-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Identifier Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578e6-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Identifier Label",
-                    "node_id": "0335788e-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Referenced in Work",
-                        "placeholder": ""
-                    },
-                    "id": "033578d4-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Referenced in Work",
-                    "node_id": "033578a3-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": null,
-                        "label": "Latest start date",
-                        "maxDate": null,
-                        "minDate": null,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "033578ed-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Latest start date",
-                    "node_id": "033578a1-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": null,
-                        "label": "Earliest start date",
-                        "maxDate": null,
-                        "minDate": null,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "033578ee-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Earliest start date",
-                    "node_id": "03357892-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": null,
-                        "label": "Latest end date (if known)",
-                        "maxDate": null,
-                        "minDate": null,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "033578ef-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Latest end date (if known)",
-                    "node_id": "033578c2-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Overall Object Sampled",
-                        "placeholder": ""
-                    },
-                    "id": "b3e171af-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Overall Object Sampled",
-                    "node_id": "b3e171aa-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578c6-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Type",
-                    "node_id": "033578b3-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
                     "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": "",
@@ -1313,312 +767,77 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "0335785d-1d9d-11eb-a29f-024e0d439fdb",
+                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "label": "Occurs Before Event",
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578c5-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Language",
+                    "node_id": "03357895-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Source Reference Work for Name for Duration of Timespan",
                         "placeholder": ""
                     },
-                    "id": "033578d2-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Occurs Before Event",
-                    "node_id": "0335785b-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
+                    "id": "033578c9-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Source Reference Work for Name for Duration of Timespan",
+                    "node_id": "033578aa-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Referenced in Work",
+                        "placeholder": ""
+                    },
+                    "id": "033578d4-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Referenced in Work",
+                    "node_id": "033578a3-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "0335787e-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Work",
-                        "placeholder": ""
-                    },
-                    "id": "033578f6-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Work",
-                    "node_id": "0335787c-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": "",
-                        "label": "Internal Label",
+                        "label": "TimeSpan Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
-                    "id": "033578eb-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Internal Label",
-                    "node_id": "033578ae-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 5,
+                    "id": "033578fc-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "TimeSpan Label",
+                    "node_id": "033578b1-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": null,
-                        "label": "Earliest end date",
-                        "maxDate": null,
-                        "minDate": null,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "033578ec-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Earliest end date",
-                    "node_id": "0335789d-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultManifest": null,
-                        "label": "Sampled Area Location"
-                    },
-                    "id": "b3e171b0-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Sampled Area Location",
-                    "node_id": "b3e171ae-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "aae743b8-4c48-11ea-988b-2bc775672c81"
-                },
-                {
-                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Sampled Area Name",
-                        "placeholder": null
-                    },
-                    "id": "b3e171b1-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Sampled Area Name",
-                    "node_id": "b3e171ac-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Sample Created",
+                        "label": "Source Reference Work for Name of Timespan",
                         "placeholder": ""
                     },
-                    "id": "b3e171b2-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Sample Created",
-                    "node_id": "b3e171ab-1d9d-11eb-a29f-024e0d439fdb",
+                    "id": "033578f8-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Source Reference Work for Name of Timespan",
+                    "node_id": "033578a6-1d9d-11eb-a29f-024e0d439fdb",
                     "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "0335784b-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Instrument used in Sampling Activity",
-                        "placeholder": null
-                    },
-                    "id": "033578f7-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Instrument used in Sampling Activity",
-                    "node_id": "03357849-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0434ccd0-1d9f-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": null,
-                        "label": "Sampling Activity Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "1b7097f7-1d9f-11eb-a29f-024e0d439fdb",
-                    "label": "Sampling Activity Type",
-                    "node_id": "0434ccce-1d9f-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Sampling Event Procedure",
-                        "placeholder": null
-                    },
-                    "id": "2155396a-1da1-11eb-a29f-024e0d439fdb",
-                    "label": "Sampling Event Procedure",
-                    "node_id": "fec2d45a-1da0-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Source Reference Work for Identifier",
-                        "placeholder": ""
-                    },
-                    "id": "033578e4-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Source Reference Work for Identifier",
-                    "node_id": "033578ac-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "03357900-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Language",
-                    "node_id": "033578a2-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357878-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Influence on Sampling Activity",
-                        "placeholder": null
-                    },
-                    "id": "03357902-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Influence on Sampling Activity",
-                    "node_id": "03357876-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0335786c-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Sampling Activity Period",
-                        "placeholder": ""
-                    },
-                    "id": "033578f5-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Sampling Activity Period",
-                    "node_id": "0335786a-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "4099e728-8e31-11eb-a9c4-faffc265b501",
-                    "config": {
-                        "label": "Digital Source",
-                        "placeholder": ""
-                    },
-                    "id": "4099e944-8e31-11eb-a9c4-faffc265b501",
-                    "label": "Digital Source",
-                    "node_id": "4099e8e0-8e31-11eb-a9c4-faffc265b501",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
-                },
-                {
-                    "card_id": "4099e728-8e31-11eb-a9c4-faffc265b501",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Digital Reference Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "4099e976-8e31-11eb-a9c4-faffc265b501",
-                    "label": "Digital Reference Type",
-                    "node_id": "4099e818-8e31-11eb-a9c4-faffc265b501",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": null,
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter name of research project or task.",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578f3-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name",
-                    "node_id": "033578c0-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Name type",
-                        "options": [
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "48b2dd36-2148-4ce6-a00a-40be229da73d",
-                                "id": "d690f5b9-1d0e-4263-9982-2d03d4331040",
-                                "sortorder": "",
-                                "text": "formal title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "41d71deb-c14b-46b2-b174-074c9abd5e3f",
-                                "id": "f0fcac66-a454-4652-a67c-07569753bffd",
-                                "sortorder": "",
-                                "text": "informal title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "09c5997e-86f4-4689-bc6e-169e299acb9b",
-                                "id": "e7d4b0bf-f37a-4af3-aa0b-4f63152ef9f6",
-                                "sortorder": "",
-                                "text": "primary name"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "fa579432-0d81-4d5e-a721-01015f8fbfe5",
-                                "id": "67fa9f61-f296-43f9-952d-39097d24741f",
-                                "sortorder": "",
-                                "text": "stage names"
-                            }
-                        ],
-                        "placeholder": "Select one or more types for this name",
-                        "url": "/concepts/dropdown?conceptid=9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
-                    },
-                    "id": "033578f4-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name type",
-                    "node_id": "033578b5-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000013"
-                },
-                {
-                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name language",
-                        "options": [],
-                        "placeholder": "Select one or more languages of the content"
-                    },
-                    "id": "033578f0-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name language",
-                    "node_id": "03357898-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
@@ -1702,6 +921,923 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
+                    "card_id": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Sampling Procedure",
+                        "placeholder": null
+                    },
+                    "id": "2155396a-1da1-11eb-a29f-024e0d439fdb",
+                    "label": "Sampling Procedure",
+                    "node_id": "fec2d45a-1da0-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": [
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578c6-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Type",
+                    "node_id": "033578b3-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578c8-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Label",
+                    "node_id": "033578b0-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0335785d-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Occurs Before Event",
+                        "placeholder": ""
+                    },
+                    "id": "033578d2-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Occurs Before Event",
+                    "node_id": "0335785b-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0335784b-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Instrument used in Sampling Activity",
+                        "placeholder": null
+                    },
+                    "id": "033578f7-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Instrument used in Sampling Activity",
+                    "node_id": "03357849-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "format": "",
+                        "label": "Value",
+                        "max": "",
+                        "min": "1",
+                        "placeholder": "Enter number",
+                        "precision": "",
+                        "prefix": "",
+                        "step": "1",
+                        "suffix": "",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578de-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Value",
+                    "node_id": "03357897-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Duration Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578e0-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Duration Type",
+                    "node_id": "033578b2-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Duration of Timespan Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578e1-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Duration of Timespan Label",
+                    "node_id": "033578be-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 6,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "format": "",
+                        "label": "Lowest possible value (if value is uncertain)",
+                        "max": "",
+                        "min": "",
+                        "placeholder": "Enter number",
+                        "precision": "",
+                        "prefix": "",
+                        "step": "",
+                        "suffix": "",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578e2-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Lowest possible value (if value is uncertain)",
+                    "node_id": "0335789f-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "format": "",
+                        "label": "Highest possible value (if value is uncertain)",
+                        "max": "",
+                        "min": "",
+                        "placeholder": "Enter number",
+                        "precision": "",
+                        "prefix": "",
+                        "step": "",
+                        "suffix": "",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578e3-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Highest possible value (if value is uncertain)",
+                    "node_id": "03357899-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Source Reference Work for Name for Statement about TimeSpan",
+                        "placeholder": ""
+                    },
+                    "id": "033578fe-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Source Reference Work for Name for Statement about TimeSpan",
+                    "node_id": "033578a9-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578ff-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name",
+                    "node_id": "0335789c-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578fd-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Type",
+                    "node_id": "033578a7-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "03357900-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Language",
+                    "node_id": "033578a2-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "03357901-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Label",
+                    "node_id": "0335789e-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "0335784e-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Occurs After Event",
+                        "placeholder": ""
+                    },
+                    "id": "033578d1-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Occurs After Event",
+                    "node_id": "0335784c-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Overall Object Sampled",
+                        "placeholder": ""
+                    },
+                    "id": "b3e171af-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Overall Object Sampled",
+                    "node_id": "b3e171aa-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultManifest": null,
+                        "label": "Sampled Area Location"
+                    },
+                    "id": "b3e171b0-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Sampled Area Location",
+                    "node_id": "b3e171ae-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "aae743b8-4c48-11ea-988b-2bc775672c81"
+                },
+                {
+                    "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578f9-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Language",
+                    "node_id": "033578bf-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Source Reference Work for Identifier",
+                        "placeholder": ""
+                    },
+                    "id": "033578e4-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Source Reference Work for Identifier",
+                    "node_id": "033578ac-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578d5-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Language",
+                    "node_id": "033578bc-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement Text",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578d6-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Statement Text",
+                    "node_id": "03357893-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Type of Statement",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578d7-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Type of Statement",
+                    "node_id": "03357891-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578e7-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Identifier",
+                    "node_id": "033578bb-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "_label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578d3-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "_label",
+                    "node_id": "033578ad-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578e5-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Identifier Type",
+                    "node_id": "033578a5-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578e6-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Identifier Label",
+                    "node_id": "0335788e-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name for Statement Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578d8-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name for Statement Label",
+                    "node_id": "033578b8-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select one or more language"
+                    },
+                    "id": "033578d9-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Language",
+                    "node_id": "033578a0-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Source Reference Work for Name for Statement",
+                        "placeholder": ""
+                    },
+                    "id": "033578da-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Source Reference Work for Name for Statement",
+                    "node_id": "033578ba-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": [
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select a type for this name"
+                    },
+                    "id": "033578db-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Type",
+                    "node_id": "033578b9-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter content",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578dc-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name",
+                    "node_id": "0335788f-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357878-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Influence on Sampling Activity",
+                        "placeholder": null
+                    },
+                    "id": "03357902-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Influence on Sampling Activity",
+                    "node_id": "03357876-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "0335786c-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Sampling Activity Period",
+                        "placeholder": ""
+                    },
+                    "id": "033578f5-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Sampling Activity Period",
+                    "node_id": "0335786a-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "0335787b-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Part of Project",
+                        "placeholder": "Select the parent project, if any."
+                    },
+                    "id": "033578c3-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Part of Project",
+                    "node_id": "03357879-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "03357881-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": null,
+                        "label": "Sampling Activity Technique",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578d0-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Sampling Activity Technique",
+                    "node_id": "0335787f-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "4099e728-8e31-11eb-a9c4-faffc265b501",
+                    "config": {
+                        "label": "Digital Source",
+                        "placeholder": ""
+                    },
+                    "id": "4099e944-8e31-11eb-a9c4-faffc265b501",
+                    "label": "Digital Source",
+                    "node_id": "4099e8e0-8e31-11eb-a9c4-faffc265b501",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "4099e728-8e31-11eb-a9c4-faffc265b501",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Digital Reference Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "4099e976-8e31-11eb-a9c4-faffc265b501",
+                    "label": "Digital Reference Type",
+                    "node_id": "4099e818-8e31-11eb-a9c4-faffc265b501",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Latest start date",
+                        "maxDate": null,
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "033578ed-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Latest start date",
+                    "node_id": "033578a1-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Earliest start date",
+                        "maxDate": null,
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "033578ee-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Earliest start date",
+                    "node_id": "03357892-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Latest end date (if known)",
+                        "maxDate": null,
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "033578ef-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Latest end date (if known)",
+                    "node_id": "033578c2-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Internal Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578eb-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Internal Label",
+                    "node_id": "033578ae-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": null,
+                        "label": "Earliest end date",
+                        "maxDate": null,
+                        "minDate": null,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "033578ec-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Earliest end date",
+                    "node_id": "0335789d-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Type of Timespan",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "033578ea-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Type of Timespan",
+                    "node_id": "033578af-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0335788d-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Internal Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578ca-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Internal Label",
+                    "node_id": "0335788b-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "03357863-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "label": "Location of Sampling Activity",
+                        "placeholder": null
+                    },
+                    "id": "033578e8-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Location of Sampling Activity",
+                    "node_id": "03357861-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
+                    "card_id": "985a7550-1d9e-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": null,
+                        "label": "Sampling Activity Tool Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "a72b63b4-1d9e-11eb-a29f-024e0d439fdb",
+                    "label": "Sampling Activity Tool Type",
+                    "node_id": "985a754e-1d9e-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "0434ccd0-1d9f-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": null,
+                        "label": "Sampling Activity Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "1b7097f7-1d9f-11eb-a29f-024e0d439fdb",
+                    "label": "Sampling Activity Type",
+                    "node_id": "0434ccce-1d9f-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": [
+                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                        ],
+                        "label": "Name type",
+                        "options": [
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "480abea1-f508-4129-af86-52a4358b0e8a",
+                                "id": "a4214e72-a6d5-4b17-ae40-f1fac63635ef",
+                                "sortorder": "",
+                                "text": "Getty Guide Title"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "f4643b7d-2710-4aca-8892-c0eeed02dfe9",
+                                "id": "0798bf2c-ab07-43d7-81f4-f1e2d20251a1",
+                                "sortorder": "",
+                                "text": "alternate titles"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "0f0f9727-0dee-4ff5-bc8d-201aaf6ab338",
+                                "id": "37c3fdc5-5a8b-438a-8c6d-c82d450520c7",
+                                "sortorder": "",
+                                "text": "catalogue title"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "fde9f103-4536-4d8d-8882-9efb5084362c",
+                                "id": "ec635afd-beb1-426e-a21c-09866ea94d25",
+                                "sortorder": "",
+                                "text": "display title"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "763b6d6d-d745-4dc8-9605-122d7c15a2d8",
+                                "id": "8f9ca198-cd32-4c3e-9ab8-afa0625a6a57",
+                                "sortorder": "",
+                                "text": "foreign language title"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "48b2dd36-2148-4ce6-a00a-40be229da73d",
+                                "id": "d690f5b9-1d0e-4263-9982-2d03d4331040",
+                                "sortorder": "",
+                                "text": "formal title"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "c000d8be-cc35-430b-b250-5105395204d0",
+                                "id": "9a6ed3ee-9ebf-47c1-8617-e2bd6212470d",
+                                "sortorder": "",
+                                "text": "group titles"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "41d71deb-c14b-46b2-b174-074c9abd5e3f",
+                                "id": "f0fcac66-a454-4652-a67c-07569753bffd",
+                                "sortorder": "",
+                                "text": "informal title"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "09c5997e-86f4-4689-bc6e-169e299acb9b",
+                                "id": "e7d4b0bf-f37a-4af3-aa0b-4f63152ef9f6",
+                                "sortorder": "",
+                                "text": "primary name"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "e1888665-101f-4307-9906-6d9df78bd88c",
+                                "id": "a567e52a-2e33-40da-abcc-212bbd2413f2",
+                                "sortorder": "",
+                                "text": "published titles"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "15599306-151c-4508-8e9c-ba0f10a709b0",
+                                "id": "d9ca8f76-5cc2-4d88-a5d5-2aea468512fc",
+                                "sortorder": "",
+                                "text": "scholarly title "
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "fa579432-0d81-4d5e-a721-01015f8fbfe5",
+                                "id": "67fa9f61-f296-43f9-952d-39097d24741f",
+                                "sortorder": "",
+                                "text": "stage names"
+                            },
+                            {
+                                "children": [],
+                                "collector": "",
+                                "conceptid": "6dd419c8-178e-4144-b107-da5aaf329529",
+                                "id": "50a74d12-94f1-4dc8-96e1-ee881603a991",
+                                "sortorder": "",
+                                "text": "translated titles"
+                            }
+                        ],
+                        "placeholder": "Select one or more types for this name",
+                        "url": "/concepts/dropdown?conceptid=9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                    },
+                    "id": "033578f4-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name type",
+                    "node_id": "033578b5-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000013"
+                },
+                {
+                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name language",
+                        "options": [],
+                        "placeholder": "Select one or more languages of the content"
+                    },
+                    "id": "033578f0-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name language",
+                    "node_id": "03357898-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
+                    "config": {
+                        "defaultValue": null,
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter the name of the sampling activity",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "033578f3-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Name",
+                    "node_id": "033578c0-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
                     "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "label": "Source Reference Work for Name",
@@ -1732,81 +1868,17 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
+                    "card_id": "03357872-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "label": "Source Reference Work for Name of Timespan",
-                        "placeholder": ""
+                        "label": "Sampler",
+                        "placeholder": "Add a member"
                     },
-                    "id": "033578f8-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Source Reference Work for Name of Timespan",
-                    "node_id": "033578a6-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "03357901-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Label",
-                    "node_id": "0335789e-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "033578c5-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Language",
-                    "node_id": "03357895-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 2,
+                    "id": "033578c4-1d9d-11eb-a29f-024e0d439fdb",
+                    "label": "Sampler",
+                    "node_id": "03357870-1d9d-11eb-a29f-024e0d439fdb",
+                    "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "label": "Source Reference Work for Name for Duration of Timespan",
-                        "placeholder": ""
-                    },
-                    "id": "033578c9-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Source Reference Work for Name for Duration of Timespan",
-                    "node_id": "033578aa-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 3,
-                    "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "033578c8-1d9d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Label",
-                    "node_id": "033578b0-1d9d-11eb-a29f-024e0d439fdb",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 }
             ],
             "color": "rgba(57,96,168,0.75)",
@@ -1844,6 +1916,69 @@
             "edges": [
                 {
                     "description": null,
+                    "domainnode_id": "03357888-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "03357924-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "033578b4-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "03357882-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "0335794b-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "rangenode_id": "033578be-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "03357852-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "0335794c-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "rangenode_id": "033578ae-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "03357888-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "0335794d-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "rangenode_id": "033578b1-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "0335794e-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "rangenode_id": "033578b6-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "b3e171ac-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "b3e171b5-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
+                    "rangenode_id": "b3e171ad-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "4099e584-8e31-11eb-a9c4-faffc265b501",
+                    "edgeid": "4099ebf6-8e31-11eb-a9c4-faffc265b501",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67.1_has_type",
+                    "rangenode_id": "4099e818-8e31-11eb-a9c4-faffc265b501"
+                },
+                {
+                    "description": null,
                     "domainnode_id": "b3e171ad-1d9d-11eb-a29f-024e0d439fdb",
                     "edgeid": "b3e171b6-1d9d-11eb-a29f-024e0d439fdb",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
@@ -1859,6 +1994,33 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P46i_forms_part_of",
                     "rangenode_id": "b3e171aa-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "03357894-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "0335791f-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "rangenode_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "03357894-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "fec2d45d-1da0-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
+                    "rangenode_id": "fec2d45a-1da0-11eb-a29f-024e0d439fdb"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "03357882-1d9d-11eb-a29f-024e0d439fdb",
+                    "edgeid": "03357944-1d9d-11eb-a29f-024e0d439fdb",
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "rangenode_id": "033578b2-1d9d-11eb-a29f-024e0d439fdb"
                 },
                 {
                     "description": null,
@@ -2132,15 +2294,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "03357888-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "03357924-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "033578b4-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "03357894-1d9d-11eb-a29f-024e0d439fdb",
                     "edgeid": "985a7551-1d9e-11eb-a29f-024e0d439fdb",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
@@ -2156,15 +2309,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "rangenode_id": "0434ccce-1d9f-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "03357894-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "fec2d45d-1da0-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P16_used_specific_object",
-                    "rangenode_id": "fec2d45a-1da0-11eb-a29f-024e0d439fdb"
                 },
                 {
                     "description": null,
@@ -2249,15 +2393,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "03357882-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "03357944-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "rangenode_id": "033578b2-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "03357894-1d9d-11eb-a29f-024e0d439fdb",
                     "edgeid": "03357945-1d9d-11eb-a29f-024e0d439fdb",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
@@ -2309,15 +2444,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "rangenode_id": "0335789b-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "4099e584-8e31-11eb-a9c4-faffc265b501",
-                    "edgeid": "4099ebf6-8e31-11eb-a9c4-faffc265b501",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67.1_has_type",
-                    "rangenode_id": "4099e818-8e31-11eb-a9c4-faffc265b501"
                 },
                 {
                     "description": null,
@@ -2546,66 +2672,12 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "03357882-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "0335794b-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "rangenode_id": "033578be-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "03357852-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "0335794c-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "rangenode_id": "033578ae-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "03357888-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "0335794d-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "rangenode_id": "033578b1-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "0335794e-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "rangenode_id": "033578b6-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "b3e171ac-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "b3e171b5-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by",
-                    "rangenode_id": "b3e171ad-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "03357894-1d9d-11eb-a29f-024e0d439fdb",
                     "edgeid": "03357905-1d9d-11eb-a29f-024e0d439fdb",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "03357873-1d9d-11eb-a29f-024e0d439fdb"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "03357894-1d9d-11eb-a29f-024e0d439fdb",
-                    "edgeid": "0335791f-1d9d-11eb-a29f-024e0d439fdb",
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "rangenode_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb"
                 }
             ],
             "functions_x_graphs": [
@@ -2627,7 +2699,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "id": "2e91ef05-a27c-11eb-a29f-024e0d439fdb"
+                    "id": "0d2c67c5-be6f-11eb-a29f-024e0d439fdb"
                 }
             ],
             "graphid": "03357848-1d9d-11eb-a29f-024e0d439fdb",
@@ -3132,26 +3204,6 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": "5f6772d0-149d-42b1-9e76-56fe018d7380"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Identifier_type",
-                    "nodegroup_id": "0335785e-1d9d-11eb-a29f-024e0d439fdb",
-                    "nodeid": "033578a5-1d9d-11eb-a29f-024e0d439fdb",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
                         "graphs": [
                             {
                                 "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
@@ -3485,26 +3537,6 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": null
-                    },
-                    "datatype": "concept",
-                    "description": null,
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "is_collector": true,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "type",
-                    "nodegroup_id": "0434ccce-1d9f-11eb-a29f-024e0d439fdb",
-                    "nodeid": "0434ccce-1d9f-11eb-a29f-024e0d439fdb",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
                         "graphs": [
                             {
                                 "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
@@ -3764,26 +3796,6 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Name_type",
-                    "nodegroup_id": "03357873-1d9d-11eb-a29f-024e0d439fdb",
-                    "nodeid": "033578b5-1d9d-11eb-a29f-024e0d439fdb",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
-                },
-                {
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
@@ -3799,26 +3811,6 @@
                     "nodeid": "033578b6-1d9d-11eb-a29f-024e0d439fdb",
                     "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
                     "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": {
-                        "rdmCollection": "f44f7240-35c5-49e8-a0e3-2ffe308f0862"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Statement_type",
-                    "nodegroup_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb",
-                    "nodeid": "033578b7-1d9d-11eb-a29f-024e0d439fdb",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0
                 },
                 {
@@ -4423,7 +4415,7 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": null
+                        "rdmCollection": "933cf221-2d71-478f-998a-a5e088457971"
                     },
                     "datatype": "concept",
                     "description": null,
@@ -4550,7 +4542,7 @@
                 },
                 {
                     "config": {
-                        "rdmCollection": null
+                        "rdmCollection": "a373aabe-bba3-4c41-a363-d8f879c2f7ff"
                     },
                     "datatype": "concept-list",
                     "description": null,
@@ -4566,6 +4558,86 @@
                     "nodeid": "985a754e-1d9e-11eb-a29f-024e0d439fdb",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P125_used_object_of_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "rdmCollection": "80028d07-9c98-48cf-84db-f77bc01c8bbc"
+                    },
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Name_type",
+                    "nodegroup_id": "03357873-1d9d-11eb-a29f-024e0d439fdb",
+                    "nodeid": "033578b5-1d9d-11eb-a29f-024e0d439fdb",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "rdmCollection": "6e3bd268-68bc-4464-aad0-82eabfd5a78f"
+                    },
+                    "datatype": "concept",
+                    "description": null,
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "is_collector": true,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "type",
+                    "nodegroup_id": "0434ccce-1d9f-11eb-a29f-024e0d439fdb",
+                    "nodeid": "0434ccce-1d9f-11eb-a29f-024e0d439fdb",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "rdmCollection": "69abe4f9-f16f-47bf-8fdf-ccce67a18e5d"
+                    },
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Statement_type",
+                    "nodegroup_id": "0335786d-1d9d-11eb-a29f-024e0d439fdb",
+                    "nodeid": "033578b7-1d9d-11eb-a29f-024e0d439fdb",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
+                    "sortorder": 0
+                },
+                {
+                    "config": {
+                        "rdmCollection": "4096365e-4fe7-412d-906c-16f3d356e8be"
+                    },
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Identifier_type",
+                    "nodegroup_id": "0335785e-1d9d-11eb-a29f-024e0d439fdb",
+                    "nodeid": "033578a5-1d9d-11eb-a29f-024e0d439fdb",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0
                 }
             ],
@@ -4597,7 +4669,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "c3b705b11 2021-04-20 15:05:23 -0700",
+        "git hash": "19d4ce482 2021-05-13 17:32:15 -0700",
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }

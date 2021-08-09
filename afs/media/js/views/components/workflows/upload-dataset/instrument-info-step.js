@@ -21,6 +21,11 @@ define([
         const observedThingInstanceId = projectInfo.physicalThing;
         const projectInstanceId = projectInfo.project;
         const projectNodeId = '736f06a4-c54d-11ea-9f58-024e0d439fdb';
+        const nameTypeNodeId = '87e4092e-c457-11e9-8036-a4d18cec433a';
+        // TODO: the default name type concept value needs to change/be confirmed.  
+        const nameTypeConceptValue = ['ec635afd-beb1-426e-a21c-09866ea94d25'];
+        const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
+        const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
 
         const getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key])
@@ -43,6 +48,13 @@ define([
         this.nameValue = ko.observable(getProp('name', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
+        this.locked = params.form.locked;
+
+        const snapshot = {
+            instrumentValue: self.instrumentValue(),
+            procedureValue: self.procedureValue(),
+            parameterValue: self.parameterValue()
+        };
 
         this.createRelatedInstance = function(val){
             return [{
@@ -93,9 +105,11 @@ define([
                 "resourceinstance_id": resourceid,
                 "sortorder": 0,
                 "tiles": {},
-                "data": {}
+                "data": {},
+                "transaction_id": params.form.workflowId
             };
             res.data = data;
+
             return res;
         };
 
@@ -115,9 +129,22 @@ define([
             });
         };
 
+        params.form.reset = function(){
+            self.instrumentValue(snapshot.instrumentValue);
+            self.procedureValue(snapshot.procedureValue);
+            self.parameterValue(snapshot.parameterValue);
+            params.form.hasUnsavedData(false);
+        };
+
         params.form.save = function() {
+            if(!self.instrumentValue()){
+                params.form.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
+                return;
+            }
+
             let observedThingData = {};
             observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
+            params.form.lockExternalStep("project-info", true);
             return self.saveTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid)
                 .then(function(data) {
                     let partOfProjectData = {};
@@ -128,6 +155,7 @@ define([
                 .then(function(data) {
                     let nameData = {};
                     nameData[nameNodeId] = self.nameValue();
+                    nameData[nameTypeNodeId] = nameTypeConceptValue;
                     projectTileId = data.tileid;
                     return self.saveTile(nameData, nameNodeGroupId, data.resourceinstance_id, nameTileId);
                 })
@@ -146,16 +174,17 @@ define([
                 .then(function(data) {
                     let parameterData = {};
                     parameterData[parameterNodeId] = self.parameterValue();
+                    parameterData[statementTypeNodeId] = statementTypeConceptValue;
                     procedureTileId = data.tileid;
                     return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
                 })
                 .then(function(data) {
                     parameterTileId = data.tileid;
                     self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
-                    params.form.complete(true);
                     params.form.savedData(params.form.addedData());
+                    params.form.complete(true);
+                    params.form.alert("");
                 });
-    
         };
     }
 
