@@ -5,6 +5,7 @@ define([
 ], function($, ko, arches) {
     function viewModel(params) {
         this.value = params.value;
+        this.locked = params.form.locked;
     };
 
     ko.components.register('dataset-step', {

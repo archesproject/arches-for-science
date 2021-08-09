@@ -16,16 +16,19 @@
             id="non-destructive" 
             value="non-destructive"
             name="dataset-type"
-            data-bind="checked: $data.value"
+            data-bind="
+                checked: $data.value,
+                disable: $data.locked(),
+                cursor: $data.locked() ? 'default' : 'pointer';
+            "
             style="
-                cursor: pointer;
                 margin-top: 10px;
                 margin-right: 5px;
             "
         >
         <label 
             for="non-destructive"
-            style="cursor: pointer;"
+            data-bind="cursor: $data.locked() ? 'default' : 'pointer';"
         >
             <h5>
                 {% trans "Data from a discreet area/region of interest" %}
@@ -44,16 +47,19 @@
             id="destructive" 
             value="destructive"
             name="dataset-type"
-            data-bind="checked: $data.value"
+            data-bind="
+                checked: $data.value,
+                disable: $data.locked(),
+                cursor: $data.locked() ? 'default' : 'pointer';
+            "
             style="
-                cursor: pointer;
                 margin-top: 10px;
                 margin-right: 5px;
             "
         >
         <label 
             for="destructive"
-            style="cursor: pointer;"
+            data-bind="cursor: $data.locked() ? 'default' : 'pointer';"
         >
             <h5>
                 {% trans "Data from the consumption of the sample or object" %}

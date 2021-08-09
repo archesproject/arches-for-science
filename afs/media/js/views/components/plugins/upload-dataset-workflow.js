@@ -9,12 +9,41 @@ define([
     'views/components/workflows/upload-dataset/dataset-step',
     'views/components/workflows/upload-dataset/instrument-info-step',
     'views/components/workflows/upload-dataset/file-interpretation-step',
+    'views/components/workflows/upload-dataset/upload-dataset-step',
     'views/components/workflows/upload-dataset/select-dataset-files-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
             this.componentName = 'upload-dataset-workflow';
             this.v2 = true;
+
+            var sampleLocationStep = {
+                title: 'Sample Location',
+                name: 'select-dataset-files-step',
+                description: '',
+                required: true,
+                workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
+                autoAdvance: false,
+                lockableExternalSteps: ['select-instrument-and-files'],
+                externalstepdata: {
+                    projectinfo: 'project-info',
+                    observationinfo: 'select-instrument-and-files',
+                },
+                layoutSections: [
+                    {
+                        sectionTitle: null,
+                        componentConfigs: [
+                            { 
+                                componentName: 'select-dataset-files-step',
+                                uniqueInstanceName: 'select-dataset-files-step', /* unique to step */
+                                parameters: {
+                                    renderContext: 'workflow',
+                                },
+                            },
+                        ], 
+                    },
+                ],
+            };
 
             this.stepConfig = [
                 {
@@ -29,12 +58,22 @@ define([
                                     componentName: 'dataset-step',
                                     uniqueInstanceName: 'dataset-step', /* unique to step */
                                     tilesManaged: 'none',
-                                    parameters: {
-                                    },
+                                    parameters: {},
                                 },
                             ], 
                         },
                     ],
+                    stepInjectionConfig: {
+                        defaultStepChoice: null,  /* optional param to show tab on new workflow creation */ 
+                        stepNameToInjectAfter: function(step) {  /* step = self-introspection */ 
+                            return 'select-instrument-and-files';
+                        },
+                        injectionLogic: function(step) {  /* step = self-introspection */ 
+                            if (step.value() && step.value()['dataset-step'][0][1] === 'non-destructive') {
+                                return sampleLocationStep;
+                            }
+                        }
+                    },
                 },
                 {
                     title: 'Project Info',
@@ -86,33 +125,6 @@ define([
                                 { 
                                     componentName: 'instrument-info-step',
                                     uniqueInstanceName: 'instrument-info', /* unique to step */
-                                    parameters: {
-                                        renderContext: 'workflow',
-                                    },
-                                },
-                            ], 
-                        },
-                    ],
-                },
-                {
-                    title: 'Sample Location',
-                    name: 'select-dataset-files-step',
-                    description: '',
-                    required: true,
-                    workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
-                    autoAdvance: false,
-                    lockableExternalSteps: ['select-instrument-and-files'],
-                    externalstepdata: {
-                        projectinfo: 'project-info',
-                        observationinfo: 'select-instrument-and-files',
-                    },
-                    layoutSections: [
-                        {
-                            sectionTitle: null,
-                            componentConfigs: [
-                                { 
-                                    componentName: 'select-dataset-files-step',
-                                    uniqueInstanceName: 'select-dataset-files-step', /* unique to step */
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
