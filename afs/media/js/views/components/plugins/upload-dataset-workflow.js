@@ -9,7 +9,6 @@ define([
     'views/components/workflows/upload-dataset/dataset-step',
     'views/components/workflows/upload-dataset/instrument-info-step',
     'views/components/workflows/upload-dataset/file-interpretation-step',
-    'views/components/workflows/upload-dataset/upload-dataset-step',
     'views/components/workflows/upload-dataset/select-dataset-files-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
