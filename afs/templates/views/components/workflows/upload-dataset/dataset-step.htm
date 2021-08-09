@@ -1,0 +1,66 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<div>
+    <p
+        style="margin-left: 4px;"
+    >
+        {% trans "Select the option that describes your dataset:" %}
+    </p>
+
+    <div
+        style="display: flex;"
+    >
+        <input 
+            type="radio" 
+            id="non-destructive" 
+            value="non-destructive"
+            name="dataset-type"
+            data-bind="checked: $data.value"
+            style="
+                cursor: pointer;
+                margin-top: 10px;
+                margin-right: 5px;
+            "
+        >
+        <label 
+            for="non-destructive"
+            style="cursor: pointer;"
+        >
+            <h5>
+                {% trans "Data from a discreet area/region of interest" %}
+            </h5>
+            <p>
+                {% trans "Choose this dataset type for any data resulting from a non-invasive technique and/or a minimally-invasive/minimally-destructive technique performed on a larger object but which does not consume the entire object/sample. This includes datasets from non-invasive techniques performed on remote samples." %}
+            </p>
+        </label>
+    </div>
+      
+    <div
+        style="display: flex;"
+    >
+        <input 
+            type="radio" 
+            id="destructive" 
+            value="destructive"
+            name="dataset-type"
+            data-bind="checked: $data.value"
+            style="
+                cursor: pointer;
+                margin-top: 10px;
+                margin-right: 5px;
+            "
+        >
+        <label 
+            for="destructive"
+            style="cursor: pointer;"
+        >
+            <h5>
+                {% trans "Data from the consumption of the sample or object" %}
+            </h5>
+            <p>
+                {% trans "Choose this dataset type for any data resulting from the full destruction of a sample or object." %}
+            </p>
+        </label>
+    </div>
+</div>
