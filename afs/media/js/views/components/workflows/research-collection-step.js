@@ -40,7 +40,8 @@ define([
         this.projectResourceId = ko.observable();
         this.collectionResourceId = ko.observable();
         this.usedSetTileId = ko.observable();
-
+        this.reportDataLoading = ko.observable(params.loading());
+    
         var projectInfoData = params.externalStepData.researchactivitystep.data["project-name"][0];
         var researchActivityStepData = projectInfoData.tileData;
         var researchActivityName = researchActivityStepData[activityNameNodeId];
@@ -323,7 +324,7 @@ define([
                 filters['paging-filter'] = 1;
             }
 
-            params.loading(true);
+            self.reportDataLoading(true);
 
             const setUpReports = function(reportData) {
                 const filterParams = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&');
@@ -359,7 +360,6 @@ define([
                             }));
                             return source;
                         });
-                        params.loading(false);
                         self.targetResources(resources);
                     });
             };
@@ -375,12 +375,13 @@ define([
                         });
                     }
                     setUpReports(data);
+                }).then(function(){
+                    self.reportDataLoading(false);
                 });
         };
 
 
         this.updateSearchResults = function(termFilter, pagingFilter) {
-            params.loading(true);
             getResultData(termFilter, pagingFilter);
         };
 
