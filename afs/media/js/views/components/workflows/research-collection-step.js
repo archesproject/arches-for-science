@@ -326,14 +326,11 @@ define([
             params.loading(true);
 
             const setUpReports = function(reportData) {
-                const graphModel = new GraphModel({
-                    data: reportData[graphId].graph,
-                    datatypes: reportData[graphId].datatypes
-                });
-                fetch(arches.urls.physical_thing_search_results, filters)
+                const filterParams = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&');
+                fetch(arches.urls.physical_thing_search_results + '?' + filterParams)
                     .then(response => response.json())
                     .then(data => {
-                        _.each(this.searchResults, function(_value, key) {
+                        _.each(self.searchResults, function(_value, key) {
                             if (key !== 'timestamp') {
                                 delete self.searchResults[key];
                             }
@@ -356,7 +353,7 @@ define([
                             
                             tileData.templates = reportLookup;
                             source.report = new ReportModel(_.extend(tileData, {
-                                graphModel: graphModel,
+                                graphModel: self.graphModel,
                                 graph: reportData[graphId].graph,
                                 datatypes: reportData[graphId].graph.datatypes
                             }));
@@ -366,10 +363,17 @@ define([
                         self.targetResources(resources);
                     });
             };
+
             fetch(arches.urls.api_bulk_resource_report + `?graph_ids=${[graphId]}&exclude=cards`)
                 .then(result => {
                     return result.json();
                 }).then(function(data){
+                    if (!self.graphModel) {
+                        self.graphModel = new GraphModel({
+                            data: data[graphId].graph,
+                            datatypes: data[graphId].datatypes
+                        });
+                    }
                     setUpReports(data);
                 });
         };
