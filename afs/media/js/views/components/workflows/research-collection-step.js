@@ -12,8 +12,6 @@ define([
     'views/components/search/paging-filter',
 ], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup) {
 
-    var graph = ko.observable();
-
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a'; // Physical Thing graph
     var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a'; // Name_content in Collection resource
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
@@ -377,13 +375,10 @@ define([
         };
 
 
-        
         this.updateSearchResults = function(termFilter, pagingFilter) {
             params.loading(true);
             getResultData(termFilter, pagingFilter);
         };
-
-        // getResultData(null);
 
         params.defineStateProperties = function(){
             var wastebin = !!(ko.unwrap(params.wastebin)) ? koMapping.toJS(params.wastebin) : undefined;
