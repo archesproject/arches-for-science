@@ -12,7 +12,7 @@
             <div class="workflow-search-list-container"> 
                 <div class="workflow-search-list">
 
-                    <div data-bind="foreach: targetResources">
+                    <!-- <div data-bind="foreach: targetResources">
                         <div class="resource-report" data-bind="component: {
                             name: $parent.reportLookup[$data.report.get('template_id')()].componentname,
                             params: {
@@ -21,18 +21,21 @@
                             }
                         }, css: {'selected-instance': $parent.value().map(function(r){return r.resourceId}).indexOf($data['_source']['resourceinstanceid']) >= 0},
                         click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
-                    </div>
-                    <!-- TODO: Implement resource report abstract once custom phys thing report is complete -->
-                    <!-- <div data-bind="foreach: targetResources">
+                    </div> -->
+
+                    <div data-bind="foreach: targetResources">
                         <div data-bind="component: { 
                             name: 'resource-report-abstract',
                             params: {
-                                resourceid: $data['_source']['resourceinstanceid'],
+                                report: $data.report,
                                 summary: true
                             }
                         }, css: {'selected-instance': $parent.value().map(function(r){return r.resourceId}).indexOf($data['_source']['resourceinstanceid']) >= 0},
-                        click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}"></div>
-                    </div> -->
+                        click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}">
+                        </div>
+                        <hr style="margin: 0"></hr>
+                    </div>
+
                 </div>
                 
                 <div class="search-results-footer">
