@@ -35,7 +35,7 @@ define([
     
     function viewModel(params) {
         var self = this;
-        var limit = 7;
+        var limit = 10;
 
         this.projectResourceId = ko.observable();
         this.collectionResourceId = ko.observable();
