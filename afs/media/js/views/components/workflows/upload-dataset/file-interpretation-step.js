@@ -19,6 +19,7 @@ define([
         this.fileFormatRenderers = fileRenderers;
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
+        this.selected = ko.observable();
         params.value({});
         this.dirty = ko.computed(function(){
             for (var value of Object.values(params.value())) {
@@ -162,6 +163,10 @@ define([
                         obj[fileTileid].fileStatementInterpretation = getStatement(interpretationValueid);
                         params.value(obj);    
                     });
+                    if(self.digitalResources().length === 1){
+                        self.selectedDigitalResource(self.digitalResources()[0]);
+                        self.selectedFile(self.files()[0]);
+                    }
                 });
         };
         datasetIds.forEach(function(datasetId){
@@ -173,7 +178,7 @@ define([
         this.selectedDigitalResource.subscribe(function(selectedDigitalResource){
             console.log('selected digital resource', selectedDigitalResource);
             this.files(selectedDigitalResource.resource.File);
-            this.selectedFile(undefined);
+            this.selectedFile(this.files()[0]);
         }, this);
         this.filteredDigitalResources = ko.pureComputed(function(){
             return this.digitalResources().filter(function(dr){
@@ -288,9 +293,6 @@ define([
         //     self.activeTab(this.card.activeTab);
         // } else {
         // }
-        
-        this.activeTab = ko.observable();
-        this.selected = ko.observable();
 
         // this.activeTab.subscribe(function(val){
         //     self.card.activeTab = val;
