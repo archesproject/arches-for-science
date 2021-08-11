@@ -349,7 +349,7 @@ define([
                     console.log('Couldn\'t create observation cross references.');
                 }
 
-                params.form.value({ 
+                params.value({ 
                     observationReferenceTileId: self.observationReferenceTileId(),
                     parts: self.parts().map(x => 
                         {
@@ -361,13 +361,9 @@ define([
                                 tileid: x.tileid
                             };
                         }
-                    )});
-                params.form.savedData(params.form.addedData());
-                params.form.complete(true);
-                
+                    )
+                });
             };
-
-            params.save = this.save;
 
             this.dropzoneOptions = {
                 url: "arches.urls.root",

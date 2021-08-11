@@ -19,10 +19,8 @@ define([
             var sampleLocationStep = {
                 title: 'Sample Location',
                 name: 'select-dataset-files-step',
-                description: '',
                 required: true,
                 workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
-                autoAdvance: false,
                 lockableExternalSteps: ['select-instrument-and-files'],
                 externalstepdata: {
                     projectinfo: 'project-info',
