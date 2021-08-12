@@ -14,7 +14,7 @@ define([
         params.form.resourceId = objectStepData['sample-object-resource-instance'][0][1];
 
         SummaryStep.apply(this, [params]);
-
+        
         this.objectAnnotations = ko.observableArray();
         this.resourceData.subscribe(function(val){
             this.displayName = val['displayname'] || 'unnamed';
@@ -22,7 +22,6 @@ define([
                 parentObject: {'name': 'Object', 'value': this.getResourceValue(val.resource, ['part of', '@value'])},
                 digitalReference: {'name': 'Image Service', 'value': this.getResourceValue(val.resource['Digital Reference'][0],['Digital Source','@value'])},
             };
-
             var annotationCollection = {};
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
                 var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@value']);
