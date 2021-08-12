@@ -13,70 +13,6 @@ define([
             this.componentName = 'analysis-areas-workflow';
             this.v2 = true;
 
-            var imageStep = {
-                title: 'Image',
-                name: 'image-step', /* unique to workflow */
-                informationboxdata: {
-                    heading: 'Image Services',
-                    text: `
-                        Image Services provide you with picture(s) of an object, often from multiple vantage points, that can be annotated to indicate the location or region of an observation. 
-                        If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
-                    `,
-                },
-                required: true,
-                lockableExternalSteps: ['object-step'],
-                externalstepdata: {
-                    objectstep: 'object-step'
-                },
-                layoutSections: [
-                    {
-                        sectionTitle: 'Image Service',
-                        componentConfigs: [
-                            { 
-                                componentName: 'analysis-areas-image-step',
-                                uniqueInstanceName: 'image-service-instance', /* unique to step */
-                                tilesManaged: 'one',
-                                parameters: {
-                                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
-                                },
-                            },
-                        ], 
-                    },
-                ],
-            };
-
-            var imageStep2 = {
-                title: 'Image2',
-                name: 'image-step-2', /* unique to workflow */
-                informationboxdata: {
-                    heading: 'Image Services',
-                    text: `
-                        Image Services provide you with picture(s) of an object, often from multiple vantage points, that can be annotated to indicate the location or region of an observation. 
-                        If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
-                    `,
-                },
-                required: true,
-                lockableExternalSteps: ['object-step'],
-                externalstepdata: {
-                    objectstep: 'object-step'
-                },
-                layoutSections: [
-                    {
-                        sectionTitle: 'Image Service',
-                        componentConfigs: [
-                            { 
-                                componentName: 'analysis-areas-image-step',
-                                uniqueInstanceName: 'image-service-instance', /* unique to step */
-                                tilesManaged: 'one',
-                                parameters: {
-                                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
-                                },
-                            },
-                        ], 
-                    },
-                ],
-            };
-
             this.stepConfig = [
                 {
                     title: 'Object',
@@ -90,7 +26,6 @@ define([
                         `,
                     },
                     required: true,
-                    shouldtrackresource: true,
                     layoutSections: [
                         {
                             sectionTitle: 'Object or Sample',
@@ -109,23 +44,46 @@ define([
                             ], 
                         },
                     ],
-                    stepInjectionConfig: {
-                        defaultStepChoice: imageStep,  /* optional param to show tab on new workflow creation */ 
-                        injectionLogic: function(step) {
-                            /* step = self-introspection */ 
-                            return imageStep2;
-                        }
+                },
+                {
+                    title: 'Image',
+                    name: 'image-step', /* unique to workflow */
+                    informationboxdata: {
+                        heading: 'Image Services',
+                        text: `
+                            Image Services provide you with picture(s) of an object, often from multiple vantage points, that can be annotated to indicate the location or region of an observation. 
+                            If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
+                        `,
                     },
+                    required: true,
+                    lockableExternalSteps: ['object-step'],
+                    externalstepdata: {
+                        objectstep: 'object-step'
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Image Service',
+                            componentConfigs: [
+                                { 
+                                    componentName: 'analysis-areas-image-step',
+                                    uniqueInstanceName: 'image-service-instance', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'Regions',
                     name: 'regions-step', /* unique to workflow */
                     required: true,
-                    lockableExternalSteps: ['image-step', 'image-step-2'],
+                    lockableExternalSteps: ['image-step'],
                     externalstepdata: {
                         objectstep: 'object-step',
                         imagestep: 'image-step',
-                        imagestep2: 'image-step-2'
                     },
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
                     layoutSections: [

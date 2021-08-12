@@ -22,7 +22,6 @@ define([
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
                     required: true,
-                    shouldtrackresource: true,
                     layoutSections: [
                         {
                             componentConfigs: [
