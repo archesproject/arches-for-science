@@ -14,7 +14,7 @@ define([
         params.form.resourceId = objectStepData['sample-object-resource-instance'][0][1];
 
         SummaryStep.apply(this, [params]);
-        
+
         this.objectAnnotations = ko.observableArray();
         this.resourceData.subscribe(function(val){
             this.displayName = val['displayname'] || 'unnamed';
