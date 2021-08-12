@@ -392,17 +392,17 @@ define([
                 }
             };
 
-            this.getIncompleteInputs = ko.pureComputed(function() {
+            this.getIncompleteInputs = ko.pureComputed(() => {
                 return self.parts().filter(part => {
                     return !part.datasetName() && part.datasetFiles().length;
                 })
             });
             
-            this.canBeSaved = ko.pureComputed(function() {
+            this.canBeSaved = ko.pureComputed(() => {
                 return self.parts().filter(part => part.datasetName && !part.datasetId())
                     .some(part => part.datasetFiles().length) ||
                     self.parts().filter(part => ko.unwrap(part.datasetId)).some(part => part.datasetFiles().some(file => !file.tileId())) ||
-                    self.parts().some(part => part.nameDirty())
+                    self.parts().some(part => part.nameDirty());
             });
 
             this.init = async() => {
@@ -454,8 +454,8 @@ define([
                             self.annotationNodes.valueHasMutated();
                         }
                     }
-                    part.datasetName.subscribe((val) => {
-                        const datasetSnapshot = self.snapshot.parts.find(x => x.datasetId == part.datasetId())
+                    part.datasetName.subscribe(() => {
+                        const datasetSnapshot = self.snapshot.parts.find(x => x.datasetId == part.datasetId());
                         if(ko.unwrap(part.datasetName) != datasetSnapshot?.datasetName) {
                             part.nameDirty(true);
                         }
