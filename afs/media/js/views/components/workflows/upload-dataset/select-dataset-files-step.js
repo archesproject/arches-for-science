@@ -43,6 +43,8 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(true);
             this.files = ko.observableArray([]);
+            this.initialValue = params.form.value() || undefined;
+            this.snapshot = undefined;
 
             this.switchCanvas = function(canvasId){
                 var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasId);
@@ -115,6 +117,7 @@ define([
                 if(self.selectedPart) {
                     file.tileId = ko.observable();
                     self.selectedPart().datasetFiles.push(file);
+                    self.parts.valueHasMutated();
                     self.files.remove(file);
                 }
             }
@@ -127,12 +130,10 @@ define([
             }
 
             this.saveDatasetName = async (part) => {
-                // don't recreate datasets that already exist
-                if(part.datasetId()){ return part.datasetId(); }
 
                 //Tile structure for the Digital Resource 'Name' nodegroup
                 const nameTemplate = {
-                    "tileid": "",
+                    "tileid": part.nameTileId() || "",
                     "data": {
                         "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a": null,
                         "d2fdc0d4-ca7a-11e9-95cf-a4d18cec433a": ["8f40c740-3c02-4839-b1a4-f1460823a9fe"],
@@ -142,7 +143,7 @@ define([
                     },
                     "nodegroup_id": "d2fdae3d-ca7a-11e9-ad84-a4d18cec433a",
                     "parenttile_id": null,
-                    "resourceinstance_id": "",
+                    "resourceinstance_id": ko.unwrap(part.datasetId),
                     "sortorder": 0,
                     "tiles": {},
                     "transaction_id": params.form.workflowId
@@ -150,7 +151,7 @@ define([
 
                 nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = part.datasetName() || "";
 
-                const tile = await window.fetch(arches.urls.api_tiles(uuid.generate()), {
+                const tile = await window.fetch(arches.urls.api_tiles(part.datasetId() || ""), {
                     method: 'POST',
                     credentials: 'include',
                     body: JSON.stringify(nameTemplate),
@@ -161,10 +162,11 @@ define([
 
                 if(tile.ok){
                     const json = await tile.json();
-
-                    const datasetResourceId = json?.resourceinstance_id;
-                    
-                    return datasetResourceId;
+                    part.nameDirty(false);
+                    return {
+                        resourceId: json?.resourceinstance_id, 
+                        tileId: json?.tileid
+                    };
                 }
             };
 
@@ -327,12 +329,13 @@ define([
                     if(!part.datasetName()) { continue; }
                     try {
                         // For each part of parent phys thing, create a digital resource with a Name tile
-                        const datasetResourceId = (await self.saveDatasetName(part));
+                        const dataset = (await self.saveDatasetName(part));
 
-                        part.datasetId(datasetResourceId);
+                        part.datasetId(dataset.resourceId);
+                        part.nameTileId(dataset.tileId);
 
                         // Then save a file tile to the digital resource for each associated file
-                        await self.saveDatasetFiles(part, datasetResourceId);
+                        await self.saveDatasetFiles(part, dataset.resourceId);
                     
                         // Then save a relationship tile on the part that points to the digital resource
                         await self.saveDigitalResourceToChildPhysThing(part);
@@ -343,7 +346,7 @@ define([
                     }
                 }
 
-                try{
+                try {
                     await self.createObservationCrossReferences();
                 } catch(err) {
                     console.log('Couldn\'t create observation cross references.');
@@ -356,15 +359,18 @@ define([
                             return {
                                 datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
                                 datasetId: x.datasetId(),
+                                nameTileId: x.nameTileId(),
                                 datasetName: x.datasetName(),
                                 resourceReferenceId: x.resourceReferenceId(),
                                 tileid: x.tileid
                             };
                         }
                     )});
+
+                self.snapshot = params.form.value();
                 params.form.savedData(params.form.addedData());
                 params.form.complete(true);
-                
+                params.form.hasUnsavedData(false);
             };
 
             params.save = this.save;
@@ -393,7 +399,10 @@ define([
             });
             
             this.canBeSaved = ko.pureComputed(function() {
-                return self.parts().some(part => part.datasetName);
+                return self.parts().filter(part => part.datasetName && !part.datasetId())
+                    .some(part => part.datasetFiles().length) ||
+                    self.parts().filter(part => ko.unwrap(part.datasetId)).some(part => part.datasetFiles().some(file => !file.tileId())) ||
+                    self.parts().some(part => part.nameDirty())
             });
 
             this.init = async() => {
@@ -414,15 +423,18 @@ define([
                 const thingResource = await resourceUtils.lookupResourceInstanceData(this.physicalThing);
         
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
-                self.parts(parts);
 
+                
                 self.observationReferenceTileId(params.form.value()?.observationReferenceTileId);               
-                self.parts().forEach(async(part) => {
+                parts.forEach(async(part) => {
                     part.datasetFiles = ko.observableArray([]);
                     part.datasetName = ko.observable();
                     part.datasetId = ko.observable();
+                    part.nameTileId = ko.observable();
                     part.resourceReferenceId = ko.observable();
+                    part.nameDirty = ko.observable(false);
                     part.displayname = part.data[physicalThingPartNameNodeId];
+                    
                     part.datasetId.subscribe(function(val){
                         if (val) {
                             params.form.complete(true);
@@ -434,6 +446,7 @@ define([
                         part.datasetFiles(savedValue.datasetFiles.map(x => { return {...x, tileId:ko.observable(x.tileId)}}));
                         part.datasetName(savedValue.datasetName);
                         part.datasetId(savedValue.datasetId);
+                        part.nameTileId(savedValue.nameTileId);
                         part.resourceReferenceId(savedValue.resourceReferenceId);
                         if(self.activeTab() != 'dataset') {
                             self.mainMenu(false);
@@ -441,7 +454,15 @@ define([
                             self.annotationNodes.valueHasMutated();
                         }
                     }
+                    part.datasetName.subscribe((val) => {
+                        const datasetSnapshot = self.snapshot.parts.find(x => x.datasetId == part.datasetId())
+                        if(ko.unwrap(part.datasetName) != datasetSnapshot?.datasetName) {
+                            part.nameDirty(true);
+                        }
+                    });
                 });
+                self.parts(parts);
+                self.snapshot = params.form.value();
                 self.selectedPart(self.parts()[0]);
             }
      
