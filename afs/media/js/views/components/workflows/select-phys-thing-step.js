@@ -105,7 +105,7 @@ define([
                 x.nodegroup_id == self.partNodeGroupId &&
                 x.data?.[self.partManifestNodeId]?.features?.[0]?.properties?.manifest)
 
-            if(digitalReferencesWithManifest.length && partsWithManifests.length) {
+            if(!self.validateThing || (digitalReferencesWithManifest.length && partsWithManifests.length)) {
                 params.value({
                     physThingName: physThing.displayname,
                     physicalThing: val,

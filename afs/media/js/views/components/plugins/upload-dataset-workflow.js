@@ -127,6 +127,7 @@ define([
                                     uniqueInstanceName: 'file-interpretation', /* unique to step */
                                     parameters: {
                                         renderContext: 'workflow',
+                                        activeTab: 'edit'
                                     },
                                 },
                             ], 
