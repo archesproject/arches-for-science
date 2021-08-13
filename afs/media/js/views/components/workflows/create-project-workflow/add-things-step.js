@@ -20,7 +20,7 @@ define([
     var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a'; // Name_content in Collection resource
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
     var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
-    console.log("loading whole thing")
+
     $.getJSON(arches.urls.graphs_api + graphId, function(data) { //getting physical thing graph why???
         var graphModel = new GraphModel({
             data: data.graph,
@@ -62,22 +62,19 @@ define([
         };
         this.getJSON();
 
-        console.log("loading...")
-
         var limit = 10;
         this.projectResourceId = ko.observable();
         this.collectionResourceId = ko.observable();
         this.usedSetTileId = ko.observable();
 
-        var researchActivityStepData = params.form.externalStepData['researchactivitystep']['data'];
-        var researchActivityName = researchActivityStepData.tile[activityNameNodeId];
-        this.projectResourceId(researchActivityStepData.resourceid);
+        var researchActivityStepData = params.form.externalStepData['researchactivitystep']['data']['project-name'][0];
+        var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
+        this.projectResourceId(researchActivityStepData.resourceInstanceId);
 
-        if (ko.unwrap(params.value)){
-            var cachedValue = ko.unwrap(params.value);
+        if (ko.unwrap(self.previouslyPersistedComponentData)){
+            var cachedValue = ko.unwrap(self.previouslyPersistedComponentData)[0];
             if (cachedValue['collectionResourceId']){
                 self.collectionResourceId(cachedValue['collectionResourceId']);
-                params.resourceid(self.collectionResourceId());
             }
             if (cachedValue['usedSetTileId']){
                 self.usedSetTileId(cachedValue['usedSetTileId']);
@@ -107,18 +104,22 @@ define([
         this.selectedResources = ko.observableArray([]);
         this.startValue = null;
 
-        params.value= ko.observable();
-        this.updatedValue = ko.pureComputed(function(){
-            return {
-                projectResourceId: self.projectResourceId(),
-                collectionResourceId: self.collectionResourceId(),
-                usedSetTileId: self.usedSetTileId()
-            };
-        });
-        this.updatedValue.subscribe(function(val){
-            console.log("some value changed",val)
-            params.value(val);
-        });
+        this.onSaveSuccess = function(savedData) {
+            self.savedData(savedData.map(function(savedDatum) {
+                return {
+                    tileData: JSON.stringify(savedDatum.data),
+                    tileId: savedDatum.tileid,
+                    nodegroupId: savedDatum.nodegroup_id,
+                    resourceInstanceId: savedDatum.resourceinstance_id,
+                    projectResourceId: ko.unwrap(self.projectResourceId),
+                    collectionResourceId: ko.unwrap(self.collectionResourceId),
+                    usedSetTileId: ko.unwrap(self.usedSetTileId),
+                };    
+            }));
+
+            self.saving(false);
+            self.complete(true);
+        };
 
         this.dirty = ko.pureComputed(function() {
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
@@ -199,7 +200,6 @@ define([
         };
 
         this.submit = function() {
-            console.log("is this run?")
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
@@ -211,7 +211,6 @@ define([
                     'resourceinstanceid': ko.unwrap(self.collectionResourceId)
                 }
             }).done(function(data) {
-                console.log(data)
                 self.collectionResourceId(data.resourceinstance_id);
                 $.ajax({
                     url: arches.urls.api_node_value,
@@ -231,7 +230,6 @@ define([
                         'resourceinstanceid': self.projectResourceId()
                     }
                 }).done(function(data){
-                    console.log(data)
                     self.usedSetTileId(data.tileid);
                     $.ajax({
                         url: arches.urls.api_node_value,
@@ -243,22 +241,18 @@ define([
                             'tileid': self.tile().tileid
                         }
                     }).done(function(data) {
-                        console.log(data)
-                        // if (data.tileid && params.tile().tileid === "") {
-                        //     params.tile().tileid = data.tileid;
-                        // }
-                        //self.onSaveSuccess([data]);
+                        if (data.tileid && self.tile().tileid === "") {
+                            self.tile().tileid = data.tileid;
+                        }
+                        self.onSaveSuccess([data]);
                         self.startValue = data.data[ko.unwrap(params.nodeid)];
-                        //self.tile()._tileData(koMapping.toJSON(data.data));
+                        self.tile()._tileData(koMapping.toJSON(data.data));
                         self.hasUnsavedData(false);
                     });
                 });
             });
         };
         params.form.saveFunction(self.submit);
-        // if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
-        //     params.preSaveCallback(self.submit);
-        // }
 
         params.saveOnQuit = function() {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
@@ -283,29 +277,6 @@ define([
                     console.log(value.resourceId, "related resource is created");
                 });
             });
-        };
-
-        params.defineStateProperties = function(){
-            var wastebin = !!(ko.unwrap(params.wastebin)) ? koMapping.toJS(params.wastebin) : undefined;
-            var resourceId = ko.unwrap(self.collectionResourceId);
-
-            if (resourceId) {
-                if (wastebin && 'resourceid' in wastebin) {
-                    wastebin.resourceid = resourceId;
-                }
-            }
-            
-            ko.mapping.fromJS(wastebin, {}, params.wastebin);
-            
-            return {
-                resourceid: resourceId,
-                tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
-                tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
-                wastebin: wastebin,
-                projectResourceId: ko.unwrap(self.projectResourceId),
-                collectionResourceId: ko.unwrap(self.collectionResourceId),
-                usedSetTileId: ko.unwrap(self.usedSetTileId)
-            };
         };
 
         this.targetResourceSelectConfig = {
