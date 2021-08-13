@@ -4,37 +4,18 @@ define([
     'knockout',
     'knockout-mapping',
     'arches',
-    'views/components/workflows/new-tile-step',
     'models/report',
     'models/graph',
     'report-templates',
     'card-components',
     'bindings/select2-query',
     'views/components/search/paging-filter',
-    'views/components/search/search-results'
-], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup, cardComponents) {
-
-    var graph = ko.observable();
+], function($, _, ko, koMapping, arches, ReportModel, GraphModel, reportLookup) {
 
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a'; // Physical Thing graph
     var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a'; // Name_content in Collection resource
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
     var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
-
-    $.getJSON(arches.urls.graphs_api + graphId, function(data) { //getting physical thing graph why???
-        var graphModel = new GraphModel({
-            data: data.graph,
-            datatypes: data.datatypes
-        });
-
-        graph({
-            graphModel: graphModel,
-            cards: data.cards,
-            graph: data.graph,
-            datatypes: data.datatypes,
-            cardwidgets: data.cardwidgets
-        });
-    });
 
     var getQueryObject = function() {
         var query = _.chain(decodeURIComponent(location.search).slice(1).split('&'))
@@ -62,10 +43,11 @@ define([
         };
         this.getJSON();
 
-        var limit = 10;
+        var limit = 7;
         this.projectResourceId = ko.observable();
         this.collectionResourceId = ko.observable();
         this.usedSetTileId = ko.observable();
+        this.reportDataLoading = ko.observable(params.loading());
 
         var researchActivityStepData = params.form.externalStepData['researchactivitystep']['data']['project-name'][0];
         var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
@@ -329,7 +311,7 @@ define([
             }
         };
         
-        var getResultData = function(termFilter, graph, pagingFilter) {
+        var getResultData = function(termFilter, pagingFilter) {
             var filters = {};
             // let's empty our termFilters
             _.each(self.filters, function(_value, key) {
@@ -350,60 +332,69 @@ define([
                 filters['paging-filter'] = 1;
             }
 
-            //params.loading(true);
-            $.ajax({
-                url: arches.urls.physical_thing_search_results,
-                data: filters
-            }).done(function(data) {
-                _.each(this.searchResults, function(_value, key) {
-                    if (key !== 'timestamp') {
-                        delete self.searchResults[key];
-                    }
-                });
-                _.each(data, function(value, key) {
-                    if (key !== 'timestamp') {
-                        self.searchResults[key] = value;
-                    }
-                });
-                self.searchResults.timestamp(data.timestamp);
+            self.reportDataLoading(true);
 
-                self.totalResults(data['total_results']);
-                var resources = data['results']['hits']['hits'].map(function(source) {
-                    var tileData = {
-                        "tiles": source._source.tiles,
-                        "related_resources": [],
-                        "displayname": source._source.displayname,
-                        "resourceid": source._source.resourceinstanceid
-                    };
-                    tileData.cards = [];
-                    
-                    tileData.templates = reportLookup;
-                    tileData.cardComponents = cardComponents;
-                    source.report = new ReportModel(_.extend(tileData, {
-                        graphModel: graph.graphModel,
-                        graph: graph.graph,
-                        datatypes: graph.datatypes
-                    }));
-                    return source;
-                });
-                self.targetResources(resources);
-                //params.loading(false);
-            });
-        };
+            const setUpReports = function(reportData) {
+                const filterParams = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&');
+                fetch(arches.urls.physical_thing_search_results + '?' + filterParams)
+                    .then(response => response.json())
+                    .then(data => {
+                        _.each(self.searchResults, function(_value, key) {
+                            if (key !== 'timestamp') {
+                                delete self.searchResults[key];
+                            }
+                        });
+                        _.each(data, function(value, key) {
+                            if (key !== 'timestamp') {
+                                self.searchResults[key] = value;
+                            }
+                        });
+                        self.searchResults.timestamp(data.timestamp);
         
-        this.updateSearchResults = function(termFilter, pagingFilter) {
-            //params.loading(true);
-
-            if (ko.unwrap(graph)) {
-                getResultData(termFilter, ko.unwrap(graph), pagingFilter);
-            }
+                        self.totalResults(data['total_results']);
+                        var resources = data['results']['hits']['hits'].map(source => {
+                            var tileData = {
+                                "tiles": source._source.tiles,
+                                "related_resources": [],
+                                "displayname": source._source.displayname,
+                                "resourceid": source._source.resourceinstanceid
+                            };
+                            
+                            tileData.templates = reportLookup;
+                            source.report = new ReportModel(_.extend(tileData, {
+                                graphModel: self.graphModel,
+                                graph: reportData[graphId].graph,
+                                datatypes: reportData[graphId].graph.datatypes
+                            }));
+                            return source;
+                        });
+                        self.targetResources(resources);
+                    });
+            };
+            console.log("I am fetching")
+            fetch(arches.urls.api_bulk_resource_report + `?graph_ids=${[graphId]}&exclude=cards`)
+                .then(result => {
+                    console.log("fetched")
+                    return result.json();
+                }).then(function(data){
+                    console.log("got data")
+                    if (!self.graphModel) {
+                        self.graphModel = new GraphModel({
+                            data: data[graphId].graph,
+                            datatypes: data[graphId].datatypes
+                        });
+                    }
+                    setUpReports(data);
+                }).then(function(){
+                    console.log("setting laoding to false")
+                    self.reportDataLoading(false);
+                    console.log("done", self.reportDataLoading())
+                });
         };
 
-        graph.subscribe(function(graph) {
-            if (ko.unwrap(graph)) {
-                getResultData(null, ko.unwrap(graph));
-            }
-        });
+        this.updateSearchResults = function(termFilter, pagingFilter) {
+            getResultData(termFilter, pagingFilter);
+        };
 
         this.selectedTerm.subscribe(function(val) {
             var termFilter = self.termOptions[val];
