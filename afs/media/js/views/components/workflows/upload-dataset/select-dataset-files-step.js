@@ -369,9 +369,7 @@ define([
                 });
 
                 self.snapshot = params.form.value();
-                params.form.savedData(params.form.addedData());
                 params.form.complete(true);
-                params.form.hasUnsavedData(false);
             };
 
             this.dropzoneOptions = {
