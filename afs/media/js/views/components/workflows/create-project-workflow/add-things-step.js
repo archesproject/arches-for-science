@@ -371,13 +371,10 @@ define([
                         self.targetResources(resources);
                     });
             };
-            console.log("I am fetching")
             fetch(arches.urls.api_bulk_resource_report + `?graph_ids=${[graphId]}&exclude=cards`)
                 .then(result => {
-                    console.log("fetched")
                     return result.json();
                 }).then(function(data){
-                    console.log("got data")
                     if (!self.graphModel) {
                         self.graphModel = new GraphModel({
                             data: data[graphId].graph,
@@ -386,9 +383,7 @@ define([
                     }
                     setUpReports(data);
                 }).then(function(){
-                    console.log("setting laoding to false")
                     self.reportDataLoading(false);
-                    console.log("done", self.reportDataLoading())
                 });
         };
 
