@@ -79,7 +79,7 @@ define(['jquery',
         this.seriesStyles = this.commonData.seriesStyles;
         this.colorHolder = this.commonData.colorHolder;
         this.compatibleSeries = this.commonData.compatibleSeries;
-        this.primarySeriesColor = JSON.parse(localStore.getItem(renderer + 'series' + this.fileViewer.tile.tileid) || '{"color": "#3333ff"}').color;
+        this.primarySeriesColor = this.fileViewer ? JSON.parse(localStore.getItem(renderer + 'series' + this.fileViewer.tile.tileid)).color : "#3333ff";
 
 
         this.selectedSeriesTile.subscribe(function(tile){
@@ -235,8 +235,16 @@ define(['jquery',
                 .done(function(data) {
                     try {
                         self.parse(data, series);
+                        // clear the data before you add new data, this fixes a bug in the 
+                        // afs file-interpretation step where data wouldn't be updated until 
+                        // the file was selected a second time
+                        self.chartData(undefined);  
                         self.chartData(series);
-                        self.loadSeriesDataFromLocalStorage();
+                        if(self.fileViewer){
+                            self.loadSeriesDataFromLocalStorage();
+                        } else {
+                            self.seriesData.push({data: series, name: self.displayContent.name});
+                        }
                     } catch(e) {
                         self.displayContent.validRenderer(false);
                     }

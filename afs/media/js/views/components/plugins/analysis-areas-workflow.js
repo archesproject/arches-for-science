@@ -4,13 +4,16 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/workflows/workflow-manifest-manager',
+    'views/components/workflows/analysis-areas-image-step',
+    'views/components/workflows/analysis-areas-annotation-step',
+    'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
             var self = this;
 
             this.resourceId = ko.observable();
+            
 
             params.steps = [
                 {
@@ -40,6 +43,7 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         ],
+                                        renderContext: 'workflow'
                                     },
                                 },
                             ], 
@@ -49,25 +53,90 @@ define([
                 {
                     title: 'Image',
                     name: 'image-step', /* unique to workflow */
+                    informationboxdata: {
+                        heading: 'Image Services',
+                        text: `
+                            Image Services provide you with picture(s) of an object, often from multiple vantage points, that can be annotated to indicate the location or region of an observation. 
+                            If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
+                        `,
+                    },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
                     required: true,
+                    lockableExternalSteps: ['object-step'],
+                    externalstepdata: {
+                        objectstep: 'object-step'
+                    },
                     layoutSections: [
                         {
                             sectionTitle: 'Image Service',
                             componentConfigs: [
                                 { 
-                                    componentName: 'workflow-manifest-manager',
+                                    componentName: 'analysis-areas-image-step',
                                     uniqueInstanceName: 'image-service-instance', /* unique to step */
                                     tilesManaged: 'one',
                                     parameters: {
-                                        graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a'
+                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
                                     },
                                 },
                             ], 
                         },
                     ],
                 },
+                {
+                    title: 'Regions',
+                    name: 'regions-step', /* unique to workflow */
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    required: true,
+                    lockableExternalSteps: ['image-step'],
+                    externalstepdata: {
+                        objectstep: 'object-step',
+                        imagestep: 'image-step'
+                    },
+                    workflowstepclass: 'analysis-areas-workflow-regions-step',
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'analysis-areas-annotation-step',
+                                    uniqueInstanceName: 'annotation-instance', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Summary',
+                    name: 'analysis-areas-complete',  /* unique to workflow */
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', //physical thing graph
+                    nodegroupid: '',
+                    resourceid: null,
+                    externalstepdata: {
+                        objectstep: 'object-step',
+                    },
+                    tileid: null,
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'analysis-areas-final-step',
+                                    uniqueInstanceName: 'analysis-areas-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                }
             ];
 
             Workflow.apply(this, [params]);

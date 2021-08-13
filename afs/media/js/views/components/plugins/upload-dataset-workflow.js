@@ -7,7 +7,9 @@ define([
     'views/components/file-upload',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/upload-dataset/instrument-info-step',
-    'views/components/workflows/upload-dataset/upload-dataset-final-step'
+    'views/components/workflows/upload-dataset/upload-dataset-final-step',
+    'views/components/workflows/upload-dataset/file-interpretation-step',
+    'views/components/workflows/upload-dataset/select-dataset-files-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
@@ -36,7 +38,8 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
                                             '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
-                                        ],  
+                                        ],
+                                        validateThing: true,
                                         renderContext: 'workflow',
                                         value: null
                                     },
@@ -52,12 +55,13 @@ define([
                     description: 'Select the instrument and corresponding files',
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    autoAdvance: false,
+                    autoAdvance: true,
                     informationboxdata: {
                         heading: 'Select the instrument used for the analysis',
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
                     },
                     required: true,
+                    lockableExternalSteps: ['project-info'],
                     externalstepdata: {
                         projectinfo: 'project-info',
                     },
@@ -67,7 +71,7 @@ define([
                             componentConfigs: [
                                 { 
                                     componentName: 'instrument-info-step',
-                                    uniqueInstanceName: 'instrument-type', /* unique to step */
+                                    uniqueInstanceName: 'instrument-info', /* unique to step */
                                     parameters: {
                                         renderContext: 'workflow',
                                     },
@@ -79,31 +83,67 @@ define([
                 },
                 {
                     title: 'Sample Location',
-                    name: 'object-sample-location',
+                    name: 'select-dataset-files-step',
                     description: '',
-                    component: 'views/components/workflows/upload-dataset/select-dataset-files-step',
-                    componentname: 'select-dataset-files-step',
-                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
-                    nodegroupid: '',
-                    hiddenNodes: [],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    required: true,
+                    workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
+                    autoAdvance: false,
+                    lockableExternalSteps: ['select-instrument-and-files'],
+                    externalstepdata: {
+                        projectinfo: 'project-info',
+                        observationinfo: 'select-instrument-and-files',
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: null,
+                            componentConfigs: [
+                                { 
+                                    componentName: 'select-dataset-files-step',
+                                    uniqueInstanceName: 'select-dataset-files-step', /* unique to step */
+                                    parameters: {
+                                        renderContext: 'workflow',
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'File Interpretation',
-                    name: 'fileinterpretation',
+                    name: 'file-interpretation',
                     description: 'The date that the sample was taken',
-                    component: 'views/components/workflows/new-tile-step',
-                    componentname: 'new-tile-step',
-                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
-                    nodegroupid: '812c7086-9471-11ea-ae26-3af9d3b32b71',
-                    hiddenNodes: [],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
+                    autoAdvance: false,
+                    informationboxdata: {
+                        heading: 'Select the instrument used for the analysis',
+                        text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
+                    },
                     required: true,
+                    externalstepdata: {
+                        projectinfo: 'project-info',
+                        datasetinfo: 'select-dataset-files-step'
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: null,
+                            componentConfigs: [
+                                { 
+                                    componentName: 'file-interpretation-step',
+                                    uniqueInstanceName: 'file-interpretation', /* unique to step */
+                                    parameters: {
+                                        renderContext: 'workflow',
+                                        activeTab: 'edit'
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
                 },
                 {
                     title: 'Summary',
