@@ -9,6 +9,7 @@ define([
     'views/components/workflows/upload-dataset/instrument-info-step',
     'views/components/workflows/upload-dataset/file-interpretation-step',
     'views/components/workflows/upload-dataset/select-dataset-files-step',
+    'views/components/workflows/upload-dataset/upload-files-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
@@ -103,6 +104,39 @@ define([
                                     uniqueInstanceName: 'select-dataset-files-step', /* unique to step */
                                     parameters: {
                                         renderContext: 'workflow',
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Upload Files',
+                    name: 'upload-files',
+                    description: 'The date that the sample was taken',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
+                    autoAdvance: false,
+                    informationboxdata: {
+                        heading: 'Upload your files here...',
+                        text: 'Blah Blah',
+                    },
+                    required: true,
+                    externalstepdata: {
+                        projectinfo: 'project-info',
+                        observationinfo: 'select-instrument-and-files',
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: null,
+                            componentConfigs: [
+                                { 
+                                    componentName: 'upload-files-step',
+                                    uniqueInstanceName: 'upload-files-step', /* unique to step */
+                                    parameters: {
+                                        renderContext: 'workflow'
                                     },
                                     required: true,
                                 },

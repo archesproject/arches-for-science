@@ -1,0 +1,90 @@
+{% load staticfiles %}
+{% load i18n %}
+
+{% block tabs %}
+{% endblock tabs %}
+
+{% block sidepanel %}
+{% endblock sidepanel %}
+
+{% block main_menu %}
+
+
+<div class="file-workbench-filter">
+    <h2 class="file-workbench-filter-header">{% trans 'Dataset Name' %}</h2>
+    <input type="text" class="form-control" style="width: 50%; height:initial"
+        data-bind="textInput: datasetName"></input>
+    <div>
+        <!-- ko if: dirty -->
+        <button class="btn btn-shim btn-danger btn-labeled btn-sm fa fa-times" data-bind="click: reset">{% trans 'Cancel'%}</button>
+        <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: save">{% trans 'Save'%}</button>
+        <!-- /ko -->
+    </div>
+</div>
+
+<div class="file-chart-upload-panel">
+    <div class="gallery-controls new-tile">
+        <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+            <div class="file-select-window">
+                <div class="bord-top pad-ver file-select">
+                    <div class="" style="padding: 5px">
+                        <h2>{% trans 'Upload Files' %}</h2>
+                        <h4>{% trans 'Drag & Drop your files onto this panel to upload' %}</h4>
+                    </div>
+                    <button type="button" class="btn btn-lg btn-file-select upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                        <i class="fa fa-file"></i>
+                        <span>{% trans "Select Files" %}</span>
+                    </button>
+                    <br>
+                    <div style="padding: 10px">{% trans "Adding files to this record is " %}
+                        <span><strong>{% trans "optional." %}</strong></span>
+                        <br>
+                        {% trans "You may upload as many files as you wish; check with the site admin on the maximum file size." %}
+                    </div>
+
+                </div>
+                <div class="file-upload-footer">
+                    <span data-bind="text: ('The following file formats may be uploaded: csv')"></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="dropzone" style="min-height: 100%; display:none;">
+            <div id="hidden-dz-previews" class="dropzone-previews" data-bind="css: uniqueidClass"></div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <!-- ko foreach: files -->
+            <div class="file-upload-card">
+                <div class="media-body">
+                    <div class="media-block">
+                        <div class="media-left">
+                            <span><i class="fa fa-file fa-lg"></i></span>
+                        </div>
+                        <div class="media-body file-upload-card-detail">
+                            <div class="media-left">
+                                <span class="text-main mar-no text-overflow" data-bind="text: name"></span>
+                                <!-- ko if: $data.error -->
+                                <span class="dz-error text-danger text-sm" data-bind="text: '{% trans " error" %}'"></span>
+                                <!-- /ko -->
+                                <!-- <span class="text-sm">
+                                    <a data-bind="attr: {href: ko.unwrap(url) ? $parent.getFileUrl(url) : content, download: name}, click: function(){return ko.unwrap(url) ? true : false}, clickBubble: false"><span
+                                            data-bind="text: ko.unwrap(url) ? '{% trans " Download" %}' : '{% trans "Unsaved" %}'"></span></a></span> -->
+                            </div>
+                            <div class=" file-upload-card-detail-right">
+                                <div class="media-right" data-bind="click: $parent.removeFile">
+                                    <button class="btn btn-xs btn-danger btn-file-cancel"><i
+                                            class="ion ion-close"></i></button>
+                                </div>
+                                <div class="file-size-label">
+                                    <span class="text-sm" data-bind="html: $parent.formatSize($data)"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>
+{% endblock main_menu %}
