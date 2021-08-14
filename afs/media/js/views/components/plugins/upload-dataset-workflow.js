@@ -157,7 +157,7 @@ define([
                     tileid: null,
                     externalstepdata: {
                         projectinfo: 'project-info',
-                        digitalresource: 'object-sample-location',
+                        digitalresource: 'select-dataset-files-step',
                     },
                     layoutSections: [
                         {
