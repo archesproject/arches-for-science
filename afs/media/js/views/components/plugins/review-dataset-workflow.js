@@ -6,6 +6,7 @@ define([
     'viewmodels/workflow-step',
     'views/components/workflows/review-dataset/select-dataset',
     'views/components/workflows/review-dataset/review-dataset-final-step',
+    'views/components/workflows/upload-dataset/file-interpretation-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
@@ -78,19 +79,39 @@ define([
                         },
                     ],
                 },
-                // {
-                //     title: 'File Interpretation',
-                //     name: 'physical-thing-type', /* unique to workflow */
-                //     description: 'Preliminary information about this physical thing',
-                //     component: 'views/components/workflows/new-tile-step',
-                //     componentname: 'new-tile-step',
-                //     graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
-                //     nodegroupid: '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a',
-                //     resourceid: null,
-                //     tileid: null,
-                //     parenttileid: null,
-                //     required: true
-                // },
+                {
+                    title: 'File Interpretation',
+                    name: 'file-interpretation',
+                    description: 'The date that the sample was taken',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
+                    autoAdvance: false,
+                    informationboxdata: {
+                        heading: 'Select the instrument used for the analysis',
+                        text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
+                    },
+                    required: true,
+                    externalstepdata: {
+                        datasetinfo: 'select-datasets'
+                    },
+                    layoutSections: [
+                        {
+                            sectionTitle: null,
+                            componentConfigs: [
+                                { 
+                                    componentName: 'file-interpretation-step',
+                                    uniqueInstanceName: 'file-interpretation', /* unique to step */
+                                    parameters: {
+                                        renderContext: 'workflow',
+                                        activeTab: 'edit'
+                                    },
+                                    required: true,
+                                },
+                            ], 
+                        },
+                    ],
+                },
                 {
                     title: 'Summary',
                     name: 'review-dataset-complete', /* unique to workflow */
