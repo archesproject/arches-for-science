@@ -124,7 +124,7 @@ define([
                     title: 'Add Things to Your Set',
                     name: 'object-search-step',  /* unique to workflow */
                     description: 'Add Physical Things to Your Set',
-                    component: 'views/components/workflows/research-collection-step',
+                    component: 'views/components/workflows/create-project-workflow/research-collection-step',
                     componentname: 'research-collection-step',
                     graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
                     nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
