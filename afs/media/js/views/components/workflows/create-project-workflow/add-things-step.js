@@ -209,23 +209,6 @@ define([
         this.selectedResources = ko.observableArray([]);
         this.startValue = null;
 
-        this.onSaveSuccess = function(savedData) {
-            self.savedData(savedData.map(function(savedDatum) {
-                return {
-                    tileData: JSON.stringify(savedDatum.data),
-                    tileId: savedDatum.tileid,
-                    nodegroupId: savedDatum.nodegroup_id,
-                    resourceInstanceId: savedDatum.resourceinstance_id,
-                    projectResourceId: ko.unwrap(self.projectResourceId),
-                    collectionResourceId: ko.unwrap(self.collectionResourceId),
-                    usedSetTileId: ko.unwrap(self.usedSetTileId),
-                };    
-            }));
-
-            self.saving(false);
-            self.complete(true);
-        };
-
         this.dirty = ko.pureComputed(function() {
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
         });
@@ -275,6 +258,7 @@ define([
                 });
             }
         };
+        params.form.reset = this.resetTile;
 
         this.updateTileData = function(resourceid) {
             var tilevalue = self.tile().data[ko.unwrap(params.nodeid)];
@@ -305,6 +289,9 @@ define([
         };
 
         this.submit = function() {
+            self.complete(false);
+            self.saving(true);
+
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
@@ -349,16 +336,30 @@ define([
                         if (data.tileid && self.tile().tileid === "") {
                             self.tile().tileid = data.tileid;
                         }
-                        self.onSaveSuccess([data]);
                         self.startValue = data.data[ko.unwrap(params.nodeid)];
                         self.tile()._tileData(koMapping.toJSON(data.data));
-                        self.hasUnsavedData(false);
+
+                        self.savedData([data].map(function(savedDatum) {
+                            return {
+                                tileData: JSON.stringify(savedDatum.data),
+                                tileId: savedDatum.tileid,
+                                nodegroupId: savedDatum.nodegroup_id,
+                                resourceInstanceId: savedDatum.resourceinstance_id,
+                                projectResourceId: ko.unwrap(self.projectResourceId),
+                                collectionResourceId: ko.unwrap(self.collectionResourceId),
+                                usedSetTileId: ko.unwrap(self.usedSetTileId),
+                            };    
+                        }));
+
+                        self.saving(false);
+                        self.complete(true);
                     });
                 });
             });
         };
-        params.form.saveFunction(self.submit);
-
+        params.form.save = self.submit;
+        params.form.onSaveSuccess = function() {};
+        
         params.saveOnQuit = function() {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             var rrTemplate = [{ 

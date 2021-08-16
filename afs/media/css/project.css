@@ -17,9 +17,7 @@
 .object-search-step {
     display: flex;
     flex-direction: column;
-    margin-left: -25px;
     height: 100%;
-    overflow-y: hidden;
 }
 
 .object-search-step .selected-instance {
@@ -29,12 +27,9 @@
 .workflow-search-panel {
     background-color: #f3f3f3;
     border-bottom: #ddd solid 1px;
-    position: fixed;
-    width: 100%;
     padding: 10px 60px;
     display: inline-flex;
     align-items: center;
-    z-index: 10;
 }
 
 .tabbed-workflow-step-body .workflow-search-panel {
@@ -62,7 +57,6 @@
 .object-search-step .search-results-footer {
     height: 55px;
     background-color: #f3f3f3;
-    position: absolute;
     bottom: 53px;
     align-items: center;
     justify-content: space-around;
@@ -81,11 +75,6 @@
     background-color: #f3f3f3;
 }
 
-.object-search-step .workflow-search-results {
-    margin-top: 55px;
-    height: calc(100% - 55px);
-}
-
 .object-search-step .search-selection-controls {
     padding: 11px;
     display: inline-flex;
@@ -95,6 +84,10 @@
     position: absolute;
     bottom: 0px;
     width: 100%;
+}
+
+.workflow-search-results {
+    height: calc(100% - 59px);
 }
 
 .workflow-search-results-full-container {
@@ -117,7 +110,6 @@
     flex-direction: column;
     width: 100%;
     overflow-y: auto;
-    padding-bottom: 105px;
 }
 
 .workflow-search-list .resource-report {
@@ -152,6 +144,7 @@
 
 .model-summary-report {
     padding: 20px 30px 30px 30px;
+    cursor: pointer;
 }
 
 .summary-report-title {
@@ -546,7 +539,7 @@
 .create-project-add-things-step {
     margin-left: 0px;
     margin-right: 0px;
-    height: 100%;
+    height: inherit;
     width: 100%;
 }
 .analysis-areas-workflow-regions-step .cke_top, 
