@@ -364,7 +364,7 @@ define([
                     });
             };
 
-            fetch(arches.urls.api_bulk_resource_report + `?graph_ids=${[graphId]}&exclude=cards`)
+            fetch(arches.urls.api_bulk_resource_report + `?graph_ids=${[graphId]}&exclude=cards,edges,domain_connections,widgets`)
                 .then(result => {
                     return result.json();
                 }).then(function(data){
