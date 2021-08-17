@@ -7,6 +7,9 @@ define([
 
     function viewModel(params) {
         var self = this;
+
+        params.form.resourceId(params.form.externalStepData['selectobjectstep']['data']['sampling-info'][0][1]['samplingActivityResourceId']);
+
         SummaryStep.apply(this, [params]);
 
         this.resourceData.subscribe(function(val){
@@ -19,10 +22,13 @@ define([
                 samplingActivityName: {'name': 'Sampling Activity Name', 'value': this.getResourceValue(val.resource, ['Name','Name_content','@value'])},
             };
 
-            var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][0],['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@value']);
-            if (annotationStr){
+            var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][1], ['Sampling Area', 'Sampling Area Identification', 'Sampling Area Visualization', '@value']);
+            if (annotationStr && annotationStr !== 'none'){
                 var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
-                this.prepareAnnotation(annotationJson);
+                self.leafletConfig = this.prepareAnnotation(annotationJson);
+            }
+            else {
+                self.leafletConfig = {};
             }
 
             try {
