@@ -153,10 +153,11 @@ define([
                     componentname: 'component-based-step',
                     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
                     nodegroupid: '',
-                    resourceid: '4c645746-d544-11eb-9aa1-acde48001122', // hard coded for testing
+                    resourceid: '',
                     tileid: null,
                     externalstepdata: {
                         projectinfo: 'project-info',
+                        instrumentinfo: 'select-instrument-and-files',
                         digitalresource: 'select-dataset-files-step',
                     },
                     layoutSections: [

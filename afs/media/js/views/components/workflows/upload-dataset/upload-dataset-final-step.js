@@ -8,19 +8,92 @@ define([
 
     function viewModel(params) {
         var self = this;
+
+        params.form.resourceId = params.form.externalStepData.instrumentinfo.data["instrument-info"][0][1]["observationInstanceId"]
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
         this.parentPhysThingLoading = ko.observable(true);
         this.digitalResourceLoading = ko.observable(true);
+        this.fileLists = ko.observableArray();
 
-        //var parentPhysThingResourceId = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physicalThing;
-        var parentPhysThingResourceId = 'abb69704-becc-4f35-9987-90fc0800cd8e' //sample data
+        this.tableConfig = {
+            "info": false,
+            "paging": false,
+            "scrollCollapse": true,
+            "searching": false,
+            "ordering": false,
+            "columns": [
+                null,
+                null,
+                null,
+            ]
+        };
+
+        this.uploadedDatasets = params.form.externalStepData.digitalresource.data['select-dataset-files-step'][0][1]["parts"];
+
+        this.getResourceDataBeta = function(resourceid, resourceData) {
+            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
+            .then(response => response.json())
+            .then(data => resourceData(data))
+        };    
+
+        this.uploadedDatasets.forEach(function(dataset){
+            var selectedDatasetData = ko.observableArray();
+            var fileList = ko.observableArray();
+
+            self.getResourceDataBeta(dataset.datasetId, selectedDatasetData);
+            selectedDatasetData.subscribe(function(val){
+                var findStatementType= function(statements, type){
+                    var foundStatement = _.find(statements, function(statement) {
+                        return statement.type.indexOf(type) > -1;
+                    });
+                    return foundStatement ? foundStatement.statement : "None";
+                };
+
+                var digitalResourceName = val.displayname;
+
+                var files = val.resource['File'].map(function(file){
+                    var fileName = self.getResourceValue(file['file_details'][0], ['name']);
+                    var statements = file["FIle_Statement"].map(function(statement){
+                        return {
+                            statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
+                            type: self.getResourceValue(statement, ['FIle_Statement_type','@display_value'])
+                        };
+                    });
+                    return {
+                        fileName: fileName,
+                        statements: statements,
+                    };
+                });
+    
+                files.forEach(function(file){
+                    var fileName = file.fileName;
+                    var fileInterpretation = findStatementType(file.statements, 'interpretation');
+                    var fileParameter = findStatementType(file.statements, 'brief text');    
+                    fileList.push({
+                        name: fileName,
+                        interpretation: fileInterpretation,
+                        parameter: fileParameter,
+                    });
+                });
+
+                self.fileLists.push({
+                    digitalResourceName: digitalResourceName,
+                    //annotationConfig: annotation,
+                    fileList: fileList,
+                });
+                self.digitalResourceLoading(false);
+                if (!self.resourceLoading()){
+                    self.loading(false);
+                }
+            });
+        }, this);
+
+        var parentPhysThingResourceId = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physicalThing;
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
         this.parentPhysThingAnnotations = ko.observableArray();
-        this.fileList = ko.observableArray();
-        this.fileList1 = ko.observableArray();
 
         this.getResourceData(parentPhysThingResourceId, this.parentPhysThingData);
 
@@ -46,86 +119,11 @@ define([
                 //}
             });
             this.parentPhysThingLoading(false);
-            if (!this.resourceLoading() && !this.digitalResourceLoading() ){
+            if (!this.resourceLoading()){
                 this.loading(false);
             }
         }, this);
         
-        /*
-        If we have to use related resource endpoint of the parent physical thing... */
-
-        var fileNodeId = '7c486328-d380-11e9-b88e-a4d18cec433a';
-        this.getRelatedResources(parentPhysThingResourceId, this.parentPhysThingRelatedData);
-
-        this.parentPhysThingRelatedData.subscribe(function(val){
-            val['related_resources'].forEach(function(rr){
-                if (rr.resourceinstanceid === digitalResourceId){
-                    rr.tiles.forEach(function(tile){
-                        if (tile.data[fileNodeId]){
-                            tile.data[fileNodeId].forEach(function(file){
-                                self.fileList.push({
-                                    'name': file.name,
-                                    'size': file.size,
-                                    'url': file.url,
-                                });
-                            });
-                        }
-                    });
-                }
-            })
-
-            this.digitalResourceLoading(false);
-            if (!this.resourceLoading() && !this.parentPhysThingLoading()){
-                this.loading(false);
-            }
-        }, this);
-
-        //var digitalResourceId = params.form.externalStepData.digitalresource.data['object-sample-location'][0][1].digitalResource;
-        var digitalResGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a'; //graph id of digital resources
-        var digitalResourceId = ['49b9afd2-65d1-4a2e-8777-7246a0f7b81e']; //sample data
-        this.digitalResourceData = ko.observableArray();
-        this.getResourceData(digitalResourceId, this.digitalResourceData);
-
-        /*
-        this.digitalResourceData.subscribe(function(val){
-            var findStatementType= function(val, type){
-                try {
-                    self.digitalResourceData.statements = val.resource['FIle_Statement'].map(function(val){
-                    return {
-                        content:  {'name': 'statement', 'value': self.getResourceValue(val, ['FIle_Statement_content','@value'])},
-                        type: {'name': 'type', 'value': self.getResourceValue(val, ['FIle_Statement_type','@value'])}
-                    };
-                });
-                } catch(e) {
-                    console.log(e);
-                    self.reportVals.statements = [];
-                }
-
-                var foundStatement = _.find(self.digitalResourceData.statements, function(statement) {
-                    return statement.type.value.split(",").indexOf(type) > -1;
-                })
-                return foundStatement ? foundStatement.content : {'name': 'statement', 'value': 'None'};
-            }
-
-            var file = val.resource['File']
-
-            var digitalResourceName = val.displayName;
-            var fileInterpretation = findStatementType(val, 'interpretation');
-            var fileParameter = findStatementType(val, 'materials/technique description');
-            self.fileList1.push({
-                digitalResourceName: digitalResourceName,
-                name: fileName,
-                interpretation: fileInterpretation,
-                parameter: fileParameter,
-            });
-
-            this.digitalResourceLoading(false);
-            if (!this.resourceLoading() && !this.parentPhysThingLoading()){
-                this.loading(false);
-            }
-        }, this);
-        */
-
         this.resourceData.subscribe(function(val){ //this is the observation resource data
             var findStatementType= function(val, type){
                 try {
@@ -154,11 +152,11 @@ define([
                 usedProcess: {'name': 'Technique', 'value': this.getResourceValue(val.resource, ['used process','@value'])},
             };
 
-            self.reportVals.statement = findStatementType(val, 'materials/technique description')
+            self.reportVals.statement = findStatementType(val, 'description')
 
             this.resourceLoading(false);
             console.log("resourceData loaded")
-            if (!this.parentPhysThingLoading() && !this.digitalResourceLoading()){
+            if (!this.parentPhysThingLoading()){
                 this.loading(false);
             }
         }, this);
