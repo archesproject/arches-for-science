@@ -64,7 +64,7 @@ define([
                 files.forEach(function(file){
                     var fileName = file.fileName;
                     var fileInterpretation = findStatementType(file.statements, 'interpretation');
-                    var fileParameter = findStatementType(file.statements, 'materials/technique description');    
+                    var fileParameter = findStatementType(file.statements, 'brief text');    
                     fileList.push({
                         name: fileName,
                         interpretation: fileInterpretation,
