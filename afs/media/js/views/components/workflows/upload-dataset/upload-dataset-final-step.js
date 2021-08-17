@@ -13,7 +13,6 @@ define([
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
-        this.parentPhysThingLoading = ko.observable(true);
         this.digitalResourceLoading = ko.observable(true);
         this.fileLists = ko.observableArray();
 
@@ -38,61 +37,6 @@ define([
                 .then(data => resourceData(data));
         };    
 
-        this.uploadedDatasets.forEach(function(dataset){
-            var selectedDatasetData = ko.observableArray();
-            var fileList = ko.observableArray();
-
-            self.getResourceDataBeta(dataset.datasetId, selectedDatasetData);
-            selectedDatasetData.subscribe(function(val){
-                var findStatementType= function(statements, type){
-                    var foundStatement = _.find(statements, function(statement) {
-                        return statement.type.indexOf(type) > -1;
-                    });
-                    return foundStatement ? foundStatement.statement : "None";
-                };
-
-                var digitalResourceName = val.displayname;
-
-                var files = val.resource['File'].map(function(file){
-                    var statements = [];
-                    var fileName = self.getResourceValue(file['file_details'][0], ['name']);
-                    if (file["FIle_Statement"]) {
-                        statements = file["FIle_Statement"].map(function(statement){
-                            return {
-                                statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
-                                type: self.getResourceValue(statement, ['FIle_Statement_type','@display_value'])
-                            };
-                        });
-                    }
-                    return {
-                        fileName: fileName,
-                        statements: statements,
-                    };
-                });
-    
-                files.forEach(function(file){
-                    var fileName = file.fileName;
-                    var fileInterpretation = findStatementType(file.statements, 'interpretation');
-                    var fileParameter = findStatementType(file.statements, 'brief text');    
-                    fileList.push({
-                        name: fileName,
-                        interpretation: fileInterpretation,
-                        parameter: fileParameter,
-                    });
-                });
-
-                self.fileLists.push({
-                    digitalResourceName: digitalResourceName,
-                    //annotationConfig: annotation,
-                    fileList: fileList,
-                });
-                self.digitalResourceLoading(false);
-                if (!self.resourceLoading()){
-                    self.loading(false);
-                }
-            });
-        }, this);
-
         var parentPhysThingResourceId = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physicalThing;
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
@@ -105,6 +49,7 @@ define([
                 var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@value']);
                 var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
                 var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
+                var tileId = self.getResourceValue(annotation,['@tile_id']);
                 var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
                 if (annotationStr) {
                     var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
@@ -112,15 +57,74 @@ define([
                 }
 
                 self.parentPhysThingAnnotations.push({
+                    tileId: tileId,
                     name: annotationName,
                     label: annotationLabel,
                     annotator: annotator,
                     leafletConfig: leafletConfig,
                 });
             });
-            this.parentPhysThingLoading(false);
-            if (!this.resourceLoading()){
-                this.loading(false);
+
+            this.uploadedDatasets.forEach(function(dataset){
+                var selectedDatasetData = ko.observableArray();
+                var fileList = ko.observableArray();
+                var leafletConfig = ko.observableArray();
+
+                self.parentPhysThingAnnotations().forEach(function(annotation){
+                    if (dataset.tileid === annotation.tileId) {
+                        leafletConfig = annotation.leafletConfig;
+                    }
+                });
+    
+                self.getResourceDataBeta(dataset.datasetId, selectedDatasetData);
+                selectedDatasetData.subscribe(function(val){
+                    var findStatementType= function(statements, type){
+                        var foundStatement = _.find(statements, function(statement) {
+                            return statement.type.indexOf(type) > -1;
+                        });
+                        return foundStatement ? foundStatement.statement : "None";
+                    };
+    
+                    var digitalResourceName = val.displayname;
+    
+                    var files = val.resource['File'].map(function(file){
+                        var statements = [];
+                        var fileName = self.getResourceValue(file['file_details'][0], ['name']);
+                        if (file["FIle_Statement"]) {
+                            statements = file["FIle_Statement"].map(function(statement){
+                                return {
+                                    statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
+                                    type: self.getResourceValue(statement, ['FIle_Statement_type','@display_value'])
+                                };
+                            });
+                        }
+                        return {
+                            fileName: fileName,
+                            statements: statements,
+                        };
+                    });
+        
+                    files.forEach(function(file){
+                        var fileName = file.fileName;
+                        var fileInterpretation = findStatementType(file.statements, 'interpretation');
+                        var fileParameter = findStatementType(file.statements, 'brief text');    
+                        fileList.push({
+                            name: fileName,
+                            interpretation: fileInterpretation,
+                            parameter: fileParameter,
+                        });
+                    });
+                    self.fileLists.push({
+                        digitalResourceName: digitalResourceName,
+                        leafletConfig: leafletConfig,
+                        fileList: fileList,
+                    });
+                });
+            });    
+
+            self.digitalResourceLoading(false);
+            if (!self.resourceLoading()){
+                self.loading(false);
             }
         }, this);
         
@@ -155,7 +159,7 @@ define([
             self.reportVals.statement = findStatementType(val, 'description');
 
             this.resourceLoading(false);
-            if (!this.parentPhysThingLoading()){
+            if (!this.digitalResourceLoading()){
                 this.loading(false);
             }
         }, this);
