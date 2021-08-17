@@ -26,8 +26,7 @@ define([
             ]
         };
 
-
-        params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId);
+        params.form.resourceId = params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId;
         SummaryStep.apply(this, [params]);
         this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function(val) {
             return val[1][0]['resourceid'];
