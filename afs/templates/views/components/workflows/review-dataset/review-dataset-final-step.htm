@@ -33,6 +33,7 @@
     <!-- ko foreach: {data:fileLists, as: 'fileList'} -->
     <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
         <h5 class="summary-value">{% trans 'Dataset Name and Associated Files' %}</h5>
+        <h5 class="summary-value" data-bind="text: digitalResourceName"></h5>
         <div>
             <table data-bind="datatable: tableConfig" class="table table-striped table-bordered" width="100%">
                 <thead>
@@ -46,7 +47,7 @@
                     <tr>
                         <td><div class="summary-value" data-bind="text: file.name"></div></td>
                         <td><div class="summary-value" data-bind="text: file.interpretation"></div></td>
-                        <td><div class="summary-value" data-bind="text: file.parameters"></div></td>
+                        <td><div class="summary-value" data-bind="text: file.parameter"></div></td>
                     </tr>
                 <tbody>
             </table>

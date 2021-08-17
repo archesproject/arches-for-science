@@ -32,11 +32,17 @@ define([
             return val[1][0]['resourceid'];
         });
 
+        this.getResourceDataBeta = function(resourceid, resourceData) {
+            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
+                .then(response => response.json())
+                .then(data => resourceData(data));
+        };
+
         this.selectedDatasets.forEach(function(resourceid){
             var selectedDatasetData = ko.observableArray();
             var fileList = ko.observableArray();
     
-            self.getResourceData(resourceid, selectedDatasetData);
+            self.getResourceDataBeta(resourceid, selectedDatasetData);
             selectedDatasetData.subscribe(function(val){
                 var findStatementType= function(statements, type){
                     var foundStatement = _.find(statements, function(statement) {
@@ -48,13 +54,16 @@ define([
                 var digitalResourceName = val.displayname;
 
                 var files = val.resource['File'].map(function(file){
-                    var fileName = self.getResourceValue(file, ['File_Name', 'File_Name_content','@value']);
-                    var statements = file["FIle_Statement"].map(function(statement){
-                        return {
-                            statement: self.getResourceValue(statement, ['FIle_Statement_content','@value']),                        
-                            type: self.getResourceValue(statement, ['FIle_Statement_type','@value'])
-                        };
-                    });
+                    var statements = [];
+                    var fileName = self.getResourceValue(file['file_details'][0], ['name']);
+                    if (file["FIle_Statement"]) {
+                        statements = file["FIle_Statement"].map(function(statement){
+                            return {
+                                statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
+                                type: self.getResourceValue(statement, ['FIle_Statement_type','@display_value'])
+                            };
+                        });
+                    }
                     return {
                         fileName: fileName,
                         statements: statements,
@@ -64,7 +73,7 @@ define([
                 files.forEach(function(file){
                     var fileName = file.fileName;
                     var fileInterpretation = findStatementType(file.statements, 'interpretation');
-                    var fileParameter = findStatementType(file.statements, 'brief text');    
+                    var fileParameter = findStatementType(file.statements, 'brief text');
                     fileList.push({
                         name: fileName,
                         interpretation: fileInterpretation,
