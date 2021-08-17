@@ -22,7 +22,7 @@ define([
                 samplingActivityName: {'name': 'Sampling Activity Name', 'value': this.getResourceValue(val.resource, ['Name','Name_content','@value'])},
             };
 
-            var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][1], ['Sampling Area', 'Sampling Area Identification', 'Sampling Area Visualization', '@value']);
+            var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][0], ['Sampling Area', 'Sampling Area Identification', 'Sampling Area Visualization', '@value']);
             if (annotationStr && annotationStr !== 'none'){
                 var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
                 self.leafletConfig = this.prepareAnnotation(annotationJson);
