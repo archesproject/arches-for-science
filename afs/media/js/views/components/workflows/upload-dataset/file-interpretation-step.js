@@ -15,7 +15,8 @@ define([
         var self = this;
         const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
         const briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
-        const datasetIds = params.form.externalStepData.datasetinfo.data["select-dataset-files-step"][0][1]?.parts.map(x => x.datasetId);
+        const datasetInfo = params.form.externalStepData.datasetinfo.data;
+        const datasetIds = datasetInfo?.["select-dataset-files-step"]?.[0][1]?.parts.map(x => x.datasetId) ?? datasetInfo?.["dataset-select-instance"][0][1].map(x => x.resourceid);
         this.fileFormatRenderers = fileRenderers;
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
