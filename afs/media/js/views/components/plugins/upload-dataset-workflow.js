@@ -125,7 +125,6 @@ define([
                     },
                     required: true,
                     externalstepdata: {
-                        projectinfo: 'project-info',
                         datasetinfo: 'select-dataset-files-step'
                     },
                     layoutSections: [
