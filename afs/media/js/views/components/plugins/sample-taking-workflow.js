@@ -150,6 +150,9 @@ define([
                     resourceid: null,
                     tileid: null,
                     parenttileid: null,
+                    externalstepdata: { 
+                        selectobjectstep: 'sample-info',
+                    },
                     layoutSections: [
                         {
                             componentConfigs: [

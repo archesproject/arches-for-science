@@ -7,7 +7,10 @@ define([
 
     function viewModel(params) {
         var self = this;
+
+        params.form.resourceId = params.form.externalStepData['selectobjectstep']['data']['sampling-info'][0][1]['samplingActivityResourceId'];
         SummaryStep.apply(this, [params]);
+
 
         this.resourceData.subscribe(function(val){
             this.reportVals = {
@@ -20,11 +23,11 @@ define([
             };
 
             var annotationStr = self.getResourceValue(val.resource['Sampling Unit'][0],['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@value']);
-            if (annotationStr){
-                var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
-                this.prepareAnnotation(annotationJson);
-            }
-
+            // if (annotationStr){
+            //     var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+            //     this.prepareAnnotation(annotationJson);
+            // }
+            this.reportVals.annotations = [];
             try {
                 this.reportVals.samplingUnits = val.resource['Sampling Unit'].map(function(val){
                     return {
