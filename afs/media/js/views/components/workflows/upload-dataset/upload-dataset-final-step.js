@@ -75,7 +75,7 @@ define([
                 self.parentPhysThingAnnotations().forEach(function(annotation){
                     if (dataset.tileid === annotation.tileId) {
                         leafletConfig = annotation.leafletConfig;
-                    };
+                    }
                 });
     
                 self.getResourceDataBeta(dataset.datasetId, selectedDatasetData);
