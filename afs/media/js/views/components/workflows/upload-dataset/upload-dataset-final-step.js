@@ -34,8 +34,8 @@ define([
 
         this.getResourceDataBeta = function(resourceid, resourceData) {
             window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
-        .then(response => response.json())
-        .then(data => resourceData(data));
+                .then(response => response.json())
+                .then(data => resourceData(data));
         };    
 
         this.uploadedDatasets.forEach(function(dataset){
