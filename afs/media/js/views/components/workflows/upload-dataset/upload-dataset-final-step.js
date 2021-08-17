@@ -9,7 +9,7 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.form.resourceId = params.form.externalStepData.instrumentinfo.data["instrument-info"][0][1]["observationInstanceId"]
+        params.form.resourceId = params.form.externalStepData.instrumentinfo.data["instrument-info"][0][1]["observationInstanceId"];
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
@@ -34,8 +34,8 @@ define([
 
         this.getResourceDataBeta = function(resourceid, resourceData) {
             window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
-            .then(response => response.json())
-            .then(data => resourceData(data))
+        .then(response => response.json())
+        .then(data => resourceData(data));
         };    
 
         this.uploadedDatasets.forEach(function(dataset){
@@ -99,24 +99,21 @@ define([
 
         this.parentPhysThingData.subscribe(function(val){
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                var currentAnnotationNames = [];
                 var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@value']);
-                //if (annotationName in currentAnnotationNames) {
-                    var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
-                    var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
-                    var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
-                    if (annotationStr) {
-                        var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
-                        var leafletConfig = self.prepareAnnotation(annotationJson);
-                    }
+                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
+                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
+                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
+                if (annotationStr) {
+                    var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+                    var leafletConfig = self.prepareAnnotation(annotationJson);
+                }
 
-                    self.parentPhysThingAnnotations.push({
-                        name: annotationName,
-                        label: annotationLabel,
-                        annotator: annotator,
-                        leafletConfig: leafletConfig,
-                    });
-                //}
+                self.parentPhysThingAnnotations.push({
+                    name: annotationName,
+                    label: annotationLabel,
+                    annotator: annotator,
+                    leafletConfig: leafletConfig,
+                });
             });
             this.parentPhysThingLoading(false);
             if (!this.resourceLoading()){
@@ -139,9 +136,9 @@ define([
                 }
                 var foundStatement = _.find(self.reportVals.statements, function(statement) {
                     return statement.type.value.split(",").indexOf(type) > -1;
-                })
+                });
                 return foundStatement ? foundStatement.content : {'name': 'Instrument Parameters', 'value': 'None'};
-            }
+            };
     
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
@@ -152,10 +149,9 @@ define([
                 usedProcess: {'name': 'Technique', 'value': this.getResourceValue(val.resource, ['used process','@value'])},
             };
 
-            self.reportVals.statement = findStatementType(val, 'description')
+            self.reportVals.statement = findStatementType(val, 'description');
 
             this.resourceLoading(false);
-            console.log("resourceData loaded")
             if (!this.parentPhysThingLoading()){
                 this.loading(false);
             }
