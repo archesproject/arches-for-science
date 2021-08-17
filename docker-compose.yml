@@ -96,7 +96,7 @@ services:
     # https://gitlab.com/ucla-library/docker-cantaloupe/-/blob/master/configs/cantaloupe.properties.default-dev
     cantaloupe_afs:
       container_name: cantaloupe_afs
-      image: uclalibrary/cantaloupe
+      image: uclalibrary/cantaloupe:5.0.3-0
       volumes:
         - cantaloupe-data:/imageroot
       ports:
