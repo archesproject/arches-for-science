@@ -54,13 +54,16 @@ define([
                 var digitalResourceName = val.displayname;
 
                 var files = val.resource['File'].map(function(file){
+                    var statements = [];
                     var fileName = self.getResourceValue(file['file_details'][0], ['name']);
-                    var statements = file["FIle_Statement"].map(function(statement){
-                        return {
-                            statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
-                            type: self.getResourceValue(statement, ['FIle_Statement_type','@display_value'])
-                        };
-                    });
+                    if (file["FIle_Statement"]) {
+                        statements = file["FIle_Statement"].map(function(statement){
+                            return {
+                                statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
+                                type: self.getResourceValue(statement, ['FIle_Statement_type','@display_value'])
+                            };
+                        });
+                    }
                     return {
                         fileName: fileName,
                         statements: statements,
