@@ -13,7 +13,6 @@ define([
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
-        this.parentPhysThingLoading = ko.observable(true);
         this.digitalResourceLoading = ko.observable(true);
         this.fileLists = ko.observableArray();
 
@@ -65,7 +64,6 @@ define([
                     leafletConfig: leafletConfig,
                 });
             });
-            this.parentPhysThingLoading(false);
 
             this.uploadedDatasets.forEach(function(dataset){
                 var selectedDatasetData = ko.observableArray();
@@ -121,15 +119,12 @@ define([
                         leafletConfig: leafletConfig,
                         fileList: fileList,
                     });
-                    self.digitalResourceLoading(false);
-                    if (!self.resourceLoading()){
-                        self.loading(false);
-                    }
                 });
-            }, this);    
+            });    
 
-            if (!this.resourceLoading()){
-                this.loading(false);
+            self.digitalResourceLoading(false);
+            if (!self.resourceLoading()){
+                self.loading(false);
             }
         }, this);
         
@@ -164,7 +159,7 @@ define([
             self.reportVals.statement = findStatementType(val, 'description');
 
             this.resourceLoading(false);
-            if (!this.parentPhysThingLoading()){
+            if (!this.digitalResourceLoading()){
                 this.loading(false);
             }
         }, this);
