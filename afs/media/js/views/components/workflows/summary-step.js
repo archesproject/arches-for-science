@@ -15,7 +15,7 @@ define([
         this.relatedResources = ko.observableArray();
 
         this.getResourceData = function(resourceid, resourceData) {
-            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false')
+            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
             .then(response => response.json())
             .then(data => resourceData(data))
         };
