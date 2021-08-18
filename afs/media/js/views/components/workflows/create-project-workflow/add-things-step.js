@@ -360,7 +360,7 @@ define([
         params.form.save = self.submit;
         params.form.onSaveSuccess = function() {};
         
-        params.saveOnQuit = function() {
+        params.form.saveOnQuit(function() {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             var rrTemplate = [{ 
                 "resourceId": ko.unwrap(self.collectionResourceId),
@@ -383,7 +383,7 @@ define([
                     console.log(value.resourceId, "related resource is created");
                 });
             });
-        };
+        });
 
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
