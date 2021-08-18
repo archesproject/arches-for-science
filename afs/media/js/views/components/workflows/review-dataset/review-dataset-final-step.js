@@ -87,7 +87,6 @@ define([
         }, this);
 
         this.resourceData.subscribe(function(val){
-            // var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
             this.displayName = val.displayname;
             this.reportVals = {
                 sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content', '@display_value'])},
