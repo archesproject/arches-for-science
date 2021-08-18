@@ -32,17 +32,11 @@ define([
             return val[1][0]['resourceid'];
         });
 
-        this.getResourceDataBeta = function(resourceid, resourceData) {
-            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
-                .then(response => response.json())
-                .then(data => resourceData(data));
-        };
-
         this.selectedDatasets.forEach(function(resourceid){
             var selectedDatasetData = ko.observableArray();
             var fileList = ko.observableArray();
     
-            self.getResourceDataBeta(resourceid, selectedDatasetData);
+            self.getResourceData(resourceid, selectedDatasetData);
             selectedDatasetData.subscribe(function(val){
                 var findStatementType= function(statements, type){
                     var foundStatement = _.find(statements, function(statement) {
@@ -96,20 +90,9 @@ define([
             // var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
             this.displayName = val.displayname;
             this.reportVals = {
-                objectName: val['displayname'],
+                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content', '@display_value'])},
+                objectName: {'name': 'Object Name', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
             };
-
-            try {
-                this.reportVals.references = val.resource['References'].map(function(ref){
-                    return {
-                        referenceName: {'name': 'Reference', 'value': self.getResourceValue(ref, ['Agency Identifier', 'Reference', '@value'])},
-                        referenceType: {'name': 'Reference Type', 'value': self.getResourceValue(ref, ['Agency Identifier', 'Reference Type', '@value'])},
-                        agency: {'name': 'Agency', 'value': self.getResourceValue(ref, ['Agency', '@value'])}
-                    };
-                });
-            } catch(e) {
-                this.reportVals.references = [];
-            }
 
             this.resourceLoading(false);
             if (!this.digitalResourceLoading()){
