@@ -420,7 +420,7 @@ define([
 
     ko.components.register('research-collection-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/object-search-step.htm' }
+        template: { require: 'text!templates/views/components/workflows/create-project-workflow/research-collection-step.htm' }
     });
     return viewModel;
 });

@@ -298,7 +298,7 @@ define([
 
     ko.components.register('analysis-areas-image-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-image-step.htm' }
+        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-image-step.htm' }
     });
     return viewModel;
 });

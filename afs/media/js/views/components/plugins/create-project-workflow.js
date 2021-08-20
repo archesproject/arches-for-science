@@ -125,8 +125,8 @@ define([
                     title: 'Add Objects to Your Project',
                     name: 'object-search-step',  /* unique to workflow */
                     informationboxdata: {
-                        heading: 'Add Physical Things',
-                        text: 'Add Physical Things to Your Set',
+                        heading: 'Add Objects',
+                        text: 'Add Objects to Your Project',
                     },
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
