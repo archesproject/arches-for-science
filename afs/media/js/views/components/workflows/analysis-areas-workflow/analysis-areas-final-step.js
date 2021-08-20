@@ -12,14 +12,13 @@ define([
 
         var objectStepData = params.form.externalStepData['objectstep']['data'];
         params.form.resourceId = objectStepData['sample-object-resource-instance'][0][1];
-        var regionsStepData = params.form.externalStepData.regionsstep.data["annotation-instance"]
+        var regionsStepData = params.form.externalStepData.regionsstep.data["annotation-instance"];
         this.regionInstances = regionsStepData.map(function(data){
             return {
                 regionName: data.data["3e541cc6-859b-11ea-97eb-acde48001122"],
                 regionResource: data.data["b240c366-8594-11ea-97eb-acde48001122"][0]["resourceId"],
-            }
-        })
-
+            };
+        });
 
         SummaryStep.apply(this, [params]);
 
