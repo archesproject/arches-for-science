@@ -122,7 +122,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Add Things to Your Set',
+                    title: 'Add Objects to Your Project',
                     name: 'object-search-step',  /* unique to workflow */
                     informationboxdata: {
                         heading: 'Add Physical Things',
