@@ -121,6 +121,7 @@ define([
                     resourceid: null,
                     externalstepdata: {
                         objectstep: 'object-step',
+                        regionsstep: 'regions-step',
                     },
                     tileid: null,
                     layoutSections: [
