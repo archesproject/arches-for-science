@@ -147,6 +147,7 @@ define([
                     componentname: 'component-based-step',
                     externalstepdata: { 
                         selectobjectstep: 'sample-info',
+                        samplelocations: 'sample-location-step',
                     },
                     layoutSections: [
                         {
