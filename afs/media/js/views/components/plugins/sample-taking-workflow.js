@@ -145,11 +145,9 @@ define([
                     description: 'Summary',
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                    nodegroupid: '',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
+                    externalstepdata: { 
+                        selectobjectstep: 'sample-info',
+                    },
                     layoutSections: [
                         {
                             componentConfigs: [
