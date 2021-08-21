@@ -53,14 +53,14 @@ define([
                 }
             }
         })
-            
-        console.log(annotationCollection)
 
         self.sampleAnnotations = ko.observableArray();
         self.samplingLocations = ko.observableArray();
         self.annotationStatus = ko.observable()
         for (var canvas in annotationCollection) {
             var annotationCombined;
+            var numberOfAnnotation = annotationCollection[canvas].length;
+            var i = 0;
             annotationCollection[canvas].forEach(function(annotation){
                 var locationName = annotation.locationName;
                 var locationAnnotation = annotation.locationAnnotation;
@@ -97,7 +97,10 @@ define([
                             sampleMotivation:sampleMotivation.replace( /(<([^>]+)>)/ig, ''),
                         }
                     );
-                    self.annotationStatus.valueHasMutated();
+                    i += 1;
+                    if (i === numberOfAnnotation) {
+                        self.annotationStatus.valueHasMutated();
+                    }
                 });
             });
             self.annotationStatus.subscribe(function(){
@@ -107,7 +110,6 @@ define([
                     leafletConfig: leafletConfig,
                     featureCollection: annotationCombined,
                 });
-                console.log(self.sampleAnnotations())    
             })
         };
 
