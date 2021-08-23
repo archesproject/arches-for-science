@@ -63,7 +63,7 @@ define([
                     ],
                     stepInjectionConfig: {
                         defaultStepChoice: null,  /* optional param to show tab on new workflow creation */ 
-                        stepNameToInjectAfter: function(step) {  /* step = self-introspection */ 
+                        stepNameToInjectAfter: function() {  /* step = self-introspection */ 
                             return 'select-instrument-and-files';
                         },
                         injectionLogic: function(step) {  /* step = self-introspection */ 
