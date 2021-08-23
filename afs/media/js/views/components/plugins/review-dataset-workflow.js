@@ -10,23 +10,16 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'review-dataset-workflow';
 
-            this.resourceId = ko.observable();
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Object',
                     name: 'review-dataset-object',  /* unique to workflow */
                     description: 'Preliminary information about this physical thing',
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
                     required: true,
-                    shouldtrackresource: true,
-                    wastebin: {resources:[]},
                     layoutSections: [
                         {
                             sectionTitle: 'Select an Object',
@@ -51,13 +44,7 @@ define([
                     description: 'Select a dataset from the Physical Thing selected in the previous step',
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
-                    nodegroupid: '8a4ad932-8d59-11eb-a9c4-faffc265b501',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
                     required: true,
-                    shouldtrackresource: true,
                     externalstepdata: { 
                         selectobjectstep: 'review-dataset-object',
                     },
@@ -138,18 +125,10 @@ define([
                             ], 
                         },
                     ],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true
                 },
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('review-dataset-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/review-dataset-workflow.htm' }
     });

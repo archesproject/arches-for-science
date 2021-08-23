@@ -97,8 +97,8 @@ define([
                 self.samplingDateTile(response4[0].tileid);
                 self.samplingTechniqueTile(response5[0].tileid);
 
-                params.form.complete(true);
                 params.form.savedData(params.form.addedData());
+                params.form.complete(true);
             });
         };
 
