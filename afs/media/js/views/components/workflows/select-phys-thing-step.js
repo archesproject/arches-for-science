@@ -123,7 +123,7 @@ define([
     ko.components.register('select-phys-thing-step', {
         viewModel: viewModel,
         template: {
-            require: 'text!templates/views/components/workflows/upload-dataset/select-phys-thing-step.htm'
+            require: 'text!templates/views/components/workflows/select-phys-thing-step.htm'
         }
     });
 

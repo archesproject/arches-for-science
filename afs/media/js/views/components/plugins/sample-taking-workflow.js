@@ -134,6 +134,9 @@ define([
                     name: 'add-project-complete',  /* unique to workflow */
                     description: 'Summary',
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                    externalstepdata: { 
+                        selectobjectstep: 'sample-info',
+                    },
                     layoutSections: [
                         {
                             componentConfigs: [

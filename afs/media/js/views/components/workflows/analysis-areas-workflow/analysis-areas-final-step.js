@@ -12,6 +12,13 @@ define([
 
         var objectStepData = params.form.externalStepData['objectstep']['data'];
         params.form.resourceId = objectStepData['sample-object-resource-instance'][0][1];
+        var regionsStepData = params.form.externalStepData.regionsstep.data["annotation-instance"];
+        this.regionInstances = regionsStepData.map(function(data){
+            return {
+                regionName: data.data["3e541cc6-859b-11ea-97eb-acde48001122"],
+                regionResource: data.data["b240c366-8594-11ea-97eb-acde48001122"][0]["resourceId"],
+            };
+        });
 
         SummaryStep.apply(this, [params]);
 
@@ -19,16 +26,15 @@ define([
         this.resourceData.subscribe(function(val){
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
-                parentObject: {'name': 'Object', 'value': this.getResourceValue(val.resource, ['part of', '@value'])},
-                digitalReference: {'name': 'Image Service', 'value': this.getResourceValue(val.resource['Digital Reference'][0],['Digital Source','@value'])},
+                parentObject: {'name': 'Object', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
+                digitalReference: {'name': 'Image Service', 'value': this.getResourceValue(val.resource['Digital Reference'][0],['Digital Source','@display_value'])},
             };
-
             var annotationCollection = {};
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@value']);
-                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
-                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
-                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
+                var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
+                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
+                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
+                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
                 var tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
                 if (annotationStr) {
                     var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));

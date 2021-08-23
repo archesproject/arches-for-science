@@ -2,27 +2,28 @@
 <!-- ko if: loading() === false -->
 <div class="final-step">
     <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
-        <h5 class="summary-value">{% trans 'Created or Modified Resource Instance' %}</h5>
+        <h5 class="summary-value">{% trans 'Related Object' %}</h5>
         <div style="display: inline-flex; width: inherit; justify-content: space-between;">
             <div style="display: flex; flex-direction: column;">
                 <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
                     <div class="summary-value" 
-                        data-bind = "text: displayName + ' ({% trans 'Physical Thing Instance' %})'">
+                        data-bind = "text: displayName">
                     </div>
                 </a>
             </div>
         </div>
-    </div>
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
-        <h5 class="summary-value">{% trans 'Related Project/Object' %}</h5>
+        <h5 class="summary-value">{% trans 'Regions' %}</h5>
+        <!-- ko foreach: regionInstances -->
         <div style="display: inline-flex; width: inherit; justify-content: space-between;">
             <div style="display: flex; flex-direction: column;">
-                <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: reportVals.parentObject.name + ':'"></div>
-                    <div class="summary-value" data-bind="text: reportVals.parentObject.value"></div>
-                </div>
+                <a data-bind="attr: { href: $root.urls.resource + '/' + regionResource}" target="_blank">
+                    <div class="summary-value" 
+                        data-bind = "text: regionName">
+                    </div>
+                </a>
             </div>
         </div>
+        <!-- /ko -->
     </div>
     <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
         <h5 class="summary-value">{% trans 'Region of Interest' %}</h5>

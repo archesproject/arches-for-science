@@ -10,21 +10,22 @@
     <div class="workflow-search-results">
         <div class="workflow-search-results-full-container">
             <div class="workflow-search-list-container"> 
-                <div class="workflow-search-list">
-                    <div data-bind="component: {
-                        name: 'search-results',
-                        params: {
-                            selectedTab,
-                            searchResults,
-                            targetResources,
-                            toggleRelationshipCandidacy,
-                            isResourceRelatable,
-                            reportLookup,
-                            filters,
-                            value,
-                            updateTileData: updateTileData
-                        }
-                    }"></div>
+                <div class="workflow-search-list search-result-details">
+                    <div data-bind="css: {'loading-mask': reportDataLoading}">
+                        <div data-bind="foreach: targetResources">
+                            <div data-bind="component: { 
+                                name: 'resource-report-abstract',
+                                params: {
+                                    report: $data.report,
+                                    summary: true,
+                                    disableDisambiguatedReport: true
+                                }
+                            }, css: {'selected-instance': $parent.value().map(function(r){return r.resourceId}).indexOf($data['_source']['resourceinstanceid']) >= 0},
+                            click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}">
+                            </div>
+                            <hr style="margin: 0"></hr>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="search-results-footer">
@@ -56,7 +57,7 @@
                         <div class="wf-multi-tile-card-info-details">
                         <dt data-bind="text: $data.displayname"></dt>
                         <dd>
-                            <a target="_blank" href="" data-bind="text: $data.displaydescription"></a>
+                            <a data-bind="text: $data.displaydescription"></a>
                         </dd>
                         </div>
                     </div>

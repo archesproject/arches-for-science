@@ -4,7 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/workflows/research-collection-step',
+    'views/components/workflows/create-project-workflow/add-things-step',
     'views/components/workflows/create-project-workflow/create-project-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('create-project-workflow', {
@@ -119,22 +119,36 @@ define([
                     ],
                 },
                 {
-                    title: 'Add Things to Your Set',
+                    title: 'Add Objects to Your Project',
                     name: 'object-search-step',  /* unique to workflow */
-                    description: 'Add Physical Things to Your Set',
-                    component: 'views/components/workflows/research-collection-step',
-                    componentname: 'research-collection-step',
-                    graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
-                    nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
-                    nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)
+                    informationboxdata: {
+                        heading: 'Add Objects',
+                        text: 'Add Objects to Your Project',
+                    },
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    required: true,
+                    wastebin: {resourceid: null, description: 'a collection instance'},
+                    workflowstepclass: 'create-project-add-things-step',
                     externalstepdata: { 
                         researchactivitystep: 'set-project-name',
                     },
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true,
-                    wastebin: {resourceid: null, description: 'a collection instance'}
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                {
+                                    componentName: 'add-things-step',
+                                    uniqueInstanceName: 'add-phys-things',
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
+                                        nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
+                                        nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)                    
+                                    },
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
                     title: 'Summary',
