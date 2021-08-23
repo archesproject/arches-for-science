@@ -452,7 +452,7 @@ define([
                         }
                     }
                     part.datasetName.subscribe(() => {
-                        const datasetSnapshot = self.snapshot.parts.find(x => x.datasetId == part.datasetId());
+                        const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
                         if(ko.unwrap(part.datasetName) != datasetSnapshot?.datasetName) {
                             part.nameDirty(true);
                         }
