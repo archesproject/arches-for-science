@@ -1,8 +1,6 @@
 define([
-    'jquery',
     'knockout',
-    'arches',
-], function($, ko, arches) {
+], function(ko) {
     function viewModel(params) {
         this.value = params.value;
         this.locked = params.form.locked;
