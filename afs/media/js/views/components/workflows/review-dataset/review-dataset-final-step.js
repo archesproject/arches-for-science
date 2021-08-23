@@ -104,14 +104,14 @@ define([
                             resourceid: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','resourceId']),
                             annotation: self.getResourceValue(part, ['Part Identifier Assignment_Polygon Identifier','@display_value'])
                         };
-                    })
+                    });
                 }
                 parentPhysThings.forEach(function(thing){
                     if (thing.resourceid === self.resourceid){
                         var annotationJson = JSON.parse(thing.annotation.replaceAll("'",'"'));
                         self.leafletConfig = self.prepareAnnotation(annotationJson);
                     }
-                })
+                });
                 self.resourceLoading(false);
                 if (!self.digitalResourceLoading()){
                     self.loading(false);
