@@ -93,10 +93,30 @@ define([
                 objectName: {'name': 'Object Name', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
             };
 
-            this.resourceLoading(false);
-            if (!this.digitalResourceLoading()){
-                this.loading(false);
-            }
+            var parentPhysThingResourceId = this.getResourceValue(val.resource, ['part of', 'resourceId']);
+            var parentPhysThingData = ko.observable();
+            self.getResourceData(parentPhysThingResourceId, parentPhysThingData);
+            parentPhysThingData.subscribe(function(val){
+                if (val.resource["Part Identifier Assignment"].length > 0){
+                    var parentPhysThings = val.resource["Part Identifier Assignment"].map(function(part){
+                        return {
+                            name: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','@display_value']),
+                            resourceid: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','resourceId']),
+                            annotation: self.getResourceValue(part, ['Part Identifier Assignment_Polygon Identifier','@display_value'])
+                        };
+                    })
+                }
+                parentPhysThings.forEach(function(thing){
+                    if (thing.resourceid === self.resourceid){
+                        var annotationJson = JSON.parse(thing.annotation.replaceAll("'",'"'));
+                        self.leafletConfig = self.prepareAnnotation(annotationJson);
+                    }
+                })
+                self.resourceLoading(false);
+                if (!self.digitalResourceLoading()){
+                    self.loading(false);
+                }    
+            });
         }, this);
     }
 
