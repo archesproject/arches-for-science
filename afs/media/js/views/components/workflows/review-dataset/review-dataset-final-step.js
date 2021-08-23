@@ -26,8 +26,7 @@ define([
             ]
         };
 
-
-        params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId);
+        params.form.resourceId = params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId;
         SummaryStep.apply(this, [params]);
         this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function(val) {
             return val[1][0]['resourceid'];
@@ -49,13 +48,16 @@ define([
                 var digitalResourceName = val.displayname;
 
                 var files = val.resource['File'].map(function(file){
-                    var fileName = self.getResourceValue(file, ['File_Name', 'File_Name_content','@value']);
-                    var statements = file["FIle_Statement"].map(function(statement){
-                        return {
-                            statement: self.getResourceValue(statement, ['FIle_Statement_content','@value']),                        
-                            type: self.getResourceValue(statement, ['FIle_Statement_type','@value'])
-                        };
-                    });
+                    var statements = [];
+                    var fileName = self.getResourceValue(file['file_details'][0], ['name']);
+                    if (file["FIle_Statement"]) {
+                        statements = file["FIle_Statement"].map(function(statement){
+                            return {
+                                statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
+                                type: self.getResourceValue(statement, ['FIle_Statement_type','@display_value'])
+                            };
+                        });
+                    }
                     return {
                         fileName: fileName,
                         statements: statements,
@@ -65,7 +67,7 @@ define([
                 files.forEach(function(file){
                     var fileName = file.fileName;
                     var fileInterpretation = findStatementType(file.statements, 'interpretation');
-                    var fileParameter = findStatementType(file.statements, 'materials/technique description');    
+                    var fileParameter = findStatementType(file.statements, 'brief text');
                     fileList.push({
                         name: fileName,
                         interpretation: fileInterpretation,
@@ -85,23 +87,11 @@ define([
         }, this);
 
         this.resourceData.subscribe(function(val){
-            // var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
             this.displayName = val.displayname;
             this.reportVals = {
-                objectName: val['displayname'],
+                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content', '@display_value'])},
+                objectName: {'name': 'Object Name', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
             };
-
-            try {
-                this.reportVals.references = val.resource['References'].map(function(ref){
-                    return {
-                        referenceName: {'name': 'Reference', 'value': self.getResourceValue(ref, ['Agency Identifier', 'Reference', '@value'])},
-                        referenceType: {'name': 'Reference Type', 'value': self.getResourceValue(ref, ['Agency Identifier', 'Reference Type', '@value'])},
-                        agency: {'name': 'Agency', 'value': self.getResourceValue(ref, ['Agency', '@value'])}
-                    };
-                });
-            } catch(e) {
-                this.reportVals.references = [];
-            }
 
             this.resourceLoading(false);
             if (!this.digitalResourceLoading()){

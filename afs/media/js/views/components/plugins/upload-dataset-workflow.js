@@ -8,6 +8,7 @@ define([
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/upload-dataset/dataset-step',
     'views/components/workflows/upload-dataset/instrument-info-step',
+    'views/components/workflows/upload-dataset/upload-dataset-final-step',
     'views/components/workflows/upload-dataset/file-interpretation-step',
     'views/components/workflows/upload-dataset/select-dataset-files-step',
 ], function(ko, $, arches, Workflow) {
@@ -144,7 +145,6 @@ define([
                     },
                     required: true,
                     externalstepdata: {
-                        projectinfo: 'project-info',
                         datasetinfo: 'select-dataset-files-step'
                     },
                     layoutSections: [
@@ -163,15 +163,35 @@ define([
                         },
                     ],
                 },
-                // {
-                //     title: 'Summary',
-                //     description: 'Choose an option below',
-                //     graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
-                //     nodegroupid: '',
-                //     resourceid: null,
-                //     tileid: null,
-                //     parenttileid: null
-                // }
+                {
+                    title: 'Summary',
+                    name: 'upload-dataset-complete',  /* unique to workflow */
+                    description: 'Summary',
+                    component: 'views/components/workflows/component-based-step',
+                    componentname: 'component-based-step',
+                    graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',
+                    nodegroupid: '',
+                    resourceid: '',
+                    tileid: null,
+                    externalstepdata: {
+                        projectinfo: 'project-info',
+                        instrumentinfo: 'select-instrument-and-files',
+                        digitalresource: 'select-dataset-files-step',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'upload-dataset-final-step',
+                                    uniqueInstanceName: 'upload-dataset-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                }
             ];
             
             Workflow.apply(this, [params]);

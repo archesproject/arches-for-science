@@ -4,8 +4,8 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/workflows/analysis-areas-image-step',
-    'views/components/workflows/analysis-areas-annotation-step',
+    'views/components/workflows/analysis-areas-workflow/analysis-areas-image-step',
+    'views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
@@ -121,6 +121,7 @@ define([
                     resourceid: null,
                     externalstepdata: {
                         objectstep: 'object-step',
+                        regionsstep: 'regions-step',
                     },
                     tileid: null,
                     layoutSections: [

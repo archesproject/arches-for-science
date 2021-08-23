@@ -754,7 +754,7 @@ define([
 
     ko.components.register('analysis-areas-annotation-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-annotation-step.htm' }
+        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step.htm' }
     });
     return viewModel;
 });
