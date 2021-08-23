@@ -19,12 +19,12 @@
         <div style="display: inline-flex; width: inherit; justify-content: space-between;">
             <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: 'Object Name' + ':'"></div>
-                    <div class="summary-value" data-bind="text: reportVals.objectName"></div>
+                    <div class="summary-label" data-bind="text: reportVals.objectName.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.objectName.value"></div>
                 </div>
                 <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: 'Sampled Object' + ':'"></div>
-                    <div class="summary-value" data-bind="text: ''"></div>
+                    <div class="summary-label" data-bind="text: reportVals.sampledObjectName.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.sampledObjectName.value"></div>
                 </div>
             </div>
         </div>

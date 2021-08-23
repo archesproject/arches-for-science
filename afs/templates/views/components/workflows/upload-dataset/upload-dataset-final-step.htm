@@ -7,7 +7,7 @@
             <div style="display: flex; flex-direction: column;">
                 <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
                     <div class="summary-value" 
-                        data-bind = "text: displayName + ' ({% trans 'Observation Resource Instance' %})'">
+                        data-bind = "text: reportVals.observationName.value + ' ({% trans 'Observation Resource Instance' %})'">
                     </div>
                 </a>
             </div>
