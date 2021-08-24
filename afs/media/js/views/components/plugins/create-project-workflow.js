@@ -156,7 +156,8 @@ define([
                     description: 'Summary',
                     component: 'views/components/workflows/component-based-step',
                     componentname: 'component-based-step',
-                    externalstepdata: { 
+                    externalstepdata: {
+                        projectnamestep: 'set-project-name',
                         addphysthingstep: 'object-search-step',
                     },
                     layoutSections: [

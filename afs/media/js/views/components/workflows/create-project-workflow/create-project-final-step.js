@@ -5,6 +5,7 @@ define([
 
     function viewModel(params) {
         var self = this;
+        params.form.resourceId(params.form.externalStepData.projectnamestep.data["project-name"][0]["resourceInstanceId"]);
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
