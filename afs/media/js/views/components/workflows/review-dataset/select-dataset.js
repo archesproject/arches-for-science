@@ -6,7 +6,7 @@ define([
     function viewModel(params) {
         var self = this;
         this.digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
-        this.physicalThingResourceId = ko.observable(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId);
+        this.physicalThingResourceId = ko.observable(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1]);
         this.relatedDigitalResources = ko.observableArray([]);
         this.dataLoaded = ko.observable(false);
         
