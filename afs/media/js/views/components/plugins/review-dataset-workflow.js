@@ -32,7 +32,7 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         ],
-                                    renderContext: 'workflow'
+                                        renderContext: 'workflow'
                                     },
                                 },
                             ], 
