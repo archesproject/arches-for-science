@@ -20,11 +20,14 @@ define([
             const physicalThingPartNodeId = "b240c366-8594-11ea-97eb-acde48001122";
             const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
             const observationInfo = params.form.externalStepData.observationinfo.data['instrument-info'][0][1];
-            const rendererByInstrumentLookup = {
+            const rendererLookup = {
                 "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
-                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"}
+                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"},
+                "image": {rendererid: "5e05aa2e-5db0-4922-8938-b4d2b7919733", renderer: "imagereader"},
+                "pdf": {rendererid: "09dec059-1ee8-4fbd-85dd-c0ab0428aa94", renderer: "pdfreader"},
             };
+
             this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb";
             this.samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
             this.selectedAnnotationTile = ko.observable();
@@ -252,8 +255,13 @@ define([
                         error: file.error
                     };
                     if (file.name.split('.').pop() === 'txt'){
-                        fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].rendererid;
-                    }
+                        fileInfo.renderer = rendererLookup[observationInfo.instrument.value].rendererid;
+                    } else if (file.type.split('/').includes('image')) {
+                        fileInfo.renderer = rendererLookup["image"].rendererid
+                    } else if (file.type.split('/').includes('pdf')) {
+                        fileInfo.renderer = rendererLookup["pdf"].rendererid
+                    };
+
                     fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
                     const formData = new window.FormData();
                     formData.append('transaction_id', params.form.workflowId);
@@ -352,7 +360,7 @@ define([
                     console.log('Couldn\'t create observation cross references.');
                 }
 
-                params.form.value({ 
+                params.value({ 
                     observationReferenceTileId: self.observationReferenceTileId(),
                     parts: self.parts().map(x => 
                         {
@@ -365,15 +373,12 @@ define([
                                 tileid: x.tileid
                             };
                         }
-                    )});
+                    )
+                });
 
                 self.snapshot = params.form.value();
-                params.form.savedData(params.form.addedData());
                 params.form.complete(true);
-                params.form.hasUnsavedData(false);
             };
-
-            params.save = this.save;
 
             this.dropzoneOptions = {
                 url: "arches.urls.root",
@@ -455,7 +460,7 @@ define([
                         }
                     }
                     part.datasetName.subscribe(() => {
-                        const datasetSnapshot = self.snapshot.parts.find(x => x.datasetId == part.datasetId());
+                        const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
                         if(ko.unwrap(part.datasetName) != datasetSnapshot?.datasetName) {
                             part.nameDirty(true);
                         }

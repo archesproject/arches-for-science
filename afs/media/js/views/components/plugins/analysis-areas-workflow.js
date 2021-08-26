@@ -10,12 +10,10 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'analysis-areas-workflow';
+            this.v2 = true;
 
-            this.resourceId = ko.observable();
-            
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Object',
                     name: 'object-step', /* unique to workflow */
@@ -27,10 +25,7 @@ define([
                             This workflow will guide you through the steps to document the location of your regions of interest.
                         `,
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
-                    shouldtrackresource: true,
                     layoutSections: [
                         {
                             sectionTitle: 'Object or Sample',
@@ -60,8 +55,6 @@ define([
                             If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
                         `,
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
                     lockableExternalSteps: ['object-step'],
                     externalstepdata: {
@@ -86,13 +79,11 @@ define([
                 {
                     title: 'Regions',
                     name: 'regions-step', /* unique to workflow */
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
                     lockableExternalSteps: ['image-step'],
                     externalstepdata: {
                         objectstep: 'object-step',
-                        imagestep: 'image-step'
+                        imagestep: 'image-step',
                     },
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
                     layoutSections: [
@@ -114,16 +105,10 @@ define([
                     title: 'Summary',
                     name: 'analysis-areas-complete',  /* unique to workflow */
                     description: 'Summary',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', //physical thing graph
-                    nodegroupid: '',
-                    resourceid: null,
                     externalstepdata: {
                         objectstep: 'object-step',
                         regionsstep: 'regions-step',
                     },
-                    tileid: null,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -141,10 +126,6 @@ define([
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('analysis-areas-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/analysis-areas-workflow.htm' }
     });

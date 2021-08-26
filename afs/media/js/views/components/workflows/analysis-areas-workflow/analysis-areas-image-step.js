@@ -292,7 +292,6 @@ define([
             });
         };
 
-
         this.initialize();
     }
 
