@@ -28,9 +28,15 @@ define([
 
         params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1]);
         SummaryStep.apply(this, [params]);
-        this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function(val) {
-            return val[1][0]['resourceid'];
-        });
+        this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"][0][1].reduce(
+            (acc, resource) => {
+                if (resource.resourceid &&  resource.selected) { 
+                    acc.push(resource.resourceid);
+                }
+                return acc;
+            }, 
+            []
+        );
 
         this.selectedDatasets.forEach(function(resourceid){
             var selectedDatasetData = ko.observableArray();
@@ -50,7 +56,7 @@ define([
                 var files = val.resource['File'].map(function(file){
                     var statements = [];
                     var fileName = self.getResourceValue(file['file_details'][0], ['name']);
-                    if (file["FIle_Statement"]) {
+                    if (Array.isArray(file["FIle_Statement"])) {
                         statements = file["FIle_Statement"].map(function(statement){
                             return {
                                 statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
