@@ -9,8 +9,8 @@ define([
         var self = this;
 
         this.loading = ko.observable(true);
-        this.digitalResourceLoading = ko.observable();
-        this.resourceLoading = ko.observable();
+        this.digitalResourceLoading = ko.observable(true);
+        this.resourceLoading = ko.observable(true);
         this.fileLists = ko.observableArray();
 
         this.tableConfig = {
@@ -26,7 +26,7 @@ define([
             ]
         };
 
-        params.form.resourceId = params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId;
+        params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1]);
         SummaryStep.apply(this, [params]);
         this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function(val) {
             return val[1][0]['resourceid'];
