@@ -31,7 +31,7 @@ define([
         this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"][0][1].reduce(
             (acc, resource) => {
                 if (resource.resourceid &&  resource.selected) { 
-                    acc.push(resource.resourceid)
+                    acc.push(resource.resourceid);
                 }
                 return acc;
             }, 
