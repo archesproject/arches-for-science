@@ -198,7 +198,6 @@ define([
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
         this.selectedDigitalResource.subscribe(function(selectedDigitalResource){
-            console.log('selected digital resource', selectedDigitalResource);
             this.files(selectedDigitalResource.resource.File);
             this.selectedFile(this.files()[0]);
         }, this);
@@ -224,8 +223,6 @@ define([
                 var file = params.value()[selectedFile['@tile_id']];
                 self.fileStatementParameter(file.fileStatementParameter.fileStatement());
                 self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
-                console.log('selected file', self.selectedRenderer().name);
-                console.log('selected file', selectedFile);
             } else {
                 // self.selectedFile.selected(false);
                 self.fileStatementParameter(undefined);
