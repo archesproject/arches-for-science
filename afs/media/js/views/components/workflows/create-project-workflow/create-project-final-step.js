@@ -10,7 +10,8 @@ define([
         this.resourceLoading = ko.observable(true);
         this.collectionLoading = ko.observable(true);
 
-        this.collectionResourceId = params.form.externalStepData['addphysthingstep']['data']['add-phys-things'][0]['collectionResourceId'];
+        console.log("DS()", params)
+        this.collectionResourceId = params.collectionResourceId;
         this.collectionData = ko.observableArray();
         this.collectionOfPhysThings = ko.observableArray();
 

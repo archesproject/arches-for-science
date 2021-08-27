@@ -10,18 +10,17 @@ define([
     return ko.components.register('create-project-workflow', {
         viewModel: function(params) {
             this.componentName = 'create-project-workflow';
+            this.v2 = true;
 
             this.stepConfig = [
                 {
                     title: 'Project Name',
                     name: 'set-project-name',  /* unique to workflow */
+                    required: true,
                     informationboxdata: {
                         heading: 'Project Name',
                         text: 'Identify the project and its objectives',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: true,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -41,13 +40,11 @@ define([
                 {
                     title: 'Project Statement',
                     name: 'set-project-statement',  /* unique to workflow */
+                    required: false,
                     informationboxdata: {
                         heading: 'Project Statement',
                         text: 'Set the Project Statement',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: false,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -58,6 +55,7 @@ define([
                                     parameters: {
                                         graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                                         nodegroupid: '0b92a414-ca85-11e9-b725-a4d18cec433a',
+                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
                                     },
                                 },
                             ], 
@@ -67,13 +65,11 @@ define([
                 {
                     title: 'Project Timespan',
                     name: 'set-project-timespan',  /* unique to workflow */
+                    required: true,
                     informationboxdata: {
                         heading: 'Project Timespan',
                         text: 'Set the Project Timespan',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: true,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -84,6 +80,7 @@ define([
                                     parameters: {
                                         graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                                         nodegroupid: '0b925e3a-ca85-11e9-a308-a4d18cec433a',
+                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
                                         hiddenNodes: ['0b92f57d-ca85-11e9-a353-a4d18cec433a', '0b931623-ca85-11e9-b235-a4d18cec433a', '0b930905-ca85-11e9-8aca-a4d18cec433a'],
                                     },
                                 },
@@ -94,14 +91,11 @@ define([
                 {
                     title: 'Project Team',
                     name: 'set-project-team',  /* unique to workflow */
+                    required: false,
                     informationboxdata: {
                         heading: 'Project Timespan',
                         text: 'Set the Project Timespan',
                     },                    
-                    description: 'Consultation Details',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: false,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -112,6 +106,7 @@ define([
                                     parameters: {
                                         graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                                         nodegroupid: 'dbaa2022-9ae7-11ea-ab62-dca90488358a',
+                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
                                     },
                                 },
                             ], 
@@ -121,17 +116,11 @@ define([
                 {
                     title: 'Add Objects to Your Project',
                     name: 'object-search-step',  /* unique to workflow */
+                    required: true,
+                    workflowstepclass: 'create-project-add-things-step',
                     informationboxdata: {
                         heading: 'Add Objects',
                         text: 'Add Objects to Your Project',
-                    },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: true,
-                    wastebin: {resourceid: null, description: 'a collection instance'},
-                    workflowstepclass: 'create-project-add-things-step',
-                    externalstepdata: { 
-                        researchactivitystep: 'set-project-name',
                     },
                     layoutSections: [
                         {
@@ -143,7 +132,9 @@ define([
                                     parameters: {
                                         graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
                                         nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
-                                        nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)                    
+                                        nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)
+                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
+                                        researchActivityStepData: "['set-project-name']['project-name'][0]"
                                     },
                                 },
                             ],
@@ -154,11 +145,6 @@ define([
                     title: 'Summary',
                     name: 'add-project-complete',  /* unique to workflow */
                     description: 'Summary',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    externalstepdata: { 
-                        addphysthingstep: 'object-search-step',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -167,6 +153,8 @@ define([
                                     uniqueInstanceName: 'create-project-final',
                                     tilesManaged: 'none',
                                     parameters: {
+                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
+                                        collectionResourceId: "['object-search-step']['add-phys-things'][0]['collectionResourceId']",
                                     },
                                 },
                             ], 

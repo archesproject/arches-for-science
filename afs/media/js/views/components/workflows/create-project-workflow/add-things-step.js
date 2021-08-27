@@ -172,7 +172,7 @@ define([
         this.usedSetTileId = ko.observable();
         this.reportDataLoading = ko.observable(params.loading());
 
-        var researchActivityStepData = params.form.externalStepData['researchactivitystep']['data']['project-name'][0];
+        var researchActivityStepData = params.researchActivityStepData;
         var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
         this.projectResourceId(researchActivityStepData.resourceInstanceId);
 
