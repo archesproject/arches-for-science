@@ -374,7 +374,7 @@ define([
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
             if (self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId].features().length === 0 ||
                 !self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()) { //Sample Name Node
-                    params.form.alert(new params.form.AlertViewModel(
+                    params.pageVm.alert(new params.form.AlertViewModel(
                         "ep-alert-red",
                         "Missing Values",
                         "Sample Location and Sample Name are Required",
