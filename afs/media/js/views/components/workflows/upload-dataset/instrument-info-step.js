@@ -138,7 +138,7 @@ define([
 
         params.form.save = function() {
             if(!self.instrumentValue()){
-                params.form.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
+                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
                 return;
             }
 
@@ -183,7 +183,7 @@ define([
                     self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
                     params.form.savedData(params.form.addedData());
                     params.form.complete(true);
-                    params.form.alert("");
+                    params.pageVm.alert("");
                 });
         };
     }
