@@ -51,7 +51,7 @@ define([
             }
             return false;
         });
-        params.form.save = function(){
+        this.save = function(){
             for (var value of Object.values(params.value())) {
                 if(value.fileStatementParameter.dirty()){
                     value.fileStatementParameter.save();
@@ -62,7 +62,6 @@ define([
             }
             params.form.complete(true);
         };
-        this.save = params.form.save;
 
         params.form.reset = function(){
             for (var value of Object.values(params.value())) {
