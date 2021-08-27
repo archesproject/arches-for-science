@@ -10,7 +10,6 @@ define([
         this.resourceLoading = ko.observable(true);
         this.collectionLoading = ko.observable(true);
 
-        console.log("DS()", params)
         this.collectionResourceId = params.collectionResourceId;
         this.collectionData = ko.observableArray();
         this.collectionOfPhysThings = ko.observableArray();
