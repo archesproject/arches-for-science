@@ -15,7 +15,6 @@ define([
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
             this.componentName = 'upload-dataset-workflow';
-            this.v2 = true;
 
             var sampleLocationStep = {
                 title: 'Sample Location',

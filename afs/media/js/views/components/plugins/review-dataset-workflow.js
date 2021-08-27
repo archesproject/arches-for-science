@@ -11,7 +11,6 @@ define([
     return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
             this.componentName = 'review-dataset-workflow';
-            this.v2 = true;
 
             this.stepConfig = [
                 {

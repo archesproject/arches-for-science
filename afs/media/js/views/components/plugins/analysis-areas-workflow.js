@@ -11,7 +11,6 @@ define([
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
             this.componentName = 'analysis-areas-workflow';
-            this.v2 = true;
 
             this.stepConfig = [
                 {

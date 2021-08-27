@@ -10,7 +10,6 @@ define([
     return ko.components.register('create-project-workflow', {
         viewModel: function(params) {
             this.componentName = 'create-project-workflow';
-            this.v2 = true;
 
             this.stepConfig = [
                 {

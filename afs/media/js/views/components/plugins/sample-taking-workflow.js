@@ -13,7 +13,6 @@ define([
     return ko.components.register('sample-taking-workflow', {
         viewModel: function(params) {
             this.componentName = 'sample-taking-workflow';
-            this.v2 = true;
 
             this.stepConfig = [
                 {
