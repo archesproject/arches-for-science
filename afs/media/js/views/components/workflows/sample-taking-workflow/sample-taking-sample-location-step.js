@@ -747,7 +747,7 @@ define([
                                                                         self.savingTile(false);
                                                                         params.dirty(true);
 
-                                                                        params.form.alert("");
+                                                                        params.pageVm.alert("");
                                                                         self.drawFeatures([]);
                                                                     });
                                                                 // });
