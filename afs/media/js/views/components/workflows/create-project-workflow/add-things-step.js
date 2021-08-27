@@ -127,14 +127,6 @@ define([
                 }
             };
 
-            /*
-                If a step modifies a child tile, get the correct parent tile id from the step that created the parent tile. 
-                This requires that your step has a parameter 'parenttilesourcestep' that identifies the step with the parent tile.
-            */
-            if (self.externalStepData[self.componentData.parameters.parenttilesourcestep]){
-                self.componentData.parameters.parenttileid = self.externalStepData[self.componentData.parameters.parenttilesourcestep].data.tileid;
-            }
-
             self.flattenTree(self.topCards, []).forEach(function(item) {
                 if (item.constructor.name === 'CardViewModel' && item.nodegroupid === ko.unwrap(self.componentData.parameters.nodegroupid)) {
                     if (ko.unwrap(self.componentData.parameters.parenttileid) && item.parent && ko.unwrap(self.componentData.parameters.parenttileid) !== item.parent.tileid) {
