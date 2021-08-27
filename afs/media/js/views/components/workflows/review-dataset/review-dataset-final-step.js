@@ -26,9 +26,9 @@ define([
             ]
         };
 
-        params.form.resourceId(params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1]);
+        params.form.resourceId(params.sampleObjectResourceInstanceId);
         SummaryStep.apply(this, [params]);
-        this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"][0][1].reduce(
+        this.selectedDatasets = params.selectedDatasets.reduce(
             (acc, resource) => {
                 if (resource.resourceid &&  resource.selected) { 
                     acc.push(resource.resourceid);
