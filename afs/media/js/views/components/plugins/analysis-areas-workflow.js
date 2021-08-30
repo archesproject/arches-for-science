@@ -4,21 +4,19 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
-    'views/components/workflows/analysis-areas-image-step',
-    'views/components/workflows/analysis-areas-annotation-step',
+    'views/components/workflows/analysis-areas-workflow/analysis-areas-image-step',
+    'views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'analysis-areas-workflow';
 
-            this.resourceId = ko.observable();
-            
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Object',
                     name: 'object-step', /* unique to workflow */
+                    required: true,
                     informationboxdata: {
                         heading: 'Workflow Goal: Record Locations and Regions of Interest',
                         text: `
@@ -27,10 +25,6 @@ define([
                             This workflow will guide you through the steps to document the location of your regions of interest.
                         `,
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: true,
-                    shouldtrackresource: true,
                     layoutSections: [
                         {
                             sectionTitle: 'Object or Sample',
@@ -43,7 +37,6 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         ],
-                                        renderContext: 'workflow'
                                     },
                                 },
                             ], 
@@ -53,6 +46,7 @@ define([
                 {
                     title: 'Image',
                     name: 'image-step', /* unique to workflow */
+                    required: true,
                     informationboxdata: {
                         heading: 'Image Services',
                         text: `
@@ -60,13 +54,7 @@ define([
                             If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
                         `,
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: true,
                     lockableExternalSteps: ['object-step'],
-                    externalstepdata: {
-                        objectstep: 'object-step'
-                    },
                     layoutSections: [
                         {
                             sectionTitle: 'Image Service',
@@ -76,7 +64,8 @@ define([
                                     uniqueInstanceName: 'image-service-instance', /* unique to step */
                                     tilesManaged: 'one',
                                     parameters: {
-                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
+                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
+                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance'][0][1]"
                                     },
                                 },
                             ], 
@@ -86,15 +75,9 @@ define([
                 {
                     title: 'Regions',
                     name: 'regions-step', /* unique to workflow */
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
-                    lockableExternalSteps: ['image-step'],
-                    externalstepdata: {
-                        objectstep: 'object-step',
-                        imagestep: 'image-step'
-                    },
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
+                    lockableExternalSteps: ['image-step'],
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -104,6 +87,8 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
+                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance'][0][1]",
+                                        imageStepData: "['image-step']['image-service-instance'][0]['data']"
                                     },
                                 },
                             ], 
@@ -114,15 +99,6 @@ define([
                     title: 'Summary',
                     name: 'analysis-areas-complete',  /* unique to workflow */
                     description: 'Summary',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', //physical thing graph
-                    nodegroupid: '',
-                    resourceid: null,
-                    externalstepdata: {
-                        objectstep: 'object-step',
-                    },
-                    tileid: null,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -131,6 +107,8 @@ define([
                                     uniqueInstanceName: 'analysis-areas-final',
                                     tilesManaged: 'none',
                                     parameters: {
+                                        sampleObjectResourceId: "['object-step']['sample-object-resource-instance'][0][1]",
+                                        regionsStepData: "['regions-step']['annotation-instance']"
                                     },
                                 },
                             ], 
@@ -140,10 +118,6 @@ define([
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('analysis-areas-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/analysis-areas-workflow.htm' }
     });

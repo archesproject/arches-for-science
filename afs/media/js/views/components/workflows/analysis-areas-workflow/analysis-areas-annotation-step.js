@@ -12,12 +12,10 @@ define([
         var self = this;
         _.extend(this, params);
 
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        var imageStepData = params.form.externalStepData['imagestep']['data']['image-service-instance'][0];
-        this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
+        this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.savingTile = ko.observable();
 
@@ -754,7 +752,7 @@ define([
 
     ko.components.register('analysis-areas-annotation-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-annotation-step.htm' }
+        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step.htm' }
     });
     return viewModel;
 });

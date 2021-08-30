@@ -24,8 +24,7 @@ define([
             }
         });
 
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
 
         this.physicalThingDigitalReferenceCard = ko.observable();
         this.physicalThingDigitalReferenceCard.subscribe(function(card) {
@@ -292,13 +291,12 @@ define([
             });
         };
 
-
         this.initialize();
     }
 
     ko.components.register('analysis-areas-image-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-image-step.htm' }
+        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-image-step.htm' }
     });
     return viewModel;
 });

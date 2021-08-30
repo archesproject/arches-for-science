@@ -74,9 +74,10 @@ define([
             self.samplingName(["Sample for", self.physicalThingNameValue, val].join(' '));
         });
 
-        this.projectValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["project"];
-        this.physicalThingNameValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["physThingName"];
-        this.physicalThingValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["physicalThing"];
+        var selectPhysThingData = params.selectPhysThingData;
+        this.projectValue = selectPhysThingData[0][1]["project"];
+        this.physicalThingNameValue = selectPhysThingData[0][1]["physThingName"];
+        this.physicalThingValue = selectPhysThingData[0][1]["physicalThing"];
 
         params.form.save = async function(){
             const sampelingNameResponse = await self.saveName();
@@ -97,8 +98,8 @@ define([
                 self.samplingDateTile(response4[0].tileid);
                 self.samplingTechniqueTile(response5[0].tileid);
 
-                params.form.complete(true);
                 params.form.savedData(params.form.addedData());
+                params.form.complete(true);
             });
         };
 

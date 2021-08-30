@@ -17,7 +17,8 @@
                                 name: 'resource-report-abstract',
                                 params: {
                                     report: $data.report,
-                                    summary: true
+                                    summary: true,
+                                    disableDisambiguatedReport: true
                                 }
                             }, css: {'selected-instance': $parent.value().map(function(r){return r.resourceId}).indexOf($data['_source']['resourceinstanceid']) >= 0},
                             click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}">
@@ -56,7 +57,7 @@
                         <div class="wf-multi-tile-card-info-details">
                         <dt data-bind="text: $data.displayname"></dt>
                         <dd>
-                            <a target="_blank" href="" data-bind="text: $data.displaydescription"></a>
+                            <a data-bind="text: $data.displaydescription"></a>
                         </dd>
                         </div>
                     </div>

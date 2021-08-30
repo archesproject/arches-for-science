@@ -4,13 +4,15 @@ define([
     'knockout',
     'knockout-mapping',
     'arches',
-    'views/components/workflows/new-tile-step',
-    'models/report',
     'models/graph',
+    'models/report',
+    'viewmodels/card',
+    'viewmodels/provisional-tile',
     'report-templates',
+    'card-components',
     'bindings/select2-query',
     'views/components/search/paging-filter',
-], function($, _, ko, koMapping, arches, NewTileStep, ReportModel, GraphModel, reportLookup) {
+], function($, _, ko, koMapping, arches, GraphModel, ReportModel, CardViewModel, ProvisionalTileViewModel, reportLookup) {
 
     var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a'; // Physical Thing graph
     var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a'; // Name_content in Collection resource
@@ -35,53 +37,161 @@ define([
     
     function viewModel(params) {
         var self = this;
-        var limit = 10;
 
+        _.extend(this, params.form);
+
+        this.nodeLookupUpdated = ko.observable(true);
+        var collectionGraphId = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
+        $.getJSON(( arches.urls.api_card + collectionGraphId), function(data) {
+            var handlers = {
+                'after-update': [],
+                'tile-reset': []
+            };
+            var displayname = ko.observable(data.displayname);
+            var createLookup = function(list, idKey) {
+                return _.reduce(list, function(lookup, item) {
+                    lookup[item[idKey]] = item;
+                    return lookup;
+                }, {});
+            };
+
+            self.reviewer = data.userisreviewer;
+            self.provisionalTileViewModel = new ProvisionalTileViewModel({
+                tile: self.tile,
+                reviewer: data.userisreviewer
+            });
+
+            var graphModel = new GraphModel({
+                data: {
+                    nodes: data.nodes,
+                    nodegroups: data.nodegroups,
+                    edges: []
+                },
+                datatypes: data.datatypes
+            });
+
+            self.graphModel = graphModel;
+
+            self.topCards = _.filter(data.cards, function(card) {
+                var nodegroup = _.find(data.nodegroups, function(group) {
+                    return group.nodegroupid === card.nodegroup_id;
+                });
+                return !nodegroup || !nodegroup.parentnodegroup_id;
+            }).map(function(card) {
+                self.componentData.parameters.nodegroupid = self.componentData.parameters.nodegroupid || card.nodegroup_id;
+                return new CardViewModel({
+                    card: card,
+                    graphModel: graphModel,
+                    tile: null,
+                    resourceId: self.resourceId,
+                    displayname: displayname,
+                    handlers: handlers,
+                    cards: data.cards,
+                    tiles: data.tiles,
+                    provisionalTileViewModel: self.provisionalTileViewModel,
+                    cardwidgets: data.cardwidgets,
+                    userisreviewer: data.userisreviewer,
+                    loading: self.loading
+                });
+            });
+
+            self.card.subscribe(function(card){
+                if (ko.unwrap(card.widgets) && self.componentData.parameters.hiddenNodes) {
+                    card.widgets().forEach(function(widget){
+                        if (self.componentData.parameters.hiddenNodes.indexOf(widget.node_id()) > -1) {
+                            widget.visible(false);
+                        }
+                    });
+                }
+            });
+
+            self.topCards.forEach(function(topCard) {
+                topCard.topCards = self.topCards;
+            });
+
+            self.widgetLookup = createLookup(
+                data.widgets,
+                'widgetid'
+            );
+            self.cardComponentLookup = createLookup(
+                data['card_components'],
+                'componentid'
+            );
+            self.nodeLookup = createLookup(
+                graphModel.get('nodes')(),
+                'nodeid'
+            );
+            self.on = function(eventName, handler) {
+                if (handlers[eventName]) {
+                    handlers[eventName].push(handler);
+                }
+            };
+
+            self.flattenTree(self.topCards, []).forEach(function(item) {
+                if (item.constructor.name === 'CardViewModel' && item.nodegroupid === ko.unwrap(self.componentData.parameters.nodegroupid)) {
+                    if (ko.unwrap(self.componentData.parameters.parenttileid) && item.parent && ko.unwrap(self.componentData.parameters.parenttileid) !== item.parent.tileid) {
+                        return;
+                    }
+                    if (self.customCardLabel) item.model.name(ko.unwrap(self.customCardLabel));
+                    self.card(item);
+                    if (ko.unwrap(self.componentData.parameters.tileid)) {
+                        ko.unwrap(item.tiles).forEach(function(tile) {
+                            if (tile.tileid === ko.unwrap(self.componentData.parameters.tileid)) {
+                                self.tile(tile);
+                            }
+                        });
+                    } else if (ko.unwrap(self.componentData.parameters.createTile) !== false) {
+                        self.tile(item.getNewTile());
+                    }
+                }
+            });
+
+            self.componentData.parameters.card = self.card();
+            self.componentData.parameters.tile = self.tile();
+            self.componentData.parameters.loading = self.loading;
+            self.componentData.parameters.provisionalTileViewModel = self.provisionalTileViewModel;
+            self.componentData.parameters.reviewer = data.userisreviewer;
+            self.componentData.parameters.dirty = self.isDirty;
+            self.componentData.parameters.saveFunction = self.saveFunction;
+            self.componentData.parameters.tiles = self.tiles;
+
+            self.loading(false);
+        });
+
+        var limit = 7;
         this.projectResourceId = ko.observable();
         this.collectionResourceId = ko.observable();
         this.usedSetTileId = ko.observable();
         this.reportDataLoading = ko.observable(params.loading());
-    
-        var projectInfoData = params.externalStepData.researchactivitystep.data["project-name"][0];
-        var researchActivityStepData = projectInfoData.tileData;
-        var researchActivityName = researchActivityStepData[activityNameNodeId];
-        this.projectResourceId(projectInfoData.resourceInstanceId);
 
-        if (ko.unwrap(params.value)){
-            var cachedValue = ko.unwrap(params.value);
+        var researchActivityStepData = params.researchActivityStepData;
+        var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
+        this.projectResourceId(researchActivityStepData.resourceInstanceId);
+
+        if (ko.unwrap(self.previouslyPersistedComponentData)){
+            var cachedValue = ko.unwrap(self.previouslyPersistedComponentData)[0];
             if (cachedValue['collectionResourceId']){
                 self.collectionResourceId(cachedValue['collectionResourceId']);
-                params.resourceid(self.collectionResourceId());
             }
             if (cachedValue['usedSetTileId']){
                 self.usedSetTileId(cachedValue['usedSetTileId']);
             }
         }
 
-        params.getJSONOnLoad = ko.observable(true);
-        NewTileStep.apply(this, [params]);
-
-        params.getJSONOnLoad = ko.observable(false);
-        NewTileStep.apply(this, [params]);
-        self.getCardResourceIdOrGraphId = function() {
-            return ko.unwrap(params.graphid);
-        };
-        self.getJSON();
-
         this.selectedTab = ko.observable();
+        this.searchResults = {'timestamp': ko.observable()};
+        this.targetResource = ko.observable();
         this.toggleRelationshipCandidacy = ko.observable();
         this.isResourceRelatable = ko.observable();
-
+        this.reportLookup = reportLookup;
         this.filters = {
             'paging-filter': ko.observable(),
             'search-results': ko.observable(),
         };
-        this.reportLookup = reportLookup;
-        this.query = ko.observable(getQueryObject());
-        this.searchResults = {'timestamp': ko.observable()};
-        this.targetResource = ko.observable();
-        this.selectedTerm = ko.observable();
         this.totalResults = ko.observable();
+
+        this.query = ko.observable(getQueryObject());
+        this.selectedTerm = ko.observable();
         this.targetResources = ko.observableArray([]);
         this.targetResourceSearchValue = ko.observable();
         this.termOptions = [];
@@ -91,7 +201,14 @@ define([
         this.selectedResources = ko.observableArray([]);
         this.startValue = null;
 
-        params.hasDirtyTile(Boolean(self.value().length));
+        this.dirty = ko.pureComputed(function() {
+            return ko.unwrap(self.tile) ? self.tile().dirty() : false;
+        });
+        this.dirty.subscribe(function(dirty) {
+            if (self.hasUnsavedData) {
+                self.hasUnsavedData(dirty);
+            }
+        });
 
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
@@ -116,7 +233,7 @@ define([
         }, null, "arrayChange");
 
         this.tile.subscribe(function(tile) {
-            self.startValue = tile.data[params.nodeid()]();
+            self.startValue = tile.data[ko.unwrap(params.nodeid)]();
             if (self.startValue) {
                 self.startValue.forEach(function(item) {
                     self.value.push(koMapping.toJS(item));
@@ -125,7 +242,7 @@ define([
         });
 
         this.resetTile = function() {
-            self.tile().data[params.nodeid()](self.startValue);
+            self.tile().data[ko.unwrap(params.nodeid)](self.startValue);
             self.value.removeAll();
             if (self.startValue) {
                 self.startValue.forEach(function(item) {
@@ -133,9 +250,10 @@ define([
                 });
             }
         };
+        params.form.reset = this.resetTile;
 
         this.updateTileData = function(resourceid) {
-            var tilevalue = self.tile().data[params.nodeid()];
+            var tilevalue = self.tile().data[ko.unwrap(params.nodeid)];
             var val = self.value().find(function(item) {
                 return ko.unwrap(item['resourceId']) === resourceid;
             });
@@ -145,7 +263,7 @@ define([
                 self.value.remove(val);
             } else {
                 var nodeConfig;
-                var nodeData = self.nodeLookup[params.nodeid()];
+                var nodeData = ko.unwrap(self.nodeLookup)[ko.unwrap(params.nodeid)];
 
                 if (nodeData) {
                     nodeConfig = nodeData.config.graphs().find(function(config) {
@@ -162,16 +280,10 @@ define([
             }
         };
 
-        this.dirty = ko.pureComputed(function() {
-            return ko.unwrap(self.tile) ? self.tile().dirty() : false;
-        });
-        this.dirty.subscribe(function(dirty) {
-            if (params.hasDirtyTile) {
-                params.hasDirtyTile(dirty);
-            }
-        });
-
         this.submit = function() {
+            self.complete(false);
+            self.saving(true);
+
             $.ajax({
                 url: arches.urls.api_node_value,
                 type: 'POST',
@@ -207,28 +319,40 @@ define([
                         url: arches.urls.api_node_value,
                         type: 'POST',
                         data: {
-                            'nodeid': params.nodeid(),
+                            'nodeid': ko.unwrap(params.nodeid),
                             'data': koMapping.toJSON(self.value),
                             'resourceinstanceid': ko.unwrap(self.collectionResourceId),
                             'tileid': self.tile().tileid
                         }
                     }).done(function(data) {
-                        if (data.tileid && params.tile().tileid === "") {
-                            params.tile().tileid = data.tileid;
+                        if (data.tileid && self.tile().tileid === "") {
+                            self.tile().tileid = data.tileid;
                         }
-                        self.onSaveSuccess([data]);
-                        self.startValue = data.data[params.nodeid()];
+                        self.startValue = data.data[ko.unwrap(params.nodeid)];
                         self.tile()._tileData(koMapping.toJSON(data.data));
-                        params.hasDirtyTile(false);
+
+                        self.savedData([data].map(function(savedDatum) {
+                            return {
+                                tileData: JSON.stringify(savedDatum.data),
+                                tileId: savedDatum.tileid,
+                                nodegroupId: savedDatum.nodegroup_id,
+                                resourceInstanceId: savedDatum.resourceinstance_id,
+                                projectResourceId: ko.unwrap(self.projectResourceId),
+                                collectionResourceId: ko.unwrap(self.collectionResourceId),
+                                usedSetTileId: ko.unwrap(self.usedSetTileId),
+                            };    
+                        }));
+
+                        self.saving(false);
+                        self.complete(true);
                     });
                 });
             });
         };
-        if (params.preSaveCallback && !ko.unwrap(params.preSaveCallback)) {
-            params.preSaveCallback(self.submit);
-        }
-
-        params.saveOnQuit = function() {
+        params.form.save = self.submit;
+        params.form.onSaveSuccess = function() {};
+        
+        params.form.saveOnQuit(function() {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             var rrTemplate = [{ 
                 "resourceId": ko.unwrap(self.collectionResourceId),
@@ -251,7 +375,7 @@ define([
                     console.log(value.resourceId, "related resource is created");
                 });
             });
-        };
+        });
 
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
@@ -363,7 +487,6 @@ define([
                         self.targetResources(resources);
                     });
             };
-
             fetch(arches.urls.api_bulk_resource_report + `?graph_ids=${[graphId]}&exclude=cards`)
                 .then(result => {
                     return result.json();
@@ -380,32 +503,8 @@ define([
                 });
         };
 
-
         this.updateSearchResults = function(termFilter, pagingFilter) {
             getResultData(termFilter, pagingFilter);
-        };
-
-        params.defineStateProperties = function(){
-            var wastebin = !!(ko.unwrap(params.wastebin)) ? koMapping.toJS(params.wastebin) : undefined;
-            var resourceId = ko.unwrap(self.collectionResourceId);
-
-            if (resourceId) {
-                if (wastebin && 'resourceid' in wastebin) {
-                    wastebin.resourceid = resourceId;
-                }
-            }
-            
-            ko.mapping.fromJS(wastebin, {}, params.wastebin);
-            
-            return {
-                resourceid: resourceId,
-                tile: !!(ko.unwrap(params.tile)) ? koMapping.toJS(params.tile().data) : undefined,
-                tileid: !!(ko.unwrap(params.tile)) ? ko.unwrap(params.tile().tileid): undefined,
-                wastebin: wastebin,
-                projectResourceId: ko.unwrap(self.projectResourceId),
-                collectionResourceId: ko.unwrap(self.collectionResourceId),
-                usedSetTileId: ko.unwrap(self.usedSetTileId)
-            };
         };
 
         this.selectedTerm.subscribe(function(val) {
@@ -418,9 +517,12 @@ define([
         });
     }
 
-    ko.components.register('research-collection-step', {
+    ko.components.register('add-things-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/object-search-step.htm' }
+        template: {
+            require: 'text!templates/views/components/workflows/create-project-workflow/add-things-step.htm'
+        }
     });
+
     return viewModel;
 });
