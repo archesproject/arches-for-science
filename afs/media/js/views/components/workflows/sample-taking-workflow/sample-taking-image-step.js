@@ -24,8 +24,7 @@ define([
             }
         });
 
-        var selectProjectStepData = params.form.externalStepData['selectprojectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(selectProjectStepData['select-phys-thing'][0][1]['physicalThing']);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
 
         this.physicalThingDigitalReferenceCard = ko.observable();
         this.physicalThingDigitalReferenceCard.subscribe(function(card) {

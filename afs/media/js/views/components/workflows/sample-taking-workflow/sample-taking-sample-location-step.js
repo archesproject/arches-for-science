@@ -12,15 +12,11 @@ define([
         var self = this;
         _.extend(this, params);
         
-        var selectProjectStepData = params.form.externalStepData['selectprojectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(selectProjectStepData['select-phys-thing'][0][1]['physicalThing']);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
+        this.samplingActivityResourceId = koMapping.toJS(params.samplingActivityResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        var imageStepData = params.form.externalStepData['imagestep']['data']['image-service-instance'][0];
-        this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
-
-        var sampleInfoStepData = params.form.externalStepData['sampleinfostep']['data'];
-        this.samplingActivityResourceId = koMapping.toJS(sampleInfoStepData['sampling-info'][0][1]['samplingActivityResourceId']);
+        this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.samplingActivitySamplingUnitCard = ko.observable();
         this.samplingActivityStatementCard = ko.observable();
@@ -372,15 +368,15 @@ define([
         this.saveSampleLocationTile = function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
-            if (self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId].features().length === 0 ||
-                !self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()) { //Sample Name Node
-                    params.form.alert(new params.form.AlertViewModel(
-                        "ep-alert-red",
-                        "Missing Values",
-                        "Sample Location and Sample Name are Required",
-                    ));
-                    return;    
-                }
+            // if (ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId].features).length === 0 ||
+            //     !ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])) { //Sample Name Node
+            //         params.form.alert(new params.form.AlertViewModel(
+            //             "ep-alert-red",
+            //             "Missing Values",
+            //             "Sample Location and Sample Name are Required",
+            //         ));
+            //         return;    
+            //     }
 
             var savePhysicalThingNameTile = function(physicalThingNameTile) {
                 return new Promise(function(resolve, _reject) {
