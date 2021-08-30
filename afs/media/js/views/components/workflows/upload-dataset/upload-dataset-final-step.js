@@ -9,7 +9,7 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.form.resourceId = params.form.externalStepData.instrumentinfo.data["instrument-info"][0][1]["observationInstanceId"];
+        params.form.resourceId = params.observationInstanceResourceId;
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
@@ -29,14 +29,13 @@ define([
             ]
         };
 
-        this.uploadedDatasets = params.form.externalStepData.digitalresource.data['select-dataset-files-step'][0][1]["parts"];
+        this.uploadedDatasets = params.uploadedDatasets;
 
-        var parentPhysThingResourceId = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1]["physicalThing"];
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
         this.parentPhysThingAnnotations = ko.observableArray();
 
-        this.getResourceData(parentPhysThingResourceId, this.parentPhysThingData);
+        this.getResourceData(params.parentPhysThingResourceId, this.parentPhysThingData);
 
         this.parentPhysThingData.subscribe(function(val){
             val.resource['Part Identifier Assignment'].forEach(function(annotation){

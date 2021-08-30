@@ -18,8 +18,8 @@ define([
             const physicalThingPartNodeGroupId = "fec59582-8593-11ea-97eb-acde48001122";
             const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
             const physicalThingPartNodeId = "b240c366-8594-11ea-97eb-acde48001122";
-            const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
-            const observationInfo = params.form.externalStepData.observationinfo.data['instrument-info'][0][1];
+            const projectInfo = params.projectInfo;
+            const observationInfo = params.observationInfo;
             const rendererLookup = {
                 "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
