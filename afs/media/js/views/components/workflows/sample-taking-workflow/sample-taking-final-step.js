@@ -8,7 +8,7 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.form.resourceId(params.form.externalStepData['selectobjectstep']['data']['sampling-info'][0][1]['samplingActivityResourceId']);
+        params.form.resourceId(params.samplingActivityResourceId);
 
         SummaryStep.apply(this, [params]);
 
