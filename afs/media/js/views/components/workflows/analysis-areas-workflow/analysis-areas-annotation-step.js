@@ -48,9 +48,21 @@ define([
             }
         });
 
+        this.hasExecutedInnerSave = ko.observable(false);
+
         this.tileDirty = ko.computed(function() {
             if (self.physicalThingPartIdentifierAssignmentTile()) {
                 return self.physicalThingPartIdentifierAssignmentTile().dirty();
+            }
+        });
+                
+        this.toggleOuterSaveButton = ko.computed(function() {
+            /* prevents user from saving workflow step with dirty 'inner' tile */ 
+            if (self.hasExecutedInnerSave() && !self.tileDirty()) {
+                params.dirty(true);
+            }
+            else {
+                params.dirty(false);
             }
         });
 
@@ -427,7 +439,8 @@ define([
                                     self.savingTile(false);
                                     params.form.alert("")
                                     self.drawFeatures([]);
-                                    params.dirty(true);
+
+                                    self.hasExecutedInnerSave(true);
                                 });
                             });
                         });
