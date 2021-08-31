@@ -28,29 +28,32 @@
     <label class="control-label">{% trans "Sampled Locations" %}</label>
     <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
     <div class="panel">
-        <div id="parts-panel" class="panel-body" data-bind="foreach: {data: parts, as: 'part'}">
+        <div style="border-top: solid 1px#ddd; margin-top: 10px">
+        <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
             <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
             <div class="panel">
                 <a role="button" data-toggle="collapse" data-parent="#parts-panel" aria-expanded="false" data-bind="click: function(){ $parent.selectedPart(part); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
-                    <div class="file-workbench-file" data-bind="click: function(){}, clickBubble: part.tileid != $parent.selectedPart().tileid, css: {staged: part.tileid === self.selectedPart().tileid }">
-                        <i class="fa" data-bind="css: { 'fa-plus-square': $parent.selectedPart().tileid != part.tileid, 'fa-minus-square': $parent.selectedPart().tileid == part.tileid }"></i> 
+                    <div style="height: 35px; padding: 10px;" class="file-workbench-file" data-bind="click: function(){}, clickBubble: part.tileid != $parent.selectedPart().tileid, css: {staged: part.tileid === self.selectedPart().tileid }">
+                        <i class="fa" data-bind="css: { 'fa-angle-right': $parent.selectedPart().tileid != part.tileid, 'fa-angle-down': $parent.selectedPart().tileid == part.tileid }"></i> 
                         <span class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname"></span>
                     </div>
                 </a>
                 <div class="panel-collapse collapse" data-bind="attr: { id: part.tileid }, css: { in: $index() == 0}">
                     <div class="dataset-name">
-                        <label class="control-label">{% trans "Dataset Name (required)" %}</label>
+                        <label class="control-label">{% trans "Dataset Name*" %}</label>
                         <input type="text" class="form-control" placeholder="Dataset name" data-bind="textInput: part.datasetName">
                     </div>
+                     <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
                     <div class="file-workbench-files" data-bind="foreach: {data: part.datasetFiles, as: 'file'}">
-                        <div class='file-workbench-file' data-bind="click: function(){ !file.tileId() ? self.removeFileFromPart(file): '' }, css: {staged: false}">
-                            <i class="fa" data-bind="css: { 'fa-check': file.tileId(), 'fa-trash': !file.tileId() }"></i>
-                            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name || file.upload.filename"></span>
+                        <div class='file-workbench-file' data-bind="click: function(){ !ko.unwrap(file.tileId) ? self.removeFileFromPart(file): '' }, css: {staged: false}">
+                            <i class="fa" data-bind="css: { 'fa-check': ko.unwrap(file.tileId), 'fa-trash': !ko.unwrap(file.tileId) }"></i>
+                            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name || file.upload?.filename"></span>
                         </div>
                     </div>
                 </div>
             </div>
             <!--/ko-->
+        </div>
         </div>
     </div>
     <!--/ko-->
