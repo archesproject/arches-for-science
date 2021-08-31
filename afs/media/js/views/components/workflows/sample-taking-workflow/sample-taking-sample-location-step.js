@@ -113,6 +113,14 @@ define([
             }
         });
 
+        this.sampleName = ko.computed(function() {
+            var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+            if (self.selectedSampleLocationInstance()){
+                return self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()
+                + " from " + params.physicalThingName;
+            }
+        })
+
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
 
@@ -381,8 +389,8 @@ define([
             var savePhysicalThingNameTile = function(physicalThingNameTile, type) {
                 return new Promise(function(resolve, _reject) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    var selectedSampleLocationInstanceLabel = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]);
-                    console.log(selectedSampleLocationInstanceLabel)
+                    var selectedSampleLocationInstanceLabel = ko.unwrap(self.sampleName);
+
                     if (type === "region") {
                         selectedSampleLocationInstanceLabel = "Region for " + selectedSampleLocationInstanceLabel;
                     }
