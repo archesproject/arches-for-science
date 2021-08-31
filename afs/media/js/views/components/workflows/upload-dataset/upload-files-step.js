@@ -13,8 +13,8 @@ define([
     return ko.components.register('upload-files-step', {
         viewModel: function(params) {
             var self = this;
-            const physicalThingId = params.form.externalStepData.projectinfo["data"]["select-phys-thing-step"][0][1].physicalThing;
-            const observationInfo = params.form.externalStepData.observationinfo.data['instrument-info'][0][1];
+            const physicalThingId = params.projectinfo["select-phys-thing-step"][0][1].physicalThing;
+            const observationInfo = params.observationinfo['instrument-info'][0][1];
             const rendererByInstrumentLookup = {
                 "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},

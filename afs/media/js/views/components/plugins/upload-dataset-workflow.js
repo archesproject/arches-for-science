@@ -52,10 +52,6 @@ define([
                     text: 'Blah Blah',
                 },
                 required: true,
-                externalstepdata: {
-                    projectinfo: 'project-info',
-                    observationinfo: 'select-instrument-and-files',
-                },
                 layoutSections: [
                     {
                         sectionTitle: null,
@@ -64,7 +60,9 @@ define([
                                 componentName: 'upload-files-step',
                                 uniqueInstanceName: 'upload-files-step', /* unique to step */
                                 parameters: {
-                                    renderContext: 'workflow'
+                                    renderContext: 'workflow',
+                                    projectinfo: '["project-info"]',
+                                    observationinfo: '["select-instrument-and-files"]',
                                 },
                                 required: true,
                             },
@@ -99,6 +97,9 @@ define([
                         injectionLogic: function(step) {  /* step = self-introspection */ 
                             if (step.value() && step.value()['dataset-step'][0][1] === 'non-destructive') {
                                 return sampleLocationStep;
+                            }
+                            if (step.value() && step.value()['dataset-step'][0][1] === 'destructive') {
+                                return uploadDatasetStep;
                             }
                         }
                     },
