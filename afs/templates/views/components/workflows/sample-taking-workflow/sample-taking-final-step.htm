@@ -33,6 +33,10 @@
         <div style="display: inline-flex; width: inherit; justify-content: space-between;">
             <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
+                    <div class="summary-label" data-bind="text: reportVals.samplingActivityName.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.samplingActivityName.value"></div>
+                </div>
+                <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: reportVals.samplers.name + ':'"></div>
                     <div class="summary-value" data-bind="text: reportVals.samplers.value"></div>
                 </div>
@@ -41,12 +45,12 @@
                     <div class="summary-value" data-bind="text: reportVals.samplingDate.value"></div>
                 </div>
                 <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: reportVals.statement.name + ':'"></div>
-                    <div class="summary-value" data-bind="html: reportVals.statement.value"></div>
+                    <div class="summary-label" data-bind="text: reportVals.technique.name + ':'"></div>
+                    <div class="summary-value" data-bind="html: reportVals.technique.value"></div>
                 </div>
                 <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: reportVals.samplingActivityName.name + ':'"></div>
-                    <div class="summary-value" data-bind="text: reportVals.samplingActivityName.value"></div>
+                    <div class="summary-label" data-bind="text: reportVals.motivation.name + ':'"></div>
+                    <div class="summary-value" data-bind="html: reportVals.motivation.value"></div>
                 </div>
             </div>
         </div>
@@ -62,7 +66,7 @@
                 <table data-bind="datatable: tableConfig" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th>{% trans "Observation Name:" %}</th>
+                            <th>{% trans "Sample Name:" %}</th>
                             <th>{% trans "Description" %}</th>
                             <th>{% trans "Sampling Motivation" %}</th>
                         </tr>
