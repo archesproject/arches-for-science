@@ -45,10 +45,9 @@
                     </div>
                      <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
                     <div class="file-workbench-files" data-bind="foreach: {data: part.datasetFiles, as: 'file'}">
-                        <div class='file-workbench-file' data-bind="css: {staged: false}">
-                            <i class="fa fa-trash" data-bind="click: function(){ self.removeFileFromPart(file) }"></i>
+                        <div class='file-workbench-file' data-bind="click: function(){ !file.tileId() ? self.removeFileFromPart(file): '' }, css: {staged: false}">
+                            <i class="fa" style="color: green" data-bind="css: { 'fa-check': file.tileId(), 'fa-trash': !file.tileId() }"></i>
                             <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name || file.upload?.filename"></span>
-                            <i class="fa" style="color: green" data-bind="css: {'fa-check': ko.unwrap(file.tileId)}"></i>
                         </div>
                     </div>
                 </div>

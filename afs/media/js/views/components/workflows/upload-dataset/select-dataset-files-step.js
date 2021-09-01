@@ -216,26 +216,26 @@ define([
                 }
             };
 
-            this.removeDatasetFiles = async (part) => {
-                const savedDatasetFiles = self.snapshot?.parts.find(p => p.datasetId === part.datasetId()).datasetFiles
-                if (savedDatasetFiles) {
-                    const currentTileIds = part.datasetFiles().map(val => ko.unwrap(val.tileId)) 
-                    const savedTileIds = savedDatasetFiles.map(val => val.tileId) 
-                    const tilesToDelete = savedTileIds.filter(tileid => !currentTileIds.includes(tileid));
-                    tilesToDelete.forEach(async (tileid) => {
-                        const tile = await window.fetch(arches.urls.api_tiles(tileid), {
-                            method: 'DELETE',
-                            credentials: 'include',
-                            body: JSON.stringify({'tileid': tileid})
-                        });
+            // this.removeDatasetFiles = async (part) => {
+            //     const savedDatasetFiles = self.snapshot?.parts.find(p => p.datasetId === part.datasetId()).datasetFiles
+            //     if (savedDatasetFiles) {
+            //         const currentTileIds = part.datasetFiles().map(val => ko.unwrap(val.tileId)) 
+            //         const savedTileIds = savedDatasetFiles.map(val => val.tileId) 
+            //         const tilesToDelete = savedTileIds.filter(tileid => !currentTileIds.includes(tileid));
+            //         tilesToDelete.forEach(async (tileid) => {
+            //             const tile = await window.fetch(arches.urls.api_tiles(tileid), {
+            //                 method: 'DELETE',
+            //                 credentials: 'include',
+            //                 body: JSON.stringify({'tileid': tileid})
+            //             });
                
-                        if (tile.ok) {
-                            json = await tile.json();
-                            console.log(json);
-                        }
-                    });
-                }
-            }
+            //             if (tile.ok) {
+            //                 json = await tile.json();
+            //                 console.log(json);
+            //             }
+            //         });
+            //     }
+            // }
 
             this.saveDatasetFiles = async (part, datasetNameTileResourceId) => {
                 //Tile structure for the Digital Resource 'File' nodegroup
@@ -372,7 +372,7 @@ define([
 
                         // Then save a file tile to the digital resource for each associated file
                         await self.saveDatasetFiles(part, dataset.resourceId);
-                        await self.removeDatasetFiles(part);
+                        // await self.removeDatasetFiles(part);
                     
                         // Then save a relationship tile on the part that points to the digital resource
                         await self.saveDigitalResourceToChildPhysThing(part);
