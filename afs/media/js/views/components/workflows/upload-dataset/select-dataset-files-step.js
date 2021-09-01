@@ -429,7 +429,7 @@ define([
         
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
 
-                
+
                 self.observationReferenceTileId(params.form.value()?.observationReferenceTileId);               
                 parts.forEach(async(part) => {
                     part.datasetFiles = ko.observableArray([]);
