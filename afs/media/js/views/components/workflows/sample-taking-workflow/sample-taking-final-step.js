@@ -13,7 +13,7 @@ define([
         SummaryStep.apply(this, [params]);
 
         this.findStatementType= function(statements, type){
-            var foundStatement = _.find(statements, function(statement) {
+            var foundStatement = statements.find(function(statement) {
                 return statement.type.indexOf(type) > -1;
             });
             return foundStatement ? foundStatement.statement : "None";
@@ -63,7 +63,6 @@ define([
                     var locationAnnotation = JSON.parse(locationAnnotationStr.replaceAll("'",'"'));
 
                     if (locationAnnotation) {
-                        console.log(locationAnnotation.features)
                         var canvas = locationAnnotation.features[0].properties.canvas;
                         if (canvas in annotationCollection) {
                             annotationCollection[canvas].push({
@@ -80,18 +79,16 @@ define([
                         }
                     }    
                 }
-            })
+            });
     
             self.sampleAnnotations = ko.observableArray();
             self.samplingLocations = ko.observableArray();
-            self.annotationStatus = ko.observable()
+            self.annotationStatus = ko.observable();
             for (var canvas in annotationCollection) {
                 var annotationCombined;
                 var numberOfAnnotation = annotationCollection[canvas].length;
                 var i = 0;
                 annotationCollection[canvas].forEach(function(annotation){
-                    var locationName = annotation.locationName;
-                    var locationAnnotation = annotation.locationAnnotation;
                     var locationResourceId = annotation.locationResourceId;
     
                     if (annotationCombined) {
@@ -134,8 +131,8 @@ define([
                         leafletConfig: leafletConfig,
                         featureCollection: annotationCombined,
                     });
-                })
-            };
+                });
+            }
             this.loading(false);
         }, this);
     }
