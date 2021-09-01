@@ -320,38 +320,33 @@ define([
                     self.fetchCardFromResourceId(samplingAreaSampleCreatedParentPhysicalThingResourceId, physicalThingStatementNodegroupId).then(function(samplingAreaSampleCreatedParentPhysicalThingStatementCard) {
                         var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
                         var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
-        
-                        var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630"
+
+                        var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
+                        var samplingMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa";
+
                         var sampleDescriptionTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
                             return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleDescriptionConceptId);
                         });
         
+                        var samplingMotivationTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
+                            return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(samplingMotivationConceptId);
+                        });
+
                         if (sampleDescriptionTile) {
                             var sampleDescriptionContent = ko.unwrap(sampleDescriptionTile.data[physicalThingStatementContentNodeId]);
 
                             self.sampleDescriptionWidgetValue(sampleDescriptionContent);
                             self.previouslySavedSampleDescriptionWidgetValue(sampleDescriptionContent);
                         }
+
+                        if (samplingMotivationTile) {
+                            var sampleMotivationContent = ko.unwrap(samplingMotivationTile.data[physicalThingStatementContentNodeId]);
+            
+                            self.motivationForSamplingWidgetValue(sampleMotivationContent);
+                            self.previouslySavedMotivationForSamplingWidgetValue(sampleMotivationContent);
+                        }
                     });
                 }
-
-                var samplingActivityStatementNodegroupId = '0335786d-1d9d-11eb-a29f-024e0d439fdb';  // Statement (E33)
-                self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingActivityStatementNodegroupId).then(function(samplingActivityStatementCard) {
-                    var samplingActivityStatementTypeNodeId = '033578b7-1d9d-11eb-a29f-024e0d439fdb';  // Statement_type (E55)
-                    var samplingMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
-                    
-                    var motivationForSamplingTile = samplingActivityStatementCard.tiles().find(function(tile) {
-                        return ko.unwrap(tile.data[samplingActivityStatementTypeNodeId]).includes(samplingMotivationConceptId);
-                    });
-
-                    if (motivationForSamplingTile) {
-                        var samplingActivityStatementContentNodeId = '033578c1-1d9d-11eb-a29f-024e0d439fdb';  // Statement_content (xsd:string)
-                        var motivationForSamplingContent = ko.unwrap(motivationForSamplingTile.data[samplingActivityStatementContentNodeId]);
-        
-                        self.motivationForSamplingWidgetValue(motivationForSamplingContent);
-                        self.previouslySavedMotivationForSamplingWidgetValue(motivationForSamplingContent);
-                    }
-                });
             }
         };
 
@@ -609,7 +604,7 @@ define([
 
             var getWorkingPhysicalThingSamplingDescriptionTile = function(physicalThingStatementCard) {
                 var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630"
-                var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
+                var physicalThingStatementTypeNodeId = "1952e470-b498-11e9-b261-a4d18cec433a"; // Statement_type (E55)
 
                 if (physicalThingStatementCard.tiles() && physicalThingStatementCard.tiles().length) {
 
@@ -629,78 +624,56 @@ define([
                 }
             };
 
-            var getWorkingSamplingActivitySamplingMotivationTile = function(samplingActivityStatementCard) {
-                var samplingMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
-                var samplingActivityStatementTypeNodeId = '033578b7-1d9d-11eb-a29f-024e0d439fdb';  // Statement_type (E55)
+            var getWorkingPhysicalThingSamplingMotivationTile = function(physicalThingStatementCard) {
+                var samplingMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa";
+                var physicalThingStatementTypeNodeId = "1952e470-b498-11e9-b261-a4d18cec433a"; // Statement_type (E55)
 
-                if (samplingActivityStatementCard.tiles() && samplingActivityStatementCard.tiles().length) {
-                    var previouslySavedTile = samplingActivityStatementCard.tiles().find(function(tile) {
-                        return ko.unwrap(tile.data[samplingActivityStatementTypeNodeId]).includes(samplingMotivationConceptId);
+                if (physicalThingStatementCard.tiles() && physicalThingStatementCard.tiles().length) {
+
+                    var previouslySavedTile = physicalThingStatementCard.tiles().find(function(tile) {
+                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(samplingMotivationConceptId);
                     });
 
                     if (previouslySavedTile) {
                         return previouslySavedTile;
                     }
                     else {
-                        return samplingActivityStatementCard.getNewTile();
+                        return physicalThingStatementCard.getNewTile();
                     }
                 }
                 else {
-                    return samplingActivityStatementCard.getNewTile();
+                    return physicalThingStatementCard.getNewTile();
                 }
             };
 
-            var savePhysicalThingSampleDescriptionStatementTile = function(physicalThingStatementTile) {
+
+            var savePhysicalThingStatementTile = function(physicalThingStatementTile, type) {
                 var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
+                var sampleMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa"; //object currently motivation not available
 
                 return new Promise(function(resolve, _reject) {
                     if (self.sampleDescriptionWidgetValue()) {
-                        /* statment content logic */ 
                         var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
-                        physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.sampleDescriptionWidgetValue();
-    
-                        /* statement type logic */ 
                         var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
     
                         var physicalThingStatementTypeData = ko.unwrap(physicalThingStatementTile.data[physicalThingStatementTypeNodeId]);
-    
-                        if (!physicalThingStatementTypeData.includes(sampleDescriptionConceptId)) {
-                            physicalThingStatementTypeData.push(sampleDescriptionConceptId);
+
+                        if (type === "description") {
+                            physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.sampleDescriptionWidgetValue();
+                            if (!physicalThingStatementTypeData.includes(sampleDescriptionConceptId)) {
+                                physicalThingStatementTypeData = [sampleDescriptionConceptId];
+                            }
+                        } else if (type === "motivation") {
+                            physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.motivationForSamplingWidgetValue();
+                            if (!physicalThingStatementTypeData.includes(sampleMotivationConceptId)) {
+                                physicalThingStatementTypeData = [sampleMotivationConceptId];
+                            }
                         }
     
                         physicalThingStatementTile.data[physicalThingStatementTypeNodeId] = physicalThingStatementTypeData;
                         physicalThingStatementTile.transactionId = params.form.workflowId;
 
                         physicalThingStatementTile.save().then(function(data) {
-                            resolve(data);
-                        });
-                    }
-                    else {
-                        resolve(null);
-                    }
-                });
-            };
-
-            var saveSamplingActivityMotivationForSamplingStatementTile = function(samplingActivityStatementTile) {
-                var samplingMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
-                
-                return new Promise(function(resolve, _reject) {
-                    if (self.motivationForSamplingWidgetValue()) {
-                        /* statment content logic */ 
-                        var samplingActivityStatementContentNodeId = '033578c1-1d9d-11eb-a29f-024e0d439fdb';  // Statement_content (xsd:string)
-                        samplingActivityStatementTile.data[samplingActivityStatementContentNodeId] = self.motivationForSamplingWidgetValue();
-    
-                        /* statement type logic */ 
-                        var samplingActivityStatementTypeNodeId = '033578b7-1d9d-11eb-a29f-024e0d439fdb'; // Statement_type (E55)
-    
-                        var samplingActivityStatementTypeData = ko.unwrap(samplingActivityStatementTile.data[samplingActivityStatementTypeNodeId]);
-                        if (!samplingActivityStatementTypeData.includes(samplingMotivationConceptId)) {
-                            samplingActivityStatementTypeData.push(samplingMotivationConceptId);
-                        }
-                        
-                        samplingActivityStatementTile.transactionId = params.form.workflowId;
-
-                        samplingActivityStatementTile.save().then(function(data) {
                             resolve(data);
                         });
                     }
@@ -735,13 +708,13 @@ define([
                                         self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
                                             var physicalThingSampleDescriptionStatementTile = getWorkingPhysicalThingSamplingDescriptionTile(physicalThingStatementCard);
 
-                                            savePhysicalThingSampleDescriptionStatementTile(physicalThingSampleDescriptionStatementTile).then(function(_physicalThingStatmentSampleDescriptionData) {
-                                                var samplingActivityStatementNodegroupId = '0335786d-1d9d-11eb-a29f-024e0d439fdb';  // Statement (E33)
+                                            savePhysicalThingStatementTile(physicalThingSampleDescriptionStatementTile, "description").then(function(_physicalThingStatmentSampleDescriptionData) {
+                                                var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
 
-                                                self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingActivityStatementNodegroupId).then(function(samplingActivityStatementCard) {
-                                                    var samplingActivitySamplingMotivationTile = getWorkingSamplingActivitySamplingMotivationTile(samplingActivityStatementCard);
+                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
+                                                    var physicalThingSamplingMotivationTile = getWorkingPhysicalThingSamplingMotivationTile(physicalThingStatementCard);
 
-                                                    saveSamplingActivityMotivationForSamplingStatementTile(samplingActivitySamplingMotivationTile).then(function(_samplingActivitySamplingMotivationData) {
+                                                    savePhysicalThingStatementTile(physicalThingSamplingMotivationTile, "motivation").then(function(_samplingActivitySamplingMotivationData) {
                                                         saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
                                                             saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
                                                                 // fetches again for updated data
