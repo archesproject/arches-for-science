@@ -9,7 +9,7 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.form.resourceId = params.form.externalStepData.instrumentinfo.data["instrument-info"][0][1]["observationInstanceId"];
+        params.form.resourceId = params.observationInstanceResourceId;
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
@@ -29,28 +29,21 @@ define([
             ]
         };
 
-        this.uploadedDatasets = params.form.externalStepData.digitalresource.data['select-dataset-files-step'][0][1]["parts"];
+        this.uploadedDatasets = params.uploadedDatasets;
 
-        this.getResourceDataBeta = function(resourceid, resourceData) {
-            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
-                .then(response => response.json())
-                .then(data => resourceData(data));
-        };    
-
-        var parentPhysThingResourceId = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1].physicalThing;
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
         this.parentPhysThingAnnotations = ko.observableArray();
 
-        this.getResourceData(parentPhysThingResourceId, this.parentPhysThingData);
+        this.getResourceData(params.parentPhysThingResourceId, this.parentPhysThingData);
 
         this.parentPhysThingData.subscribe(function(val){
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@value']);
-                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@value']);
-                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@value']);
+                var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
+                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
+                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
                 var tileId = self.getResourceValue(annotation,['@tile_id']);
-                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@value']);
+                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
                 if (annotationStr) {
                     var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
                     var leafletConfig = self.prepareAnnotation(annotationJson);
@@ -76,7 +69,7 @@ define([
                     }
                 });
     
-                self.getResourceDataBeta(dataset.datasetId, selectedDatasetData);
+                self.getResourceData(dataset.datasetId, selectedDatasetData);
                 selectedDatasetData.subscribe(function(val){
                     var findStatementType= function(statements, type){
                         var foundStatement = _.find(statements, function(statement) {
@@ -90,7 +83,7 @@ define([
                     var files = val.resource['File'].map(function(file){
                         var statements = [];
                         var fileName = self.getResourceValue(file['file_details'][0], ['name']);
-                        if (file["FIle_Statement"]) {
+                        if (Array.isArray(file["FIle_Statement"])) {
                             statements = file["FIle_Statement"].map(function(statement){
                                 return {
                                     statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
@@ -133,8 +126,8 @@ define([
                 try {
                     self.reportVals.statements = val.resource['Statement'].map(function(val){
                         return {
-                            content:  {'name': 'Instrument Parameters', 'value': self.getResourceValue(val, ['content','@value'])},
-                            type: {'name': 'type', 'value': self.getResourceValue(val, ['type','@value'])}
+                            content:  {'name': 'Instrument Parameters', 'value': self.getResourceValue(val, ['Statement_content','@display_value'])},
+                            type: {'name': 'type', 'value': self.getResourceValue(val, ['Statement_type','@display_value'])}
                         };
                     });
                 } catch(e) {
@@ -149,11 +142,11 @@ define([
     
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
-                observationName: {'name': 'Experiment/Observation Name', 'value': this.getResourceValue(val.resource['Name'][0], ['content','@value'])},
-                project: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@value'])},
-                usedObject: {'name': 'Used Object', 'value': this.getResourceValue(val.resource, ['observed','@value'])},
-                usedInstrument: {'name': 'Instrument', 'value': this.getResourceValue(val.resource, ['used instrument','@value'])},
-                usedProcess: {'name': 'Technique', 'value': this.getResourceValue(val.resource, ['used process','@value'])},
+                observationName: {'name': 'Experiment/Observation Name', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
+                project: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
+                usedObject: {'name': 'Used Object', 'value': this.getResourceValue(val.resource, ['observed','@display_value'])},
+                usedInstrument: {'name': 'Instrument', 'value': this.getResourceValue(val.resource, ['used instrument','@display_value'])},
+                usedProcess: {'name': 'Technique', 'value': this.getResourceValue(val.resource, ['used process','@display_value'])},
             };
 
             self.reportVals.statement = findStatementType(val, 'description');

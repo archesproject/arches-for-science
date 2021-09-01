@@ -10,23 +10,13 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'review-dataset-workflow';
 
-            this.resourceId = ko.observable();
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Object',
                     name: 'review-dataset-object',  /* unique to workflow */
-                    description: 'Preliminary information about this physical thing',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
                     required: true,
-                    shouldtrackresource: true,
-                    wastebin: {resources:[]},
                     layoutSections: [
                         {
                             sectionTitle: 'Select an Object',
@@ -48,22 +38,9 @@ define([
                 {
                     title: 'Datasets',
                     name: 'select-datasets', /* unique to workflow */
-                    description: 'Select a dataset from the Physical Thing selected in the previous step',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
-                    nodegroupid: '8a4ad932-8d59-11eb-a9c4-faffc265b501',
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
                     required: true,
-                    shouldtrackresource: true,
-                    externalstepdata: { 
-                        selectobjectstep: 'review-dataset-object',
-                    },
                     layoutSections: [
                         {
-                            // sectionTitle: 'Select an Object',
                             componentConfigs: [
                                 { 
                                     componentName: 'select-dataset',
@@ -73,6 +50,7 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         ],
+                                        physicalThingResourceId: "['review-dataset-object']['sample-object-resource-instance'][0][1]"
                                     },
                                 },
                             ], 
@@ -82,31 +60,22 @@ define([
                 {
                     title: 'File Interpretation',
                     name: 'file-interpretation',
-                    description: 'The date that the sample was taken',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
+                    required: true,
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
-                    autoAdvance: false,
                     informationboxdata: {
                         heading: 'Select the instrument used for the analysis',
                         text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
                     },
-                    required: true,
-                    externalstepdata: {
-                        datasetinfo: 'select-datasets'
-                    },
                     layoutSections: [
                         {
-                            sectionTitle: null,
                             componentConfigs: [
                                 { 
                                     componentName: 'file-interpretation-step',
                                     uniqueInstanceName: 'file-interpretation', /* unique to step */
                                     parameters: {
-                                        renderContext: 'workflow',
-                                        activeTab: 'edit'
+                                        activeTab: 'edit',
+                                        datasetInfo: "['select-datasets']"
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -115,16 +84,6 @@ define([
                 {
                     title: 'Summary',
                     name: 'review-dataset-complete', /* unique to workflow */
-                    description: 'Upload a file to this digital resource',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',
-                    nodegroupid: '8a4ad932-8d59-11eb-a9c4-faffc265b501',
-                    externalstepdata: { 
-                        selectobjectstep: 'review-dataset-object',
-                        selecteddatasets: 'select-datasets',
-                        
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -133,23 +92,17 @@ define([
                                     uniqueInstanceName: 'review-dataset-final',
                                     tilesManaged: 'none',
                                     parameters: {
+                                        sampleObjectResourceInstanceId: "['review-datasets-object']['sample-object-resource-instance'][0][1]",
+                                        selectedDatasets: "['select-datasets']['dataset-select-instance'][0][1]"
                                     },
                                 },
                             ], 
                         },
                     ],
-                    resourceid: null,
-                    tileid: null,
-                    parenttileid: null,
-                    required: true
                 },
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('review-dataset-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/review-dataset-workflow.htm' }
     });

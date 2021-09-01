@@ -9,8 +9,8 @@ define([
         var self = this;
 
         this.loading = ko.observable(true);
-        this.digitalResourceLoading = ko.observable();
-        this.resourceLoading = ko.observable();
+        this.digitalResourceLoading = ko.observable(true);
+        this.resourceLoading = ko.observable(true);
         this.fileLists = ko.observableArray();
 
         this.tableConfig = {
@@ -26,23 +26,23 @@ define([
             ]
         };
 
-        params.form.resourceId = params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId;
+        params.form.resourceId(params.sampleObjectResourceInstanceId);
         SummaryStep.apply(this, [params]);
-        this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function(val) {
-            return val[1][0]['resourceid'];
-        });
-
-        this.getResourceDataBeta = function(resourceid, resourceData) {
-            window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
-                .then(response => response.json())
-                .then(data => resourceData(data));
-        };
+        this.selectedDatasets = params.selectedDatasets.reduce(
+            (acc, resource) => {
+                if (resource.resourceid &&  resource.selected) { 
+                    acc.push(resource.resourceid);
+                }
+                return acc;
+            }, 
+            []
+        );
 
         this.selectedDatasets.forEach(function(resourceid){
             var selectedDatasetData = ko.observableArray();
             var fileList = ko.observableArray();
     
-            self.getResourceDataBeta(resourceid, selectedDatasetData);
+            self.getResourceData(resourceid, selectedDatasetData);
             selectedDatasetData.subscribe(function(val){
                 var findStatementType= function(statements, type){
                     var foundStatement = _.find(statements, function(statement) {
@@ -56,7 +56,7 @@ define([
                 var files = val.resource['File'].map(function(file){
                     var statements = [];
                     var fileName = self.getResourceValue(file['file_details'][0], ['name']);
-                    if (file["FIle_Statement"]) {
+                    if (Array.isArray(file["FIle_Statement"])) {
                         statements = file["FIle_Statement"].map(function(statement){
                             return {
                                 statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
@@ -93,28 +93,36 @@ define([
         }, this);
 
         this.resourceData.subscribe(function(val){
-            // var description = val.resource['Descriptions'] && val.resource['Descriptions'].length ? val.resource['Descriptions'][0] : {};
             this.displayName = val.displayname;
             this.reportVals = {
-                objectName: val['displayname'],
+                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content', '@display_value'])},
+                objectName: {'name': 'Object Name', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
             };
 
-            try {
-                this.reportVals.references = val.resource['References'].map(function(ref){
-                    return {
-                        referenceName: {'name': 'Reference', 'value': self.getResourceValue(ref, ['Agency Identifier', 'Reference', '@value'])},
-                        referenceType: {'name': 'Reference Type', 'value': self.getResourceValue(ref, ['Agency Identifier', 'Reference Type', '@value'])},
-                        agency: {'name': 'Agency', 'value': self.getResourceValue(ref, ['Agency', '@value'])}
-                    };
+            var parentPhysThingResourceId = this.getResourceValue(val.resource, ['part of', 'resourceId']);
+            var parentPhysThingData = ko.observable();
+            self.getResourceData(parentPhysThingResourceId, parentPhysThingData);
+            parentPhysThingData.subscribe(function(val){
+                if (val.resource["Part Identifier Assignment"].length > 0){
+                    var parentPhysThings = val.resource["Part Identifier Assignment"].map(function(part){
+                        return {
+                            name: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','@display_value']),
+                            resourceid: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','resourceId']),
+                            annotation: self.getResourceValue(part, ['Part Identifier Assignment_Polygon Identifier','@display_value'])
+                        };
+                    });
+                }
+                parentPhysThings.forEach(function(thing){
+                    if (thing.resourceid === self.resourceid){
+                        var annotationJson = JSON.parse(thing.annotation.replaceAll("'",'"'));
+                        self.leafletConfig = self.prepareAnnotation(annotationJson);
+                    }
                 });
-            } catch(e) {
-                this.reportVals.references = [];
-            }
-
-            this.resourceLoading(false);
-            if (!this.digitalResourceLoading()){
-                this.loading(false);
-            }
+                self.resourceLoading(false);
+                if (!self.digitalResourceLoading()){
+                    self.loading(false);
+                }    
+            });
         }, this);
     }
 

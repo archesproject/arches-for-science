@@ -10,7 +10,7 @@ define([
         this.resourceLoading = ko.observable(true);
         this.collectionLoading = ko.observable(true);
 
-        this.collectionResourceId = params.form.externalStepData['addphysthingstep']['data']['add-phys-things'][0]['collectionResourceId'];
+        this.collectionResourceId = params.collectionResourceId;
         this.collectionData = ko.observableArray();
         this.collectionOfPhysThings = ko.observableArray();
 
@@ -36,18 +36,18 @@ define([
             this.displayName = val['displayname'] || 'unnamed';
             this.displaydescription = val['displaydescription'] || "none";
             this.reportVals = {
-                projectName: {'name': 'Project Name', 'value': this.getResourceValue(val.resource['Name'][0],['Name_content','@value'])},
-                projectTimespan: {'name': 'Project Timespan', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@value'])},
-                projectTeam: {'name': 'Project Team', 'value': this.getResourceValue(val.resource, ['carried out by','@value'])},
-                collection: {'name': 'Related Collection', 'value': this.getResourceValue(val.resource['Used Set'], ['@value'])},
+                projectName: {'name': 'Project Name', 'value': this.getResourceValue(val.resource['Name'][0],['Name_content','@display_value'])},
+                projectTimespan: {'name': 'Project Timespan', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@display_value'])},
+                projectTeam: {'name': 'Project Team', 'value': this.getResourceValue(val.resource, ['carried out by','@display_value'])},
+                collection: {'name': 'Related Collection', 'value': this.getResourceValue(val.resource['Used Set'], ['@display_value'])},
             };
 
             var findStatement= function(type){
                 try {
                     self.reportVals.statements = val.resource['Statement'].map(function(statement){
                         return {
-                            content:  {'name': 'Project Statement', 'value': self.getResourceValue(statement, ['Statement_content','@value'])},
-                            type: {'name': 'type', 'value': self.getResourceValue(statement, ['Statement_type','@value'])}
+                            content:  {'name': 'Project Statement', 'value': self.getResourceValue(statement, ['Statement_content','@display_value'])},
+                            type: {'name': 'type', 'value': self.getResourceValue(statement, ['Statement_type','@display_value'])}
                         };
                     });
                 } catch(e) {

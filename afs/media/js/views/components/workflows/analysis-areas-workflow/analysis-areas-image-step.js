@@ -24,8 +24,7 @@ define([
             }
         });
 
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
 
         this.physicalThingDigitalReferenceCard = ko.observable();
         this.physicalThingDigitalReferenceCard.subscribe(function(card) {
@@ -291,7 +290,6 @@ define([
                 }
             });
         };
-
 
         this.initialize();
     }

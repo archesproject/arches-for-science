@@ -20,6 +20,7 @@ define([
         this.samplers = ko.observable(getProp("samplers"));
         this.samplingDate = ko.observable(getProp("samplingDate"));
         this.samplingTechnique = ko.observable(getProp("samplingTechnique"));
+        this.samplingMotivation = ko.observable(getProp("samplingMotivation"));
         this.samplingName = ko.observable(getProp("samplingName"));
         this.projectTile = ko.observable(getProp("projectTile"));
         this.physicalThingTile = ko.observable(getProp("physicalThingTile"));
@@ -27,6 +28,7 @@ define([
         this.samplingNameTile = ko.observable(getProp("samplingNameTile"));
         this.samplingDateTile = ko.observable(getProp("samplingDateTile"));
         this.samplingTechniqueTile = ko.observable(getProp("samplingTechniqueTile"));
+        this.samplingMotivationTile = ko.observable(getProp("samplingMotivationTile"));
         this.showName = ko.observable(false);
 
         const snapshot = {
@@ -34,17 +36,19 @@ define([
             samplingDate: self.samplingDate(),
             samplers: self.samplers(),
             samplingTechnique: self.samplingTechnique(),
+            samplingMotivation: self.samplingMotivation(),
             samplingName: self.samplingName(),
             projectTile: self.projectTile(),
             physicalThingTile: self.physicalThingTile(),
             samplersTile: self.samplersTile(),
             samplingNameTile: self.samplingNameTile(),
             samplingDateTile: self.samplingDateTile(),
-            samplingTechniqueTile: self.samplingTechniqueTile() 
+            samplingTechniqueTile: self.samplingTechniqueTile(),
+            samplingMotivationTile: self.samplingMotivationTile()
         };
 
         var samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
-        var sampleTechniqueNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
+        var sampleStatementNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
         var samplingNameNode = '033578c0-1d9d-11eb-a29f-024e0d439fdb';
         var parentProjectNode = '03357879-1d9d-11eb-a29f-024e0d439fdb'; //related project
         var overallObjectSampleNode = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb'; //related phys thing
@@ -57,12 +61,14 @@ define([
                 samplers: self.samplers(),
                 samplingDate: self.samplingDate(),
                 samplingTechnique: self.samplingTechnique(),
+                samplingMotivation: self.samplingMotivation(),
                 projectTile: self.projectTile(),
                 physicalThingTile: self.physicalThingTile(),      
                 samplingNameTile: self.samplingNameTile(),
                 samplersTile: self.samplersTile(),
                 samplingDateTile: self.samplingDateTile(),
                 samplingTechniqueTile: self.samplingTechniqueTile(),
+                samplingMotivationTile: self.samplingMotivationTile(),
             };
         });
 
@@ -74,31 +80,34 @@ define([
             self.samplingName(["Sample for", self.physicalThingNameValue, val].join(' '));
         });
 
-        this.projectValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["project"];
-        this.physicalThingNameValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["physThingName"];
-        this.physicalThingValue = params.form.externalStepData.selectprojectstep.data['select-phys-thing'][0][1]["physicalThing"];
+        var selectPhysThingData = params.selectPhysThingData;
+        this.projectValue = selectPhysThingData[0][1]["project"];
+        this.physicalThingNameValue = selectPhysThingData[0][1]["physThingName"];
+        this.physicalThingValue = selectPhysThingData[0][1]["physicalThing"];
 
         params.form.save = async function(){
             const sampelingNameResponse = await self.saveName();
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
-            params.form.lockExternalStep("select-project", true);
 
             $.when(
                 self.saveProject(),
                 self.savePhysicalThing(),
                 self.saveSamplers(),
                 self.saveSamplingDate(),
-                self.saveSamplingTechnique()
-            ).done(function(response1, response2, response3, response4, response5){
+                self.saveSamplingTechnique(),
+                self.saveSamplingMotivation()
+            ).done(function(response1, response2, response3, response4, response5, response6){
                 self.projectTile(response1[0].tileid);
                 self.physicalThingTile(response2[0].tileid);
                 self.samplersTile(response3[0].tileid);
                 self.samplingDateTile(response4[0].tileid);
                 self.samplingTechniqueTile(response5[0].tileid);
+                self.samplingMotivationTile(response6[0].tileid);
 
-                params.form.complete(true);
+                params.form.lockExternalStep("select-project", true);
                 params.form.savedData(params.form.addedData());
+                params.form.complete(true);
             });
         };
 
@@ -193,7 +202,7 @@ define([
         this.saveSamplingTechnique = function() {
             var samplingTechniqueTileData = {
                 "tileid": ko.unwrap(self.samplingTechniqueTile) || "",
-                "nodegroup_id": sampleTechniqueNodegroup,
+                "nodegroup_id": sampleStatementNodegroup,
                 "parenttile_id": null,
                 "resourceinstance_id": ko.unwrap(self.samplingActivityResourceId) || "",
                 "sortorder": 0,
@@ -211,11 +220,33 @@ define([
             return self.saveTile(samplingTechniqueTileid, samplingTechniqueTileData);
         };
 
+        this.saveSamplingMotivation = function() {
+            var samplingMotivationTileData = {
+                "tileid": ko.unwrap(self.samplingMotivationTile) || "",
+                "nodegroup_id": sampleStatementNodegroup,
+                "parenttile_id": null,
+                "resourceinstance_id": ko.unwrap(self.samplingActivityResourceId) || "",
+                "sortorder": 0,
+                "tiles": {},
+                'data': {
+                    '0335789a-1d9d-11eb-a29f-024e0d439fdb': ['bc35776b-996f-4fc1-bd25-9f6432c1f349'],
+                    '033578a8-1d9d-11eb-a29f-024e0d439fdb': null,
+                    '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
+                    '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['7060892c-4d91-4ab3-b3de-a95e19931a61'],
+                    '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingMotivation()
+                },
+                'transaction_id': params.form.workflowId        
+            };
+            var samplingMotivationTileid = ko.unwrap(self.samplingMotivationTile) || uuid.generate();
+            return self.saveTile(samplingMotivationTileid, samplingMotivationTileData);
+        };
+
         params.form.reset = function() {
             self.samplingActivityResourceId(snapshot.samplingActivityResourceId);
             self.samplers(snapshot.samplers);
             self.samplingDate(snapshot.samplingDate);
             self.samplingTechnique(snapshot.samplingTechnique);
+            self.samplingMotivation(snapshot.samplingMotivation);
             self.samplingName(snapshot.samplingName);
             self.projectTile(snapshot.projectTile);
             self.physicalThingTile(snapshot.physicalThingTile);
@@ -223,6 +254,7 @@ define([
             self.samplingNameTile(snapshot.samplingNameTile);
             self.samplingDateTile(snapshot.samplingDateTile);
             self.samplingTechniqueTile(snapshot.samplingTechniqueTile);
+            self.samplingMotivationTile(snapshot.samplingMotivationTile);
         };
     }
 

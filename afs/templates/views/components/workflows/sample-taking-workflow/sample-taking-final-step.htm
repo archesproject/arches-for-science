@@ -6,8 +6,8 @@
         <div style="display: inline-flex; width: inherit; justify-content: space-between;">
             <div style="display: flex; flex-direction: column;">
                 <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
-                    <div class="summary-value">
-                        {% trans 'Sampling Activity Resource Instance' %}
+                    <div class="summary-value" 
+                        data-bind = "text: displayName + ' ({% trans 'Sampling Activity Resource Instance' %})'">
                     </div>
                 </a>
             </div>
