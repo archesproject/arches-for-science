@@ -10,7 +10,7 @@ define([
 ], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel) {
     function viewModel(params) {
         var self = this;
-        params.pageVm.loading(true)
+        params.pageVm.loading(true);
 
         this.isManifestManagerHidden = ko.observable(true);
         this.shouldShowEditService = ko.observable(false);
@@ -287,7 +287,7 @@ define([
                         else if (!self.selectedPhysicalThingImageServiceName()) {
                             self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
                         }
-                        params.pageVm.loading(false)
+                        params.pageVm.loading(false);
                     });
                 }
             });
