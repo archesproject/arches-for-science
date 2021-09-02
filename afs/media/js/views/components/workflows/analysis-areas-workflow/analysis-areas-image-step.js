@@ -11,7 +11,6 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.pageVm.loading(true);
         this.isManifestManagerHidden = ko.observable(true);
         this.shouldShowEditService = ko.observable(false);
 
