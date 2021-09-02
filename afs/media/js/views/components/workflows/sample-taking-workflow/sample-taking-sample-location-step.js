@@ -116,8 +116,8 @@ define([
         this.sampleName = ko.computed(function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedSampleLocationInstance()){
-                return self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()
-                + " [" + params.physicalThingName + "]";
+                const baseName = self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]() ?? "";
+                return `${baseName} [ ${params.physicalThingName} ]`;
             }
         })
 
