@@ -237,6 +237,7 @@ RENDERERS += [
     # },
 ]
 
+DOCKER = False
 
 try:
     from .package_settings import *
@@ -248,7 +249,8 @@ try:
 except ImportError:
     pass
 
-try:
-    from .settings_docker import *
-except ImportError:
-    pass
+if DOCKER:
+    try:
+        from .settings_docker import *
+    except ImportError:
+        pass
