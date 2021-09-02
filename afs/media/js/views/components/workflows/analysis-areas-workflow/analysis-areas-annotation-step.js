@@ -48,24 +48,12 @@ define([
             }
         });
 
-        this.hasExecutedInnerSave = ko.observable(false);
-
         this.tileDirty = ko.computed(function() {
             if (self.physicalThingPartIdentifierAssignmentTile()) {
                 return self.physicalThingPartIdentifierAssignmentTile().dirty();
             }
         });
                 
-        this.toggleOuterSaveButton = ko.computed(function() {
-            /* prevents user from saving workflow step with dirty 'inner' tile */ 
-            if (self.hasExecutedInnerSave() && !self.tileDirty()) {
-                params.dirty(true);
-            }
-            else {
-                params.dirty(false);
-            }
-        });
-
         this.selectedAnalysisAreaInstanceFeatures = ko.computed(function() {
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
 
@@ -107,8 +95,6 @@ define([
         });
 
         this.initialize = function() {
-            params.form.save = self.saveWorkflowStep;
-
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
@@ -280,7 +266,6 @@ define([
         };
 
         this.saveAnalysisAreaTile = function() {
-            params.form.lockExternalStep('image-step', true);
             var savePhysicalThingNameTile = function(physicalThingNameTile) {
                 return new Promise(function(resolve, _reject) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
@@ -421,6 +406,8 @@ define([
             };
 
             self.savingTile(true);
+            params.form.lockExternalStep('image-step', true);
+
             getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
@@ -437,10 +424,11 @@ define([
     
                                     self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
                                     self.savingTile(false);
-                                    params.form.alert("")
                                     self.drawFeatures([]);
 
-                                    self.hasExecutedInnerSave(true);
+                                    let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
+                                    params.form.savedData(koMapping.toJS(mappedInstances));
+                                    params.form.complete(true);
                                 });
                             });
                         });
@@ -454,15 +442,6 @@ define([
                 var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
                 self.selectAnalysisAreaInstance(newTile);
             }
-        };
-
-        this.saveWorkflowStep = function() {
-            params.form.complete(false);
-            params.form.saving(true);
-            let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
-            params.form.savedData(mappedInstances);
-            params.form.complete(true);
-            params.form.saving(false);
         };
 
         this.loadExternalCardData = function(data) {
