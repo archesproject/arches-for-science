@@ -321,7 +321,7 @@ define([
             this.save = async() => {
                 const incompleteInputs = self.getIncompleteInputs();
                 if(incompleteInputs.length) { 
-                    params.pageVm.alert(new params.form.AlertViewModel(
+                    params.pageVm.alert(new params.pageVm.AlertViewModel(
                         'ep-alert-red', 
                         "Dataset Name Required", 
                         `A dataset name was not provided for parts: ${incompleteInputs.map(x => x.displayname).join(', ')}`

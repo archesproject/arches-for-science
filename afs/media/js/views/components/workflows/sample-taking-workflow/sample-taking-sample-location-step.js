@@ -728,7 +728,6 @@ define([
                                                                         self.savingTile(false);
                                                                         params.dirty(true);
 
-                                                                        params.form.alert("");
                                                                         self.drawFeatures([]);
                                                                     });
                                                                 // });
