@@ -10,7 +10,7 @@ define([
 ], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel) {
     function viewModel(params) {
         var self = this;
-
+        params.pageVm.loading(true);
         this.isManifestManagerHidden = ko.observable(true);
         this.shouldShowEditService = ko.observable(false);
 
@@ -270,7 +270,6 @@ define([
 
                 if (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ))  {
                     var physicalThingManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
-                    params.pageVm.loading(true);
 
                     $.getJSON( arches.urls.api_card + physicalThingManifestResourceId ).then(function(data) {
                         if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
