@@ -461,7 +461,7 @@ define([
                 });
 
                 const thingResource = await resourceUtils.lookupResourceInstanceData(this.physicalThing);
-        
+
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
 
 
@@ -482,6 +482,7 @@ define([
                     if (datasetTile) {
                         const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
                         const datasetName =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).data[datasetNameNodeId];
+                        const nameTileId =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).tileid;
                         const datasetTiles =  dataset._source.tiles.filter((tile) => tile.nodegroup_id === datasetFileNodeGroupId)
                         const datasetFiles = datasetTiles.map((tile) => {
                             let file = tile.data[datasetFileNodeId][0];
@@ -490,7 +491,8 @@ define([
                         });
                         part.datasetId(dataset._id);
                         part.datasetName(datasetName);
-                        part.datasetFiles(datasetFiles)
+                        part.datasetFiles(datasetFiles);
+                        part.nameTileId(nameTileId);
                     }
                     
                     part.datasetId.subscribe(function(val){
