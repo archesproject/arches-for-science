@@ -236,6 +236,10 @@ define([
             //         });
             //     }
             // }
+            // The above would need this corresponding fix in api.py
+            // def delete(self, request, tileid):
+            //     tileview = TileView()
+            //     return tileview.delete(request)
 
             this.saveDatasetFiles = async (part, datasetNameTileResourceId) => {
                 //Tile structure for the Digital Resource 'File' nodegroup
@@ -259,6 +263,8 @@ define([
                 for(let i = 0; i < datasetFilesArray.length; ++i){
                     const file = datasetFilesArray[i];
                     let fileInfo;
+                    // file has already been uploaded
+                    if (file.tileId()){ continue; }
                     // eslint-disable-next-line camelcase
                     fileTemplate.resourceinstance_id = datasetNameTileResourceId;
                     
