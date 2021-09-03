@@ -10,8 +10,8 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.form.resourceId = params.sampleObjectResourceId;
-
+        params.form.resourceId(params.sampleObjectResourceId);
+        
         this.regionInstances = params.regionsStepData.map(function(data){
             return {
                 regionName: data.data["3e541cc6-859b-11ea-97eb-acde48001122"],

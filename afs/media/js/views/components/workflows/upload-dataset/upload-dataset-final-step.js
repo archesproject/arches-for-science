@@ -9,7 +9,7 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.form.resourceId = params.observationInstanceResourceId;
+        params.form.resourceId(params.observationInstanceResourceId);
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);

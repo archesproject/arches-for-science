@@ -65,7 +65,7 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
-                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance'][0][1]"
+                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance']"
                                     },
                                 },
                             ], 
@@ -78,6 +78,7 @@ define([
                     required: true,
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
                     lockableExternalSteps: ['image-step'],
+                    hiddenWorkflowButtons: ['undo', 'save'],
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -87,7 +88,7 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
-                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance'][0][1]",
+                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance']",
                                         imageStepData: "['image-step']['image-service-instance'][0]['data']"
                                     },
                                 },
@@ -107,7 +108,7 @@ define([
                                     uniqueInstanceName: 'analysis-areas-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        sampleObjectResourceId: "['object-step']['sample-object-resource-instance'][0][1]",
+                                        sampleObjectResourceId: "['object-step']['sample-object-resource-instance']",
                                         regionsStepData: "['regions-step']['annotation-instance']"
                                     },
                                 },
