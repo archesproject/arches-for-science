@@ -3,16 +3,279 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
-            TabbedReportViewModel.apply(this, [params]);
+            
+            self.sections = [
+                {'id': 'name', 'title': 'Names/Indentifiers'}, 
+                {'id': 'prod', 'title': 'Production Event'},
+            ];
+            self.reportMetadata = ko.observable(params.report?.report_json);
+            self.resource = ko.observable(self.reportMetadata()?.resource);
+            self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
+            self.activeSection = ko.observable('name');
+
+            const cards = params.report.cards;
+            self.cards = {};
+            self.cards.productionEvent = cards.find(x => x.nodegroupid == 'cc15650c-b497-11e9-a64d-a4d18cec433a');
+            const productionEventChildren = self.cards.productionEvent.tiles()?.[0]?.cards ? self.cards.productionEvent.tiles()[0].cards : self.cards.productionEvent.cards()
+            if(self.cards.productionEvent){
+                self.cards.productionEvent.timespan = productionEventChildren.find(x => x.nodegroupid == 'cc15718f-b497-11e9-a9e8-a4d18cec433a');
+                self.cards.productionEvent.identifiers = productionEventChildren.find(x => x.nodegroupid == 'cc153f33-b497-11e9-bab1-a4d18cec433a');
+                self.cards.productionEvent.statements = productionEventChildren.find(x => x.nodegroupid == '6c1d4051-bee9-11e9-a4d2-a4d18cec433a');
+                self.cards.productionEvent.names = productionEventChildren.find(x => x.nodegroupid == 'cc1558a3-b497-11e9-9310-a4d18cec433a');
+                self.cards.productionEvent.parts = productionEventChildren.find(x => x.nodegroupid == 'cc1577b8-b497-11e9-8f11-a4d18cec433a');
+            }
+
+            self.toggleBlockVisibility = (block) => {
+                block(!block());
+            }
+
+            self.blockVisible = {
+                names: ko.observable(true),
+                production: {
+                    event: ko.observable(true)
+                }
+            };
+            self.resourceData = {
+                names: ko.observableArray(),
+                production: {
+                    name: ko.observable(),
+                    location: ko.observable(),
+                    creator: ko.observable(),
+                    techniques: ko.observable(),
+                    objectsUsed: ko.observable(),
+                    influence: ko.observable(),
+                    names: ko.observableArray(),
+                    parts: ko.observableArray(),
+                    statements: ko.observableArray(),
+                    identifiers: ko.observableArray(),
+                    timespan: ko.observable()
+                }
+            }
+            self.defaultTableConfig = {
+                responsive: {
+                    breakpoints: [
+                        {name: 'bigdesktop', width: Infinity},
+                        {name: 'meddesktop', width: 1480},
+                        {name: 'smalldesktop', width: 1280},
+                        {name: 'medium', width: 1188},
+                        {name: 'tabletl', width: 1024},
+                        {name: 'btwtabllandp', width: 848},
+                        {name: 'tabletp', width: 768},
+                        {name: 'mobilel', width: 480},
+                        {name: 'mobilep', width: 320}
+                    ]
+                },
+                paging: false,
+                searching: false,
+                scrollCollapse: true,
+                info: false,
+                columnDefs: [{
+                    orderable: false,
+                    targets: -1
+                }]
+            };
+
+            //Names table configuration
+            self.nameTableConfig = {
+                ...self.defaultTableConfig,
+                "columns": Array(4).fill(null)
+            };            
+            
+            self.identifierTableConfig = {
+                ...self.defaultTableConfig,
+                "columns": Array(3).fill(null)
+            };
+
+                //Statements Table
+            self.statementsTableConfig = {
+                "responsive": true,
+                "paging": false,
+                "searching": false,
+                "scrollCollapse": true,
+                "info": false,
+                "columnDefs": [ {
+                    "orderable": false,
+                    "targets":   -1
+                } ],
+                "columns": Array(5).fill(null)
+            };
+
+            // Used to add a new tile object to a given card.  If nested card, saves the parent tile for the
+            // card and uses the same card underneath the parent tile.
+            self.addNewTile = async (card) => {
+                let currentCard = card;
+                if(card.parentCard && !card.parent?.tileid){
+                    await card.parentCard.saveParentTile();
+                    currentCard = card.parentCard.tiles()?.[0].cards.find(x => x.nodegroupid == card.nodegroupid)
+                }
+                currentCard.canAdd() ? currentCard.selected(true) : currentCard.tiles()[0].selected(true);
+                if(currentCard.cardinality == "n" || (currentCard.cardinality == "1" && !currentCard.tiles().length)) {
+                    const currentSubscription = currentCard.selected.subscribe(function(){
+                        currentCard.showForm(true);
+                        currentSubscription.dispose();
+                    });
+                }
+            }
+
+            self.editTile = function(tileid, card){
+                if(card){
+                    const tile = card.tiles().find(y => tileid == y.tileid)
+                    if(tile){
+                        tile.selected(true);
+                    }
+                }
+            }
+
+            self.deleteTile = (tileid, card) => {
+                const tile = card.tiles().find(y => tileid == y.tileid)
+                if(tile){
+                    tile.deleteTile((err) => { 
+                        console.log(err); 
+                    }, () => {});
+                }
+            }
+
+            self.getNodeValue = (resource, ...args) => {
+                let node = ko.unwrap(resource);
+                for(let i = 0; i < args.length; ++i){
+                    const arg = args[i];
+                    node = node?.[arg];
+                }
+                const nodeValue = node?.["@display_value"]
+                const geojson = node?.geojson;
+                if(geojson){
+                    return geojson;
+                }
+                if(nodeValue !== undefined){
+                    if(nodeValue === "" || nodeValue === null){
+                        return "--"
+                    }
+                    return $(`<span>${nodeValue}</span>`).text();
+                }
+                return "--";
+            };
+
+            const loadData = (resource) => {
+                const productionData = resource?.["Production "];
+                if(productionData) {
+                    const productionNames = productionData?.['Production_name']
+                    if(productionNames.length){
+                        self.resourceData.production.names(productionNames.map(x => {
+                            const name = self.getNodeValue(x, 'Production_name_content');
+                            const type = self.getNodeValue(x, 'Production_name_type');
+                            const language = self.getNodeValue(x, 'Production_name_language');
+                            const tileid = x?.['@tile_id'];
+                            return {language, name, tileid, type}
+                        }));
+                    }
+
+                    const productionIdentifiers = productionData?.['Production_identifier']
+                    if(productionIdentifiers.length){
+                        self.resourceData.production.identifiers(productionIdentifiers.map(x => {
+                            const name = self.getNodeValue(x, 'Production_identifier_content');
+                            const type = self.getNodeValue(x, 'Production_identifier_type');
+                            const tileid = x?.['@tile_id'];
+                            return {name, tileid, type}
+                        }));
+                    }
+                    self.resourceData.production.creator(self.getNodeValue(productionData, 'Production_carried out by'))
+                    self.resourceData.production.objectsUsed(self.getNodeValue(productionData, 'Production_used object'));
+                    self.resourceData.production.techniques(self.getNodeValue(productionData, 'Production_technique'));
+                    self.resourceData.production.location(self.getNodeValue(productionData, 'Production_location'));
+                    self.resourceData.production.influence(self.getNodeValue(productionData, 'Production_influence'));
+                    self.resourceData.production.name(self.getNodeValue(productionData, 'Production_influence'));
+                    self.resourceData.production.tileid = productionData?.['@tile_id'];
+
+                    const productionTime = productionData?.['Production_time'];
+                    if(productionTime) {
+                        const beginningStart = self.getNodeValue(productionTime, 'Production_time_begin of the begin');
+                        const beginningComplete = self.getNodeValue(productionTime, 'Production_time_begin of the end');
+                        const endingStart = self.getNodeValue(productionTime, 'Production_time_end of the begin');
+                        const endingComplete = self.getNodeValue(productionTime, 'Production_time_end of the end');
+
+                        // TODO: check with cyrus/Dennis on name/Duration and why it isn't populated
+                        const name = self.getNodeValue(productionTime, 'Production_time_name', 'Production_time_name_content');
+                        const duration = self.getNodeValue(productionTime, 'Production_time_duration', 'Production_time_duration_highest possible value');
+                        const durationEventName = self.getNodeValue(productionTime, 'Production_time_duration', 'Production_time_duration_Name', 'Production_time_duration_Name_content');
+                        self.resourceData.production.timespan({beginningComplete, beginningStart, duration, durationEventName, endingComplete, endingStart, name})
+                    }
+
+                    const productionStatement = productionData?.['Production_Statement'];
+                    if(productionStatement.length){
+                        self.resourceData.production.statements(productionStatement.map(x => {
+                            const content = self.getNodeValue(x, 'Production_Statement_content');
+                            const name = self.getNodeValue(x, 'Production_Statement_name', 'Production_Statement_name_content');
+                            const type = self.getNodeValue(x, 'Production_Statement_type');
+                            const language = self.getNodeValue(x, 'Production_Statement_language');
+                            const tileid = x?.['@tile_id'];
+                            return {content, language, name, tileid, type}
+                        }));
+                    }                    
+
+                    const parts = productionData?.['Production_part']
+                    if(parts.length){
+                        self.resourceData.production.parts(parts.map(x => {
+                            const creator = self.getNodeValue(x, 'Production_part_carried out by');
+                            const objectsUsed = self.getNodeValue(x, 'Production_part_used');
+                            const technique = self.getNodeValue(x, 'Production_part_technique');
+                            const location = self.getNodeValue(x, 'Production_part_location');
+                            const influence = self.getNodeValue(x, 'Production_part_influence');
+                            const name = self.getNodeValue(x, 'Production_part_name', 'Production_part_name_content');
+                            const nameLanguage = self.getNodeValue(x, 'Production_part_name', 'Production_part_name_language');
+                            const nameType = self.getNodeValue(x, 'Production_part_name', 'Production_part_name_type');
+                            const statementContent = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_content');
+                            const statementLanguage = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_language');
+                            const statementName = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_name', 'Production_part_Statement_name_content');
+                            const statementType = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_type');
+                            const identifier = self.getNodeValue(x, 'Production_part_identifier', 'Production_part_identifier_content');
+                            const identifierType = self.getNodeValue(x,'Production_part_identifier','Production_part_identifier_type');
+                            const tileid = x?.['@tile_id'];
+                            const time = x?.['Production_part_time'];
+                            const names = [{name, nameType, nameLanguage}];
+                            const statements = [{statementContent, statementLanguage, statementName, statementType}];
+                            const identifiers = [{identifier, identifierType}]
+                            
+                            const tile = self.cards?.productionEvent?.parts?.tiles().find(x => x.tileid == tileid)
+                            const eventCards = {};
+                            let selectedObservable = undefined;
+                            if(tile){
+                                eventCards.timespan = tile.cards.find(x => x.nodegroupid == 'cc157e05-b497-11e9-8f5a-a4d18cec433a');
+                                eventCards.name = tile.cards.find(x => x.nodegroupid == 'cc157e05-b497-11e9-8f5a-a4d18cec433a');
+                                eventCards.identifier = tile.cards.find(x => x.nodegroupid == 'cc155257-b497-11e9-9ed7-a4d18cec433a');
+                                eventCards.statements = tile.cards.find(x => x.nodegroupid == '7ae6204a-bee9-11e9-bd2a-a4d18cec433a');
+                                selectedObservable = tile.selected;
+                            }
+                            const expanded = ko.observable(true);
+
+                            let timespan = {};
+                            if(time){
+                                const beginningStart = self.getNodeValue(time, 'Production_part_time_begin of the begin');
+                                const beginningComplete = self.getNodeValue(time, 'Production_part_time_begin of the end');
+                                const endingStart = self.getNodeValue(time, 'Production_part_time_end of the begin');
+                                const endingComplete = self.getNodeValue(time, 'Production_part_time_end of the end');
+
+                                // TODO: check with cyrus/Dennis on name/Duration and why it isn't populated
+                                const name = self.getNodeValue(time, 'Production_part_time_name', 'Production_part_time_name_content');
+                                const duration = self.getNodeValue(time, 'Production_part_time_duration', 'Production_part_time_duration_highest possible value');
+                                const durationEventName = self.getNodeValue(time, 'Production_part_name_time_duration', 'Production_part_name_time_duration_Name', 'Production_time_duration_Name_content');
+                                timespan = {beginningComplete, beginningStart, duration, durationEventName, eventCards, endingComplete, endingStart, name};
+                            }
+                            return {creator, eventCards, expanded, identifiers, objectsUsed, technique, location, name, influence, selectedObservable, tileid, timespan, names, statements}
+                        }));
+                    }
+                }
+            }
+
+            loadData(self.resource());
 
             if (params.summary) {
-                var IdentifierContentnodeid = '22c169b5-b498-11e9-bdad-a4d18cec433a';
-                var IdentifierType = '22c15cfa-b498-11e9-b5e3-a4d18cec433a';
-                var GallerySystemsTMSid = '26094e9c-2702-4963-adee-19ad118f0f5a';
-                var CreatorProductionEvent = 'cc16893d-b497-11e9-94b0-a4d18cec433a';
-                var Statement = '1953016e-b498-11e9-9445-a4d18cec433a';
-                var PartOfSet = '63e49254-c444-11e9-afbe-a4d18cec433a';
-                var StatementType = '1952e470-b498-11e9-b261-a4d18cec433a';
+                const IdentifierContentnodeid = '22c169b5-b498-11e9-bdad-a4d18cec433a';
+                const IdentifierType = '22c15cfa-b498-11e9-b5e3-a4d18cec433a';
+                const GallerySystemsTMSid = '26094e9c-2702-4963-adee-19ad118f0f5a';
+                const CreatorProductionEvent = 'cc16893d-b497-11e9-94b0-a4d18cec433a';
+                const Statement = '1953016e-b498-11e9-9445-a4d18cec433a';
+                const PartOfSet = '63e49254-c444-11e9-afbe-a4d18cec433a';
+                const StatementType = '1952e470-b498-11e9-b261-a4d18cec433a';
                 this.gallerySystemsTMSid = resourceUtils.getNodeValues({
                     nodeId: IdentifierContentnodeid,
                     where: {
