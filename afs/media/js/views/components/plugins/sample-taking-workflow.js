@@ -86,7 +86,7 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
-                                        physicalThingResourceId: "['select-project']['select-phys-thing'][0][1]['physicalThing']"
+                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']"
                                     },
                                 },
                             ], 
@@ -107,10 +107,10 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
-                                        physicalThingResourceId: "['select-project']['select-phys-thing'][0][1]['physicalThing']",
-                                        physicalThingName: "['select-project']['select-phys-thing'][0][1]['physThingName']",
+                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']",
+                                        physicalThingName: "['select-project']['select-phys-thing']['physThingName']",
                                         imageServiceInstanceData: "['image-step']['image-service-instance'][0]['data']",
-                                        samplingActivityResourceId: "['sample-info']['sampling-info'][0][1]['samplingActivityResourceId']", 
+                                        samplingActivityResourceId: "['sample-info']['sampling-info']['samplingActivityResourceId']", 
                                     },
                                 },
                             ], 
@@ -128,7 +128,7 @@ define([
                                     componentName: 'sample-taking-final-step',
                                     uniqueInstanceName: 'sample-taking-final',
                                     parameters: {
-                                        samplingActivityResourceId: "['sample-info']['sampling-info'][0][1]['samplingActivityResourceId']",
+                                        samplingActivityResourceId: "['sample-info']['sampling-info']['samplingActivityResourceId']",
                                     },
                                 },
                             ], 

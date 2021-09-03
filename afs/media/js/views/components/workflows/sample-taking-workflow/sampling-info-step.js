@@ -81,9 +81,9 @@ define([
         });
 
         var selectPhysThingData = params.selectPhysThingData;
-        this.projectValue = selectPhysThingData[0][1]["project"];
-        this.physicalThingNameValue = selectPhysThingData[0][1]["physThingName"];
-        this.physicalThingValue = selectPhysThingData[0][1]["physicalThing"];
+        this.projectValue = selectPhysThingData["project"];
+        this.physicalThingNameValue = selectPhysThingData["physThingName"];
+        this.physicalThingValue = selectPhysThingData["physicalThing"];
 
         params.form.save = async function(){
             const sampelingNameResponse = await self.saveName();
@@ -105,8 +105,8 @@ define([
                 self.samplingTechniqueTile(response5[0].tileid);
                 self.samplingMotivationTile(response6[0].tileid);
 
+                params.form.savedData(params.form.value());
                 params.form.lockExternalStep("select-project", true);
-                params.form.savedData(params.form.addedData());
                 params.form.complete(true);
             });
         };
