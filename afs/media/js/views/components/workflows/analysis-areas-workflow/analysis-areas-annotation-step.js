@@ -94,6 +94,25 @@ define([
             }
         });
 
+        this.physicalThingName = ko.observable();
+        window.fetch(arches.urls.api_resources(self.physicalThingResourceId) + '?format=json&compact=false&v=beta')
+        .then(function(response){
+            if(response.ok){
+                return response.json();
+            }
+        })
+        .then(function(data){
+            self.physicalThingName(data.displayname);
+        })
+
+        this.areaName = ko.computed(function(){
+            var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+            if (self.selectedAnalysisAreaInstance()){
+                const baseName = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]) || "";
+                return `${baseName} [ ${self.physicalThingName()} ]`;
+            }
+        })
+
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
 
@@ -271,11 +290,11 @@ define([
             params.form.lockExternalStep('image-step', true);
             var savePhysicalThingNameTile = function(physicalThingNameTile) {
                 return new Promise(function(resolve, _reject) {
-                    var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
+                    // var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+                    // var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
                     
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
-                    physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedAnalysisAreaInstanceLabel;
+                    physicalThingNameTile.data[physicalThingNameContentNodeId] = self.areaName();
                     physicalThingNameTile.transactionId = params.form.workflowId;
 
                     physicalThingNameTile.save().then(function(physicalThingNameData) {
