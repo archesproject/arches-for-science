@@ -108,16 +108,16 @@ define([
                                     type: self.getResourceValue(statement, ['Statement_type','@display_value'])
                                 };
                             });
-                            var sampleMotivation = self.findStatementType(statements, "object/work type (category)");
-                            var sampleDescription = self.findStatementType(statements, "sample description");
-                            self.samplingLocations.push(
-                                {
-                                    samplingLocationName: samplingLocationName,
-                                    sampleDescription: sampleDescription.replace( /(<([^>]+)>)/ig, ''),
-                                    sampleMotivation:sampleMotivation.replace( /(<([^>]+)>)/ig, ''),
-                                }
-                            );
+                            var sampleMotivation = self.findStatementType(statements, "object/work type (category)").replace( /(<([^>]+)>)/ig, '');
+                            var sampleDescription = self.findStatementType(statements, "sample description").replace( /(<([^>]+)>)/ig, '');
                         }
+                        self.samplingLocations.push(
+                            {
+                                samplingLocationName: samplingLocationName || "None",
+                                sampleDescription: sampleDescription || "None",
+                                sampleMotivation: sampleMotivation || "None",
+                            }
+                        );
                         i += 1;
                         if (i === numberOfAnnotation) {
                             self.annotationStatus.valueHasMutated();
