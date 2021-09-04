@@ -72,7 +72,13 @@
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: {data: samplingLocations, as: 'loc'}">
-                        <tr>
+                        <tr style="cursor: pointer"
+                            data-bind="
+                            css:
+                                {'selected': $parents[1].selectedAnnotationTileId() === loc.tileId }, 
+                            click: function() {
+                                $parents[1].highlightAnnotation(loc.tileId);
+                            }">
                             <td><div class="summary-value" data-bind="text: loc.samplingLocationName"></div></td>
                             <td><div class="summary-value" data-bind="text: loc.sampleDescription"></div></td>
                             <td><div class="summary-value" data-bind="text: loc.sampleMotivation"></div></td>
