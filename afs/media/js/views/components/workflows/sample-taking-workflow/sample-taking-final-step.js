@@ -1,10 +1,11 @@
 define([
     'geojson-extent',
     'knockout',
+    'leaflet',
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
-], function(geojsonExtent, ko, uuid, arches, SummaryStep) {
+], function(geojsonExtent, ko, L, uuid, arches, SummaryStep) {
 
     function viewModel(params) {
         var self = this;
