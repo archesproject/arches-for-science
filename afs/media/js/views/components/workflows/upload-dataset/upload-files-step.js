@@ -1,15 +1,11 @@
 define([
     'underscore',
     'knockout',
-    'knockout-mapping',
     'uuid',
     'arches',
-    'utils/resource',
-    'utils/physical-thing',
-    'viewmodels/alert-json',
     'models/tile',
     'bindings/dropzone'
-], function(_, ko, koMapping, uuid, arches, resourceUtils, physicalThingUtils, JsonErrorAlertViewModel, TileModel) {
+], function(_, ko, uuid, arches, TileModel) {
     return ko.components.register('upload-files-step', {
         viewModel: function(params) {
             var self = this;
@@ -20,74 +16,35 @@ define([
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
                 "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"}
             };
+            this.datasetId = undefined;
             this.datasetName = ko.observable();
+            this.datasetNameTileId = "";
+            this.files = ko.observableArray();
+            this.observationReferenceTileId = "";
+            this.physicalthingReferenceTileId  = "";
             this.uniqueId = uuid.generate();
-            this.files = ko.observableArray([]);
-            this.observationReferenceTileId = ko.observable();
-            this.uniqueidClass = ko.pureComputed(function() {
-                return "unique_id_" + self.uniqueId;
-            });
-            this.dirty = ko.pureComputed(function(){
-                return true;
-            })
-            this.reset = function(){
 
-            }
+            var FileTile = function(){
+                var self = this;
+                
+                const fileTemplate = {
+                    "tileid": "",
+                    "data": {
+                        "29d5ecb8-79a5-11ea-8ae2-acde48001122": null,
+                        "7c486328-d380-11e9-b88e-a4d18cec433a": null,
+                        "5e1791d4-79a5-11ea-8ae2-acde48001122": null,
+                        "21d0ba4e-78eb-11ea-a33b-acde48001122": null
+                    },
+                    "nodegroup_id": "7c486328-d380-11e9-b88e-a4d18cec433a",
+                    "parenttile_id": null,
+                    "resourceinstance_id": "",
+                    "sortorder": 1,
+                    "tiles": {},
+                    "transaction_id": params.form.workflowId
+                };
 
-            this.addFiles = function(fileList) {
-                Array.from(fileList).forEach(function(file) {
-                    file.fileId = ko.observable();
-                    self.files.push(file);
-                    console.log(file)
-                });
-                // if (self.files()) {
-                //     self.mainMenu(false);
-                //     self.activeTab('dataset');
-                //     self.annotationNodes.valueHasMutated();
-                // }
-            };
-
-            // this.removeFile = function(file) {
-            //     var filePosition;
-            //     self.filesJSON().forEach(function(f, i) { if (f.file_id === file.file_id) { filePosition = i; } });
-            //     var newfilePosition = filePosition === 0 ? 1 : filePosition - 1;
-            //     var filesForUpload = self.filesForUpload();
-            //     var uploadedFiles = self.uploadedFiles();
-            //     if (file.file_id) {
-            //         file = _.find(uploadedFiles, function(uploadedFile) {
-            //             return file.file_id ===  ko.unwrap(uploadedFile.file_id);
-            //         });
-            //         self.uploadedFiles.remove(file);
-            //     } else {
-            //         file = filesForUpload[file.index];
-            //         self.filesForUpload.remove(file);
-            //     }
-            //     if (self.filesJSON().length > 0) { self.selectedFile(self.filesJSON()[newfilePosition]); }
-            // };
-
-            this.removeFile = function(file){
-                // const index = self.files().find(function(file){
-                //     return file.
-                // });
-                self.files.remove(file);
-
-                // var files = [];
-                // self.files().forEach(function(f){
-                //     if(file.index !== f.index){
-                //         files.push(f);
-                //     }
-                // });
-                // self.files(files);
-                // const index = self.files.indexOf(file);
-                // if (index > -1) {
-                //     self.files().splice(index, 1);
-                // }
-            };
-
-            this.filesJSON = ko.computed(function() {
-                var filesForUpload = self.files();
-                return ko.toJS(_.map(filesForUpload, function(file, i) {
-                    return {
+                this.setFile = function(file) {
+                    this.fileInfo = {
                         name: file.name,
                         accepted: file.accepted,
                         height: file.height,
@@ -97,13 +54,102 @@ define([
                         type: file.type,
                         width: file.width,
                         url: null,
+                        uploaded: ko.observable(false),
+                        // eslint-disable-next-line camelcase
                         file_id: null,
-                        index: i,
-                        content: URL.createObjectURL(file),
+                        // index: i,
+                        content: window.URL.createObjectURL(file),
                         error: file.error
                     };
-                }));
-            }).extend({throttle: 100});
+                    if (file.name.split('.').pop() === 'txt'){
+                        this.fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].rendererid;
+                    }
+                    fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [this.fileInfo];
+                    
+                    this.formData = new window.FormData();
+                    this.formData.append('transaction_id', params.form.workflowId);
+                    this.formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
+                    
+                    this.tile = new TileModel(fileTemplate);
+                }
+
+                this.setResourceId = function(resId){
+                    self.tile.set("resourceinstance_id", resId);
+                };
+
+                this.save = function(resId) {
+                    self.setResourceId(resId);
+                    return self.tile.save(null, self, self.formData)
+                    .then(function(response){
+                        self.tile.set('tileid', response.tileid);
+                        self.fileInfo.uploaded(true);
+                    });
+                };
+            };
+
+
+
+            this.init = function() {
+                // params.form.value({
+                //     'files': params.form.value()?.files ?? [],
+                //     'datasetName': params.form.value()?.datasetName ?? '',
+                // });
+                // params.form.value({
+                //     'datasetName': params.form.value()?.files ?? [],
+                //     'datasetId': params.form.value()?.datasetName ?? '',
+                //     'files': self.files().map(function(file){
+                //         return {fileInfo: file.fileInfo};
+                //     })
+                // });
+                this.physicalthingReferenceTileId = params.form.value()?.physicalthingReferenceTileId ?? "";
+                this.observationReferenceTileId = params.form.value()?.observationReferenceTileId ?? "";
+                this.datasetId = params.form.value()?.datasetId ?? "";
+                this.datasetName(params.form.value()?.datasetName ?? "");
+                this.datasetNameTileId = params.form.value()?.datasetNameTileId ?? "";
+                (params.form.value()?.files ?? []).forEach(function(fileInfo){
+                    const file = new FileTile();
+                    file.fileInfo = fileInfo.fileInfo;
+                    file.fileInfo.uploaded = ko.observable(fileInfo.fileInfo.uploaded);
+                    self.files.push(file);
+                });
+            }
+            this.init();
+
+            this.uniqueidClass = ko.pureComputed(function() {
+                return "unique_id_" + self.uniqueId;
+            });
+            
+            params.form.reset = this.reset = function(){
+                self.datasetName(params.form.value()?.datasetName);
+            }
+
+            this.dirty = params.form.hasUnsavedData;
+
+            this.datasetName.subscribe(function(name) {
+                params.form.hasUnsavedData(name !== params.form.value()?.datasetName);
+            });
+            this.files.subscribe(function(files){
+                params.form.hasUnsavedData(false);
+                files.forEach(function(file){
+                    if(!ko.unwrap(file.fileInfo.uploaded)){
+                        params.form.hasUnsavedData(true);
+                    }
+                })
+            });
+
+            this.addFiles = function(fileList) {
+                Array.from(fileList).forEach(function(file) {
+                    // file.fileId = ko.observable();
+                    var fileTile = new FileTile();
+                    fileTile.setFile(file);
+                    self.files.push(fileTile);
+                    console.log(file)
+                });
+            };
+
+            this.removeFile = function(file){
+                self.files.remove(file);
+            };
 
             this.formatSize = function(file) {
                 var bytes = ko.unwrap(file.size);
@@ -133,7 +179,7 @@ define([
                 }
             };
 
-            this.save = async() => {
+            params.form.save = this.save = async() => {
                 if(!self.datasetName()) { 
                     params.form.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
@@ -153,6 +199,20 @@ define([
                     await self.saveDatasetFiles(datasetResourceId);
                     await self.createObservationToDatasetXRef(datasetResourceId);
                     await self.createPhysicalThingToDatasetXRef(datasetResourceId);
+
+                    params.value({ 
+                        physicalthingReferenceTileId: self.physicalthingReferenceTileId,
+                        observationReferenceTileId: self.observationReferenceTileId,
+                        datasetName: self.datasetName(),
+                        datasetNameTileId: self.datasetNameTileId,
+                        datasetId: datasetResourceId,
+                        files: self.files().map(function(file){
+                            return {fileInfo: file.fileInfo};
+                        })
+                    });
+
+                    params.form.savedData(params.form.addedData());
+                    params.form.complete(true);
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
@@ -163,57 +223,16 @@ define([
                     params.form.loading(false);
                     return;
                 }
-            
-                // params.form.lockExternalStep("select-instrument-and-files", true);
-                // const parts = self.parts();
-                // for (const part of parts) {
-                //     if(!part.datasetName()) { continue; }
-                //     try {
-                //         // For each part of parent phys thing, create a digital resource with a Name tile
-                //         const datasetResourceId = (await self.saveDatasetName(part));
-
-                //         part.datasetId(datasetResourceId);
-
-                //         // Then save a file tile to the digital resource for each associated file
-                //         await self.saveDatasetFiles(part, datasetResourceId);
-                    
-                //         // Then save a relationship tile on the part that points to the digital resource
-                //         await self.saveDigitalResourceToChildPhysThing(part);
-                //     } catch(err) {
-                //         // eslint-disable-next-line no-console
-                //         console.log('Tile update failed', err);
-                //         params.form.loading(false);
-                //     }
-                // }
-
-
-                // params.form.value({ 
-                //     observationReferenceTileId: self.observationReferenceTileId(),
-                //     parts: self.parts().map(x => 
-                //         {
-                //             return {
-                //                 datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
-                //                 datasetId: x.datasetId(),
-                //                 datasetName: x.datasetName(),
-                //                 resourceReferenceId: x.resourceReferenceId(),
-                //                 tileid: x.tileid
-                //             };
-                //         }
-                //     )});
-                // params.form.savedData(params.form.addedData());
-                // params.form.complete(true);
                 
             };
 
-            params.save = this.save;
-
             this.saveDatasetName = async() => {
                 // don't recreate datasets that already exist
-                // if(part.datasetId()){ return part.datasetId(); }
+                //if(!!self.datasetId){ return self.datasetId; }
 
                 //Tile structure for the Digital Resource 'Name' nodegroup
                 const nameTemplate = {
-                    "tileid": "",
+                    "tileid": self.datasetNameTileId,
                     "data": {
                         "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a": self.datasetName(),
                         "d2fdc0d4-ca7a-11e9-95cf-a4d18cec433a": ["8f40c740-3c02-4839-b1a4-f1460823a9fe"],
@@ -223,7 +242,7 @@ define([
                     },
                     "nodegroup_id": "d2fdae3d-ca7a-11e9-ad84-a4d18cec433a",
                     "parenttile_id": null,
-                    "resourceinstance_id": "",
+                    "resourceinstance_id": self.datasetId,
                     "sortorder": 0,
                     "tiles": {},
                     "transaction_id": params.form.workflowId
@@ -231,79 +250,28 @@ define([
 
                 var tile = new TileModel(nameTemplate);
                 var result = await tile.save();
+                self.datasetId = result.resourceinstance_id;
+                self.datasetNameTileId = result.tileid;
                 return result.resourceinstance_id;
-
-
-                // const tile = await window.fetch(arches.urls.api_tiles(uuid.generate()), {
-                //     method: 'POST',
-                //     credentials: 'include',
-                //     body: JSON.stringify(nameTemplate),
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                // });
-
             };
 
             this.saveDatasetFiles = async(datasetNameTileResourceId) => {
-                //Tile structure for the Digital Resource 'File' nodegroup
-                const fileTemplate = {
-                    "tileid": "",
-                    "data": {
-                        "29d5ecb8-79a5-11ea-8ae2-acde48001122": null,
-                        "7c486328-d380-11e9-b88e-a4d18cec433a": null,
-                        "5e1791d4-79a5-11ea-8ae2-acde48001122": null,
-                        "21d0ba4e-78eb-11ea-a33b-acde48001122": null
-                    },
-                    "nodegroup_id": "7c486328-d380-11e9-b88e-a4d18cec433a",
-                    "parenttile_id": null,
-                    "resourceinstance_id": datasetNameTileResourceId,
-                    "sortorder": 1,
-                    "tiles": {},
-                    "transaction_id": params.form.workflowId
-                };
-
                 const datasetFilesArray = self.files();
                 for(let i = 0; i < datasetFilesArray.length; ++i){
                     const file = datasetFilesArray[i];
                     // file has already been uploaded
-                    // if(file.tileid){ return; }
+                    if(file.fileInfo.uploaded()){ continue; }
                     
-                    const fileInfo = {
-                        name: file.name,
-                        accepted: file.accepted,
-                        height: file.height,
-                        lastModified: file.lastModified,
-                        size: file.size,
-                        status: file.status,
-                        type: file.type,
-                        width: file.width,
-                        url: null,
-                        // eslint-disable-next-line camelcase
-                        file_id: null,
-                        index: i,
-                        content: window.URL.createObjectURL(file),
-                        error: file.error
-                    };
-                    if (file.name.split('.').pop() === 'txt'){
-                        fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].rendererid;
-                    }
-                    fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
-                    
-                    var formData = new window.FormData();
-                    formData.append('transaction_id', params.form.workflowId);
-                    formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
-                    
-                    var tile = new TileModel(fileTemplate);
-                    var result = await tile.save(null, this, formData);
-                    // file.tileId(result.tileid);
-                    // return result;
+                    var result = await file.save(datasetNameTileResourceId);
                 }
             };
 
             this.createObservationToDatasetXRef = async(datasetNameTileResourceId) => {
+                // don't recreate references that already exist
+                if(!!self.observationReferenceTileId){ return self.observationReferenceTileId; }
+
                 const digitalReferenceTile = {
-                    "tileid": self.observationReferenceTileId() || "",
+                    "tileid": self.observationReferenceTileId,
                     "data": {
                         "dd596aae-c457-11e9-956b-a4d18cec433a": [{
                             "resourceId": datasetNameTileResourceId,
@@ -321,29 +289,15 @@ define([
 
                 var tile = new TileModel(digitalReferenceTile);
                 var result = await tile.save();
-                self.observationReferenceTileId(result.tileid);
+                self.observationReferenceTileId = result.tileid;
                 return result;
-
-                // const result = await window.fetch(arches.urls.api_tiles(tileid), {
-                //     method: 'POST',
-                //     credentials: 'include',
-                //     body: JSON.stringify(digitalReferenceTile),
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                // });
-
-                // if(result.ok){
-                //     const json = await result.json();
-                //     self.observationReferenceTileId(json?.tileid);
-                //     return json;
-                // }
             };
 
             this.createPhysicalThingToDatasetXRef = async(datasetNameTileResourceId) => {
-                // const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
+                // don't recreate references that already exist
+                if(!!self.physicalthingReferenceTileId){ return self.physicalthingReferenceTileId; }
+
                 const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501";  
-                // const tileid = uuid.generate();
                 const digitalReferenceTile = {
                     "tileid": "",
                     "data": {
@@ -355,7 +309,7 @@ define([
                     },
                     "nodegroup_id": digitalReferenceNodeGroupId,
                     "parenttile_id": null,
-                    "resourceinstance_id": self.physicalThingId,
+                    "resourceinstance_id": physicalThingId,
                     "sortorder": 1,
                     "tiles": {},
                     "transaction_id": params.form.workflowId
@@ -363,23 +317,8 @@ define([
 
                 var tile = new TileModel(digitalReferenceTile);
                 var result = await tile.save();
-                self.observationReferenceTileId(result.tileid);
+                self.physicalthingReferenceTileId = result.tileid;
                 return result;
-
-                // const result = await window.fetch(arches.urls.api_tiles(tileid), {
-                //     method: 'POST',
-                //     credentials: 'include',
-                //     body: JSON.stringify(digitalReferenceTile),
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                // });
-
-                // if(result.ok){
-                //     const json = await result.json();
-                //     part.resourceReferenceId(json?.tileid);
-                //     return part.resourceReferenceId();
-                // }
             };
 
 

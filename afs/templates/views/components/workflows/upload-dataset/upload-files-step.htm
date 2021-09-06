@@ -10,11 +10,13 @@
 {% block main_menu %}
 
 
-<div class="file-workbench-filter">
-    <h2 class="file-workbench-filter-header">{% trans 'Dataset Name' %}</h2>
-    <input type="text" class="form-control" style="width: 50%; height:initial"
-        data-bind="textInput: datasetName"></input>
-    <div>
+<div class="file-workbench-filter" style="padding-left: 46px;  padding-right: 46px; display:flex; align-items: flex-end;">
+    <div class="dataset-name" style="flex-grow: 1;">
+        <label class="control-label">{% trans "Dataset Name (required)" %}</label>
+        <input type="text" class="form-control" style="width: 50%; height:initial"
+            data-bind="textInput: datasetName"></input>
+    </div>
+    <div style="padding-left: 20px;">
         <!-- ko if: dirty -->
         <button class="btn btn-shim btn-danger btn-labeled btn-sm fa fa-times" data-bind="click: reset">{% trans 'Cancel'%}</button>
         <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: save">{% trans 'Save'%}</button>
@@ -52,39 +54,38 @@
         <div class="dropzone" style="min-height: 100%; display:none;">
             <div id="hidden-dz-previews" class="dropzone-previews" data-bind="css: uniqueidClass"></div>
         </div>
-        <div style="display: flex; flex-direction: column;">
-            <!-- ko foreach: files -->
-            <div class="file-upload-card">
-                <div class="media-body">
-                    <div class="media-block">
-                        <div class="media-left">
+      
+        <!-- ko if: files().length > 0 -->
+        <div style="background-color: white; padding: 45px;">
+            <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 485px; border: solid 1px lightgrey; padding: 20px;">
+                <!-- ko foreach: {data: files, as: 'file'} -->
+                    <div class="file-workbench-file">
+                        <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
                             <span><i class="fa fa-file fa-lg"></i></span>
-                        </div>
-                        <div class="media-body file-upload-card-detail">
-                            <div class="media-left">
-                                <span class="text-main mar-no text-overflow" data-bind="text: name"></span>
-                                <!-- ko if: $data.error -->
-                                <span class="dz-error text-danger text-sm" data-bind="text: '{% trans " error" %}'"></span>
-                                <!-- /ko -->
-                                <!-- <span class="text-sm">
-                                    <a data-bind="attr: {href: ko.unwrap(url) ? $parent.getFileUrl(url) : content, download: name}, click: function(){return ko.unwrap(url) ? true : false}, clickBubble: false"><span
-                                            data-bind="text: ko.unwrap(url) ? '{% trans " Download" %}' : '{% trans "Unsaved" %}'"></span></a></span> -->
+                            <span class="text-main mar-no text-overflow" style="flex-grow: 1;" data-bind="text: file.fileInfo.name"></span>
+                            <!-- ko if: file.fileInfo.error -->
+                            <span class="dz-error text-danger text-sm"  data-bind="text: '{% trans " error" %}'"></span>
+                            <!-- /ko -->
+                            <div class="file-size-label">
+                                <span class="text-sm" data-bind="html: $parent.formatSize(file.fileInfo)"></span>
                             </div>
-                            <div class=" file-upload-card-detail-right">
-                                <div class="media-right" data-bind="click: $parent.removeFile">
-                                    <button class="btn btn-xs btn-danger btn-file-cancel"><i
-                                            class="ion ion-close"></i></button>
-                                </div>
-                                <div class="file-size-label">
-                                    <span class="text-sm" data-bind="html: $parent.formatSize($data)"></span>
-                                </div>
+                            <!-- ko if: file.fileInfo.uploaded -->
+                            <div class="media-right">
+                                <button class="btn btn-xs btn-danger btn-file-cancel"><i class="ion ion-cloud"></i></button>
                             </div>
+                            <!-- /ko -->
+                            <!-- ko ifnot: file.fileInfo.uploaded -->
+                            <div class="media-right" data-bind="click: $parent.removeFile">
+                                <button class="btn btn-xs btn-danger btn-file-cancel"><i
+                                        class="ion ion-close"></i></button>
+                            </div>
+                            <!-- /ko -->
                         </div>
                     </div>
-                </div>
+                <!-- /ko -->
             </div>
-            <!-- /ko -->
         </div>
+        <!-- /ko -->
     </div>
 </div>
 {% endblock main_menu %}
