@@ -36,6 +36,8 @@ define([
                 }, 
                 []
             )
+        } else if (params.datasetInfoFromUploadFilesStep){
+            var datasetIds = [params.datasetInfoFromUploadFilesStep["upload-files-step"][0][1]?.datasetId];
         }
 
         this.fileFormatRenderers = fileRenderers;

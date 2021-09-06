@@ -170,7 +170,8 @@ define([
                                     uniqueInstanceName: 'file-interpretation', /* unique to step */
                                     parameters: {
                                         activeTab: 'edit',
-                                        datasetInfo: "['select-dataset-files-step']"
+                                        datasetInfo: "['select-dataset-files-step']",
+                                        datasetInfoFromUploadFilesStep: "['upload-files']"
                                     },
                                 },
                             ], 
