@@ -50,7 +50,7 @@ define([
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         ],
-                                        physicalThingResourceId: "['review-dataset-object']['sample-object-resource-instance'][0][1]"
+                                        physicalThingResourceId: "['review-dataset-object']['sample-object-resource-instance']"
                                     },
                                 },
                             ], 
@@ -92,8 +92,8 @@ define([
                                     uniqueInstanceName: 'review-dataset-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        sampleObjectResourceInstanceId: "['review-datasets-object']['sample-object-resource-instance'][0][1]",
-                                        selectedDatasets: "['select-datasets']['dataset-select-instance'][0][1]"
+                                        sampleObjectResourceInstanceId: "['review-datasets-object']['sample-object-resource-instance']",
+                                        selectedDatasets: "['select-datasets']['dataset-select-instance']"
                                     },
                                 },
                             ], 

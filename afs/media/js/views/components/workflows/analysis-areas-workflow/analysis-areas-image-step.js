@@ -105,8 +105,8 @@ define([
             var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
             
             /* will not have tiles if creating a new manifest */ 
-            if (manifestResourceData && manifestResourceData.tiles && params.form.previouslyPersistedComponentData) {
-                var previouslyPersistedTileId = params.form.previouslyPersistedComponentData[0].tileid;
+            if (manifestResourceData && manifestResourceData.tiles && params.form.savedData()) {
+                var previouslyPersistedTileId = params.form.savedData().tileid;
 
                 var tileMatchingPreviouslyPersistedTile = manifestResourceData.tiles.find(function(tile) {
                     return tile.tileid === previouslyPersistedTileId;
@@ -136,7 +136,7 @@ define([
                             self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
                             self.digitalResourceServiceIdentifierTile.transactionId = params.form.workflowId;
                             self.digitalResourceServiceIdentifierTile.save().then(function(data) {
-                                params.form.savedData.push(data);
+                                params.form.savedData(data);
 
                                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
@@ -174,7 +174,7 @@ define([
                         return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                     });
     
-                    params.form.savedData.push(matchingTile);
+                    params.form.savedData(matchingTile);
                 }
                 params.form.complete(true);
                 params.form.saving(false);        
@@ -182,8 +182,8 @@ define([
         };
 
         this.reset = function() {
-            if (params.form.previouslyPersistedComponentData) {
-                var previouslyPersistedResourceId = params.form.previouslyPersistedComponentData[0].resourceinstance_id;
+            if (params.form.savedData()) {
+                var previouslyPersistedResourceId = params.form.savedData().resourceinstance_id;
 
                 var preferredManifestResourceData = self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });
                 var alternateManifestResourceData = self.physicalThingDigitalReferenceAlternateManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });
@@ -270,7 +270,7 @@ define([
 
                 if (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ))  {
                     var physicalThingManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
-                    
+
                     $.getJSON( arches.urls.api_card + physicalThingManifestResourceId ).then(function(data) {
                         if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
                             self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
@@ -286,6 +286,7 @@ define([
                         else if (!self.selectedPhysicalThingImageServiceName()) {
                             self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
                         }
+                        params.pageVm.loading(false);
                     });
                 }
             });
