@@ -4,10 +4,11 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
+    'utils/resource',
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
+], function(_, $, arches, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -89,6 +90,7 @@ define([
             if (self.sampleLocationFilterTerm()) {
                 return self.sampleLocationInstances().filter(function(sampleLocationInstance) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+                    console.log(sampleLocationInstance);
                     return sampleLocationInstance.data[partIdentifierAssignmentLabelNodeId]().includes(self.sampleLocationFilterTerm());
                 });
             }
@@ -811,8 +813,26 @@ define([
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
-            self.sampleLocationInstances(card.tiles());
-
+            const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+            const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
+            const analysisAreaTypeConceptId = '19ef147a-3703-41b4-bfa3-d4c66e333b0b'; //'this is actually the ceramic value as a placeholder'
+            const related = card.tiles().map(tile => ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId())
+            const analysisAreaResourceIds = [];
+            Promise.all(related.map(resourceid => ResourceUtils.lookupResourceInstanceData(resourceid))).then((values) => {
+                values.forEach((value) => {
+                    const nodevals = ResourceUtils.getNodeValues({
+                        nodeId: classificationNodeId,
+                        where: {
+                            nodeId: classificationNodeId,
+                            contains: analysisAreaTypeConceptId
+                        }
+                    }, value._source.tiles);
+                    if (nodevals.includes(analysisAreaTypeConceptId)) {
+                        analysisAreaResourceIds.push(value._id);
+                    }
+                });
+                self.sampleLocationInstances(card.tiles());
+            })
             /* 
                 subscription to features lives here because we _only_ want it to run once, on blank starting tile, when a user places a feature on the map
             */
