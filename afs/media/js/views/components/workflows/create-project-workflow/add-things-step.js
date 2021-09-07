@@ -152,7 +152,7 @@ define([
             self.componentData.parameters.provisionalTileViewModel = self.provisionalTileViewModel;
             self.componentData.parameters.reviewer = data.userisreviewer;
             self.componentData.parameters.dirty = self.isDirty;
-            self.componentData.parameters.saveFunction = self.saveFunction;
+            self.componentData.parameters.save = self.save;
             self.componentData.parameters.tiles = self.tiles;
 
             self.loading(false);
@@ -168,8 +168,9 @@ define([
         var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
         this.projectResourceId(researchActivityStepData.resourceInstanceId);
 
-        if (ko.unwrap(self.previouslyPersistedComponentData)){
-            var cachedValue = ko.unwrap(self.previouslyPersistedComponentData)[0];
+        if (ko.unwrap(self.savedData())){
+            var cachedValue = ko.unwrap(self.savedData());
+            // var cachedValue = ko.unwrap(self.savedData())[0];
             if (cachedValue['collectionResourceId']){
                 self.collectionResourceId(cachedValue['collectionResourceId']);
             }
@@ -205,8 +206,8 @@ define([
             return ko.unwrap(self.tile) ? self.tile().dirty() : false;
         });
         this.dirty.subscribe(function(dirty) {
-            if (self.hasUnsavedData) {
-                self.hasUnsavedData(dirty);
+            if (dirty) {
+                params.dirty(dirty);
             }
         });
 
@@ -342,6 +343,7 @@ define([
                                 usedSetTileId: ko.unwrap(self.usedSetTileId),
                             };    
                         }));
+                        saveCollectionRelationships();
 
                         self.saving(false);
                         self.complete(true);
@@ -352,7 +354,7 @@ define([
         params.form.save = self.submit;
         params.form.onSaveSuccess = function() {};
         
-        params.form.saveOnQuit(function() {
+        const saveCollectionRelationships = () => {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             var rrTemplate = [{ 
                 "resourceId": ko.unwrap(self.collectionResourceId),
@@ -375,7 +377,7 @@ define([
                     console.log(value.resourceId, "related resource is created");
                 });
             });
-        });
+        };
 
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,

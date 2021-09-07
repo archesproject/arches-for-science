@@ -29,8 +29,8 @@ define([
                                 componentName: 'select-dataset-files-step',
                                 uniqueInstanceName: 'select-dataset-files-step', /* unique to step */
                                 parameters: {
-                                    projectInfo: "['project-info']['select-phys-thing-step'][0][1]",
-                                    observationInfo: "['select-instrument-and-files']['instrument-info'][0][1]"
+                                    projectInfo: "['project-info']['select-phys-thing-step']",
+                                    observationInfo: "['select-instrument-and-files']['instrument-info']"
                                 },
                             },
                         ], 
@@ -62,7 +62,10 @@ define([
                             return 'select-instrument-and-files';
                         },
                         injectionLogic: function(step) {  /* step = self-introspection */ 
-                            if (step.value() && step.value()['dataset-step'][0][1] === 'non-destructive') {
+                            if (
+                                step.workflowComponentAbstractLookup() 
+                                && step.workflowComponentAbstractLookup()['dataset-step'].savedData() === 'non-destructive'
+                            ) {
                                 return sampleLocationStep;
                             }
                         }
@@ -110,7 +113,7 @@ define([
                                     componentName: 'instrument-info-step',
                                     uniqueInstanceName: 'instrument-info', /* unique to step */
                                     parameters: {
-                                        projectInfoData: "['project-info']['select-phys-thing-step'][0][1]"
+                                        projectInfoData: "['project-info']['select-phys-thing-step']"
                                     },
                                 },
                             ], 
@@ -152,9 +155,9 @@ define([
                                     uniqueInstanceName: 'upload-dataset-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        observationInstanceResourceId: "['select-instrument-and-files']['instrument-info'][0][1]['observationInstanceId']",
-                                        uploadedDatasets: "['select-dataset-files-step']['select-dataset-files-step'][0][1]['parts']",
-                                        parentPhysThingResourceId: "['project-info']['select-phys-thing-step'][0][1]['physicalThing']"
+                                        observationInstanceResourceId: "['select-instrument-and-files']['instrument-info']['observationInstanceId']",
+                                        uploadedDatasets: "['select-dataset-files-step']['select-dataset-files-step']['parts']",
+                                        parentPhysThingResourceId: "['project-info']['select-phys-thing-step']['physicalThing']"
                                     },
                                 },
                             ], 
