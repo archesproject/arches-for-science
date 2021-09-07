@@ -271,25 +271,25 @@ define([
                     var physicalThingManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
                     params.pageVm.loading(true);
                     $.getJSON( arches.urls.api_card + physicalThingManifestResourceId )
-                    .then(function(data) {
-                        if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
-                            self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
-                        }
-                        else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
-                            self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
-                        }
-                        
-                        var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
-                        if (resourceData) {
-                            self.selectedPhysicalThingImageServiceName(resourceData.displayname);
-                        }
-                        else if (!self.selectedPhysicalThingImageServiceName()) {
-                            self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
-                        }
-                    })
-                    .always(function() {
-                        params.pageVm.loading(false);
-                    });
+                        .then(function(data) {
+                            if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
+                                self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
+                            }
+                            else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
+                                self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
+                            }
+                            
+                            var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
+                            if (resourceData) {
+                                self.selectedPhysicalThingImageServiceName(resourceData.displayname);
+                            }
+                            else if (!self.selectedPhysicalThingImageServiceName()) {
+                                self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
+                            }
+                        })
+                        .always(function() {
+                            params.pageVm.loading(false);
+                        });
                 }
             });
         };
