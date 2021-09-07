@@ -287,9 +287,6 @@ define([
         this.saveAnalysisAreaTile = function() {
             var savePhysicalThingNameTile = function(physicalThingNameTile) {
                 return new Promise(function(resolve, _reject) {
-                    // var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    // var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
-                    
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = self.areaName();
                     physicalThingNameTile.transactionId = params.form.workflowId;
