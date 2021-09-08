@@ -371,7 +371,8 @@ define([
         this.saveSampleLocationTile = function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
-            if (self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId].features().length === 0 ||
+            const featureCollection = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])
+            if (!ko.unwrap(featureCollection?.features)?.length ||
                 !self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()) { //Sample Name Node
                     params.pageVm.alert(new params.form.AlertViewModel(
                         "ep-alert-red",
