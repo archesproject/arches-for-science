@@ -15,9 +15,10 @@ define([
         var self = this;
         const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
         const briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
-        const datasetInfo = params.form.externalStepData.datasetinfo.data;
+        const datasetInfo = params.datasetInfo;
+
         if (datasetInfo["select-dataset-files-step"]){
-            var datasetIds = datasetInfo["select-dataset-files-step"][0][1]?.parts.reduce(
+            var datasetIds = datasetInfo["select-dataset-files-step"].savedData()?.parts.reduce(
                 (acc, part) => {
                     if (part.datasetId) { 
                         acc.push(part.datasetId)
@@ -27,7 +28,7 @@ define([
                 []
             )
         } else if (datasetInfo["dataset-select-instance"]){
-            var datasetIds = datasetInfo["dataset-select-instance"][0][1]?.reduce(
+            var datasetIds = datasetInfo["dataset-select-instance"].savedData()?.reduce(
                 (acc, res) => {
                     if (res.resourceid && res.selected === true) { 
                         acc.push(res.resourceid)

@@ -24,8 +24,7 @@ define([
             }
         });
 
-        var selectProjectStepData = params.form.externalStepData['selectprojectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(selectProjectStepData['select-phys-thing'][0][1]['physicalThing']);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
 
         this.physicalThingDigitalReferenceCard = ko.observable();
         this.physicalThingDigitalReferenceCard.subscribe(function(card) {
@@ -106,8 +105,8 @@ define([
             var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
             
             /* will not have tiles if creating a new manifest */ 
-            if (manifestResourceData && manifestResourceData.tiles && params.form.previouslyPersistedComponentData) {
-                var previouslyPersistedTileId = params.form.previouslyPersistedComponentData[0].tileid;
+            if (manifestResourceData && manifestResourceData.tiles && params.form.savedData()) {
+                var previouslyPersistedTileId = params.form.savedData().tileid;
 
                 var tileMatchingPreviouslyPersistedTile = manifestResourceData.tiles.find(function(tile) {
                     return tile.tileid === previouslyPersistedTileId;
@@ -140,7 +139,7 @@ define([
                             self.digitalResourceServiceIdentifierTile.transactionId = params.form.workflowId;
 
                             self.digitalResourceServiceIdentifierTile.save().then(function(data) {
-                                params.form.savedData.push(data);
+                                params.form.savedData(data);
     
                                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
     
@@ -178,7 +177,7 @@ define([
                         return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                     });
     
-                    params.form.savedData.push(matchingTile);
+                    params.form.savedData(matchingTile);
                 }
 
                 params.form.complete(true);
@@ -187,8 +186,8 @@ define([
         };
 
         this.reset = function() {
-            if (params.form.previouslyPersistedComponentData) {
-                var previouslyPersistedResourceId = params.form.previouslyPersistedComponentData[0].resourceinstance_id;
+            if (params.form.savedData()) {
+                var previouslyPersistedResourceId = params.form.savedData().resourceinstance_id;
 
                 var preferredManifestResourceData = self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });
                 var alternateManifestResourceData = self.physicalThingDigitalReferenceAlternateManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });

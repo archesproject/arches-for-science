@@ -15,7 +15,7 @@ define([
         const parameterNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a'; // parameter are 'Statement' cards
         const nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         const nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
-        const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
+        const projectInfo = params.projectInfoData;
         const physThingName = projectInfo.physThingName;
         const observedThingNodeId = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
         const observedThingInstanceId = projectInfo.physicalThing;
@@ -181,7 +181,7 @@ define([
                 .then(function(data) {
                     parameterTileId = data.tileid;
                     self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
-                    params.form.savedData(params.form.addedData());
+                    params.form.savedData(params.form.value());
                     params.form.complete(true);
                     params.pageVm.alert("");
                 });

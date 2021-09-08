@@ -12,12 +12,10 @@ define([
         var self = this;
         _.extend(this, params);
 
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(objectStepData['sample-object-resource-instance'][0][1]);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        var imageStepData = params.form.externalStepData['imagestep']['data']['image-service-instance'][0];
-        this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
+        this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.savingTile = ko.observable();
 
@@ -55,7 +53,7 @@ define([
                 return self.physicalThingPartIdentifierAssignmentTile().dirty();
             }
         });
-
+                
         this.selectedAnalysisAreaInstanceFeatures = ko.computed(function() {
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
 
@@ -96,9 +94,26 @@ define([
             }
         });
 
-        this.initialize = function() {
-            params.form.save = self.saveWorkflowStep;
+        this.physicalThingName = ko.observable();
+        window.fetch(arches.urls.api_resources(self.physicalThingResourceId) + '?format=json&compact=false&v=beta')
+        .then(function(response){
+            if(response.ok){
+                return response.json();
+            }
+        })
+        .then(function(data){
+            self.physicalThingName(data.displayname);
+        })
 
+        this.areaName = ko.computed(function(){
+            var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+            if (self.selectedAnalysisAreaInstance()){
+                const baseName = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]) || "";
+                return `${baseName} [ ${self.physicalThingName()} ]`;
+            }
+        })
+
+        this.initialize = function() {
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
@@ -270,14 +285,10 @@ define([
         };
 
         this.saveAnalysisAreaTile = function() {
-            params.form.lockExternalStep('image-step', true);
             var savePhysicalThingNameTile = function(physicalThingNameTile) {
                 return new Promise(function(resolve, _reject) {
-                    var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    var selectedAnalysisAreaInstanceLabel = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]);
-                    
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
-                    physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedAnalysisAreaInstanceLabel;
+                    physicalThingNameTile.data[physicalThingNameContentNodeId] = self.areaName();
                     physicalThingNameTile.transactionId = params.form.workflowId;
 
                     physicalThingNameTile.save().then(function(physicalThingNameData) {
@@ -411,6 +422,8 @@ define([
             };
 
             self.savingTile(true);
+            params.form.lockExternalStep('image-step', true);
+
             getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
@@ -429,7 +442,10 @@ define([
                                     self.savingTile(false);
                                     params.pageVm.alert("")
                                     self.drawFeatures([]);
-                                    params.dirty(true);
+
+                                    let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
+                                    params.form.savedData(koMapping.toJS(mappedInstances));
+                                    params.form.complete(true);
                                 });
                             });
                         });
@@ -443,15 +459,6 @@ define([
                 var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
                 self.selectAnalysisAreaInstance(newTile);
             }
-        };
-
-        this.saveWorkflowStep = function() {
-            params.form.complete(false);
-            params.form.saving(true);
-            let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
-            params.form.savedData(mappedInstances);
-            params.form.complete(true);
-            params.form.saving(false);
         };
 
         this.loadExternalCardData = function(data) {
