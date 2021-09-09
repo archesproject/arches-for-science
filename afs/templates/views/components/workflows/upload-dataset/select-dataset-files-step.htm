@@ -23,83 +23,84 @@
     </div>
 </div>
 
-<div class="iiif-image-tools upload-dataset-select-dataset-files">
-    <!--ko if: annotations().length > 0-->
-    <label class="control-label">{% trans "Sampled Locations" %}</label>
-    <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
-    <div class="panel">
-        <div style="border-top: solid 1px#ddd; margin-top: 10px">
-        <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
-            <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
-            <div class="panel">
-                <a role="button" data-toggle="collapse" data-parent="#parts-panel" aria-expanded="false" data-bind="click: function(){ $parent.selectedPart(part); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
-                    <div style="height: 35px; padding: 10px;" class="file-workbench-file" data-bind="click: function(){}, clickBubble: part.tileid != $parent.selectedPart().tileid, css: {staged: part.tileid === self.selectedPart().tileid }">
-                        <i class="fa" data-bind="css: { 'fa-angle-right': $parent.selectedPart().tileid != part.tileid, 'fa-angle-down': $parent.selectedPart().tileid == part.tileid }"></i> 
-                        <span class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname"></span>
-                    </div>
-                </a>
-                <div class="panel-collapse collapse" data-bind="attr: { id: part.tileid }, css: { in: $index() == 0}">
-                    <div class="dataset-name">
-                        <label class="control-label">{% trans "Dataset Name*" %}</label>
-                        <input type="text" class="form-control" placeholder="Dataset name" data-bind="textInput: part.datasetName">
-                    </div>
-                     <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
-                    <div class="file-workbench-files" data-bind="foreach: {data: part.datasetFiles, as: 'file'}">
-                        <div class='file-workbench-file' data-bind="click: function(){ !file.tileId() ? self.removeFileFromPart(file): '' }, css: {staged: false}">
-                            <i class="fa" data-bind="
-                                css: { 'fa-check': file.tileId(), 'fa-trash': !file.tileId() },
-                                style: { color: file.tileId() ? 'green' : 'black' }"></i>
-                            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name || file.upload?.filename"></span>
+<div class="workbench-content-container">
+    <div class="iiif-image-tools upload-dataset-select-dataset-files">
+        <!--ko if: annotations().length > 0-->
+        <label class="control-label">{% trans "Sampled Locations" %}</label>
+        <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
+        <div class="panel">
+            <div style="border-top: solid 1px#ddd; margin-top: 10px">
+            <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
+                <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
+                <div class="panel">
+                    <a role="button" data-toggle="collapse" data-parent="#parts-panel" aria-expanded="false" data-bind="click: function(){ $parent.selectedPart(part); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
+                        <div style="height: 35px; padding: 10px;" class="file-workbench-file" data-bind="click: function(){}, clickBubble: part.tileid != $parent.selectedPart().tileid, css: {staged: part.tileid === self.selectedPart().tileid }">
+                            <i class="fa" data-bind="css: { 'fa-angle-right': $parent.selectedPart().tileid != part.tileid, 'fa-angle-down': $parent.selectedPart().tileid == part.tileid }"></i> 
+                            <span class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname"></span>
+                        </div>
+                    </a>
+                    <div class="panel-collapse collapse" data-bind="attr: { id: part.tileid }, css: { in: $index() == 0}">
+                        <div class="dataset-name">
+                            <label class="control-label">{% trans "Dataset Name*" %}</label>
+                            <input type="text" class="form-control" placeholder="Dataset name" data-bind="textInput: part.datasetName">
+                        </div>
+                        <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
+                        <div class="file-workbench-files" data-bind="foreach: {data: part.datasetFiles, as: 'file'}">
+                            <div class='file-workbench-file' data-bind="click: function(){ !file.tileId() ? self.removeFileFromPart(file): '' }, css: {staged: false}">
+                                <i class="fa" data-bind="
+                                    css: { 'fa-check': file.tileId(), 'fa-trash': !file.tileId() },
+                                    style: { color: file.tileId() ? 'green' : 'black' }"></i>
+                                <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name || file.upload?.filename"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!--/ko-->
             </div>
-            <!--/ko-->
+            </div>
         </div>
-        </div>
-    </div>
-    <!--/ko-->
-</div>
-
-
-
-
-<div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: 12px;">
-    <!--ko if: files().length > 0 && selectedPart() -->
-    <label class="control-label">{% trans "Available Files" %}</label>
-    <div class="file-workbench-files" data-bind="foreach: {data: files, as: 'file'}">
-        <div class='file-workbench-file' data-bind="css: {staged: false}">
-            <i class="fa fa-upload" data-bind="value: file, click: function(){$parent.addFileToPart(file)}"></i>
-            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name, click: function(){$parent.addFileToPart(file)}, clickBubble: false"></span>
-        </div>
-    </div>
-    <!--/ko-->
-
-    <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
-        <div class="file-workbench-links">
-            <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
-                <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span><span>{% trans "to upload photos" %}</span>
-            </a>
-        </div>
-        <div style="min-height: 100%;">
-            <div id="hidden-dz-previews" style="display:none"></div>
-        </div>
+        <!--/ko-->
     </div>
 
-    <div>
 
-    <div>
-        <button class="btn btn-shim btn-danger btn-labeled btn-lg fa fa-times" data-bind="click: function(){console.log('cancelling')}, css: {
-            disabled: !canBeSaved()
-        }">{% trans "Cancel" %}</button>
-        <button class="btn btn-shim btn-labeled btn-lg fa fa-plus btn-mint" data-bind="click: function(){save();}, css: {
-            disabled: !canBeSaved(),
-            'btn-mint': true
-        }">{% trans "Save" %}</button>
-    </div>
+
+
+    <div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: 12px;">
+        <!--ko if: files().length > 0 && selectedPart() -->
+        <label class="control-label">{% trans "Available Files" %}</label>
+        <div class="file-workbench-files" data-bind="foreach: {data: files, as: 'file'}">
+            <div class='file-workbench-file' data-bind="css: {staged: false}">
+                <i class="fa fa-upload" data-bind="value: file, click: function(){$parent.addFileToPart(file)}"></i>
+                <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name, click: function(){$parent.addFileToPart(file)}, clickBubble: false"></span>
+            </div>
+        </div>
+        <!--/ko-->
+
+        <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+            <div class="file-workbench-links">
+                <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                    <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span><span>{% trans "to upload photos" %}</span>
+                </a>
+            </div>
+            <div style="min-height: 100%;">
+                <div id="hidden-dz-previews" style="display:none"></div>
+            </div>
+        </div>
 
     </div>
 </div>
+<div class="workbench-button-panel">
+    <button class="btn btn-success" data-bind="click: $data.save, css: { disabled: !canBeSaved(), 'btn-mint': true  }">
+        <i class="ion-android-cloud-done"></i> 
+        {% trans "Save" %}
+    </button>
+    <button class="btn btn-danger" data-bind="click: function(){console.log('todo')}, css: {disabled: !canBeSaved()}">
+        <i class="ion-android-cancel"></i>
+        {% trans "Cancel" %}
+    </button>
+    
+</div>
+
 
 <!--/ko-->
 <!--/ko-->

@@ -50,7 +50,7 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(true);
             this.files = ko.observableArray([]);
-            this.initialValue = params.form.value() || undefined;
+            this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
 
             this.switchCanvas = function(canvasId){
@@ -395,7 +395,7 @@ define([
                     console.log('Couldn\'t create observation cross references.');
                 }
 
-                params.value({ 
+                params.form.savedData({ 
                     observationReferenceTileId: self.observationReferenceTileId(),
                     parts: self.parts().map(x => 
                         {
@@ -411,7 +411,7 @@ define([
                     )
                 });
 
-                self.snapshot = params.form.value();
+                self.snapshot = params.form.savedData();
                 params.form.complete(true);
             };
 
@@ -465,7 +465,7 @@ define([
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
 
 
-                self.observationReferenceTileId(params.form.value()?.observationReferenceTileId);               
+                self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);               
                 parts.forEach(async(part) => {
                     part.resourceid = part.data[physicalThingPartNodeId][0].resourceId; 
                     const related = await resourceUtils.lookupResourceInstanceData(part.resourceid);
@@ -500,7 +500,7 @@ define([
                             params.form.complete(true);
                         }
                     });
-                    const savedValue = params.form.value()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
+                    const savedValue = params.form.savedData()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
                     if(savedValue) {
                         
                         part.datasetFiles(savedValue.datasetFiles.map(x => { return {...x, tileId:ko.observable(x.tileId)}}));
@@ -522,7 +522,7 @@ define([
                     });
                 });
                 self.parts(parts);
-                self.snapshot = params.form.value();
+                self.snapshot = params.form.savedData();
                 self.selectedPart(self.parts()[0]);
             }
      
