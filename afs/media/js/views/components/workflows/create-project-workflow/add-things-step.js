@@ -343,6 +343,7 @@ define([
                                 usedSetTileId: ko.unwrap(self.usedSetTileId),
                             };    
                         }));
+                        saveCollectionRelationships();
 
                         self.saving(false);
                         self.complete(true);
@@ -353,7 +354,7 @@ define([
         params.form.save = self.submit;
         params.form.onSaveSuccess = function() {};
         
-        params.form.saveOnQuit(function() {
+        const saveCollectionRelationships = () => {
             var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             var rrTemplate = [{ 
                 "resourceId": ko.unwrap(self.collectionResourceId),
@@ -376,7 +377,7 @@ define([
                     console.log(value.resourceId, "related resource is created");
                 });
             });
-        });
+        };
 
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,

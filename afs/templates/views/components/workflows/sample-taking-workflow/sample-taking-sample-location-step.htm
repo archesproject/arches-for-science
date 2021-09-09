@@ -33,7 +33,7 @@
         </div>
     </div>
 
-
+    <div class="workbench-content-container">
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
             <div class="card">
@@ -384,37 +384,28 @@
                 {% endblock form_widgets %}
                 <!-- /ko -->
 
-                {% block form_buttons %}
-                    <!-- ko if: $data.tileDirty() -->
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 0 5px;
-                        "
-                    >
-                        <button 
-                            class="btn btn-success" 
-                            style="width: 48%;"
-                            data-bind="click: $data.saveSampleLocationTile"
-                        >
-                            <i class="ion-android-cloud-done"></i>
-                            <span style="padding-left: 4px">{% trans 'Save' %}</span>
-                        </button>
-                        <button 
-                            class="btn btn-danger" 
-                            style="width: 48%;"
-                            data-bind="click: $data.resetSampleLocationTile"
-                        >
-                            <i class="ion-android-cancel"></i>
-                            <span style="padding-left: 4px">{% trans 'Cancel' %}</span>
-                        </button>
-                    </div>
-                    <!-- /ko -->
-                {% endblock form_buttons %}
             </div>
         </div>
     </div>
+    </div>
+    {% block form_buttons %}
+    <div class="workbench-button-panel">
+        <button 
+            class="btn btn-success" 
+            data-bind="click: $data.saveSampleLocationTile, css: {disabled: !$data.tileDirty()}"
+        >
+            <i class="ion-android-cloud-done"></i>
+            <span style="padding-left: 4px">{% trans 'Save' %}</span>
+        </button>
+        <button 
+            class="btn btn-danger" 
+            data-bind="click: $data.resetSampleLocationTile, css: {disabled: !$data.tileDirty()}"
+        >
+            <i class="ion-android-cancel"></i>
+            <span style="padding-left: 4px">{% trans 'Cancel' %}</span>
+        </button>
+    </div>
+    {% endblock form_buttons %}
     <!-- /ko -->
 
     {{ block.super }}

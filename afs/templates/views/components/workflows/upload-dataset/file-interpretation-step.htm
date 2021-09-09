@@ -151,62 +151,62 @@
         <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Dataset Details'"></h4>
     </div>
 </div>
-<div class="file-workbench-filter">
-    <h2 class="file-workbench-filter-header">{% trans 'Datasets' %}</h2>
-    <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
-        data-bind="textInput: digitalResourceFilter"></input>
-    <span class="clear-node-search" data-bind="visible: digitalResourceFilter().length > 0, click: function() { digitalResourceFilter(''); }"><i
-            class="fa fa-times-circle"></i></span>
-</div>
-<div class='file-workbench-files'>
-    <!-- ko foreach: { data: filteredDigitalResources, as:'digitalResource'} -->
-    <div class='file-workbench-file' style="display: inline-flex;"
-        data-bind="css: {'selected-photo': ko.unwrap($parent.selectedDigitalResource) === digitalResource}, click: function(ri){
-            $parent.selectedDigitalResource(ri);
-        }, container: '.file-workbench-files'">
-        <i role="presentation" data-bind="class: 'fa fa-file'"></i>
-        <div class='file-name' data-bind="text: digitalResource.resource.Name.Name_content['@display_value']"></div>
+<div class="workbench-content-container">
+    <div class="file-workbench-filter">
+        <h2 class="file-workbench-filter-header">{% trans 'Datasets' %}</h2>
+        <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
+            data-bind="textInput: digitalResourceFilter"></input>
+        <span class="clear-node-search" data-bind="visible: digitalResourceFilter().length > 0, click: function() { digitalResourceFilter(''); }"><i
+                class="fa fa-times-circle"></i></span>
     </div>
-    <!-- /ko -->
-</div>
-
-<div class="file-workbench-filter">
-    <h2 class="file-workbench-filter-header">{% trans 'Data Files' %}</h2>
-    <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
-        data-bind="textInput: fileFilter"></input>
-    <span class="clear-node-search"
-        data-bind="visible: fileFilter().length > 0, click: function() { fileFilter(''); }"><i
-            class="fa fa-times-circle"></i></span>
-</div>
-<div class='file-workbench-files'>
-    <!-- ko foreach: { data: filteredFiles, as:'file'} -->
-    <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {'selected-photo': ko.unwrap($parent.selectedFile) === file}, click: function(f){
-            $parent.selectedFile(f);
-        }, container: '.file-workbench-files'">
-        <i role="presentation" data-bind="class: 'fa fa-file'"></i>
-        <div class='file-name' data-bind="text: file.file_details[0].name"></div>
+    <div class='file-workbench-files'>
+        <!-- ko foreach: { data: filteredDigitalResources, as:'digitalResource'} -->
+        <div class='file-workbench-file' style="display: inline-flex;"
+            data-bind="css: {'selected-photo': ko.unwrap($parent.selectedDigitalResource) === digitalResource}, click: function(ri){
+                $parent.selectedDigitalResource(ri);
+            }, container: '.file-workbench-files'">
+            <i role="presentation" data-bind="class: 'fa fa-file'"></i>
+            <div class='file-name' data-bind="text: digitalResource.resource.Name.Name_content['@display_value']"></div>
+        </div>
+        <!-- /ko -->
     </div>
-    <!-- /ko -->
-</div>
 
-<div style="display: flex; flex-direction: column;">
-    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end;">
-        <h2 class="file-workbench-filter-header">{% trans 'File Parameters' %}</h2>
+    <div class="file-workbench-filter">
+        <h2 class="file-workbench-filter-header">{% trans 'Data Files' %}</h2>
+        <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
+            data-bind="textInput: fileFilter"></input>
+        <span class="clear-node-search"
+            data-bind="visible: fileFilter().length > 0, click: function() { fileFilter(''); }"><i
+                class="fa fa-times-circle"></i></span>
     </div>
-    <textarea data-bind="textInput: fileStatementParameter" rows="4" class="form-control" style="width: 100%; height:initial" 
-    placeholder="{% trans 'e.g.: .txt' %}"></textarea>
-</div>
+    <div class='file-workbench-files'>
+        <!-- ko foreach: { data: filteredFiles, as:'file'} -->
+        <div class='file-workbench-file' style="display: inline-flex;" data-bind="css: {'selected-photo': ko.unwrap($parent.selectedFile) === file}, click: function(f){
+                $parent.selectedFile(f);
+            }, container: '.file-workbench-files'">
+            <i role="presentation" data-bind="class: 'fa fa-file'"></i>
+            <div class='file-name' data-bind="text: file.file_details[0].name"></div>
+        </div>
+        <!-- /ko -->
+    </div>
 
-<div>
-    <h2 class="file-workbench-filter-header">{% trans 'File Interpretation' %}</h2>
-    <textarea data-bind="textInput: fileStatementInterpretation" rows="4" class="form-control" style="width: 100%; height:initial"
-    placeholder="{% trans 'e.g.: .txt' %}"></textarea>
+    <div style="display: flex; flex-direction: column;">
+        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end;">
+            <h2 class="file-workbench-filter-header">{% trans 'File Parameters' %}</h2>
+        </div>
+        <textarea data-bind="textInput: fileStatementParameter" rows="4" class="form-control" style="width: 100%; height:initial" 
+        placeholder="{% trans 'e.g.: .txt' %}"></textarea>
+    </div>
+
+    <div>
+        <h2 class="file-workbench-filter-header">{% trans 'File Interpretation' %}</h2>
+        <textarea data-bind="textInput: fileStatementInterpretation" rows="4" class="form-control" style="width: 100%; height:initial"
+        placeholder="{% trans 'e.g.: .txt' %}"></textarea>
+    </div>
 </div>
-<div style="margin-top: 10px;">
-    <!-- ko if: dirty -->
-    <button class="btn btn-shim btn-danger btn-labeled btn-sm fa fa-times" data-bind="click: reset">{% trans 'Cancel' %}</button>
-    <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: save">{% trans 'Save'%}</button>
-    <!-- /ko -->
+<div class="workbench-button-panel">
+    <button class="btn btn-success" data-bind="click: save, css: {disabled: !dirty()}"><i class="ion-android-cloud-done"></i> {% trans 'Save'%}</button>
+    <button class="btn btn-danger" data-bind="click: reset, css: {disabled: !dirty()}"><i class="ion-android-cancel"></i> {% trans 'Cancel' %}</button>
 </div>
 
 <!-- /ko -->

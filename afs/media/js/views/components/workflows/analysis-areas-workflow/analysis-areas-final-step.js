@@ -74,7 +74,7 @@ define([
                     }
                     info.push({
                         tileId: annotation.tileId,
-                        label: annotation.annotationLabel,
+                        name: annotation.annotationName,
                         annotator: annotation.annotator,
                     });
                 });
