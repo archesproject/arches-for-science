@@ -307,7 +307,6 @@ define([
 
                         if (tile.ok) {
                             json = await tile.json();
-                            console.log(file.tileId(), json.tileid);
                             file.tileId(json.tileid);
                         }
                     } 
