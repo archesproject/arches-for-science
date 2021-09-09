@@ -4,6 +4,14 @@
     margin-top: 20px;
 }
 
+.boxed {
+    position:relative;
+}
+
+#content-container {
+    z-index: 0;
+}
+
 .file-workbench-filter.series-data {
     position: relative;
     margin-top: 15px;
