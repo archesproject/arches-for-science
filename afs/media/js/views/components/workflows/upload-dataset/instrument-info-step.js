@@ -136,6 +136,10 @@ define([
             params.form.hasUnsavedData(false);
         };
 
+        self.instrumentValue.subscribe(function(val){
+            params.form.dirty(Boolean(val));
+        });
+
         params.form.save = function() {
             params.form.complete(false);
             if (!self.instrumentValue()){
@@ -185,6 +189,7 @@ define([
                     self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
                     params.form.savedData(params.form.value());
                     params.form.complete(true);
+                    params.form.dirty(false);
                     params.pageVm.alert("");
                 });
         };
