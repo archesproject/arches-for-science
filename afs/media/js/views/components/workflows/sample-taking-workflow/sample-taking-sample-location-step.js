@@ -727,6 +727,7 @@ define([
             
                                                                         self.savingTile(false);
                                                                         params.dirty(true);
+                                                                        params.form.complete(true);
 
                                                                         self.drawFeatures([]);
                                                                     });

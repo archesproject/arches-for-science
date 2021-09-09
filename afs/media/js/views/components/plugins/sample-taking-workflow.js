@@ -98,6 +98,7 @@ define([
                     name: 'sample-location-step', /* unique to workflow */
                     required: true,
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
+                    hiddenWorkflowButtons: ['undo', 'save'],
                     layoutSections: [
                         {
                             componentConfigs: [
