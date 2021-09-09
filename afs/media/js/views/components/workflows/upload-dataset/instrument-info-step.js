@@ -28,9 +28,9 @@ define([
         const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
 
         const getProp = function(key, prop) {
-            if (ko.unwrap(params.value) && params.value()[key])
-                return params.value()[key][prop] || params.value()[key];
-            else {
+            if (ko.unwrap(params.value) && params.value()[key]) {
+                return prop ? params.value()[key][prop] : params.value()[key];
+            } else {
                 return null;
             } 
         };
@@ -137,7 +137,9 @@ define([
         };
 
         params.form.save = function() {
-            if(!self.instrumentValue()){
+            params.form.complete(false);
+            if (!self.instrumentValue()){
+                params.form.error(true);
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
                 return;
             }
