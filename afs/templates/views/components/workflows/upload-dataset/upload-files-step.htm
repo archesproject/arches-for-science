@@ -25,6 +25,7 @@
 </div>
 
 <div class="file-chart-upload-panel">
+    <!-- ko if: files().length === 0 -->
     <div class="gallery-controls new-tile">
         <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
             <div class="file-select-window">
@@ -54,38 +55,50 @@
         <div class="dropzone" style="min-height: 100%; display:none;">
             <div id="hidden-dz-previews" class="dropzone-previews" data-bind="css: uniqueidClass"></div>
         </div>
-      
-        <!-- ko if: files().length > 0 -->
-        <div style="background-color: white; padding: 45px;">
-            <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 485px; border: solid 1px lightgrey; padding: 20px;">
-                <!-- ko foreach: {data: files, as: 'file'} -->
-                    <div class="file-workbench-file">
-                        <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
-                            <span><i class="fa fa-file fa-lg"></i></span>
-                            <span class="text-main mar-no text-overflow" style="flex-grow: 1;" data-bind="text: file.fileInfo.name"></span>
-                            <!-- ko if: file.fileInfo.error -->
-                            <span class="dz-error text-danger text-sm"  data-bind="text: '{% trans " error" %}'"></span>
-                            <!-- /ko -->
-                            <div class="file-size-label">
-                                <span class="text-sm" data-bind="html: $parent.formatSize(file.fileInfo)"></span>
-                            </div>
-                            <!-- ko if: file.fileInfo.uploaded -->
-                            <div class="media-right">
-                                <button class="btn btn-xs btn-danger btn-file-cancel"><i class="ion ion-cloud"></i></button>
-                            </div>
-                            <!-- /ko -->
-                            <!-- ko ifnot: file.fileInfo.uploaded -->
-                            <div class="media-right" data-bind="click: $parent.removeFile">
-                                <button class="btn btn-xs btn-danger btn-file-cancel"><i
-                                        class="ion ion-close"></i></button>
-                            </div>
-                            <!-- /ko -->
-                        </div>
-                    </div>
-                <!-- /ko -->
-            </div>
-        </div>
-        <!-- /ko -->
     </div>
+    <!-- /ko -->
+      
+    <!-- ko if: files().length > 0 -->
+    <div style="background-color: white; padding: 45px;">
+        <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 485px; border: solid 1px lightgrey; padding: 20px;">
+            <div class="dropzone-photo-upload" style="border: dashed 1px purple; padding: 40px; text-align: center;" data-bind="dropzone: dropzoneOptions">
+                <div class="file-workbench-links">
+                    <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                        <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span>
+                        <span>{% trans "to upload more files" %}</span>
+                    </a>
+                </div>
+                <div style="min-height: 100%;">
+                    <div id="hidden-dz-previews" style="display:none"></div>
+                </div>
+            </div>
+            <!-- ko foreach: {data: files, as: 'file'} -->
+                <div class="file-workbench-file">
+                    <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
+                        <span><i class="fa fa-file fa-lg"></i></span>
+                        <span class="text-main mar-no text-overflow" style="flex-grow: 1;" data-bind="text: file.fileInfo.name"></span>
+                        <!-- ko if: file.fileInfo.error -->
+                        <span class="dz-error text-danger text-sm"  data-bind="text: '{% trans " error" %}'"></span>
+                        <!-- /ko -->
+                        <div class="file-size-label">
+                            <span class="text-sm" data-bind="html: $parent.formatSize(file.fileInfo)"></span>
+                        </div>
+                        <!-- ko if: file.fileInfo.uploaded -->
+                        <div class="media-right">
+                            <button class="btn btn-xs btn-danger btn-file-cancel"><i class="ion ion-cloud"></i></button>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: file.fileInfo.uploaded -->
+                        <div class="media-right" data-bind="click: $parent.removeFile">
+                            <button class="btn btn-xs btn-danger btn-file-cancel"><i
+                                    class="ion ion-close"></i></button>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
 </div>
 {% endblock main_menu %}

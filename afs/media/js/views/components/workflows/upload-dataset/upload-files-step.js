@@ -9,8 +9,8 @@ define([
     return ko.components.register('upload-files-step', {
         viewModel: function(params) {
             var self = this;
-            const physicalThingId = params.projectinfo["select-phys-thing-step"][0][1].physicalThing;
-            const observationInfo = params.observationinfo['instrument-info'][0][1];
+            const physicalThingId = params.projectinfo["select-phys-thing-step"].savedData().physicalThing;
+            const observationInfo = params.observationinfo['instrument-info'].savedData();
             const rendererByInstrumentLookup = {
                 "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
@@ -87,20 +87,7 @@ define([
                 };
             };
 
-
-
             this.init = function() {
-                // params.form.value({
-                //     'files': params.form.value()?.files ?? [],
-                //     'datasetName': params.form.value()?.datasetName ?? '',
-                // });
-                // params.form.value({
-                //     'datasetName': params.form.value()?.files ?? [],
-                //     'datasetId': params.form.value()?.datasetName ?? '',
-                //     'files': self.files().map(function(file){
-                //         return {fileInfo: file.fileInfo};
-                //     })
-                // });
                 this.physicalthingReferenceTileId = params.form.value()?.physicalthingReferenceTileId ?? "";
                 this.observationReferenceTileId = params.form.value()?.observationReferenceTileId ?? "";
                 this.datasetId = params.form.value()?.datasetId ?? "";
@@ -123,23 +110,22 @@ define([
                 self.datasetName(params.form.value()?.datasetName);
             }
 
-            this.dirty = params.form.hasUnsavedData;
+            this.dirty = params.form.dirty;
 
             this.datasetName.subscribe(function(name) {
-                params.form.hasUnsavedData(name !== params.form.value()?.datasetName);
+                params.form.dirty(name !== "" && name !== params.form.value()?.datasetName && self.files().length > 0);
             });
             this.files.subscribe(function(files){
-                params.form.hasUnsavedData(false);
+                params.form.dirty(false);
                 files.forEach(function(file){
-                    if(!ko.unwrap(file.fileInfo.uploaded)){
-                        params.form.hasUnsavedData(true);
+                    if(!ko.unwrap(file.fileInfo.uploaded && params.form.value()?.datasetName !== "")){
+                        params.form.dirty(true);
                     }
                 })
             });
 
             this.addFiles = function(fileList) {
                 Array.from(fileList).forEach(function(file) {
-                    // file.fileId = ko.observable();
                     var fileTile = new FileTile();
                     fileTile.setFile(file);
                     self.files.push(fileTile);
@@ -227,9 +213,6 @@ define([
             };
 
             this.saveDatasetName = async() => {
-                // don't recreate datasets that already exist
-                //if(!!self.datasetId){ return self.datasetId; }
-
                 //Tile structure for the Digital Resource 'Name' nodegroup
                 const nameTemplate = {
                     "tileid": self.datasetNameTileId,

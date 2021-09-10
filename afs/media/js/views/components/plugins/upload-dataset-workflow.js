@@ -102,7 +102,7 @@ define([
                             ) {
                                 return sampleLocationStep;
                             }
-                            if (step.value() && step.value()['dataset-step'][0][1] === 'destructive') {
+                            if (step.workflowComponentAbstractLookup() && step.workflowComponentAbstractLookup()['dataset-step'].savedData() === 'destructive') {
                                 return uploadDatasetStep;
                             }
                         }
