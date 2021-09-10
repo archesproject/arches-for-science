@@ -90,11 +90,11 @@
     </div>
 </div>
 <div class="workbench-button-panel">
-    <button class="btn btn-success" data-bind="click: $data.save, css: { disabled: !canBeSaved(), 'btn-mint': true  }">
+    <button class="btn btn-success" data-bind="click: function(){$data.save()}, css: {disabled: !canBeSaved()}">
         <i class="ion-android-cloud-done"></i> 
         {% trans "Save" %}
     </button>
-    <button class="btn btn-danger" data-bind="click: function(){console.log('todo')}, css: {disabled: !canBeSaved()}">
+    <button class="btn btn-danger" data-bind="click: function(){$data.cancel()}, css: {disabled: !canBeSaved()}">
         <i class="ion-android-cancel"></i>
         {% trans "Cancel" %}
     </button>
