@@ -2,6 +2,7 @@
 Django settings for afs project.
 """
 
+from arches.arches.settings import BYPASS_CARDINALITY_TILE_VALIDATION
 import os
 import arches
 import inspect
@@ -23,6 +24,8 @@ TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "widgets", "templates"))
 TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
 
 APP_PATHNAME = ""
+
+BYPASS_CARDINALITY_TILE_VALIDATION = False
 
 CANTALOUPE_DIR = os.path.join(APP_ROOT, "uploadedfiles")
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
@@ -152,7 +155,7 @@ GRAPH_MODEL_CACHE_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 USER_GRAPH_PERMITTED_CARDS_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 USER_GRAPH_CARDWIDGETS_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 
-MOBILE_OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
+MOBILE_OAUTH_CLIENT_ID = "7celI8OVqhC5UViw3UZL6pbCwLuxIbiOuVfn4YGu"  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 MOBILE_DEFAULT_ONLINE_BASEMAP = {"default": "mapbox://styles/mapbox/streets-v9"}
 
 APP_TITLE = "Arches for Science"
