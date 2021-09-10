@@ -128,7 +128,7 @@ define([
                     });
                 }
             }
-        }
+        };
 
         this.resetTile = function() {
             if (self.startValue()) {
@@ -170,7 +170,7 @@ define([
                 },
             }).done(function(data) {
                 self.collectionResourceId(data.resourceinstance_id);
-                self.collectionTileId(data.tileid)
+                self.collectionTileId(data.tileid);
 
                 self.removedValues(self.startValue().filter(val => !self.value().includes(val)));
                 self.addedValues(self.value().filter(val => !self.startValue().includes(val)));
@@ -186,7 +186,7 @@ define([
                                 return {
                                     tileid: tile.tileid,
                                     resourceid: tile.resourceinstanceidfrom,
-                                }
+                                };
                             });
                             Promise.all(removeCollectionRelationships(tiles)).then(function(){
                                 self.savedData(
@@ -197,15 +197,14 @@ define([
                                         collectionTileId: ko.unwrap(self.collectionTileId),                            
                                         usedSetTileId: ko.unwrap(self.usedSetTileId),
                                     }
-                
                                 );
                                 self.saving(false);
                                 self.complete(true);
-                            })
+                            });
                         })
                     )
-                )
-            })
+                );
+            });
         };
 
         params.form.save = self.submit;
@@ -234,7 +233,7 @@ define([
                     self.usedSetTileId(data.tileid);
                 });
             return activityUsedSetToCreate;
-        }
+        };
 
         const saveCollectionRelationships = () => {
             const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
@@ -270,7 +269,7 @@ define([
             const relationshipsToRemove = self.removedValues().map(function(resourceid) {
                 return $.ajax({
                     url: arches.urls.related_resources + resourceid + "?paginate=false",
-                })
+                });
             });
             return relationshipsToRemove;
         };
@@ -291,7 +290,7 @@ define([
                     // eslint-disable-next-line no-console
                     console.log(resourceid, "related resource failed to remove");
                 });
-            })
+            });
             return tilesToRemove;
         };
 
