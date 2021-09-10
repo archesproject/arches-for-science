@@ -267,10 +267,10 @@ define([
                         x.nodeid === memberOfSetNodeid && x.resourceinstanceidto === self.collectionResourceId()
                     ).tileid;
 
-                    return $.ajax({
+                    $.ajax({
                         url: arches.urls.tile,
                         type: 'DELETE',
-                        data: {'tileid': tileid},
+                        data: JSON.stringyfy({'tileid': tileid}),
                     }).done(function() {
                         // eslint-disable-next-line no-console
                         console.log(resourceid, "related resource is removed");
