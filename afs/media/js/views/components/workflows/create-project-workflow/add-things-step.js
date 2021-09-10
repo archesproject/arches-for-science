@@ -174,27 +174,41 @@ define([
                 self.removedValues(self.startValue().filter(val => !self.value().includes(val)));
                 self.addedValues(self.value().filter(val => !self.startValue().includes(val)));
 
-                Promise.all(saveCollectionRelationships()).then(
-                    Promise.all(removeCollectionRelationships()).then(
-                        createActivityUsedSet().then(function(){
-                            console.log("finished", ko.unwrap(self.value))
-                            self.savedData(
-                                {
-                                    value: ko.unwrap(self.value),
-                                    projectResourceId: ko.unwrap(self.projectResourceId),
-                                    collectionResourceId: ko.unwrap(self.collectionResourceId),
-                                    collectionTileId: ko.unwrap(self.collectionTileId),                            
-                                    usedSetTileId: ko.unwrap(self.usedSetTileId),
+                createActivityUsedSet().then(
+                    Promise.all(saveCollectionRelationships()).then(
+                        Promise.all(getCollectionRelationshipTiles()).then(function(data) {
+                            const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
+                            const tiles = data.map(function(rr){
+                                const tile = rr.resource_relationships.find(x => 
+                                    x.nodeid === memberOfSetNodeid && x.resourceinstanceidto === self.collectionResourceId()
+                                );
+                                return {
+                                    tileid: tile.tileid,
+                                    resourceid: tile.resourceinstanceidfrom,
                                 }
-            
-                            );
-                            self.saving(false);
-                            self.complete(true);
+                            });
+                            console.log(tiles)
+                            Promise.all(removeCollectionRelationships(tiles)).then(function(){
+                                console.log("finished", ko.unwrap(self.value))
+                                self.savedData(
+                                    {
+                                        value: ko.unwrap(self.value),
+                                        projectResourceId: ko.unwrap(self.projectResourceId),
+                                        collectionResourceId: ko.unwrap(self.collectionResourceId),
+                                        collectionTileId: ko.unwrap(self.collectionTileId),                            
+                                        usedSetTileId: ko.unwrap(self.usedSetTileId),
+                                    }
+                
+                                );
+                                self.saving(false);
+                                self.complete(true);
+                            })
                         })
                     )
                 )
             })
         };
+
         params.form.save = self.submit;
         params.form.onSaveSuccess = function() {};
         
@@ -255,33 +269,36 @@ define([
             return relationshipsToCreate;
         };
 
-        const removeCollectionRelationships = () => {
+        const getCollectionRelationshipTiles = () => {
             console.log("removing is running")
-            const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             const relationshipsToRemove = self.removedValues().map(function(resourceid) {
                 return $.ajax({
                     url: arches.urls.related_resources + resourceid + "?paginate=false",
-                }).done(function(data) {
-                    console.log("2nd ajax is starting")
-                    const tileid = data.resource_relationships.find(x => 
-                        x.nodeid === memberOfSetNodeid && x.resourceinstanceidto === self.collectionResourceId()
-                    ).tileid;
-
-                    $.ajax({
-                        url: arches.urls.tile,
-                        type: 'DELETE',
-                        data: JSON.stringify({'tileid': tileid}),
-                    }).done(function() {
-                        // eslint-disable-next-line no-console
-                        console.log(resourceid, "related resource is removed");
-                    }).fail(function(){
-                        self.value.push(resourceid);
-                        // eslint-disable-next-line no-console
-                        console.log(resourceid, "related resource failed to remove");
-                    });
                 })
             });
+            console.log(relationshipsToRemove)
             return relationshipsToRemove;
+        };
+
+        const removeCollectionRelationships = (tiles) => {
+            const tilesToRemove = tiles.map(function(tile) {
+                const tileid = tile.tileid;
+                const resourceid = tile.resourceid;
+                console.log(tileid, resourceid, tile)
+                return $.ajax({
+                    url: arches.urls.tile,
+                    type: 'DELETE',
+                    data: JSON.stringify({'tileid': tileid}),
+                }).done(function() {
+                    // eslint-disable-next-line no-console
+                    console.log(resourceid, "related resource is removed");
+                }).fail(function(){
+                    self.value.push(resourceid);
+                    // eslint-disable-next-line no-console
+                    console.log(resourceid, "related resource failed to remove");
+                });
+            })
+            return tilesToRemove;
         };
 
         this.targetResourceSelectConfig = {
