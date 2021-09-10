@@ -350,6 +350,13 @@ define([
                 }
             };
 
+            this.cancel = () => {
+                if(self.canBeSaved()){
+                    self.init();
+                }
+                self.parts.valueHasMutated();
+            }
+
             this.save = async() => {
                 const incompleteInputs = self.getIncompleteInputs();
                 if(incompleteInputs.length) { 
@@ -464,18 +471,18 @@ define([
 
 
                 self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);               
-                parts.forEach(async(part) => {
+                for (const part of parts) {
                     part.resourceid = part.data[physicalThingPartNodeId][0].resourceId; 
                     const related = await resourceUtils.lookupResourceInstanceData(part.resourceid);
                     const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501"; 
                     const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
                     const datasetTile = related?._source.tiles.find((tile) => tile.nodegroup_id === digitalReferenceNodeGroupId);
-                    part.datasetFiles = ko.observableArray([]);
-                    part.datasetName = ko.observable();
-                    part.datasetId = ko.observable();
-                    part.nameTileId = ko.observable();
-                    part.resourceReferenceId = ko.observable();
-                    part.nameDirty = ko.observable(false);
+                    part.datasetFiles = part.datasetFiles || ko.observableArray([]);
+                    part.datasetName = part.datasetName || ko.observable();
+                    part.datasetId = part.datasetId || ko.observable();
+                    part.nameTileId = part.nameTileId || ko.observable();
+                    part.resourceReferenceId = part.resourceReferenceId || ko.observable();
+                    part.nameDirty = part.nameDirty || ko.observable(false);
                     part.displayname = part.data[physicalThingPartNameNodeId];
                     if (datasetTile) {
                         const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
@@ -493,11 +500,13 @@ define([
                         part.nameTileId(nameTileId);
                     }
                     
-                    part.datasetId.subscribe(function(val){
-                        if (val) {
-                            params.form.complete(true);
-                        }
-                    });
+                    if(!part.datasetId.getSubscriptionsCount()){
+                        part.datasetId.subscribe(function(val){
+                            if (val) {
+                                params.form.complete(true);
+                            }
+                        });
+                    }
                     const savedValue = params.form.savedData()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
                     if(savedValue) {
                         
@@ -512,15 +521,19 @@ define([
                             self.annotationNodes.valueHasMutated();
                         }
                     }
-                    part.datasetName.subscribe(() => {
-                        const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
-                        if(ko.unwrap(part.datasetName) != datasetSnapshot?.datasetName) {
-                            part.nameDirty(true);
-                        }
-                    });
-                });
+                    if(!part.datasetName.getSubscriptionsCount()){
+                        part.datasetName.subscribe((newValue) => {
+                            const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
+                            if(newValue != datasetSnapshot?.datasetName) {
+                                part.nameDirty(true);
+                            } else {
+                                part.nameDirty(false);
+                            }
+                        });
+                    }
+                };
                 self.parts(parts);
-                self.snapshot = params.form.savedData();
+                self.save();
                 self.selectedPart(self.parts()[0]);
             }
      
