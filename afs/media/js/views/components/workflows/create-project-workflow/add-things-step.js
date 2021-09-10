@@ -169,7 +169,6 @@ define([
                     'transaction_id': params.form.workflowId
                 },
             }).done(function(data) {
-                console.log(data)
                 self.collectionResourceId(data.resourceinstance_id);
                 self.collectionTileId(data.tileid)
 
@@ -189,9 +188,7 @@ define([
                                     resourceid: tile.resourceinstanceidfrom,
                                 }
                             });
-                            console.log(tiles)
                             Promise.all(removeCollectionRelationships(tiles)).then(function(){
-                                console.log("finished", ko.unwrap(self.value))
                                 self.savedData(
                                     {
                                         value: ko.unwrap(self.value),
@@ -235,13 +232,11 @@ define([
                     }
                 }).done(function(data){
                     self.usedSetTileId(data.tileid);
-                    console.log("usedSet is created")
                 });
             return activityUsedSetToCreate;
         }
 
         const saveCollectionRelationships = () => {
-            console.log("adding is running")
             const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             const rrTemplate = [{ 
                 "resourceId": ko.unwrap(self.collectionResourceId),
@@ -272,13 +267,11 @@ define([
         };
 
         const getCollectionRelationshipTiles = () => {
-            console.log("removing is running")
             const relationshipsToRemove = self.removedValues().map(function(resourceid) {
                 return $.ajax({
                     url: arches.urls.related_resources + resourceid + "?paginate=false",
                 })
             });
-            console.log(relationshipsToRemove)
             return relationshipsToRemove;
         };
 
@@ -286,7 +279,6 @@ define([
             const tilesToRemove = tiles.map(function(tile) {
                 const tileid = tile.tileid;
                 const resourceid = tile.resourceid;
-                console.log(tileid, resourceid, tile)
                 return $.ajax({
                     url: arches.urls.tile,
                     type: 'DELETE',
