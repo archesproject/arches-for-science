@@ -165,9 +165,11 @@ define([
                     'nodeid': collectionNameNodeId,
                     'data':  ("Collection for " + researchActivityName),
                     'tileid': ko.unwrap(self.collectionTileId),
-                    'resourceinstanceid': ko.unwrap(self.collectionResourceId)
-                }
+                    'resourceinstanceid': ko.unwrap(self.collectionResourceId),
+                    'transaction_id': params.form.workflowId
+                },
             }).done(function(data) {
+                console.log(data)
                 self.collectionResourceId(data.resourceinstance_id);
                 self.collectionTileId(data.tileid)
 
