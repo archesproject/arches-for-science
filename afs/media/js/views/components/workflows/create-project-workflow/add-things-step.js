@@ -270,7 +270,7 @@ define([
                     $.ajax({
                         url: arches.urls.tile,
                         type: 'DELETE',
-                        data: JSON.stringyfy({'tileid': tileid}),
+                        data: JSON.stringify({'tileid': tileid}),
                     }).done(function() {
                         // eslint-disable-next-line no-console
                         console.log(resourceid, "related resource is removed");
