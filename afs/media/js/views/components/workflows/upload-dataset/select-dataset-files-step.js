@@ -37,7 +37,6 @@ define([
             this.selectedAnnotationTile = ko.observable();
             this.selectedPart = ko.observable();
             this.partFilter = ko.observable("");
-            this.alert = params.alert;
             this.annotations = ko.observableArray([]);
             this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
@@ -354,7 +353,7 @@ define([
             this.save = async() => {
                 const incompleteInputs = self.getIncompleteInputs();
                 if(incompleteInputs.length) { 
-                    params.pageVm.alert(new params.pageVm.AlertViewModel(
+                    params.pageVm.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
                         "Dataset Name Required", 
                         `A dataset name was not provided for parts: ${incompleteInputs.map(x => x.displayname).join(', ')}`
