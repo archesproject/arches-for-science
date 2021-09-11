@@ -53,6 +53,7 @@ define([
                     text: 'Blah Blah',
                 },
                 required: true,
+                hiddenWorkflowButtons: ['undo', 'save'],
                 layoutSections: [
                     {
                         sectionTitle: null,
