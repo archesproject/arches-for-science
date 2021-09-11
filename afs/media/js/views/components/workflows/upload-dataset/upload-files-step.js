@@ -186,7 +186,7 @@ define([
                     await self.createObservationToDatasetXRef(datasetResourceId);
                     await self.createPhysicalThingToDatasetXRef(datasetResourceId);
 
-                    params.value({ 
+                    const dataToSave = {
                         physicalthingReferenceTileId: self.physicalthingReferenceTileId,
                         observationReferenceTileId: self.observationReferenceTileId,
                         datasetName: self.datasetName(),
@@ -195,9 +195,9 @@ define([
                         files: self.files().map(function(file){
                             return {fileInfo: file.fileInfo};
                         })
-                    });
+                    };
 
-                    params.form.savedData(params.form.addedData());
+                    params.form.savedData(dataToSave);
                     params.form.complete(true);
                 } catch(err) {
                     // eslint-disable-next-line no-console
