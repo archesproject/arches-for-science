@@ -118,7 +118,7 @@ define([
             this.files.subscribe(function(files){
                 params.form.dirty(false);
                 files.forEach(function(file){
-                    if(!ko.unwrap(file.fileInfo.uploaded && params.form.value()?.datasetName !== "")){
+                    if(!ko.unwrap(file.fileInfo.uploaded) && params.form.value()?.datasetName !== ""){
                         params.form.dirty(true);
                     }
                 })
