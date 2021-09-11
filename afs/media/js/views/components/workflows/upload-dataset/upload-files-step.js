@@ -165,7 +165,7 @@ define([
                 }
             };
 
-            params.form.save = this.save = async() => {
+            this.save = async() => {
                 if(!self.datasetName()) { 
                     params.pageVm.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
