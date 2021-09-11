@@ -167,14 +167,14 @@ define([
 
             params.form.save = this.save = async() => {
                 if(!self.datasetName()) { 
-                    params.form.alert(new params.form.AlertViewModel(
+                    params.pageVm.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
                         "Dataset Name Required", 
                         `A dataset name was not provided`
                     ));
                     return;
                 } else {
-                    params.form.alert('');
+                    params.pageVm.alert('');
                 }
 
                 try {
@@ -202,7 +202,7 @@ define([
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
-                    params.form.alert(new params.form.AlertViewModel(
+                    params.pageVm.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
                         'Error saving the Dataset',
                     ));
