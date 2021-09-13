@@ -129,7 +129,6 @@ define([
                     var fileTile = new FileTile();
                     fileTile.setFile(file);
                     self.files.push(fileTile);
-                    console.log(file)
                 });
             };
 
