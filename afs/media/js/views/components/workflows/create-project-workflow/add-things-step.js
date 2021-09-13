@@ -111,7 +111,7 @@ define([
 
         this.initialize = function(){
             if (params.value()) {
-                var cachedValue = ko.unwrap(params.value);
+                const cachedValue = ko.unwrap(params.value);
                 if (cachedValue['collectionResourceId']){
                     self.collectionResourceId(cachedValue['collectionResourceId']);
                 }
