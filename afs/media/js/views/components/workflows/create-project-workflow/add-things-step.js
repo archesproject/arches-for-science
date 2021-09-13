@@ -40,144 +40,16 @@ define([
 
         _.extend(this, params.form);
 
-        this.nodeLookupUpdated = ko.observable(true);
-        var collectionGraphId = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
-        $.getJSON(( arches.urls.api_card + collectionGraphId), function(data) {
-            var handlers = {
-                'after-update': [],
-                'tile-reset': []
-            };
-            var displayname = ko.observable(data.displayname);
-            var createLookup = function(list, idKey) {
-                return _.reduce(list, function(lookup, item) {
-                    lookup[item[idKey]] = item;
-                    return lookup;
-                }, {});
-            };
-
-            self.reviewer = data.userisreviewer;
-            self.provisionalTileViewModel = new ProvisionalTileViewModel({
-                tile: self.tile,
-                reviewer: data.userisreviewer
-            });
-
-            var graphModel = new GraphModel({
-                data: {
-                    nodes: data.nodes,
-                    nodegroups: data.nodegroups,
-                    edges: []
-                },
-                datatypes: data.datatypes
-            });
-
-            self.graphModel = graphModel;
-
-            self.topCards = _.filter(data.cards, function(card) {
-                var nodegroup = _.find(data.nodegroups, function(group) {
-                    return group.nodegroupid === card.nodegroup_id;
-                });
-                return !nodegroup || !nodegroup.parentnodegroup_id;
-            }).map(function(card) {
-                self.componentData.parameters.nodegroupid = self.componentData.parameters.nodegroupid || card.nodegroup_id;
-                return new CardViewModel({
-                    card: card,
-                    graphModel: graphModel,
-                    tile: null,
-                    resourceId: self.resourceId,
-                    displayname: displayname,
-                    handlers: handlers,
-                    cards: data.cards,
-                    tiles: data.tiles,
-                    provisionalTileViewModel: self.provisionalTileViewModel,
-                    cardwidgets: data.cardwidgets,
-                    userisreviewer: data.userisreviewer,
-                    loading: self.loading
-                });
-            });
-
-            self.card.subscribe(function(card){
-                if (ko.unwrap(card.widgets) && self.componentData.parameters.hiddenNodes) {
-                    card.widgets().forEach(function(widget){
-                        if (self.componentData.parameters.hiddenNodes.indexOf(widget.node_id()) > -1) {
-                            widget.visible(false);
-                        }
-                    });
-                }
-            });
-
-            self.topCards.forEach(function(topCard) {
-                topCard.topCards = self.topCards;
-            });
-
-            self.widgetLookup = createLookup(
-                data.widgets,
-                'widgetid'
-            );
-            self.cardComponentLookup = createLookup(
-                data['card_components'],
-                'componentid'
-            );
-            self.nodeLookup = createLookup(
-                graphModel.get('nodes')(),
-                'nodeid'
-            );
-            self.on = function(eventName, handler) {
-                if (handlers[eventName]) {
-                    handlers[eventName].push(handler);
-                }
-            };
-
-            self.flattenTree(self.topCards, []).forEach(function(item) {
-                if (item.constructor.name === 'CardViewModel' && item.nodegroupid === ko.unwrap(self.componentData.parameters.nodegroupid)) {
-                    if (ko.unwrap(self.componentData.parameters.parenttileid) && item.parent && ko.unwrap(self.componentData.parameters.parenttileid) !== item.parent.tileid) {
-                        return;
-                    }
-                    if (self.customCardLabel) item.model.name(ko.unwrap(self.customCardLabel));
-                    self.card(item);
-                    if (ko.unwrap(self.componentData.parameters.tileid)) {
-                        ko.unwrap(item.tiles).forEach(function(tile) {
-                            if (tile.tileid === ko.unwrap(self.componentData.parameters.tileid)) {
-                                self.tile(tile);
-                            }
-                        });
-                    } else if (ko.unwrap(self.componentData.parameters.createTile) !== false) {
-                        self.tile(item.getNewTile());
-                    }
-                }
-            });
-
-            self.componentData.parameters.card = self.card();
-            self.componentData.parameters.tile = self.tile();
-            self.componentData.parameters.loading = self.loading;
-            self.componentData.parameters.provisionalTileViewModel = self.provisionalTileViewModel;
-            self.componentData.parameters.reviewer = data.userisreviewer;
-            self.componentData.parameters.dirty = self.isDirty;
-            self.componentData.parameters.save = self.save;
-            self.componentData.parameters.tiles = self.tiles;
-
-            self.loading(false);
-        });
-
         var limit = 7;
         this.projectResourceId = ko.observable();
         this.collectionResourceId = ko.observable();
+        this.collectionTileId = ko.observable();
         this.usedSetTileId = ko.observable();
         this.reportDataLoading = ko.observable(params.loading());
 
         var researchActivityStepData = params.researchActivityStepData;
         var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
         this.projectResourceId(researchActivityStepData.resourceInstanceId);
-
-        if (ko.unwrap(self.savedData())){
-            var cachedValue = ko.unwrap(self.savedData());
-            // var cachedValue = ko.unwrap(self.savedData())[0];
-            if (cachedValue['collectionResourceId']){
-                self.collectionResourceId(cachedValue['collectionResourceId']);
-            }
-            if (cachedValue['usedSetTileId']){
-                self.usedSetTileId(cachedValue['usedSetTileId']);
-            }
-        }
 
         this.selectedTab = ko.observable();
         this.searchResults = {'timestamp': ko.observable()};
@@ -190,7 +62,6 @@ define([
             'search-results': ko.observable(),
         };
         this.totalResults = ko.observable();
-
         this.query = ko.observable(getQueryObject());
         this.selectedTerm = ko.observable();
         this.targetResources = ko.observableArray([]);
@@ -199,23 +70,28 @@ define([
         this.value = ko.observableArray([]).extend({
             rateLimit: 100
         });
+        this.startValue = ko.observableArray();
         this.selectedResources = ko.observableArray([]);
-        this.startValue = null;
+        this.addedValues = ko.observableArray();
+        this.removedValues = ko.observableArray();
 
         this.dirty = ko.pureComputed(function() {
-            return ko.unwrap(self.tile) ? self.tile().dirty() : false;
+            if (self.startValue() && self.value()){
+                return !!(self.startValue().find(x => !self.value().includes(x))
+                    || self.value().find(x => !self.startValue().includes(x)));
+            } else {
+                return false;
+            }
         });
         this.dirty.subscribe(function(dirty) {
-            if (dirty) {
-                params.dirty(dirty);
-            }
+            params.dirty(dirty);
         });
 
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
                 if (action.status === 'added') {
                     $.ajax({
-                        url: arches.urls.api_resources(ko.unwrap(action.value['resourceId'])),
+                        url: arches.urls.api_resources(ko.unwrap(action.value)),
                         data: {
                             format: 'json',
                             includetiles: 'false'
@@ -225,7 +101,7 @@ define([
                     });
                 } else if (action.status === 'deleted') {
                     self.selectedResources().forEach(function(val) {
-                        if (val.resourceinstanceid === ko.unwrap(action.value['resourceId'])) {
+                        if (val.resourceinstanceid === ko.unwrap(action.value)) {
                             self.selectedResources.remove(val);
                         }
                     });
@@ -233,51 +109,47 @@ define([
             });
         }, null, "arrayChange");
 
-        this.tile.subscribe(function(tile) {
-            self.startValue = tile.data[ko.unwrap(params.nodeid)]();
-            if (self.startValue) {
-                self.startValue.forEach(function(item) {
-                    self.value.push(koMapping.toJS(item));
-                });
+        this.initialize = function(){
+            if (params.value()) {
+                const cachedValue = ko.unwrap(params.value);
+                if (cachedValue['collectionResourceId']){
+                    self.collectionResourceId(cachedValue['collectionResourceId']);
+                }
+                if (cachedValue['collectionTileId']){
+                    self.collectionTileId(cachedValue['collectionTileId']);
+                }
+                if (cachedValue['usedSetTileId']){
+                    self.usedSetTileId(cachedValue['usedSetTileId']);
+                }
+                if (cachedValue["value"]){
+                    self.startValue(ko.unwrap(cachedValue["value"]));
+                    self.startValue().forEach(function(val){
+                        self.value.push(val);
+                    });
+                }
             }
-        });
+        };
 
         this.resetTile = function() {
-            self.tile().data[ko.unwrap(params.nodeid)](self.startValue);
-            self.value.removeAll();
-            if (self.startValue) {
-                self.startValue.forEach(function(item) {
-                    self.value.push(koMapping.toJS(item));
+            if (self.startValue()) {
+                self.value.removeAll();
+                self.startValue().forEach(function(val){
+                    self.value.push(val);
                 });
             }
         };
         params.form.reset = this.resetTile;
 
         this.updateTileData = function(resourceid) {
-            var tilevalue = self.tile().data[ko.unwrap(params.nodeid)];
             var val = self.value().find(function(item) {
-                return ko.unwrap(item['resourceId']) === resourceid;
+                return ko.unwrap(item) === resourceid;
             });
 
             if (!!val) {
                 // remove item, we don't want users to add the same item twice
                 self.value.remove(val);
             } else {
-                var nodeConfig;
-                var nodeData = ko.unwrap(self.nodeLookup)[ko.unwrap(params.nodeid)];
-
-                if (nodeData) {
-                    nodeConfig = nodeData.config.graphs().find(function(config) {
-                        return config.graphid === graphId;
-                    });
-
-                    self.value.push({'resourceId': resourceid, 'ontologyProperty': nodeConfig['ontologyProperty'], 'inverseOntologyProperty': nodeConfig['inverseOntologyProperty']});
-                }
-            }
-            if (self.value().length === 0 && self.startValue === null) {
-                tilevalue(null);
-            } else {
-                tilevalue(self.value());
+                self.value.push(resourceid);
             }
         };
 
@@ -292,11 +164,54 @@ define([
                 data: {
                     'nodeid': collectionNameNodeId,
                     'data':  ("Collection for " + researchActivityName),
-                    'tileid': null,
-                    'resourceinstanceid': ko.unwrap(self.collectionResourceId)
-                }
+                    'tileid': ko.unwrap(self.collectionTileId),
+                    'resourceinstanceid': ko.unwrap(self.collectionResourceId),
+                    'transaction_id': params.form.workflowId
+                },
             }).done(function(data) {
                 self.collectionResourceId(data.resourceinstance_id);
+                self.collectionTileId(data.tileid);
+
+                self.removedValues(self.startValue().filter(val => !self.value().includes(val)));
+                self.addedValues(self.value().filter(val => !self.startValue().includes(val)));
+
+                createActivityUsedSet().then(
+                    Promise.all(saveCollectionRelationships()).then(
+                        Promise.all(getCollectionRelationshipTiles()).then(function(data) {
+                            const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
+                            const tiles = data.map(function(rr){
+                                const tile = rr.resource_relationships.find(x => 
+                                    x.nodeid === memberOfSetNodeid && x.resourceinstanceidto === self.collectionResourceId()
+                                );
+                                return {
+                                    tileid: tile.tileid,
+                                    resourceid: tile.resourceinstanceidfrom,
+                                };
+                            });
+                            Promise.all(removeCollectionRelationships(tiles)).then(function(){
+                                self.savedData(
+                                    {
+                                        value: ko.unwrap(self.value),
+                                        projectResourceId: ko.unwrap(self.projectResourceId),
+                                        collectionResourceId: ko.unwrap(self.collectionResourceId),
+                                        collectionTileId: ko.unwrap(self.collectionTileId),                            
+                                        usedSetTileId: ko.unwrap(self.usedSetTileId),
+                                    }
+                                );
+                                self.saving(false);
+                                self.complete(true);
+                            });
+                        })
+                    )
+                );
+            });
+        };
+
+        params.form.save = self.submit;
+        params.form.onSaveSuccess = function() {};
+        
+        const createActivityUsedSet = () => {
+            const activityUsedSetToCreate = 
                 $.ajax({
                     url: arches.urls.api_node_value,
                     type: 'POST',
@@ -305,78 +220,78 @@ define([
                         'nodeid': activityUsedSetNodeId, // used_set (of Activity)
                         'data': JSON.stringify(
                             [{
-                                'resourceId': data.resourceinstance_id,
+                                'resourceId': ko.unwrap(self.collectionResourceId),
                                 'ontologyProperty': '',
                                 'inverseOntologyProperty':'',
                                 'resourceXresourceId':''
                             }]
                         ), 
                         'tileid': ko.unwrap(self.usedSetTileId),
-                        'resourceinstanceid': self.projectResourceId()
+                        'resourceinstanceid': ko.unwrap(self.projectResourceId)
                     }
                 }).done(function(data){
                     self.usedSetTileId(data.tileid);
-                    $.ajax({
-                        url: arches.urls.api_node_value,
-                        type: 'POST',
-                        data: {
-                            'nodeid': ko.unwrap(params.nodeid),
-                            'data': koMapping.toJSON(self.value),
-                            'resourceinstanceid': ko.unwrap(self.collectionResourceId),
-                            'tileid': self.tile().tileid
-                        }
-                    }).done(function(data) {
-                        if (data.tileid && self.tile().tileid === "") {
-                            self.tile().tileid = data.tileid;
-                        }
-                        self.startValue = data.data[ko.unwrap(params.nodeid)];
-                        self.tile()._tileData(koMapping.toJSON(data.data));
-
-                        self.savedData([data].map(function(savedDatum) {
-                            return {
-                                tileData: JSON.stringify(savedDatum.data),
-                                tileId: savedDatum.tileid,
-                                nodegroupId: savedDatum.nodegroup_id,
-                                resourceInstanceId: savedDatum.resourceinstance_id,
-                                projectResourceId: ko.unwrap(self.projectResourceId),
-                                collectionResourceId: ko.unwrap(self.collectionResourceId),
-                                usedSetTileId: ko.unwrap(self.usedSetTileId),
-                            };    
-                        }));
-                        saveCollectionRelationships();
-
-                        self.saving(false);
-                        self.complete(true);
-                    });
                 });
-            });
+            return activityUsedSetToCreate;
         };
-        params.form.save = self.submit;
-        params.form.onSaveSuccess = function() {};
-        
+
         const saveCollectionRelationships = () => {
-            var memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
-            var rrTemplate = [{ 
+            const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
+            const rrTemplate = [{ 
                 "resourceId": ko.unwrap(self.collectionResourceId),
                 "ontologyProperty": "",
                 "resourceXresourceId": "",
                 "inverseOntologyProperty": ""
             }];
-            self.value().forEach(function(value) {
-                $.ajax({
+            const relationshipsToCreate = self.addedValues().map(function(resourceid) {
+                return $.ajax({
                     url: arches.urls.api_node_value,
                     type: 'POST',
                     data: {
                         'nodeid': memberOfSetNodeid,
                         'data': koMapping.toJSON(rrTemplate),
-                        'resourceinstanceid': value.resourceId,
+                        'resourceinstanceid': resourceid,
                         'tileid': ''
                     }
                 }).done(function() {
                     // eslint-disable-next-line no-console
-                    console.log(value.resourceId, "related resource is created");
+                    console.log(resourceid, "related resource is created");
+                }).fail(function(){
+                    self.value.remove(resourceid);
+                    // eslint-disable-next-line no-console
+                    console.log(resourceid, "related resource failed to create");
                 });
             });
+            return relationshipsToCreate;
+        };
+
+        const getCollectionRelationshipTiles = () => {
+            const relationshipsToRemove = self.removedValues().map(function(resourceid) {
+                return $.ajax({
+                    url: arches.urls.related_resources + resourceid + "?paginate=false",
+                });
+            });
+            return relationshipsToRemove;
+        };
+
+        const removeCollectionRelationships = (tiles) => {
+            const tilesToRemove = tiles.map(function(tile) {
+                const tileid = tile.tileid;
+                const resourceid = tile.resourceid;
+                return $.ajax({
+                    url: arches.urls.tile,
+                    type: 'DELETE',
+                    data: JSON.stringify({'tileid': tileid}),
+                }).done(function() {
+                    // eslint-disable-next-line no-console
+                    console.log(resourceid, "related resource is removed");
+                }).fail(function(){
+                    self.value.push(resourceid);
+                    // eslint-disable-next-line no-console
+                    console.log(resourceid, "related resource failed to remove");
+                });
+            });
+            return tilesToRemove;
         };
 
         this.targetResourceSelectConfig = {
@@ -517,6 +432,8 @@ define([
         this.query.subscribe(function(query) {
             self.updateSearchResults(null, query['paging-filter']);
         });
+
+        this.initialize();
     }
 
     ko.components.register('add-things-step', {
