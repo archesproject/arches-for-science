@@ -80,7 +80,7 @@ define([
     
                     var digitalResourceName = val.displayname;
     
-                    var files = val.resource['File'].map(function(file){
+                    var files = val.resource?.File.map(function(file){
                         var statements = [];
                         var fileName = self.getResourceValue(file['file_details'][0], ['name']);
                         if (Array.isArray(file["FIle_Statement"])) {
@@ -95,7 +95,7 @@ define([
                             fileName: fileName,
                             statements: statements,
                         };
-                    });
+                    }) || [];
         
                     files.forEach(function(file){
                         var fileName = file.fileName;
