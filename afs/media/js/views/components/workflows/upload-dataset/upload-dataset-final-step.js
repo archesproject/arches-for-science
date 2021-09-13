@@ -29,7 +29,8 @@ define([
             ]
         };
 
-        this.uploadedDatasets = params.uploadedDatasets;
+        this.hasAnnotatedParts = Array.isArray(params.uploadedDatasets);
+        this.uploadedDatasets = this.hasAnnotatedParts ? params.uploadedDatasets : [params.uploadedDataset["upload-files-step"].savedData()];
 
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
