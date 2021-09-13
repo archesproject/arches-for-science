@@ -18,19 +18,25 @@ define([
             const physicalThingPartNodeGroupId = "fec59582-8593-11ea-97eb-acde48001122";
             const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
             const physicalThingPartNodeId = "b240c366-8594-11ea-97eb-acde48001122";
-            const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
-            const observationInfo = params.form.externalStepData.observationinfo.data['instrument-info'][0][1];
-            const rendererByInstrumentLookup = {
+            const projectInfo = params.projectInfo;
+            const observationInfo = params.observationInfo;
+            const datasetNameNodeGroupId = "d2fdae3d-ca7a-11e9-ad84-a4d18cec433a";
+            const datasetNameNodeId = "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a";
+            const datasetFileNodeGroupId = "7c486328-d380-11e9-b88e-a4d18cec433a";
+            const datasetFileNodeId = "7c486328-d380-11e9-b88e-a4d18cec433a";
+            const rendererLookup = {
                 "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
-                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"}
+                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"},
+                "image": {rendererid: "5e05aa2e-5db0-4922-8938-b4d2b7919733", renderer: "imagereader"},
+                "pdf": {rendererid: "09dec059-1ee8-4fbd-85dd-c0ab0428aa94", renderer: "pdfreader"},
             };
+
             this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb";
             this.samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
             this.selectedAnnotationTile = ko.observable();
             this.selectedPart = ko.observable();
             this.partFilter = ko.observable("");
-            this.alert = params.alert;
             this.annotations = ko.observableArray([]);
             this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
@@ -43,7 +49,7 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(true);
             this.files = ko.observableArray([]);
-            this.initialValue = params.form.value() || undefined;
+            this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
 
             this.switchCanvas = function(canvasId){
@@ -141,7 +147,7 @@ define([
                         "d2fdbc38-ca7a-11e9-a31a-a4d18cec433a": null,
                         "d2fdbeb8-ca7a-11e9-a294-a4d18cec433a": null
                     },
-                    "nodegroup_id": "d2fdae3d-ca7a-11e9-ad84-a4d18cec433a",
+                    "nodegroup_id": datasetNameNodeGroupId,
                     "parenttile_id": null,
                     "resourceinstance_id": ko.unwrap(part.datasetId),
                     "sortorder": 0,
@@ -149,7 +155,7 @@ define([
                     "transaction_id": params.form.workflowId
                 };
 
-                nameTemplate.data["d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"] = part.datasetName() || "";
+                nameTemplate.data[datasetNameNodeId] = part.datasetName() || "";
 
                 const tile = await window.fetch(arches.urls.api_tiles(part.datasetId() || ""), {
                     method: 'POST',
@@ -209,6 +215,31 @@ define([
                 }
             };
 
+            // this.removeDatasetFiles = async (part) => {
+            //     const savedDatasetFiles = self.snapshot?.parts.find(p => p.datasetId === part.datasetId()).datasetFiles
+            //     if (savedDatasetFiles) {
+            //         const currentTileIds = part.datasetFiles().map(val => ko.unwrap(val.tileId)) 
+            //         const savedTileIds = savedDatasetFiles.map(val => val.tileId) 
+            //         const tilesToDelete = savedTileIds.filter(tileid => !currentTileIds.includes(tileid));
+            //         tilesToDelete.forEach(async (tileid) => {
+            //             const tile = await window.fetch(arches.urls.api_tiles(tileid), {
+            //                 method: 'DELETE',
+            //                 credentials: 'include',
+            //                 body: JSON.stringify({'tileid': tileid})
+            //             });
+               
+            //             if (tile.ok) {
+            //                 json = await tile.json();
+            //                 console.log(json);
+            //             }
+            //         });
+            //     }
+            // }
+            // The above would need this corresponding fix in api.py
+            // def delete(self, request, tileid):
+            //     tileview = TileView()
+            //     return tileview.delete(request)
+
             this.saveDatasetFiles = async (part, datasetNameTileResourceId) => {
                 //Tile structure for the Digital Resource 'File' nodegroup
                 const fileTemplate = {
@@ -230,45 +261,54 @@ define([
                 const datasetFilesArray = part.datasetFiles();
                 for(let i = 0; i < datasetFilesArray.length; ++i){
                     const file = datasetFilesArray[i];
+                    let fileInfo;
                     // file has already been uploaded
-                    if(file.tileId()){ continue; }
+                    if (file.tileId()){ continue; }
                     // eslint-disable-next-line camelcase
                     fileTemplate.resourceinstance_id = datasetNameTileResourceId;
                     
-                    const fileInfo = {
-                        name: file.name,
-                        accepted: file.accepted,
-                        height: file.height,
-                        lastModified: file.lastModified,
-                        size: file.size,
-                        status: file.status,
-                        type: file.type,
-                        width: file.width,
-                        url: null,
-                        // eslint-disable-next-line camelcase
-                        file_id: null,
-                        index: i,
-                        content: window.URL.createObjectURL(file),
-                        error: file.error
-                    };
-                    if (file.name.split('.').pop() === 'txt'){
-                        fileInfo.renderer = rendererByInstrumentLookup[observationInfo.instrument.value].rendererid;
-                    }
-                    fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
-                    const formData = new window.FormData();
-                    formData.append('transaction_id', params.form.workflowId);
-                    formData.append('data', JSON.stringify(fileTemplate));
-                    formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
-                    const tile = await window.fetch(arches.urls.api_tiles(uuid.generate()), {
-                        method: 'POST',
-                        credentials: 'include',
-                        body: formData
-                    })
-                        
-                    if (tile.ok) {
-                        json = await tile.json();
-                        file.tileId(json.tileid);
-                    }
+                    if (!ko.unwrap(file.tileId)) {
+                        fileInfo = {
+                            name: file.name,
+                            accepted: file.accepted,
+                            height: file.height,
+                            lastModified: file.lastModified,
+                            size: file.size,
+                            status: file.status,
+                            type: file.type,
+                            width: file.width,
+                            url: null,
+                            // eslint-disable-next-line camelcase
+                            file_id: null,
+                            index: i,
+                            content: window.URL.createObjectURL(file),
+                            error: file.error
+                        };
+                        if (file.name.split('.').pop() === 'txt'){
+                            fileInfo.renderer = rendererLookup[observationInfo.instrument.value].rendererid;
+                        } else if (file.type.split('/').includes('image')) {
+                            fileInfo.renderer = rendererLookup["image"].rendererid
+                        } else if (file.type.split('/').includes('pdf')) {
+                            fileInfo.renderer = rendererLookup["pdf"].rendererid
+                        };
+
+                        fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [fileInfo];
+                        const formData = new window.FormData();
+                        formData.append('transaction_id', params.form.workflowId);
+                        formData.append('data', JSON.stringify(fileTemplate));
+                        formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
+                        const tileId = file.tileId() ?? uuid.generate();
+                        const tile = await window.fetch(arches.urls.api_tiles(tileId), {
+                            method: 'POST',
+                            credentials: 'include',
+                            body: formData
+                        })
+
+                        if (tile.ok) {
+                            json = await tile.json();
+                            file.tileId(json.tileid);
+                        }
+                    } 
                 }  
             };
 
@@ -310,17 +350,24 @@ define([
                 }
             };
 
+            this.cancel = () => {
+                if(self.canBeSaved()){
+                    self.init();
+                }
+                self.parts.valueHasMutated();
+            }
+
             this.save = async() => {
                 const incompleteInputs = self.getIncompleteInputs();
                 if(incompleteInputs.length) { 
-                    params.form.alert(new params.form.AlertViewModel(
+                    params.pageVm.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
                         "Dataset Name Required", 
                         `A dataset name was not provided for parts: ${incompleteInputs.map(x => x.displayname).join(', ')}`
                     ));
                     return;
                 } else {
-                    params.form.alert('');
+                    params.pageVm.alert('');
                 }
                 
                 params.form.lockExternalStep("select-instrument-and-files", true);
@@ -336,6 +383,7 @@ define([
 
                         // Then save a file tile to the digital resource for each associated file
                         await self.saveDatasetFiles(part, dataset.resourceId);
+                        // await self.removeDatasetFiles(part);
                     
                         // Then save a relationship tile on the part that points to the digital resource
                         await self.saveDigitalResourceToChildPhysThing(part);
@@ -352,7 +400,7 @@ define([
                     console.log('Couldn\'t create observation cross references.');
                 }
 
-                params.form.value({ 
+                params.form.savedData({ 
                     observationReferenceTileId: self.observationReferenceTileId(),
                     parts: self.parts().map(x => 
                         {
@@ -365,15 +413,12 @@ define([
                                 tileid: x.tileid
                             };
                         }
-                    )});
+                    )
+                });
 
-                self.snapshot = params.form.value();
-                params.form.savedData(params.form.addedData());
+                self.snapshot = params.form.savedData();
                 params.form.complete(true);
-                params.form.hasUnsavedData(false);
             };
-
-            params.save = this.save;
 
             this.dropzoneOptions = {
                 url: "arches.urls.root",
@@ -421,26 +466,48 @@ define([
                 });
 
                 const thingResource = await resourceUtils.lookupResourceInstanceData(this.physicalThing);
-        
+
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
 
-                
-                self.observationReferenceTileId(params.form.value()?.observationReferenceTileId);               
-                parts.forEach(async(part) => {
-                    part.datasetFiles = ko.observableArray([]);
-                    part.datasetName = ko.observable();
-                    part.datasetId = ko.observable();
-                    part.nameTileId = ko.observable();
-                    part.resourceReferenceId = ko.observable();
-                    part.nameDirty = ko.observable(false);
+
+                self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);               
+                for (const part of parts) {
+                    part.resourceid = part.data[physicalThingPartNodeId][0].resourceId; 
+                    const related = await resourceUtils.lookupResourceInstanceData(part.resourceid);
+                    const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501"; 
+                    const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
+                    const datasetTile = related?._source.tiles.find((tile) => tile.nodegroup_id === digitalReferenceNodeGroupId);
+                    part.datasetFiles = part.datasetFiles || ko.observableArray([]);
+                    part.datasetName = part.datasetName || ko.observable();
+                    part.datasetId = part.datasetId || ko.observable();
+                    part.nameTileId = part.nameTileId || ko.observable();
+                    part.resourceReferenceId = part.resourceReferenceId || ko.observable();
+                    part.nameDirty = part.nameDirty || ko.observable(false);
                     part.displayname = part.data[physicalThingPartNameNodeId];
+                    if (datasetTile) {
+                        const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
+                        const datasetName =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).data[datasetNameNodeId];
+                        const nameTileId =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).tileid;
+                        const datasetTiles =  dataset._source.tiles.filter((tile) => tile.nodegroup_id === datasetFileNodeGroupId)
+                        const datasetFiles = datasetTiles.map((tile) => {
+                            let file = tile.data[datasetFileNodeId][0];
+                            file.tileId = ko.observable(tile.tileid);
+                            return file;
+                        });
+                        part.datasetId(dataset._id);
+                        part.datasetName(datasetName);
+                        part.datasetFiles(datasetFiles);
+                        part.nameTileId(nameTileId);
+                    }
                     
-                    part.datasetId.subscribe(function(val){
-                        if (val) {
-                            params.form.complete(true);
-                        }
-                    });
-                    const savedValue = params.form.value()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
+                    if(!part.datasetId.getSubscriptionsCount()){
+                        part.datasetId.subscribe(function(val){
+                            if (val) {
+                                params.form.complete(true);
+                            }
+                        });
+                    }
+                    const savedValue = params.form.savedData()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
                     if(savedValue) {
                         
                         part.datasetFiles(savedValue.datasetFiles.map(x => { return {...x, tileId:ko.observable(x.tileId)}}));
@@ -454,15 +521,19 @@ define([
                             self.annotationNodes.valueHasMutated();
                         }
                     }
-                    part.datasetName.subscribe(() => {
-                        const datasetSnapshot = self.snapshot.parts.find(x => x.datasetId == part.datasetId());
-                        if(ko.unwrap(part.datasetName) != datasetSnapshot?.datasetName) {
-                            part.nameDirty(true);
-                        }
-                    });
-                });
+                    if(!part.datasetName.getSubscriptionsCount()){
+                        part.datasetName.subscribe((newValue) => {
+                            const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
+                            if(newValue != datasetSnapshot?.datasetName) {
+                                part.nameDirty(true);
+                            } else {
+                                part.nameDirty(false);
+                            }
+                        });
+                    }
+                };
                 self.parts(parts);
-                self.snapshot = params.form.value();
+                self.save();
                 self.selectedPart(self.parts()[0]);
             }
      
