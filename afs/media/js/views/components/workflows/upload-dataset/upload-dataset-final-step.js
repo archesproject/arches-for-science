@@ -29,7 +29,8 @@ define([
             ]
         };
 
-        this.uploadedDatasets = params.uploadedDatasets;
+        this.hasAnnotatedParts = Array.isArray(params.uploadedDatasets);
+        this.uploadedDatasets = this.hasAnnotatedParts ? params.uploadedDatasets : [params.uploadedDataset["upload-files-step"].savedData()];
 
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
@@ -80,7 +81,7 @@ define([
     
                     var digitalResourceName = val.displayname;
     
-                    var files = val.resource['File'].map(function(file){
+                    var files = val.resource?.File.map(function(file){
                         var statements = [];
                         var fileName = self.getResourceValue(file['file_details'][0], ['name']);
                         if (Array.isArray(file["FIle_Statement"])) {
@@ -95,7 +96,7 @@ define([
                             fileName: fileName,
                             statements: statements,
                         };
-                    });
+                    }) || [];
         
                     files.forEach(function(file){
                         var fileName = file.fileName;
