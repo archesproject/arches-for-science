@@ -17,6 +17,7 @@ define([
         this.samplingActivityResourceId = koMapping.toJS(params.samplingActivityResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+        const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
         this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.samplingActivitySamplingUnitCard = ko.observable();
@@ -295,7 +296,6 @@ define([
             self.selectedSampleLocationInstance(sampleLocationInstance);
 
             if (self.selectedSampleLocationInstance() && self.samplingActivitySamplingUnitCard()) {
-                var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
 
                 var selectedSampleLocationParentPhysicalThingData = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
                 
@@ -426,8 +426,6 @@ define([
                     var physicalThingPartOfResourceXResourceId = physicalThingPartOfData.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
                     
                     var selectedSampleLocationInstance = self.selectedSampleLocationInstance();
-                    
-                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
     
                     selectedSampleLocationInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
                         "resourceId": physicalThingPartOfData.resourceinstance_id,
@@ -560,7 +558,6 @@ define([
             var getRegionPhysicalThingNameCard = function() {
                 return new Promise(function(resolve, _reject) {
                     var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
-                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
                     var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
         
                     if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
@@ -813,7 +810,6 @@ define([
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
-            const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
             const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
             const analysisAreaTypeConceptId = '19ef147a-3703-41b4-bfa3-d4c66e333b0b'; //'this is actually the ceramic value as a placeholder'
             const related = card.tiles().map(tile => ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId())
