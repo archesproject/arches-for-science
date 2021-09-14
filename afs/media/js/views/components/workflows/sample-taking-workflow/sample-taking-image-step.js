@@ -272,7 +272,7 @@ define([
 
             const hasDataset = tiles.some(function(tile) {
                 var digitalReferenceTypeValue = ko.unwrap(tile.data[digitalReferenceTypeNodeId]);
-                return (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ))
+                return (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ));
             });
 
             if (!hasDataset){
