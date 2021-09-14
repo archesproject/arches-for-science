@@ -350,9 +350,19 @@ define([
             }
         };
 
+        this.resetDescriptions = function(){
+            const previouslySavedSampleDescriptionWidgetValue = ko.unwrap(self.previouslySavedSampleDescriptionWidgetValue);
+            const previouslySavedMotivationForSamplingWidgetValue = ko.unwrap(self.previouslySavedMotivationForSamplingWidgetValue);
+            
+            self.sampleDescriptionWidgetValue(previouslySavedSampleDescriptionWidgetValue);
+            self.motivationForSamplingWidgetValue(previouslySavedMotivationForSamplingWidgetValue);
+
+        }
+
         this.resetSampleLocationTile = function() {
             self.tile.reset();
             self.resetCanvasFeatures();
+            self.resetDescriptions();
             self.drawFeatures([]);
             self.highlightAnnotation();
             self.selectedFeature(null);
