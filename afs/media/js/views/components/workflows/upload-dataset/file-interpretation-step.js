@@ -15,8 +15,32 @@ define([
         var self = this;
         const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
         const briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
-        const datasetInfo = params.form.externalStepData.datasetinfo.data;
-        const datasetIds = datasetInfo?.["select-dataset-files-step"]?.[0][1]?.parts.map(x => x.datasetId) ?? datasetInfo?.["dataset-select-instance"][0][1].map(x => x.resourceid);
+        const datasetInfo = params.datasetInfo;
+
+        if (datasetInfo["select-dataset-files-step"]){
+            var datasetIds = datasetInfo["select-dataset-files-step"].savedData()?.parts.reduce(
+                (acc, part) => {
+                    if (part.datasetId) { 
+                        acc.push(part.datasetId)
+                    }
+                    return acc;
+                }, 
+                []
+            )
+        } else if (datasetInfo["dataset-select-instance"]){
+            var datasetIds = datasetInfo["dataset-select-instance"].savedData()?.reduce(
+                (acc, res) => {
+                    if (res.resourceid && res.selected === true) { 
+                        acc.push(res.resourceid)
+                    }
+                    return acc;
+                }, 
+                []
+            )
+        } else if (params.datasetInfoFromUploadFilesStep){
+            var datasetIds = [params.datasetInfoFromUploadFilesStep['upload-files-step'].savedData().datasetId]
+        }
+
         this.fileFormatRenderers = fileRenderers;
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
@@ -30,7 +54,7 @@ define([
             }
             return false;
         });
-        params.form.save = function(){
+        this.save = function(){
             for (var value of Object.values(params.value())) {
                 if(value.fileStatementParameter.dirty()){
                     value.fileStatementParameter.save();
@@ -41,7 +65,6 @@ define([
             }
             params.form.complete(true);
         };
-        this.save = params.form.save;
 
         params.form.reset = function(){
             for (var value of Object.values(params.value())) {
@@ -177,7 +200,6 @@ define([
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
         this.selectedDigitalResource.subscribe(function(selectedDigitalResource){
-            console.log('selected digital resource', selectedDigitalResource);
             this.files(selectedDigitalResource.resource.File);
             this.selectedFile(this.files()[0]);
         }, this);
@@ -203,8 +225,6 @@ define([
                 var file = params.value()[selectedFile['@tile_id']];
                 self.fileStatementParameter(file.fileStatementParameter.fileStatement());
                 self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
-                console.log('selected file', self.selectedRenderer().name);
-                console.log('selected file', selectedFile);
             } else {
                 // self.selectedFile.selected(false);
                 self.fileStatementParameter(undefined);

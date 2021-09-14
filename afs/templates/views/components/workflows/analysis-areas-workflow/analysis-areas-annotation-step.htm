@@ -25,14 +25,16 @@
 {% endblock tabs %}
 
 {% block sidepanel %}
-    <!-- ko if: $data.activeTab() === 'dataset' -->
 
-    <div class="workbench-header-buffer">
-        <div class="workbench-card-sidepanel-header-container">
-            <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Regions'"></h4>
-        </div>
+<!-- ko if: $data.activeTab() === 'dataset' -->
+
+<div class="workbench-header-buffer">
+    <div class="workbench-card-sidepanel-header-container">
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Regions'"></h4>
     </div>
-
+</div>
+        
+<div class="workbench-content-container">
 
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
@@ -175,6 +177,9 @@
                                     visible: $data.partIdentifierAssignmentLabelWidget().visible
                                 '
                             ></div>
+                            <div>
+                                <input disabled type="text" style="padding-left: 20px; margin-left: 5px; width: 342px; height: 36px;" data-bind="textInput: areaName"></input>
+                            </div>
                         <!-- /ko -->
 
                         <div data-bind="foreach: {
@@ -390,37 +395,30 @@
                 <!-- /ko -->
 
                 {% block form_buttons %}
-                    <!-- ko if: $data.tileDirty() -->
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 0 5px;
-                        "
-                    >
-                        <button 
-                            class="btn btn-success" 
-                            style="width: 48%;"
-                            data-bind="click: $data.saveAnalysisAreaTile"
-                        >
-                            <i class="ion-android-cloud-done"></i>
-                            <span style="padding-left: 4px">{% trans 'Save' %}</span>
-                        </button>
-                        <button 
-                            class="btn btn-danger" 
-                            style="width: 48%;"
-                            data-bind="click: $data.resetAnalysisAreasTile"
-                        >
-                            <i class="ion-android-cancel"></i>
-                            <span style="padding-left: 4px">{% trans 'Cancel' %}</span>
-                        </button>
-                    </div>
-                    <!-- /ko -->
                 {% endblock form_buttons %}
+
             </div>
         </div>
     </div>
-    <!-- /ko -->
+</div>
+<!-- /ko -->
+<div class="workbench-button-panel">
+    <button 
+        class="btn btn-success" 
+        data-bind="click: $data.saveAnalysisAreaTile, css: {disabled: !$data.tileDirty()}""
+    >
+        <i class="ion-android-cloud-done"></i>
+        <span>{% trans 'Save' %}</span>
+    </button>
+    <button 
+        class="btn btn-danger" 
+        data-bind="click: $data.resetAnalysisAreasTile, css: {disabled: !$data.tileDirty()}"
+    >
+        <i class="ion-android-cancel}"></i>
+        <span>{% trans 'Cancel' %}</span>
+    </button>
+</div>
 
-    {{ block.super }}
+{{ block.super }}
+
 {% endblock sidepanel %}

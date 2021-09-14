@@ -35,6 +35,16 @@
         }"></div>
     </div>
     <div style="padding: 5px">
+        <div class="widget-input-label">Sampling Motivation</div>
+        <div style="margin: -10px -5px;" data-bind="component: {
+            name: 'rich-text-widget',
+            params: {
+                renderContext: 'workflow', 
+                value: samplingMotivation,
+            }
+        }"></div>
+    </div>
+    <div style="padding: 5px">
         <div style="color:#2b547c; cursor: pointer;" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide sampling activity name' : 'Show sampling activity name'"></div>
         <div data-bind="visible: showName">
             <div class="widget-input-label">Sampling Activity Name</div>

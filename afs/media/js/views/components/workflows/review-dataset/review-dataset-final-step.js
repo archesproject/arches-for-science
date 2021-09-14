@@ -9,8 +9,8 @@ define([
         var self = this;
 
         this.loading = ko.observable(true);
-        this.digitalResourceLoading = ko.observable();
-        this.resourceLoading = ko.observable();
+        this.digitalResourceLoading = ko.observable(true);
+        this.resourceLoading = ko.observable(true);
         this.fileLists = ko.observableArray();
 
         this.tableConfig = {
@@ -26,11 +26,17 @@ define([
             ]
         };
 
-        params.form.resourceId = params.form.externalStepData.selectobjectstep.data["sample-object-resource-instance"][0][1][0].resourceId;
+        params.form.resourceId(params.sampleObjectResourceInstanceId);
         SummaryStep.apply(this, [params]);
-        this.selectedDatasets = params.form.externalStepData.selecteddatasets.data["dataset-select-instance"].map(function(val) {
-            return val[1][0]['resourceid'];
-        });
+        this.selectedDatasets = params.selectedDatasets.reduce(
+            (acc, resource) => {
+                if (resource.resourceid &&  resource.selected) { 
+                    acc.push(resource.resourceid);
+                }
+                return acc;
+            }, 
+            []
+        );
 
         this.selectedDatasets.forEach(function(resourceid){
             var selectedDatasetData = ko.observableArray();
@@ -50,7 +56,7 @@ define([
                 var files = val.resource['File'].map(function(file){
                     var statements = [];
                     var fileName = self.getResourceValue(file['file_details'][0], ['name']);
-                    if (file["FIle_Statement"]) {
+                    if (Array.isArray(file["FIle_Statement"])) {
                         statements = file["FIle_Statement"].map(function(statement){
                             return {
                                 statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
@@ -93,10 +99,30 @@ define([
                 objectName: {'name': 'Object Name', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
             };
 
-            this.resourceLoading(false);
-            if (!this.digitalResourceLoading()){
-                this.loading(false);
-            }
+            var parentPhysThingResourceId = this.getResourceValue(val.resource, ['part of', 'resourceId']);
+            var parentPhysThingData = ko.observable();
+            self.getResourceData(parentPhysThingResourceId, parentPhysThingData);
+            parentPhysThingData.subscribe(function(val){
+                if (val.resource["Part Identifier Assignment"].length > 0){
+                    var parentPhysThings = val.resource["Part Identifier Assignment"].map(function(part){
+                        return {
+                            name: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','@display_value']),
+                            resourceid: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','resourceId']),
+                            annotation: self.getResourceValue(part, ['Part Identifier Assignment_Polygon Identifier','@display_value'])
+                        };
+                    });
+                }
+                parentPhysThings.forEach(function(thing){
+                    if (thing.resourceid === self.resourceid){
+                        var annotationJson = JSON.parse(thing.annotation.replaceAll("'",'"'));
+                        self.leafletConfig = self.prepareAnnotation(annotationJson);
+                    }
+                });
+                self.resourceLoading(false);
+                if (!self.digitalResourceLoading()){
+                    self.loading(false);
+                }    
+            });
         }, this);
     }
 

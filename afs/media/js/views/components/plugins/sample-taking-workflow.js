@@ -12,26 +12,19 @@ define([
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('sample-taking-workflow', {
         viewModel: function(params) {
-            var self = this;
+            this.componentName = 'sample-taking-workflow';
 
-            this.resourceId = ko.observable();
-
-            params.steps = [
+            this.stepConfig = [
                 {
                     title: 'Project Info',
                     name: 'select-project',  /* unique to workflow */
-                    description: 'Select the project and object',
+                    required: true,
                     informationboxdata: {
                         heading: 'Projects and related object',
                         text: 'Select the project and object that your are sampling',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: true,
-                    shoudltrackresource: true,
                     layoutSections: [
                         {
-                            sectionTitle: null,
                             componentConfigs: [
                                 { 
                                     componentName: 'select-phys-thing-step',
@@ -41,10 +34,7 @@ define([
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
                                             '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
                                         ],  
-                                        renderContext: 'workflow',
-                                        value: null,
                                     },
-                                    required: true,
                                 },
                             ], 
                         },
@@ -58,13 +48,8 @@ define([
                         heading: 'Sampling Information',
                         text: 'Enter the people, date, method, and notes describing the sampling activities on the object',
                     },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: false,
+                    required: true,
                     lockableExternalSteps: ['select-project'],
-                    externalstepdata: {
-                        selectprojectstep: 'select-project',
-                    },
                     layoutSections: [
                         {
                             sectionTitle: null,
@@ -73,7 +58,7 @@ define([
                                     componentName: 'sampling-info-step',
                                     uniqueInstanceName: 'sampling-info', /* unique to step */
                                     parameters: {
-                                        renderContext: 'workflow',
+                                        selectPhysThingData: "['select-project']['select-phys-thing']"
                                     },
                                 },
                             ], 
@@ -83,18 +68,13 @@ define([
                 {
                     title: 'Image',
                     name: 'image-step',  /* unique to workflow */
+                    required: true,
                     informationboxdata: {
                         heading: 'Image Services',
                         text: 'Image services provide you with picture(s) of an object, often from multiple vantage points, \
                         that can be annotated to indicate the location or region of an observation. \
                         If you wish, you can upload photographs and automatically create a new image service \
                         to document the location of your observations of an object',
-                    },
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    required: true,
-                    externalstepdata: {
-                        selectprojectstep: 'select-project',
                     },
                     layoutSections: [
                         {
@@ -105,7 +85,8 @@ define([
                                     uniqueInstanceName: 'image-service-instance', /* unique to step */
                                     tilesManaged: 'one',
                                     parameters: {
-                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a'  /* Digital Resources */
+                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
+                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']"
                                     },
                                 },
                             ], 
@@ -115,15 +96,9 @@ define([
                 {
                     title: 'Sample Location',
                     name: 'sample-location-step', /* unique to workflow */
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
                     required: true,
-                    externalstepdata: {
-                        selectprojectstep: 'select-project',
-                        sampleinfostep: 'sample-info',
-                        imagestep: 'image-step',
-                    },
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
+                    hiddenWorkflowButtons: ['undo', 'save'],
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -133,6 +108,10 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
+                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']",
+                                        physicalThingName: "['select-project']['select-phys-thing']['physThingName']",
+                                        imageServiceInstanceData: "['image-step']['image-service-instance'][0]['data']",
+                                        samplingActivityResourceId: "['sample-info']['sampling-info']['samplingActivityResourceId']", 
                                     },
                                 },
                             ], 
@@ -142,20 +121,15 @@ define([
                 {
                     title: 'Summary',
                     name: 'add-project-complete',  /* unique to workflow */
-                    description: 'Summary',
-                    component: 'views/components/workflows/component-based-step',
-                    componentname: 'component-based-step',
-                    externalstepdata: { 
-                        selectobjectstep: 'sample-info',
-                    },
+                    graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     layoutSections: [
                         {
                             componentConfigs: [
                                 { 
                                     componentName: 'sample-taking-final-step',
                                     uniqueInstanceName: 'sample-taking-final',
-                                    tilesManaged: 'none',
                                     parameters: {
+                                        samplingActivityResourceId: "['sample-info']['sampling-info']['samplingActivityResourceId']",
                                     },
                                 },
                             ], 
@@ -166,10 +140,6 @@ define([
             ];
 
             Workflow.apply(this, [params]);
-            this.quitUrl = arches.urls.plugin('init-workflow');
-            self.getJSON('sample-taking-workflow');
-
-            self.ready(true);
         },
         template: { require: 'text!templates/views/components/plugins/sample-taking-workflow.htm' }
     });

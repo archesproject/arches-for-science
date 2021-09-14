@@ -9,7 +9,7 @@ define([
     function viewModel(params) {
         var self = this;
 
-        params.form.resourceId = params.form.externalStepData.instrumentinfo.data["instrument-info"][0][1]["observationInstanceId"];
+        params.form.resourceId(params.observationInstanceResourceId);
         SummaryStep.apply(this, [params]);
 
         this.resourceLoading = ko.observable(true);
@@ -29,14 +29,14 @@ define([
             ]
         };
 
-        this.uploadedDatasets = params.form.externalStepData.digitalresource.data['select-dataset-files-step'][0][1]["parts"];
+        this.hasAnnotatedParts = Array.isArray(params.uploadedDatasets);
+        this.uploadedDatasets = this.hasAnnotatedParts ? params.uploadedDatasets : [params.uploadedDataset["upload-files-step"].savedData()];
 
-        var parentPhysThingResourceId = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1]["physicalThing"];
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
         this.parentPhysThingAnnotations = ko.observableArray();
 
-        this.getResourceData(parentPhysThingResourceId, this.parentPhysThingData);
+        this.getResourceData(params.parentPhysThingResourceId, this.parentPhysThingData);
 
         this.parentPhysThingData.subscribe(function(val){
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
@@ -81,10 +81,10 @@ define([
     
                     var digitalResourceName = val.displayname;
     
-                    var files = val.resource['File'].map(function(file){
+                    var files = val.resource?.File.map(function(file){
                         var statements = [];
                         var fileName = self.getResourceValue(file['file_details'][0], ['name']);
-                        if (file["FIle_Statement"]) {
+                        if (Array.isArray(file["FIle_Statement"])) {
                             statements = file["FIle_Statement"].map(function(statement){
                                 return {
                                     statement: self.getResourceValue(statement, ['FIle_Statement_content','@display_value']),                        
@@ -96,7 +96,7 @@ define([
                             fileName: fileName,
                             statements: statements,
                         };
-                    });
+                    }) || [];
         
                     files.forEach(function(file){
                         var fileName = file.fileName;
