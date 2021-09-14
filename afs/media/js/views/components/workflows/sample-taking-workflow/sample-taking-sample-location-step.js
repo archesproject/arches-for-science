@@ -18,6 +18,7 @@ define([
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+        this.analysisAreaResourceIds = [];
         this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.samplingActivitySamplingUnitCard = ko.observable();
@@ -88,15 +89,15 @@ define([
 
         this.sampleLocationFilterTerm = ko.observable();
         this.filteredSampleLocationInstances = ko.computed(function() {
+            const samplesOnly = self.sampleLocationInstances().filter(function(a){return !self.analysisAreaResourceIds.includes(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId())})
             if (self.sampleLocationFilterTerm()) {
-                return self.sampleLocationInstances().filter(function(sampleLocationInstance) {
+                return samplesOnly.filter(function(sampleLocationInstance) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    console.log(sampleLocationInstance);
                     return sampleLocationInstance.data[partIdentifierAssignmentLabelNodeId]().includes(self.sampleLocationFilterTerm());
                 });
             }
             else {
-                return self.sampleLocationInstances();
+                return samplesOnly;
             }
         });
 
@@ -813,7 +814,6 @@ define([
             const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
             const analysisAreaTypeConceptId = '19ef147a-3703-41b4-bfa3-d4c66e333b0b'; //'this is actually the ceramic value as a placeholder'
             const related = card.tiles().map(tile => ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId())
-            const analysisAreaResourceIds = [];
             Promise.all(related.map(resourceid => ResourceUtils.lookupResourceInstanceData(resourceid))).then((values) => {
                 values.forEach((value) => {
                     const nodevals = ResourceUtils.getNodeValues({
@@ -824,7 +824,7 @@ define([
                         }
                     }, value._source.tiles);
                     if (nodevals.includes(analysisAreaTypeConceptId)) {
-                        analysisAreaResourceIds.push(value._id);
+                        self.analysisAreaResourceIds.push(value._id);
                     }
                 });
                 self.sampleLocationInstances(card.tiles());
