@@ -11,6 +11,10 @@ define([
         var self = this;
 
         params.form.resourceId(params.sampleObjectResourceId);
+        const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+        const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId];
+        const digitalReferenceResourceId = params.digitalReferenceResourceId;
+
         
         this.regionInstances = params.regionsStepData.map(function(data){
             return {
@@ -24,50 +28,56 @@ define([
         this.objectAnnotations = ko.observableArray();
         this.resourceData.subscribe(function(val){
             this.displayName = val['displayname'] || 'unnamed';
+            const digitalReference = val.resource['Digital Reference'].find(function(val){
+                return val['Digital Source']['resourceId'] === digitalReferenceResourceId;
+            });
             this.reportVals = {
                 parentObject: {'name': 'Object', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
-                digitalReference: {'name': 'Image Service', 'value': this.getResourceValue(val.resource['Digital Reference'][0],['Digital Source','@display_value'])},
+                digitalReference: {'name': 'Image Service', 'value': digitalReference['Digital Source']["@display_value"]},
             };
             var annotationCollection = {};
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
-                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
-                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
-                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
-                var tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
+                const annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
+                const annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
+                const annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
+                const annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
+                const tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
                 if (annotationStr) {
-                    var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+                    const annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
                     if (annotationJson.features.length > 0){
-                        var canvas = annotationJson.features[0].properties.canvas;
-                        annotationJson.features.forEach(function(feature){
-                            feature.properties.tileId = tileId;
-                        });
-                        if (canvas in annotationCollection) {
-                            annotationCollection[canvas].push({
-                                tileId: tileId,
-                                annotationName: annotationName,
-                                annotationLabel: annotationLabel,
-                                annotator: annotator,
-                                annotationJson: annotationJson,
+                        const currentManifestUrl = annotation['Part Identifier Assignment_Polygon Identifier']['geojson']['features'][0]['properties']['manifest'];
+                        console.log(currentManifestUrl,manifestUrl)
+                        if (currentManifestUrl === manifestUrl){
+                            const canvas = annotationJson.features[0].properties.canvas;
+                            annotationJson.features.forEach(function(feature){
+                                feature.properties.tileId = tileId;
                             });
-                        } else {
-                            annotationCollection[canvas] = [{
-                                tileId: tileId,
-                                annotationName: annotationName,
-                                annotationLabel: annotationLabel,
-                                annotator: annotator,
-                                annotationJson: annotationJson,
-                            }];
-                        }    
-                    }
+                            if (canvas in annotationCollection) {
+                                annotationCollection[canvas].push({
+                                    tileId: tileId,
+                                    annotationName: annotationName,
+                                    annotationLabel: annotationLabel,
+                                    annotator: annotator,
+                                    annotationJson: annotationJson,
+                                });
+                            } else {
+                                annotationCollection[canvas] = [{
+                                    tileId: tileId,
+                                    annotationName: annotationName,
+                                    annotationLabel: annotationLabel,
+                                    annotator: annotator,
+                                    annotationJson: annotationJson,
+                                }];
+                            }    
+                        }
+                    }    
                 }
             });
-            console.log(annotationCollection)
 
-            for (var canvas in annotationCollection) {
-                var name;
+            for (const canvas in annotationCollection) {
+                let name;
                 let annotationCombined;
-                var info = [];
+                let info = [];
                 annotationCollection[canvas].forEach(function(annotation){
                     name = annotation.annotationName;
                     if (annotationCombined) {
@@ -82,7 +92,7 @@ define([
                     });
                 });
 
-                var leafletConfig = self.prepareAnnotation(annotationCombined);
+                const leafletConfig = self.prepareAnnotation(annotationCombined);
                 self.objectAnnotations.push({
                     name: name,
                     info: info,

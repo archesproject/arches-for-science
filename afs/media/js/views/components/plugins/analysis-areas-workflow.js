@@ -109,7 +109,9 @@ define([
                                     tilesManaged: 'none',
                                     parameters: {
                                         sampleObjectResourceId: "['object-step']['sample-object-resource-instance']",
-                                        regionsStepData: "['regions-step']['annotation-instance']"
+                                        regionsStepData: "['regions-step']['annotation-instance']",
+                                        imageStepData: "['image-step']['image-service-instance'][0]['data']",
+                                        digitalReferenceResourceId: "['image-step']['image-service-instance'][0]['resourceinstance_id']"
                                     },
                                 },
                             ], 
