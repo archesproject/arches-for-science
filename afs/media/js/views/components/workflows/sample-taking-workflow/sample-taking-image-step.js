@@ -270,12 +270,12 @@ define([
             
             var tiles = card.tiles() || [];
 
-            const hasDataset = tiles.some(function(tile) {
+            const hasManifest = tiles.some(function(tile) {
                 var digitalReferenceTypeValue = ko.unwrap(tile.data[digitalReferenceTypeNodeId]);
                 return (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ));
             });
 
-            if (!hasDataset){
+            if (!hasManifest){
                 params.pageVm.loading(false);
             }
 
