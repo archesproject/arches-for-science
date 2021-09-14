@@ -46,7 +46,6 @@ define([
                     const annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
                     if (annotationJson.features.length > 0){
                         const currentManifestUrl = annotation['Part Identifier Assignment_Polygon Identifier']['geojson']['features'][0]['properties']['manifest'];
-                        console.log(currentManifestUrl,manifestUrl)
                         if (currentManifestUrl === manifestUrl){
                             const canvas = annotationJson.features[0].properties.canvas;
                             annotationJson.features.forEach(function(feature){
