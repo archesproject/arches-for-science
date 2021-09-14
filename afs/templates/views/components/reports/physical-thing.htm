@@ -46,56 +46,13 @@
         <div class="afs-tabbed-report-content">
             <!-- Names Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'name'">
-
-                <!-- Names section -->
-                <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleBlockVisibility(blockVisible.names)}" class="fa fa-angle-double-right toggle"></i> {% trans "Asset Names" %}</h2>
-                    <a class="afs-report-a" data-bind="{if: cards.assetName, event:{ mousedown:function(d, e){addNewTile(cards.assetName, e)}}}"><i class="fa fa-mail-reply"></i> {% trans "Add Name" %}</a>
-
-                    <!-- Collapsible content -->
-                    <div data-bind="visible: blockVisible.names" class="afs-report-collapsible-container pad-lft">
-
-                        <!-- ko ifnot: resourceData.names().length -->
-                        <div class="afs-nodata-note">No names for this resource</div>
-                        <!-- /ko -->
-
-                        <!-- ko if: resourceData.names().length -->
-                        <div class="afs-report-subsection" >
-                            <div class="firstchild-container">
-                                <div class="afs-table">
-                                    <table class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr class="afs-table-header">
-                                                <th>{% trans "Name" %}</th>
-                                                <th class="min-tabletl">{% trans "Type" %}</th>
-                                                <th class="min-medium">{% trans "Currency" %}</th>
-                                                <th class="afs-table-control all"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody data-bind="dataTablesForEach: { data: resourceData.names, dataTableOptions: nameTableConfig }">
-                                            <tr>
-                                                <td data-bind="text: name"></td>
-                                                <td data-bind="text: type"></td>
-                                                <td data-bind="text: currency"></td>
-                                                <td class="afs-table-control">
-                                                    <div data-bind="if: $parent.cards.assetName">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, cards.assetName)}">
-                                                            <i class="fa fa-mail-reply"></i>
-                                                        </a>
-                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, cards.assetName)}">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /ko -->
-                    </div>
-                </div>
+                <div data-bind="component: {
+                    name: 'name-scene',
+                    params: {
+                        data: resource,
+                        card: cards.Name
+                    }
+                }"></div>
             </div>
             <!-- Production -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'prod'">

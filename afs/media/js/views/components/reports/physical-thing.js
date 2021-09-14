@@ -1,11 +1,11 @@
-define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/physical-thing'], function(_, ko, arches, TabbedReportViewModel, resourceUtils, physicalThingUtils) {
+define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/physical-thing', 'utils/report'], function(_, ko, arches, TabbedReportViewModel, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
-            
+            Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names/Indentifiers'}, 
+                {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'prod', 'title': 'Production Event'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -14,15 +14,12 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
             self.activeSection = ko.observable('name');
 
             const cards = params.report.cards;
-            self.cards = {};
-            self.cards.productionEvent = cards.find(x => x.nodegroupid == 'cc15650c-b497-11e9-a64d-a4d18cec433a');
-            const productionEventChildren = self.cards.productionEvent.tiles()?.[0]?.cards ? self.cards.productionEvent.tiles()[0].cards : self.cards.productionEvent.cards()
-            if(self.cards.productionEvent){
-                self.cards.productionEvent.timespan = productionEventChildren.find(x => x.nodegroupid == 'cc15718f-b497-11e9-a9e8-a4d18cec433a');
-                self.cards.productionEvent.identifiers = productionEventChildren.find(x => x.nodegroupid == 'cc153f33-b497-11e9-bab1-a4d18cec433a');
-                self.cards.productionEvent.statements = productionEventChildren.find(x => x.nodegroupid == '6c1d4051-bee9-11e9-a4d2-a4d18cec433a');
-                self.cards.productionEvent.names = productionEventChildren.find(x => x.nodegroupid == 'cc1558a3-b497-11e9-9310-a4d18cec433a');
-                self.cards.productionEvent.parts = productionEventChildren.find(x => x.nodegroupid == 'cc1577b8-b497-11e9-8f11-a4d18cec433a');
+            
+            self.cards = self.createCardDictionary(cards)
+
+            if(self.cards?.["Production (partitioned)"]){
+                const productionEventChildren = self.cards["Production (partitioned)"].tiles()?.[0]?.cards ? self.cards["Production (partitioned)"].tiles()[0].cards : self.cards["Production (partitioned)"].cards();
+                self.cards["Production (partitioned)"].children = self.createCardDictionary(productionEventChildren);
             }
 
             self.toggleBlockVisibility = (block) => {
@@ -98,61 +95,6 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     "targets":   -1
                 } ],
                 "columns": Array(5).fill(null)
-            };
-
-            // Used to add a new tile object to a given card.  If nested card, saves the parent tile for the
-            // card and uses the same card underneath the parent tile.
-            self.addNewTile = async (card) => {
-                let currentCard = card;
-                if(card.parentCard && !card.parent?.tileid){
-                    await card.parentCard.saveParentTile();
-                    currentCard = card.parentCard.tiles()?.[0].cards.find(x => x.nodegroupid == card.nodegroupid)
-                }
-                currentCard.canAdd() ? currentCard.selected(true) : currentCard.tiles()[0].selected(true);
-                if(currentCard.cardinality == "n" || (currentCard.cardinality == "1" && !currentCard.tiles().length)) {
-                    const currentSubscription = currentCard.selected.subscribe(function(){
-                        currentCard.showForm(true);
-                        currentSubscription.dispose();
-                    });
-                }
-            }
-
-            self.editTile = function(tileid, card){
-                if(card){
-                    const tile = card.tiles().find(y => tileid == y.tileid)
-                    if(tile){
-                        tile.selected(true);
-                    }
-                }
-            }
-
-            self.deleteTile = (tileid, card) => {
-                const tile = card.tiles().find(y => tileid == y.tileid)
-                if(tile){
-                    tile.deleteTile((err) => { 
-                        console.log(err); 
-                    }, () => {});
-                }
-            }
-
-            self.getNodeValue = (resource, ...args) => {
-                let node = ko.unwrap(resource);
-                for(let i = 0; i < args.length; ++i){
-                    const arg = args[i];
-                    node = node?.[arg];
-                }
-                const nodeValue = node?.["@display_value"]
-                const geojson = node?.geojson;
-                if(geojson){
-                    return geojson;
-                }
-                if(nodeValue !== undefined){
-                    if(nodeValue === "" || nodeValue === null){
-                        return "--"
-                    }
-                    return $(`<span>${nodeValue}</span>`).text();
-                }
-                return "--";
             };
 
             const loadData = (resource) => {
@@ -235,7 +177,7 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                             const statements = [{statementContent, statementLanguage, statementName, statementType}];
                             const identifiers = [{identifier, identifierType}]
                             
-                            const tile = self.cards?.productionEvent?.parts?.tiles().find(x => x.tileid == tileid)
+                            const tile = self?.cards?.["Production (partitioned)"]?.children?.["Production Event Part "]?.tiles().find(x => x.tileid == tileid)
                             const eventCards = {};
                             let selectedObservable = undefined;
                             if(tile){

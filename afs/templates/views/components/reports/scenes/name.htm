@@ -1,0 +1,59 @@
+{% extends "views/report-templates/default.htm" %} 
+{% load i18n %} 
+{% block report %}
+
+{% block body %}
+<div class="afs-report-section">
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible)}" class="fa fa-angle-double-right toggle"></i> {% trans "Names" %}</h2>
+    <a class="afs-report-a" data-bind="if: card, click: function(){add(card)}"><i class="fa fa-mail-reply"></i> {% trans "Add Name" %}</a>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible" class="afs-report-collapsible-container pad-lft">
+
+        <!-- ko ifnot: names().length -->
+        <div class="afs-nodata-note">No names for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: names().length -->
+        <div class="afs-report-subsection" >
+            <div class="firstchild-container">
+                <div class="afs-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                <th class="min-medium">{% trans "Language" %}</th>
+                                <th class="none">{% trans "Label" %}</th>
+                                <th class="none">{% trans "Source" %}</th>
+                                <th class="afs-table-control all"></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: names, dataTableOptions: nameTableConfig }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: language"></td>
+                                <td data-bind="text: label"></td>
+                                <td data-bind="text: source"></td>
+                                <td class="afs-table-control">
+                                    <div data-bind="if: $parent.card">
+                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.card)}">
+                                            <i class="fa fa-mail-reply"></i>
+                                        </a>
+                                        <a data-bind="click: function() {$parent.delete(tileid, $parent.card)}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+{% endblock body %}
+{% endblock report %}
