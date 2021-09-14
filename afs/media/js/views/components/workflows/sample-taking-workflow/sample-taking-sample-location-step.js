@@ -374,15 +374,16 @@ define([
         this.saveSampleLocationTile = function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
-            // if (ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId].features).length === 0 ||
-            //     !ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])) { //Sample Name Node
-            //         params.form.alert(new params.form.AlertViewModel(
-            //             "ep-alert-red",
-            //             "Missing Values",
-            //             "Sample Location and Sample Name are Required",
-            //         ));
-            //         return;    
-            //     }
+            const featureCollection = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])
+            if (!ko.unwrap(featureCollection?.features)?.length ||
+                !self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()) { //Sample Name Node
+                    params.pageVm.alert(new params.form.AlertViewModel(
+                        "ep-alert-red",
+                        "Missing Values",
+                        "Sample Location and Sample Name are Required",
+                    ));
+                    return;    
+                }
 
             var savePhysicalThingNameTile = function(physicalThingNameTile, type) {
                 return new Promise(function(resolve, _reject) {
@@ -727,7 +728,9 @@ define([
             
                                                                         self.savingTile(false);
                                                                         params.dirty(true);
+                                                                        params.form.complete(true);
 
+                                                                        params.pageVm.alert("");
                                                                         self.drawFeatures([]);
                                                                     });
                                                                 // });

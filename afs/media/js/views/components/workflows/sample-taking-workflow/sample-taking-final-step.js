@@ -1,12 +1,18 @@
 define([
+    'geojson-extent',
     'knockout',
+    'leaflet',
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
-], function(ko, uuid, arches, SummaryStep) {
+], function(geojsonExtent, ko, L, uuid, arches, SummaryStep) {
 
     function viewModel(params) {
         var self = this;
+
+        this.map = ko.observable();
+        this.selectedAnnotationTileId = ko.observable();
+        var defaultColor;
 
         params.form.resourceId(params.samplingActivityResourceId);
 
@@ -31,6 +37,69 @@ define([
                 null,
                 null,
             ]
+        };
+
+        this.prepareAnnotation = function(featureCollection) {
+            var canvas = featureCollection.features[0].properties.canvas;
+
+            var afterRender = function(map) {
+                L.tileLayer.iiif(canvas + '/info.json').addTo(map);
+                var extent = geojsonExtent(featureCollection);
+                map.addLayer(L.geoJson(featureCollection, {
+                    pointToLayer: function(feature, latlng) {
+                        return L.circleMarker(latlng, feature.properties);
+                    },
+                    style: function(feature) {
+                        return feature.properties;
+                    },
+                    onEachFeature: function(feature, layer) {
+                        layer.on('click', function() {
+                            if (feature.properties && feature.properties.tileId){
+                                self.highlightAnnotation(feature.properties.tileId);
+                            }
+                        });
+                    }
+                }));
+                L.control.fullscreen().addTo(map);
+                setTimeout(function() {
+                    map.fitBounds([
+                        [extent[1]-1, extent[0]-1],
+                        [extent[3]+1, extent[2]+1]
+                    ]);
+                }, 250);
+                self.map(map);
+            };
+
+            return {
+                center: [0, 0],
+                crs: L.CRS.Simple,
+                zoom: 0,
+                afterRender: afterRender
+            };
+        };
+
+        this.highlightAnnotation = function(tileId){
+            if (tileId !== self.selectedAnnotationTileId()){
+                self.selectedAnnotationTileId(tileId);
+            } else {
+                self.selectedAnnotationTileId(null);
+            }
+            if (self.map()) {
+                self.map().eachLayer(function(layer){
+                    if (layer.eachLayer) {
+                        layer.eachLayer(function(feature){
+                            if (!defaultColor) {
+                                defaultColor = feature.feature.properties.color;
+                            }
+                            if (self.selectedAnnotationTileId() === feature.feature.properties.tileId) {
+                                feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                            } else {
+                                feature.setStyle({color: defaultColor, fillColor: defaultColor});
+                            }
+                        });
+                    }
+                });
+            } 
         };
 
         this.resourceData.subscribe(function(val){
@@ -60,18 +129,24 @@ define([
                     var locationName = self.getResourceValue(unit, ['Sample Created','@display_value']);
                     var locationResourceId = self.getResourceValue(unit, ['Sample Created','resourceId']);
                     var locationAnnotationStr = self.getResourceValue(unit, ['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@display_value']);
-                    var locationAnnotation = JSON.parse(locationAnnotationStr.replaceAll("'",'"'));
+                    var tileId = self.getResourceValue(unit, ['Sampling Area','Sampling Area Identification','Sampling Area Visualization','@tile_id']);
 
-                    if (locationAnnotation) {
+                    if (locationAnnotationStr) {
+                        var locationAnnotation = JSON.parse(locationAnnotationStr.replaceAll("'",'"'));
                         var canvas = locationAnnotation.features[0].properties.canvas;
+                        locationAnnotation.features.forEach(function(feature){
+                            feature.properties.tileId = tileId;
+                        });    
                         if (canvas in annotationCollection) {
                             annotationCollection[canvas].push({
+                                tileId: tileId,
                                 locationName: locationName,
                                 locationResourceId: locationResourceId,
                                 locationAnnotation: locationAnnotation,
                             });
                         } else {
                             annotationCollection[canvas] = [{
+                                tileId: tileId,
                                 locationName: locationName,
                                 locationResourceId: locationResourceId,
                                 locationAnnotation: locationAnnotation,
@@ -90,6 +165,7 @@ define([
                 var i = 0;
                 annotationCollection[canvas].forEach(function(annotation){
                     var locationResourceId = annotation.locationResourceId;
+                    var locationTileId = annotation.tileId;
     
                     if (annotationCombined) {
                         annotationCombined.features = annotationCombined.features.concat(annotation.locationAnnotation.features);
@@ -108,16 +184,17 @@ define([
                                     type: self.getResourceValue(statement, ['Statement_type','@display_value'])
                                 };
                             });
-                            var sampleMotivation = self.findStatementType(statements, "object/work type (category)");
-                            var sampleDescription = self.findStatementType(statements, "sample description");
-                            self.samplingLocations.push(
-                                {
-                                    samplingLocationName: samplingLocationName,
-                                    sampleDescription: sampleDescription.replace( /(<([^>]+)>)/ig, ''),
-                                    sampleMotivation:sampleMotivation.replace( /(<([^>]+)>)/ig, ''),
-                                }
-                            );
+                            var sampleMotivation = self.findStatementType(statements, "object/work type (category)").replace( /(<([^>]+)>)/ig, '');
+                            var sampleDescription = self.findStatementType(statements, "sample description").replace( /(<([^>]+)>)/ig, '');
                         }
+                        self.samplingLocations.push(
+                            {
+                                tileId: locationTileId,
+                                samplingLocationName: samplingLocationName || "None",
+                                sampleDescription: sampleDescription || "None",
+                                sampleMotivation: sampleMotivation || "None",
+                            }
+                        );
                         i += 1;
                         if (i === numberOfAnnotation) {
                             self.annotationStatus.valueHasMutated();

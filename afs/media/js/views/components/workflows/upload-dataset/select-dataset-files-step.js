@@ -37,7 +37,6 @@ define([
             this.selectedAnnotationTile = ko.observable();
             this.selectedPart = ko.observable();
             this.partFilter = ko.observable("");
-            this.alert = params.alert;
             this.annotations = ko.observableArray([]);
             this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
@@ -50,7 +49,7 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(true);
             this.files = ko.observableArray([]);
-            this.initialValue = params.form.value() || undefined;
+            this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
 
             this.switchCanvas = function(canvasId){
@@ -307,7 +306,6 @@ define([
 
                         if (tile.ok) {
                             json = await tile.json();
-                            console.log(file.tileId(), json.tileid);
                             file.tileId(json.tileid);
                         }
                     } 
@@ -352,10 +350,17 @@ define([
                 }
             };
 
+            this.cancel = () => {
+                if(self.canBeSaved()){
+                    self.init();
+                }
+                self.parts.valueHasMutated();
+            }
+
             this.save = async() => {
                 const incompleteInputs = self.getIncompleteInputs();
                 if(incompleteInputs.length) { 
-                    params.pageVm.alert(new params.pageVm.AlertViewModel(
+                    params.pageVm.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
                         "Dataset Name Required", 
                         `A dataset name was not provided for parts: ${incompleteInputs.map(x => x.displayname).join(', ')}`
@@ -395,7 +400,7 @@ define([
                     console.log('Couldn\'t create observation cross references.');
                 }
 
-                params.value({ 
+                params.form.savedData({ 
                     observationReferenceTileId: self.observationReferenceTileId(),
                     parts: self.parts().map(x => 
                         {
@@ -411,7 +416,7 @@ define([
                     )
                 });
 
-                self.snapshot = params.form.value();
+                self.snapshot = params.form.savedData();
                 params.form.complete(true);
             };
 
@@ -465,19 +470,19 @@ define([
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
 
 
-                self.observationReferenceTileId(params.form.value()?.observationReferenceTileId);               
-                parts.forEach(async(part) => {
+                self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);               
+                for (const part of parts) {
                     part.resourceid = part.data[physicalThingPartNodeId][0].resourceId; 
                     const related = await resourceUtils.lookupResourceInstanceData(part.resourceid);
                     const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501"; 
                     const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
                     const datasetTile = related?._source.tiles.find((tile) => tile.nodegroup_id === digitalReferenceNodeGroupId);
-                    part.datasetFiles = ko.observableArray([]);
-                    part.datasetName = ko.observable();
-                    part.datasetId = ko.observable();
-                    part.nameTileId = ko.observable();
-                    part.resourceReferenceId = ko.observable();
-                    part.nameDirty = ko.observable(false);
+                    part.datasetFiles = part.datasetFiles || ko.observableArray([]);
+                    part.datasetName = part.datasetName || ko.observable();
+                    part.datasetId = part.datasetId || ko.observable();
+                    part.nameTileId = part.nameTileId || ko.observable();
+                    part.resourceReferenceId = part.resourceReferenceId || ko.observable();
+                    part.nameDirty = part.nameDirty || ko.observable(false);
                     part.displayname = part.data[physicalThingPartNameNodeId];
                     if (datasetTile) {
                         const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
@@ -495,12 +500,14 @@ define([
                         part.nameTileId(nameTileId);
                     }
                     
-                    part.datasetId.subscribe(function(val){
-                        if (val) {
-                            params.form.complete(true);
-                        }
-                    });
-                    const savedValue = params.form.value()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
+                    if(!part.datasetId.getSubscriptionsCount()){
+                        part.datasetId.subscribe(function(val){
+                            if (val) {
+                                params.form.complete(true);
+                            }
+                        });
+                    }
+                    const savedValue = params.form.savedData()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
                     if(savedValue) {
                         
                         part.datasetFiles(savedValue.datasetFiles.map(x => { return {...x, tileId:ko.observable(x.tileId)}}));
@@ -514,15 +521,19 @@ define([
                             self.annotationNodes.valueHasMutated();
                         }
                     }
-                    part.datasetName.subscribe(() => {
-                        const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
-                        if(ko.unwrap(part.datasetName) != datasetSnapshot?.datasetName) {
-                            part.nameDirty(true);
-                        }
-                    });
-                });
+                    if(!part.datasetName.getSubscriptionsCount()){
+                        part.datasetName.subscribe((newValue) => {
+                            const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
+                            if(newValue != datasetSnapshot?.datasetName) {
+                                part.nameDirty(true);
+                            } else {
+                                part.nameDirty(false);
+                            }
+                        });
+                    }
+                };
                 self.parts(parts);
-                self.snapshot = params.form.value();
+                self.save();
                 self.selectedPart(self.parts()[0]);
             }
      

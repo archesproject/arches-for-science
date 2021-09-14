@@ -4,10 +4,49 @@
     margin-top: 20px;
 }
 
+.boxed {
+    position:relative;
+}
+
+#content-container {
+    z-index: 0;
+}
+
 .file-workbench-filter.series-data {
     position: relative;
     margin-top: 15px;
     margin-bottom: -10px;
+}
+
+.workbench-card-sidepanel{
+    display: flex;
+    flex-direction: column;
+}
+
+.workbench-button-panel {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #fafafa;
+    border-top: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+.workbench-content-container {
+    padding-bottom: 70px;
+    flex: 1; 
+    overflow: auto;
+}
+
+.workbench-button-panel button {
+    width: 48%;
+}
+.workbench-button-panel button span {
+    padding-left: 4px;
 }
 
 .tabbed-workflow .object-search-step {
