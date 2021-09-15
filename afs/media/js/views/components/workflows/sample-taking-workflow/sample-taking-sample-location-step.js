@@ -411,6 +411,28 @@ define([
                 });
             };
 
+            // TO BE UPDATED: Currently saving the classification cards with temporary value ids
+            // ceramics: "19ef147a-3703-41b4-bfa3-d4c66e333b0b" -> analysis area
+            // sculpture: "860c0f17-c655-4eb9-95f1-693c729d225e" -> region (sampling location)
+            // miniature: "b175683f-6229-43b5-acc8-b5ff82a1c9cc" -> sample
+
+            const savePhysicalThingClassificationTile = function(physicalThingClassificationTile, type) {
+                return new Promise(function(resolve, _reject) {
+                    const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
+                    if (type === "region") {
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["860c0f17-c655-4eb9-95f1-693c729d225e"];
+                    }
+                    else { // type === "sample"
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["b175683f-6229-43b5-acc8-b5ff82a1c9cc"];
+                    }
+                    physicalThingClassificationTile.transactionId = params.form.workflowId;
+
+                    physicalThingClassificationTile.save().then(function(physicalThingClassificationData) {
+                        resolve(physicalThingClassificationData);
+                    });
+                });
+            };
+
             var savePhysicalThingPartOfTile = function(physicalThingPartOfTile) {
                 var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
 
@@ -699,51 +721,67 @@ define([
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
                 savePhysicalThingNameTile(regionPhysicalThingNameTile, "region").then(function(regionPhysicalThingNameData) {
-                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                    const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
-                    self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
-                        var physicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+                    self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
+                        var physicalThingClassificationTile = getWorkingTile(regionPhysicalThingClassificationCard);
 
-                        savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
-                            var samplingUnitNodegroupId = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Unit (E80)
-                
-                            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
-                                var samplingActivitySamplingUnitTile = getWorkingSamplingActivityUnitTile(samplingActivitySamplingUnitCard, regionPhysicalThingNameData);
-            
-                                getSamplePhysicalThingNameCard(samplingActivitySamplingUnitTile).then(function(samplePhysicalThingNameCard) {
-                                    var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
+                        savePhysicalThingClassificationTile(physicalThingClassificationTile, "region").then(function(regionPhysicalThingClassificationData) {
+                            var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
 
-                                    savePhysicalThingNameTile(samplePhysicalThingNameTile, "sample").then(function(samplePhysicalThingNameData) {
-                                        var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
-                                        
-                                        self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
-                                            var physicalThingSampleDescriptionStatementTile = getWorkingPhysicalThingSamplingDescriptionTile(physicalThingStatementCard);
+                            self.fetchCardFromResourceId(regionPhysicalThingClassificationData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
+                                var physicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
 
-                                            savePhysicalThingStatementTile(physicalThingSampleDescriptionStatementTile, "description").then(function(_physicalThingStatmentSampleDescriptionData) {
-                                                var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
+                                savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
+                                    var samplingUnitNodegroupId = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Unit (E80)
+                        
+                                    self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
+                                        var samplingActivitySamplingUnitTile = getWorkingSamplingActivityUnitTile(samplingActivitySamplingUnitCard, regionPhysicalThingNameData);
+                    
+                                        getSamplePhysicalThingNameCard(samplingActivitySamplingUnitTile).then(function(samplePhysicalThingNameCard) {
+                                            var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
 
-                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
-                                                    var physicalThingSamplingMotivationTile = getWorkingPhysicalThingSamplingMotivationTile(physicalThingStatementCard);
+                                            savePhysicalThingNameTile(samplePhysicalThingNameTile, "sample").then(function(samplePhysicalThingNameData) {
+                                                const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
-                                                    savePhysicalThingStatementTile(physicalThingSamplingMotivationTile, "motivation").then(function(_samplingActivitySamplingMotivationData) {
-                                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
-                                                            saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
-                                                                // fetches again for updated data
-                                                                // self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(updatedSamplingActivitySamplingUnitCard) {
-                                                                    updateAnnotations().then(function(_physicalThingAnnotationNode) {
-                                                                        self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
-                                                                        
-                                                                        self.updateSampleLocationInstances();
-                                                                        self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
-            
-                                                                        self.savingTile(false);
-                                                                        params.dirty(true);
-                                                                        params.form.complete(true);
+                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(samplePhysicalThingClassificationCard) {
+                                                    var physicalThingClassificationTile = getWorkingTile(samplePhysicalThingClassificationCard);
+                            
+                                                    savePhysicalThingClassificationTile(physicalThingClassificationTile, "sample").then(function(samplePhysicalThingClassificationData) {
+                                                        var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
+                                                        
+                                                        self.fetchCardFromResourceId(samplePhysicalThingClassificationData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
+                                                            var physicalThingSampleDescriptionStatementTile = getWorkingPhysicalThingSamplingDescriptionTile(physicalThingStatementCard);
 
-                                                                        params.pageVm.alert("");
-                                                                        self.drawFeatures([]);
+                                                            savePhysicalThingStatementTile(physicalThingSampleDescriptionStatementTile, "description").then(function(_physicalThingStatmentSampleDescriptionData) {
+                                                                var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
+
+                                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
+                                                                    var physicalThingSamplingMotivationTile = getWorkingPhysicalThingSamplingMotivationTile(physicalThingStatementCard);
+
+                                                                    savePhysicalThingStatementTile(physicalThingSamplingMotivationTile, "motivation").then(function(_samplingActivitySamplingMotivationData) {
+                                                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
+                                                                            saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
+                                                                                // fetches again for updated data
+                                                                                // self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(updatedSamplingActivitySamplingUnitCard) {
+                                                                                    updateAnnotations().then(function(_physicalThingAnnotationNode) {
+                                                                                        self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
+                                                                                        
+                                                                                        self.updateSampleLocationInstances();
+                                                                                        self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
+                            
+                                                                                        self.savingTile(false);
+                                                                                        params.dirty(true);
+                                                                                        params.form.complete(true);
+
+                                                                                        params.pageVm.alert("");
+                                                                                        self.drawFeatures([]);
+                                                                                    });
+                                                                                // });
+                                                                            });
+                                                                        });
                                                                     });
-                                                                // });
+                                                                });
                                                             });
                                                         });
                                                     });
