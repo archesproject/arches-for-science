@@ -1,4 +1,4 @@
-define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/report', 'views/components/reports/scenes/name'], function($, _, ko, arches, resourceUtils, reportUtils) {
+define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/report'], function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('digital-resource-report', {
         viewModel: function(params) {
             var self = this;
