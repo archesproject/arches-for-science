@@ -32,7 +32,7 @@
                             </tr>
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: names, dataTableOptions: nameTableConfig }">
-                            <tr><span data-bind="text: console.log(names())"></span>
+                            <tr>
                                 <td data-bind="text: content"></td>
                                 <td data-bind="text: type"></td>
                                 <td data-bind="text: language"></td>
@@ -59,7 +59,6 @@
 </div>
 <div class="afs-report-section">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.identifiers)}" class="fa fa-angle-double-right toggle"></i> {% trans "Identifiers" %}</h2>
-    <span data-bind="text: console.log(cards.identifier)"></span>
     <span data-bind="if: cards.identifier && (!identifiers().length || cards.identifier.cardinality == 'n')">
         <a class="afs-report-a" data-bind="click: function(){add(cards.identifier)}"><i class="fa fa-mail-reply"></i> {% trans "Add Identifier" %}</a>
     </span>
