@@ -297,6 +297,18 @@ define([
                 });
             };
 
+            var savePhysicalThingClassificationTile = function(physicalThingClassificationTile) {
+                return new Promise(function(resolve, _reject) {
+                    var physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
+                    physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["19ef147a-3703-41b4-bfa3-d4c66e333b0b"]; //to be updated currently indicating "ceramics"
+                    physicalThingClassificationTile.transactionId = params.form.workflowId;
+
+                    physicalThingClassificationTile.save().then(function(physicalThingClassificationData) {
+                        resolve(physicalThingClassificationData);
+                    });
+                });
+            };
+
             var savePhysicalThingPartOfTile = function(physicalThingPartOfTile) {
                 var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
 
@@ -428,24 +440,32 @@ define([
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
                 savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(physicalThingNameData) {
-                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
-    
-                    self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
-                        var regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+                    const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
 
-                        savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
-                            updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
-                                updateAnnotations().then(function(_physicalThingAnnotationNode) {
-                                    self.updateAnalysisAreaInstances();
-    
-                                    self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
-                                    self.savingTile(false);
-                                    params.pageVm.alert("")
-                                    self.drawFeatures([]);
+                    self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
+                       const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingClassificationCard);
 
-                                    let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
-                                    params.form.savedData(koMapping.toJS(mappedInstances));
-                                    params.form.complete(true);
+                       savePhysicalThingClassificationTile(regionPhysicalThingPartOfTile).then(function(physicalThingClassificationData) {
+                            var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+            
+                            self.fetchCardFromResourceId(physicalThingClassificationData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
+                                var regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+
+                                savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
+                                    updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
+                                        updateAnnotations().then(function(_physicalThingAnnotationNode) {
+                                            self.updateAnalysisAreaInstances();
+            
+                                            self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
+                                            self.savingTile(false);
+                                            params.pageVm.alert("")
+                                            self.drawFeatures([]);
+
+                                            let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
+                                            params.form.savedData(koMapping.toJS(mappedInstances));
+                                            params.form.complete(true);
+                                        });
+                                    });
                                 });
                             });
                         });
