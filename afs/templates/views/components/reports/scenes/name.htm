@@ -1,0 +1,160 @@
+{% extends "views/report-templates/default.htm" %} 
+{% load i18n %} 
+{% block report %}
+
+{% block body %}
+<div class="afs-report-section">
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.names)}" class="fa fa-angle-double-right toggle"></i> {% trans "Names" %}</h2>
+    <span data-bind="if: cards.name && (!names().length || cards.name.cardinality == 'n')">
+        <a class="afs-report-a" data-bind="click: function(){add(cards.name)}"><i class="fa fa-mail-reply"></i> {% trans "Add Name" %}</a>
+    </span>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.names" class="afs-report-collapsible-container pad-lft">
+
+        <!-- ko ifnot: names().length -->
+        <div class="afs-nodata-note">No names for this resource</div>
+        <!-- /ko -->
+        
+        <!-- ko if: names().length -->
+        <div class="afs-report-subsection" >
+            <div class="firstchild-container">
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                <th class="min-medium">{% trans "Language" %}</th>
+                                <th class="none">{% trans "Label" %}</th>
+                                <th class="none">{% trans "Source" %}</th>
+                                <th class="afs-table-control all"></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: names, dataTableOptions: nameTableConfig }">
+                            <tr><span data-bind="text: console.log(names())"></span>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: language"></td>
+                                <td data-bind="text: label"></td>
+                                <td data-bind="text: source"></td>
+                                <td class="afs-table-control">
+                                    <div data-bind="if: $parent.cards && $parent.cards.name">
+                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.name)}">
+                                            <i class="fa fa-mail-reply"></i>
+                                        </a>
+                                        <a data-bind="click: function() {$parent.delete(tileid, $parent.cards.name)}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<div class="afs-report-section">
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.identifiers)}" class="fa fa-angle-double-right toggle"></i> {% trans "Identifiers" %}</h2>
+    <span data-bind="text: console.log(cards.identifier)"></span>
+    <span data-bind="if: cards.identifier && (!identifiers().length || cards.identifier.cardinality == 'n')">
+        <a class="afs-report-a" data-bind="click: function(){add(cards.identifier)}"><i class="fa fa-mail-reply"></i> {% trans "Add Identifier" %}</a>
+    </span>
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.identifiers" class="afs-report-collapsible-container pad-lft">
+
+        <!-- ko ifnot: identifiers().length -->
+        <div class="afs-nodata-note">No identifiers for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: identifiers().length -->
+        
+        <div class="afs-report-subsection" >
+            <div class="firstchild-container">
+                <div class="afs-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                <th class="none">{% trans "Label" %}</th>
+                                <th class="none">{% trans "Source" %}</th>
+                                <th class="afs-table-control all"></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: identifiers, dataTableOptions: identifierTableConfig }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: label"></td>
+                                <td data-bind="text: source"></td>
+                                <td class="afs-table-control">
+                                    <div data-bind="if: $parent.cards.identifier">
+                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.identifier)}">
+                                            <i class="fa fa-mail-reply"></i>
+                                        </a>
+                                        <a data-bind="click: function() {$parent.delete(tileid, $parent.cards.identifier)}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<div class="afs-report-section">
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.classifications)}" class="fa fa-angle-double-right toggle"></i> {% trans "Classification" %}</h2>
+    
+
+    <!-- Collapsible content -->
+    <div data-bind="visible: visible.classifications" class="afs-report-collapsible-container pad-lft">
+
+        <!-- ko ifnot: identifiers().length -->
+        <div class="afs-nodata-note">No classification for this resource</div>
+        <!-- /ko -->
+
+        <!-- ko if: identifiers().length -->
+        
+        <div class="afs-report-subsection" >
+            <div class="firstchild-container">
+                <div class="afs-report-subsection-ite" style="padding-top: 10px;">
+                    <div data-bind="if: cards.type && type() != '--'">
+                        <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Type" %}</a>
+                    </div>
+                    <div data-bind="if: cards.type && type() == '--'">
+                        <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Add Type" %}</a>
+                    </div>
+                    <div class="afs-block-attributes pad-btm">
+                        <h4 class="afs-block-key">Type: </h4>
+                        <div class="afs-block-value" data-bind="text: type"></div>
+                    </div>
+                    <div data-bind="if: exactMatch()">
+                        <div data-bind="if: cards.exactMatch && exactMatch() == '--'">
+                            <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Add Exact Match" %}</a>
+                        </div>
+                        <div data-bind="if: cards.exactMatch && exactMatch() != '--'">
+                            <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Exact Match" %}</a>
+                        </div>
+                        <div class="afs-block-attributes">
+                            <h4 class="afs-block-key">Exact Match: </h4>
+                            <div class="afs-block-value"><a data-bind="if: exactMatch() != '--', attr: {href: exactMatch}"><span data-bind="text: exactMatch"></span></a><span data-bind="if: exactMatch() == '--'">--</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+{% endblock body %}
+{% endblock report %}
