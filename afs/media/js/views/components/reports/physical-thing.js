@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
+define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable', 'views/components/reports/scenes/name'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;

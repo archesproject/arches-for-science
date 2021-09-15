@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/report'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
+define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/report', 'views/components/reports/scenes/name'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
         viewModel: function(params) {
             var self = this;
