@@ -297,9 +297,9 @@ define([
                 });
             };
 
-            var savePhysicalThingClassificationTile = function(physicalThingClassificationTile) {
+            const savePhysicalThingClassificationTile = function(physicalThingClassificationTile) {
                 return new Promise(function(resolve, _reject) {
-                    var physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
+                    const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
                     physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["19ef147a-3703-41b4-bfa3-d4c66e333b0b"]; //to be updated currently indicating "ceramics"
                     physicalThingClassificationTile.transactionId = params.form.workflowId;
 
@@ -437,7 +437,7 @@ define([
             params.form.lockExternalStep('image-step', true);
 
             getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
-                var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
+                const regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
                 savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(physicalThingNameData) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
@@ -446,10 +446,10 @@ define([
                        const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingClassificationCard);
 
                        savePhysicalThingClassificationTile(regionPhysicalThingPartOfTile).then(function(physicalThingClassificationData) {
-                            var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                            const physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
             
                             self.fetchCardFromResourceId(physicalThingClassificationData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
-                                var regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+                                const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
 
                                 savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
                                     updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
