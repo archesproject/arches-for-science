@@ -17,7 +17,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Duration of TimeSpan of Group Dissolution Event",
+                    "name": "Name for Duration of TimeSpan",
                     "nodegroup_id": "ae7d3728-d284-11e9-a267-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -36,7 +36,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Identifier for Professional Activity Known for",
+                    "name": "Identifier for Professional Activity",
                     "nodegroup_id": "d3a4d89c-c061-11e9-b8a1-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -61,8 +61,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Residence or Associated Location",
+                    "is_editable": false,
+                    "name": "Residence or Associated Location of Group",
                     "nodegroup_id": "bda20e7a-b323-11e9-b758-a4d18cec433a",
                     "sortorder": 8,
                     "visible": true
@@ -81,7 +81,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for TimeSpan of Group Dissolution Event",
+                    "name": "Name for TimeSpan",
                     "nodegroup_id": "ae7d53b5-d284-11e9-87fc-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -100,7 +100,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Duration of TimeSpan of Group Dissolution Event",
+                    "name": "Duration of TimeSpan",
                     "nodegroup_id": "ae7d4c17-d284-11e9-be76-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -125,8 +125,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Identifier",
+                    "is_editable": false,
+                    "name": "Identifier of Group",
                     "nodegroup_id": "280201ae-c05e-11e9-b285-a4d18cec433a",
                     "sortorder": 5,
                     "visible": true
@@ -145,7 +145,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Identifier for Group Dissolution Event",
+                    "name": "Identifier for Dissolution Event",
                     "nodegroup_id": "ae7d3cb5-d284-11e9-ae92-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -164,7 +164,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Identifier for Group Formation Event",
+                    "name": "Identifier for Formation Event",
                     "nodegroup_id": "3b5f550f-c05e-11e9-8d2d-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true
@@ -174,7 +174,14 @@
                     "cardid": "9f704956-8e2f-11eb-a9c4-faffc265b501",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "9f704956-8e2f-11eb-a9c4-faffc265b501",
+                            "constraintid": "70f40f45-3f0b-4f9d-bd1a-a941c4063a82",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -183,7 +190,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Digital Reference",
+                    "name": "Digital Reference to Group",
                     "nodegroup_id": "9f704776-8e2f-11eb-a9c4-faffc265b501",
                     "sortorder": 21,
                     "visible": true
@@ -209,25 +216,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "54949228-c05e-11e9-ba58-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Statement about Group Formation Event",
-                    "nodegroup_id": "54948f8c-c05e-11e9-955a-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "cadc4b6e-b323-11e9-8ce1-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -246,8 +234,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Part of Broader Group",
+                    "is_editable": false,
+                    "name": "Parent Group",
                     "nodegroup_id": "cadbc433-b323-11e9-a4ba-a4d18cec433a",
                     "sortorder": 3,
                     "visible": true
@@ -273,7 +261,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Dissolution",
+                    "name": "Dissolution Event of Group",
                     "nodegroup_id": "ae7d576b-d284-11e9-a0e5-a4d18cec433a",
                     "sortorder": 11,
                     "visible": true
@@ -299,7 +287,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "URI in External List",
+                    "name": "External URI of Group",
                     "nodegroup_id": "bc2bfc4a-c061-11e9-bfe8-a4d18cec433a",
                     "sortorder": 6,
                     "visible": true
@@ -325,32 +313,6 @@
                 },
                 {
                     "active": true,
-                    "cardid": "32db9714-c05e-11e9-8b31-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "32db9714-c05e-11e9-8b31-a4d18cec433a",
-                            "constraintid": "4d9d9bb7-00bb-4b5a-8db1-3dde9bc8a1f6",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Group Description or Statement",
-                    "nodegroup_id": "32db94f8-c05e-11e9-a2c1-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true
-                },
-                {
-                    "active": true,
                     "cardid": "20004100-c05e-11e9-9f79-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
@@ -369,48 +331,10 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Address or Contact Point",
+                    "is_editable": false,
+                    "name": "Address or Contact Point of Group",
                     "nodegroup_id": "20003a33-c05e-11e9-8646-a4d18cec433a",
                     "sortorder": 4,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "TimeSpan of Professional Activity Known For",
-                    "nodegroup_id": "d3a4fac0-c061-11e9-8e91-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "ec344c80-c061-11e9-bd85-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Statement about TimeSpan of Professional Activity Known For",
-                    "nodegroup_id": "ec344a33-c061-11e9-b40a-a4d18cec433a",
-                    "sortorder": null,
                     "visible": true
                 },
                 {
@@ -434,36 +358,10 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "References",
+                    "name": "Source Reference Work for Group",
                     "nodegroup_id": "a5ee95c7-b323-11e9-a9d8-a4d18cec433a",
                     "sortorder": 12,
                     "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                            "constraintid": "aa90d8cd-ca75-4d9a-95ce-af41719ebea4",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: la-activity-base\n* FieldId: \n",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Professional Activity Known For",
-                    "nodegroup_id": "d3a51166-c061-11e9-9820-a4d18cec433a",
-                    "sortorder": 9,
-                    "visible": true
                 },
                 {
                     "active": true,
@@ -479,35 +377,9 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Statement about Group Formation Event",
+                    "name": "Name for Statement",
                     "nodegroup_id": "549489f5-c05e-11e9-bc2f-a4d18cec433a",
                     "sortorder": null,
-                    "visible": false
-                },
-                {
-                    "active": true,
-                    "cardid": "554a0ea6-b2e3-11e9-adec-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "554a0ea6-b2e3-11e9-adec-a4d18cec433a",
-                            "constraintid": "c4db3c96-0e18-485b-9572-a3c9edc0d933",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Internal Label",
-                    "nodegroup_id": "5549881e-b2e3-11e9-8d22-a4d18cec433a",
-                    "sortorder": 7,
                     "visible": false
                 },
                 {
@@ -569,7 +441,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Timespan of Group Formation Event",
+                    "name": "Name for Timespan",
                     "nodegroup_id": "3b5f629c-c05e-11e9-85d2-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true
@@ -588,7 +460,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Statement about Group Dissolution Event",
+                    "name": "Name for Statement",
                     "nodegroup_id": "ae7d5b2b-d284-11e9-a870-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -607,7 +479,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Duration of Timespan of Group Formation Event",
+                    "name": "Name for Duration of Timespan",
                     "nodegroup_id": "3b5f5d1c-c05e-11e9-83ef-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -626,7 +498,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Statement about TimeSpan of Professional Activity Known For",
+                    "name": "Name for Statement about Professional Activity",
                     "nodegroup_id": "ec3444e3-c061-11e9-8305-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -664,7 +536,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Timespan of Group Formation Event",
+                    "name": "Timespan of Formation Event",
                     "nodegroup_id": "3b5f5947-c05e-11e9-bc8f-a4d18cec433a",
                     "sortorder": 3,
                     "visible": true
@@ -683,7 +555,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Group Dissolution Event",
+                    "name": "Name for Dissolution Event",
                     "nodegroup_id": "ae7d483a-d284-11e9-a9d5-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -702,7 +574,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "TimeSpan of Group Dissolution Event",
+                    "name": "TimeSpan of Dissolution Event",
                     "nodegroup_id": "ae7d4fe1-d284-11e9-bd89-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -740,7 +612,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Group Formation Event",
+                    "name": "Name for Formation Event",
                     "nodegroup_id": "3b5f6afa-c05e-11e9-b78b-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true
@@ -759,29 +631,10 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Statement about Group Dissolution Event",
+                    "name": "Statement about Dissolution Event",
                     "nodegroup_id": "ae7d40cf-d284-11e9-962d-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Duration of Timespan of Group Formation Event",
-                    "nodegroup_id": "3b5f4f70-c05e-11e9-8aaa-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": false
                 },
                 {
                     "active": true,
@@ -803,8 +656,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Group Name",
+                    "is_editable": false,
+                    "name": "Name of Group",
                     "nodegroup_id": "12707705-c05e-11e9-8177-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true
@@ -830,100 +683,178 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Formation",
+                    "name": "Formation Event of Group",
                     "nodegroup_id": "3b5f674f-c05e-11e9-88f2-a4d18cec433a",
                     "sortorder": 10,
                     "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                            "constraintid": "aa90d8cd-ca75-4d9a-95ce-af41719ebea4",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: la-activity-base\n* FieldId: \n",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Professional Activity Group Known For",
+                    "nodegroup_id": "d3a51166-c061-11e9-9820-a4d18cec433a",
+                    "sortorder": 9,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "TimeSpan of Professional Activity",
+                    "nodegroup_id": "d3a4fac0-c061-11e9-8e91-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "ec344c80-c061-11e9-bd85-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Statement about Professional Activity",
+                    "nodegroup_id": "ec344a33-c061-11e9-b40a-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "54949228-c05e-11e9-ba58-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Statement about Formation Event",
+                    "nodegroup_id": "54948f8c-c05e-11e9-955a-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": true,
+                    "name": "Duration of Timespan",
+                    "nodegroup_id": "3b5f4f70-c05e-11e9-8aaa-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": false
+                },
+                {
+                    "active": true,
+                    "cardid": "32db9714-c05e-11e9-8b31-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "32db9714-c05e-11e9-8b31-a4d18cec433a",
+                            "constraintid": "4d9d9bb7-00bb-4b5a-8db1-3dde9bc8a1f6",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Statement about Group",
+                    "nodegroup_id": "32db94f8-c05e-11e9-a2c1-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "554a0ea6-b2e3-11e9-adec-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "554a0ea6-b2e3-11e9-adec-a4d18cec433a",
+                            "constraintid": "c4db3c96-0e18-485b-9572-a3c9edc0d933",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Internal Label of Group",
+                    "nodegroup_id": "5549881e-b2e3-11e9-8d22-a4d18cec433a",
+                    "sortorder": 7,
+                    "visible": false
                 }
             ],
             "cards_x_nodes_x_widgets": [
                 {
-                    "card_id": "d3a4e44a-c061-11e9-b1af-a4d18cec433a",
+                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
                     "config": {
-                        "defaultValue": "",
-                        "label": "Identifier Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "b68102d9-d282-11e9-993b-a4d18cec433a",
-                    "label": "Identifier Type",
-                    "node_id": "d3a5ba00-c061-11e9-837c-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "d3a4f570-c061-11e9-9b3e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "01891821-a33d-11eb-a29f-024e0d439fdb",
-                    "label": "Name Type",
-                    "node_id": "d3a591cf-c061-11e9-9300-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "cadc4b6e-b323-11e9-8ce1-a4d18cec433a",
-                    "config": {
-                        "label": "Group",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name",
                         "placeholder": ""
                     },
-                    "id": "041702d1-cd05-11e9-a8ef-a4d18cec433a",
-                    "label": "Group",
-                    "node_id": "cadbc433-b323-11e9-a4ba-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "d3a55182-c061-11e9-992f-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "0070f238-d283-11e9-b17e-a4d18cec433a",
-                    "label": "Name Language",
-                    "node_id": "d3a5746e-c061-11e9-9d51-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "d3a55182-c061-11e9-992f-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "00727aca-d283-11e9-9a71-a4d18cec433a",
-                    "label": "Name Label",
-                    "node_id": "d3a5abe6-c061-11e9-a37d-a4d18cec433a",
+                    "id": "e7d36766-cd04-11e9-b785-a4d18cec433a",
+                    "label": "Source Reference Work for Name",
+                    "node_id": "12708b91-c05e-11e9-823f-a4d18cec433a",
                     "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "d3a55182-c061-11e9-992f-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Name for Duration of TimeSpan of Professional Activity",
-                        "placeholder": ""
-                    },
-                    "id": "0073e3d9-d283-11e9-a810-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Duration of TimeSpan of Professional Activity",
-                    "node_id": "d3a5778c-c061-11e9-9e2d-a4d18cec433a",
-                    "sortorder": 4,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
@@ -964,6 +895,41 @@
                 {
                     "card_id": "32db9714-c05e-11e9-8b31-a4d18cec433a",
                     "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Statement Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "f9ddee21-cd04-11e9-b4a1-a4d18cec433a",
+                    "label": "Statement Language",
+                    "node_id": "32db9854-c05e-11e9-9b20-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "32db9714-c05e-11e9-8b31-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "f9e13fa1-cd04-11e9-ba21-a4d18cec433a",
+                    "label": "Statement Label",
+                    "node_id": "32db9d5e-c05e-11e9-b170-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "32db9714-c05e-11e9-8b31-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Statement",
                         "placeholder": ""
                     },
@@ -975,8 +941,86 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
+                    "card_id": "20004100-c05e-11e9-9f79-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Address or Contact Point",
+                        "placeholder": ""
+                    },
+                    "id": "da732340-cd04-11e9-b165-a4d18cec433a",
+                    "label": "Source Reference Work for Address or Contact Point",
+                    "node_id": "20004414-c05e-11e9-bb65-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "d3a4f570-c061-11e9-9b3e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "01891821-a33d-11eb-a29f-024e0d439fdb",
+                    "label": "Name Type",
+                    "node_id": "d3a591cf-c061-11e9-9300-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "d3a55182-c061-11e9-992f-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "0070f238-d283-11e9-b17e-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "d3a5746e-c061-11e9-9d51-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "d3a55182-c061-11e9-992f-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "00727aca-d283-11e9-9a71-a4d18cec433a",
+                    "label": "Name Label",
+                    "node_id": "d3a5abe6-c061-11e9-a37d-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "d3a55182-c061-11e9-992f-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for Duration of TimeSpan of Professional Activity",
+                        "placeholder": ""
+                    },
+                    "id": "0073e3d9-d283-11e9-a810-a4d18cec433a",
+                    "label": "Source Reference Work for Name for Duration of TimeSpan of Professional Activity",
+                    "node_id": "d3a5778c-c061-11e9-9e2d-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
                     "card_id": "bda2a194-b323-11e9-9c06-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Location",
                         "placeholder": ""
                     },
@@ -1023,53 +1067,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "ec344c80-c061-11e9-bd85-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Statement Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "39f27b91-d283-11e9-857d-a4d18cec433a",
-                    "label": "Statement Language",
-                    "node_id": "ec344dde-c061-11e9-bc06-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "ec344c80-c061-11e9-bd85-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Statement about TimeSpan of Professional Activity Known For",
-                        "placeholder": ""
-                    },
-                    "id": "39f3cfb0-d283-11e9-8e44-a4d18cec433a",
-                    "label": "Source Reference Work for Statement about TimeSpan of Professional Activity Known For",
-                    "node_id": "ec34525c-c061-11e9-a34d-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "ec344c80-c061-11e9-bd85-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Statement Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "39f5c8c7-d283-11e9-a86c-a4d18cec433a",
-                    "label": "Statement Label",
-                    "node_id": "ec345354-c061-11e9-b443-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "d3a4e44a-c061-11e9-b1af-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -1084,23 +1081,6 @@
                     "node_id": "d3a598c0-c061-11e9-8dfd-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "d3a4e44a-c061-11e9-b1af-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Identifier Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "b67fe06b-d282-11e9-bb91-a4d18cec433a",
-                    "label": "Identifier Label",
-                    "node_id": "d3a5b870-c061-11e9-bb00-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
@@ -1138,11 +1118,12 @@
                 {
                     "card_id": "ae7d559e-d284-11e9-a348-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Name for TimeSpan of Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for TimeSpan",
                         "placeholder": ""
                     },
                     "id": "0e5d3ef3-a33f-11eb-a29f-024e0d439fdb",
-                    "label": "Source Reference Work for Name for TimeSpan of Group Dissolution Event",
+                    "label": "Source Reference Work for Name for TimeSpan",
                     "node_id": "ae7d88cc-d284-11e9-8834-a4d18cec433a",
                     "sortorder": null,
                     "visible": true,
@@ -1218,6 +1199,7 @@
                 {
                     "card_id": "a5ef2219-b323-11e9-ae33-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work",
                         "placeholder": ""
                     },
@@ -1278,6 +1260,23 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "ec344c80-c061-11e9-bd85-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Statement Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "39f5c8c7-d283-11e9-a86c-a4d18cec433a",
+                    "label": "Statement Label",
+                    "node_id": "ec345354-c061-11e9-b443-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
                     "card_id": "3b5f6563-c05e-11e9-b5a5-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -1295,11 +1294,12 @@
                 {
                     "card_id": "ae7d5d33-d284-11e9-988d-a4d18cec433a",
                     "config": {
-                        "label": "Name for Name for Statement about Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Name for Name for Statement",
                         "placeholder": ""
                     },
                     "id": "ae7e0933-d284-11e9-a28b-a4d18cec433a",
-                    "label": "Name for Name for Statement about Group Dissolution Event",
+                    "label": "Name for Name for Statement",
                     "node_id": "ae7d8017-d284-11e9-9180-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -1376,11 +1376,12 @@
                 {
                     "card_id": "3b5f5f42-c05e-11e9-af92-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Name for Duration of Timespan of Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for Duration of Timespan",
                         "placeholder": ""
                     },
                     "id": "20bc2347-d71d-11e9-aa78-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Duration of Timespan of Group Formation Event",
+                    "label": "Source Reference Work for Name for Duration of Timespan",
                     "node_id": "3b5f9514-c05e-11e9-9d69-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -1402,125 +1403,14 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "label": "Location of Professional Activity",
-                        "placeholder": ""
-                    },
-                    "id": "7cdbb1dc-cd04-11e9-88e6-a4d18cec433a",
-                    "label": "Location of Professional Activity",
-                    "node_id": "d3a5a11e-c061-11e9-ac1d-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "label": "Influence on Professional Activity",
-                        "placeholder": ""
-                    },
-                    "id": "7cd639d4-cd04-11e9-b347-a4d18cec433a",
-                    "label": "Influence on Professional Activity",
-                    "node_id": "d3a5b0a8-c061-11e9-ac3c-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "label": "Physical Object used in Professional Activity",
-                        "placeholder": ""
-                    },
-                    "id": "7cdef7e1-cd04-11e9-a5a7-a4d18cec433a",
-                    "label": "Physical Object used in Professional Activity",
-                    "node_id": "d3a58987-c061-11e9-b10d-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Professional Activity Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "7cd40aeb-cd04-11e9-a65e-a4d18cec433a",
-                    "label": "Professional Activity Type",
-                    "node_id": "d3a59f85-c061-11e9-9811-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Professional Activity Technique",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "7cdcbc28-cd04-11e9-8976-a4d18cec433a",
-                    "label": "Professional Activity Technique",
-                    "node_id": "d3a57073-c061-11e9-84d6-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "label": "Professional Activity Period",
-                        "placeholder": ""
-                    },
-                    "id": "7cda6a54-cd04-11e9-9ebf-a4d18cec433a",
-                    "label": "Professional Activity Period",
-                    "node_id": "d3a55a9c-c061-11e9-8e95-a4d18cec433a",
-                    "sortorder": 10,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Professional Activity Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "7cddd368-cd04-11e9-84a7-a4d18cec433a",
-                    "label": "Professional Activity Label",
-                    "node_id": "d3a5a428-c061-11e9-b312-a4d18cec433a",
-                    "sortorder": 11,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Professional Activity",
-                        "placeholder": ""
-                    },
-                    "id": "7cd17173-cd04-11e9-ab82-a4d18cec433a",
-                    "label": "Source Reference Work for Professional Activity",
-                    "node_id": "d3a5a2a3-c061-11e9-8738-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
                     "card_id": "ec34485c-c061-11e9-b52d-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Name for Statement about TimeSpan of Professional Activity Known For",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for Statement about Professional Activity",
                         "placeholder": ""
                     },
                     "id": "720ea15e-d283-11e9-897b-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Statement about TimeSpan of Professional Activity Known For",
+                    "label": "Source Reference Work for Name for Statement about Professional Activity",
                     "node_id": "ec345751-c061-11e9-a3ce-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -1624,11 +1514,12 @@
                 {
                     "card_id": "ae7d4de3-d284-11e9-8264-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Duration of TimeSpan of Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Duration of TimeSpan",
                         "placeholder": ""
                     },
                     "id": "ae7dfa6e-d284-11e9-83a7-a4d18cec433a",
-                    "label": "Source Reference Work for Duration of TimeSpan of Group Dissolution Event",
+                    "label": "Source Reference Work for Duration of TimeSpan",
                     "node_id": "ae7d948f-d284-11e9-ab82-a4d18cec433a",
                     "sortorder": 4,
                     "visible": false,
@@ -1709,11 +1600,12 @@
                 {
                     "card_id": "ae7d3f3d-d284-11e9-868d-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Identifier for Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Identifier",
                         "placeholder": ""
                     },
                     "id": "ae7dda85-d284-11e9-a6f0-a4d18cec433a",
-                    "label": "Source Reference Work for Identifier for Group Dissolution Event",
+                    "label": "Source Reference Work for Identifier",
                     "node_id": "ae7d7d00-d284-11e9-a3de-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -1722,11 +1614,12 @@
                 {
                     "card_id": "3b5f57c0-c05e-11e9-a3ed-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Identifier for Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Identifier for Formation Event",
                         "placeholder": ""
                     },
                     "id": "379b6e21-d284-11e9-a9c4-a4d18cec433a",
-                    "label": "Source Reference Work for Identifier for Group Formation Event",
+                    "label": "Source Reference Work for Identifier for Formation Event",
                     "node_id": "3b5f7933-c05e-11e9-8b69-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -1784,6 +1677,7 @@
                 {
                     "card_id": "d3a4f570-c061-11e9-9b3e-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for TimeSpan of Professional Activity Known For",
                         "placeholder": ""
                     },
@@ -1878,23 +1772,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "bc2c80f0-c061-11e9-b991-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "URI of this Group",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "8c4cfc54-cd04-11e9-8219-a4d18cec433a",
-                    "label": "URI of this Group",
-                    "node_id": "bc2bfc4a-c061-11e9-bfe8-a4d18cec433a",
-                    "sortorder": null,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "d3a55182-c061-11e9-992f-a4d18cec433a",
                     "config": {
                         "defaultValue": [
@@ -1926,40 +1803,6 @@
                     "node_id": "d3a55eab-c061-11e9-a50e-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "32db9714-c05e-11e9-8b31-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Statement Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "f9ddee21-cd04-11e9-b4a1-a4d18cec433a",
-                    "label": "Statement Language",
-                    "node_id": "32db9854-c05e-11e9-9b20-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "32db9714-c05e-11e9-8b31-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Statement Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "f9e13fa1-cd04-11e9-ba21-a4d18cec433a",
-                    "label": "Statement Label",
-                    "node_id": "32db9d5e-c05e-11e9-b170-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
@@ -1995,36 +1838,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "20004100-c05e-11e9-9f79-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Address or Contact Point",
-                        "placeholder": ""
-                    },
-                    "id": "da732340-cd04-11e9-b165-a4d18cec433a",
-                    "label": "Source Reference Work for Address or Contact Point",
-                    "node_id": "20004414-c05e-11e9-bb65-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "20004100-c05e-11e9-9f79-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Address or Contact Point Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "da7413c2-cd04-11e9-9759-a4d18cec433a",
-                    "label": "Address or Contact Point Label",
-                    "node_id": "20004c8c-c05e-11e9-8b48-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -2038,95 +1851,6 @@
                     "sortorder": 0,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Earliest Begin",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "cd02c93a-d282-11e9-9257-a4d18cec433a",
-                    "label": "Earliest Begin",
-                    "node_id": "d3a5a754-c061-11e9-acd5-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Latest Begin",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "cd01bcc0-d282-11e9-89a6-a4d18cec433a",
-                    "label": "Latest Begin",
-                    "node_id": "d3a59c0a-c061-11e9-9d95-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Earliest End",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "cd00b097-d282-11e9-82d1-a4d18cec433a",
-                    "label": "Earliest End",
-                    "node_id": "d3a59dca-c061-11e9-8b2f-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
-                    "config": {
-                        "dateFormat": "YYYY-MM-DD",
-                        "defaultValue": "",
-                        "label": "Latest End",
-                        "maxDate": false,
-                        "minDate": false,
-                        "placeholder": "Enter date",
-                        "viewMode": "days"
-                    },
-                    "id": "cd03e54a-d282-11e9-98dd-a4d18cec433a",
-                    "label": "Latest End",
-                    "node_id": "d3a56ecf-c061-11e9-abd8-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "TimeSpan Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "cd0514b0-d282-11e9-9138-a4d18cec433a",
-                    "label": "TimeSpan Label",
-                    "node_id": "d3a57f66-c061-11e9-9676-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "d3a54b07-c061-11e9-b4ac-a4d18cec433a",
@@ -2148,11 +1872,12 @@
                 {
                     "card_id": "3b5f6563-c05e-11e9-b5a5-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Name for Timespan of Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for Timespan",
                         "placeholder": ""
                     },
                     "id": "328dc7b5-d71d-11e9-9404-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Timespan of Group Formation Event",
+                    "label": "Source Reference Work for Name for Timespan",
                     "node_id": "3b5f7eca-c05e-11e9-991a-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -2299,6 +2024,7 @@
                 {
                     "card_id": "d3a52aa3-c061-11e9-8486-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Duration of TimeSpan of Professional Activity Known For",
                         "placeholder": ""
                     },
@@ -2312,11 +2038,12 @@
                 {
                     "card_id": "ae7d3aca-d284-11e9-8b98-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Name for Duration of TimeSpan of Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for Duration of TimeSpan",
                         "placeholder": ""
                     },
                     "id": "ae7e19c2-d284-11e9-bca5-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Duration of TimeSpan of Group Dissolution Event",
+                    "label": "Source Reference Work for Name for Duration of TimeSpan",
                     "node_id": "ae7d6ba8-d284-11e9-958d-a4d18cec433a",
                     "sortorder": 4,
                     "visible": false,
@@ -2389,19 +2116,6 @@
                     "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "d3a4e44a-c061-11e9-b1af-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Identifier for Professional Activity Known for",
-                        "placeholder": ""
-                    },
-                    "id": "b681f366-d282-11e9-908d-a4d18cec433a",
-                    "label": "Source Reference Work for Identifier for Professional Activity Known for",
-                    "node_id": "d3a55ceb-c061-11e9-9d1f-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "d3a52aa3-c061-11e9-8486-a4d18cec433a",
@@ -2485,23 +2199,6 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "3b5f5b6e-c05e-11e9-b597-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "TimeSpan Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "da1a7fca-d71c-11e9-ab4c-a4d18cec433a",
-                    "label": "TimeSpan Label",
-                    "node_id": "3b5f7fb8-c05e-11e9-9b02-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "3b5f5b6e-c05e-11e9-b597-a4d18cec433a",
@@ -2608,11 +2305,12 @@
                 {
                     "card_id": "ae7d4a2e-d284-11e9-b729-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Name for Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for  Dissolution Event",
                         "placeholder": ""
                     },
                     "id": "ae7e063a-d284-11e9-8257-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Group Dissolution Event",
+                    "label": "Source Reference Work for Name for  Dissolution Event",
                     "node_id": "ae7d9682-d284-11e9-9921-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -2632,70 +2330,6 @@
                     "label": "Name Language",
                     "node_id": "ae7dbf85-d284-11e9-9011-a4d18cec433a",
                     "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "17ea8323-d284-11e9-82d2-a4d18cec433a",
-                    "label": "Name Label",
-                    "node_id": "549497b5-c05e-11e9-a556-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Name for Statement about Group Formation Event",
-                        "placeholder": ""
-                    },
-                    "id": "17e92c05-d284-11e9-820a-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Statement about Group Formation Event",
-                    "node_id": "54949ef0-c05e-11e9-a448-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "17ec928f-d284-11e9-b5d6-a4d18cec433a",
-                    "label": "Name Language",
-                    "node_id": "54949c78-c05e-11e9-a508-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "17eb934a-d284-11e9-bbbd-a4d18cec433a",
-                    "label": "Name Type",
-                    "node_id": "54949535-c05e-11e9-b819-a4d18cec433a",
-                    "sortorder": 1,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
@@ -2891,6 +2525,7 @@
                 {
                     "card_id": "32db9354-c05e-11e9-8d0a-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Statement",
                         "placeholder": ""
                     },
@@ -2900,87 +2535,6 @@
                     "sortorder": 4,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "f402d0bd-cd07-11e9-a812-a4d18cec433a",
-                    "label": "Name Type",
-                    "node_id": "3b5f6fd1-c05e-11e9-a229-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Name for Group Formation Event",
-                        "placeholder": ""
-                    },
-                    "id": "f4058070-cd07-11e9-8224-a4d18cec433a",
-                    "label": "Source Reference Work for Name for Group Formation Event",
-                    "node_id": "3b5f70d4-c05e-11e9-969e-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "f401246b-cd07-11e9-9354-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "3b5f8c7d-c05e-11e9-8061-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "f4046e4c-cd07-11e9-b11f-a4d18cec433a",
-                    "label": "Name Label",
-                    "node_id": "3b5f914c-c05e-11e9-98cc-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "f406a13a-cd07-11e9-9972-a4d18cec433a",
-                    "label": "Name Language",
-                    "node_id": "3b5f7b11-c05e-11e9-8ee5-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "ae7d4678-d284-11e9-b9fd-a4d18cec433a",
@@ -3128,6 +2682,7 @@
                 {
                     "card_id": "280206c0-c05e-11e9-9cc4-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Identifier",
                         "placeholder": ""
                     },
@@ -3220,79 +2775,15 @@
                     "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
-                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Group Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "e7d7f14f-cd04-11e9-b2ad-a4d18cec433a",
-                    "label": "Group Name",
-                    "node_id": "127095f5-c05e-11e9-bb57-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "e7d6cd47-cd04-11e9-85f5-a4d18cec433a",
-                    "label": "Name Type",
-                    "node_id": "1270928f-c05e-11e9-a111-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "e7d4b1a1-cd04-11e9-8bd4-a4d18cec433a",
-                    "label": "Name Language",
-                    "node_id": "127085d1-c05e-11e9-9b11-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Name",
-                        "placeholder": ""
-                    },
-                    "id": "e7d36766-cd04-11e9-b785-a4d18cec433a",
-                    "label": "Source Reference Work for Name",
-                    "node_id": "12708b91-c05e-11e9-823f-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
                     "card_id": "ae7d59cc-d284-11e9-b0f2-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Group Dissolution Event Type",
+                        "label": "Dissolution Event Type",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "ae7dee33-d284-11e9-b371-a4d18cec433a",
-                    "label": "Group Dissolution Event Type",
+                    "label": "Dissolution Event Type",
                     "node_id": "ae7d7f11-d284-11e9-b690-a4d18cec433a",
                     "sortorder": 0,
                     "visible": false,
@@ -3302,14 +2793,14 @@
                     "card_id": "ae7d59cc-d284-11e9-b0f2-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Group Dissolution Event Label",
+                        "label": "Dissolution Event Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "ae7ddd17-d284-11e9-9ae0-a4d18cec433a",
-                    "label": "Group Dissolution Event Label",
+                    "label": "Dissolution Event Label",
                     "node_id": "ae7daea6-d284-11e9-8626-a4d18cec433a",
                     "sortorder": 11,
                     "visible": false,
@@ -3318,11 +2809,12 @@
                 {
                     "card_id": "ae7d59cc-d284-11e9-b0f2-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Dissolution Event",
                         "placeholder": ""
                     },
                     "id": "ae7e16fa-d284-11e9-bd7c-a4d18cec433a",
-                    "label": "Source Reference Work for Group Dissolution Event",
+                    "label": "Source Reference Work for Dissolution Event",
                     "node_id": "ae7d79d7-d284-11e9-95eb-a4d18cec433a",
                     "sortorder": 5,
                     "visible": true,
@@ -3331,11 +2823,12 @@
                 {
                     "card_id": "ae7d59cc-d284-11e9-b0f2-a4d18cec433a",
                     "config": {
-                        "label": "Location of Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Location of Dissolution Event",
                         "placeholder": ""
                     },
                     "id": "ae7ddb57-d284-11e9-b4a8-a4d18cec433a",
-                    "label": "Location of Group Dissolution Event",
+                    "label": "Location of Dissolution Event",
                     "node_id": "ae7dc4ca-d284-11e9-a9a6-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true,
@@ -3362,11 +2855,12 @@
                 {
                     "card_id": "ae7d4678-d284-11e9-b9fd-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Statement about Group Dissolution Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Statement about Dissolution Event",
                         "placeholder": ""
                     },
                     "id": "ae7e2430-d284-11e9-b035-a4d18cec433a",
-                    "label": "Source Reference Work for Statement about Group Dissolution Event",
+                    "label": "Source Reference Work for Statement about Dissolution Event",
                     "node_id": "ae7d630f-d284-11e9-9d16-a4d18cec433a",
                     "sortorder": 3,
                     "visible": false,
@@ -3428,53 +2922,9 @@
                     "widget_id": "10000000-0000-0000-0000-000000000008"
                 },
                 {
-                    "card_id": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Duration of Timespan of Group Formation Event",
-                        "placeholder": ""
-                    },
-                    "id": "fb98c542-d71c-11e9-996d-a4d18cec433a",
-                    "label": "Source Reference Work for Duration of Timespan of Group Formation Event",
-                    "node_id": "3b5f7a21-c05e-11e9-b7b4-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Duration Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "fb99cd02-d71c-11e9-bcfd-a4d18cec433a",
-                    "label": "Duration Type",
-                    "node_id": "3b5f8902-c05e-11e9-963d-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Duration Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "fb9acf07-d71c-11e9-bd83-a4d18cec433a",
-                    "label": "Duration Label",
-                    "node_id": "3b5f8440-c05e-11e9-a910-a4d18cec433a",
-                    "sortorder": 6,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "9f704956-8e2f-11eb-a9c4-faffc265b501",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Digital Source",
                         "placeholder": ""
                     },
@@ -3503,11 +2953,12 @@
                 {
                     "card_id": "ae7d59cc-d284-11e9-b0f2-a4d18cec433a",
                     "config": {
-                        "label": "Group Dissolution Event Period",
+                        "defaultResourceInstance": [],
+                        "label": "Dissolution Event Period",
                         "placeholder": ""
                     },
                     "id": "ae7dded9-d284-11e9-a45f-a4d18cec433a",
-                    "label": "Group Dissolution Event Period",
+                    "label": "Dissolution Event Period",
                     "node_id": "ae7d8214-d284-11e9-a7ae-a4d18cec433a",
                     "sortorder": 10,
                     "visible": false,
@@ -3533,6 +2984,7 @@
                 {
                     "card_id": "d3a54b07-c061-11e9-b4ac-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Professional Activity",
                         "placeholder": ""
                     },
@@ -3546,11 +2998,12 @@
                 {
                     "card_id": "54949228-c05e-11e9-ba58-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Statement about Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Statement about Formation Event",
                         "placeholder": ""
                     },
                     "id": "f4a59c00-d283-11e9-a2c5-a4d18cec433a",
-                    "label": "Source Reference Work for Statement about Group Formation Event",
+                    "label": "Source Reference Work for Statement about Formation Event",
                     "node_id": "549498eb-c05e-11e9-a137-a4d18cec433a",
                     "sortorder": 4,
                     "visible": false,
@@ -3574,6 +3027,102 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Person in Formation Event",
+                        "placeholder": ""
+                    },
+                    "id": "b059a9f0-cd07-11e9-bad4-a4d18cec433a",
+                    "label": "Person in Formation Event",
+                    "node_id": "3b5f8617-c05e-11e9-9ca5-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "20004100-c05e-11e9-9f79-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Address or Contact Point Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "da7413c2-cd04-11e9-9759-a4d18cec433a",
+                    "label": "Address or Contact Point Label",
+                    "node_id": "20004c8c-c05e-11e9-8b48-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Formation Event",
+                        "placeholder": ""
+                    },
+                    "id": "b0569e87-cd07-11e9-95b9-a4d18cec433a",
+                    "label": "Source Reference Work for Formation Event",
+                    "node_id": "3b5f6e91-c05e-11e9-adb7-a4d18cec433a",
+                    "sortorder": 11,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "e7d7f14f-cd04-11e9-b2ad-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "127095f5-c05e-11e9-bb57-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "e7d6cd47-cd04-11e9-85f5-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "1270928f-c05e-11e9-a111-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "e7d4b1a1-cd04-11e9-8bd4-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "127085d1-c05e-11e9-9b11-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
                     "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
@@ -3591,26 +3140,242 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
+                    "card_id": "cadc4b6e-b323-11e9-8ce1-a4d18cec433a",
                     "config": {
-                        "label": "Person in Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Parent Group",
                         "placeholder": ""
                     },
-                    "id": "b059a9f0-cd07-11e9-bad4-a4d18cec433a",
-                    "label": "Person in Group Formation Event",
-                    "node_id": "3b5f8617-c05e-11e9-9ca5-a4d18cec433a",
-                    "sortorder": 0,
+                    "id": "041702d1-cd05-11e9-a8ef-a4d18cec433a",
+                    "label": "Parent Group",
+                    "node_id": "cadbc433-b323-11e9-a4ba-a4d18cec433a",
+                    "sortorder": null,
                     "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "bc2c80f0-c061-11e9-b991-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "External URI",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "8c4cfc54-cd04-11e9-8219-a4d18cec433a",
+                    "label": "External URI",
+                    "node_id": "bc2bfc4a-c061-11e9-bfe8-a4d18cec433a",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Influence on Professional Activity",
+                        "placeholder": ""
+                    },
+                    "id": "7cd639d4-cd04-11e9-b347-a4d18cec433a",
+                    "label": "Influence on Professional Activity",
+                    "node_id": "d3a5b0a8-c061-11e9-ac3c-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Professional Activity Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "7cddd368-cd04-11e9-84a7-a4d18cec433a",
+                    "label": "Professional Activity Label",
+                    "node_id": "d3a5a428-c061-11e9-b312-a4d18cec433a",
+                    "sortorder": 11,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Earliest Begin",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "cd02c93a-d282-11e9-9257-a4d18cec433a",
+                    "label": "Earliest Begin",
+                    "node_id": "d3a5a754-c061-11e9-acd5-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Latest Begin",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "cd01bcc0-d282-11e9-89a6-a4d18cec433a",
+                    "label": "Latest Begin",
+                    "node_id": "d3a59c0a-c061-11e9-9d95-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Earliest End",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "cd00b097-d282-11e9-82d1-a4d18cec433a",
+                    "label": "Earliest End",
+                    "node_id": "d3a59dca-c061-11e9-8b2f-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
+                    "config": {
+                        "dateFormat": "YYYY-MM-DD",
+                        "defaultValue": "",
+                        "label": "Latest End",
+                        "maxDate": false,
+                        "minDate": false,
+                        "placeholder": "Enter date",
+                        "viewMode": "days"
+                    },
+                    "id": "cd03e54a-d282-11e9-98dd-a4d18cec433a",
+                    "label": "Latest End",
+                    "node_id": "d3a56ecf-c061-11e9-abd8-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000004"
+                },
+                {
+                    "card_id": "d3a5048c-c061-11e9-aba3-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "TimeSpan Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "cd0514b0-d282-11e9-9138-a4d18cec433a",
+                    "label": "TimeSpan Label",
+                    "node_id": "d3a57f66-c061-11e9-9676-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "d3a4e44a-c061-11e9-b1af-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "b68102d9-d282-11e9-993b-a4d18cec433a",
+                    "label": "Identifier Type",
+                    "node_id": "d3a5ba00-c061-11e9-837c-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "d3a4e44a-c061-11e9-b1af-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "b67fe06b-d282-11e9-bb91-a4d18cec433a",
+                    "label": "Identifier Label",
+                    "node_id": "d3a5b870-c061-11e9-bb00-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "d3a4e44a-c061-11e9-b1af-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Identifier for Professional Activity",
+                        "placeholder": ""
+                    },
+                    "id": "b681f366-d282-11e9-908d-a4d18cec433a",
+                    "label": "Source Reference Work for Identifier for Professional Activity",
+                    "node_id": "d3a55ceb-c061-11e9-9d1f-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "ec344c80-c061-11e9-bd85-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Statement Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "39f27b91-d283-11e9-857d-a4d18cec433a",
+                    "label": "Statement Language",
+                    "node_id": "ec344dde-c061-11e9-bc06-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "ec344c80-c061-11e9-bd85-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Statement about Professional Activity",
+                        "placeholder": ""
+                    },
+                    "id": "39f3cfb0-d283-11e9-8e44-a4d18cec433a",
+                    "label": "Source Reference Work for Statement about Professional Activity",
+                    "node_id": "ec34525c-c061-11e9-a34d-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
                     "config": {
-                        "label": "Location of Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Location of Formation Event",
                         "placeholder": ""
                     },
                     "id": "b054842b-cd07-11e9-b417-a4d18cec433a",
-                    "label": "Location of Group Formation Event",
+                    "label": "Location of Formation Event",
                     "node_id": "3b5f960f-c05e-11e9-8db4-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true,
@@ -3620,12 +3385,12 @@
                     "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Group Formation Event Type",
+                        "label": "Formation Event Type",
                         "options": [],
                         "placeholder": "Select an option"
                     },
                     "id": "b050bbba-cd07-11e9-9b2e-a4d18cec433a",
-                    "label": "Group Formation Event Type",
+                    "label": "Formation Event Type",
                     "node_id": "3b5f8f61-c05e-11e9-9fc3-a4d18cec433a",
                     "sortorder": 2,
                     "visible": false,
@@ -3634,28 +3399,29 @@
                 {
                     "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
                     "config": {
-                        "label": "Influence on Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Influence on Formation Event",
                         "placeholder": ""
                     },
                     "id": "b0587bd4-cd07-11e9-9d15-a4d18cec433a",
-                    "label": "Influence on Group Formation Event",
+                    "label": "Influence on Formation Event",
                     "node_id": "3b5f8a75-c05e-11e9-b44e-a4d18cec433a",
                     "sortorder": 3,
-                    "visible": true,
+                    "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Group Formation Event Label",
+                        "label": "Formation Event Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b05addab-cd07-11e9-a34b-a4d18cec433a",
-                    "label": "Group Formation Event Label",
+                    "label": "Formation Event Label",
                     "node_id": "3b5f8359-c05e-11e9-bcfe-a4d18cec433a",
                     "sortorder": 4,
                     "visible": false,
@@ -3664,11 +3430,12 @@
                 {
                     "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
                     "config": {
-                        "label": "Related Event Causal to Group Formation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Related Event Causal to Formation Event",
                         "placeholder": ""
                     },
                     "id": "b05e4e68-cd07-11e9-8eed-a4d18cec433a",
-                    "label": "Related Event Causal to Group Formation Event",
+                    "label": "Related Event Causal to Formation Event",
                     "node_id": "3b5f7dd9-c05e-11e9-a107-a4d18cec433a",
                     "sortorder": 5,
                     "visible": false,
@@ -3677,26 +3444,310 @@
                 {
                     "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
                     "config": {
-                        "label": "Group Formation Event Period",
+                        "defaultResourceInstance": [],
+                        "label": "Formation Event Period",
                         "placeholder": ""
                     },
                     "id": "b05c1759-cd07-11e9-93c5-a4d18cec433a",
-                    "label": "Group Formation Event Period",
+                    "label": "Formation Event Period",
                     "node_id": "3b5f8707-c05e-11e9-b913-a4d18cec433a",
                     "sortorder": 6,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
+                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Group Formation Event",
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "f401246b-cd07-11e9-9354-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "3b5f8c7d-c05e-11e9-8061-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "f402d0bd-cd07-11e9-a812-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "3b5f6fd1-c05e-11e9-a229-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "f406a13a-cd07-11e9-9972-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "3b5f7b11-c05e-11e9-8ee5-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "f4046e4c-cd07-11e9-b11f-a4d18cec433a",
+                    "label": "Name Label",
+                    "node_id": "3b5f914c-c05e-11e9-98cc-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "3b5f6cee-c05e-11e9-82fa-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for Formation Event",
                         "placeholder": ""
                     },
-                    "id": "b0569e87-cd07-11e9-95b9-a4d18cec433a",
-                    "label": "Source Reference Work for Group Formation Event",
-                    "node_id": "3b5f6e91-c05e-11e9-adb7-a4d18cec433a",
-                    "sortorder": 11,
+                    "id": "f4058070-cd07-11e9-8224-a4d18cec433a",
+                    "label": "Source Reference Work for Name for Formation Event",
+                    "node_id": "3b5f70d4-c05e-11e9-969e-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "17eb934a-d284-11e9-bbbd-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "54949535-c05e-11e9-b819-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "17ec928f-d284-11e9-b5d6-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "54949c78-c05e-11e9-a508-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for Statement ",
+                        "placeholder": ""
+                    },
+                    "id": "17e92c05-d284-11e9-820a-a4d18cec433a",
+                    "label": "Source Reference Work for Name for Statement ",
+                    "node_id": "54949ef0-c05e-11e9-a448-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "54948d8c-c05e-11e9-88db-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "17ea8323-d284-11e9-82d2-a4d18cec433a",
+                    "label": "Name Label",
+                    "node_id": "549497b5-c05e-11e9-a556-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "3b5f5b6e-c05e-11e9-b597-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "TimeSpan Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "da1a7fca-d71c-11e9-ab4c-a4d18cec433a",
+                    "label": "TimeSpan Label",
+                    "node_id": "3b5f7fb8-c05e-11e9-9b02-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Duration Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "fb99cd02-d71c-11e9-bcfd-a4d18cec433a",
+                    "label": "Duration Type",
+                    "node_id": "3b5f8902-c05e-11e9-963d-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Duration of Timespan ",
+                        "placeholder": ""
+                    },
+                    "id": "fb98c542-d71c-11e9-996d-a4d18cec433a",
+                    "label": "Source Reference Work for Duration of Timespan ",
+                    "node_id": "3b5f7a21-c05e-11e9-b7b4-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "3b5f534c-c05e-11e9-aae3-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Duration Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "fb9acf07-d71c-11e9-bd83-a4d18cec433a",
+                    "label": "Duration Label",
+                    "node_id": "3b5f8440-c05e-11e9-a910-a4d18cec433a",
+                    "sortorder": 6,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Professional Activity Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "7cd40aeb-cd04-11e9-a65e-a4d18cec433a",
+                    "label": "Professional Activity Type",
+                    "node_id": "d3a59f85-c061-11e9-9811-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Professional Activity Technique",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "7cdcbc28-cd04-11e9-8976-a4d18cec433a",
+                    "label": "Professional Activity Technique",
+                    "node_id": "d3a57073-c061-11e9-84d6-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Location of Professional Activity",
+                        "placeholder": ""
+                    },
+                    "id": "7cdbb1dc-cd04-11e9-88e6-a4d18cec433a",
+                    "label": "Location of Professional Activity",
+                    "node_id": "d3a5a11e-c061-11e9-ac1d-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Physical Object used in Professional Activity",
+                        "placeholder": ""
+                    },
+                    "id": "7cdef7e1-cd04-11e9-a5a7-a4d18cec433a",
+                    "label": "Physical Object used in Professional Activity",
+                    "node_id": "d3a58987-c061-11e9-b10d-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Professional Activity",
+                        "placeholder": ""
+                    },
+                    "id": "7cd17173-cd04-11e9-ab82-a4d18cec433a",
+                    "label": "Source Reference Work for Professional Activity",
+                    "node_id": "d3a5a2a3-c061-11e9-8738-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "d3a52100-c061-11e9-b4e0-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Professional Activity Period",
+                        "placeholder": ""
+                    },
+                    "id": "7cda6a54-cd04-11e9-9ebf-a4d18cec433a",
+                    "label": "Professional Activity Period",
+                    "node_id": "d3a55a9c-c061-11e9-8e95-a4d18cec433a",
+                    "sortorder": 10,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 }
@@ -3823,15 +3874,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
                     "rangenode_id": "ae7d8ae8-d284-11e9-a201-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
-                    "edgeid": "cadd23d4-b323-11e9-9407-a4d18cec433a",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
-                    "rangenode_id": "cadbc433-b323-11e9-a4ba-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -4276,15 +4318,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "ec344a33-c061-11e9-b40a-a4d18cec433a",
-                    "edgeid": "ec346eae-c061-11e9-9bd1-a4d18cec433a",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "ec3444e3-c061-11e9-8305-a4d18cec433a"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "d3a51166-c061-11e9-9820-a4d18cec433a",
                     "edgeid": "d3a81e42-c061-11e9-a8e2-a4d18cec433a",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -4336,15 +4369,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "rangenode_id": "ae7d7e02-d284-11e9-892c-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
-                    "edgeid": "554af46b-b2e3-11e9-969f-a4d18cec433a",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "rangenode_id": "5549881e-b2e3-11e9-8d22-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -4789,15 +4813,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "d3a51166-c061-11e9-9820-a4d18cec433a",
-                    "edgeid": "d3a81673-c061-11e9-8ce3-a4d18cec433a",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "d3a4d89c-c061-11e9-b8a1-a4d18cec433a"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "3b5f674f-c05e-11e9-88f2-a4d18cec433a",
                     "edgeid": "3b6120de-c05e-11e9-9e36-a4d18cec433a",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -5086,15 +5101,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
-                    "edgeid": "3b612e2e-c05e-11e9-bd69-a4d18cec433a",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P95i_was_formed_by",
-                    "rangenode_id": "3b5f674f-c05e-11e9-88f2-a4d18cec433a"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "20003a33-c05e-11e9-8646-a4d18cec433a",
                     "edgeid": "2000ac2e-c05e-11e9-b332-a4d18cec433a",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -5285,15 +5291,6 @@
                 {
                     "description": null,
                     "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
-                    "edgeid": "1270bd91-c05e-11e9-a56e-a4d18cec433a",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "12707705-c05e-11e9-8177-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
                     "edgeid": "32dbbed7-c05e-11e9-9327-a4d18cec433a",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                     "name": null,
@@ -5416,15 +5413,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "rangenode_id": "ec345751-c061-11e9-a3ce-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
-                    "edgeid": "bc2d5b26-c061-11e9-81e7-a4d18cec433a",
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.w3.org/2004/02/skos/core#exactMatch",
-                    "rangenode_id": "bc2bfc4a-c061-11e9-bfe8-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -5632,6 +5620,69 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P15_was_influenced_by",
                     "rangenode_id": "3b5f8a75-c05e-11e9-b44e-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+                    "edgeid": "bc2d5b26-c061-11e9-81e7-a4d18cec433a",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.w3.org/2004/02/skos/core#exactMatch",
+                    "rangenode_id": "bc2bfc4a-c061-11e9-bfe8-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "d3a51166-c061-11e9-9820-a4d18cec433a",
+                    "edgeid": "d3a81673-c061-11e9-8ce3-a4d18cec433a",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "d3a4d89c-c061-11e9-b8a1-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "ec344a33-c061-11e9-b40a-a4d18cec433a",
+                    "edgeid": "ec346eae-c061-11e9-9bd1-a4d18cec433a",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "ec3444e3-c061-11e9-8305-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+                    "edgeid": "3b612e2e-c05e-11e9-bd69-a4d18cec433a",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P95i_was_formed_by",
+                    "rangenode_id": "3b5f674f-c05e-11e9-88f2-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+                    "edgeid": "1270bd91-c05e-11e9-a56e-a4d18cec433a",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "12707705-c05e-11e9-8177-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+                    "edgeid": "cadd23d4-b323-11e9-9407-a4d18cec433a",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P107i_is_current_or_former_member_of",
+                    "rangenode_id": "cadbc433-b323-11e9-a4ba-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
+                    "edgeid": "554af46b-b2e3-11e9-969f-a4d18cec433a",
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "rangenode_id": "5549881e-b2e3-11e9-8d22-a4d18cec433a"
                 }
             ],
             "functions_x_graphs": [
@@ -5653,12 +5704,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "id": "8d4a20e2-be6e-11eb-a29f-024e0d439fdb"
+                    "id": "748a8fad-f0c2-11eb-a2a7-024e0d439fdb"
                 }
             ],
             "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
             "iconclass": "fa fa-users",
-            "is_editable": true,
+            "is_editable": false,
             "isactive": true,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
@@ -5900,6 +5951,26 @@
                 }
             ],
             "nodes": [
+                {
+                    "config": {
+                        "rdmCollection": "b27ffefc-18a1-468f-8923-87530b6f5943"
+                    },
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Professional Activity_technique",
+                    "nodegroup_id": "d3a51166-c061-11e9-9820-a4d18cec433a",
+                    "nodeid": "d3a57073-c061-11e9-84d6-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique",
+                    "sortorder": 0
+                },
                 {
                     "config": null,
                     "datatype": "string",
@@ -7255,7 +7326,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7376,7 +7449,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7402,7 +7477,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7428,7 +7505,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7454,7 +7533,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7480,7 +7561,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7506,7 +7589,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7532,7 +7617,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7558,7 +7645,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7584,7 +7673,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7610,7 +7701,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7636,7 +7729,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7662,7 +7757,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7688,7 +7785,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7714,7 +7813,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7740,7 +7841,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7766,7 +7869,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7786,7 +7891,9 @@
                 },
                 {
                     "config": {
-                        "graphs": []
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7806,7 +7913,9 @@
                 },
                 {
                     "config": {
-                        "graphs": []
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7832,7 +7941,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7858,7 +7969,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7884,7 +7997,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7910,7 +8025,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7936,7 +8053,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7962,7 +8081,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -7988,7 +8109,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -8014,7 +8137,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -8040,7 +8165,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -8066,7 +8193,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -8092,7 +8221,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -8250,7 +8381,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -8335,7 +8468,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -8858,7 +8993,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9110,7 +9247,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9459,7 +9598,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9485,7 +9626,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9511,7 +9654,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9537,7 +9682,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9563,7 +9710,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9589,7 +9738,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9689,7 +9840,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -9955,7 +10108,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -10013,7 +10168,9 @@
                 },
                 {
                     "config": {
-                        "graphs": []
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -10120,7 +10277,9 @@
                                 "name": "Digital Resources",
                                 "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by"
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance",
                     "description": null,
@@ -10175,26 +10334,6 @@
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
                     "sortorder": 0
-                },
-                {
-                    "config": {
-                        "rdmCollection": "b27ffefc-18a1-468f-8923-87530b6f5943"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Professional Activity_technique",
-                    "nodegroup_id": "d3a51166-c061-11e9-9820-a4d18cec433a",
-                    "nodeid": "d3a57073-c061-11e9-84d6-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique",
-                    "sortorder": 0
                 }
             ],
             "ontology_id": "0b1f5462-faa7-11e9-8f09-3af9d3b32b71",
@@ -10225,7 +10364,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "19d4ce482 2021-05-13 17:32:15 -0700",
+        "git hash": "2909183f1 2021-07-29 07:06:28 -0700",
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }

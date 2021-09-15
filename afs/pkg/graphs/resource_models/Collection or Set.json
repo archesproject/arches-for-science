@@ -87,8 +87,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Internal Label",
+                    "is_editable": false,
+                    "name": "Internal Label of Collection",
                     "nodegroup_id": "a5568b17-b2e2-11e9-9573-a4d18cec433a",
                     "sortorder": 6,
                     "visible": false
@@ -107,7 +107,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Identifier for Creation Event",
+                    "name": "Identifier of Creation Event",
                     "nodegroup_id": "597626bd-c450-11e9-b5d6-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true
@@ -126,7 +126,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Duration of TimeSpan of Creation Event",
+                    "name": "Name for Duration",
                     "nodegroup_id": "5976376b-c450-11e9-80e2-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -228,7 +228,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for TimeSpan of Creation Event",
+                    "name": "Name of TimeSpan",
                     "nodegroup_id": "59763e75-c450-11e9-a7b0-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true
@@ -238,7 +238,14 @@
                     "cardid": "31aaf2a4-8e2f-11eb-a9c4-faffc265b501",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
                     "config": null,
-                    "constraints": [],
+                    "constraints": [
+                        {
+                            "card_id": "31aaf2a4-8e2f-11eb-a9c4-faffc265b501",
+                            "constraintid": "9fdd5aa9-7083-474e-9663-e5c4047ea9b0",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
                     "cssclass": null,
                     "description": "",
                     "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
@@ -247,7 +254,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Digital Reference",
+                    "name": "Digital Reference to Collection",
                     "nodegroup_id": "31aaf0ba-8e2f-11eb-a9c4-faffc265b501",
                     "sortorder": 8,
                     "visible": true
@@ -278,8 +285,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Used In",
+                    "is_editable": false,
+                    "name": "Related Project of Collection",
                     "nodegroup_id": "9e4f6be8-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 7,
                     "visible": true
@@ -298,7 +305,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Duration of TimeSpan of Creation Event",
+                    "name": "Duration of TimeSpan",
                     "nodegroup_id": "5976218c-c450-11e9-8437-a4d18cec433a",
                     "sortorder": 1,
                     "visible": true
@@ -374,35 +381,9 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Identifier for Curation Event",
+                    "name": "Identifier of Curation Event",
                     "nodegroup_id": "466f73c5-c451-11e9-ba6c-a4d18cec433a",
                     "sortorder": 1,
-                    "visible": true
-                },
-                {
-                    "active": true,
-                    "cardid": "52aa1963-c450-11e9-b89e-a4d18cec433a",
-                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
-                    "constraints": [
-                        {
-                            "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
-                            "constraintid": "cd9bf547-34e3-4e17-a155-9d6ec1d1aeb1",
-                            "nodes": [],
-                            "uniquetoallinstances": false
-                        }
-                    ],
-                    "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
-                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
-                    "is_editable": true,
-                    "name": "Name",
-                    "nodegroup_id": "52aa1673-c450-11e9-8640-a4d18cec433a",
-                    "sortorder": 0,
                     "visible": true
                 },
                 {
@@ -425,8 +406,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Curation",
+                    "is_editable": false,
+                    "name": "Curation Event of Collection",
                     "nodegroup_id": "466f81d4-c451-11e9-b7c9-a4d18cec433a",
                     "sortorder": 5,
                     "visible": true
@@ -451,8 +432,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Identifier",
+                    "is_editable": false,
+                    "name": "Identifier of Collection",
                     "nodegroup_id": "5620cb99-c450-11e9-ac35-a4d18cec433a",
                     "sortorder": 3,
                     "visible": true
@@ -471,7 +452,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Duration of Timespan of Curation Event",
+                    "name": "Duration of Timespan",
                     "nodegroup_id": "466f85a8-c451-11e9-9251-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -490,7 +471,7 @@
                     "helptitle": null,
                     "instructions": null,
                     "is_editable": true,
-                    "name": "Name for Timespan of Curation Event",
+                    "name": "Name of Timespan",
                     "nodegroup_id": "466f79de-c451-11e9-aa95-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -515,8 +496,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Creation",
+                    "is_editable": false,
+                    "name": "Creation Event of Collection",
                     "nodegroup_id": "597645ca-c450-11e9-8132-a4d18cec433a",
                     "sortorder": 4,
                     "visible": true
@@ -541,10 +522,36 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Statement",
+                    "is_editable": false,
+                    "name": "Statement about Collection",
                     "nodegroup_id": "56c7a5dc-c450-11e9-ad38-a4d18cec433a",
                     "sortorder": 1,
+                    "visible": true
+                },
+                {
+                    "active": true,
+                    "cardid": "52aa1963-c450-11e9-b89e-a4d18cec433a",
+                    "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
+                    "config": null,
+                    "constraints": [
+                        {
+                            "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
+                            "constraintid": "cd9bf547-34e3-4e17-a155-9d6ec1d1aeb1",
+                            "nodes": [],
+                            "uniquetoallinstances": false
+                        }
+                    ],
+                    "cssclass": null,
+                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                    "helpenabled": false,
+                    "helptext": null,
+                    "helptitle": null,
+                    "instructions": null,
+                    "is_editable": false,
+                    "name": "Name of Collection",
+                    "nodegroup_id": "52aa1673-c450-11e9-8640-a4d18cec433a",
+                    "sortorder": 0,
                     "visible": true
                 },
                 {
@@ -567,8 +574,8 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
-                    "name": "Classification",
+                    "is_editable": false,
+                    "name": "Type of Collection",
                     "nodegroup_id": "442a9c87-c450-11e9-b396-a4d18cec433a",
                     "sortorder": 2,
                     "visible": true
@@ -576,37 +583,105 @@
             ],
             "cards_x_nodes_x_widgets": [
                 {
-                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Curation Event",
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Duration of TimeSpan of Creation Event",
                         "placeholder": ""
                     },
-                    "id": "bb007302-d34f-11e9-8bc3-a4d18cec433a",
-                    "label": "Source Reference Work for Curation Event",
-                    "node_id": "466fac57-c451-11e9-bbe1-a4d18cec433a",
-                    "sortorder": 7,
+                    "id": "937d2e63-d352-11e9-a291-a4d18cec433a",
+                    "label": "Source Reference Work for Duration of TimeSpan of Creation Event",
+                    "node_id": "59766ae8-c450-11e9-b39b-a4d18cec433a",
+                    "sortorder": 4,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Curation Event Label",
+                        "label": "Duration Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "938123d4-d352-11e9-bdab-a4d18cec433a",
+                    "label": "Duration Type",
+                    "node_id": "597686c0-c450-11e9-94db-a4d18cec433a",
+                    "sortorder": 5,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                },
+                {
+                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Duration Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
                         "uneditable": false,
                         "width": "100%"
                     },
-                    "id": "bb0170e1-d34f-11e9-8bc9-a4d18cec433a",
-                    "label": "Curation Event Label",
-                    "node_id": "466fad3a-c451-11e9-9f45-a4d18cec433a",
-                    "sortorder": 8,
+                    "id": "93825451-d352-11e9-b053-a4d18cec433a",
+                    "label": "Duration Label",
+                    "node_id": "59767dbd-c450-11e9-8111-a4d18cec433a",
+                    "sortorder": 6,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
+                    "card_id": "466f879e-c451-11e9-8c69-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "format": "",
+                        "label": "Lowest possible value",
+                        "max": "",
+                        "min": "",
+                        "placeholder": "Enter number",
+                        "precision": "",
+                        "prefix": "",
+                        "step": "",
+                        "suffix": "",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "587fbedc-d355-11e9-9307-a4d18cec433a",
+                    "label": "Lowest possible value",
+                    "node_id": "466f9a5c-c451-11e9-a967-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000008"
+                },
+                {
+                    "card_id": "466f879e-c451-11e9-8c69-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Duration of Timespan of Curation Event",
+                        "placeholder": ""
+                    },
+                    "id": "5885a891-d355-11e9-823c-a4d18cec433a",
+                    "label": "Source Reference Work for Duration of Timespan of Curation Event",
+                    "node_id": "466fb3b8-c451-11e9-accd-a4d18cec433a",
+                    "sortorder": 6,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "5620d3cc-c450-11e9-942f-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "9548d3eb-d34f-11e9-879a-a4d18cec433a",
+                    "label": "Identifier Type",
+                    "node_id": "5620e935-c450-11e9-a7fa-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "56c7a438-c450-11e9-97d9-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
                         "label": "Name",
@@ -615,42 +690,34 @@
                         "uneditable": false,
                         "width": "100%"
                     },
-                    "id": "3029aaa3-d34f-11e9-be86-a4d18cec433a",
+                    "id": "758a3166-d34f-11e9-9218-a4d18cec433a",
                     "label": "Name",
-                    "node_id": "52aa2007-c450-11e9-b5d4-a4d18cec433a",
+                    "node_id": "56c7afdc-c450-11e9-a4e6-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
-                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "card_id": "56c7a438-c450-11e9-97d9-a4d18cec433a",
                     "config": {
-                        "label": "Person in Curation Event",
-                        "placeholder": ""
+                        "defaultValue": [
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
                     },
-                    "id": "baf737e3-d34f-11e9-bb7e-a4d18cec433a",
-                    "label": "Person in Curation Event",
-                    "node_id": "466f9f7d-c451-11e9-bc03-a4d18cec433a",
-                    "sortorder": 0,
+                    "id": "758cdcf5-d34f-11e9-90fd-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "56c7aa9e-c450-11e9-8ee9-a4d18cec433a",
+                    "sortorder": 1,
                     "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "31aaf2a4-8e2f-11eb-a9c4-faffc265b501",
-                    "config": {
-                        "label": "Digital Source",
-                        "placeholder": ""
-                    },
-                    "id": "31aaf4f2-8e2f-11eb-a9c4-faffc265b501",
-                    "label": "Digital Source",
-                    "node_id": "31aaf48e-8e2f-11eb-a9c4-faffc265b501",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "56c7a438-c450-11e9-97d9-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Statement",
                         "placeholder": ""
                     },
@@ -679,8 +746,99 @@
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
+                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Creation Event Period",
+                        "placeholder": ""
+                    },
+                    "id": "ab95df4f-d34f-11e9-87ad-a4d18cec433a",
+                    "label": "Creation Event Period",
+                    "node_id": "5976832b-c450-11e9-84da-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Creation Event",
+                        "placeholder": ""
+                    },
+                    "id": "ab970373-d34f-11e9-b70d-a4d18cec433a",
+                    "label": "Source Reference Work for Creation Event",
+                    "node_id": "5976554c-c450-11e9-97aa-a4d18cec433a",
+                    "sortorder": 10,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Creation Event Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "ab9ea123-d34f-11e9-b92b-a4d18cec433a",
+                    "label": "Creation Event Label",
+                    "node_id": "59767bdc-c450-11e9-a7ab-a4d18cec433a",
+                    "sortorder": 11,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "3029aaa3-d34f-11e9-be86-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "52aa2007-c450-11e9-b5d4-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Person in Curation Event",
+                        "placeholder": ""
+                    },
+                    "id": "baf737e3-d34f-11e9-bb7e-a4d18cec433a",
+                    "label": "Person in Curation Event",
+                    "node_id": "466f9f7d-c451-11e9-bc03-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "31aaf2a4-8e2f-11eb-a9c4-faffc265b501",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Digital Source",
+                        "placeholder": ""
+                    },
+                    "id": "31aaf4f2-8e2f-11eb-a9c4-faffc265b501",
+                    "label": "Digital Source",
+                    "node_id": "31aaf48e-8e2f-11eb-a9c4-faffc265b501",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
+                },
+                {
                     "card_id": "11b58ac7-d354-11e9-88f9-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Statement about Curation Event",
                         "placeholder": ""
                     },
@@ -709,6 +867,7 @@
                 {
                     "card_id": "d64f7882-d352-11e9-a309-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Statement about Creation Event",
                         "placeholder": ""
                     },
@@ -788,6 +947,7 @@
                 {
                     "card_id": "d64f7cf5-d352-11e9-9b12-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Statement about Creation Event",
                         "placeholder": ""
                     },
@@ -852,6 +1012,7 @@
                 {
                     "card_id": "466f782e-c451-11e9-8fc2-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Identifier for Curation Event",
                         "placeholder": ""
                     },
@@ -882,6 +1043,7 @@
                 {
                     "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name",
                         "placeholder": ""
                     },
@@ -895,6 +1057,7 @@
                 {
                     "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Location of Curation Event",
                         "placeholder": ""
                     },
@@ -904,23 +1067,6 @@
                     "sortorder": 1,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "461bf80b-bf25-47a1-b757-2dbefb157aa4"
-                        ],
-                        "label": "Curation Event Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "bb02d35e-d34f-11e9-8509-a4d18cec433a",
-                    "label": "Curation Event Type",
-                    "node_id": "466faa8a-c451-11e9-9f68-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "5620d3cc-c450-11e9-942f-a4d18cec433a",
@@ -943,21 +1089,6 @@
                     "card_id": "5620d3cc-c450-11e9-942f-a4d18cec433a",
                     "config": {
                         "defaultValue": "",
-                        "label": "Identifier Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "9548d3eb-d34f-11e9-879a-a4d18cec433a",
-                    "label": "Identifier Type",
-                    "node_id": "5620e935-c450-11e9-a7fa-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "5620d3cc-c450-11e9-942f-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
                         "label": "Identifier Label",
                         "maxLength": null,
                         "placeholder": "Enter text",
@@ -974,6 +1105,7 @@
                 {
                     "card_id": "5620d3cc-c450-11e9-942f-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Identifier",
                         "placeholder": ""
                     },
@@ -1008,29 +1140,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000008"
                 },
                 {
-                    "card_id": "466f879e-c451-11e9-8c69-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "format": "",
-                        "label": "Lowest possible value",
-                        "max": "",
-                        "min": "",
-                        "placeholder": "Enter number",
-                        "precision": "",
-                        "prefix": "",
-                        "step": "",
-                        "suffix": "",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "587fbedc-d355-11e9-9307-a4d18cec433a",
-                    "label": "Lowest possible value",
-                    "node_id": "466f9a5c-c451-11e9-a967-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000008"
-                },
-                {
                     "card_id": "466f7c73-c451-11e9-af4b-a4d18cec433a",
                     "config": {
                         "defaultValue": [
@@ -1050,6 +1159,7 @@
                 {
                     "card_id": "59763b85-c450-11e9-b05f-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Duration of TimeSpan of Creation Event",
                         "placeholder": ""
                     },
@@ -1077,49 +1187,6 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000004"
-                },
-                {
-                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
-                    "config": {
-                        "label": "Creation Event Period",
-                        "placeholder": ""
-                    },
-                    "id": "ab95df4f-d34f-11e9-87ad-a4d18cec433a",
-                    "label": "Creation Event Period",
-                    "node_id": "5976832b-c450-11e9-84da-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
-                    "config": {
-                        "label": "Related Event causal to Creation Event",
-                        "placeholder": ""
-                    },
-                    "id": "ab995f17-d34f-11e9-9913-a4d18cec433a",
-                    "label": "Related Event causal to Creation Event",
-                    "node_id": "597671b5-c450-11e9-8e4c-a4d18cec433a",
-                    "sortorder": 9,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Creation Event Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "ab9ea123-d34f-11e9-b92b-a4d18cec433a",
-                    "label": "Creation Event Label",
-                    "node_id": "59767bdc-c450-11e9-a7ab-a4d18cec433a",
-                    "sortorder": 11,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "466f8f80-c451-11e9-a943-a4d18cec433a",
@@ -1401,6 +1468,7 @@
                 {
                     "card_id": "59765223-c450-11e9-b4da-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Creation Event",
                         "placeholder": ""
                     },
@@ -1440,57 +1508,6 @@
                     "label": "Identifier Label",
                     "node_id": "466fb94c-c451-11e9-9356-a4d18cec433a",
                     "sortorder": 2,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "302b1a0c-d34f-11e9-96d7-a4d18cec433a",
-                    "label": "Name Type",
-                    "node_id": "52aa1f17-c450-11e9-a114-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "302eca82-d34f-11e9-adb2-a4d18cec433a",
-                    "label": "Name Language",
-                    "node_id": "52aa1ade-c450-11e9-8326-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "302d760a-d34f-11e9-b2bf-a4d18cec433a",
-                    "label": "Name Label",
-                    "node_id": "52aa1e1c-c450-11e9-91cc-a4d18cec433a",
-                    "sortorder": 4,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -1550,6 +1567,7 @@
                 {
                     "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Influence on Curation Event",
                         "placeholder": ""
                     },
@@ -1563,6 +1581,7 @@
                 {
                     "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Physical Object used in Curation Event",
                         "placeholder": ""
                     },
@@ -1574,21 +1593,9 @@
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
-                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
-                    "config": {
-                        "label": "Curation Event Period",
-                        "placeholder": ""
-                    },
-                    "id": "bb04c178-d34f-11e9-ac91-a4d18cec433a",
-                    "label": "Curation Event Period",
-                    "node_id": "466f923d-c451-11e9-a983-a4d18cec433a",
-                    "sortorder": 6,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
                     "card_id": "9e4fa16c-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Related Project",
                         "placeholder": ""
                     },
@@ -1617,19 +1624,6 @@
                 {
                     "card_id": "466f879e-c451-11e9-8c69-a4d18cec433a",
                     "config": {
-                        "label": "Source Reference Work for Duration of Timespan of Curation Event",
-                        "placeholder": ""
-                    },
-                    "id": "5885a891-d355-11e9-823c-a4d18cec433a",
-                    "label": "Source Reference Work for Duration of Timespan of Curation Event",
-                    "node_id": "466fb3b8-c451-11e9-accd-a4d18cec433a",
-                    "sortorder": 6,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "466f879e-c451-11e9-8c69-a4d18cec433a",
-                    "config": {
                         "defaultValue": "",
                         "label": "Duration Label",
                         "maxLength": null,
@@ -1641,68 +1635,6 @@
                     "label": "Duration Label",
                     "node_id": "466fb58f-c451-11e9-a70e-a4d18cec433a",
                     "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Identifier",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "49676678-d352-11e9-bd54-a4d18cec433a",
-                    "label": "Identifier",
-                    "node_id": "59765d82-c450-11e9-9905-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Identifier Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "49692b82-d352-11e9-8931-a4d18cec433a",
-                    "label": "Identifier Type",
-                    "node_id": "597684eb-c450-11e9-aae1-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Identifier for Creation Event",
-                        "placeholder": ""
-                    },
-                    "id": "496a90a1-d352-11e9-a004-a4d18cec433a",
-                    "label": "Source Reference Work for Identifier for Creation Event",
-                    "node_id": "59766945-c450-11e9-98c0-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Identifier Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "496bfc80-d352-11e9-b0cd-a4d18cec433a",
-                    "label": "Identifier Label",
-                    "node_id": "59768a45-c450-11e9-82cc-a4d18cec433a",
-                    "sortorder": 3,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -1760,6 +1692,7 @@
                 {
                     "card_id": "466f7c73-c451-11e9-af4b-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Timespan of Curation Event",
                         "placeholder": ""
                     },
@@ -1927,19 +1860,7 @@
                 {
                     "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
                     "config": {
-                        "label": "Influence on Creation Event",
-                        "placeholder": ""
-                    },
-                    "id": "ab982007-d34f-11e9-a330-a4d18cec433a",
-                    "label": "Influence on Creation Event",
-                    "node_id": "59768882-c450-11e9-b5a1-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": true,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
-                    "config": {
+                        "defaultResourceInstance": [],
                         "label": "Creation Event Location",
                         "placeholder": ""
                     },
@@ -1953,6 +1874,7 @@
                 {
                     "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Creator",
                         "placeholder": ""
                     },
@@ -1977,19 +1899,6 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Creation Event",
-                        "placeholder": ""
-                    },
-                    "id": "ab970373-d34f-11e9-b70d-a4d18cec433a",
-                    "label": "Source Reference Work for Creation Event",
-                    "node_id": "5976554c-c450-11e9-97aa-a4d18cec433a",
-                    "sortorder": 10,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
                 },
                 {
                     "card_id": "466f8f80-c451-11e9-a943-a4d18cec433a",
@@ -2028,6 +1937,7 @@
                 {
                     "card_id": "466f8f80-c451-11e9-a943-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Duration of Timespan of Curation Event",
                         "placeholder": ""
                     },
@@ -2126,6 +2036,7 @@
                 {
                     "card_id": "466f8b54-c451-11e9-9dac-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Name for Curation Event",
                         "placeholder": ""
                     },
@@ -2208,6 +2119,7 @@
                 {
                     "card_id": "11b58ecc-d354-11e9-a84f-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Statement about Curation Event",
                         "placeholder": ""
                     },
@@ -2217,87 +2129,6 @@
                     "sortorder": 4,
                     "visible": false,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "747cd6b8-d352-11e9-a125-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "59769f68-c450-11e9-991c-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "747e6f33-d352-11e9-b37d-a4d18cec433a",
-                    "label": "Name Type",
-                    "node_id": "59766ffa-c450-11e9-b466-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
-                        ],
-                        "label": "Name Language",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "747fcaf8-d352-11e9-9555-a4d18cec433a",
-                    "label": "Name Language",
-                    "node_id": "597676b5-c450-11e9-b372-a4d18cec433a",
-                    "sortorder": 2,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Name for TimeSpan of Creation Event",
-                        "placeholder": ""
-                    },
-                    "id": "7480d86b-d352-11e9-b978-a4d18cec433a",
-                    "label": "Source Reference Work for Name for TimeSpan of Creation Event",
-                    "node_id": "59767361-c450-11e9-904f-a4d18cec433a",
-                    "sortorder": 3,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "7481dc80-d352-11e9-9be6-a4d18cec433a",
-                    "label": "Name Label",
-                    "node_id": "597693c2-c450-11e9-9f58-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
                 {
                     "card_id": "31aaf2a4-8e2f-11eb-a9c4-faffc265b501",
@@ -2385,6 +2216,7 @@
                 {
                     "card_id": "56c7a80c-c450-11e9-9ec4-a4d18cec433a",
                     "config": {
+                        "defaultResourceInstance": [],
                         "label": "Source Reference Work for Statement",
                         "placeholder": ""
                     },
@@ -2495,85 +2327,6 @@
                     "widget_id": "10000000-0000-0000-0000-000000000008"
                 },
                 {
-                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
-                    "config": {
-                        "label": "Source Reference Work for Duration of TimeSpan of Creation Event",
-                        "placeholder": ""
-                    },
-                    "id": "937d2e63-d352-11e9-a291-a4d18cec433a",
-                    "label": "Source Reference Work for Duration of TimeSpan of Creation Event",
-                    "node_id": "59766ae8-c450-11e9-b39b-a4d18cec433a",
-                    "sortorder": 4,
-                    "visible": false,
-                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Duration Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "938123d4-d352-11e9-bdab-a4d18cec433a",
-                    "label": "Duration Type",
-                    "node_id": "597686c0-c450-11e9-94db-a4d18cec433a",
-                    "sortorder": 5,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
-                },
-                {
-                    "card_id": "59762538-c450-11e9-98ab-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Duration Label",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "93825451-d352-11e9-b053-a4d18cec433a",
-                    "label": "Duration Label",
-                    "node_id": "59767dbd-c450-11e9-8111-a4d18cec433a",
-                    "sortorder": 6,
-                    "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "56c7a438-c450-11e9-97d9-a4d18cec433a",
-                    "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
-                        "label": "Name Type",
-                        "options": [],
-                        "placeholder": "Select an option"
-                    },
-                    "id": "758cdcf5-d34f-11e9-90fd-a4d18cec433a",
-                    "label": "Name Type",
-                    "node_id": "56c7aa9e-c450-11e9-8ee9-a4d18cec433a",
-                    "sortorder": 1,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
-                },
-                {
-                    "card_id": "56c7a438-c450-11e9-97d9-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "label": "Name",
-                        "maxLength": null,
-                        "placeholder": "Enter text",
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "758a3166-d34f-11e9-9218-a4d18cec433a",
-                    "label": "Name",
-                    "node_id": "56c7afdc-c450-11e9-a4e6-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
                     "card_id": "56c7a438-c450-11e9-97d9-a4d18cec433a",
                     "config": {
                         "defaultValue": [
@@ -2589,6 +2342,292 @@
                     "sortorder": 2,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "49676678-d352-11e9-bd54-a4d18cec433a",
+                    "label": "Identifier",
+                    "node_id": "59765d82-c450-11e9-9905-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "49692b82-d352-11e9-8931-a4d18cec433a",
+                    "label": "Identifier Type",
+                    "node_id": "597684eb-c450-11e9-aae1-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Identifier for Creation Event",
+                        "placeholder": ""
+                    },
+                    "id": "496a90a1-d352-11e9-a004-a4d18cec433a",
+                    "label": "Source Reference Work for Identifier for Creation Event",
+                    "node_id": "59766945-c450-11e9-98c0-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "59762bf0-c450-11e9-a049-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Identifier Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "496bfc80-d352-11e9-b0cd-a4d18cec433a",
+                    "label": "Identifier Label",
+                    "node_id": "59768a45-c450-11e9-82cc-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "747cd6b8-d352-11e9-a125-a4d18cec433a",
+                    "label": "Name",
+                    "node_id": "59769f68-c450-11e9-991c-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "747e6f33-d352-11e9-b37d-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "59766ffa-c450-11e9-b466-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                        ],
+                        "label": "Name Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "302b1a0c-d34f-11e9-96d7-a4d18cec433a",
+                    "label": "Name Type",
+                    "node_id": "52aa1f17-c450-11e9-a114-a4d18cec433a",
+                    "sortorder": 1,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "302eca82-d34f-11e9-adb2-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "52aa1ade-c450-11e9-8326-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "52aa1963-c450-11e9-b89e-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "302d760a-d34f-11e9-b2bf-a4d18cec433a",
+                    "label": "Name Label",
+                    "node_id": "52aa1e1c-c450-11e9-91cc-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Influence on Creation Event",
+                        "placeholder": ""
+                    },
+                    "id": "ab982007-d34f-11e9-a330-a4d18cec433a",
+                    "label": "Influence on Creation Event",
+                    "node_id": "59768882-c450-11e9-b5a1-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "59764b61-c450-11e9-8100-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Related Event causal to Creation Event",
+                        "placeholder": ""
+                    },
+                    "id": "ab995f17-d34f-11e9-9913-a4d18cec433a",
+                    "label": "Related Event causal to Creation Event",
+                    "node_id": "597671b5-c450-11e9-8e4c-a4d18cec433a",
+                    "sortorder": 9,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "461bf80b-bf25-47a1-b757-2dbefb157aa4"
+                        ],
+                        "label": "Curation Event Type",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "bb02d35e-d34f-11e9-8509-a4d18cec433a",
+                    "label": "Curation Event Type",
+                    "node_id": "466faa8a-c451-11e9-9f68-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Curation Event Period",
+                        "placeholder": ""
+                    },
+                    "id": "bb04c178-d34f-11e9-ac91-a4d18cec433a",
+                    "label": "Curation Event Period",
+                    "node_id": "466f923d-c451-11e9-a983-a4d18cec433a",
+                    "sortorder": 6,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Curation Event",
+                        "placeholder": ""
+                    },
+                    "id": "bb007302-d34f-11e9-8bc3-a4d18cec433a",
+                    "label": "Source Reference Work for Curation Event",
+                    "node_id": "466fac57-c451-11e9-bbe1-a4d18cec433a",
+                    "sortorder": 7,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "466f83f3-c451-11e9-92bb-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Curation Event Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "bb0170e1-d34f-11e9-8bc9-a4d18cec433a",
+                    "label": "Curation Event Label",
+                    "node_id": "466fad3a-c451-11e9-9f45-a4d18cec433a",
+                    "sortorder": 8,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
+                    "config": {
+                        "defaultValue": [
+                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        ],
+                        "label": "Name Language",
+                        "options": [],
+                        "placeholder": "Select an option"
+                    },
+                    "id": "747fcaf8-d352-11e9-9555-a4d18cec433a",
+                    "label": "Name Language",
+                    "node_id": "597676b5-c450-11e9-b372-a4d18cec433a",
+                    "sortorder": 2,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                },
+                {
+                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
+                    "config": {
+                        "defaultResourceInstance": [],
+                        "label": "Source Reference Work for Name for TimeSpan of Creation Event",
+                        "placeholder": ""
+                    },
+                    "id": "7480d86b-d352-11e9-b978-a4d18cec433a",
+                    "label": "Source Reference Work for Name for TimeSpan of Creation Event",
+                    "node_id": "59767361-c450-11e9-904f-a4d18cec433a",
+                    "sortorder": 3,
+                    "visible": false,
+                    "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
+                },
+                {
+                    "card_id": "597641f8-c450-11e9-9f5a-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "label": "Name Label",
+                        "maxLength": null,
+                        "placeholder": "Enter text",
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "7481dc80-d352-11e9-9be6-a4d18cec433a",
+                    "label": "Name Label",
+                    "node_id": "597693c2-c450-11e9-9f58-a4d18cec433a",
+                    "sortorder": 4,
+                    "visible": false,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
                 }
             ],
             "color": "rgba(5,114,102,0.8)",
@@ -2620,6 +2659,15 @@
             "deploymentfile": null,
             "description": "Collections or sets of objects. These might be curated as a museum or scientific study set, or simply sets put together for a particular purpose and then disbanded.",
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "56c7a5dc-c450-11e9-ad38-a4d18cec433a",
+                    "edgeid": "56c7c83d-c450-11e9-9b22-a4d18cec433a",
+                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "56c7a10f-c450-11e9-bebb-a4d18cec433a"
+                },
                 {
                     "description": null,
                     "domainnode_id": "5976218c-c450-11e9-8437-a4d18cec433a",
@@ -2757,15 +2805,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "466f81d4-c451-11e9-b7c9-a4d18cec433a",
-                    "edgeid": "4671d814-c451-11e9-af08-a4d18cec433a",
-                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "466f73c5-c451-11e9-ba6c-a4d18cec433a"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "59763e75-c450-11e9-a7b0-a4d18cec433a",
                     "edgeid": "59782a85-c450-11e9-9fc8-a4d18cec433a",
                     "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
@@ -2874,15 +2913,6 @@
                 },
                 {
                     "description": null,
-                    "domainnode_id": "1b20e985-b25c-11e9-90b3-a4d18cec433a",
-                    "edgeid": "52aa2b30-c450-11e9-bcda-a4d18cec433a",
-                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "52aa1673-c450-11e9-8640-a4d18cec433a"
-                },
-                {
-                    "description": null,
                     "domainnode_id": "597645ca-c450-11e9-8132-a4d18cec433a",
                     "edgeid": "59781f28-c450-11e9-a51b-a4d18cec433a",
                     "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
@@ -2898,15 +2928,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "rangenode_id": "56c7a5dc-c450-11e9-ad38-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "56c7a5dc-c450-11e9-ad38-a4d18cec433a",
-                    "edgeid": "56c7c83d-c450-11e9-9b22-a4d18cec433a",
-                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
-                    "rangenode_id": "56c7a10f-c450-11e9-bebb-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -3375,15 +3396,6 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by",
                     "rangenode_id": "466f9f7d-c451-11e9-bc03-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "1b20e985-b25c-11e9-90b3-a4d18cec433a",
-                    "edgeid": "597833ab-c450-11e9-8c8b-a4d18cec433a",
-                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P94i_was_created_by",
-                    "rangenode_id": "597645ca-c450-11e9-8132-a4d18cec433a"
                 },
                 {
                     "description": null,
@@ -3951,6 +3963,33 @@
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
                     "rangenode_id": "11b586e1-d354-11e9-ba15-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "1b20e985-b25c-11e9-90b3-a4d18cec433a",
+                    "edgeid": "52aa2b30-c450-11e9-bcda-a4d18cec433a",
+                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "52aa1673-c450-11e9-8640-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "1b20e985-b25c-11e9-90b3-a4d18cec433a",
+                    "edgeid": "597833ab-c450-11e9-8c8b-a4d18cec433a",
+                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P94i_was_created_by",
+                    "rangenode_id": "597645ca-c450-11e9-8132-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "466f81d4-c451-11e9-b7c9-a4d18cec433a",
+                    "edgeid": "4671d814-c451-11e9-af08-a4d18cec433a",
+                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by",
+                    "rangenode_id": "466f73c5-c451-11e9-ba6c-a4d18cec433a"
                 }
             ],
             "functions_x_graphs": [
@@ -3972,12 +4011,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "id": "2c9cd47c-be6f-11eb-a29f-024e0d439fdb"
+                    "id": "0b1cc7ae-f0c3-11eb-a2a7-024e0d439fdb"
                 }
             ],
             "graphid": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
             "iconclass": "fa fa-cubes",
-            "is_editable": true,
+            "is_editable": false,
             "isactive": true,
             "isresource": true,
             "jsonldcontext": "",
@@ -4141,6 +4180,27 @@
                 }
             ],
             "nodes": [
+                {
+                    "config": {
+                        "graphid": null,
+                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                    },
+                    "datatype": "concept-list",
+                    "description": "# Specific:\n\n\n# General:\nThis is the language of the statement, drawn from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "Curation_Statement_language",
+                    "nodegroup_id": "11b58c94-d354-11e9-bbeb-a4d18cec433a",
+                    "nodeid": "11b5905e-d354-11e9-a4fa-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E56_Language",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P72_has_language",
+                    "sortorder": 0
+                },
                 {
                     "config": null,
                     "datatype": "semantic",
@@ -4319,7 +4379,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4399,7 +4461,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4419,7 +4483,9 @@
                 },
                 {
                     "config": {
-                        "graphs": []
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4445,7 +4511,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4489,7 +4557,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4505,6 +4575,24 @@
                     "nodeid": "59767361-c450-11e9-904f-a4d18cec433a",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "config": null,
+                    "datatype": "string",
+                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "created_time_duration_Name_content",
+                    "nodegroup_id": "5976376b-c450-11e9-80e2-a4d18cec433a",
+                    "nodeid": "59766e38-c450-11e9-a846-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
                     "sortorder": 0
                 },
                 {
@@ -4649,7 +4737,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4675,7 +4765,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4833,7 +4925,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4922,7 +5016,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4960,7 +5056,9 @@
                 },
                 {
                     "config": {
-                        "graphs": []
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -4991,7 +5089,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5211,7 +5311,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5237,7 +5339,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5263,7 +5367,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5421,7 +5527,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5447,7 +5555,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5473,7 +5583,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5499,7 +5611,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5525,7 +5639,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5681,7 +5797,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5707,7 +5825,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5727,7 +5847,9 @@
                 },
                 {
                     "config": {
-                        "graphs": []
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5753,7 +5875,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5779,7 +5903,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5805,7 +5931,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5831,7 +5959,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5857,7 +5987,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5883,7 +6015,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5909,7 +6043,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5935,7 +6071,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -5961,7 +6099,9 @@
                                 "inverseOntologyProperty": "",
                                 "ontologyProperty": ""
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -6540,45 +6680,6 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": null,
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
-                    },
-                    "datatype": "concept-list",
-                    "description": "# Specific:\n\n\n# General:\nThis is the language of the statement, drawn from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "Curation_Statement_language",
-                    "nodegroup_id": "11b58c94-d354-11e9-bbeb-a4d18cec433a",
-                    "nodeid": "11b5905e-d354-11e9-a4fa-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E56_Language",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P72_has_language",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "created_time_duration_Name_content",
-                    "nodegroup_id": "5976376b-c450-11e9-80e2-a4d18cec433a",
-                    "nodeid": "59766e38-c450-11e9-a846-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P190_has_symbolic_content",
-                    "sortorder": 0
-                },
-                {
                     "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
@@ -7075,7 +7176,9 @@
                                 "name": "Digital Resources",
                                 "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by"
                             }
-                        ]
+                        ],
+                        "searchDsl": "",
+                        "searchString": ""
                     },
                     "datatype": "resource-instance",
                     "description": null,
@@ -7200,7 +7303,7 @@
     ],
     "metadata": {
         "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "19d4ce482 2021-05-13 17:32:15 -0700",
+        "git hash": "2909183f1 2021-07-29 07:06:28 -0700",
         "os": "Linux",
         "os version": "4.15.0-1051-aws"
     }
