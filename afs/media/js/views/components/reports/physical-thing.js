@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/physical-thing', 'utils/report'], function(_, ko, arches, TabbedReportViewModel, resourceUtils, physicalThingUtils, reportUtils) {
+define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -12,28 +12,30 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+            self.nameCards = {};
+            if(params.report.cards){
+                const cards = params.report.cards;
+                
+                self.cards = self.createCardDictionary(cards)
 
-            const cards = params.report.cards;
-            
-            self.cards = self.createCardDictionary(cards)
-
-            if(self.cards?.["Production (partitioned)"]){
-                const productionEventChildren = self.cards["Production (partitioned)"].tiles()?.[0]?.cards ? self.cards["Production (partitioned)"].tiles()[0].cards : self.cards["Production (partitioned)"].cards();
-                self.cards["Production (partitioned)"].children = self.createCardDictionary(productionEventChildren);
-            }
-
-            self.toggleBlockVisibility = (block) => {
-                block(!block());
+                if(self.cards?.["Production (partitioned)"]){
+                    const productionEventChildren = self.cards["Production (partitioned)"].tiles()?.[0]?.cards ? self.cards["Production (partitioned)"].tiles()[0].cards : self.cards["Production (partitioned)"].cards();
+                    self.cards["Production (partitioned)"].children = self.createCardDictionary(productionEventChildren);
+                }
+                self.nameCards = {
+                    name: self.cards.Name,
+                    identifier: self.cards.Identifier,
+                    exactMatch: self.cards.ExactMatch,
+                    type: self.cards.Classification
+                }
             }
 
             self.blockVisible = {
-                names: ko.observable(true),
                 production: {
                     event: ko.observable(true)
                 }
             };
             self.resourceData = {
-                names: ko.observableArray(),
                 production: {
                     name: ko.observable(),
                     location: ko.observable(),
@@ -48,40 +50,6 @@ define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/r
                     timespan: ko.observable()
                 }
             }
-            self.defaultTableConfig = {
-                responsive: {
-                    breakpoints: [
-                        {name: 'bigdesktop', width: Infinity},
-                        {name: 'meddesktop', width: 1480},
-                        {name: 'smalldesktop', width: 1280},
-                        {name: 'medium', width: 1188},
-                        {name: 'tabletl', width: 1024},
-                        {name: 'btwtabllandp', width: 848},
-                        {name: 'tabletp', width: 768},
-                        {name: 'mobilel', width: 480},
-                        {name: 'mobilep', width: 320}
-                    ]
-                },
-                paging: false,
-                searching: false,
-                scrollCollapse: true,
-                info: false,
-                columnDefs: [{
-                    orderable: false,
-                    targets: -1
-                }]
-            };
-
-            //Names table configuration
-            self.nameTableConfig = {
-                ...self.defaultTableConfig,
-                "columns": Array(4).fill(null)
-            };            
-            
-            self.identifierTableConfig = {
-                ...self.defaultTableConfig,
-                "columns": Array(3).fill(null)
-            };
 
                 //Statements Table
             self.statementsTableConfig = {

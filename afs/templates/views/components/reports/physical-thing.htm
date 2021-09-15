@@ -10,25 +10,6 @@
             <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Physical Thing" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
         </div>
 
-        <!-- Altenative Nav and Content -->
-        <div class="afs-tab-container" style="display: none;">
-            <ul class="nav nav-tabs afs-tab-list">
-                <li class="afs-tab-list-item">
-                    <div class='afs-nav-tab active'>
-                        <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                            <span>Name/Identifiers</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class='afs-nav-tab'>
-                        <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                            <span>Location</span>
-                            </span>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
     </div>
     {% endblock report_title_bar %}
 
@@ -47,10 +28,11 @@
             <!-- Names Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'name'">
                 <div data-bind="component: {
-                    name: 'name-scene',
+                    name: 'views/components/reports/scenes/name',
                     params: {
                         data: resource,
-                        card: cards.Name
+                        cards: nameCards,
+
                     }
                 }"></div>
             </div>
