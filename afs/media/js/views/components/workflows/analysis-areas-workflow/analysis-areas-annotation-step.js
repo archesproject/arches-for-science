@@ -4,10 +4,11 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
+    'utils/resource',
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
+], function(_, $, arches, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -15,6 +16,8 @@ define([
         this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+        const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+        this.sampleLocationResourceIds = [];
         this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.savingTile = ko.observable();
@@ -67,14 +70,18 @@ define([
 
         this.analysisAreaFilterTerm = ko.observable();
         this.filteredAnalysisAreaInstances = ko.computed(function() {
+            const analysisAreasOnly = self.analysisAreaInstances().filter(function(a){
+                const sampleLocationResourceIds = self.sampleLocationResourceIds.map(item => item.resourceid);
+                return !sampleLocationResourceIds.includes(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId())
+            });
             if (self.analysisAreaFilterTerm()) {
-                return self.analysisAreaInstances().filter(function(analysisAreaInstance) {
+                return analysisAreasOnly.filter(function(analysisAreaInstance) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                     return analysisAreaInstance.data[partIdentifierAssignmentLabelNodeId]().includes(self.analysisAreaFilterTerm());
                 });
             }
             else {
-                return self.analysisAreaInstances();
+                return analysisAreasOnly;
             }
         });
 
@@ -461,7 +468,32 @@ define([
             }
         };
 
-        this.loadExternalCardData = function(data) {
+        this.identifySampleLocations = function(card) {
+            const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
+            const analysisAreaTypeConceptId = '860c0f17-c655-4eb9-95f1-693c729d225e'; //'this is actually the ceramic value as a placeholder'
+            const related = card.tiles().map((tile) => {
+                return {
+                    'resourceid': ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId(),
+                    'tileid': tile.tileid
+                }
+            });
+            return Promise.all(related.map(resource => ResourceUtils.lookupResourceInstanceData(resource.resourceid))).then((values) => {
+                values.forEach((value) => {
+                    const nodevals = ResourceUtils.getNodeValues({
+                        nodeId: classificationNodeId,
+                        where: {
+                            nodeId: classificationNodeId,
+                            contains: analysisAreaTypeConceptId
+                        }
+                    }, value._source.tiles);
+                    if (nodevals.includes(analysisAreaTypeConceptId)) {
+                        self.sampleLocationResourceIds.push(related.find(tile => value._id === tile.resourceid));
+                    }
+                });
+            });
+        }
+
+        this.loadExternalCardData = async function(data) {
             var partIdentifierAssignmentNodeGroupId = 'fec59582-8593-11ea-97eb-acde48001122';  // Part Identifier Assignment (E13) 
 
             var partIdentifierAssignmentCardData = data.cards.find(function(card) {
@@ -503,7 +535,9 @@ define([
 
             params.card = self.card;
             params.tile = self.tile;
-            
+
+            await this.identifySampleLocations(params.card);
+
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
             params.widgets = self.card.widgets().filter(function(widget) {
                 return widget.node_id() === partIdentifierAssignmentPolygonIdentifierNodeId;
