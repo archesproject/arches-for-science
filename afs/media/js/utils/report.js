@@ -8,7 +8,31 @@ define([
                 obj[x.toLowerCase().trim()] = obj[x];
             });
         }
-    }
+    };
+
+    const getRawNodeValue = (resource, ...args) => {
+        let node = resource;
+        for(let i = 0; i < args.length; ++i){
+            standardizeNode(node);
+            const arg = args[i];
+            node = node?.[arg];
+        }
+        return node;
+    };
+
+    const processRawNodeValue = (rawValue) => {
+        const nodeValue = rawValue?.["@display_value"]
+        const geojson = rawValue?.geojson;
+        if(geojson){
+            return geojson;
+        }
+        if(nodeValue){
+            return $(`<span>${nodeValue}</span>`).text();
+        } else {
+            return "--";
+        }
+    };
+
     return {
         // default table configuration - used for display
         defaultTableConfig: {
@@ -84,25 +108,13 @@ define([
         },
 
         // extract a value from a resource graph given a specific path (args)
+        getRawNodeValue: getRawNodeValue,
+
+        processRawValue: processRawNodeValue,
+
         getNodeValue: (resource, ...args) => {
-            let node = resource;
-            for(let i = 0; i < args.length; ++i){
-                standardizeNode(node);
-                const arg = args[i];
-                node = node?.[arg];
-            }
-            const nodeValue = node?.["@display_value"]
-            const geojson = node?.geojson;
-            if(geojson){
-                return geojson;
-            }
-            if(nodeValue !== undefined){
-                if(nodeValue === "" || nodeValue === null){
-                    return "--"
-                }
-                return $(`<span>${nodeValue}</span>`).text();
-            }
-            return "--";
+            const rawValue = getRawNodeValue(resource, args);
+            return processRawNodeValue(rawValue);
         }
     } 
 });

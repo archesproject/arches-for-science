@@ -36,10 +36,12 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                     self.statements(statementData.map(x => {
                         const type = self.getNodeValue(x, "statement_type");
-                        const name = self.getNodeValue(x, "statement_name", 'statement_name_content');
-                        const statementContent = self.getNodeValue(x, "statement_content")
-                        const contentNode = self.getNodeValue(x, "content");
-                        const content = contentNode == '--' ? statementContent == '--' ? '--' : statementContent :contentNode;
+                        const nameCardn = self.getRawNodeValue(x, "statement_name", 0, 'statement_name_content');
+                        const nameCard1 = self.getRawNodeValue(x, "statement_name", 'statement_name_content');
+                        const name = nameCardn ? self.processRawValue(nameCardn) : self.processRawValue(nameCard1);
+                        const contentLocation1 = self.getRawNodeValue(x, "statement_content")
+                        const contentLocation2 = self.getRawNodeValue(x, "content");
+                        const content = contentLocation1 ? self.processRawValue(contentLocation1) : self.processRawValue(contentLocation2);
                         const language = self.getNodeValue(x, "statement_language");
                         const label = self.getNodeValue(x, "statement_label");
                         const source = self.getNodeValue(x, "statement_source");

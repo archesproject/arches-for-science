@@ -6,6 +6,7 @@ define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/re
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
+                {'id': 'description', 'title': 'Description'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -13,6 +14,7 @@ define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/re
             self.activeSection = ko.observable('name');
             self.dataConfig = { exactMatch: undefined };
             self.nameCards = {};
+            self.descriptionCards = {}
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -24,6 +26,10 @@ define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/re
                     exactMatch: self.cards.ExactMatch,
                     type: self.cards.Classification
                 }
+
+                self.descriptionCards = {
+                    statement: self.cards['Statement']
+                };
             }
             if (params.summary) {
 
