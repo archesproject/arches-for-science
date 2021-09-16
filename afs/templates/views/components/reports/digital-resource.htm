@@ -32,7 +32,7 @@
                     params: {
                         data: resource,
                         cards: nameCards,
-                        dataConfig: dataConfig
+                        dataConfig: nameDataConfig
                     }
                 }"></div>
             </div>
@@ -43,6 +43,18 @@
                     params: {
                         data: resource,
                         cards: descriptionCards,
+
+                    }
+                }"></div>
+            </div>
+            <!-- Documentation Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/documentation',
+                    params: {
+                        data: resource,
+                        cards: documentationCards,
+                        dataConfig: documentationDataConfig
 
                     }
                 }"></div>

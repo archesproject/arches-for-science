@@ -46,6 +46,16 @@
 
                     }
                 }"></div>
+            </div>            
+            <!-- Description Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/documentation',
+                    params: {
+                        data: resource,
+                        cards: documentationCards
+                    }
+                }"></div>
             </div>
             <!-- Production -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'prod'">

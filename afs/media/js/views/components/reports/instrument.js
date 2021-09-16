@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/report', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
+define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/report', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description', 'views/components/reports/scenes/documentation'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
         viewModel: function(params) {
             var self = this;
@@ -7,14 +7,20 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'description', 'title': 'Description'},
+                {'id': 'documentation', 'title': 'Documentation'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
-            self.dataConfig = { 'exactMatch': undefined };
+            self.nameDataConfig = { 'exactMatch': undefined };
+            self.documentationDataConfig = {
+                'subjectOf': undefined, 
+                'digitalReference': undefined
+            };
             self.nameCards = {};
             self.descriptionCards = {}
+            self.documentationCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;

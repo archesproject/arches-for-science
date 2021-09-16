@@ -1,6 +1,6 @@
 define([
-    'utils/resource'
-], function() {
+    'arches'
+], function(arches) {
     const standardizeNode = (obj) => {
         if(obj){
             const keys = Object.keys(obj);
@@ -111,6 +111,13 @@ define([
         getRawNodeValue: getRawNodeValue,
 
         processRawValue: processRawNodeValue,
+
+        getResourceLink: (node) => {
+            const resourceId = node.resourceId;
+            if(resourceId){
+                return `${arches.urls.resource}\\${resourceId}`;
+            }
+        },
 
         getNodeValue: (resource, ...args) => {
             const rawValue = getRawNodeValue(resource, args);
