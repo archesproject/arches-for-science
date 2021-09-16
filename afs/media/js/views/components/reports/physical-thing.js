@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
+define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description', 'views/components/reports/scenes/documentation'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -7,6 +7,7 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'description', 'title': 'Description'},
+                {'id': 'documentation', 'title': 'Documentation'},
                 {'id': 'prod', 'title': 'Production Event'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -14,7 +15,9 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
             self.nameCards = {};
-            self.descriptionCards = {}
+            self.descriptionCards = {};
+            self.documentationCards = {};
+            
             if(params.report.cards){
                 const cards = params.report.cards;
                 
@@ -24,6 +27,7 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
                     const productionEventChildren = self.cards["Production (partitioned)"].tiles()?.[0]?.cards ? self.cards["Production (partitioned)"].tiles()[0].cards : self.cards["Production (partitioned)"].cards();
                     self.cards["Production (partitioned)"].children = self.createCardDictionary(productionEventChildren);
                 }
+
                 self.nameCards = {
                     name: self.cards.Name,
                     identifier: self.cards.Identifier,
@@ -33,6 +37,11 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
 
                 self.descriptionCards = {
                     statement: self.cards.Statement
+                };
+
+                self.documentationCards = {
+                    digitalReference: self.cards?.["Digital Reference"],
+                    subjectOf: self.cards?.["Subject Of"]
                 };
             }
 
