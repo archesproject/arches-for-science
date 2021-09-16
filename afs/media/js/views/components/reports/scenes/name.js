@@ -49,11 +49,11 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 } 
 
                 self.names(nameData.map(x => {
-                    const type = self.getNodeValue(x, "name_type");
-                    const content = self.getNodeValue(x, "name_content");
-                    const language = self.getNodeValue(x, "name_language");
-                    const label = self.getNodeValue(x, "name_label");
-                    const source = self.getNodeValue(x, "name_source");
+                    const type = self.getNodeValue(x, `${self.dataConfig.name}_type`);
+                    const content = self.getNodeValue(x, `${self.dataConfig.name}_content`);
+                    const language = self.getNodeValue(x, `${self.dataConfig.name}_language`);
+                    const label = self.getNodeValue(x, `${self.dataConfig.name}_label`);
+                    const source = self.getNodeValue(x, `${self.dataConfig.name}_source`);
                     const tileid = x?.['@tile_id'];
                     return { type, content, language, label, source, tileid }
                 }));
