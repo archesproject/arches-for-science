@@ -24,8 +24,6 @@ define([
             };
             self.nameCards = {};
 
-            console.log(params.report, self.reportMetadata(), self.resource(), self.displayname(), self.activeSection());
-
             if(params.report.cards){
                 const cards = params.report.cards;
                 
