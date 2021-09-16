@@ -25,16 +25,10 @@ define([
             };
             self.nameCards = {};
 
-            console.log(params.report, self.reportMetadata(), self.resource(), self.displayname(), self.activeSection());
-
             if(params.report.cards){
                 const cards = params.report.cards;
                 
                 self.cards = self.createCardDictionary(cards)
-
-                console.log(params)
-                console.log(self.cards)
-                console.log(self.cards['Textual Work Name'])
 
                 self.nameCards = {
                     name: self.cards['Textual Work Name'],
