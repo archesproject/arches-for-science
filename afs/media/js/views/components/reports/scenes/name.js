@@ -49,11 +49,31 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 } 
 
                 self.names(nameData.map(x => {
-                    const type = self.getNodeValue(x, `${self.dataConfig.name.toLowerCase()}_type`);
-                    const content = self.getNodeValue(x, `${self.dataConfig.name.toLowerCase()}_content`);
-                    const language = self.getNodeValue(x, `${self.dataConfig.name.toLowerCase()}_language`);
-                    const label = self.getNodeValue(x, `${self.dataConfig.name.toLowerCase()}_label`);
-                    const source = self.getNodeValue(x, `${self.dataConfig.name.toLowerCase()}_source`);
+                    const type = self.getNodeValue(x, {
+                        testPaths: [
+                            [`${self.dataConfig.name.toLowerCase()}_type`], 
+                            ['type']
+                        ]});
+                    const content = self.getNodeValue(x, {
+                        testPaths: [
+                            [`${self.dataConfig.name.toLowerCase()}_content`], 
+                            ['content']
+                        ]});
+                    const language = self.getNodeValue(x, {
+                        testPaths: [
+                            [`${self.dataConfig.name.toLowerCase()}_language`],
+                            ['language']
+                        ]});
+                    const label = self.getNodeValue(x, {
+                        testPaths: [
+                            [`${self.dataConfig.name.toLowerCase()}_label`],
+                            ['_label']
+                        ]});
+                    const source = self.getNodeValue(x, {
+                        testPaths: [
+                            [`${self.dataConfig.name.toLowerCase()}_source`],
+                            ['source']
+                        ]});
                     const tileid = x?.['@tile_id'];
                     return { type, content, language, label, source, tileid }
                 }));
@@ -65,10 +85,26 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                 if(identifierData) {
                     self.identifiers(identifierData.map(x => {
-                        const type = self.getNodeValue(x, "identifier_type");
-                        const content = self.getNodeValue(x, "identifier_content");
-                        const label = self.getNodeValue(x, "identifier_label");
-                        const source = self.getNodeValue(x, "identifier_source");
+                        const type = self.getNodeValue(x,{
+                            testPaths: [
+                                [`${self.dataConfig.identifier.toLowerCase()}_type`], 
+                                ['type']
+                            ]});
+                        const content = self.getNodeValue(x, {
+                            testPaths: [
+                                [`${self.dataConfig.identifier.toLowerCase()}_content`], 
+                                ['content']
+                            ]});
+                        const label = self.getNodeValue(x,self.getNodeValue(x, {
+                            testPaths: [
+                                [`${self.dataConfig.identifier.toLowerCase()}_label`],
+                                ['_label']
+                            ]}));
+                        const source = self.getNodeValue(x, {
+                            testPaths: [
+                                [`${self.dataConfig.identifier.toLowerCase()}_source`],
+                                ['source']
+                            ]});
                         const tileid = x?.['@tile_id'];
                         return { type, content, label, source, tileid }
                     }));

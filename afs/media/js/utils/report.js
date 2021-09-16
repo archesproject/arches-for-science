@@ -11,13 +11,26 @@ define([
     };
 
     const getRawNodeValue = (resource, ...args) => {
-        let node = resource;
-        for(let i = 0; i < args.length; ++i){
-            standardizeNode(node);
-            const arg = args[i];
-            node = node?.[arg];
+        let rootNode = resource;
+        let testPaths = undefined;
+
+        if(typeof(args?.[0]?.[0]) == 'object'){
+            testPaths = args[0][0]?.testPaths;
+        } else {
+            testPaths = [args];
         }
-        return node;
+
+        for(path of testPaths){
+            let node = rootNode;
+            for(let i = 0; i < path.length; ++i){
+                standardizeNode(node);
+                const pathComponent = path[i];
+                node = node?.[pathComponent];
+            }
+            if(node){
+                return node;
+            }
+        }
     };
 
     const processRawNodeValue = (rawValue) => {
