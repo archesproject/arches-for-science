@@ -537,6 +537,7 @@ define([
             params.tile = self.tile;
 
             await this.identifySampleLocations(params.card);
+            this.sampleLocationTileIds = self.sampleLocationResourceIds.map(item => item.tileid);
 
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
             params.widgets = self.card.widgets().filter(function(widget) {
@@ -585,6 +586,42 @@ define([
 
                     if (!featureLayer) {
                         self.featureLayers.push(layer)
+                    }
+
+                    if (self.sampleLocationTileIds.includes(feature.properties.tileId)){
+                        const sampleLocation = self.sampleLocationResourceIds.find(sampleLocation => sampleLocation.tileid === feature.properties.tileId);
+                        var popup = L.popup({
+                            closeButton: false,
+                            maxWidth: 349
+                        })
+                            .setContent(iiifPopup)
+                            .on('add', function() {
+                                var popupData = {
+                                    'closePopup': function() {
+                                        popup.remove();
+                                    },
+                                    'name': ko.observable(''),
+                                    'description': ko.observable(''),
+                                    'graphName': feature.properties.graphName,
+                                    'resourceinstanceid': sampleLocation.resourceid,
+                                    'reportURL': arches.urls.resource_report
+                                };
+                                window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
+                                    .then(function(response) {
+                                        return response.json();
+                                    })
+                                    .then(function(descriptors) {
+                                        popupData.name(descriptors.displayname);
+                                        const description = `<strong>Sample Location</strong>
+                                            <br>Sample locations may not be modified in the analysis area workflow
+                                            <br>${descriptors['map_popup'] !== "Undefined" ? descriptors['map_popup'] : ''}`
+                                        popupData.description(description);
+                                    });
+                                var popupElement = popup.getElement()
+                                    .querySelector('.mapboxgl-popup-content');
+                                ko.applyBindingsToDescendants(popupData, popupElement);
+                            });
+                        layer.bindPopup(popup);
                     }
 
                     layer.on({
