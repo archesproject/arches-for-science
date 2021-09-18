@@ -118,7 +118,7 @@
     <!-- Collapsible content -->
     <div data-bind="visible: visible.classifications" class="afs-report-collapsible-container pad-lft">
 
-        <!-- ko ifnot: type && exactMatch().length -->
+        <!-- ko ifnot: type || exactMatch().length -->
         <div class="afs-nodata-note">No classification for this resource</div>
         <!-- /ko -->
 
