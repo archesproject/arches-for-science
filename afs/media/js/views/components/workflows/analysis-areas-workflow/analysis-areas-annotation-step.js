@@ -8,7 +8,8 @@ define([
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
-], function(_, $, arches, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
+    'text!templates/views/components/iiif-popup.htm',
+], function(_, $, arches, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -72,7 +73,8 @@ define([
         this.filteredAnalysisAreaInstances = ko.computed(function() {
             const analysisAreasOnly = self.analysisAreaInstances().filter(function(a){
                 const sampleLocationResourceIds = self.sampleLocationResourceIds.map(item => item.resourceid);
-                return !sampleLocationResourceIds.includes(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId())
+                const partId = ko.unwrap(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId)
+                return !sampleLocationResourceIds.includes(partId);
             });
             if (self.analysisAreaFilterTerm()) {
                 return analysisAreasOnly.filter(function(analysisAreaInstance) {
@@ -174,7 +176,7 @@ define([
         this.removeFeatureFromCanvas = function(feature) {
             var annotationNodes = self.annotationNodes();
             
-            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNodeName = "Analysis Areas";
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
@@ -200,7 +202,7 @@ define([
             var annotationNodes = self.annotationNodes();
             
             if (self.selectedAnalysisAreaInstanceFeatures()) {
-                var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                var physicalThingAnnotationNodeName = "Analysis Areas";
                 var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                     return annotationNode.name === physicalThingAnnotationNodeName;
                 });
@@ -231,7 +233,7 @@ define([
         };
 
         this.updateAnalysisAreaInstances = function() {
-            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNodeName = "Analysis Areas";
             var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
@@ -282,7 +284,7 @@ define([
         };
 
         this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
-            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNodeName = "Analysis Areas";
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
@@ -358,7 +360,7 @@ define([
             var updateAnnotations = function() {
                 return new Promise(function(resolve, _reject) {
                     /* updates selected annotations */ 
-                    var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                    var physicalThingAnnotationNodeName = "Analysis Areas";
                     var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
                         return annotationNode.name === physicalThingAnnotationNodeName;
                     });
@@ -646,11 +648,60 @@ define([
     
                                     self.drawFeatures([selectedFeature]);
                                 } 
-                            } 
-                                } 
                             }
                         },
                     })
+                },
+                buildAnnotationNodes: function(json) {
+                    let sampleAnnotations = ko.observableArray();
+                    let analysisAreaAnnotations = ko.observableArray();
+                    var updateAnnotations = function() {
+                        var canvas = self.canvas();
+                        if (canvas) {
+                            window.fetch(arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
+                                .then(function(response) {
+                                    return response.json();
+                                })
+                                .then(function(json) {
+                                    json.features.forEach(function(feature) {
+                                        feature.properties.graphName = "Physical Thing";
+                                        if (self.sampleLocationTileIds.includes(feature.properties.tileId)) {
+                                            feature.properties.type = 'sample_location';
+                                            feature.properties.color = '#AC53F5';
+                                            feature.properties.fillColor = '#AC53F5';
+                                            sampleAnnotations.push(feature);
+                                        } else {
+                                            feature.properties.type = 'analysis_area';
+                                            analysisAreaAnnotations.push(feature);
+                                        }
+                                    });
+                                    const editNodeActiveState = ko.observable(false);
+                                    editNodeActiveState.subscribe(function(active){
+                                        if (!active) {
+                                            self.resetAnalysisAreasTile();
+                                        }
+                                    });
+                                    self.annotationNodes([
+                                        {
+                                            name: "Analysis Areas",
+                                            icon: "fa fa-eye",
+                                            active: editNodeActiveState,
+                                            opacity: ko.observable(100),
+                                            annotations: analysisAreaAnnotations
+                                        },
+                                        {
+                                            name: "Sample Locations",
+                                            icon: "fa fa-eyedropper",
+                                            active: ko.observable(false),
+                                            opacity: ko.observable(100),
+                                            annotations: sampleAnnotations
+                                        }
+                                    ])
+                                });
+                        }
+                    };
+                    self.canvas.subscribe(updateAnnotations);
+                    updateAnnotations();
                 }
             }]);
 
