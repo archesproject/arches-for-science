@@ -13,17 +13,24 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'}, 
+                {'id': 'name', 'title': 'Names and Classifications'},
+                {'id': 'description', 'title': 'Description'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
-            self.dataConfig = { 
+            self.nameDataConfig = {
                 name: "Name (top)",
                 exactMatch: undefined
             };
             self.nameCards = {};
+            self.descriptionDataConfig = {
+                statement: "Statement (top)",
+            };
+            self.descriptionCards = {};
+
+            console.log(self.resource())
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -36,6 +43,10 @@ define([
                     exactMatch: self.cards.ExactMatch,
                     type: self.cards.Classification
                 }
+
+                self.descriptionCards = {
+                    statement: self.cards.Statement,
+                };
             }
 
             if (params.summary) {
