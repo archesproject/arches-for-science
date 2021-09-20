@@ -1,9 +1,41 @@
-define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils) {
-    return ko.components.register('activity-report', {
+define([
+    'jquery',
+    'underscore',
+    'knockout',
+    'arches',
+    'utils/resource',
+    'utils/report',
+    'views/components/reports/scenes/name'
+], function($, _, ko, arches, resourceUtils, reportUtils) {
+    return ko.components.register('project-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
-            TabbedReportViewModel.apply(this, [params]);
+            Object.assign(self, reportUtils);
+            self.sections = [
+                {'id': 'name', 'title': 'Names and Classifications'}, 
+            ];
+            self.reportMetadata = ko.observable(params.report?.report_json);
+            self.resource = ko.observable(self.reportMetadata()?.resource);
+            self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
+            self.activeSection = ko.observable('name');
+            self.dataConfig = {
+                exactMatch: undefined
+            };
+            self.nameCards = {};
+
+            if(params.report.cards){
+                const cards = params.report.cards;
+                
+                self.cards = self.createCardDictionary(cards)
+
+                self.nameCards = {
+                    name: self.cards.name,
+                    identifier: self.cards.Identifier,
+                    exactMatch: self.cards.ExactMatch,
+                    type: self.cards.Classification
+                }
+            }
 
             if (params.summary) {
 
@@ -100,6 +132,6 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                 });
             }
         },
-        template: { require: 'text!templates/views/components/reports/activity.htm' }
+        template: { require: 'text!templates/views/components/reports/project.htm' }
     });
 });
