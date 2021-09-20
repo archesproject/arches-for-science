@@ -24,8 +24,6 @@ define([
             };
             self.nameCards = {};
 
-            console.log(self.resource())
-
             if(params.report.cards){
                 const cards = params.report.cards;
                 

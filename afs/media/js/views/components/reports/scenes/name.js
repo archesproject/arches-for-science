@@ -110,12 +110,12 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                     }));
                 }
 
-                let exactMatchData = params.data()[self.dataConfig.exactMatch];
+                let exactMatchData = self.getRawNodeValue(params.data(), self.dataConfig.exactMatch);
                 if(exactMatchData) {
                     if(exactMatchData.length === undefined){
                         exactMatchData = [exactMatchData]
                     }
-                    self.exactMatch(exactMatchData.map(x => x["@display_value"]))
+                    self.exactMatch(exactMatchData.map(x => self.getNodeValue(x)))
                 }
 
                 self.type(self.getNodeValue(params.data(), self.dataConfig.type));

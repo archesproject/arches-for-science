@@ -118,10 +118,6 @@
     <!-- Collapsible content -->
     <div data-bind="visible: visible.classifications" class="afs-report-collapsible-container pad-lft">
 
-        <!-- ko ifnot: type || exactMatch().length -->
-        <div class="afs-nodata-note">No classification for this resource</div>
-        <!-- /ko -->
-
         <!-- ko if: type || exactMatch().length -->
         <div class="afs-report-subsection" >
             <div class="firstchild-container">
@@ -147,8 +143,11 @@
                             <h4 class="afs-block-key">Exact Match: </h4>
                             <div class="afs-block-value">
                                 <!-- ko foreach: exactMatch -->
-                                <a data-bind="if: $data != '--', attr: {href: $data}"><span data-bind="text: $data"></span></a>
-                                <span>;</span>
+                                <span data-bind="if: $data != '--'">
+                                    <a data-bind="attr: {href: $data}">
+                                        <span data-bind="text: $data"></span><span data-bind="if: $index() !== $parent.exactMatch().length-1">,</span>
+                                    </a>
+                                </span>
                                 <!-- /ko -->
                                 <!-- ko if: exactMatch().length === 0 -->
                                 <span>--</span>
