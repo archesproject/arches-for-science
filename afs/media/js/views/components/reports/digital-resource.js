@@ -1,4 +1,15 @@
-define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/report', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description', 'views/components/reports/scenes/documentation'], function($, _, ko, arches, resourceUtils, reportUtils) {
+define([
+    'jquery',
+    'underscore', 
+    'knockout', 
+    'arches', 
+    'utils/resource', 
+    'utils/report', 
+    'views/components/reports/scenes/name', 
+    'views/components/reports/scenes/description', 
+    'views/components/reports/scenes/documentation', 
+    'views/components/reports/scenes/existence'], 
+    function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('digital-resource-report', {
         viewModel: function(params) {
             var self = this;
@@ -6,6 +17,7 @@ define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/re
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
+                {'id': 'existence', 'title': 'Existence'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -31,7 +43,7 @@ define(['jquery','underscore', 'knockout', 'arches', 'utils/resource', 'utils/re
                     identifier: self.cards.Identifier,
                     exactMatch: self.cards.ExactMatch,
                     type: self.cards.Classification
-                }
+                };
 
                 self.descriptionCards = {
                     statement: self.cards['Statement']

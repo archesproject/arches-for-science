@@ -1,4 +1,17 @@
-define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/report', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description', 'views/components/reports/scenes/documentation'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
+define([
+    'jquery', 
+    'underscore', 
+    'knockout', 
+    'arches', 
+    'viewmodels/tabbed-report', 
+    'utils/resource', 
+    'utils/report', 
+    'views/components/reports/scenes/name', 
+    'views/components/reports/scenes/description', 
+    'views/components/reports/scenes/documentation', 
+    'views/components/reports/scenes/existence'
+], 
+    function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
         viewModel: function(params) {
             var self = this;
@@ -6,6 +19,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
+                {'id': 'existence', 'title': 'Existence'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -21,6 +35,7 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
+            self.existenceCards = { productionEvent: { tiles: () => {return {}}}};
 
             if(params.report.cards){
                 const cards = params.report.cards;

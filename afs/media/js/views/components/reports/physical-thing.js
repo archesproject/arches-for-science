@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description', 'views/components/reports/scenes/documentation'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
+define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description', 'views/components/reports/scenes/documentation', 'views/components/reports/scenes/existence'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -6,18 +6,21 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
+                {'id': 'existence', 'title': 'Existence'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
-                {'id': 'prod', 'title': 'Production Event'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('name');
+            self.activeSection = ko.observable('existence');
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
-            
+            self.existenceEvents = ['production', 'destruction', 'removal from object'];
+            self.existenceDataConfig = {'destruction': 'destruction', 'removal from object': 'removal from object'};
+            self.existenceCards = { productionEvent: { tiles: () => {return {}}}};
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
@@ -43,6 +46,35 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
                     digitalReference: self.cards?.["Digital Reference"],
                     subjectOf: self.cards?.["Subject Of"]
                 };
+                self.existenceCards = {
+                    production: {
+                        card: self.cards?.["Production (partitioned)"],
+                        subCards: {
+                            name: 'Name for Production Event',
+                            identifier: 'Identifier for Production Event',
+                            timespan: 'TimeSpan for Production Event',
+                            statement: 'Statement about Production Event'
+                        }
+                    },
+                    destruction: {
+                        card:  self.cards?.["Destruction"],
+                        subCards: {
+                            name: 'Name for Production Event',
+                            identifier: 'Identifier for Production Event',
+                            timespan: 'TimeSpan for Production Event',
+                            statement: 'Statement about Production Event'
+                        }
+                    },
+                    'removal from object': { 
+                        card: self.cards?.["Removal from Object"],
+                        subCards: {
+                            name: 'Name for Part Removal Event',
+                            identifier: 'Identifier for Part Removal Event',
+                            timespan: 'TimeSpan for Removal from Object',
+                            statement: 'Statement about Part Removal Event'
+                        }
+                    },
+                }
             }
 
             self.blockVisible = {

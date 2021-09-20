@@ -14,8 +14,8 @@ define([
         let rootNode = resource;
         let testPaths = undefined;
 
-        if(typeof(args?.[0]?.[0]) == 'object'){
-            testPaths = args[0][0]?.testPaths;
+        if(typeof(args?.[0]) == 'object'){
+            testPaths = args[0]?.testPaths;
         } else {
             testPaths = [args];
         }
@@ -133,7 +133,7 @@ define([
         },
 
         getNodeValue: (resource, ...args) => {
-            const rawValue = getRawNodeValue(resource, args);
+            const rawValue = getRawNodeValue(resource, ...args);
             return processRawNodeValue(rawValue);
         }
     } 
