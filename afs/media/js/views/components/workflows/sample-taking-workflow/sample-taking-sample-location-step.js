@@ -965,29 +965,31 @@ define([
                     }
 
                     layer.on({
-                        click: function() {
 
-                            self.drawFeatures([]);
-                            self.featureClick = true;
+                        click: function() {              
+                            const sampleLocationInstance = self.getSampleLocationTileFromFeatureId(feature.id);
                             
-                            var sampleLocationInstance = self.getSampleLocationTileFromFeatureId(feature.id);
+                            if (sampleLocationInstance && !self.analysisAreaTileIds.includes(sampleLocationInstance.tileid)) {
+                                self.drawFeatures([]);
+                                self.featureClick = true;
 
-                            if (!self.selectedSampleLocationInstance() || self.selectedSampleLocationInstance().tileid !== sampleLocationInstance.tileid ) {
-                                self.selectSampleLocationInstance(sampleLocationInstance);
+                                if (!self.selectedSampleLocationInstance() || self.selectedSampleLocationInstance().tileid !== sampleLocationInstance.tileid ) {
+                                    self.selectSampleLocationInstance(sampleLocationInstance);
+                                }
+                                else {
+                                    self.tile.reset();
+                                    self.resetCanvasFeatures();
+    
+                                    const selectedFeature = ko.toJS(self.selectedSampleLocationInstanceFeatures().find(function(selectedSampleLocationInstanceFeature) {
+                                        return ko.unwrap(selectedSampleLocationInstanceFeature.id) === feature.id;
+                                    }));
+    
+                                    self.selectedFeature(selectedFeature);
+                                    self.removeFeatureFromCanvas(self.selectedFeature());
+    
+                                    self.drawFeatures([selectedFeature]);
+                                } 
                             }
-                            else {
-                                self.tile.reset();
-                                self.resetCanvasFeatures();
-
-                                var selectedFeature = ko.toJS(self.selectedSampleLocationInstanceFeatures().find(function(selectedSampleLocationInstanceFeature) {
-                                    return ko.unwrap(selectedSampleLocationInstanceFeature.id) === feature.id;
-                                }));
-
-                                self.selectedFeature(selectedFeature);
-                                self.removeFeatureFromCanvas(self.selectedFeature());
-
-                                self.drawFeatures([selectedFeature]);
-                            } 
                         },
                     })
                 },
