@@ -81,6 +81,16 @@
                     }
                 }"></div>
             </div>
+            <!-- Actor Relations Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/actor-relations',
+                    params: {
+                        data: resource,
+                        cards: actorCards,
+                    }
+                }"></div>
+            </div>
         </div>
     </div>
 

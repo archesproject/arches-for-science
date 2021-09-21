@@ -10,7 +10,8 @@ define([
     'views/components/reports/scenes/description', 
     'views/components/reports/scenes/documentation', 
     'views/components/reports/scenes/existence', 
-    'views/components/reports/scenes/substance'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
+    'views/components/reports/scenes/substance', 
+    'views/components/reports/scenes/actor-relations'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -20,6 +21,7 @@ define([
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'existence', 'title': 'Existence'},
                 {'id': 'substance', 'title': 'Substance'},
+                {'id': 'actor-relations', 'title': 'Actor Relations'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -34,6 +36,7 @@ define([
             self.existenceDataConfig = {'destruction': 'destruction', 'removal from object': 'removal from object'};
             self.existenceCards = {};
             self.substanceCards = {};
+            self.actorCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -94,6 +97,10 @@ define([
 
                 self.substanceCards = {
                     dimension: self.cards.dimension
+                }
+
+                self.actorCards = {
+                    owner: self.cards["current owner"]
                 }
             }
 

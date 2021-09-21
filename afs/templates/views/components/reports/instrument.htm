@@ -70,10 +70,21 @@
                     }
                 }"></div>
             </div>
-            <!-- Existence Tab -->
+            <!-- Substance Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/substance',
+                    params: {
+                        data: resource,
+                        cards: substanceCards
+
+                    }
+                }"></div>
+            </div>
+            <!-- Actor Relations Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/actor-relations',
                     params: {
                         data: resource,
                         cards: substanceCards

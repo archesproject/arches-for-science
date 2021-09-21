@@ -10,7 +10,8 @@ define([
     'views/components/reports/scenes/description', 
     'views/components/reports/scenes/documentation', 
     'views/components/reports/scenes/existence', 
-    'views/components/reports/scenes/substance'
+    'views/components/reports/scenes/substance', 
+    'views/components/reports/scenes/actor-relations'
 ], 
     function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
@@ -22,6 +23,7 @@ define([
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'existence', 'title': 'Existence'},
                 {'id': 'substance', 'title': 'Substance'},
+                {'id': 'actor-relations', 'title': 'Actor Relations'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -39,6 +41,7 @@ define([
             self.documentationCards = {};
             self.existenceCards = {};
             self.substanceCards = {};
+            self.actorCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
