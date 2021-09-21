@@ -27,7 +27,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.add = params.addTile || self.addNewTile;
             self.names = ko.observableArray();
             self.identifiers = ko.observableArray();
-            self.exactMatch = ko.observable();
+            self.exactMatch = ko.observableArray();
             self.type = ko.observable();
             self.visible = {
                 names: ko.observable(true),
@@ -79,11 +79,11 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 }));
 
                 let identifierData = params.data()[self.dataConfig.identifier];
-                if(identifierData.length === undefined){
-                    identifierData = [identifierData]
-                } 
-
                 if(identifierData) {
+                    if(identifierData.length === undefined){
+                        identifierData = [identifierData]
+                    } 
+
                     self.identifiers(identifierData.map(x => {
                         const type = self.getNodeValue(x,{
                             testPaths: [
@@ -110,9 +110,14 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                     }));
                 }
 
-                if(self.dataConfig.exactMatch){
-                    self.exactMatch(self.getNodeValue(params.data(), self.dataConfig.exactMatch));
+                let exactMatchData = self.getRawNodeValue(params.data(), self.dataConfig.exactMatch);
+                if(exactMatchData) {
+                    if(exactMatchData.length === undefined){
+                        exactMatchData = [exactMatchData]
+                    }
+                    self.exactMatch(exactMatchData.map(x => self.getNodeValue(x)))
                 }
+
                 self.type(self.getNodeValue(params.data(), self.dataConfig.type));
             } 
 
