@@ -30,8 +30,6 @@ define([
             };
             self.descriptionCards = {};
 
-            console.log(self.resource())
-
             if(params.report.cards){
                 const cards = params.report.cards;
                 
