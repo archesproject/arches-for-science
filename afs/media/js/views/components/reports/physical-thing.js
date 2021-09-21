@@ -1,4 +1,16 @@
-define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-thing', 'utils/report','bindings/datatable', 'views/components/reports/scenes/name', 'views/components/reports/scenes/description', 'views/components/reports/scenes/documentation', 'views/components/reports/scenes/existence'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
+define([
+    'underscore', 
+    'knockout', 
+    'arches', 
+    'utils/resource', 
+    'utils/physical-thing', 
+    'utils/report',
+    'bindings/datatable', 
+    'views/components/reports/scenes/name', 
+    'views/components/reports/scenes/description', 
+    'views/components/reports/scenes/documentation', 
+    'views/components/reports/scenes/existence', 
+    'views/components/reports/scenes/substance'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -7,45 +19,48 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'existence', 'title': 'Existence'},
+                {'id': 'substance', 'title': 'Substance'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('existence');
+            self.activeSection = ko.observable('substance');
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
             self.existenceEvents = ['production', 'destruction', 'removal from object'];
             self.existenceDataConfig = {'destruction': 'destruction', 'removal from object': 'removal from object'};
             self.existenceCards = {};
+            self.substanceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
                 
                 self.cards = self.createCardDictionary(cards);
 
-                if(self.cards?.["Production (partitioned)"]) {
-                    const productionEventChildren = self.cards["Production (partitioned)"].tiles()?.[0]?.cards ? self.cards["Production (partitioned)"].tiles()[0].cards : self.cards["Production (partitioned)"].cards();
-                    self.cards["Production (partitioned)"].children = self.createCardDictionary(productionEventChildren);
+                if(self.cards?.["production (partitioned)"]) {
+                    const productionEventChildren = self.cards["production (partitioned)"].tiles()?.[0]?.cards ? self.cards["production (partitioned)"].tiles()[0].cards : self.cards["production (partitioned)"].cards();
+                    self.cards["production (partitioned)"].children = self.createCardDictionary(productionEventChildren);
                 }
 
                 self.nameCards = {
-                    name: self.cards.Name,
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards.Classification
+                    name: self.cards.name,
+                    identifier: self.cards.identifier,
+                    exactMatch: self.cards.exactmatch,
+                    type: self.cards.classification
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards.Statement
+                    statement: self.cards.statement
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.["Digital Reference"],
-                    subjectOf: self.cards?.["Subject Of"]
+                    digitalReference: self.cards?.["digital reference"],
+                    subjectOf: self.cards?.["subject of"]
                 };
+
                 self.existenceCards = {
                     production: {
                         card: self.cards?.["production (partitioned)"],
@@ -75,156 +90,19 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
                             statement: 'statement about part removal event'
                         }
                     },
+                },
+
+                self.substanceCards = {
+                    dimension: self.cards.dimension
                 }
             }
 
-            self.blockVisible = {
-                production: {
-                    event: ko.observable(true)
-                }
-            };
-            self.resourceData = {
-                production: {
-                    name: ko.observable(),
-                    location: ko.observable(),
-                    creator: ko.observable(),
-                    techniques: ko.observable(),
-                    objectsUsed: ko.observable(),
-                    influence: ko.observable(),
-                    names: ko.observableArray(),
-                    parts: ko.observableArray(),
-                    statements: ko.observableArray(),
-                    identifiers: ko.observableArray(),
-                    timespan: ko.observable()
-                }
-            }
-
-                //Statements Table
-            self.statementsTableConfig = {
-                "responsive": true,
-                "paging": false,
-                "searching": false,
-                "scrollCollapse": true,
-                "info": false,
-                "columnDefs": [ {
-                    "orderable": false,
-                    "targets":   -1
-                } ],
-                "columns": Array(5).fill(null)
-            };
-
-            const loadData = (resource) => {
-                const productionData = resource?.["Production "];
-                if(productionData) {
-                    const productionNames = productionData?.['Production_name']
-                    if(productionNames.length){
-                        self.resourceData.production.names(productionNames.map(x => {
-                            const name = self.getNodeValue(x, 'Production_name_content');
-                            const type = self.getNodeValue(x, 'Production_name_type');
-                            const language = self.getNodeValue(x, 'Production_name_language');
-                            const tileid = x?.['@tile_id'];
-                            return {language, name, tileid, type}
-                        }));
-                    }
-
-                    const productionIdentifiers = productionData?.['Production_identifier']
-                    if(productionIdentifiers.length){
-                        self.resourceData.production.identifiers(productionIdentifiers.map(x => {
-                            const name = self.getNodeValue(x, 'Production_identifier_content');
-                            const type = self.getNodeValue(x, 'Production_identifier_type');
-                            const tileid = x?.['@tile_id'];
-                            return {name, tileid, type}
-                        }));
-                    }
-                    self.resourceData.production.creator(self.getNodeValue(productionData, 'Production_carried out by'))
-                    self.resourceData.production.objectsUsed(self.getNodeValue(productionData, 'Production_used object'));
-                    self.resourceData.production.techniques(self.getNodeValue(productionData, 'Production_technique'));
-                    self.resourceData.production.location(self.getNodeValue(productionData, 'Production_location'));
-                    self.resourceData.production.influence(self.getNodeValue(productionData, 'Production_influence'));
-                    self.resourceData.production.name(self.getNodeValue(productionData, 'Production_influence'));
-                    self.resourceData.production.tileid = productionData?.['@tile_id'];
-
-                    const productionTime = productionData?.['Production_time'];
-                    if(productionTime) {
-                        const beginningStart = self.getNodeValue(productionTime, 'Production_time_begin of the begin');
-                        const beginningComplete = self.getNodeValue(productionTime, 'Production_time_begin of the end');
-                        const endingStart = self.getNodeValue(productionTime, 'Production_time_end of the begin');
-                        const endingComplete = self.getNodeValue(productionTime, 'Production_time_end of the end');
-
-                        // TODO: check with cyrus/Dennis on name/Duration and why it isn't populated
-                        const name = self.getNodeValue(productionTime, 'Production_time_name', 'Production_time_name_content');
-                        const duration = self.getNodeValue(productionTime, 'Production_time_duration', 'Production_time_duration_highest possible value');
-                        const durationEventName = self.getNodeValue(productionTime, 'Production_time_duration', 'Production_time_duration_Name', 'Production_time_duration_Name_content');
-                        self.resourceData.production.timespan({beginningComplete, beginningStart, duration, durationEventName, endingComplete, endingStart, name})
-                    }
-
-                    const productionStatement = productionData?.['Production_Statement'];
-                    if(productionStatement.length){
-                        self.resourceData.production.statements(productionStatement.map(x => {
-                            const content = self.getNodeValue(x, 'Production_Statement_content');
-                            const name = self.getNodeValue(x, 'Production_Statement_name', 'Production_Statement_name_content');
-                            const type = self.getNodeValue(x, 'Production_Statement_type');
-                            const language = self.getNodeValue(x, 'Production_Statement_language');
-                            const tileid = x?.['@tile_id'];
-                            return {content, language, name, tileid, type}
-                        }));
-                    }                    
-
-                    const parts = productionData?.['Production_part']
-                    if(parts.length){
-                        self.resourceData.production.parts(parts.map(x => {
-                            const creator = self.getNodeValue(x, 'Production_part_carried out by');
-                            const objectsUsed = self.getNodeValue(x, 'Production_part_used');
-                            const technique = self.getNodeValue(x, 'Production_part_technique');
-                            const location = self.getNodeValue(x, 'Production_part_location');
-                            const influence = self.getNodeValue(x, 'Production_part_influence');
-                            const name = self.getNodeValue(x, 'Production_part_name', 'Production_part_name_content');
-                            const nameLanguage = self.getNodeValue(x, 'Production_part_name', 'Production_part_name_language');
-                            const nameType = self.getNodeValue(x, 'Production_part_name', 'Production_part_name_type');
-                            const statementContent = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_content');
-                            const statementLanguage = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_language');
-                            const statementName = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_name', 'Production_part_Statement_name_content');
-                            const statementType = self.getNodeValue(x, 'Production_part_Statement', 'Production_part_Statement_type');
-                            const identifier = self.getNodeValue(x, 'Production_part_identifier', 'Production_part_identifier_content');
-                            const identifierType = self.getNodeValue(x,'Production_part_identifier','Production_part_identifier_type');
-                            const tileid = x?.['@tile_id'];
-                            const time = x?.['Production_part_time'];
-                            const names = [{name, nameType, nameLanguage}];
-                            const statements = [{statementContent, statementLanguage, statementName, statementType}];
-                            const identifiers = [{identifier, identifierType}]
-                            
-                            const tile = self?.cards?.["Production (partitioned)"]?.children?.["Production Event Part "]?.tiles().find(x => x.tileid == tileid)
-                            const eventCards = {};
-                            let selectedObservable = undefined;
-                            if(tile){
-                                eventCards.timespan = tile.cards.find(x => x.nodegroupid == 'cc157e05-b497-11e9-8f5a-a4d18cec433a');
-                                eventCards.name = tile.cards.find(x => x.nodegroupid == 'cc157e05-b497-11e9-8f5a-a4d18cec433a');
-                                eventCards.identifier = tile.cards.find(x => x.nodegroupid == 'cc155257-b497-11e9-9ed7-a4d18cec433a');
-                                eventCards.statements = tile.cards.find(x => x.nodegroupid == '7ae6204a-bee9-11e9-bd2a-a4d18cec433a');
-                                selectedObservable = tile.selected;
-                            }
-                            const expanded = ko.observable(true);
-
-                            let timespan = {};
-                            if(time){
-                                const beginningStart = self.getNodeValue(time, 'Production_part_time_begin of the begin');
-                                const beginningComplete = self.getNodeValue(time, 'Production_part_time_begin of the end');
-                                const endingStart = self.getNodeValue(time, 'Production_part_time_end of the begin');
-                                const endingComplete = self.getNodeValue(time, 'Production_part_time_end of the end');
-
-                                // TODO: check with cyrus/Dennis on name/Duration and why it isn't populated
-                                const name = self.getNodeValue(time, 'Production_part_time_name', 'Production_part_time_name_content');
-                                const duration = self.getNodeValue(time, 'Production_part_time_duration', 'Production_part_time_duration_highest possible value');
-                                const durationEventName = self.getNodeValue(time, 'Production_part_name_time_duration', 'Production_part_name_time_duration_Name', 'Production_time_duration_Name_content');
-                                timespan = {beginningComplete, beginningStart, duration, durationEventName, eventCards, endingComplete, endingStart, name};
-                            }
-                            return {creator, eventCards, expanded, identifiers, objectsUsed, technique, location, name, influence, selectedObservable, tileid, timespan, names, statements}
-                        }));
-                    }
-                }
-            }
-
-            loadData(self.resource());
+            self.additionalData = ko.observableArray([{
+                key: 'material', 
+                value: self.getNodeValue(self.resource(), 'material'), 
+                card: self.cards?.["material(s)"],
+                type: 'kv'
+            }]);
 
             if (params.summary) {
                 const IdentifierContentnodeid = '22c169b5-b498-11e9-bdad-a4d18cec433a';

@@ -8,7 +8,8 @@ define([
     'views/components/reports/scenes/name', 
     'views/components/reports/scenes/description', 
     'views/components/reports/scenes/documentation', 
-    'views/components/reports/scenes/existence'], 
+    'views/components/reports/scenes/existence', 
+    'views/components/reports/scenes/substance'], 
     function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('digital-resource-report', {
         viewModel: function(params) {
@@ -18,6 +19,7 @@ define([
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'existence', 'title': 'Existence'},
+                {'id': 'substance', 'title': 'Substance'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -33,6 +35,7 @@ define([
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
+            self.substanceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -48,7 +51,20 @@ define([
                 self.descriptionCards = {
                     statement: self.cards['Statement']
                 };
+
+                self.substanceCards = {
+                    dimension: self.cards.dimension
+                }
             }
+
+            self.additionalData = ko.observableArray([{
+                key: 'conforms to standard', 
+                value: self.getNodeValue(self.resource(), 'conforms to'), 
+                href: self.getNodeValue(self.resource(), 'conforms to'), 
+                card: self.cards?.["conforms to standard"],
+                type: 'href'
+            }]);
+            
             if (params.summary) {
 
                 this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;

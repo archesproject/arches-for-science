@@ -41,7 +41,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             const extractEventData = (existenceEvent, eventData, existenceEventConfig, rootCardConfig) => {
-                
+
                 const eventObservables = {
                     names: ko.observableArray(),
                     visible: ko.observable(true),

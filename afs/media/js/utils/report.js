@@ -39,7 +39,9 @@ define([
         if(geojson){
             return geojson;
         }
-        if(nodeValue){
+        
+        //strict checks here because some nodeValues (0, false, etc.) should be rendered differently.
+        if(nodeValue !== undefined && nodeValue !== null && nodeValue !== ""){
             return $(`<span>${nodeValue}</span>`).text();
         } else {
             return "--";

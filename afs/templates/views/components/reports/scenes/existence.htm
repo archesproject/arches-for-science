@@ -14,13 +14,13 @@
     <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
         <i class="fa fa-mail-reply"></i> {% trans "Edit Event" %}
     </a>
-    </span>
-    <!-- ko ifnot: eventData[eventName].tileid -->
-    <div class="afs-nodata-note">No event</div>
+    </span><span data-bind="text: console.log(eventData)"></span>
+    <!-- ko if: !eventData[eventName] || !eventData[eventName].tileid -->
+    <div class="afs-nodata-note">No events</div>
     <!-- /ko -->
     <!-- Show this div if there are event data -->
     <!-- Event Block (one for each event) -->
-    <!-- ko if: eventData[eventName].tileid --> 
+    <!-- ko if: eventData[eventName] && eventData[eventName].tileid --> 
     <div class="afs-report-subsection">
         <h2 class="afs-report-section-title">{% trans "Event Details" %}</h2>
         <h3 style="display: block ;"><i data-bind="click: function() {toggleVisibility(eventData[eventName].visible)}" class="fa fa-angle-double-right toggle"></i> {% trans "Event: " %} <span></span></h3>

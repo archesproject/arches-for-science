@@ -9,7 +9,8 @@ define([
     'views/components/reports/scenes/name', 
     'views/components/reports/scenes/description', 
     'views/components/reports/scenes/documentation', 
-    'views/components/reports/scenes/existence'
+    'views/components/reports/scenes/existence', 
+    'views/components/reports/scenes/substance'
 ], 
     function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
@@ -20,6 +21,7 @@ define([
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'existence', 'title': 'Existence'},
+                {'id': 'substance', 'title': 'Substance'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -35,7 +37,8 @@ define([
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
-            self.existenceCards = { productionEvent: { tiles: () => {return {}}}};
+            self.existenceCards = {};
+            self.substanceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -52,6 +55,9 @@ define([
                 self.descriptionCards = {
                     statement: self.cards['Statement about Thing']
                 };
+                self.substanceCards = {
+                    dimension: self.cards.dimension
+                }
             }
 
             if (params.summary) {

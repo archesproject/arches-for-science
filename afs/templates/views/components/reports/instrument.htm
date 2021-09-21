@@ -70,6 +70,17 @@
                     }
                 }"></div>
             </div>
+            <!-- Existence Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/substance',
+                    params: {
+                        data: resource,
+                        cards: substanceCards
+
+                    }
+                }"></div>
+            </div>
         </div>
     </div>
 
