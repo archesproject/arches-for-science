@@ -33,7 +33,17 @@
                     params: {
                         data: resource,
                         cards: nameCards,
-                        dataConfig: dataConfig
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Description Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
                     }
                 }"></div>
             </div>
