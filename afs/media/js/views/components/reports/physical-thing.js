@@ -19,7 +19,7 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
             self.documentationCards = {};
             self.existenceEvents = ['production', 'destruction', 'removal from object'];
             self.existenceDataConfig = {'destruction': 'destruction', 'removal from object': 'removal from object'};
-            self.existenceCards = { productionEvent: { tiles: () => {return {}}}};
+            self.existenceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -48,30 +48,31 @@ define(['underscore', 'knockout', 'arches', 'utils/resource', 'utils/physical-th
                 };
                 self.existenceCards = {
                     production: {
-                        card: self.cards?.["Production (partitioned)"],
+                        card: self.cards?.["production (partitioned)"],
                         subCards: {
-                            name: 'Name for Production Event',
-                            identifier: 'Identifier for Production Event',
-                            timespan: 'TimeSpan for Production Event',
-                            statement: 'Statement about Production Event'
+                            name: 'name for production event',
+                            identifier: 'identifier for production event',
+                            timespan: 'timespan of production event',
+                            statement: 'statement about production event',
+                            part: 'production event part'
                         }
                     },
                     destruction: {
-                        card:  self.cards?.["Destruction"],
+                        card:  self.cards?.["destruction"],
                         subCards: {
-                            name: 'Name for Production Event',
-                            identifier: 'Identifier for Production Event',
-                            timespan: 'TimeSpan for Production Event',
-                            statement: 'Statement about Production Event'
+                            name: 'name for destruction event',
+                            identifier: 'identifier for destruction event',
+                            timespan: 'timespan of destruction event',
+                            statement: 'statement about destruction event'
                         }
                     },
                     'removal from object': { 
-                        card: self.cards?.["Removal from Object"],
+                        card: self.cards?.["removal from object"],
                         subCards: {
-                            name: 'Name for Part Removal Event',
-                            identifier: 'Identifier for Part Removal Event',
-                            timespan: 'TimeSpan for Removal from Object',
-                            statement: 'Statement about Part Removal Event'
+                            name: 'name for part removal event',
+                            identifier: 'identifier for part removal event',
+                            timespan: 'timespan of removal from object',
+                            statement: 'statement about part removal event'
                         }
                     },
                 }
