@@ -117,6 +117,7 @@ define([
             for(card of cards){
                 dictionary[card.model.name()] = card;
             }
+            standardizeNode(dictionary)
             return dictionary;
         },
 

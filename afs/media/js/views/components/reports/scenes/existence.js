@@ -34,29 +34,43 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.add = params.addTile || self.addNewTile;
             self.events = params.events || ['production']
             self.eventData = {};
-            self.productionParts = ko.observableArray();
             self.visible = {
                 production: ko.observable(true),
                 event: ko.observable(true)
             }
             Object.assign(self.dataConfig, params.dataConfig || {});
 
-            const extractEventData = (existenceEvent) => {
-                const existenceEventConfig = self.dataConfig[existenceEvent];
-                let eventData = self.getRawNodeValue(params.data(), existenceEventConfig);
-                self.eventData[existenceEvent] = eventObservables = {
+            const extractEventData = (existenceEvent, eventData, existenceEventConfig, rootCardConfig) => {
+                
+                const eventObservables = {
                     names: ko.observableArray(),
+                    visible: ko.observable(true),
                     identifiers: ko.observableArray(),
                     statements: ko.observableArray(),
-                    timespan: ko.observable()
+                    timespan: ko.observable(),
+                    parts: ko.observableArray()
                 };
-                const rootCardConfig = self.cards[existenceEvent];
-                const rootCard = rootCardConfig.card;
-                const subCards = rootCardConfig.subCards;
+
+                eventObservables.tileid = eventData?.['@tile_id'];
+
+                const rootCard = rootCardConfig?.card;
+
+                if(rootCard) {
+                    const subCards = rootCardConfig.subCards;
+                    const tileCards = self.createCardDictionary(rootCard.tiles().find(x => x.tileid == eventObservables.tileid).cards);
+                    tileCards.name = tileCards?.[subCards.name];
+                    tileCards.statement = tileCards?.[subCards.statement];
+                    tileCards.timespan = tileCards?.[subCards.timespan];
+                    tileCards.identifier = tileCards?.[subCards.identifier];
+                    tileCards.part = tileCards?.[subCards.part];
+                    eventObservables.cards = tileCards;
+                }
                 
                 if(eventData) {
-                    const eventNames = self.getRawNodeValue(eventData, `${existenceEventConfig}_name`);
-                    if(eventNames.length){
+                    const eventNamesValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_name`);
+                    if(eventNamesValue) {
+                        const eventNames = !eventNamesValue.length ? [eventNamesValue] : eventNamesValue; 
+                    
                         eventObservables.names(eventNames.map(x => {
                             const name = self.getNodeValue(x, `${existenceEventConfig}_name_content`);
                             const type = self.getNodeValue(x, `${existenceEventConfig}_name_type`);
@@ -66,13 +80,14 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         }));
                     }
 
-                    const eventIdentifiers = self.getRawNodeValue(eventData, `${existenceEventConfig}_identifier`);
-                    if(eventIdentifiers.length){
+                    const eventIdentifiersValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_identifier`);
+                    if(eventIdentifiersValue){
+                        const eventIdentifiers = !eventIdentifiersValue.length ? [eventIdentifiersValue] : eventIdentifiersValue; 
                         eventObservables.identifiers(eventIdentifiers.map(x => {
                             const name = self.getNodeValue(x, `${existenceEventConfig}_identifier_content`);
                             const type = self.getNodeValue(x, `${existenceEventConfig}_identifier_type`);
                             const tileid = x?.['@tile_id'];
-                            return {name, tileid, type}
+                            return {name, tileid, type};
                         }));
                     }
 
@@ -109,8 +124,9 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         eventObservables.timespan({beginningComplete, beginningStart, duration, durationEventName, endingComplete, endingStart, name})
                     }
 
-                    const eventStatement = self.getRawNodeValue(eventData, `${existenceEventConfig}_statement`);
-                    if(eventStatement.length){
+                    const eventStatementValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_statement`);
+                    if(eventStatementValue){
+                        const eventStatement = !eventStatementValue.length ? [eventStatementValue] : eventStatementValue
                         eventObservables.statements(eventStatement.map(x => {
                             const content = self.getNodeValue(x, `${existenceEventConfig}_statement_content`);
                             const name = self.getNodeValue(x, `${existenceEventConfig}_statement_name`, `${existenceEventConfig}_statement_name_content`);
@@ -120,6 +136,20 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                             return {content, language, name, tileid, type}
                         }));
                     }
+
+                    const parts = self.getRawNodeValue(eventData, `${existenceEventConfig}_part`);
+                    if(parts?.length){
+                        var partObservables = parts.map(x => {
+                            const subKeys = Object.keys(rootCardConfig.subCards);
+                            const partKeys = JSON.parse(JSON.stringify(rootCardConfig.subCards));
+                            for(const key of subKeys){
+                                partKeys[key] += " part"
+                            }
+                            const partData = extractEventData(existenceEvent, x, `${existenceEventConfig}_part`, {card: eventObservables?.cards?.part, subCards: partKeys});
+                            return {...partData}
+                        });
+                        eventObservables.parts(partObservables);
+                    }
                     
                     eventObservables.creator = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_carried out by`))
                     eventObservables.objectsUsed = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_used object`));
@@ -127,14 +157,8 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                     eventObservables.location = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_location`));
                     eventObservables.influence = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_influence`));
                     eventObservables.name = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_influence`));
-                    eventObservables.tileid = eventData?.['@tile_id'];
-                    const tileCards = self.createCardDictionary(rootCard.tiles().find(x => x.tileid == eventObservables.tileid).cards);
-                    tileCards.name = tileCards?.[subCards.name];
-                    tileCards.statement = tileCards?.[subCards.name];
-                    tileCards.timespan = tileCards?.[subCards.name];
-                    tileCards.identifier = tileCards?.[subCards.name];
-                    eventObservables.cards = tileCards;
-                    
+
+                    return eventObservables;
                 }
             }
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
@@ -142,7 +166,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 self.eventData = params.data.eventData;
             } else {
                 for(existenceEvent of self.events){
-                    extractEventData(existenceEvent);
+                    self.eventData[existenceEvent] = extractEventData(existenceEvent, self.getRawNodeValue(params.data(), self.dataConfig?.[existenceEvent]), self.dataConfig?.[existenceEvent], self.cards?.[existenceEvent]);
                 }
             }
             
