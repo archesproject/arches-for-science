@@ -61,9 +61,21 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         } 
 
                         self.digitalReference(digitalReferenceData.map(x => {
-                            const type = self.getNodeValue(x, "digital reference type");
-                            const source = self.getNodeValue(x, "digital source");
-                            const link = self.getResourceLink(self.getRawNodeValue(x, "digital source"));
+                            const type = self.getNodeValue(x, {
+                                testPaths: [
+                                    ["digital reference_digital reference type"], 
+                                    ["digital reference type"]
+                                ]});
+                            const source = self.getNodeValue(x, {
+                                testPaths: [
+                                    ["digital reference_digital source"], 
+                                    ["digital source"]
+                                ]});
+                            const link = self.getResourceLink(self.getRawNodeValue(x, {
+                                testPaths: [
+                                    ["digital reference_digital source"], 
+                                    ["digital source"]
+                                ]}));
                             const tileid = x?.['@tile_id'];
                             return { link, type, source, tileid };
                         }));
