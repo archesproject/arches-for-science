@@ -92,6 +92,33 @@
                     }
                 }"></div>
             </div>
+            <!-- Location Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: locationData,
+                    }
+                }"></div>
+            </div>
+            <!-- Parthood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
+            <!-- Sethood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'sethood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: sethoodData,
+                    }
+                }"></div>
+            </div>
         </div>
     </div>
 

@@ -24,13 +24,22 @@
                                 <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
                             </div>        
                          </div>
+                         <!-- ko ifnot: item.value -->
+                         <div>
+                            <div class="afs-block-value">--</div>
+                        </div>
+                         <!-- /ko -->
+
                          <!-- ko if: item.type == 'kv'-->
                          <div class="afs-block-value" data-bind="text: item.value"></div>
-                         <!-- /ko -->                        
+                         <!-- /ko --> 
+
                          <!-- ko if: item.type == 'href'-->
                          <div class="afs-block-value"><a data-bind="text: item.value, attr: { href: item.href }"></a></div>
-                         <!-- /ko -->                    
+                         <!-- /ko -->  
+
                          <!-- ko if: item.type == 'resource'-->
+                         <!-- ko if: item.value -->
                          <!-- ko if: item.value && item.value.length -->
                          <!-- ko foreach: {data: item, as: 'instance', noChildContext: true}-->
                          <div data-bind="foreach: {data: instance.value.instance_details, as: 'detail', noChildContext: true}">
@@ -51,6 +60,8 @@
                          <!-- /ko -->
                          <!-- /ko -->
                          <!-- /ko -->
+                         <!-- /ko -->
+                         
                      </div>
                  </div>
              </div>

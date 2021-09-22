@@ -24,6 +24,8 @@ define([
                 {'id': 'substance', 'title': 'Substance'},
                 {'id': 'actor-relations', 'title': 'Actor Relations'},
                 {'id': 'location', 'title': 'Location'},
+                {'id': 'parthood', 'title': 'Parthood'},
+                {'id': 'sethood', 'title': 'Sethood'},
                 {'id': 'aboutness', 'title': 'Aboutness'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
@@ -143,7 +145,37 @@ define([
                         }
                     ]
             });
-            
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Parthood", 
+                            data: [{
+                                key: 'part of larger object', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['part of larger object'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.sethoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Sethood", 
+                            data: [{
+                                key: 'In Collection or Set', 
+                                value: self.getRawNodeValue(self.resource(), 'member of'), 
+                                card: self.cards?.['in collection or set'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
             self.additionalData = ko.observableArray([{
                 key: 'material', 
                 value: self.getNodeValue(self.resource(), 'material'), 
