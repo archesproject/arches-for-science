@@ -4,11 +4,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             var self = this;
             Object.assign(self, reportUtils);
 
-            self.dimensionTableConfig = {
-                ...self.defaultTableConfig,
-                columns: Array(9).fill(null)
-            };
-
             self.dataConfig = {
                 owner: 'current owner',
             }

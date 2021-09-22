@@ -57,13 +57,15 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                 if(rootCard) {
                     const subCards = rootCardConfig.subCards;
-                    const tileCards = self.createCardDictionary(rootCard.tiles().find(x => x.tileid == eventObservables.tileid).cards);
-                    tileCards.name = tileCards?.[subCards.name];
-                    tileCards.statement = tileCards?.[subCards.statement];
-                    tileCards.timespan = tileCards?.[subCards.timespan];
-                    tileCards.identifier = tileCards?.[subCards.identifier];
-                    tileCards.part = tileCards?.[subCards.part];
-                    eventObservables.cards = tileCards;
+                    const tileCards = self.createCardDictionary(rootCard.tiles().find(x => x.tileid == eventObservables.tileid)?.cards);
+                    if(tileCards){
+                        tileCards.name = tileCards?.[subCards.name];
+                        tileCards.statement = tileCards?.[subCards.statement];
+                        tileCards.timespan = tileCards?.[subCards.timespan];
+                        tileCards.identifier = tileCards?.[subCards.identifier];
+                        tileCards.part = tileCards?.[subCards.part];
+                        eventObservables.cards = tileCards;
+                    }
                 }
                 
                 if(eventData) {

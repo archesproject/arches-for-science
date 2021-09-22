@@ -78,14 +78,16 @@
         
         <!-- ko if: additionalData().length -->
         <div class="afs-report-subsection" >
-            <div class="firstchild-container">
+            <div>
                 <div data-bind="foreach: {data: additionalData, as: 'item', noChildContext: true}" class="afs-report-subsection-ite" style="padding-top: 10px;">
                     <div data-bind="if: item.card">
                         <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
                     </div>
 
                     <div class="afs-block-attributes pad-btm">
-                        <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>
+                        <div class="afs-card-control">
+                            <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>
+                        </div>
                         <!-- ko if: item.type == 'kv'-->
                         <div class="afs-block-value" data-bind="text: item.value"></div>
                         <!-- /ko -->                        

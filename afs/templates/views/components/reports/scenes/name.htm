@@ -18,7 +18,7 @@
         
         <!-- ko if: names().length -->
         <div class="afs-report-subsection" >
-            <div class="firstchild-container">
+            <div>
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
                         <thead>
@@ -73,7 +73,7 @@
         <!-- ko if: identifiers().length -->
         
         <div class="afs-report-subsection" >
-            <div class="firstchild-container">
+            <div>
                 <div class="afs-table">
                     <table class="table table-striped" cellspacing="0" width="100%">
                         <thead>
@@ -120,27 +120,32 @@
 
         <!-- ko if: type || exactMatch().length -->
         <div class="afs-report-subsection" >
-            <div class="firstchild-container">
+            <div>
                 <div class="afs-report-subsection-ite" style="padding-top: 10px;">
-                    <div data-bind="if: cards.type && type() != '--'">
-                        <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Type" %}</a>
-                    </div>
-                    <div data-bind="if: cards.type && type() == '--'">
-                        <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Add Type" %}</a>
-                    </div>
+                    
                     <div class="afs-block-attributes pad-btm">
-                        <h4 class="afs-block-key">Type: </h4>
+                        <div>
+                            <h4 class="afs-block-key">Type: </h4>
+                            <div class="afs-card-control" data-bind="if: cards.type && type() != '--'">
+                                <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Type" %}</a>
+                            </div>
+                            <div class="afs-card-control" data-bind="if: cards.type && type() == '--'">
+                                <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Add Type" %}</a>
+                            </div>
+                        </div>
                         <div class="afs-block-value" data-bind="text: type"></div>
                     </div>
                     <div data-bind="if: exactMatch()">
-                        <div data-bind="if: cards.exactMatch && exactMatch() == '--'">
-                            <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Add Exact Match" %}</a>
-                        </div>
-                        <div data-bind="if: cards.exactMatch && exactMatch() != '--'">
-                            <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Exact Match" %}</a>
-                        </div>
                         <div class="afs-block-attributes">
-                            <h4 class="afs-block-key">Exact Match: </h4>
+                            <div>
+                                <h4 class="afs-block-key">Exact Match: </h4>
+                                <div class="afs-card-control" data-bind="if: cards.exactMatch && !exactMatch().length">
+                                    <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Add Exact Match" %}</a>
+                                </div>
+                                <div class="afs-card-control" data-bind="if: cards.exactMatch && exactMatch().length">
+                                    <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Exact Match" %}</a>
+                                </div>
+                            </div>
                             <div class="afs-block-value">
                                 <!-- ko foreach: exactMatch -->
                                 <span data-bind="if: $data != '--'">

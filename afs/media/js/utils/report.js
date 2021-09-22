@@ -115,6 +115,9 @@ define([
 
         // builds an object-based dictionary for cards
         createCardDictionary: (cards) => {
+            if(!cards){
+                return;
+            }
             const dictionary = {};
             for(card of cards){
                 dictionary[card.model.name()] = card;

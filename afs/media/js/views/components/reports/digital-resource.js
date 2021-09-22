@@ -36,6 +36,7 @@ define([
             self.descriptionCards = {}
             self.documentationCards = {};
             self.substanceCards = {};
+            self.existenceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
