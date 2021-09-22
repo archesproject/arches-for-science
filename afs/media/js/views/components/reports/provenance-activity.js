@@ -15,6 +15,7 @@ define([
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
                 {'id': 'description', 'title': 'Description'},
+                {'id': 'documentation', 'title': 'Documentation'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -26,6 +27,10 @@ define([
             };
             self.nameCards = {};
             self.descriptionCards = {};
+            self.documentationCards = {};
+            self.documentationDataConfig = {
+                subjectOf: 'Textual Source'
+            };
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -37,10 +42,14 @@ define([
                     identifier: self.cards.Identifier,
                     exactMatch: self.cards.ExactMatch,
                     type: self.cards.Classification
-                }
+                };
 
                 self.descriptionCards = {
                     statement: self.cards.Statement,
+                };
+
+                self.documentationCards = {
+                    subjectOf: self.cards?.["Reference in Source Material"]
                 };
             }
         },
