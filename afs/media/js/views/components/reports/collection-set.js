@@ -28,8 +28,9 @@ define([
             self.documentationDataConfig = {
                 'subjectOf': undefined,
             };
+            self.existenceEvents = ['creation'];
             self.existenceDataConfig = {
-                'production': 'created',
+                'creation': 'created',
             };
             self.nameCards = {};
             self.descriptionCards = {};
@@ -52,7 +53,7 @@ define([
                     statement: self.cards.Statement,
                 };
                 self.existenceCards = {
-                    production: {
+                    "creation": {
                         card: self.cards?.["creation"],
                         subCards: {
                             name: 'name for creation event',
