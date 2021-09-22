@@ -15,6 +15,7 @@ define([
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
                 {'id': 'description', 'title': 'Description'},
+                {'id': 'documentation', 'title': 'Documentation'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -23,8 +24,12 @@ define([
             self.nameDataConfig = {
                 exactMatch: undefined
             };
+            self.documentationDataConfig = {
+                subjectOf: 'source'
+            };
             self.nameCards = {};
             self.descriptionCards = {};
+            self.documentationCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
