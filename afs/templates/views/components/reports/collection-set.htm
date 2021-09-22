@@ -8,7 +8,7 @@
 
         <!-- Title Block -->
         <div class="afs-report-toolbar">
-            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Sampling Activity" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Collection or Set" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
         </div>
 
     </div>
@@ -33,7 +33,17 @@
                     params: {
                         data: resource,
                         cards: nameCards,
-                        dataConfig: dataConfig
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Description Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
                     }
                 }"></div>
             </div>

@@ -32,26 +32,41 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 if(statementData) {
                     if(statementData.length === undefined){
                         statementData = [statementData];
-                    } 
+                    }
 
                     self.statements(statementData.map(x => {
-                        const type = self.getNodeValue(x, "statement_type");
-                        const name = self.getNodeValue(x, {
+                        const type = self.getNodeValue(x, {
                             testPaths: [
-                                ["statement_name", 0, 'statement_name_content'], 
-                                ["statement_name", 'statement_name_content']
-                            ]
-                        });
-
+                                [`${self.dataConfig.statement.toLowerCase()}_type`], 
+                                ['type']
+                            ]});
                         const content = self.getNodeValue(x, {
                             testPaths: [
-                                ["statement_content"], 
-                                ["content"]
-                            ]
-                        });
-                        const language = self.getNodeValue(x, "statement_language");
-                        const label = self.getNodeValue(x, "statement_label");
-                        const source = self.getNodeValue(x, "statement_source");
+                                [`${self.dataConfig.statement.toLowerCase()}_content`], 
+                                ['content']
+                            ]});
+                        const language = self.getNodeValue(x, {
+                            testPaths: [
+                                [`${self.dataConfig.statement.toLowerCase()}_language`], 
+                                ['language']
+                            ]});
+                        const label = self.getNodeValue(x, {
+                            testPaths: [
+                                [`${self.dataConfig.statement.toLowerCase()}_label`], 
+                                ['label']
+                            ]});
+                        const source = self.getNodeValue(x, {
+                            testPaths: [
+                                [`${self.dataConfig.statement.toLowerCase()}_source`], 
+                                ['source']
+                            ]});
+                        const name = self.getNodeValue(x, {
+                            testPaths: [
+                                [`${self.dataConfig.statement.toLowerCase()}_name`, 0, `${self.dataConfig.statement.toLowerCase()}_name_content`], 
+                                [`${self.dataConfig.statement.toLowerCase()}_name`, `${self.dataConfig.statement.toLowerCase()}_name_content`],
+                                ["name", 0, 'content'], 
+                                ["name", 'content']
+                            ]});
                         const tileid = x?.['@tile_id'];
                         return { type, content, name, language, label, source, tileid };
                     }));
