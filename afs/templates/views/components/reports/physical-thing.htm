@@ -90,7 +90,25 @@
                         cards: actorCards,
                     }
                 }"></div>
-            </div>
+            </div>           
+             <!-- Aboutness Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'aboutness'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: aboutnessData
+                    }
+                }"></div>
+            </div>    
+            <!-- Location Tab -->
+           <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
+               <div data-bind="component: {
+                   name: 'views/components/reports/scenes/default',
+                   params: {
+                       data: locationData
+                   }
+               }"></div>
+           </div>
         </div>
     </div>
 

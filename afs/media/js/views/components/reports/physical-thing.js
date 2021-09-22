@@ -11,6 +11,7 @@ define([
     'views/components/reports/scenes/documentation', 
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance', 
+    'views/components/reports/scenes/default', 
     'views/components/reports/scenes/actor-relations'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
@@ -22,13 +23,15 @@ define([
                 {'id': 'existence', 'title': 'Existence'},
                 {'id': 'substance', 'title': 'Substance'},
                 {'id': 'actor-relations', 'title': 'Actor Relations'},
+                {'id': 'location', 'title': 'Location'},
+                {'id': 'aboutness', 'title': 'Aboutness'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('substance');
+            self.activeSection = ko.observable('name');
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
@@ -105,6 +108,42 @@ define([
                 }
             }
 
+            
+            self.aboutnessData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Aboutness", 
+                            data: [{
+                                key: 'carries text', 
+                                value: self.getRawNodeValue(self.resource(), 'carries'), 
+                                card: self.cards?.["carries text"],
+                                type: 'resource'
+                            }, {
+                                key: 'shows image', 
+                                value: self.getRawNodeValue(self.resource(), 'shows'),
+                                card: self.cards?.["shows image"],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });            
+            
+            self.locationData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Location", 
+                            data: [{
+                                key: 'current location', 
+                                value: self.getRawNodeValue(self.resource(), 'current location'), 
+                                card: self.cards?.['current location'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+            
             self.additionalData = ko.observableArray([{
                 key: 'material', 
                 value: self.getNodeValue(self.resource(), 'material'), 
