@@ -14,6 +14,7 @@ define([
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
+                {'id': 'existence', 'title': 'Existence'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -27,9 +28,13 @@ define([
             self.documentationDataConfig = {
                 'subjectOf': undefined,
             };
+            self.existenceDataConfig = {
+                'production': 'created',
+            };
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
+            self.existenceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -45,6 +50,17 @@ define([
                 
                 self.descriptionCards = {
                     statement: self.cards.Statement,
+                };
+                self.existenceCards = {
+                    production: {
+                        card: self.cards?.["creation"],
+                        subCards: {
+                            name: 'name for creation event',
+                            identifier: 'identifier for creation event',
+                            timespan: 'timespan of creation event',
+                            statement: 'statement about creation event',
+                        }
+                    },
                 };
             }
 
