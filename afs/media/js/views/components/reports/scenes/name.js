@@ -29,6 +29,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.identifiers = ko.observableArray();
             self.exactMatch = ko.observableArray();
             self.type = ko.observable();
+            self.summary = params.summary || false;
             self.visible = {
                 names: ko.observable(true),
                 identifiers: ko.observable(true),
