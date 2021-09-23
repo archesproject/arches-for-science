@@ -868,7 +868,7 @@ define([
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
             const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
-            const analysisAreaTypeConceptId = '19ef147a-3703-41b4-bfa3-d4c66e333b0b'; //'this is actually the ceramic value as a placeholder'
+            const analysisAreaTypeConceptId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
             const related = card.tiles().map((tile) => {
                 return {
                     'resourceid': ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId(),

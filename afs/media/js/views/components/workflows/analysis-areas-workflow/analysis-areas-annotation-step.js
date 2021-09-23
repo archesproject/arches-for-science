@@ -307,9 +307,10 @@ define([
             };
 
             const savePhysicalThingClassificationTile = function(physicalThingClassificationTile) {
+                const analysisAreaTypeConceptId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
                 return new Promise(function(resolve, _reject) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
-                    physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["19ef147a-3703-41b4-bfa3-d4c66e333b0b"]; //to be updated currently indicating "ceramics"
+                    physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [analysisAreaTypeConceptId];
                     physicalThingClassificationTile.transactionId = params.form.workflowId;
 
                     physicalThingClassificationTile.save().then(function(physicalThingClassificationData) {
