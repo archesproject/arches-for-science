@@ -6,12 +6,12 @@
 <div data-bind="foreach: {data: events, as: 'eventName', noChildContext: true}" class="afs-report-section">
     <h2 data-bind="text: eventName + ' Event'" class="afs-report-section-title"></h2>
     <span data-bind="if: cards[eventName] && cards[eventName].card && !cards[eventName].card.tiles().length,">
-        <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
+        <a data-bind="{click:function(){$parent.addNewTile(cards[eventName].card)}}" class="afs-report-a">
             <i class="fa fa-mail-reply"></i> {% trans "Add Event" %}
         </a>
     </span>
     <span data-bind="if: cards[eventName] && cards[eventName].card && cards[eventName].card.tiles().length">
-    <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
+    <a data-bind="{click:function(){$parent.addNewTile(cards[eventName].card)}}" class="afs-report-a">
         <i class="fa fa-mail-reply"></i> {% trans "Edit Event" %}
     </a>
     </span>
@@ -26,7 +26,7 @@
     <!-- ko if: eventData.tileid --> 
     <div class="afs-report-subsection">
         <h2 class="afs-report-section-title">{% trans "Event Details" %}</h2>
-        <h3 style="display: block ;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}" class="fa fa-angle-double-right toggle"></i> {% trans "Event: " %} <span></span></h3>
+        <h3 style="display: block ;"><i data-bind="click: function() {$parent.toggleVisibility(eventData.visible)}" class="fa fa-angle-double-right toggle"></i> {% trans "Event: " %} <span></span></h3>
         <!-- <a class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Event" %}</a>-->
 
         <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
@@ -64,7 +64,7 @@
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Names</h5>
                 <span data-bind="if: eventData.cards && eventData.cards.name">
-                    <a data-bind="click: function(){addNewTile(eventData.cards.name)}" class="afs-report-a">
+                    <a data-bind="click: function(){$parent.addNewTile(eventData.cards.name)}" class="afs-report-a">
                         <i class="fa fa-mail-reply"></i> {% trans "Add Event Name" %}
                     </a>
                 </span>
@@ -113,7 +113,7 @@
             <!-- Event First Generation Cards -->
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Statements</h5>
-                <a data-bind="if: eventData.cards && eventData.cards.statement, click: function(){addNewTile(eventData.cards.statement)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Statement" %}</a>
+                <a data-bind="if: eventData.cards && eventData.cards.statement, click: function(){$parent.addNewTile(eventData.cards.statement)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Statement" %}</a>
                 <!-- ko ifnot: eventData.statements().length -->
                 <div class="afs-nodata-note">No statements for this event</div>
                 <!-- /ko -->
@@ -159,7 +159,7 @@
             <!-- Event First Generation Cards -->
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Identifiers</h5>
-                <a data-bind="if: eventData.cards && eventData.cards.identifier, click: function(){addNewTile(eventData.cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Identifier" %}</a>
+                <a data-bind="if: eventData.cards && eventData.cards.identifier, click: function(){$parent.addNewTile(eventData.cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Identifier" %}</a>
                 <!-- ko ifnot: eventData.identifiers().length -->
                 <div class="afs-nodata-note">No identifiers for this event</div>
                 <!-- /ko -->
@@ -202,7 +202,7 @@
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Timespan</h5>
                 <span data-bind="if: eventData.cards && eventData.cards.timespan">
-                    <a data-bind="click: function(){addNewTile(eventData.cards.timespan)}" class="afs-report-a">
+                    <a data-bind="click: function(){$parent.addNewTile(eventData.cards.timespan)}" class="afs-report-a">
                         <i class="fa fa-mail-reply"></i> {% trans "Edit Event Timespan" %}
                     </a>
                 </span>
@@ -251,14 +251,14 @@
     </div>
     <div data-bind="if: eventData.parts && eventData.parts().length" class="afs-report-subsection">
         <h2 class="afs-report-section-title">{% trans "Event Parts" %}</h2>
-        <a data-bind="if: cards[eventName].parts, click: function(){addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
+        <a data-bind="if: cards[eventName].parts, click: function(){$parent.addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
     
         <!-- Event Part -->
         <div data-bind="foreach:{ data: eventData[eventName].parts }" class="part">
             <div>
                 <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part: " %} <span data-bind="text: name"></span></h3>
                 <div class="afs-part-expanded" data-bind="visible: visible">
-                    <a data-bind="click: function(){editTile(tileid, cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Part" %}</a>
+                    <a data-bind="click: function(){$parent.editTile(tileid, cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Part" %}</a>
     
                     <!-- Show this block if there's NO data -->
                     <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>

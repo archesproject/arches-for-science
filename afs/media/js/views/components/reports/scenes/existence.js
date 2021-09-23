@@ -114,7 +114,10 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                                         `${existenceEventConfig}_time_name_content`
                                     ]
                                 ]});
-                            const duration = self.getNodeValue(eventTime, `${existenceEventConfig}_time_duration`, `${existenceEventConfig}_time_duration_highest possible value`);
+                            const durationValue = self.getNodeValue(eventTime, `${existenceEventConfig}_time_duration`, `${existenceEventConfig}_time_duration_value`);
+                            const durationUnit = self.getNodeValue(eventTime, `${existenceEventConfig}_time_duration`, `${existenceEventConfig}_time_duration_unit`);
+                            const duration = `${durationValue} ${durationUnit.replace(/\([^()]*\)/g, '')}`
+
                             const durationEventName = self.getNodeValue(eventTime, {
                                 testPaths: [
                                     [`${existenceEventConfig}_time_duration`, 
