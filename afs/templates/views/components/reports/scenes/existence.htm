@@ -251,10 +251,10 @@
     </div>
     <div data-bind="if: eventData.parts && eventData.parts().length" class="afs-report-subsection">
         <h2 class="afs-report-section-title">{% trans "Event Parts" %}</h2>
-        <a data-bind="if: cards[eventName].parts, click: function(){$parent.addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
+        <a data-bind="if: $parent.cards[eventName].parts, click: function(){$parent.addNewTile($parent.cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
     
         <!-- Event Part -->
-        <div data-bind="foreach:{ data: eventData[eventName].parts }" class="part">
+        <div data-bind="foreach:{ data: eventData.parts }" class="part">
             <div>
                 <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part: " %} <span data-bind="text: name"></span></h3>
                 <div class="afs-part-expanded" data-bind="visible: visible">
