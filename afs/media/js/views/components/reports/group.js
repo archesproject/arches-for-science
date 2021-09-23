@@ -43,15 +43,23 @@ define([
                 
                 self.cards = self.createCardDictionary(cards)
 
+                console.log(self.cards)
+
                 self.nameCards = {
-                    name: self.cards.name,
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards.Classification
+                    name: self.cards?.["group name"],
+                    identifier: self.cards?.["identifier"],
+                    exactMatch: self.cards?.["uri in external list"],
+                    type: self.cards?.["type of group"]
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards.Statement,
+                    statement: self.cards?.["group description or statement"],
+                };
+
+                self.documentationCards = {
+                    label: self.cards?.["internal label"],
+                    digitalReference: self.cards?.["digital reference"],
+                    subjectOf: self.cards?.["references"]
                 };
 
                 self.existenceCards = {
