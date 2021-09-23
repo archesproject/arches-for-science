@@ -71,7 +71,6 @@ define([
                 self.documentationCards = {
                     label: self.cards?.["internal label"],
                     digitalReference: self.cards?.["digital reference"],
-                    subjectOf: self.cards?.["references"]
                 };
 
                 self.existenceCards = {
