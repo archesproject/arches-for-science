@@ -14,6 +14,7 @@ define([
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
+                {'id': 'existence', 'title': 'Existence'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -27,9 +28,15 @@ define([
             self.documentationDataConfig = {
                 subjectOf: 'source'
             };
+            self.existenceEvents = ['formation', 'dissolution'];
+            self.existenceDataConfig = {
+                'formation': 'formation',
+                'dissolution': 'dissolution',
+            };
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
+            self.existenceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -45,6 +52,27 @@ define([
 
                 self.descriptionCards = {
                     statement: self.cards.Statement,
+                };
+
+                self.existenceCards = {
+                    'formation': { 
+                        card: self.cards?.["formation"],
+                        subCards: {
+                            name: 'name for group formation event',
+                            identifier: 'identifier for group formation event',
+                            timespan: 'timespan of group formation event',
+                            statement: 'statement about group formation event',
+                        }
+                    },
+                    'dissolution': {
+                        card:  self.cards?.["dissolution"],
+                        subCards: {
+                            name: 'name for group dissolution event',
+                            identifier: 'identifier for group dissolution event',
+                            timespan: 'timespan of group dissolution event',
+                            statement: 'statement about group dissolution event'
+                        }
+                    },
                 };
             }
 
