@@ -14,16 +14,17 @@
     <a data-bind="{click:function(){$parent.addNewTile(cards[eventName].card)}}" class="afs-report-a">
         <i class="fa fa-mail-reply"></i> {% trans "Edit Event" %}
     </a>
-    </span>
-    <!-- ko if: !eventDataArray[eventName].length > 0 -->
+    </span><span data-bind="text: console.log(eventDataArray)"></span>
+    <!-- ko if: eventDataArray[eventName].length === 0 || !eventDataArray[eventName].some(x => x !== undefined) -->
     <div class="afs-nodata-note">No events</div>
     <!-- /ko -->
+
     <!-- Show this div if there are event data -->
     <!-- Event Block (one for each event) -->
-    <!-- ko if: eventDataArray[eventName] -->
+    <!-- ko if: eventDataArray[eventName].length > 0 && eventDataArray[eventName].some(x => x !== undefined) -->
     
     <!-- ko foreach: { data: eventDataArray[eventName], as: "eventData" } -->
-    <!-- ko if: eventData.tileid --> 
+    <!-- ko if: !!eventData && eventData.tileid -->
     <div class="afs-report-subsection">
         <h2 class="afs-report-section-title">{% trans "Event Details" %}</h2>
         <h3 style="display: block ;"><i data-bind="click: function() {$parent.toggleVisibility(eventData.visible)}" class="fa fa-angle-double-right toggle"></i> {% trans "Event: " %} <span></span></h3>
