@@ -14,7 +14,6 @@
     <a data-bind="{click:function(){$parent.addNewTile(cards[eventName].card)}}" class="afs-report-a">
         <i class="fa fa-mail-reply"></i> {% trans "Edit Event" %}
     </a>
-    </span><span data-bind="text: console.log(eventDataArray)"></span>
     <!-- ko if: eventDataArray[eventName].length === 0 || !eventDataArray[eventName].some(x => x !== undefined) -->
     <div class="afs-nodata-note">No events</div>
     <!-- /ko -->
