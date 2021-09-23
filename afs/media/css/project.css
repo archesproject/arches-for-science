@@ -111,7 +111,7 @@
 
 .object-search-step .wf-multi-tile-step-list {
     /* border-left: 0px; */
-    background-color: #f3f3f3;
+    background-color: #f9f9f9;
 }
 
 .object-search-step .search-selection-controls {
@@ -589,3 +589,43 @@
 .analysis-areas-workflow-regions-step .cke_contents {
     height: 120px !important;
 } 
+
+.afs-final-step-section {
+    padding: 15px 60px; 
+    display: flex; 
+    flex-direction: column
+}
+.afs-final-step-section h5.summary-value {
+    font-size: 15px;
+}
+
+.afs-final-step-section .summary-value {
+    font-size: 14px;
+}
+
+.afs-final-step-section .summary-label {
+    font-size: 14px;
+}
+
+.afs-final-step-block {
+    display: inline-flex; 
+    width: inherit; 
+    justify-content: space-between;
+    margin-top: -5px;
+}
+
+.afs-final-step-block a .summary-value {
+    color: steelblue;
+}
+
+.afs-final-step-block a:hover .summary-value {
+    color: #2b547c;
+}
+
+.afs-final-step-block a.summary-value {
+    color: steelblue;
+}
+
+.afs-final-step-block a.summary-value:hover {
+    color: #2b547c;
+}

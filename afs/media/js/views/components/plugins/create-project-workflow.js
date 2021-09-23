@@ -62,11 +62,11 @@ define([
                     ],
                 },
                 {
-                    title: 'Project Timespan',
+                    title: 'Project Start',
                     name: 'set-project-timespan',  /* unique to workflow */
                     required: true,
                     informationboxdata: {
-                        heading: 'Project Timespan',
+                        heading: 'Project Start',
                         text: 'Set the Project Timespan',
                     },
                     layoutSections: [
