@@ -43,8 +43,6 @@ define([
                 
                 self.cards = self.createCardDictionary(cards)
 
-                console.log(self.cards)
-
                 self.nameCards = {
                     name: self.cards?.["group name"],
                     identifier: self.cards?.["identifier"],
