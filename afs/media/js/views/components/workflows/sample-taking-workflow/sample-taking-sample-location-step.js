@@ -420,13 +420,14 @@ define([
 
             const savePhysicalThingClassificationTile = function(physicalThingClassificationTile, type) {
                 const sampleLocationTypeConceptId = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123';
+                const sampleTypeConceptId = '77d8cf19-ce9c-4e0a-bde1-9148d870e11c';
                 return new Promise(function(resolve, _reject) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
                     if (type === "region") {
                         physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [sampleLocationTypeConceptId];
                     }
                     else { // type === "sample"
-                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["b175683f-6229-43b5-acc8-b5ff82a1c9cc"];
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [sampleTypeConceptId];
                     }
                     physicalThingClassificationTile.transactionId = params.form.workflowId;
 
