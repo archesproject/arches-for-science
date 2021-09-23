@@ -22,11 +22,25 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+            self.sourceData = ko.observable({
+                sections:
+                    [
+                        {
+                            title: "References",
+                            data: [{
+                                key: 'source reference work',
+                                value: self.getRawNodeValue(self.resource(), 'source'),
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
             self.nameDataConfig = {
                 exactMatch: 'exact match',
             };
             self.documentationDataConfig = {
-                subjectOf: 'source'
+                subjectOf: undefined
             };
             self.existenceEvents = ['formation', 'dissolution'];
             self.existenceDataConfig = {

@@ -50,6 +50,12 @@
             <!-- documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
                 <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: sourceData,
+                    }
+                }"></div>
+                <div data-bind="component: {
                     name: 'views/components/reports/scenes/documentation',
                     params: {
                         data: resource,
