@@ -403,12 +403,12 @@ define([
             var savePhysicalThingNameTile = function(physicalThingNameTile, type) {
                 return new Promise(function(resolve, _reject) {
                     var selectedSampleLocationInstanceLabel = ko.unwrap(self.sampleName);
+                    var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
 
                     if (type === "region") {
                         selectedSampleLocationInstanceLabel = "Region for " + selectedSampleLocationInstanceLabel;
                     }
                     
-                    var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedSampleLocationInstanceLabel;
                     physicalThingNameTile.transactionId = params.form.workflowId;
 
