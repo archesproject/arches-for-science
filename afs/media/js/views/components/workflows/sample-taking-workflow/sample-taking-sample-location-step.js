@@ -418,16 +418,12 @@ define([
                 });
             };
 
-            // TO BE UPDATED: Currently saving the classification cards with temporary value ids
-            // ceramics: "19ef147a-3703-41b4-bfa3-d4c66e333b0b" -> analysis area
-            // sculpture: "860c0f17-c655-4eb9-95f1-693c729d225e" -> region (sampling location)
-            // miniature: "b175683f-6229-43b5-acc8-b5ff82a1c9cc" -> sample
-
             const savePhysicalThingClassificationTile = function(physicalThingClassificationTile, type) {
+                const sampleLocationTypeConceptId = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123';
                 return new Promise(function(resolve, _reject) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
                     if (type === "region") {
-                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["860c0f17-c655-4eb9-95f1-693c729d225e"];
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [sampleLocationTypeConceptId];
                     }
                     else { // type === "sample"
                         physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["b175683f-6229-43b5-acc8-b5ff82a1c9cc"];
