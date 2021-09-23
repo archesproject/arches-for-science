@@ -81,16 +81,15 @@
                     }
                 }"></div>
             </div>
-            <!-- Actor Relations Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
+           <!-- Actor Tab -->
+           <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
                 <div data-bind="component: {
-                    name: 'views/components/reports/scenes/actor-relations',
+                    name: 'views/components/reports/scenes/default',
                     params: {
-                        data: resource,
-                        cards: actorCards,
+                        data: actorData,
                     }
                 }"></div>
-            </div>           
+            </div>       
              <!-- Aboutness Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'aboutness'">
                 <div data-bind="component: {
@@ -117,6 +116,25 @@
                        data: parthoodData,
                    }
                }"></div>
+               <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.parts)}" class="fa fa-angle-double-right toggle"></i> {% trans "Parts" %}</h2>
+                    <span data-bind="if: cards.parts">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards.parts)}"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
+                    </span>
+
+                    <div data-bind="visible: visible.parts" class="afs-report-collapsible-container pad-lft">
+                        
+                        <!-- ko ifnot: Array.isArray(annotation.info) -->
+                        <div class="afs-nodata-note">No parts for this resource</div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: Array.isArray(annotation.info) -->
+                        <div data-bind="with: annotation, as: 'annotation'">
+                        <div data-bind="component: { name: 'views/components/annotation-summary', params: {annotation: annotation}}"></div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
            </div>
            <!-- Sethood Tab -->
            <div class="afs-report-page" data-bind="if: activeSection() === 'sethood'">
@@ -126,6 +144,15 @@
                        data: sethoodData,
                    }
                }"></div>
+               <div data-bind="component: {
+                name: 'views/components/reports/scenes/existence',
+                params: {
+                    data: resource,
+                    cards: setCards,
+                    events: setEvents, 
+                    dataConfig: setDataConfig,
+                }
+            }"></div>
            </div>
         </div>
     </div>

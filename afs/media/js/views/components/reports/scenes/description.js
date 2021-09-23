@@ -6,7 +6,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
             self.statementTableConfig = {
                 ...self.defaultTableConfig,
-                columns: Array(7).fill(null)
+                columns: Array(4).fill(null)
             };
 
             self.dataConfig = {
@@ -50,25 +50,10 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                                 [`${self.dataConfig.statement.toLowerCase()}_language`], 
                                 ['language']
                             ]});
-                        const label = self.getNodeValue(x, {
-                            testPaths: [
-                                [`${self.dataConfig.statement.toLowerCase()}_label`], 
-                                ['label']
-                            ]});
-                        const source = self.getNodeValue(x, {
-                            testPaths: [
-                                [`${self.dataConfig.statement.toLowerCase()}_source`], 
-                                ['source']
-                            ]});
-                        const name = self.getNodeValue(x, {
-                            testPaths: [
-                                [`${self.dataConfig.statement.toLowerCase()}_name`, 0, `${self.dataConfig.statement.toLowerCase()}_name_content`], 
-                                [`${self.dataConfig.statement.toLowerCase()}_name`, `${self.dataConfig.statement.toLowerCase()}_name_content`],
-                                ["name", 0, 'content'], 
-                                ["name", 'content']
-                            ]});
-                        const tileid = x?.['@tile_id'];
-                        return { type, content, name, language, label, source, tileid };
+
+
+                        const tileid = self.getTileId(x);
+                        return { type, content, name, language, tileid };
                     }));
                 }
 

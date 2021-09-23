@@ -6,12 +6,12 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
             self.nameTableConfig = {
                 ...self.defaultTableConfig,
-                columns: Array(6).fill(null)
+                columns: Array(4).fill(null)
             };
 
             self.identifierTableConfig = {
                 ...self.defaultTableConfig,
-                columns: Array(5).fill(null)
+                columns: Array(3).fill(null)
             };
 
             self.dataConfig = {
@@ -65,18 +65,9 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                             [`${self.dataConfig.name.toLowerCase()}_language`],
                             ['language']
                         ]});
-                    const label = self.getNodeValue(x, {
-                        testPaths: [
-                            [`${self.dataConfig.name.toLowerCase()}_label`],
-                            ['_label']
-                        ]});
-                    const source = self.getNodeValue(x, {
-                        testPaths: [
-                            [`${self.dataConfig.name.toLowerCase()}_source`],
-                            ['source']
-                        ]});
-                    const tileid = x?.['@tile_id'];
-                    return { type, content, language, label, source, tileid }
+
+                    const tileid = self.getTileId(x);
+                    return { type, content, language, tileid }
                 }));
 
                 let identifierData = params.data()[self.dataConfig.identifier];
@@ -96,18 +87,9 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                                 [`${self.dataConfig.identifier.toLowerCase()}_content`], 
                                 ['content']
                             ]});
-                        const label = self.getNodeValue(x,self.getNodeValue(x, {
-                            testPaths: [
-                                [`${self.dataConfig.identifier.toLowerCase()}_label`],
-                                ['_label']
-                            ]}));
-                        const source = self.getNodeValue(x, {
-                            testPaths: [
-                                [`${self.dataConfig.identifier.toLowerCase()}_source`],
-                                ['source']
-                            ]});
-                        const tileid = x?.['@tile_id'];
-                        return { type, content, label, source, tileid }
+
+                        const tileid = self.getTileId(x);
+                        return { type, content, tileid }
                     }));
                 }
 

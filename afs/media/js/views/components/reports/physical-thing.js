@@ -12,6 +12,7 @@ define([
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance', 
     'views/components/reports/scenes/default', 
+    'views/components/annotation-summary', 
     'views/components/reports/scenes/actor-relations'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
@@ -34,11 +35,14 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+            self.visible = {parts: ko.observable(true)};
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
             self.existenceEvents = ['production', 'destruction', 'removal from object'];
             self.existenceDataConfig = {'destruction': 'destruction', 'removal from object': 'removal from object'};
+            self.setEvents = ['added', 'removed'];
+            self.setDataConfig = {'added': 'addition to collection', 'removed': 'removal from set'};
             self.existenceCards = {};
             self.substanceCards = {};
             self.actorCards = {};
@@ -97,6 +101,27 @@ define([
                             identifier: 'identifier for part removal event',
                             timespan: 'timespan of removal from object',
                             statement: 'statement about part removal event'
+                        }
+                    },
+                },               
+                
+                self.setCards = {
+                    added: {
+                        card: self.cards?.["added to collection"],
+                        subCards: {
+                            name: 'name for set addition event',
+                            identifier: 'identifier for set addition event',
+                            timespan: 'timespan of set addition event',
+                            statement: 'statement about set addition event',
+                        }
+                    },
+                    removed: {
+                        card:  self.cards?.["removal from collection"],
+                        subCards: {
+                            name: 'name for set removal event',
+                            identifier: 'identifier for set removal event',
+                            timespan: 'timespan of set removal event',
+                            statement: 'statement about set removal event'
                         }
                     },
                 },
@@ -160,6 +185,43 @@ define([
                         }
                     ]
             });
+
+            self.selectedAnnotationTileId = ko.observable();
+            const parts = self.getRawNodeValue(self.resource(), 'part identifier assignment')
+            self.annotation = parts ? {
+                    info: parts.map((x => {
+                        const name = self.getNodeValue(x, 'part identifier assignment_label');
+                        const annotator = self.getNodeValue(x, 'part identifier assignment_annotator');
+                        const tileId = self.getTileId(x);
+                        return {name, annotator, tileId}
+                    })),
+                    featureCollection: parts.reduce(((previous, current) => {
+                        const geojson = self.getNodeValue(current, 'part identifier assignment_polygon identifier');
+                        for (feature of geojson.features){
+                            feature.properties.tileId = self.getTileId(current);
+                            previous.features.push(feature);
+                        }
+                        return previous;
+                    }), {features: [], type: 'FeatureCollection'})
+                }: {};
+            
+
+            self.actorData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Actor Relations", 
+                            data: [{
+                                key: 'current owner', 
+                                value: self.getRawNodeValue(self.resource(), 'current owner'), 
+                                card: self.cards?.['current owner'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.parts = ko.observableArray();
 
             self.sethoodData = ko.observable({
                 sections: 

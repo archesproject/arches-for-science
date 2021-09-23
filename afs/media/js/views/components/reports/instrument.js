@@ -81,6 +81,7 @@ define([
                         }
                     ]
             });
+
             self.parthoodData = ko.observable({
                 sections: 
                     [
@@ -90,6 +91,22 @@ define([
                                 key: 'part of larger object', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
                                 card: self.cards?.['part of larger object'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+
+            self.actorData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Actor Relations", 
+                            data: [{
+                                key: 'current owner', 
+                                value: self.getRawNodeValue(self.resource(), 'current owner'), 
+                                card: self.cards?.['current owner'],
                                 type: 'resource'
                             }]
                         }

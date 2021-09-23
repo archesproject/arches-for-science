@@ -23,23 +23,17 @@
                     <table class="table table-striped" cellspacing="0" width="100%">
                         <thead>
                             <tr class="afs-table-header">
-                                <th>{% trans "Name" %}</th>
                                 <th>{% trans "Content" %}</th>
                                 <th class="min-tabletl">{% trans "Type" %}</th>
                                 <th class="min-medium">{% trans "Language" %}</th>
-                                <th class="none">{% trans "Label" %}</th>
-                                <th class="none">{% trans "Source" %}</th>
                                 <th class="afs-table-control all"></th>
                             </tr>
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: statements, dataTableOptions: statementTableConfig }">
                             <tr>
-                                <td data-bind="text: name"></td>
                                 <td data-bind="text: content"></td>
                                 <td data-bind="text: type"></td>
                                 <td data-bind="text: language"></td>
-                                <td data-bind="text: label"></td>
-                                <td data-bind="text: source"></td>
                                 <td class="afs-table-control">
                                     <div data-bind="if: $parent.cards && $parent.cards.statement">
                                         <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.statement)}">

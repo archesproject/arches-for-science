@@ -136,6 +136,12 @@ define([
             if(resourceId){
                 return `${arches.urls.resource}\\${resourceId}`;
             }
+        },        
+        
+        getTileId: (node) => {
+            if(node){
+                return node?.['@tile_id'];
+            }
         },
 
         getNodeValue: (resource, ...args) => {
