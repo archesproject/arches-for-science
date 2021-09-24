@@ -32,6 +32,9 @@ define([
                 'subjectOf': undefined, 
                 'digitalReference': undefined
             };
+            self.existenceDataConfig = {
+                'production': 'creation',
+            };
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
@@ -55,7 +58,19 @@ define([
 
                 self.substanceCards = {
                     dimension: self.cards.dimension
-                }
+                };
+
+                self.existenceCards = {
+                    'production': { 
+                        card: self.cards?.["production"],
+                        subCards: {
+                            name: 'name for creation event',
+                            identifier: 'identifier for creation event',
+                            timespan: 'timespan of creation event',
+                            statement: 'statement about creation event',
+                        }
+                    },
+                };
             }
 
             self.additionalData = ko.observableArray([{
