@@ -64,7 +64,7 @@
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Names</h5>
                 <span data-bind="if: eventData.cards && eventData.cards.name">
-                    <a data-bind="click: function(){$parent.addNewTile(eventData.cards.name)}" class="afs-report-a">
+                    <a data-bind="click: function(){addNewTile(eventData.cards.name)}" class="afs-report-a">
                         <i class="fa fa-mail-reply"></i> {% trans "Add Event Name" %}
                     </a>
                 </span>
@@ -93,11 +93,11 @@
                                     <td data-bind="text: type"></td>
                                     <td data-bind="text: language"></td>
                                     <td class="afs-table-control">
-                                        <div data-bind="if: eventData.cards && eventData.cards.name && eventData.cards.name.tiles().length">
-                                            <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.name)}">
+                                        <div data-bind="if: $parent.eventData.cards && $parent.eventData.cards.name && $parent.eventData.cards.name.tiles().length">
+                                            <a data-bind="click: function() {$parent.editTile(tileid, $parent.eventData.cards.name)}">
                                                 <i class="fa fa-mail-reply"></i>
                                             </a>
-                                            <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.name)}">
+                                            <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.eventData.cards.name)}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -139,11 +139,11 @@
                                     <td data-bind="text: language"></td>
                                     <td data-bind="text: name"></td>
                                     <td class="afs-table-control">
-                                        <div data-bind="if: eventData.cards && eventData.cards.statement && eventData.cards.statement.tiles().length">
-                                            <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.statement)}">
+                                        <div data-bind="if: $parent.eventData.cards && $parent.eventData.cards.statement && $parent.eventData.cards.statement.tiles().length">
+                                            <a data-bind="click: function() {$parent.editTile(tileid, $parent.eventData.cards.statement)}">
                                                 <i class="fa fa-mail-reply"></i>
                                             </a>
-                                            <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.statement)}">
+                                            <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.eventData.cards.statement)}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -181,11 +181,11 @@
                                     <td data-bind="text: name"></td>
                                     <td data-bind="text: type"></td>
                                     <td class="afs-table-control">
-                                        <div data-bind="if: eventData.cards && eventData.cards.identifier && eventData.cards.identifier.tiles().length">
-                                            <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.identifier)}">
+                                        <div data-bind="if: $parent.eventData.cards && $parent.eventData.cards.identifier && $parent.eventData.cards.identifier.tiles().length">
+                                            <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.eventData.cards.identifier)}">
                                                 <i class="fa fa-mail-reply"></i>
                                             </a>
-                                            <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.identifier)}">
+                                            <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.eventData.cards.identifier)}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -322,10 +322,10 @@
                                                 <td data-bind="text: language"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: $parent.cards.name && $parent.cards.name.tiles().length">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards.name)}">
+                                                        <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.name)}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards.name)}">
+                                                        <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.name)}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
@@ -369,10 +369,10 @@
                                                 <td data-bind="text: name"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: $parent.cards.statement && $parent.cards.statement.tiles().length">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards.statement)}">
+                                                        <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.statement)}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards.statement)}">
+                                                        <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.statement)}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
@@ -413,10 +413,10 @@
                                                 <td data-bind="text: type"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: $parent.cards.identifier && $parent.cards.identifier.tiles().length">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards.identifier)}">
+                                                        <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.identifier)}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards.identifier)}">
+                                                        <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.identifier)}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
