@@ -46,6 +46,7 @@ define([
             self.existenceCards = {};
             self.substanceCards = {};
             self.actorCards = {};
+            self.summary = params.summary;
 
             if(params.report.cards){
                 const cards = params.report.cards;

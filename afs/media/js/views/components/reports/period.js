@@ -30,6 +30,7 @@ define([
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
+            self.summary = params.summary;
 
             if(params.report.cards){
                 const cards = params.report.cards;

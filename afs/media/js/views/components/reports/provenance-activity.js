@@ -31,6 +31,7 @@ define([
             self.documentationDataConfig = {
                 subjectOf: 'Textual Source'
             };
+            self.summary = params.summary;
 
             if(params.report.cards){
                 const cards = params.report.cards;

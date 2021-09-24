@@ -64,7 +64,7 @@ define([
                     exactMatch: self.cards.exactmatch,
                     type: self.cards.classification
                 };
-
+                console.log(self.nameCards)
                 self.descriptionCards = {
                     statement: self.cards.statement
                 };
