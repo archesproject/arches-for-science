@@ -14,6 +14,7 @@ define([
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
+                {'id': 'existence', 'title': 'Existence'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -34,21 +35,38 @@ define([
                 subjectOf: "is about",
             };
             self.documentationCards = {};
+            self.existenceEvents = ['creation'];
+            self.existenceDataConfig = {
+                'creation': 'Creation (partitioned)',
+            };
+            self.existenceCards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
                 
                 self.cards = self.createCardDictionary(cards)
-
                 self.nameCards = {
-                    name: self.cards['Textual Work Name'],
+                    name: self.cards?.['Textual Work Name'],
                     identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards.Classification
+                    exactMatch: self.cards?.['Textual Work Name'],
+                    type: self.cards?.['classification'],
                 }
 
                 self.descriptionCards = {
                     statement: self.cards.Statement,
+                };
+
+                self.existenceCards = {
+                    'creation': { 
+                        card: self.cards?.["creation"],
+                        subCards: {
+                            name: 'name for creation event',
+                            identifier: 'identifier for creation event',
+                            timespan: 'timespan of creation event',
+                            statement: 'statement about creation event',
+                            part: 'creation event part'
+                        }
+                    },
                 };
             }
 

@@ -50,11 +50,29 @@
             <!-- documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
                 <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: sourceData,
+                    }
+                }"></div>
+                <div data-bind="component: {
                     name: 'views/components/reports/scenes/documentation',
                     params: {
                         data: resource,
                         cards: documentationCards,
                         dataConfig: documentationDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Existence Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: existenceCards,
+                        events: existenceEvents,
+                        dataConfig: existenceDataConfig,
                     }
                 }"></div>
             </div>
