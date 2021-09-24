@@ -35,20 +35,16 @@ define([
                 subjectOf: "is about",
             };
             self.documentationCards = {};
-            self.existenceEvents = ['creation', 'publication'];
+            self.existenceEvents = ['creation'];
             self.existenceDataConfig = {
                 'creation': 'Creation (partitioned)',
-                'publication': 'publication',
             };
             self.existenceCards = {};
-
-            console.log(self.resource())
 
             if(params.report.cards){
                 const cards = params.report.cards;
                 
                 self.cards = self.createCardDictionary(cards)
-                console.log(self.cards)
                 self.nameCards = {
                     name: self.cards?.['Textual Work Name'],
                     identifier: self.cards.Identifier,
@@ -69,15 +65,6 @@ define([
                             timespan: 'timespan of creation event',
                             statement: 'statement about creation event',
                             part: 'creation event part'
-                        }
-                    },
-                    'publication': {
-                        card:  self.cards?.["publication"],
-                        subCards: {
-                            name: 'name',
-                            identifier: 'identifier for publication event',
-                            timespan: 'timespan',
-                            statement: 'statement about publication event'
                         }
                     },
                 };
