@@ -153,7 +153,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                                     partKeys[key] += " part"
                                 }
                                 const partData = extractEventData(existenceEvent, x, `${existenceEventConfig}_part`, {card: eventObservables?.cards?.part, subCards: partKeys});
-                                return {...partData}
+                                return {...partData?.[0]}
                             });
                             eventObservables.parts(partObservables);
                         }
