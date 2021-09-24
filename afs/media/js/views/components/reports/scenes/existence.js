@@ -41,6 +41,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             const extractEventData = (existenceEvent, eventDataSet, existenceEventConfig, rootCardConfig) => {
+                if(!eventDataSet){ return []; }
                 if (!Array.isArray(eventDataSet)) {eventDataSet = [eventDataSet]}
 
                 return eventDataSet.map(eventData => {

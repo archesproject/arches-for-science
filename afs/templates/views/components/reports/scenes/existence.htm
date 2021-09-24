@@ -11,9 +11,10 @@
         </a>
     </span>
     <span data-bind="if: cards[eventName] && cards[eventName].card && cards[eventName].card.tiles().length">
-    <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
-        <i class="fa fa-mail-reply"></i> {% trans "Edit Event" %}
-    </a>
+        <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
+            <i class="fa fa-mail-reply"></i> {% trans "Edit Event" %}
+        </a>
+    </span>
     <!-- ko if: eventDataArray[eventName].length === 0 || !eventDataArray[eventName].some(x => x !== undefined) -->
     <div class="afs-nodata-note">No events</div>
     <!-- /ko -->
