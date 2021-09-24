@@ -40,7 +40,101 @@ define([
             self.descriptionCards = {};
             self.documentationCards = {};
             self.existenceEvents = ['production', 'destruction', 'removal from object'];
-            self.existenceDataConfig = {'destruction': 'destruction', 'removal from object': 'removal from object'};
+            self.existenceDataConfig = {
+                'production': {
+                    graph: 'production',
+                    metadata: [{
+                        key: 'creator in production event',
+                        path: 'production_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'physical object used in production event',
+                        path: 'production_used object',
+                        type: 'resource'
+                    },{
+                        key: 'production event technique',
+                        path: 'production_technique',
+                        type: 'resource'
+                    },{
+                        key: 'production event type',
+                        path: 'production_type',
+                        type: 'resource'
+                    },{
+                        key: 'location of production event',
+                        path: 'production_location',
+                        type: 'resource'
+                    },{
+                        key: 'influenced on production event',
+                        path: 'production_influence',
+                        type: 'resource'
+                    }],
+                    parts: {
+                        graph: 'production_part',
+                        metadata:[{
+                            key: 'creator of event',
+                            path: 'production_part_carried out by',
+                            type: 'resource'
+                        },{
+                            key: 'physical object used in production event',
+                            path: 'production_part_used object',
+                            type: 'resource'
+                        },{
+                            key: 'production event technique',
+                            path: 'production_part_technique',
+                            type: 'kv'
+                        },{
+                            key: 'production event type',
+                            path: 'production_part_type',
+                            type: 'kv'
+                        },{
+                            key: 'location of production event',
+                            path: 'production_part_location',
+                            type: 'resource'
+                        },{
+                            key: 'influenced on production event',
+                            path: 'production_part_influence',
+                            type: 'resource'
+                        }]
+                    }
+                },
+                'destruction': { 
+                    graph: 'destruction',
+                    metadata: [{
+                        key: 'location of destruction event',
+                        path: 'destruction_location',
+                        type: 'resource'
+                    },{
+                        key: 'destruction event type',
+                        path: 'destruction_type',
+                        type: 'kv'
+                    }]
+                }, 
+                'removal from object': {
+                    graph: 'removal from object',
+                    metadata: [{
+                        key: 'object removed by part removal event',
+                        path: 'removal from object_removed from',
+                        type: 'resource'
+                    },{
+                        key: 'person in part removal event',
+                        path: 'production_part_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'removal from object event technique',
+                        path: 'removal from object_technique',
+                        type: 'kv'
+                    },{
+                        key: 'location of part removal event',
+                        path: 'removal from object_location',
+                        type: 'resource'
+                    },{
+                        key: 'influence on part removal event',
+                        path: 'removal from object_influence',
+                        type: 'resource'
+                    }]
+                }
+            };
+
             self.setEvents = ['added', 'removed'];
             self.setDataConfig = {'added': 'addition to collection', 'removed': 'removal from set'};
             self.existenceCards = {};
@@ -53,40 +147,40 @@ define([
                 
                 self.cards = self.createCardDictionary(cards);
 
-                if(self.cards?.["production (partitioned)"]) {
-                    const productionEventChildren = self.cards["production (partitioned)"].tiles()?.[0]?.cards ? self.cards["production (partitioned)"].tiles()[0].cards : self.cards["production (partitioned)"].cards();
-                    self.cards["production (partitioned)"].children = self.createCardDictionary(productionEventChildren);
+                if(self.cards?.["production event of object"]) {
+                    const productionEventChildren = self.cards["production event of object"].tiles()?.[0]?.cards ? self.cards["production event of object"].tiles()[0].cards : self.cards["production event of object"].cards();
+                    self.cards["production event of object"].children = self.createCardDictionary(productionEventChildren);
                 }
 
                 self.nameCards = {
-                    name: self.cards.name,
-                    identifier: self.cards.identifier,
-                    exactMatch: self.cards.exactmatch,
-                    type: self.cards.classification
+                    name: self.cards?.['name of object'],
+                    identifier: self.cards?.['identifier of object'],
+                    exactMatch: self.cards?.['external uri for object'],
+                    type: self.cards?.['type of object']
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards.statement
+                    statement: self.cards?.['statement about object']
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.["digital reference"],
-                    subjectOf: self.cards?.["subject of"]
+                    digitalReference: self.cards?.["digital reference to object"],
+                    subjectOf: self.cards?.["source reference work for object"]
                 };
 
                 self.existenceCards = {
                     production: {
-                        card: self.cards?.["production (partitioned)"],
+                        card: self.cards?.["production event of object"],
                         subCards: {
-                            name: 'name for production event',
-                            identifier: 'identifier for production event',
+                            name: 'name of production event',
+                            identifier: 'identifier of production event',
                             timespan: 'timespan of production event',
                             statement: 'statement about production event',
                             part: 'production event part'
                         }
                     },
                     destruction: {
-                        card:  self.cards?.["destruction"],
+                        card:  self.cards?.["destruction event of object"],
                         subCards: {
                             name: 'name for destruction event',
                             identifier: 'identifier for destruction event',
@@ -95,11 +189,11 @@ define([
                         }
                     },
                     'removal from object': { 
-                        card: self.cards?.["removal from object"],
+                        card: self.cards?.["part removal event of object"],
                         subCards: {
                             name: 'name for part removal event',
                             identifier: 'identifier for part removal event',
-                            timespan: 'timespan of removal from object',
+                            timespan: 'timespan of part removal event',
                             statement: 'statement about part removal event'
                         }
                     },
@@ -127,11 +221,11 @@ define([
                 },
 
                 self.substanceCards = {
-                    dimension: self.cards.dimension
+                    dimension: self.cards?.['dimension of object']
                 }
 
                 self.actorCards = {
-                    owner: self.cards["current owner"]
+                    owner: self.cards?.["current owner of object"]
                 }
             }
 
@@ -142,14 +236,9 @@ define([
                         {
                             title: "Aboutness", 
                             data: [{
-                                key: 'carries text', 
+                                key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
-                                card: self.cards?.["carries text"],
-                                type: 'resource'
-                            }, {
-                                key: 'shows image', 
-                                value: self.getRawNodeValue(self.resource(), 'shows'),
-                                card: self.cards?.["shows image"],
+                                card: self.cards?.["text carried by object"],
                                 type: 'resource'
                             }]
                         }
@@ -160,11 +249,11 @@ define([
                 sections: 
                     [
                         {
-                            title: "Location", 
+                            title: "Current Location of Object", 
                             data: [{
                                 key: 'current location', 
                                 value: self.getRawNodeValue(self.resource(), 'current location'), 
-                                card: self.cards?.['current location'],
+                                card: self.cards?.['current location of object'],
                                 type: 'resource'
                             }]
                         }
@@ -177,9 +266,9 @@ define([
                         {
                             title: "Parthood", 
                             data: [{
-                                key: 'part of larger object', 
+                                key: 'parent object', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
-                                card: self.cards?.['part of larger object'],
+                                card: self.cards?.['parent object'],
                                 type: 'resource'
                             }]
                         }
@@ -212,9 +301,9 @@ define([
                         {
                             title: "Actor Relations", 
                             data: [{
-                                key: 'current owner', 
+                                key: 'current owner of object', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
-                                card: self.cards?.['current owner'],
+                                card: self.cards?.['current owner of object'],
                                 type: 'resource'
                             }]
                         }
@@ -229,21 +318,14 @@ define([
                         {
                             title: "Sethood", 
                             data: [{
-                                key: 'In Collection or Set', 
+                                key: 'Collection Object is Part Of', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
-                                card: self.cards?.['in collection or set'],
+                                card: self.cards?.['collection object is part of'],
                                 type: 'resource'
                             }]
                         }
                     ]
             });
-
-            self.additionalData = ko.observableArray([{
-                key: 'material', 
-                value: self.getNodeValue(self.resource(), 'material'), 
-                card: self.cards?.["material(s)"],
-                type: 'kv'
-            }]);
         },
         template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
     });

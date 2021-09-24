@@ -38,7 +38,6 @@ define([
             self.nameDataConfig = { 'exactMatch': undefined };
             self.documentationDataConfig = {
                 'subjectOf': undefined, 
-                'digitalReference': undefined
             };
             self.nameCards = {};
             self.descriptionCards = {}
@@ -54,17 +53,20 @@ define([
                 self.cards = self.createCardDictionary(cards);
 
                 self.nameCards = {
-                    name: self.cards["Name of Thing"],
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards["Type of Object"]
+                    name: self.cards?.["name of instrument"],
+                    identifier: self.cards?.["identifier for instrument"],
+                    type: self.cards?.["type of instrument"]
+                };
+
+                self.documentationCards = {
+                    digitalReference: self.cards?.["digital reference to instrument"],
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards['Statement about Thing']
+                    statement: self.cards?.['statement about instrument']
                 };
                 self.substanceCards = {
-                    dimension: self.cards.dimension
+                    dimension: self.cards?.['dimension of instrument']
                 }
             }
 
@@ -76,7 +78,7 @@ define([
                             data: [{
                                 key: 'current location', 
                                 value: self.getRawNodeValue(self.resource(), 'current location'), 
-                                card: self.cards?.['current location'],
+                                card: self.cards?.['current location of instrument'],
                                 type: 'resource'
                             }]
                         }
@@ -89,9 +91,9 @@ define([
                         {
                             title: "Parthood", 
                             data: [{
-                                key: 'part of larger object', 
+                                key: 'parent instrument', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
-                                card: self.cards?.['part of larger object'],
+                                card: self.cards?.['parent instrument'],
                                 type: 'resource'
                             }]
                         }
@@ -107,7 +109,7 @@ define([
                             data: [{
                                 key: 'current owner', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
-                                card: self.cards?.['current owner'],
+                                card: self.cards?.['current owner of instrument'],
                                 type: 'resource'
                             }]
                         }
@@ -122,7 +124,7 @@ define([
                             data: [{
                                 key: 'Member of Set', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
-                                card: self.cards?.['member of'],
+                                card: self.cards?.['part of set'],
                                 type: 'resource'
                             }]
                         }

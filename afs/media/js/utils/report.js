@@ -34,7 +34,7 @@ define([
     };
 
     const processRawNodeValue = (rawValue) => {
-        const nodeValue = rawValue?.["@display_value"]
+        const nodeValue = rawValue?.["@display_value"] || rawValue?.['display_value'];
         const geojson = rawValue?.geojson;
         if(geojson){
             return geojson;

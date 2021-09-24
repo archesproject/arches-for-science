@@ -1,0 +1,70 @@
+{% extends "views/report-templates/default.htm" %} 
+{% load i18n %} 
+{% block report %}
+
+{% block body %}
+ <!-- ko ifnot: inline -->
+<div data-bind="ifnot: inline">
+    <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>
+    <div class="afs-card-control" data-bind="if: item.card">
+        <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
+    </div>        
+ </div>
+ <!-- /ko -->
+ <!-- ko if: inline && !small -->
+<h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
+<!-- /ko --> 
+<!-- ko if: inline && small -->
+<h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
+<!-- /ko -->
+ <!-- ko ifnot: item.value -->
+<div data-bind="style: { display: inline ? 'inline': '' }" class="afs-block-value">--</div>
+ <!-- /ko -->
+
+ <!-- ko if: item.type == 'kv'-->
+ <div class="afs-block-value" data-bind="text: item.value"></div>
+ <!-- /ko --> 
+
+ <!-- ko if: item.type == 'href'-->
+ <div class="afs-block-value"><a data-bind="text: item.value, attr: { href: item.href }"></a></div>
+ <!-- /ko -->  
+
+ <!-- ko if: item.type == 'resource'-->
+ <!-- ko if: item.value -->
+ <!-- ko if: item.value && item.value.length -->
+ <!-- ko foreach: {data: item, as: 'instance', noChildContext: true}-->
+ <!-- ko if: instance.value.instance_details.length -->
+ <div data-bind="foreach: {data: instance.value.instance_details, as: 'detail', noChildContext: true}">
+    <div class="afs-block-value"><a data-bind="text: $data.getNodeValue(detail), attr: { href: $data.getResourceLink(detail) }"></a></div>
+ </div>
+ <!-- /ko --> 
+ <!-- ko ifnot: instance.value.instance_details.length -->
+ <div data-bind="style: { display: inline ? 'inline': '' }" class="afs-block-value">--</div>
+ <!-- /ko -->
+ <!-- /ko -->
+ <!-- /ko -->
+ <!-- ko if: item.value && !item.value.length -->
+ <!-- ko ifnot: item.value.instance_details -->
+ <div data-bind="style: { display: inline ? 'inline': '' }">
+    <div class="afs-block-value">
+        <a data-bind="text: $data.getNodeValue(item.value), attr: { href: $data.getResourceLink(item.value) }"></a>
+    </div>
+</div>
+ <!-- /ko -->
+ <!-- ko if: item.value.instance_details -->
+ <!-- ko if: item.value.instance_details.length -->
+ <div data-bind="foreach: {data: item.value.instance_details, as: 'instance', noChildContext: true}, style: { display: inline ? 'inline': '' }">
+    <div class="afs-block-value">
+        <a data-bind="text: $data.getNodeValue(instance), attr: { href: $data.getResourceLink(instance) }"></a>
+    </div>
+ </div>
+ <!-- /ko --> 
+ <!-- ko ifnot: item.value.instance_details.length -->
+ <div data-bind="style: { display: inline ? 'inline': '' }" class="afs-block-value">--</div>
+ <!-- /ko -->
+ <!-- /ko -->
+ <!-- /ko -->
+ <!-- /ko -->
+ <!-- /ko -->
+ {% endblock body %}
+{% endblock report %}

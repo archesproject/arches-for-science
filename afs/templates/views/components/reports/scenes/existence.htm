@@ -34,30 +34,14 @@
 
         <div data-bind="visible: eventData.visible" class="afs-report-collapsible-container">
             <div class="afs-report-subsection-container">
-                <div class="afs-report-subsection-item">
-                    <div data-bind="" class="afs-block-attributes">
-                        <h4 class="afs-block-key">Creator of Event: </h4>
-                        <div data-bind="text: eventData.creator" class="afs-block-value"></div>
-                    </div>
-                    <div class="afs-block-attributes">
-                        <h4 class="afs-block-key">Event Techniques: </h4>
-                        <div data-bind="text: eventData.techniques" class="afs-block-value"></div>
-                    </div>
-                    <div class="afs-block-attributes">
-                        <h4 class="afs-block-key">Location of Event: </h4>
-                        <div data-bind="text: eventData.location" class="afs-block-value"></div>
-                    </div>
-                </div>
-
-                <div class="afs-report-subsection-item">
-                    <div class="afs-block-attributes">
-                        <h4 class="afs-block-key">Objects used in Event: </h4>
-                        <div data-bind="text: eventData.objectsUsed" class="afs-block-value"></div>
-                    </div>
-                    <div class="afs-block-attributes">
-                        <h4 class="afs-block-key">Influence on Event: </h4>
-                        <div data-bind="text: eventData.influence" class="afs-block-value"></div>
-                    </div>
+                <div style="width:75%" data-bind="foreach: {data: eventData.metadata, as: 'item'}" class="afs-report-subsection-two-column">
+                    <div class="afs-keyvalue" data-bind="component: {
+                        name: 'views/components/reports/scenes/keyvalue',
+                        params: {
+                            data: item,
+                            inline: true
+                        }
+                    }"></div>
                 </div>
             </div>
         
@@ -266,32 +250,14 @@
     
                     <!-- Show this if there is Event data (Top Card) -->
                     <div class="afs-report-collapsible-container">
-                        <div class="afs-report-subsection-container">
-                            <div class="afs-report-subsection-item">
-                                <div class="afs-block-attributes">
-                                    <h4 class="afs-block-key">Creator of Event: </h4>
-                                    <div data-bind="text: creator" class="afs-block-value"></div>
-                                </div>
-                                <div class="afs-block-attributes">
-                                    <h4 class="afs-block-key">Event Techniques: </h4>
-                                    <div data-bind="text: techniques" class="afs-block-value"></div>
-                                </div>
-                                <div class="afs-block-attributes">
-                                    <h4 class="afs-block-key">Location of Event: </h4>
-                                    <div data-bind="text: location" class="afs-block-value"></div>
-                                </div>
-                            </div>
-    
-                            <div class="afs-report-subsection-item">
-                                <div class="afs-block-attributes">
-                                    <h4 class="afs-block-key">Objects used in Event: </h4>
-                                    <div data-bind="text: objectsUsed" class="afs-block-value"></div>
-                                </div>
-                                <div class="afs-block-attributes">
-                                    <h4 class="afs-block-key">Influence on Event: </h4>
-                                    <div data-bind="text: influence" class="afs-block-value"></div>
-                                </div>
-                            </div>
+                        <div style="width:75%" data-bind="foreach: {data: $data.metadata, as: 'item' }" class="afs-report-subsection-two-column">
+                            <div class="afs-keyvalue" data-bind="component: {
+                                name: 'views/components/reports/scenes/keyvalue',
+                                params: {
+                                    data: item,
+                                    inline: true
+                                }
+                            }"></div>
                         </div>
                     
                         <!-- Event First Generation Cards -->

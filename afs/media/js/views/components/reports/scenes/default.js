@@ -1,4 +1,4 @@
-define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable'], function(_, ko, arches, reportUtils) {
+define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable', 'views/components/reports/scenes/keyvalue'], function(_, ko, arches, reportUtils) {
     return ko.components.register('views/components/reports/scenes/default', {
         // IMPORTANT:  this scene *requires* you to compile your own data.  Aboutness is too disparate across all models.
         viewModel: function(params) {

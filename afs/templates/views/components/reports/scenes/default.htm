@@ -18,49 +18,12 @@
              <div>
                  <div data-bind="foreach: {data: section.data, as: 'item', noChildContext: true}" class="afs-report-subsection-ite" style="padding-top: 10px;">
                      <div class="afs-block-attributes pad-btm">
-                         <div>
-                            <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>
-                            <div class="afs-card-control" data-bind="if: item.card">
-                                <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
-                            </div>        
-                         </div>
-                         <!-- ko ifnot: item.value -->
-                         <div>
-                            <div class="afs-block-value">--</div>
-                        </div>
-                         <!-- /ko -->
-
-                         <!-- ko if: item.type == 'kv'-->
-                         <div class="afs-block-value" data-bind="text: item.value"></div>
-                         <!-- /ko --> 
-
-                         <!-- ko if: item.type == 'href'-->
-                         <div class="afs-block-value"><a data-bind="text: item.value, attr: { href: item.href }"></a></div>
-                         <!-- /ko -->  
-
-                         <!-- ko if: item.type == 'resource'-->
-                         <!-- ko if: item.value -->
-                         <!-- ko if: item.value && item.value.length -->
-                         <!-- ko foreach: {data: item, as: 'instance', noChildContext: true}-->
-                         <div data-bind="foreach: {data: instance.value.instance_details, as: 'detail', noChildContext: true}">
-                            <div class="afs-block-value"><a data-bind="text: detail.display_value, attr: { href: getResourceLink(detail) }"></a></div>
-                         </div>
-                         <!-- /ko -->
-                         <!-- /ko -->
-                         <!-- ko if: item.value && !item.value.length -->
-                         <!-- ko ifnot: item.value.instance_details -->
-                         <div>
-                            <div class="afs-block-value"><a data-bind="text: $parent.getNodeValue(item.value), attr: { href: $parent.getResourceLink(item.value) }"></a></div>
-                        </div>
-                         <!-- /ko -->
-                         <!-- ko if: item.value.instance_details -->
-                         <div data-bind="foreach: {data: item.value.instance_details, as: 'instance', noChildContext: true}">
-                            <div class="afs-block-value"><a data-bind="text: instance.display_value, attr: { href: $parent.getResourceLink(instance) }"></a></div>
-                         </div>
-                         <!-- /ko -->
-                         <!-- /ko -->
-                         <!-- /ko -->
-                         <!-- /ko -->
+                        <div data-bind="component: {
+                            name: 'views/components/reports/scenes/keyvalue',
+                            params: {
+                                data: item,
+                            }
+                        }"></div>
                          
                      </div>
                  </div>

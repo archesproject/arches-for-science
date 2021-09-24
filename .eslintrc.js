@@ -1,7 +1,7 @@
 module.exports = {
-    "extends": "eslint:recommended",
+    "extends": "eslint:airbnb",
     // add your custom rules here
-    rules: {
+    /*rules: {
         "semi": ["error", "always"],
         "indent": ["error", 4],
         "space-before-function-paren": ["error", "never"],
@@ -11,7 +11,7 @@ module.exports = {
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         "camelcase": [2, {"properties": "always"}]
-    },
+    },*/
     "globals": {
         "fetch": false,
         "define": false,

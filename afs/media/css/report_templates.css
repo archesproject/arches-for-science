@@ -38,6 +38,13 @@
     position: fixed;
     z-index: 10;
 }
+.afs-report-subsection-two-column {
+    display: flex;
+    flex-wrap: wrap;
+}
+.afs-report-subsection-two-column > div {
+    flex: 45%;
+}
 
 .afs-report-anchors.breadcrumb li, .afs-report-anchors.breadcrumb li a {
     padding: 0px;
@@ -439,6 +446,9 @@ i.toggle:hover {
 .afs-block-attributes h6 span {
     font-weight: 600;
     color: #555;
+}
+.afs-keyvalue > h4 {
+    margin: 2px;
 }
 
 .afs-block-attributes.actor-name {

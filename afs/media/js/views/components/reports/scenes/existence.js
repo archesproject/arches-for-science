@@ -40,9 +40,12 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             }
             Object.assign(self.dataConfig, params.dataConfig || {});
 
-            const extractEventData = (existenceEvent, eventDataSet, existenceEventConfig, rootCardConfig) => {
+            const extractEventData = (existenceEvent, eventDataSet, dataConfig, rootCardConfig) => {
                 if(!eventDataSet){ return []; }
                 if (!Array.isArray(eventDataSet)) {eventDataSet = [eventDataSet]}
+
+                const existenceEventConfig = dataConfig.graph;
+
 
                 return eventDataSet.map(eventData => {
                     const eventObservables = {
@@ -51,7 +54,8 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         identifiers: ko.observableArray(),
                         statements: ko.observableArray(),
                         timespan: ko.observable(),
-                        parts: ko.observableArray()
+                        parts: ko.observableArray(),
+                        metadata: ko.observableArray()
                     };
 
                     eventObservables.tileid = eventData?.['@tile_id'];
@@ -144,26 +148,35 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                             }));
                         }
 
-                        const parts = self.getRawNodeValue(eventData, `${existenceEventConfig}_part`);
+                        const parts = self.getRawNodeValue(eventData, dataConfig?.parts?.graph);
                         if(parts?.length){
                             var partObservables = parts.map(x => {
-                                const subKeys = Object.keys(rootCardConfig.subCards);
-                                const partKeys = JSON.parse(JSON.stringify(rootCardConfig.subCards));
-                                for(const key of subKeys){
-                                    partKeys[key] += " part"
+                                let partKeys = {};
+                                if(rootCardConfig?.subCards){
+                                    const subKeys = Object.keys(rootCardConfig?.subCards);
+                                    let partKeys = JSON.parse(JSON.stringify(rootCardConfig?.subCards));
+                                    for(const key of subKeys){
+                                        partKeys[key] += " part"
+                                    }
                                 }
-                                const partData = extractEventData(existenceEvent, x, `${existenceEventConfig}_part`, {card: eventObservables?.cards?.part, subCards: partKeys});
+                                const partData = extractEventData(existenceEvent, x, dataConfig.parts, {card: eventObservables?.cards?.part, subCards: partKeys});
                                 return {...partData?.[0]}
                             });
                             eventObservables.parts(partObservables);
                         }
                         
-                        eventObservables.creator = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_carried out by`))
-                        eventObservables.objectsUsed = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_used object`));
-                        eventObservables.techniques = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_technique`));
-                        eventObservables.location = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_location`));
-                        eventObservables.influence = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_influence`));
-                        eventObservables.name = ko.observable(self.getNodeValue(eventData, `${existenceEventConfig}_influence`));
+                        const existenceEventMetadata = [];
+                        for(configuration of dataConfig.metadata){
+                            const key = configuration.key;
+                            const type = configuration.type;
+                            
+                            const value = 
+                                type == 'resource' ? 
+                                    self.getRawNodeValue(eventData, {testPaths: [[configuration.path]]}) : 
+                                    self.getNodeValue(eventData, {testPaths: [[configuration.path]]});
+                            existenceEventMetadata.push({key, type, value})
+                        }
+                        eventObservables.metadata(existenceEventMetadata);
 
                         return eventObservables;
                     }
@@ -175,7 +188,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 self.eventDataArray = params.data.eventData;
             } else {
                 for(existenceEvent of self.events){
-                    self.eventDataArray[existenceEvent] = extractEventData(existenceEvent, self.getRawNodeValue(params.data(), self.dataConfig?.[existenceEvent]), self.dataConfig?.[existenceEvent], self.cards?.[existenceEvent]);
+                    self.eventDataArray[existenceEvent] = extractEventData(existenceEvent, self.getRawNodeValue(params.data(), self.dataConfig?.[existenceEvent]?.graph), self.dataConfig?.[existenceEvent], self.cards?.[existenceEvent], params.metadata);
                 }
             }
             

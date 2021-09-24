@@ -6,7 +6,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
             self.dimensionTableConfig = {
                 ...self.defaultTableConfig,
-                columns: Array(9).fill(null)
+                columns: Array(6).fill(null)
             };
 
             self.dataConfig = {
@@ -23,7 +23,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 dimensions: ko.observable(true),
                 additionalData: ko.observable(true)
             }
-            self.additionalData = params.additionalData || ko.observableArray();
+            self.additionalData = params.additionalData || undefined;
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
@@ -56,7 +56,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         const source = self.getNodeValue(x, `${self.dataConfig.dimension}_source`);
                         const unit = self.getNodeValue(x, `${self.dataConfig.dimension}_unit`);
                         const label = self.getNodeValue(x, `${self.dataConfig.dimension}_label`);
-                        const tileid = x?.['@tile_id'];
+                        const tileid = self.getTileId(x);
                         return { type, unit, name, highestValue, label, lowestValue, dimensionValue, source, tileid };
                     }));
                 }

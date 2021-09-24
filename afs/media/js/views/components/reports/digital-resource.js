@@ -33,8 +33,32 @@ define([
                 'digitalReference': undefined
             };
             self.existenceDataConfig = {
-                'production': 'creation',
+                'creation': {
+                    graph: 'creation',
+                    metadata: [{
+                        key: 'creator',
+                        path: 'creation_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'creation event location',
+                        path: 'creation_location',
+                        type: 'resource'
+                    },{
+                        key: 'creation event type',
+                        path: 'creation_type',
+                        type: 'resource'
+                    },{
+                        key: 'creation event technique',
+                        path: 'creation_technique',
+                        type: 'resource'
+                    },{
+                        key: 'physical object used in creation event',
+                        path: 'creation_used object',
+                        type: 'resource'
+                    }]
+                },
             };
+            self.existenceEvents = ['creation'];
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
@@ -47,23 +71,22 @@ define([
                 
                 self.cards = self.createCardDictionary(cards)
                 self.nameCards = {
-                    name: self.cards.Name,
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards.Classification
+                    name: self.cards?.['name of digital resource'],
+                    identifier: self.cards?.['identifier of digital resource'],
+                    type: self.cards?.['type of digital resource']
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards['Statement']
+                    statement: self.cards['statement about digital resource']
                 };
 
                 self.substanceCards = {
-                    dimension: self.cards.dimension
+                    dimension: self.cards?.['dimension of digital resource']
                 };
 
                 self.existenceCards = {
-                    'production': { 
-                        card: self.cards?.["production"],
+                    'creation':{
+                        card: self.cards?.["creation event of digital resource"],
                         subCards: {
                             name: 'name for creation event',
                             identifier: 'identifier for creation event',
@@ -75,10 +98,10 @@ define([
             }
 
             self.additionalData = ko.observableArray([{
-                key: 'conforms to standard', 
+                key: 'standards conformed to by digital resource', 
                 value: self.getNodeValue(self.resource(), 'conforms to'), 
                 href: self.getNodeValue(self.resource(), 'conforms to'), 
-                card: self.cards?.["conforms to standard"],
+                card: self.cards?.["standards conformed to by digital resource"],
                 type: 'href'
             }]);
         },
