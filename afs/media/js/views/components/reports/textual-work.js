@@ -52,7 +52,7 @@ define([
                     exactMatch: self.cards?.['Textual Work Name'],
                     type: self.cards?.['classification'],
                 }
-                console.log(self.nameCards)
+
                 self.descriptionCards = {
                     statement: self.cards.Statement,
                 };
