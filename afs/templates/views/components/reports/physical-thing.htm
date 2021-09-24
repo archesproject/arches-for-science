@@ -165,13 +165,21 @@
 {% block summary %}
 
 <div class="model-summary-report">
-    <!-- Names -->
     <div class="afs-report-page">
+        <!-- Names -->
         <div data-bind="component: {
             name: 'views/components/reports/scenes/name',
             params: {
                 data: resource,
                 cards: nameCards
+            }
+        }"></div>
+        <!-- Description -->
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/description',
+            params: {
+                data: resource,
+                cards: descriptionCards,
             }
         }"></div>
     </div>
