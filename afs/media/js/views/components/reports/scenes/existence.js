@@ -33,7 +33,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.delete = params.deleteTile || self.deleteTile;
             self.add = params.addTile || self.addNewTile;
             self.events = params.events || ['production']
-            //self.eventData = {};
             self.eventDataArray = {};
             self.visible = {
                 production: ko.observable(true),
@@ -172,7 +171,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
             if(params?.compiled){
-                self.eventData = params.data.eventData;
+                self.eventDataArray = params.data.eventData;
             } else {
                 for(existenceEvent of self.events){
                     self.eventDataArray[existenceEvent] = extractEventData(existenceEvent, self.getRawNodeValue(params.data(), self.dataConfig?.[existenceEvent]), self.dataConfig?.[existenceEvent], self.cards?.[existenceEvent]);
