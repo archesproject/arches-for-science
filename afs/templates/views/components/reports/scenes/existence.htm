@@ -6,12 +6,12 @@
 <div data-bind="foreach: {data: events, as: 'eventName', noChildContext: true}" class="afs-report-section">
     <h2 data-bind="text: eventName + ' Event'" class="afs-report-section-title"></h2>
     <span data-bind="if: cards[eventName] && cards[eventName].card && !cards[eventName].card.tiles().length,">
-        <a data-bind="{click:function(){$parent.addNewTile(cards[eventName].card)}}" class="afs-report-a">
+        <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
             <i class="fa fa-mail-reply"></i> {% trans "Add Event" %}
         </a>
     </span>
     <span data-bind="if: cards[eventName] && cards[eventName].card && cards[eventName].card.tiles().length">
-    <a data-bind="{click:function(){$parent.addNewTile(cards[eventName].card)}}" class="afs-report-a">
+    <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
         <i class="fa fa-mail-reply"></i> {% trans "Edit Event" %}
     </a>
     <!-- ko if: eventDataArray[eventName].length === 0 || !eventDataArray[eventName].some(x => x !== undefined) -->
@@ -22,11 +22,11 @@
     <!-- Event Block (one for each event) -->
     <!-- ko if: eventDataArray[eventName].length > 0 && eventDataArray[eventName].some(x => x !== undefined) -->
     
-    <!-- ko foreach: { data: eventDataArray[eventName], as: "eventData" } -->
+    <!-- ko foreach: { data: eventDataArray[eventName], as: "eventData", noChildContext: true} -->
     <!-- ko if: !!eventData && eventData.tileid -->
     <div class="afs-report-subsection">
         <h2 class="afs-report-section-title">{% trans "Event Details" %}</h2>
-        <h3 style="display: block ;"><i data-bind="click: function() {$parent.toggleVisibility(eventData.visible)}" class="fa fa-angle-double-right toggle"></i> {% trans "Event: " %} <span></span></h3>
+        <h3 style="display: block ;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}" class="fa fa-angle-double-right toggle"></i> {% trans "Event: " %} <span></span></h3>
         <!-- <a class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Event" %}</a>-->
 
         <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
@@ -87,17 +87,17 @@
                                     <th class="afs-table-control all"></th>
                                 </tr>
                             </thead>
-                            <tbody data-bind="dataTablesForEach: { data: eventData.names, dataTableOptions: $parent.nameTableConfig }">
+                            <tbody data-bind="dataTablesForEach: { data: eventData.names, dataTableOptions: nameTableConfig }">
                                 <tr>
                                     <td data-bind="text: name"></td>
                                     <td data-bind="text: type"></td>
                                     <td data-bind="text: language"></td>
                                     <td class="afs-table-control">
                                         <div data-bind="if: eventData.cards && eventData.cards.name && eventData.cards.name.tiles().length">
-                                            <a data-bind="click: function() {$parents[1].editTile(tileid, eventData.cards.name)}">
+                                            <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.name)}">
                                                 <i class="fa fa-mail-reply"></i>
                                             </a>
-                                            <a data-bind="click: function() {$parents[1].deleteTile(tileid, eventData.cards.name)}">
+                                            <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.name)}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -113,7 +113,7 @@
             <!-- Event First Generation Cards -->
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Statements</h5>
-                <a data-bind="if: eventData.cards && eventData.cards.statement, click: function(){$parent.addNewTile(eventData.cards.statement)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Statement" %}</a>
+                <a data-bind="if: eventData.cards && eventData.cards.statement, click: function(){addNewTile(eventData.cards.statement)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Statement" %}</a>
                 <!-- ko ifnot: eventData.statements().length -->
                 <div class="afs-nodata-note">No statements for this event</div>
                 <!-- /ko -->
@@ -132,7 +132,7 @@
                                     <th class="afs-table-control all"></th>
                                 </tr>
                             </thead>
-                            <tbody  data-bind="dataTablesForEach: { data: eventData.statements, dataTableOptions: $parent.statementsTableConfig}">
+                            <tbody  data-bind="dataTablesForEach: { data: eventData.statements, dataTableOptions: statementsTableConfig}">
                                 <tr>
                                     <td data-bind="text: type"></td>
                                     <td data-bind="text: content" class="line-clamp-1" style="vertical-align: unset; padding-top: 7px;"></td>
@@ -140,10 +140,10 @@
                                     <td data-bind="text: name"></td>
                                     <td class="afs-table-control">
                                         <div data-bind="if: eventData.cards && eventData.cards.statement && eventData.cards.statement.tiles().length">
-                                            <a data-bind="click: function() {$parents[1].editTile(tileid, eventData.cards.statement)}">
+                                            <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.statement)}">
                                                 <i class="fa fa-mail-reply"></i>
                                             </a>
-                                            <a data-bind="click: function() {$parents[1].deleteTile(tileid, eventData.cards.statement)}">
+                                            <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.statement)}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -159,7 +159,7 @@
             <!-- Event First Generation Cards -->
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Identifiers</h5>
-                <a data-bind="if: eventData.cards && eventData.cards.identifier, click: function(){$parent.addNewTile(eventData.cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Identifier" %}</a>
+                <a data-bind="if: eventData.cards && eventData.cards.identifier, click: function(){addNewTile(eventData.cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Event Identifier" %}</a>
                 <!-- ko ifnot: eventData.identifiers().length -->
                 <div class="afs-nodata-note">No identifiers for this event</div>
                 <!-- /ko -->
@@ -176,16 +176,16 @@
                                     <th class="afs-table-control all"></th>
                                 </tr>
                             </thead>
-                            <tbody  data-bind="dataTablesForEach: { data: eventData.identifiers, dataTableOptions: $parent.identifierTableConfig}">
+                            <tbody  data-bind="dataTablesForEach: { data: eventData.identifiers, dataTableOptions: identifierTableConfig}">
                                 <tr>
                                     <td data-bind="text: name"></td>
                                     <td data-bind="text: type"></td>
                                     <td class="afs-table-control">
                                         <div data-bind="if: eventData.cards && eventData.cards.identifier && eventData.cards.identifier.tiles().length">
-                                            <a data-bind="click: function() {$parents[1].editTile(tileid, eventData.cards.identifier)}">
+                                            <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.identifier)}">
                                                 <i class="fa fa-mail-reply"></i>
                                             </a>
-                                            <a data-bind="click: function() {$parents[1].deleteTile(tileid, eventData.cards.identifier)}">
+                                            <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.identifier)}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -202,7 +202,7 @@
             <div class="afs-report-subsection-firstchild">
                 <h5>Event Timespan</h5>
                 <span data-bind="if: eventData.cards && eventData.cards.timespan">
-                    <a data-bind="click: function(){$parent.addNewTile(eventData.cards.timespan)}" class="afs-report-a">
+                    <a data-bind="click: function(){addNewTile(eventData.cards.timespan)}" class="afs-report-a">
                         <i class="fa fa-mail-reply"></i> {% trans "Edit Event Timespan" %}
                     </a>
                 </span>
@@ -251,14 +251,14 @@
     </div>
     <div data-bind="if: eventData.parts && eventData.parts().length" class="afs-report-subsection">
         <h2 class="afs-report-section-title">{% trans "Event Parts" %}</h2>
-        <a data-bind="if: $parent.cards[eventName].parts, click: function(){$parent.addNewTile($parent.cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
+        <a data-bind="if: cards[eventName].parts, click: function(){addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
     
         <!-- Event Part -->
         <div data-bind="foreach:{ data: eventData.parts }" class="part">
             <div>
                 <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part: " %} <span data-bind="text: name"></span></h3>
                 <div class="afs-part-expanded" data-bind="visible: visible">
-                    <a data-bind="click: function(){$parent.editTile(tileid, cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Part" %}</a>
+                    <a data-bind="click: function(){editTile(tileid, cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Part" %}</a>
     
                     <!-- Show this block if there's NO data -->
                     <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
@@ -322,10 +322,10 @@
                                                 <td data-bind="text: language"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: $parent.cards.name && $parent.cards.name.tiles().length">
-                                                        <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.name)}">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards.name)}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.name)}">
+                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards.name)}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
@@ -369,10 +369,10 @@
                                                 <td data-bind="text: name"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: $parent.cards.statement && $parent.cards.statement.tiles().length">
-                                                        <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.statement)}">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards.statement)}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.statement)}">
+                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards.statement)}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
@@ -413,10 +413,10 @@
                                                 <td data-bind="text: type"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: $parent.cards.identifier && $parent.cards.identifier.tiles().length">
-                                                        <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.identifier)}">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards.identifier)}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.identifier)}">
+                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards.identifier)}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
