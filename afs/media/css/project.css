@@ -662,6 +662,10 @@
     background: #fff;
 }
 
+.workflow-component-based-step-wrapper .workflow-component div.row:first-child {
+    padding-left: 26px;
+}
+
 .afs-image-service-instructions {
     padding-bottom: 8px;
     padding-left: 28px;
@@ -684,4 +688,17 @@
     border-top: none;
     border-left: none !important;
     border-right: none;
+}
+
+.afs-region-name .row.widget-wrapper {
+    padding-left: 5px !important;
+    margin-top: 3px;
+}
+
+.afs-region-name .row.widget-wrapper .widget-input-label {
+    display: none;
+}
+
+.afs-workflow-annotator .widget-input-label {
+    display: none;
 }

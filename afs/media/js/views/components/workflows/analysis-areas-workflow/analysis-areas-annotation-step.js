@@ -118,7 +118,7 @@ define([
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedAnalysisAreaInstance()){
                 const baseName = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]) || "";
-                return `${baseName} [ ${self.physicalThingName()} ]`;
+                return `${baseName} [${self.physicalThingName()}]`;
             }
         })
 
