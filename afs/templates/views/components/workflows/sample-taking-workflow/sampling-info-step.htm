@@ -47,8 +47,8 @@
     <div style="padding: 5px">
         <div style="color:#2b547c; cursor: pointer;" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide sampling activity name' : 'Show sampling activity name'"></div>
         <div data-bind="visible: showName">
-            <div class="widget-input-label">Sampling Activity Name</div>
-            <div style="margin: -10px -5px;" data-bind="component: {
+            <div class="widget-input-label" style="display: none;">Sampling Activity Name</div>
+            <div style="margin: -3px -5px;" data-bind="component: {
                 name: 'text-widget',
                 params: {
                     renderContext: 'workflow', 
@@ -57,4 +57,5 @@
             }"></div>
         </div>
     </div>
+    <div style="height: 20px;"></div>
 </div>

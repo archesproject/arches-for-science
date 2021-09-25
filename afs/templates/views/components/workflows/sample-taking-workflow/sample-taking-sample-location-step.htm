@@ -37,15 +37,10 @@
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
             <div class="card">
-                <div style="padding: 10px 0;">
+                <div style="padding: 10px 0; margin-top: 10px;">
                     <h5>{% trans 'Sample locations' %}</h5>
             
-                    <div
-                        style="
-                            margin-left: 5px;
-                            margin-right: 15px;
-                        "
-                    >
+                    <div style="margin-left: 5px; margin-right: 15px;">
                         <input 
                             type="text" 
                             placeholder="{% trans 'filter...' %}"
@@ -53,7 +48,7 @@
                                 width: 100%;
                                 height: 36px;
                                 border: 1px solid #ddd;
-                                border-bottom: none;
+                                margin-bottom: 3px;
                             "
                             data-bind="textInput: $data.sampleLocationFilterTerm"
                         >
@@ -132,19 +127,19 @@
 
                 <!-- ko if: $data.selectedSampleLocationInstance() -->
                 {% block form_widgets %}
-                    <form class="widgets" style="margin-bottom: 20px;">
+                    <form class="widgets" style="margin-bottom: 20px; margin-top: 10px; margin-left: 5px;">
                         <!-- BEGIN geometry table -->
                         <div data-bind="foreach: {
                             data:card.widgets, as: 'widget'
                         }">
                         <!-- ko if: ko.unwrap(self.form.nodeLookup[widget.node_id()].datatype) === 'annotation' -->
                             <h5 class="analysis-areas-annotation-step-widget-title">
-                                {% trans 'Sample Location' %}
+                                {% trans 'Sample Location' %} <span class="afs-workflow-required-tag">{% trans 'required' %}</span>
                             </h5>
 
-                            <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[widget.node_id()].isrequired}"></i>
+                            <i style="display: none;" data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[widget.node_id()].isrequired}"></i>
 
-                            <div class="col-xs-12">
+                            <div class="col-xs-12" style="width: 342px;">
                                 <div class="style-tools-collapser" data-bind=" click: function() {
                                     self.showStylingTools(!self.showStylingTools());
                                 }">
@@ -302,10 +297,12 @@
                         <!-- END geometry table -->
 
                         <!-- ko if: $data.partIdentifierAssignmentLabelWidget() -->
-                            <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Sample Name' %}</h5>
-                            <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()].isrequired}"></i>
+                            <h5 class="analysis-areas-annotation-step-widget-title" style="margin-bottom: 5px;">
+                                {% trans 'Sample Name' %} <span class="afs-workflow-required-tag">{% trans 'required' %}</span>
+                            </h5>
+                            <i style="display: none;" data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()].isrequired}"></i>
 
-                            <div 
+                            <div class="afs-sample-name"
                                 data-bind='
                                     component: {
                                         name: self.form.widgetLookup[$data.partIdentifierAssignmentLabelWidget().widget_id()].name,
@@ -343,7 +340,7 @@
                                 '
                             ></div>
                             <div>
-                                <input disabled type="text" style="padding-left: 20px; margin-left: 5px; width: 342px; height: 36px;" data-bind="textInput: sampleName"></input>
+                                <input disabled type="text" style="padding-left: 20px; margin-left: 5px; width: 338px; height: 36px; margin-top: -5px; margin-bottom: 15px;" data-bind="textInput: sampleName"></input>
                             </div>
                         <!-- /ko -->
 
