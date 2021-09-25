@@ -19,6 +19,7 @@ define([
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+        const sampleMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
         this.analysisAreaResourceIds = [];
         this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
 
@@ -330,14 +331,13 @@ define([
                         var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
 
                         var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
-                        var samplingMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa";
 
                         var sampleDescriptionTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
                             return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleDescriptionConceptId);
                         });
         
                         var samplingMotivationTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
-                            return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(samplingMotivationConceptId);
+                            return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleMotivationConceptId);
                         });
 
                         if (sampleDescriptionTile) {
@@ -663,13 +663,12 @@ define([
             };
 
             var getWorkingPhysicalThingSamplingMotivationTile = function(physicalThingStatementCard) {
-                var samplingMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa";
                 var physicalThingStatementTypeNodeId = "1952e470-b498-11e9-b261-a4d18cec433a"; // Statement_type (E55)
 
                 if (physicalThingStatementCard.tiles() && physicalThingStatementCard.tiles().length) {
 
                     var previouslySavedTile = physicalThingStatementCard.tiles().find(function(tile) {
-                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(samplingMotivationConceptId);
+                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleMotivationConceptId);
                     });
 
                     if (previouslySavedTile) {
@@ -687,7 +686,6 @@ define([
 
             var savePhysicalThingStatementTile = function(physicalThingStatementTile, type) {
                 var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
-                var sampleMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa"; //object currently motivation not available
 
                 return new Promise(function(resolve, _reject) {
                     if (self.sampleDescriptionWidgetValue()) {
