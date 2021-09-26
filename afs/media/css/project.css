@@ -499,6 +499,7 @@
 .upload-dataset-select-dataset-files .file-workbench-files {
     margin-top: 0; 
     overflow-y: auto;
+    background: #fff;
 }
 
 .upload-dataset-select-dataset-files .file-workbench-file {
@@ -525,7 +526,8 @@
 }
 
 .upload-dataset-select-dataset-files #parts-panel .panel-collapse {
-    padding: 15px 15px;
+    padding: 5px 10px 15px 10px;
+    background: #fbfbfb;
 }
 
 .upload-dataset-select-dataset-files #parts-panel .dataset-name {
@@ -701,4 +703,44 @@
 
 .afs-workflow-annotator .widget-input-label {
     display: none;
+}
+
+.afs-workflow-option {
+    font-size: 14px;
+}
+
+.afs-workflow-option-instruction {
+    font-size: 13px;
+    color: #777;
+    margin-top: -5px;
+}
+
+.workflow-component-element .widget-input-label {
+    padding-left: 25px;
+}
+
+.workflow-component-element .row {
+    margin-bottom: 15px !important;
+}
+
+.afs-experiment-name-block {
+    padding-left: 30px;
+}
+
+.afs-experiment-name {
+    color: steelblue;
+    margin-bottom: 5px;
+}
+
+.afs-experiment-name:hover {
+    color: #2b547c;
+    cursor: pointer;
+}
+
+.afs-experiment-name-block .widget-input-label {
+    display: none;
+}
+
+.afs-experiment-name-block input {
+    margin-left: -20px;
 }
