@@ -71,6 +71,15 @@
                     }
                 }"></div>
             </div>
+            <!-- Substance Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: substanceData,
+                    }
+                }"></div>
+            </div>
         </div>
     </div>
 

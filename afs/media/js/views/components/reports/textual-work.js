@@ -15,6 +15,8 @@ define([
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
                 {'id': 'existence', 'title': 'Existence'},
+                {'id': 'substance', 'title': 'Substance'},
+                {'id': 'event', 'title': 'Event'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -40,6 +42,8 @@ define([
                 'creation': 'Creation (partitioned)',
             };
             self.existenceCards = {};
+            self.substanceCards = {};
+
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -56,19 +60,39 @@ define([
                 self.descriptionCards = {
                     statement: self.cards.Statement,
                 };
-
                 self.existenceCards = {
                     'creation': { 
-                        card: self.cards?.["creation"],
+                        card: self.cards?.["creation event of textual work"],
                         subCards: {
                             name: 'name for creation event',
-                            identifier: 'identifier for creation event',
                             timespan: 'timespan of creation event',
                             statement: 'statement about creation event',
                             part: 'creation event part'
                         }
                     },
                 };
+                self.substanceData = ko.observable({
+                    sections: [
+                        {
+                            title: "Language", 
+                            data: [{
+                                key: 'language of textual work', 
+                                value: self.getRawNodeValue(self.resource(), 'language'), 
+                                card: self.cards?.['language of textual work'],
+                                type: 'resource'
+                            }]
+                        },
+                        {
+                            title: "Text Content", 
+                            data: [{
+                                key: 'content of textual work', 
+                                value: self.getRawNodeValue(self.resource(), 'content'), 
+                                card: self.cards?.['content of textual work'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+                });
             }
         },
         template: { require: 'text!templates/views/components/reports/textual-work.htm' }
