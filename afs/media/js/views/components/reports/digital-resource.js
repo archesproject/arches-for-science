@@ -85,7 +85,7 @@ define([
                 };
 
                 self.existenceCards = {
-                    'creation':{
+                    creation: {
                         card: self.cards?.["creation event of digital resource"],
                         subCards: {
                             name: 'name for creation event',

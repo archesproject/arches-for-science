@@ -14,6 +14,10 @@ define([
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
+                {'id': 'substance', 'title': 'Substance'},
+                {'id': 'location', 'title': 'Location'},
+                {'id': 'parameters', 'title': 'Parameters & Outcomes'},
+                {'id': 'parthood', 'title': 'Parthood'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -26,6 +30,7 @@ define([
             };
             self.documentationDataConfig = {
                 'subjectOf': undefined,
+                'label': undefined
             };
             self.nameCards = {};
             self.descriptionCards = {};
@@ -38,17 +43,166 @@ define([
                 self.cards = self.createCardDictionary(cards)
 
                 self.nameCards = {
-                    name: self.cards.name,
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards.Classification
+                    name: self.cards?.['name of observation'],
+                    identifier: self.cards?.['identifier of observation'],
+                    type: self.cards?.['type of observation']
                 }
 
                 self.descriptionCards = {
-                    statement: self.cards.Statement,
+                    statement: self.cards?.['statement about observation'],
+                };
+
+                self.documentationCards = {
+                    digitalReference: self.cards?.['digital reference to observation'],
                 };
             }
+                        
+            self.locationData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Location of Observation', 
+                            data: [{
+                                key: 'location of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'took place at'), 
+                                card: self.cards?.['location of observation'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            const timeSpanData = self.getRawNodeValue(self.resource(), `timespan`);
+            self.timeSpanData = ko.observable();
+            if(timeSpanData) {
+                const beginningStart = self.getNodeValue(timeSpanData, `timespan_begin of the begin`);
+                const beginningComplete = self.getNodeValue(timeSpanData, `timespan_begin of the end`);
+                const endingStart = self.getNodeValue(timeSpanData, `timespan_end of the begin`);
+                const endingComplete = self.getNodeValue(timeSpanData, `timespan_end of the end`);
+
+                const name = self.getNodeValue(timeSpanData, {
+                    testPaths: [
+                        [
+                            `timespan_name`, 
+                            `timespan_name_content`
+                        ],
+                        [
+                            `timespan_name`, 
+                            0,
+                            `timespan_name_content`
+                        ]
+                    ]});
+                const durationValue = self.getNodeValue(timeSpanData, `timespan_duration`, `timespan_duration_value`);
+                const durationUnit = self.getNodeValue(timeSpanData, `timespan_duration`, `timespan_duration_unit`);
+                const duration = `${durationValue} ${durationUnit.replace(/\([^()]*\)/g, '')}`
+
+                const durationEventName = self.getNodeValue(timeSpanData, {
+                    testPaths: [
+                        [`timespan_duration`, 
+                        `timespan_duration_name`, 
+                        `timespan_duration_name_content`],
+                        [`timespan_duration`,
+                        `timespan_duration_name`, 
+                        0,
+                        `timespan_duration_name_content`]
+                    ]});
+
+                self.timeSpanData({
+                    sections: [{
+                        title: 'Substance', 
+                        data: [{
+                            key: 'timespan of observation', 
+                            value: {
+                                beginningComplete, 
+                                beginningStart, 
+                                duration, 
+                                durationEventName, 
+                                endingComplete, 
+                                endingStart, 
+                                name
+                            },
+                            type: 'timespan'
+                        }]
+                    }]}
+                );
+            }
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Parthood', 
+                            data: [{
+                                key: 'parent event of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['parent event of observation'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Parthood', 
+                            data: [{
+                                key: 'parent event of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['parent event of observation'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.parameterData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Parameters & Outcomes', 
+                            data: [{
+                                key: 'technique of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'technique'), 
+                                card: self.cards?.['technique of observation'],
+                                type: 'resource'
+                            },{
+                                key: 'procedure / method used during observation', 
+                                value: self.getRawNodeValue(self.resource(), 'used process'), 
+                                card: self.cards?.['parent event of observation'],
+                                type: 'resource'
+                            },{
+                                key: 'object observed during observation', 
+                                value: self.getRawNodeValue(self.resource(), 'observed'), 
+                                card: self.cards?.['object observed during observation'],
+                                type: 'resource'
+                            },{
+                                key: 'recorded value of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'recorded value'), 
+                                card: self.cards?.['recorded value of observation'],
+                                type: 'resource'
+                            },{
+                                key: 'person carrying out observation', 
+                                value: self.getRawNodeValue(self.resource(), 'carried out by'), 
+                                card: self.cards?.['person carrying out observation'],
+                                type: 'resource'
+                            },{
+                                key: 'instrument / tool used for observation', 
+                                value: self.getRawNodeValue(self.resource(), 'used instrument'), 
+                                card: self.cards?.['instrument/tool used for observation'],
+                                type: 'resource'
+                            },{
+                                key: 'digital resource used in observation', 
+                                value: self.getRawNodeValue(self.resource(), 'used digital resource'), 
+                                card: self.cards?.['digital resource used in observation'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
         },
+        
         template: { require: 'text!templates/views/components/reports/observation.htm' }
     });
 });

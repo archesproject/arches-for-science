@@ -3,7 +3,7 @@
 {% block report %}
 
 {% block body %}
-<div class="afs-report-section">
+<div data-bind="if: dataConfig.label" class="afs-report-section">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.label)}" class="fa fa-angle-double-right toggle"></i> {% trans "Metadata" %}</h2>
     
 

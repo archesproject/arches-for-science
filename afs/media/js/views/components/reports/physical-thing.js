@@ -12,8 +12,7 @@ define([
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance', 
     'views/components/reports/scenes/default', 
-    'views/components/annotation-summary', 
-    'views/components/reports/scenes/actor-relations'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
+    'views/components/annotation-summary'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -117,7 +116,7 @@ define([
                         type: 'resource'
                     },{
                         key: 'person in part removal event',
-                        path: 'production_part_carried out by',
+                        path: 'removal from object_carried out by',
                         type: 'resource'
                     },{
                         key: 'removal from object event technique',
@@ -135,11 +134,43 @@ define([
                 }
             };
 
-            self.setEvents = ['added', 'removed'];
-            self.setDataConfig = {'added': 'addition to collection', 'removed': 'removal from set'};
+            self.setEvents = ['addition', 'removal'];
+            self.setDataConfig = {
+                addition: {
+                    graph: 'addition to collection',
+                    metadata: [{
+                        key: 'collection added to',
+                        path: 'addition to collection_added to',
+                        type: 'resource'
+                    },{
+                        key: 'addition event type',
+                        path: 'addition to collection_type',
+                        type: 'kv'
+                    },{
+                        key: 'person in removal event',
+                        path: 'addition to collection_carried out by',
+                        type: 'resource'
+                    }]
+                }, removal: {
+                    graph:'removal from set',
+                    metadata: [{
+                        key: 'collection removed from',
+                        path: 'removal from set_removed from',
+                        type: 'resource'
+                    },{
+                        key: 'removal event type',
+                        path: 'removal from set_type',
+                        type: 'kv'
+                    },{
+                        key: 'person in removal event',
+                        path: 'removal from set_carried out by',
+                        type: 'resource'
+                    }]
+                }};
+
             self.existenceCards = {};
             self.substanceCards = {};
-            self.actorCards = {};
+            self.setCards = {}
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -197,36 +228,33 @@ define([
                             statement: 'statement about part removal event'
                         }
                     },
-                },               
-                
+                };
+
                 self.setCards = {
-                    added: {
-                        card: self.cards?.["added to collection"],
+                    addition: {
+                        card:  self.cards?.["addition event of object to collection"],
                         subCards: {
-                            name: 'name for set addition event',
-                            identifier: 'identifier for set addition event',
-                            timespan: 'timespan of set addition event',
-                            statement: 'statement about set addition event',
+                            name: 'name for addition event',
+                            identifier: 'identifier for addition event',
+                            timespan: 'timespan of addition event',
+                            statement: 'statement about addition event'
                         }
                     },
-                    removed: {
-                        card:  self.cards?.["removal from collection"],
+                    removal: {
+                        card:  self.cards?.["removal event of object from collection"],
                         subCards: {
-                            name: 'name for set removal event',
-                            identifier: 'identifier for set removal event',
-                            timespan: 'timespan of set removal event',
-                            statement: 'statement about set removal event'
+                            name: 'name for addition event',
+                            identifier: 'identifier for addition event',
+                            timespan: 'timespan of addition event',
+                            statement: 'statement about addition event'
                         }
-                    },
-                },
+                    }
+                };        
 
                 self.substanceCards = {
                     dimension: self.cards?.['dimension of object']
-                }
+                };
 
-                self.actorCards = {
-                    owner: self.cards?.["current owner of object"]
-                }
             }
 
             

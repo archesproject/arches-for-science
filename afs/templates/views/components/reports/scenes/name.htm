@@ -114,20 +114,21 @@
         <div class="afs-report-subsection" >
             <div>
                 <div class="afs-report-subsection-ite" style="padding-top: 10px;">
-                    
-                    <div class="afs-block-attributes pad-btm">
-                        <div>
-                            <h4 class="afs-block-key">Type: </h4>
-                            <div class="afs-card-control" data-bind="if: cards.type && type() != '--'">
-                                <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Type" %}</a>
+                    <div data-bind="if: dataConfig.type">
+                        <div class="afs-block-attributes pad-btm">
+                            <div>
+                                <h4 class="afs-block-key">Type: </h4>
+                                <div class="afs-card-control" data-bind="if: cards.type && type() != '--'">
+                                    <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Type" %}</a>
+                                </div>
+                                <div class="afs-card-control" data-bind="if: cards.type && type() == '--'">
+                                    <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Add Type" %}</a>
+                                </div>
                             </div>
-                            <div class="afs-card-control" data-bind="if: cards.type && type() == '--'">
-                                <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Add Type" %}</a>
-                            </div>
+                            <div class="afs-block-value" data-bind="text: type"></div>
                         </div>
-                        <div class="afs-block-value" data-bind="text: type"></div>
                     </div>
-                    <div data-bind="if: exactMatch()">
+                    <div data-bind="if: dataConfig.exactMatch">
                         <div class="afs-block-attributes">
                             <div>
                                 <h4 class="afs-block-key">Exact Match: </h4>

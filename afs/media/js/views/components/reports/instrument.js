@@ -11,8 +11,7 @@ define([
     'views/components/reports/scenes/documentation', 
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance',  
-    'views/components/reports/scenes/default', 
-    'views/components/reports/scenes/actor-relations'
+    'views/components/reports/scenes/default' 
 ], 
     function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
@@ -39,12 +38,29 @@ define([
             self.documentationDataConfig = {
                 'subjectOf': undefined, 
             };
+            self.existenceDataConfig = {
+                'production': {
+                    graph: 'production',
+                    metadata: [{
+                        key: 'production event type',
+                        path: 'production_type',
+                        type: 'resource'
+                    },{
+                        key: 'producer',
+                        path: 'production_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'production event location',
+                        path: 'production_location',
+                        type: 'resource'
+                    }]
+                },
+            };
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
             self.existenceCards = {};
             self.substanceCards = {};
-            self.actorCards = {};
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -56,6 +72,17 @@ define([
                     name: self.cards?.["name of instrument"],
                     identifier: self.cards?.["identifier for instrument"],
                     type: self.cards?.["type of instrument"]
+                };
+                self.existenceCards = {
+                    production: {
+                        card: self.cards?.["production event of instrument"],
+                        subCards: {
+                            name: 'name for production event',
+                            identifier: 'identifier for production event',
+                            timespan: 'timespan of production event',
+                            statement: 'statement about production event',
+                        }
+                    }
                 };
 
                 self.documentationCards = {

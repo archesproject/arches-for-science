@@ -57,6 +57,42 @@
                         dataConfig: documentationDataConfig,
                     }
                 }"></div>
+            </div>            
+            <!-- Location Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: locationData,
+                    }
+                }"></div>
+            </div>
+            <!-- Parthood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
+            <!-- Substance Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: timeSpanData,
+                    }
+                }"></div>
+            </div>
+            <!-- Parameters & Outcomes Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parameters'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parameterData,
+                    }
+                }"></div>
             </div>
         </div>
     </div>            
