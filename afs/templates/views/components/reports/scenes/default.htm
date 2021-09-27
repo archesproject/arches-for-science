@@ -3,8 +3,13 @@
 {% block report %}
 
 {% block body %}
-<div class="afs-report-section" data-bind="foreach: {data: data().sections, as: section, noChildContext: true}">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible[section.title])}" class="fa fa-angle-double-right toggle"></i> <span data-bind="text: section.title"></span></h2>
+<div class="afs-report-section" data-bind="foreach: {data: data().sections, as: 'section', noChildContext: true}">
+    <div>
+        <h2 class="afs-report-section-title">
+            <i data-bind="click: function() {toggleVisibility(visible[section.title])}" class="fa fa-angle-double-right toggle"></i>
+            <span data-bind="text: section.title"></span>
+        </h2>
+    </div>
     
     <!-- Collapsible content -->
     <div data-bind="visible: visible[section.title]" class="afs-report-collapsible-container pad-lft">
