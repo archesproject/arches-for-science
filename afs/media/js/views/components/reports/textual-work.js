@@ -42,7 +42,7 @@ define([
             self.existenceEvents = ['creation'];
             self.existenceDataConfig = {
                 creation: {
-                    graph: 'Creation (partitioned)',
+                    graph: 'creation (partitioned)',
                     metadata: [{
                         key: 'Creation Event Type',
                         path: 'creation (partitioned)_type',
@@ -57,7 +57,7 @@ define([
                         type: 'resource'
                     }],
                     parts: {
-                        graph: 'Creation (partitioned)_part',
+                        graph: 'creation (partitioned)_part',
                         metadata:[{
                             key: 'Creation Event Part Type',
                             path: 'creation (partitioned)_part_type',
@@ -117,9 +117,14 @@ define([
                         card: self.cards?.["creation event of textual work"],
                         subCards: {
                             name: 'name for creation event',
-                            timespan: 'timespan of creation event',
-                            statement: 'statement about creation event',
+                            timespan: 'timespan for creation event',
+                            statement: 'statement about creation',
                             part: 'creation event part'
+                        },
+                        partCards: {
+                            name: 'name for creation event part',
+                            statement: 'statement about creation event part',
+                            timespan: 'timespan of creation event part',
                         }
                     },
                 };
@@ -128,7 +133,7 @@ define([
                         card: self.cards?.["publication event of textual work"],
                         subCards: {
                             name: 'name for publication event',
-                            statement: 'statement about publication event',
+                            statement: 'statement of publication event',
                             timespan: 'timespan of publication event',
                         }
                     },
