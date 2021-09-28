@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.statements)}" class="fa fa-angle-double-right toggle"></i> {% trans "Statements" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.statements)}, css: {'fa-angle-double-right': visible.statements(), 'fa-angle-double-up': !visible.statements()}" class="fa toggle"></i> {% trans "Statements" %}</h2>
     <span data-bind="if: cards.statement && (!statements().length || cards.statement.cardinality == 'n')">
         <a class="afs-report-a" data-bind="click: function(){add(cards.statement)}"><i class="fa fa-mail-reply"></i> {% trans "Add Statement" %}</a>
     </span>

@@ -9,7 +9,9 @@ define([
     'views/components/reports/scenes/description', 
     'views/components/reports/scenes/documentation', 
     'views/components/reports/scenes/existence', 
-    'views/components/reports/scenes/substance'], 
+    'views/components/reports/scenes/substance',
+    'views/components/reports/scenes/json',  
+    'views/components/reports/scenes/default'], 
     function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('digital-resource-report', {
         viewModel: function(params) {
@@ -20,8 +22,14 @@ define([
                 {'id': 'name', 'title': 'Names and Classifications'}, 
                 {'id': 'existence', 'title': 'Existence'},
                 {'id': 'substance', 'title': 'Substance'},
+                {'id': 'events', 'title': 'Events'},
+                {'id': 'parthood', 'title': 'Parthood'},
+                {'id': 'sethood', 'title': 'Sethood'},
+                {'id': 'carriers', 'title': 'Information Carriers & Information Carried'},
+                {'id': 'aboutness', 'title': 'Aboutness'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
+                {'id': 'json', 'title': 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -58,12 +66,29 @@ define([
                     }]
                 },
             };
+
+            self.eventsDataConfig = {
+                'digital service': {
+                    graph: 'service',
+                    metadata: [{
+                        key: 'conforms to',
+                        path: 'service_conforms to',
+                        type: 'resource'
+                    },{
+                        key: 'service type',
+                        path: 'service_type',
+                        type: 'resource'
+                    }]
+                },
+            };
             self.existenceEvents = ['creation'];
+            self.eventsEvents = ['digital service'];
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
             self.substanceCards = {};
             self.existenceCards = {};
+            self.eventsCards = {};
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -95,7 +120,64 @@ define([
                         }
                     },
                 };
+
+                /*self.eventsCards = {
+                    creation: {
+                        card: self.cards?.["creation event of digital resource"],
+                        subCards: {
+                            name: 'name for creation event',
+                            identifier: 'identifier for creation event',
+                            timespan: 'timespan of creation event',
+                            statement: 'statement about creation event',
+                        }
+                    },
+                };*/
             }
+
+            self.aboutnessData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Aboutness", 
+                            data: [{
+                                key: 'text carried by object', 
+                                value: self.getRawNodeValue(self.resource(), 'carries text'), 
+                                card: self.cards?.["text carried by object"],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });       
+
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Parthood", 
+                            data: [{
+                                key: 'parent digital resource', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.sethoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Sethood", 
+                            data: [{
+                                key: 'collection that includes digital resource', 
+                                value: self.getRawNodeValue(self.resource(), 'member of'), 
+                                card: self.cards?.['collection that includes digital resource'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
 
             self.additionalData = ko.observableArray([{
                 key: 'standards conformed to by digital resource', 

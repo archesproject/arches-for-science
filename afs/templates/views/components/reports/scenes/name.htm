@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.names)}" class="fa fa-angle-double-right toggle"></i> {% trans "Names" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.names)}, css: {'fa-angle-double-right': visible.names(), 'fa-angle-double-up': !visible.names()}" class="fa toggle"></i> {% trans "Names" %}</h2>
     <span data-bind="if: cards.name && (!names().length || cards.name.cardinality == 'n')">
         <a class="afs-report-a" data-bind="click: function(){add(cards.name)}"><i class="fa fa-mail-reply"></i> {% trans "Add Name" %}</a>
     </span>
@@ -54,7 +54,7 @@
     </div>
 </div>
 <div class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.identifiers)}" class="fa fa-angle-double-right toggle"></i> {% trans "Identifiers" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.identifiers)}, css: {'fa-angle-double-right': visible.identifiers(), 'fa-angle-double-up': !visible.identifiers()}" class="fa toggle"></i> {% trans "Identifiers" %}</h2>
     <span data-bind="if: cards.identifier && (!identifiers().length || cards.identifier.cardinality == 'n')">
         <a class="afs-report-a" data-bind="click: function(){add(cards.identifier)}"><i class="fa fa-mail-reply"></i> {% trans "Add Identifier" %}</a>
     </span>
@@ -104,7 +104,7 @@
 </div>
 
 <div class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.classifications)}" class="fa fa-angle-double-right toggle"></i> {% trans "Classification" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.classifications)}, css: {'fa-angle-double-right': visible.classifications(), 'fa-angle-double-up': !visible.classifications()}" class="fa toggle"></i> {% trans "Classification" %}</h2>
     
 
     <!-- Collapsible content -->

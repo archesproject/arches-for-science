@@ -132,9 +132,11 @@ define([
         processRawValue: processRawNodeValue,
 
         getResourceLink: (node) => {
-            const resourceId = node.resourceId;
-            if(resourceId){
-                return `${arches.urls.resource}\\${resourceId}`;
+            if(node) {
+                const resourceId = node.resourceId;
+                if(resourceId){
+                    return `${arches.urls.resource}\\${resourceId}`;
+                }
             }
         },        
         

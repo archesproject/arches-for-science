@@ -1,9 +1,6 @@
 define([
     'underscore', 
     'knockout', 
-    'arches', 
-    'utils/resource', 
-    'utils/physical-thing', 
     'utils/report',
     'bindings/datatable', 
     'views/components/reports/scenes/name', 
@@ -12,7 +9,8 @@ define([
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance', 
     'views/components/reports/scenes/default', 
-    'views/components/annotation-summary'], function(_, ko, arches, resourceUtils, physicalThingUtils, reportUtils) {
+    'views/components/reports/scenes/json', 
+    'views/components/reports/scenes/annotation-parts'], function(_, ko, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -29,11 +27,12 @@ define([
                 {'id': 'aboutness', 'title': 'Aboutness'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
+                {'id': 'json', 'title': 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('name');
+            self.activeSection = ko.observable('parthood');
             self.visible = {parts: ko.observable(true)};
             self.nameCards = {};
             self.descriptionCards = {};
@@ -307,11 +306,15 @@ define([
             const parts = self.getRawNodeValue(self.resource(), 'part identifier assignment')
             self.annotation = parts ? {
                     info: parts.map((x => {
-                        const name = self.getNodeValue(x, 'part identifier assignment_label');
-                        const annotator = self.getNodeValue(x, 'part identifier assignment_annotator');
+                        const annotator = self.getRawNodeValue(x, 'part identifier assignment_annotator'); //annotator
+                        const geometricAnnotationIdentifier = self.getNodeValue(x, 'part identifier assignment_polygon identifier', 'part identifier assignment_polygon identifier_classification');
+                        const label = self.getNodeValue(x, 'part identifier assignment_label'); // label/name
+                        const assignedPropertyType = self.getNodeValue(x, 'part identifier assignment_assigned property type'); 
+                        const physicalPartOfObject = self.getRawNodeValue(x, 'part identifier assignment_physical part of object'); // object part
                         const tileId = self.getTileId(x);
-                        return {name, annotator, tileId}
+                        return {label, annotator, tileId, assignedPropertyType, physicalPartOfObject, geometricAnnotationIdentifier}
                     })),
+                    card: self.cards?.['parts of object'],
                     featureCollection: parts.reduce(((previous, current) => {
                         const geojson = self.getNodeValue(current, 'part identifier assignment_polygon identifier');
                         for (feature of geojson.features){
