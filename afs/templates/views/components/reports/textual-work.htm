@@ -80,6 +80,24 @@
                     }
                 }"></div>
             </div>
+             <!-- Aboutness Tab -->
+             <div class="afs-report-page" data-bind="if: activeSection() === 'aboutness'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: aboutnessData
+                    }
+                }"></div>
+            </div>
+            <!-- Parthood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
         </div>
     </div>
 

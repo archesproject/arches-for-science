@@ -17,6 +17,8 @@ define([
                 {'id': 'existence', 'title': 'Existence'},
                 {'id': 'substance', 'title': 'Substance'},
                 {'id': 'event', 'title': 'Event'},
+                {'id': 'parthood', 'title': 'Parthood'},
+                {'id': 'aboutness', 'title': 'Aboutness'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
@@ -39,9 +41,18 @@ define([
             self.documentationCards = {};
             self.existenceEvents = ['creation'];
             self.existenceDataConfig = {
-                'creation': 'Creation (partitioned)',
+                creation: {
+                    graph: 'Creation (partitioned)',
+                }
             };
             self.existenceCards = {};
+            self.eventEvents = ['publication'];
+            self.eventDataConfig = {
+                publication: {
+                    graph: 'publication',
+                }
+            };
+            self.eventCards = {};
             self.substanceCards = {};
 
             self.summary = params.summary;
@@ -49,14 +60,13 @@ define([
             if(params.report.cards){
                 const cards = params.report.cards;
                 
-                self.cards = self.createCardDictionary(cards)
+                self.cards = self.createCardDictionary(cards);
                 self.nameCards = {
                     name: self.cards?.['Textual Work Name'],
                     identifier: self.cards.Identifier,
                     exactMatch: self.cards?.['Textual Work Name'],
                     type: self.cards?.['classification'],
-                }
-
+                };
                 self.descriptionCards = {
                     statement: self.cards.Statement,
                 };
@@ -88,6 +98,41 @@ define([
                                 key: 'content of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'content'), 
                                 card: self.cards?.['content of textual work'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+                });
+                self.parthoodData = ko.observable({
+                    sections: [
+                        {
+                            title: "Part of Text", 
+                            data: [{
+                                key: 'parent textual work', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['parent textual work'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+                });    
+                self.aboutnessData = ko.observable({
+                    sections: [
+                        {
+                            title: "Text Subjects", 
+                            data: [{
+                                key: 'subject(s) of textual work', 
+                                value: self.getRawNodeValue(self.resource(), 'subject'), 
+                                card: self.cards?.["subject(s) of textual work"],
+                                type: 'resource'
+                            }]
+                        },
+                        {
+                            title: "Textual Referent", 
+                            data: [{
+                                key: 'source reference work of textual work', 
+                                value: self.getRawNodeValue(self.resource(), 'is about'), 
+                                card: self.cards?.["source reference work of textual work"],
                                 type: 'resource'
                             }]
                         }
