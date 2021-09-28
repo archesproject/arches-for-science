@@ -152,9 +152,11 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         if(parts?.length){
                             var partObservables = parts.map(x => {
                                 let partKeys = {};
-                                if(rootCardConfig?.subCards){
+                                if (rootCardConfig?.partCards) {
+                                    partKeys = rootCardConfig.partCards;
+                                } else if(rootCardConfig?.subCards){
                                     const subKeys = Object.keys(rootCardConfig?.subCards);
-                                    let partKeys = JSON.parse(JSON.stringify(rootCardConfig?.subCards));
+                                    partKeys = JSON.parse(JSON.stringify(rootCardConfig?.subCards));
                                     for(const key of subKeys){
                                         partKeys[key] += " part"
                                     }
