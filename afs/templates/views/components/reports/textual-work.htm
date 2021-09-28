@@ -80,6 +80,18 @@
                     }
                 }"></div>
             </div>
+            <!-- Event Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'event'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: eventCards,
+                        events: eventEvents, 
+                        dataConfig: eventDataConfig,
+                    }
+                }"></div>
+            </div>
              <!-- Aboutness Tab -->
              <div class="afs-report-page" data-bind="if: activeSection() === 'aboutness'">
                 <div data-bind="component: {

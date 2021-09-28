@@ -43,6 +43,35 @@ define([
             self.existenceDataConfig = {
                 creation: {
                     graph: 'Creation (partitioned)',
+                    metadata: [{
+                        key: 'Creation Event Type',
+                        path: 'creation (partitioned)_type',
+                        type: 'kv'
+                    },{
+                        key: 'Creator of Textual Work',
+                        path: 'creation (partitioned)_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'Creation Event Location',
+                        path: 'creation (partitioned)_location',
+                        type: 'resource'
+                    }],
+                    parts: {
+                        graph: 'Creation (partitioned)_part',
+                        metadata:[{
+                            key: 'Creation Event Part Type',
+                            path: 'creation (partitioned)_part_type',
+                            type: 'kv'
+                        },{
+                            key: 'Creator in Creation Event Part',
+                            path: 'creation (partitioned)_part_carried out by',
+                            type: 'resource'
+                        },{
+                            key: 'Creation Event Part Location',
+                            path: 'creation (partitioned)_part_location',
+                            type: 'resource'
+                        }]
+                    }
                 }
             };
             self.existenceCards = {};
@@ -50,6 +79,19 @@ define([
             self.eventDataConfig = {
                 publication: {
                     graph: 'publication',
+                    metadata: [{
+                        key: 'Publication Event Type',
+                        path: 'Publication_type',
+                        type: 'kv'
+                    },{
+                        key: 'Particular Technique',
+                        path: 'Publication_technique',
+                        type: 'kv'
+                    },{
+                        key: 'Publication Event Location',
+                        path: 'Publication_location',
+                        type: 'resource'
+                    }]
                 }
             };
             self.eventCards = {};
@@ -78,6 +120,16 @@ define([
                             timespan: 'timespan of creation event',
                             statement: 'statement about creation event',
                             part: 'creation event part'
+                        }
+                    },
+                };
+                self.eventCards = {
+                    'publication': {
+                        card: self.cards?.["publication event of textual work"],
+                        subCards: {
+                            name: 'name for publication event',
+                            statement: 'statement about publication event',
+                            timespan: 'timespan of publication event',
                         }
                     },
                 };
