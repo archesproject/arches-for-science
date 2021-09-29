@@ -19,17 +19,17 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'}, 
-                {'id': 'existence', 'title': 'Existence'},
-                {'id': 'substance', 'title': 'Substance'},
-                {'id': 'events', 'title': 'Events'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'sethood', 'title': 'Sethood'},
-                {'id': 'carriers', 'title': 'Information Carriers & Information Carried'},
-                {'id': 'aboutness', 'title': 'Aboutness'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
-                {'id': 'json', 'title': 'JSON'},
+                {id: 'name', title: 'Names and Classifications'}, 
+                {id: 'existence', title: 'Existence'},
+                {id: 'substance', title: 'Substance'},
+                {id: 'events', title: 'Events'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'sethood', title: 'Sethood'},
+                {id: 'carriers', title: 'Information Carriers & Information Carried'},
+                {id: 'aboutness', title: 'Aboutness'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -41,7 +41,7 @@ define([
                 'digitalReference': undefined
             };
             self.existenceDataConfig = {
-                'creation': {
+                creation: {
                     graph: 'creation',
                     metadata: [{
                         key: 'creator',
