@@ -25,6 +25,13 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+            self.contactPointsTable = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+            self.visible = {
+                contactPoints: ko.observable(true)
+            }
             self.sourceData = ko.observable({
                 sections:
                     [
@@ -45,6 +52,7 @@ define([
             self.documentationDataConfig = {
                 subjectOf: undefined
             };
+
             self.existenceEvents = ['birth', 'death'];
             self.existenceDataConfig = {
                 birth: {
@@ -56,11 +64,65 @@ define([
                     metadata: []
                 },
             };
+
+            self.eventEvents = ['professional activity', 'group joining', 'group leaving'];
+            self.eventDataConfig = {
+                'professional activity': {
+                    graph: 'profession activity',
+                    metadata: [{
+                        key: 'professional activity type',
+                        path: 'profession activity_type',
+                        type: 'kv'
+                    },{
+                        key: 'particular professional activity technique',
+                        path: 'profession activity_technique',
+                        type: 'kv'
+                    },{
+                        key: 'location of professional activity',
+                        path: 'profession activity_location',
+                        type: 'resource'
+                    }]
+                },
+                'group joining': {
+                    graph: 'joined group',
+                    metadata: [{
+                        key: 'group joined',
+                        path: 'joined group_joined to',
+                        type: 'resource'
+                    },{
+                        key: 'group role',
+                        path: 'joined group_type',
+                        type: 'kv'
+                    },{
+                        key: 'location of group joining event',
+                        path: 'joined group_location',
+                        type: 'resource'
+                    }]
+                },
+                'group leaving': {
+                    graph: 'left group',
+                    metadata: [{
+                        key: 'group left',
+                        path: 'left group_left group',
+                        type: 'resource'
+                    },{
+                        key: 'group leaving event type',
+                        path: 'left group_type',
+                        type: 'kv'
+                    },{
+                        key: 'location of group leaving event',
+                        path: 'left group_location',
+                        type: 'resource'
+                    }]
+                },
+            };
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
             self.existenceCards = {};
+            self.eventCards = {};
             self.summary = params.summary;
+            self.cards = {};
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -99,6 +161,33 @@ define([
                         }
                     },
                 };
+                
+                self.eventCards = {
+                    'professional activity': {
+                        card: self.cards?.['professional activity of person'],
+                        subCards: {
+                            name: 'name for professional activity',
+                            timespan: 'timespan of professional activity',
+                            statement: 'statement about professional activity',
+                        }
+                    },
+                    'group joining': {
+                        card: self.cards?.['group joining event of person'],
+                        subCards: {
+                            name: 'name for group joining event',
+                            timespan: 'timespan of group joining event',
+                            statement: 'statement about group joining event',
+                        }
+                    },
+                    'group leaving': {
+                        card: self.cards?.['group leaving event of person'],
+                        subCards: {
+                            name: 'name for group leaving event',
+                            timespan: 'timespan of group leaving event',
+                            statement: 'statement about group leaving event',
+                        }
+                    }
+                };
             }
 
             self.parthoodData = ko.observable({
@@ -109,12 +198,21 @@ define([
                             data: [{
                                 key: 'member of group', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
-                                card: self.cards?.['group person is member'],
+                                card: self.cards?.['group person is member of'],
                                 type: 'resource'
                             }]
                         }
                     ]
             });
+
+            self.contactPoints = ko.observableArray(self.getRawNodeValue(self.resource(), 'contact point')?.map(
+                x => {
+                    const content = self.getNodeValue(x, 'contact point_content');
+                    const type = self.getNodeValue(x, 'contact point_type');
+                    const tileid = self.getTileId(x);
+                    return { content, type, tileid };
+                }
+            ));
         },
         template: { require: 'text!templates/views/components/reports/person.htm' }
     });

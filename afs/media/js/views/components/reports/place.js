@@ -33,6 +33,7 @@ define([
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
+            self.locationCards = {};
             self.summary = params.summary;
             
             if(params.report.cards){
@@ -49,6 +50,14 @@ define([
 
                 self.descriptionCards = {
                     statement: self.cards?.["statement about place"],
+                };
+
+                self.documentationCards = {
+                    digitalReference: self.cards?.['digital reference to place'],
+                };
+
+                self.locationCards = {
+                    location: self.cards?.['geospatial definition of place'],
                 };
             }
 

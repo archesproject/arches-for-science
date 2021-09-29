@@ -24,7 +24,7 @@ define([
                 metadata: ko.observable(true),
                 locality: ko.observable(true),
 
-            }
+            };
             self.locationTableConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(6).fill(null)
