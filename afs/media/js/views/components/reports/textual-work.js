@@ -185,7 +185,7 @@ define([
                 self.aboutnessData = ko.observable({
                     sections: [
                         {
-                            title: "Text Subjects", 
+                            title: "Subject this work is about", 
                             data: [{
                                 key: 'subject(s) of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'subject'), 
@@ -194,7 +194,7 @@ define([
                             }]
                         },
                         {
-                            title: "Textual Referent", 
+                            title: "Source Reference Work", 
                             data: [{
                                 key: 'source reference work of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'is about'), 
