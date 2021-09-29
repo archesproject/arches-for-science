@@ -27,16 +27,17 @@ define([
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
             self.nameDataConfig = {
-                name: "Name (top)",
-                exactMatch: undefined
+                name: "name (top)",
+                exactMatch: "exact match"
             };
             self.nameCards = {};
             self.descriptionDataConfig = {
-                statement: "Statement (top)",
+                statement: "statement (top)",
             };
             self.descriptionCards = {};
             self.documentationDataConfig = {
                 subjectOf: "is about",
+                label: undefined
             };
             self.documentationCards = {};
             self.existenceEvents = ['creation'];
@@ -104,13 +105,21 @@ define([
                 
                 self.cards = self.createCardDictionary(cards);
                 self.nameCards = {
-                    name: self.cards?.['Textual Work Name'],
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards?.['Textual Work Name'],
-                    type: self.cards?.['classification'],
+                    name: self.cards?.['name of textual work'],
+                    identifier: self.cards?.['identifier of textual work'],
+                    exactMatch: self.cards?.['external uri of textual work'],
+                    type: self.cards?.['type of textual work'],
                 };
+
+                console.log(self.resource())
+                console.log(self.cards)
+                
                 self.descriptionCards = {
-                    statement: self.cards.Statement,
+                    statement: self.cards?.['statement about textual work'],
+                };
+                self.documentationCards = {
+                    digitalReference: self.cards?.['digital reference to textual work'],
+                    subjectOf: self.cards?.['subject(s) of textual work'],
                 };
                 self.existenceCards = {
                     creation: { 
