@@ -113,7 +113,7 @@ define([
                     statement: self.cards.Statement,
                 };
                 self.existenceCards = {
-                    'creation': { 
+                    creation: { 
                         card: self.cards?.["creation event of textual work"],
                         subCards: {
                             name: 'name for creation event',
@@ -129,7 +129,7 @@ define([
                     },
                 };
                 self.eventCards = {
-                    'publication': {
+                    publication: {
                         card: self.cards?.["publication event of textual work"],
                         subCards: {
                             name: 'name for publication event',
