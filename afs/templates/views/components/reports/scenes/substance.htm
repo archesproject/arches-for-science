@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.dimensions)}" class="fa fa-angle-double-right toggle"></i> {% trans "Dimensions" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.dimensions)}, css: {'fa-angle-double-right': visible.dimensions(), 'fa-angle-double-up': !visible.dimensions()}" class="fa toggle"></i> {% trans "Dimensions" %}</h2>
     <span data-bind="if: cards.dimension">
         <a class="afs-report-a" data-bind="click: function(){add(cards.dimension)}"><i class="fa fa-mail-reply"></i> {% trans "Add Dimension" %}</a>
     </span>
@@ -58,7 +58,7 @@
     </div>
 </div><span></span>
 <div data-bind="if: additionalData" class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.additionalData)}" class="fa fa-angle-double-right toggle"></i> {% trans "Additional Data" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.additionalData)}, css: {'fa-angle-double-right': visible.additionalData(), 'fa-angle-double-up': !visible.additionalData()}" class="fa toggle"></i> {% trans "Additional Data" %}</h2>
     <span data-bind="if: cards.material">
         <a class="afs-report-a" data-bind="click: function(){add(cards.material)}"><i class="fa fa-mail-reply"></i> {% trans "Add Material" %}</a>
     </span>
@@ -74,20 +74,13 @@
         <div class="afs-report-subsection" >
             <div>
                 <div data-bind="foreach: {data: additionalData, as: 'item', noChildContext: true}" class="afs-report-subsection-ite" style="padding-top: 10px;">
-                    <div data-bind="if: item.card">
-                        <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
-                    </div>
-
                     <div class="afs-block-attributes pad-btm">
-                        <div class="afs-card-control">
-                            <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>
-                        </div>
-                        <!-- ko if: item.type == 'kv'-->
-                        <div class="afs-block-value" data-bind="text: item.value"></div>
-                        <!-- /ko -->                        
-                        <!-- ko if: item.type == 'href'-->
-                        <div class="afs-block-value"><a data-bind="text: item.value, attr: { href: item.href }"></a></div>
-                        <!-- /ko -->
+                        <div class="afs-keyvalue" data-bind="component: {
+                            name: 'views/components/reports/scenes/keyvalue',
+                            params: {
+                                data: item
+                            }
+                        }"></div>
                     </div>
                 </div>
             </div>

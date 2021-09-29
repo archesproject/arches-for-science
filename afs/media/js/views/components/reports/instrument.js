@@ -11,6 +11,7 @@ define([
     'views/components/reports/scenes/documentation', 
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance',  
+    'views/components/reports/scenes/json', 
     'views/components/reports/scenes/default' 
 ], 
     function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
@@ -29,6 +30,7 @@ define([
                 {'id': 'sethood', 'title': 'Sethood'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
+                {'id': 'json', 'title': 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);

@@ -88,7 +88,7 @@
                         data: actorData,
                     }
                 }"></div>
-            </div>       
+            </div>
              <!-- Aboutness Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'aboutness'">
                 <div data-bind="component: {
@@ -97,7 +97,7 @@
                         data: aboutnessData
                     }
                 }"></div>
-            </div>    
+            </div>
             <!-- Location Tab -->
            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
                <div data-bind="component: {
@@ -116,7 +116,7 @@
                    }
                }"></div>
                <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.parts)}" class="fa fa-angle-double-right toggle"></i> {% trans "Parts" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.parts)}, css: {'fa-angle-double-right': visible.parts(), 'fa-angle-double-up': !visible.parts()}" class="fa toggle"></i> {% trans "Parts" %}</h2>
                     <span data-bind="if: cards.parts">
                         <a class="afs-report-a" data-bind="click: function(){addNewTile(cards.parts)}"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
                     </span>
@@ -129,7 +129,7 @@
                         
                         <!-- ko if: Array.isArray(annotation.info) -->
                         <div data-bind="with: annotation, as: 'annotation'">
-                        <div data-bind="component: { name: 'views/components/annotation-summary', params: {annotation: annotation}}"></div>
+                        <div data-bind="component: { name: 'views/components/reports/scenes/annotation-parts', params: {annotation: annotation}}"></div>
                         </div>
                         <!-- /ko -->
                     </div>
@@ -144,14 +144,23 @@
                    }
                }"></div>
                <div data-bind="component: {
-                name: 'views/components/reports/scenes/existence',
-                params: {
-                    data: resource,
-                    cards: setCards,
-                    events: setEvents, 
-                    dataConfig: setDataConfig,
-                }
-            }"></div>
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: setCards,
+                        events: setEvents, 
+                        dataConfig: setDataConfig,
+                    }
+                }"></div>
+           </div>           
+           <!-- JSON Tab -->
+           <div class="afs-report-page" data-bind="if: activeSection() === 'json'">
+               <div data-bind="component: {
+                   name: 'views/components/reports/scenes/json',
+                   params: {
+                       resourceInstanceId: reportMetadata().resourceinstanceid,
+                   }
+               }"></div>
            </div>
         </div>
     </div>

@@ -313,7 +313,11 @@ define([
             };
 
             this.saveDigitalResourceToChildPhysThing = async (part) => {
-                if(part.resourceReferenceId()) { return part.resourceReferenceId(); }
+                const resourceReferenceId = part.resourceReferenceId()
+                const filesAlreadyUploaded = part.datasetFiles().some(f => f.file_id)
+                if ( resourceReferenceId || !resourceReferenceId && filesAlreadyUploaded) { 
+                    return resourceReferenceId; 
+                }
                 const partResourceInstanceId = part.data[physicalThingPartNodeId][0].resourceId; 
                 const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
                 const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501";  

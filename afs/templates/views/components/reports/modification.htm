@@ -47,6 +47,42 @@
                     }
                 }"></div>
             </div>
+            <!-- Parameters & Outcomes Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parameters'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parameterData,
+                    }
+                }"></div>
+            </div>
+            <!-- Aboutness Tab -->
+           <div class="afs-report-page" data-bind="if: activeSection() === 'aboutness'">
+               <div data-bind="component: {
+                   name: 'views/components/reports/scenes/default',
+                   params: {
+                       data: aboutnessData
+                   }
+               }"></div>
+           </div>
+            <!-- Parthood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
+            <!-- Location Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: locationData
+                    }
+                }"></div>
+            </div>      
             <!-- Documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
                 <div data-bind="component: {
@@ -57,7 +93,16 @@
                         dataConfig: documentationDataConfig,
                     }
                 }"></div>
-            </div>            
+            </div>
+            <!-- JSON Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'json'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/json',
+                    params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
+                    }
+                }"></div>
+            </div>
         </div>
     </div>            
     {% endblock body %}

@@ -70,6 +70,33 @@
                     }
                 }"></div>
             </div>
+            <!-- Events Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'events'">                
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: usedInData,
+                    }
+                }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: eventCards,
+                        events: eventEvents,
+                        dataConfig: eventDataConfig,
+                    }
+                }"></div>
+            </div>
+            <!-- JSON Tab -->
+           <div class="afs-report-page" data-bind="if: activeSection() === 'json'">
+               <div data-bind="component: {
+                   name: 'views/components/reports/scenes/json',
+                   params: {
+                       resourceInstanceId: reportMetadata().resourceinstanceid,
+                   }
+               }"></div>
+           </div>
         </div>
     </div>            
     {% endblock body %}

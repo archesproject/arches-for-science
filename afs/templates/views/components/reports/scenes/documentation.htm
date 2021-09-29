@@ -4,7 +4,7 @@
 
 {% block body %}
 <div data-bind="if: dataConfig.label" class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.label)}" class="fa fa-angle-double-right toggle"></i> {% trans "Metadata" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.label)}, css: {'fa-angle-double-right': visible.label(), 'fa-angle-double-up': !visible.label()}" class="fa toggle"></i> {% trans "Metadata" %}</h2>
     
 
     <!-- Collapsible content -->
@@ -30,7 +30,7 @@
 </div>
 
 <div data-bind="if: digitalReferenceDisplay" class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.digitalReference)}" class="fa fa-angle-double-right toggle"></i> {% trans "Digital Reference" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.digitalReference)}, css: {'fa-angle-double-right': visible.digitalReference(), 'fa-angle-double-up': !visible.digitalReference()}" class="fa toggle"></i> {% trans "Digital Reference" %}</h2>
     <span data-bind="if: cards.digitalReference && (!digitalReference().length || cards.digitalReference.cardinality == 'n')">
         <a class="afs-report-a" data-bind="click: function(){add(cards.digitalReference)}"><i class="fa fa-mail-reply"></i> {% trans "Add Digital Reference" %}</a>
     </span>
@@ -78,7 +78,7 @@
     </div>
 </div>
 <div data-bind="if: subjectOfDisplay" class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.subjectOf)}" class="fa fa-angle-double-right toggle"></i> {% trans "Subject Of" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.subjectOf)}, css: {'fa-angle-double-right': visible.subjectOf(), 'fa-angle-double-up': !visible.subjectOf()}" class="fa toggle"></i> {% trans "Subject Of" %}</h2>
     <span data-bind="if: cards.subjectOf">
         <a class="afs-report-a" data-bind="click: function(){add(cards.subjectOf)}"><i class="fa fa-mail-reply"></i> {% trans "Modify Subject Of" %}</a>
     </span>

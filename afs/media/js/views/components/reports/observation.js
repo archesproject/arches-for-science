@@ -5,7 +5,8 @@ define([
     'arches',
     'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name'
+    'views/components/reports/scenes/name',
+    'views/components/reports/scenes/json' 
 ], function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('observation-report', {
         viewModel: function(params) {
@@ -20,6 +21,7 @@ define([
                 {'id': 'parthood', 'title': 'Parthood'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
+                {'id': 'json', 'title': 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);

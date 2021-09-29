@@ -19,6 +19,7 @@ define([
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+        const sampleMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
         this.analysisAreaResourceIds = [];
         this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
 
@@ -330,14 +331,13 @@ define([
                         var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
 
                         var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
-                        var samplingMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa";
 
                         var sampleDescriptionTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
                             return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleDescriptionConceptId);
                         });
         
                         var samplingMotivationTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
-                            return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(samplingMotivationConceptId);
+                            return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleMotivationConceptId);
                         });
 
                         if (sampleDescriptionTile) {
@@ -402,14 +402,13 @@ define([
 
             var savePhysicalThingNameTile = function(physicalThingNameTile, type) {
                 return new Promise(function(resolve, _reject) {
-                    var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                     var selectedSampleLocationInstanceLabel = ko.unwrap(self.sampleName);
+                    var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
 
                     if (type === "region") {
                         selectedSampleLocationInstanceLabel = "Region for " + selectedSampleLocationInstanceLabel;
                     }
                     
-                    var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedSampleLocationInstanceLabel;
                     physicalThingNameTile.transactionId = params.form.workflowId;
 
@@ -419,19 +418,16 @@ define([
                 });
             };
 
-            // TO BE UPDATED: Currently saving the classification cards with temporary value ids
-            // ceramics: "19ef147a-3703-41b4-bfa3-d4c66e333b0b" -> analysis area
-            // sculpture: "860c0f17-c655-4eb9-95f1-693c729d225e" -> region (sampling location)
-            // miniature: "b175683f-6229-43b5-acc8-b5ff82a1c9cc" -> sample
-
             const savePhysicalThingClassificationTile = function(physicalThingClassificationTile, type) {
+                const sampleLocationTypeConceptId = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123';
+                const sampleTypeConceptId = '77d8cf19-ce9c-4e0a-bde1-9148d870e11c';
                 return new Promise(function(resolve, _reject) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
                     if (type === "region") {
-                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["860c0f17-c655-4eb9-95f1-693c729d225e"];
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [sampleLocationTypeConceptId];
                     }
                     else { // type === "sample"
-                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["b175683f-6229-43b5-acc8-b5ff82a1c9cc"];
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [sampleTypeConceptId];
                     }
                     physicalThingClassificationTile.transactionId = params.form.workflowId;
 
@@ -663,13 +659,12 @@ define([
             };
 
             var getWorkingPhysicalThingSamplingMotivationTile = function(physicalThingStatementCard) {
-                var samplingMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa";
                 var physicalThingStatementTypeNodeId = "1952e470-b498-11e9-b261-a4d18cec433a"; // Statement_type (E55)
 
                 if (physicalThingStatementCard.tiles() && physicalThingStatementCard.tiles().length) {
 
                     var previouslySavedTile = physicalThingStatementCard.tiles().find(function(tile) {
-                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(samplingMotivationConceptId);
+                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleMotivationConceptId);
                     });
 
                     if (previouslySavedTile) {
@@ -687,7 +682,6 @@ define([
 
             var savePhysicalThingStatementTile = function(physicalThingStatementTile, type) {
                 var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
-                var sampleMotivationConceptId = "0fccc7ca-50fd-4b67-abcd-aff15396cbfa"; //object currently motivation not available
 
                 return new Promise(function(resolve, _reject) {
                     if (self.sampleDescriptionWidgetValue()) {
@@ -868,7 +862,7 @@ define([
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
             const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
-            const analysisAreaTypeConceptId = '19ef147a-3703-41b4-bfa3-d4c66e333b0b'; //'this is actually the ceramic value as a placeholder'
+            const analysisAreaTypeConceptId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
             const related = card.tiles().map((tile) => {
                 return {
                     'resourceid': ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId(),

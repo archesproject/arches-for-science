@@ -243,14 +243,18 @@ i.toggle:hover {
 }
 
 .afs-codemirror {
-    width: 100%;
+    display: flex;
     position: relative;
+    flex-direction: column;
     flex: 1 1 auto;
+    height: 100%;
+    flex-shrink: 0;
 }
 
 .afs-codemirror .geojson-editor {
     position: absolute;
     width: 100%;
+    height: auto;
 }
 
 .afs-table thead th {

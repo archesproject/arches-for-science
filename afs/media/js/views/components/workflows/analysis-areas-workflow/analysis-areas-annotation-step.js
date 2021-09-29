@@ -307,9 +307,10 @@ define([
             };
 
             const savePhysicalThingClassificationTile = function(physicalThingClassificationTile) {
+                const analysisAreaTypeConceptId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
                 return new Promise(function(resolve, _reject) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
-                    physicalThingClassificationTile.data[physicalThingClassificationNodeId] = ["19ef147a-3703-41b4-bfa3-d4c66e333b0b"]; //to be updated currently indicating "ceramics"
+                    physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [analysisAreaTypeConceptId];
                     physicalThingClassificationTile.transactionId = params.form.workflowId;
 
                     physicalThingClassificationTile.save().then(function(physicalThingClassificationData) {
@@ -492,7 +493,7 @@ define([
 
         this.identifySampleLocations = function(card) {
             const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
-            const analysisAreaTypeConceptId = '860c0f17-c655-4eb9-95f1-693c729d225e'; //'this is actually the ceramic value as a placeholder'
+            const sampleAreaTypeConceptId = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123';
             const related = card.tiles().map((tile) => {
                 return {
                     'resourceid': ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId(),
@@ -505,10 +506,10 @@ define([
                         nodeId: classificationNodeId,
                         where: {
                             nodeId: classificationNodeId,
-                            contains: analysisAreaTypeConceptId
+                            contains: sampleAreaTypeConceptId
                         }
                     }, value._source.tiles);
-                    if (nodevals.includes(analysisAreaTypeConceptId)) {
+                    if (nodevals.includes(sampleAreaTypeConceptId)) {
                         self.sampleLocationResourceIds.push(related.find(tile => value._id === tile.resourceid));
                     }
                 });
