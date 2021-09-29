@@ -109,11 +109,7 @@ define([
                     identifier: self.cards?.['identifier of textual work'],
                     exactMatch: self.cards?.['external uri of textual work'],
                     type: self.cards?.['type of textual work'],
-                };
-
-                console.log(self.resource())
-                console.log(self.cards)
-                
+                };                
                 self.descriptionCards = {
                     statement: self.cards?.['statement about textual work'],
                 };
