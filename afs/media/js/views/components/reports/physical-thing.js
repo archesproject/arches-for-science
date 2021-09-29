@@ -3,13 +3,6 @@ define([
     'knockout', 
     'utils/report',
     'bindings/datatable', 
-    'views/components/reports/scenes/name', 
-    'views/components/reports/scenes/description', 
-    'views/components/reports/scenes/documentation', 
-    'views/components/reports/scenes/existence', 
-    'views/components/reports/scenes/substance', 
-    'views/components/reports/scenes/default', 
-    'views/components/reports/scenes/json', 
     'views/components/reports/scenes/annotation-parts'], function(_, ko, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
@@ -32,7 +25,7 @@ define([
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
-            self.activeSection = ko.observable('parthood');
+            self.activeSection = ko.observable('name');
             self.visible = {parts: ko.observable(true)};
             self.nameCards = {};
             self.descriptionCards = {};

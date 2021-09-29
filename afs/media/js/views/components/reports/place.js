@@ -3,10 +3,10 @@ define([
     'underscore',
     'knockout',
     'arches',
-    'utils/resource',
     'utils/report',
-    'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/name',
+    'views/components/reports/scenes/location'
+], function($, _, ko, arches, reportUtils) {
     return ko.components.register('place-report', {
         viewModel: function(params) {
             var self = this;
@@ -14,8 +14,11 @@ define([
             Object.assign(self, reportUtils);
             self.sections = [
                 {'id': 'name', 'title': 'Names and Classifications'},
+                {'id': 'location', 'title': 'Location'},
+                {'id': 'parthood', 'title': 'Parthood'},
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
+                {'id': 'json', 'title': 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -38,16 +41,33 @@ define([
                 self.cards = self.createCardDictionary(cards)
 
                 self.nameCards = {
-                    name: self.cards.name,
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards.Classification
+                    name: self.cards?.["name of place"],
+                    identifier: self.cards?.["identifier"],
+                    exactMatch: self.cards?.["external uri for place"],
+                    type: self.cards?.["type of place"],
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards.Statement,
+                    statement: self.cards?.["statement about place"],
                 };
             }
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Parthood", 
+                            data: [{
+                                key: 'parent place', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['parent place'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.geojson = self.getNodeValue(self.resource(), 'defined by')
         },
         template: { require: 'text!templates/views/components/reports/place.htm' }
     });
