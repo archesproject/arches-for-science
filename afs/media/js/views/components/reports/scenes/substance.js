@@ -31,7 +31,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
             if(params?.compiled){
                 self.dimensions(params.data.dimensions);
-            } else {
+            } else if(self.dataConfig.dimension) {
                 let dimensionData = self.getRawNodeValue(params.data(), self.dataConfig.dimension);
                 
                 if(dimensionData) {
