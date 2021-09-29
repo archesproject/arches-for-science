@@ -165,7 +165,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                         const parts = self.getRawNodeValue(eventData, dataConfig?.parts?.graph);
                         if(parts?.length){
-                            var partObservables = parts.map(x => {
+                            const partObservables = parts.map(x => {
                                 let partKeys = {};
                                 if (rootCardConfig?.partCards) {
                                     partKeys = rootCardConfig.partCards;
