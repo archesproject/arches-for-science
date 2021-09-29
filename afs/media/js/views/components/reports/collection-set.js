@@ -89,6 +89,10 @@ define([
                 self.descriptionCards = {
                     statement: self.cards?.['statement about collection'],
                 };
+                
+                self.documentationCards = {
+                    digitalReference: self.cards?.['digital reference to collection'],
+                };
 
                 self.existenceCards = {
                     creation: {
