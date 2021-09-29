@@ -36,7 +36,7 @@ define([
             };
             self.substanceDataConfig = {
                 dimension: undefined,
-                timespan: {nodegroup: 'timespan', key: 'timespan of observation'}
+                timespan: {path: 'timespan', key: 'timespan of observation'}
             };
             self.nameCards = {};
             self.descriptionCards = {};

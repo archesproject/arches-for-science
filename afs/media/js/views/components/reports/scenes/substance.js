@@ -71,7 +71,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 if(params?.compiled){
                     self.timeSpanValue(params.data.timespan);
                 } else {
-                    const timeSpanData = self.getRawNodeValue(params.data(), self.dataConfig.timespan.nodegroup);
+                    const timeSpanData = self.getRawNodeValue(params.data(), self.dataConfig.timespan.path);
                     self.timeSpanData = ko.observable();
                     if(timeSpanData) {
                         const beginningStart = self.getNodeValue(timeSpanData, `timespan_begin of the begin`);
