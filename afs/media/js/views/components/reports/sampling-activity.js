@@ -21,10 +21,16 @@ define([
                 {'id': 'description', 'title': 'Description'},
                 {'id': 'documentation', 'title': 'Documentation'},
             ];
+
+            self.annotationTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(4).fill(null)
+            };
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
+            self.selectedAnnotationTileId = ko.observable(null);
 
             self.nameDataConfig = {
                 exactMatch: undefined
@@ -62,6 +68,11 @@ define([
                 self.substanceCards = {
                     timespan: self.cards?.['dates of sampling activity'],
                 };
+
+                console.log(self.resource())
+                console.log(self.cards)
+
+
             };
 
             self.temporalData = ko.observable({
@@ -131,6 +142,27 @@ define([
                     }
                 ]
             });
+
+            const parts = self.getRawNodeValue(self.resource(), 'sampling unit')
+            self.annotation = parts ? {
+                info: parts.map((x => {
+                    const overallObjectSampled = self.getRawNodeValue(x, 'sampling area', 'overall object sampled');
+                    const samplingArea = self.getRawNodeValue(x, 'sampling area');
+                    const sampleCreated = self.getRawNodeValue(x, 'sample created');
+                    const tileId = self.getTileId(x);
+                    return {overallObjectSampled, samplingArea, sampleCreated, tileId}
+                })),
+                card: self.cards?.['Sampling Unit for Sampling Activity'],
+                featureCollection: parts.reduce(((previous, current) => {
+                    const geojson = self.getNodeValue(current, 'sampling area', 'sampling area identification', 'Sampling Area Visualization');
+                    for (feature of geojson.features){
+                        feature.properties.tileId = self.getTileId(current);
+                        previous.features.push(feature);
+                    }
+                    return previous;
+                }), {features: [], type: 'FeatureCollection'})
+            }: {};
+            console.log(self.annotation)
         },
         template: { require: 'text!templates/views/components/reports/sampling-activity.htm' }
     });
