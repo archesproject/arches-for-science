@@ -13,13 +13,13 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'},
-                {'id': 'substance', 'title': 'Substance'},
-                {'id': 'temporal', 'title': 'Temporal Relations'},
-                {'id': 'parameters', 'title': 'Parameters & Outcomes'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
+                {id: 'name', title: 'Names and Classifications'},
+                {id: 'substance', title: 'Substance'},
+                {id: 'temporal', title: 'Temporal Relations'},
+                {id: 'parameters', title: 'Parameters & Outcomes'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
             ];
 
             self.annotationTableConfig = {
@@ -73,21 +73,21 @@ define([
             self.temporalData = ko.observable({
                 sections: [
                     {
-                        title: "Temporal Relations of Sampling Activity", 
+                        title: 'Temporal Relations of Sampling Activity', 
                         data: [{
                             key: 'Sampling Activity Period', 
                             value: self.getRawNodeValue(self.resource(), 'during'), 
-                            card: self.cards?.["temporal relations of sampling activity"],
+                            card: self.cards?.['temporal relations of sampling activity'],
                             type: 'resource'
                         },{
                             key: 'Occurs After Event', 
                             value: self.getRawNodeValue(self.resource(), 'starts after'), 
-                            card: self.cards?.["occurs after event in sampling activity"],
+                            card: self.cards?.['occurs after event in sampling activity'],
                             type: 'resource'
                         },{
                             key: 'Occurs Before Event', 
                             value: self.getRawNodeValue(self.resource(), 'ends before'), 
-                            card: self.cards?.["occurs before event in sampling activity"],
+                            card: self.cards?.['occurs before event in sampling activity'],
                             type: 'resource'
                         }]
                     }
