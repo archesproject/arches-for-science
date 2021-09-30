@@ -58,6 +58,44 @@
                     }
                 }"></div>
             </div>
+            <!-- Temportal Relationship Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'temporal'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: temporalData,
+                    }
+                }"></div>
+            </div>
+            <!-- Parthood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
+            <!-- Substance Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/substance',
+                    params: {
+                        data: resource,
+                        cards: substanceCards,
+                        dataConfig: substanceDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Parameters & Outcomes Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parameters'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parameterData,
+                    }
+                }"></div>
+            </div>
         </div>
     </div>            
     {% endblock body %}
