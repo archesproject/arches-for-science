@@ -37,6 +37,7 @@ define([
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
+            self.substanceCards = {};
             self.summary = params.summary;
 
             if(params.report.cards) {
@@ -56,6 +57,9 @@ define([
 
                 self.descriptionCards = {
                     statement: self.cards?.['statement about modification']
+                };
+                self.substanceCards = {
+                    timespan: self.cards?.['timespan of modification'],
                 };
             }
 
@@ -109,6 +113,10 @@ define([
                     ]
             });
 
+            self.substanceDataConfig = {
+                dimension: undefined,
+                timespan: {path: 'timespan', key: 'timespan of modification'}
+            };
 
             self.parthoodData = ko.observable({
                 sections: 

@@ -12,14 +12,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'},
-                {'id': 'existence', 'title': 'Existence'},
-                {'id': 'events', 'title': 'Events'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
-                {'id': 'communication', 'title': 'Communication'},
-                {'id': 'json', 'title': 'JSON'},
+                {id: 'name', title: 'Names and Classifications'},
+                {id: 'existence', title: 'Existence'},
+                {id: 'events', title: 'Events'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'communication', title: 'Communication'},
+                {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -36,7 +36,7 @@ define([
                 sections:
                     [
                         {
-                            title: "References",
+                            title: 'References',
                             data: [{
                                 key: 'source reference work',
                                 value: self.getRawNodeValue(self.resource(), 'source'),
@@ -57,11 +57,25 @@ define([
             self.existenceDataConfig = {
                 birth: {
                     graph: 'birth',
-                    metadata: []
+                    metadata: [],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: true
+                    }
                 },
                 death: {
                     graph: 'death',
-                    metadata: []
+                    metadata: [],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: true
+                    }
                 },
             };
 
@@ -81,7 +95,14 @@ define([
                         key: 'location of professional activity',
                         path: 'profession activity_location',
                         type: 'resource'
-                    }]
+                    }],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: false
+                    }
                 },
                 'group joining': {
                     graph: 'joined group',
@@ -97,7 +118,14 @@ define([
                         key: 'location of group joining event',
                         path: 'joined group_location',
                         type: 'resource'
-                    }]
+                    }],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: false
+                    }
                 },
                 'group leaving': {
                     graph: 'left group',
@@ -113,13 +141,21 @@ define([
                         key: 'location of group leaving event',
                         path: 'left group_location',
                         type: 'resource'
-                    }]
+                    }],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: false
+                    }
                 },
             };
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
             self.existenceCards = {};
+            self.communicationCards = {};
             self.eventCards = {};
             self.summary = params.summary;
             self.cards = {};
@@ -130,34 +166,40 @@ define([
                 self.cards = self.createCardDictionary(cards)
 
                 self.nameCards = {
-                    name: self.cards?.["name of person"],
-                    identifier: self.cards?.["identifier for person"],
-                    exactMatch: self.cards?.["external uri for person"],
+                    name: self.cards?.['name of person'],
+                    identifier: self.cards?.['identifier for person'],
+                    exactMatch: self.cards?.['external uri for person'],
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards?.["statement about person"],
+                    statement: self.cards?.['statement about person'],
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.["digital reference for person"],
+                    digitalReference: self.cards?.['digital reference for person'],
+                };
+
+                self.communicationCards = {
+                    contactPoints: self.cards?.['contact information for person'],
                 };
 
                 self.existenceCards = {
                     birth: { 
-                        card: self.cards?.["birth event of person"],
+                        card: self.cards?.['birth event of person'],
                         subCards: {
                             name: 'name for birth event',
                             timespan: 'timespan of birth event',
                             statement: 'statement about birth event',
+                            location: 'location of birth event',
                         }
                     },
                     death: {
-                        card:  self.cards?.["death event of person"],
+                        card:  self.cards?.['death event of person'],
                         subCards: {
                             name: 'name for death event',
                             timespan: 'timespan of death event',
-                            statement: 'statement about death event'
+                            statement: 'statement about death event',
+                            location: 'location of death event'
                         }
                     },
                 };
@@ -194,7 +236,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Parthood", 
+                            title: 'Parthood', 
                             data: [{
                                 key: 'member of group', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
@@ -204,15 +246,6 @@ define([
                         }
                     ]
             });
-
-            self.contactPoints = ko.observableArray(self.getRawNodeValue(self.resource(), 'contact point')?.map(
-                x => {
-                    const content = self.getNodeValue(x, 'contact point_content');
-                    const type = self.getNodeValue(x, 'contact point_type');
-                    const tileid = self.getTileId(x);
-                    return { content, type, tileid };
-                }
-            ));
         },
         template: { require: 'text!templates/views/components/reports/person.htm' }
     });

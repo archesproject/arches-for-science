@@ -47,14 +47,15 @@
                     }
                 }"></div>
             </div>
-            <!-- documentation Tab -->
+            <!-- Documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
-                <div data-bind="component: {
+                <!-- commented due to model discrepency in airtable
+                    <div data-bind="component: { 
                     name: 'views/components/reports/scenes/default',
                     params: {
                         data: sourceData,
                     }
-                }"></div>
+                }"></div>--> 
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/documentation',
                     params: {
@@ -76,6 +77,55 @@
                     }
                 }"></div>
             </div>
+            <!-- Events Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'events'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: eventCards,
+                        events: eventEvents,
+                        dataConfig: eventDataConfig,
+                    }
+                }"></div>
+            </div>
+            <!-- Parthood Tab --> 
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
+            <!-- Location Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: locationData
+                    }
+                }"></div>
+            </div>      
+            <!-- JSON Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'json'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/json',
+                    params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
+                    }
+                }"></div>
+            </div>
+            <!-- Communication Tab, unique to person -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'communication'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/communication',
+                    params: {
+                        data: resource,
+                        cards: communicationCards
+                    }
+                }"></div>
+            </div>
         </div>
     </div>            
     {% endblock body %}
@@ -93,7 +143,7 @@
                 cards: nameCards
             }
         }"></div>
-        <!-- Description -->>
+        <!-- Description -->
         <div data-bind="component: {
             name: 'views/components/reports/scenes/description',
             params: {

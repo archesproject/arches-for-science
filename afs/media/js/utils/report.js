@@ -34,17 +34,17 @@ define([
     };
 
     const processRawNodeValue = (rawValue) => {
-        const nodeValue = rawValue?.["@display_value"] || rawValue?.['display_value'];
+        const nodeValue = rawValue?.['@display_value'] || rawValue?.['display_value'];
         const geojson = rawValue?.geojson;
         if(geojson){
             return geojson;
         }
         
         //strict checks here because some nodeValues (0, false, etc.) should be rendered differently.
-        if(nodeValue !== undefined && nodeValue !== null && nodeValue !== ""){
+        if(nodeValue !== undefined && nodeValue !== null && nodeValue !== ''){
             return $(`<span>${nodeValue}</span>`).text();
         } else {
-            return "--";
+            return '--';
         }
     };
 
@@ -105,7 +105,7 @@ define([
                 currentCard = card.parentCard.tiles()?.[0].cards.find(x => x.nodegroupid == card.nodegroupid)
             }
             currentCard.canAdd() ? currentCard.selected(true) : currentCard.tiles()[0].selected(true);
-            if(currentCard.cardinality == "n" || (currentCard.cardinality == "1" && !currentCard.tiles().length)) {
+            if(currentCard.cardinality == 'n' || (currentCard.cardinality == '1' && !currentCard.tiles().length)) {
                 const currentSubscription = currentCard.selected.subscribe(function(){
                     currentCard.showForm(true);
                     currentSubscription.dispose();

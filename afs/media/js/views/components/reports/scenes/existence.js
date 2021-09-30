@@ -25,8 +25,11 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             };
 
             self.dataConfig = {
-                production: 'production',
-            }
+                'production': {
+                    graph: 'production',
+                    metadata: []
+                }
+            };
 
             self.cards = Object.assign({}, params.cards);
             self.edit = params.editTile || self.editTile;
@@ -34,10 +37,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.add = params.addTile || self.addNewTile;
             self.events = params.events || ['production']
             self.eventDataArray = {};
-            self.visible = {
-                production: ko.observable(true),
-                event: ko.observable(true)
-            }
+            self.visible = {}
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             const extractEventData = (existenceEvent, eventDataSet, dataConfig, rootCardConfig) => {
@@ -49,11 +49,19 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                 return eventDataSet.map(eventData => {
                     const eventObservables = {
+                        children: dataConfig.children || {
+                            names: true, 
+                            identifiers: true, 
+                            statements: true, 
+                            timespan: true,
+                            location: false
+                        },
                         names: ko.observableArray(),
                         visible: ko.observable(true),
                         identifiers: ko.observableArray(),
                         statements: ko.observableArray(),
                         timespan: ko.observable(),
+                        location: ko.observable(),
                         parts: ko.observableArray(),
                         metadata: ko.observableArray()
                     };
@@ -69,6 +77,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                             tileCards.statement = tileCards?.[subCards.statement];
                             tileCards.timespan = tileCards?.[subCards.timespan];
                             tileCards.identifier = tileCards?.[subCards.identifier];
+                            tileCards.location = tileCards?.[subCards.location];
                             tileCards.part = tileCards?.[subCards.part];
                             eventObservables.cards = tileCards;
                         }
@@ -97,6 +106,11 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                                 const tileid = x?.['@tile_id'];
                                 return {name, tileid, type};
                             }));
+                        }
+
+                        const eventLocationValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_location`);
+                        if(eventLocationValue){
+                            eventObservables.location(eventLocationValue);
                         }
 
                         const eventTime = self.getRawNodeValue(eventData, `${existenceEventConfig}_time`)
@@ -205,6 +219,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 self.eventDataArray = params.data.eventData;
             } else {
                 for(existenceEvent of self.events){
+                    self.visible[existenceEvent] = ko.observable(true);
                     self.eventDataArray[existenceEvent] = extractEventData(existenceEvent, self.getRawNodeValue(params.data(), self.dataConfig?.[existenceEvent]?.graph), self.dataConfig?.[existenceEvent], self.cards?.[existenceEvent], params.metadata);
                 }
             }

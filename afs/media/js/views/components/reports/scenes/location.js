@@ -37,101 +37,101 @@ define([
                 const strokecolor = '#fff'
 
                 const layers = [{
-                    "id": "unselected-feature-polygon-fill",
-                    "type": "fill",
-                    "minzoom": 11,
-                    "filter": ['all',[
-                        "==", "$type", "Polygon"
+                    'id': 'unselected-feature-polygon-fill',
+                    'type': 'fill',
+                    'minzoom': 11,
+                    'filter': ['all',[
+                        '==', '$type', 'Polygon'
                     ]],
-                    "paint": {
-                        "fill-color": color,
-                        "fill-outline-color": color,
-                        "fill-opacity": 0.2
+                    'paint': {
+                        'fill-color': color,
+                        'fill-outline-color': color,
+                        'fill-opacity': 0.2
                     },
-                    "layout": {
-                        "visibility": visible ? "visible": "none"
+                    'layout': {
+                        'visibility': visible ? 'visible': 'none'
                     }
                 },  {
-                    "id": "unselected-feature-polygon-under-stroke",
-                    "type": "line",
-                    "minzoom": 11,
-                    "filter": ['all',[
-                        "==", "$type", "Polygon"
+                    'id': 'unselected-feature-polygon-under-stroke',
+                    'type': 'line',
+                    'minzoom': 11,
+                    'filter': ['all',[
+                        '==', '$type', 'Polygon'
                     ]],
-                    "layout": {
-                        "line-cap": "round",
-                        "line-join": "round",
-                        "visibility": visible ? "visible": "none"
+                    'layout': {
+                        'line-cap': 'round',
+                        'line-join': 'round',
+                        'visibility': visible ? 'visible': 'none'
                     },
-                    "paint": {
-                        "line-color": strokecolor,
-                        "line-width": 4
+                    'paint': {
+                        'line-color': strokecolor,
+                        'line-width': 4
                     }
                 }, {
-                    "id": "unselected-feature-polygon-stroke",
-                    "type": "line",
-                    "minzoom": 11,
-                    "filter": ['all',[
-                        "==", "$type", "Polygon"
+                    'id': 'unselected-feature-polygon-stroke',
+                    'type': 'line',
+                    'minzoom': 11,
+                    'filter': ['all',[
+                        '==', '$type', 'Polygon'
                     ]], 
-                    "layout": {
-                        "line-cap": "round",
-                        "line-join": "round",
-                        "visibility": visible ? "visible": "none"
+                    'layout': {
+                        'line-cap': 'round',
+                        'line-join': 'round',
+                        'visibility': visible ? 'visible': 'none'
                     },
-                    "paint": {
-                        "line-color": color,
-                        "line-width": 2
+                    'paint': {
+                        'line-color': color,
+                        'line-width': 2
                     }
                 }, {
-                    "id": "unselected-feature-line",
-                    "type": "line",
-                    "minzoom": 11,
-                    "filter": ['all',[
-                        "==", "$type", "LineString"
+                    'id': 'unselected-feature-line',
+                    'type': 'line',
+                    'minzoom': 11,
+                    'filter': ['all',[
+                        '==', '$type', 'LineString'
                     ]],
-                    "layout": {
-                        "line-cap": "round",
-                        "line-join": "round",
-                        "visibility": visible ? "visible": "none"
+                    'layout': {
+                        'line-cap': 'round',
+                        'line-join': 'round',
+                        'visibility': visible ? 'visible': 'none'
                     },
-                    "paint": {
-                        "line-color": color,
-                        "line-width": 2
+                    'paint': {
+                        'line-color': color,
+                        'line-width': 2
                     }
                 }, {
-                    "id": "unselected-feature-point-point-stroke",
-                    "type": "circle",
-                    "minzoom": 11,
-                    "filter": ['all',[
-                        "==", "$type", "Point"
+                    'id': 'unselected-feature-point-point-stroke',
+                    'type': 'circle',
+                    'minzoom': 11,
+                    'filter': ['all',[
+                        '==', '$type', 'Point'
                     ]],
-                    "paint": {
-                        "circle-radius": 6,
-                        "circle-opacity": 1,
-                        "circle-color": "#fff"
+                    'paint': {
+                        'circle-radius': 6,
+                        'circle-opacity': 1,
+                        'circle-color': '#fff'
                     },
-                    "layout": {
-                        "visibility": visible ? "visible": "none"
+                    'layout': {
+                        'visibility': visible ? 'visible': 'none'
                     }
                 }, {
-                    "id": "unselected-feature-point",
-                    "type": "circle",
-                    "minzoom": 11,
-                    "filter": ['all',[
-                        "==", "$type", "Point"
+                    'id': 'unselected-feature-point',
+                    'type': 'circle',
+                    'minzoom': 11,
+                    'filter': ['all',[
+                        '==', '$type', 'Point'
                     ]],
-                    "paint": {
-                        "circle-radius": 4,
-                        "circle-color": color
+                    'paint': {
+                        'circle-radius': 4,
+                        'circle-color': color
                     },
-                    "layout": {
-                        "visibility": visible ? "visible": "none"
+                    'layout': {
+                        'visibility': visible ? 'visible': 'none'
                     }
                 }];
 
                 layers.forEach((layer) => {
-                    layer["source"] = source;
+                    layer['source'] = source;
                 });
 
                 return layers;
@@ -170,8 +170,8 @@ define([
                 
                 const sourceConfig = {};
                 sourceConfig[sourceId] = {
-                        "type": "geojson",
-                        "data": geojson
+                        'type': 'geojson',
+                        'data': geojson
                     };
                 mapParams.sources = Object.assign(sourceConfig, mapParams.sources);
                 mapParams.layers = [...selectFeatureLayersFactory(
@@ -184,8 +184,8 @@ define([
                 ), ...createUnselectedLayers(sourceId)];
                 MapComponentViewModel.apply(self, [Object.assign({},  mapParams,
                     {
-                        "activeTab": ko.observable(false),
-                        "zoom": null
+                        'activeTab': ko.observable(false),
+                        'zoom': null
                     }
                 )]);
                 
