@@ -22,6 +22,9 @@ define([
                 columns: Array(6).fill(null)
             };
 
+            this.type = params.type || 'physical-thing'
+            Object.assign(self.annotationTableConfig, params.annotationTableConfig || {});
+
             this.prepareAnnotation = function(featureCollection) {
                 var canvas = featureCollection.features[0].properties.canvas;
 

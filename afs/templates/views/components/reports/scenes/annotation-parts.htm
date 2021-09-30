@@ -6,6 +6,7 @@
     </div>
     <div style="flex: 0 0 100%">
         <div class="afs-table pad-btm">
+            <!-- ko if: type === 'physical-thing' -->
             <table class="table table-striped" cellspacing="0" width="100%">
                 <thead>
                     <tr class="afs-table-header">
@@ -49,6 +50,48 @@
                     </tr>
                 </tbody>
             </table>
+            <!-- /ko -->
+            <!-- ko if: type === 'sampling-activity' -->
+            <table class="table table-striped" cellspacing="0" width="100%">
+                <thead>
+                    <tr class="afs-table-header">
+                        <th>{% trans "Sampling Area" %}</th>
+                        <th>{% trans "Sample Created" %}</th>
+                        <th>{% trans "Overall Object" %}</th>
+                        <th class="afs-table-control all"></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="dataTablesForEach: { data: annotation.info, as: 'part', dataTableOptions: annotationTableConfig }">
+                    <tr>
+                        <td>
+                            <div data-bind="text: part.samplingArea"></div>
+                        </td>
+                        <td>
+                            <div data-bind="text: part.sampleCreated"></div>
+                        </td>
+                        <td>
+                            <div data-bind="text: part.overallObjectSampled"></div>
+                        </td>
+                        <td style="width: 110px;" class="afs-table-control">
+                            <div">
+                            <div style="display:inline" data-bind="if: annotation.card && annotation.card">
+                                <a style="display:inline" data-bind="click: function() {$parent.editTile(part.tileId, annotation.card)}">
+                                    <i style="display:inline" class="fa fa-mail-reply"></i>
+                                </a>
+                                <a style="display:inline" data-bind="click: function() {$parent.deleteTile(part.tileId, annotation.card)}">
+                                    <i style="display:inline" class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                            <a style="display:inline" data-bind="click: function(){$parent.highlightAnnotation(part.tileId)}">
+                                <i class="fa fa-globe"></i>
+                            </a>
+                            <i style="display:inline" data-bind="visible: $parent.selectedAnnotationTileId() === part.tileId" class="fa fa-arrow-left"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- /ko -->
         </div>
         <div class="final-step-section-block-item">
             <div class="block-item files-metadata">
