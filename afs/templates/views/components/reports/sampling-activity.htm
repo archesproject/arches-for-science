@@ -162,6 +162,15 @@
                     </div>
                 </div>
             </div>
+            <!-- JSON Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'json'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/json',
+                    params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
+                    }
+                }"></div>
+            </div>
         </div>
     </div>            
     {% endblock body %}

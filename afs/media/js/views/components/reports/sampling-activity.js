@@ -20,6 +20,7 @@ define([
                 {id: 'parthood', title: 'Parthood'},
                 {id: 'description', title: 'Description'},
                 {id: 'documentation', title: 'Documentation'},
+                {id: 'json', title: 'JSON'},
             ];
 
             self.annotationTableConfig = {
