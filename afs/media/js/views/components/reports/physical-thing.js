@@ -3,7 +3,8 @@ define([
     'knockout', 
     'utils/report',
     'bindings/datatable', 
-    'views/components/reports/scenes/annotation-parts'], function(_, ko, reportUtils) {
+    'views/components/reports/scenes/annotation-parts'
+], function(_, ko, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -22,11 +23,17 @@ define([
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
+
+            self.annotationTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(6).fill(null)
+            };
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
             self.visible = {parts: ko.observable(true)};
+            self.selectedAnnotationTileId = ko.observable(null);
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};

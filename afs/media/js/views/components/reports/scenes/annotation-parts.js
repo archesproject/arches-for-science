@@ -13,16 +13,10 @@ define([
             var self = this;
 
             Object.assign(self, reportUtils);
-            this.map = ko.observable();
-            this.selectedAnnotationTileId = ko.observable();
-            var defaultColor;
+            self.map = ko.observable();
+            self.selectedAnnotationTileId = params.selectedAnnotationTileId || ko.observable();
 
-            this.annotationTableConfig = {
-                ...self.defaultTableConfig,
-                columns: Array(6).fill(null)
-            };
-
-            this.prepareAnnotation = function(featureCollection) {
+            self.prepareAnnotation = function(featureCollection) {
                 var canvas = featureCollection.features[0].properties.canvas;
 
                 var afterRender = function(map) {
@@ -61,22 +55,16 @@ define([
                 };
             };
 
-            this.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection);
+            self.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection);
 
-            this.highlightAnnotation = function(tileId){
-                if (tileId !== self.selectedAnnotationTileId()){
-                    self.selectedAnnotationTileId(tileId);
-                } else {
-                    self.selectedAnnotationTileId(null);
-                }
+            self.selectedAnnotationTileId.subscribe(tileId => {
                 if (self.map()) {
                     self.map().eachLayer(function(layer){
                         if (layer.eachLayer) {
                             layer.eachLayer(function(feature){
-                                if (!defaultColor) {
-                                    defaultColor = feature.feature.properties.color;
-                                }
-                                if (self.selectedAnnotationTileId() === feature.feature.properties.tileId) {
+                                const defaultColor = feature.feature.properties.color;
+
+                                if (tileId === feature.feature.properties.tileId) {
                                     feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
                                 } else {
                                     feature.setStyle({color: defaultColor, fillColor: defaultColor});
@@ -84,8 +72,8 @@ define([
                             });
                         }
                     });
-                } 
-            };
+                };
+            });
         },
         template: {
             require: 'text!templates/views/components/reports/scenes/annotation-parts.htm'
