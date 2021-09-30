@@ -4,7 +4,7 @@
 
 {% block body %}
 <!-- JSON section -->
-<div class="afs-report-section" style="height: 100%;">
+<div class="afs-report-section afs-flex-col">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.json)}, css: {'fa-angle-double-right': visible.json(), 'fa-angle-double-up': !visible.json()}" class="fa toggle"></i> {% trans "Resource JSON" %}</h2>
     
 
@@ -39,10 +39,11 @@
         </a>
     </div>
     <!-- Show this block if there is resource tile content -->
-    <div data-bind="visible: visible.json" class="afs-report-subsection">
-        <div class="afs-codemirror">
-            <div class="geojson-editor" data-bind="codemirror: {
+    <div data-bind="visible: visible.json" class="afs-report-subsection afs-flex-col">
+        <div class="afs-codemirror afs-flex-col">
+            <div style="overflow:auto; height:100%;" class="geojson-editor" data-bind="codemirror: {
                 value: selectedJSON,
+                viewportMargin: Infinity,
                 mode: { name: 'javascript', json: codeMirrorJsonMode, jsonld: codeMirrorJsonLDMode },
                 lineNumbers: true
             }"></div>

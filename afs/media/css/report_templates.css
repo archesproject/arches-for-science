@@ -242,6 +242,16 @@ i.toggle:hover {
     width: 100%;
 }
 
+.afs-codemirror div .CodeMirror{
+    height: 100%
+}
+
+.afs-flex-col{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 .afs-codemirror {
     display: flex;
     position: relative;
