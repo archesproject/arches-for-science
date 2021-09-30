@@ -13,30 +13,31 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'},
-                {'id': 'existence', 'title': 'Existence'},
-                {'id': 'substance', 'title': 'Substance'},
-                {'id': 'event', 'title': 'Event'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'aboutness', 'title': 'Aboutness'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
+                {id: 'name', title: 'Names and Classifications'},
+                {id: 'existence', title: 'Existence'},
+                {id: 'substance', title: 'Substance'},
+                {id: 'event', title: 'Event'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'aboutness', title: 'Aboutness'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'json', title: 'JSON'}
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
             self.nameDataConfig = {
-                name: "name (top)",
-                exactMatch: "exact match"
+                name: 'name (top)',
+                exactMatch: 'exact match'
             };
             self.nameCards = {};
             self.descriptionDataConfig = {
-                statement: "statement (top)",
+                statement: 'statement (top)',
             };
             self.descriptionCards = {};
             self.documentationDataConfig = {
-                subjectOf: "is about",
+                subjectOf: 'is about',
                 label: undefined
             };
             self.documentationCards = {};
@@ -119,7 +120,7 @@ define([
                 };
                 self.existenceCards = {
                     creation: { 
-                        card: self.cards?.["creation event of textual work"],
+                        card: self.cards?.['creation event of textual work'],
                         subCards: {
                             name: 'name for creation event',
                             timespan: 'timespan for creation event',
@@ -135,7 +136,7 @@ define([
                 };
                 self.eventCards = {
                     publication: {
-                        card: self.cards?.["publication event of textual work"],
+                        card: self.cards?.['publication event of textual work'],
                         subCards: {
                             name: 'name for publication event',
                             statement: 'statement of publication event',
@@ -146,17 +147,13 @@ define([
                 self.substanceData = ko.observable({
                     sections: [
                         {
-                            title: "Language", 
+                            title: 'Substance', 
                             data: [{
                                 key: 'language of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'language'), 
                                 card: self.cards?.['language of textual work'],
                                 type: 'resource'
-                            }]
-                        },
-                        {
-                            title: "Text Content", 
-                            data: [{
+                            },{
                                 key: 'content of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'content'), 
                                 card: self.cards?.['content of textual work'],
@@ -168,7 +165,7 @@ define([
                 self.parthoodData = ko.observable({
                     sections: [
                         {
-                            title: "Part of Text", 
+                            title: 'Part of Text', 
                             data: [{
                                 key: 'parent textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -181,20 +178,16 @@ define([
                 self.aboutnessData = ko.observable({
                     sections: [
                         {
-                            title: "Subject this work is about", 
+                            title: 'Aboutness', 
                             data: [{
-                                key: 'subject(s) of textual work', 
+                                key: 'subject of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'subject'), 
-                                card: self.cards?.["subject(s) of textual work"],
+                                card: self.cards?.['subject(s) of textual work'],
                                 type: 'resource'
-                            }]
-                        },
-                        {
-                            title: "Source Reference Work", 
-                            data: [{
+                            },{
                                 key: 'source reference work of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'is about'), 
-                                card: self.cards?.["source reference work of textual work"],
+                                card: self.cards?.['source reference work of textual work'],
                                 type: 'resource'
                             }]
                         }

@@ -12,14 +12,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'},
-                {'id': 'existence', 'title': 'Existence'},
-                {'id': 'events', 'title': 'Events'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
-                {'id': 'communication', 'title': 'Communication'},
-                {'id': 'json', 'title': 'JSON'},
+                {id: 'name', title: 'Names and Classifications'},
+                {id: 'existence', title: 'Existence'},
+                {id: 'events', title: 'Events'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'communication', title: 'Communication'},
+                {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -36,7 +36,7 @@ define([
                 sections:
                     [
                         {
-                            title: "References",
+                            title: 'References',
                             data: [{
                                 key: 'source reference work',
                                 value: self.getRawNodeValue(self.resource(), 'source'),
@@ -130,22 +130,22 @@ define([
                 self.cards = self.createCardDictionary(cards)
 
                 self.nameCards = {
-                    name: self.cards?.["name of person"],
-                    identifier: self.cards?.["identifier for person"],
-                    exactMatch: self.cards?.["external uri for person"],
+                    name: self.cards?.['name of person'],
+                    identifier: self.cards?.['identifier for person'],
+                    exactMatch: self.cards?.['external uri for person'],
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards?.["statement about person"],
+                    statement: self.cards?.['statement about person'],
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.["digital reference for person"],
+                    digitalReference: self.cards?.['digital reference for person'],
                 };
 
                 self.existenceCards = {
                     birth: { 
-                        card: self.cards?.["birth event of person"],
+                        card: self.cards?.['birth event of person'],
                         subCards: {
                             name: 'name for birth event',
                             timespan: 'timespan of birth event',
@@ -153,7 +153,7 @@ define([
                         }
                     },
                     death: {
-                        card:  self.cards?.["death event of person"],
+                        card:  self.cards?.['death event of person'],
                         subCards: {
                             name: 'name for death event',
                             timespan: 'timespan of death event',
@@ -194,7 +194,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Parthood", 
+                            title: 'Parthood', 
                             data: [{
                                 key: 'member of group', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
@@ -204,15 +204,6 @@ define([
                         }
                     ]
             });
-
-            self.contactPoints = ko.observableArray(self.getRawNodeValue(self.resource(), 'contact point')?.map(
-                x => {
-                    const content = self.getNodeValue(x, 'contact point_content');
-                    const type = self.getNodeValue(x, 'contact point_type');
-                    const tileid = self.getTileId(x);
-                    return { content, type, tileid };
-                }
-            ));
         },
         template: { require: 'text!templates/views/components/reports/person.htm' }
     });

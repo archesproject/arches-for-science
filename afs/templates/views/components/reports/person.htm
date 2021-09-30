@@ -100,56 +100,14 @@
                     }
                 }"></div>
             </div>
-            <!-- Communication Tab, unique to person -->
+            <!-- Communication Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'communication'">
-                <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.contactPoints)}, css: {'fa-angle-double-right': visible.contactPoints(), 'fa-angle-double-up': !visible.contactPoints()}" class="fa toggle"></i> {% trans "Contact Points" %}</h2>
-                    <span data-bind="if: cards && cards['contact information for person'] && (!contactPoints().length || cards['contact information for person'].cardinality == 'n')">
-                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['contact information for person'])}"><i class="fa fa-mail-reply"></i> {% trans "Add Contact Point" %}</a>
-                    </span>
-                
-                    <!-- Collapsible content -->
-                    <div data-bind="visible: visible.contactPoints" class="afs-report-collapsible-container pad-lft">
-                
-                        <!-- ko ifnot: Array.isArray(contactPoints()) -->
-                        <div class="afs-nodata-note">No contact points for this resource</div>
-                        <!-- /ko -->
-                        
-                        <!-- ko if: Array.isArray(contactPoints()) -->
-                        <div class="afs-report-subsection" >
-                            <div>
-                                <div class="afs-table pad-btm">
-                                    <table class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr class="afs-table-header">
-                                                <th>{% trans "Contact Information" %}</th>
-                                                <th class="min-tabletl">{% trans "Contact Information Type" %}</th>
-                                                <th class="afs-table-control all"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody data-bind="dataTablesForEach: { data: contactPoints, dataTableOptions: contactPointsTable }">
-                                            <tr>
-                                                <td data-bind="text: content"></td>
-                                                <td data-bind="text: type"></td>
-                                                <td class="afs-table-control">
-                                                    <div data-bind="if: $parent.cards && $parent.cards['contact information for person']">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['contact information for person'])}">
-                                                            <i class="fa fa-mail-reply"></i>
-                                                        </a>
-                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards['contact information for person'])}">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /ko -->
-                    </div>
-                </div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/communication',
+                    params: {
+                        data: resource
+                    }
+                }"></div>
             </div>
         </div>
     </div>            

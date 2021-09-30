@@ -29,6 +29,7 @@ define([
             };
             self.documentationDataConfig = {
                 subjectOf: undefined,
+                label: undefined // set to undefined per airtable - not visible
             };
             self.existenceEvents = ['creation'];
             self.existenceDataConfig = {

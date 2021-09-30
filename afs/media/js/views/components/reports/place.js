@@ -29,6 +29,7 @@ define([
             };
             self.documentationDataConfig = {
                 'subjectOf': undefined,
+                'label': undefined
             };
             self.nameCards = {};
             self.descriptionCards = {};

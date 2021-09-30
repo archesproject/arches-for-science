@@ -170,9 +170,9 @@ define([
                 
                 self.cards = self.createCardDictionary(cards);
 
-                if(self.cards?.["production event of object"]) {
-                    const productionEventChildren = self.cards["production event of object"].tiles()?.[0]?.cards ? self.cards["production event of object"].tiles()[0].cards : self.cards["production event of object"].cards();
-                    self.cards["production event of object"].children = self.createCardDictionary(productionEventChildren);
+                if(self.cards?.['production event of object']) {
+                    const productionEventChildren = self.cards['production event of object'].tiles()?.[0]?.cards ? self.cards['production event of object'].tiles()[0].cards : self.cards['production event of object'].cards();
+                    self.cards['production event of object'].children = self.createCardDictionary(productionEventChildren);
                 }
 
                 self.nameCards = {
@@ -187,13 +187,13 @@ define([
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.["digital reference to object"],
-                    subjectOf: self.cards?.["source reference work for object"]
+                    digitalReference: self.cards?.['digital reference to object'],
+                    subjectOf: self.cards?.['source reference work for object']
                 };
 
                 self.existenceCards = {
                     production: {
-                        card: self.cards?.["production event of object"],
+                        card: self.cards?.['production event of object'],
                         subCards: {
                             name: 'name of production event',
                             identifier: 'identifier of production event',
@@ -203,7 +203,7 @@ define([
                         }
                     },
                     destruction: {
-                        card:  self.cards?.["destruction event of object"],
+                        card:  self.cards?.['destruction event of object'],
                         subCards: {
                             name: 'name for destruction event',
                             identifier: 'identifier for destruction event',
@@ -212,7 +212,7 @@ define([
                         }
                     },
                     'removal from object': { 
-                        card: self.cards?.["part removal event of object"],
+                        card: self.cards?.['part removal event of object'],
                         subCards: {
                             name: 'name for part removal event',
                             identifier: 'identifier for part removal event',
@@ -224,7 +224,7 @@ define([
 
                 self.setCards = {
                     addition: {
-                        card:  self.cards?.["addition event of object to collection"],
+                        card:  self.cards?.['addition event of object to collection'],
                         subCards: {
                             name: 'name for addition event',
                             identifier: 'identifier for addition event',
@@ -233,7 +233,7 @@ define([
                         }
                     },
                     removal: {
-                        card:  self.cards?.["removal event of object from collection"],
+                        card:  self.cards?.['removal event of object from collection'],
                         subCards: {
                             name: 'name for addition event',
                             identifier: 'identifier for addition event',
@@ -254,11 +254,11 @@ define([
                 sections: 
                     [
                         {
-                            title: "Aboutness", 
+                            title: 'Aboutness', 
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
-                                card: self.cards?.["text carried by object"],
+                                card: self.cards?.['text carried by object'],
                                 type: 'resource'
                             }]
                         }
@@ -269,7 +269,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Current Location of Object", 
+                            title: 'Current Location of Object', 
                             data: [{
                                 key: 'current location', 
                                 value: self.getRawNodeValue(self.resource(), 'current location'), 
@@ -284,7 +284,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Parthood", 
+                            title: 'Parthood', 
                             data: [{
                                 key: 'parent object', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -323,7 +323,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Actor Relations", 
+                            title: 'Actor Relations', 
                             data: [{
                                 key: 'current owner of object', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
@@ -340,7 +340,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Sethood", 
+                            title: 'Sethood', 
                             data: [{
                                 key: 'Collection Object is Part Of', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 

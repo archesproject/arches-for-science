@@ -34,10 +34,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.add = params.addTile || self.addNewTile;
             self.events = params.events || ['production']
             self.eventDataArray = {};
-            self.visible = {
-                production: ko.observable(true),
-                event: ko.observable(true)
-            }
+            self.visible = {}
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             const extractEventData = (existenceEvent, eventDataSet, dataConfig, rootCardConfig) => {
@@ -205,6 +202,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 self.eventDataArray = params.data.eventData;
             } else {
                 for(existenceEvent of self.events){
+                    self.visible[existenceEvent] = ko.observable(true);
                     self.eventDataArray[existenceEvent] = extractEventData(existenceEvent, self.getRawNodeValue(params.data(), self.dataConfig?.[existenceEvent]?.graph), self.dataConfig?.[existenceEvent], self.cards?.[existenceEvent], params.metadata);
                 }
             }

@@ -20,7 +20,7 @@
 <h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
 <!-- /ko -->
 
- <!-- ko ifnot: item.value -->
+ <!-- ko if: !item.value && item.type != 'timespan' -->
 <div data-bind="style: { display: inline ? 'inline': '' }" class="afs-block-value">--</div>
  <!-- /ko -->
 
@@ -33,6 +33,7 @@
  <!-- /ko -->  
 
 <!-- ko if: item.type == 'timespan' -->
+<!-- ko if: item.value -->
 <div class="firstchild-container">
     <div class="afs-report-subsection-item flex">
         <div class="afs-block-attributes timespan">
@@ -69,6 +70,10 @@
         </div>
     </div>
 </div>
+<!-- /ko -->
+<!-- ko ifnot: item.value -->
+<div class="afs-nodata-note">No timespan available for this resource</div>
+<!-- /ko -->
 <!-- /ko -->
 
  <!-- ko if: item.type == 'resource'-->

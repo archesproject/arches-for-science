@@ -111,7 +111,7 @@ define([
 
                 self.existenceCards = {
                     creation: {
-                        card: self.cards?.["creation event of digital resource"],
+                        card: self.cards?.['creation event of digital resource'],
                         subCards: {
                             name: 'name for creation event',
                             identifier: 'identifier for creation event',
@@ -123,7 +123,7 @@ define([
 
                 /*self.eventsCards = {
                     creation: {
-                        card: self.cards?.["creation event of digital resource"],
+                        card: self.cards?.['creation event of digital resource'],
                         subCards: {
                             name: 'name for creation event',
                             identifier: 'identifier for creation event',
@@ -138,11 +138,11 @@ define([
                 sections: 
                     [
                         {
-                            title: "Aboutness", 
+                            title: 'Aboutness', 
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries text'), 
-                                card: self.cards?.["text carried by object"],
+                                card: self.cards?.['text carried by object'],
                                 type: 'resource'
                             }]
                         }
@@ -154,7 +154,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Parthood", 
+                            title: 'Parthood', 
                             data: [{
                                 key: 'parent digital resource', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -168,7 +168,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Sethood", 
+                            title: 'Sethood', 
                             data: [{
                                 key: 'collection that includes digital resource', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
@@ -183,7 +183,7 @@ define([
                 key: 'standards conformed to by digital resource', 
                 value: self.getNodeValue(self.resource(), 'conforms to'), 
                 href: self.getNodeValue(self.resource(), 'conforms to'), 
-                card: self.cards?.["standards conformed to by digital resource"],
+                card: self.cards?.['standards conformed to by digital resource'],
                 type: 'href'
             }]);
         },
