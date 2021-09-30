@@ -24,6 +24,7 @@ define([
                 name: 'contact point',
             };
             self.contactPoints = ko.observableArray();
+            self.cards = Object.assign({}, params.cards);
 
             Object.assign(self.dataConfig, params.dataConfig || {}) 
             if(params?.compiled){

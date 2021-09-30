@@ -57,11 +57,25 @@ define([
             self.existenceDataConfig = {
                 birth: {
                     graph: 'birth',
-                    metadata: []
+                    metadata: [],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: true
+                    }
                 },
                 death: {
                     graph: 'death',
-                    metadata: []
+                    metadata: [],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: true
+                    }
                 },
             };
 
@@ -81,7 +95,14 @@ define([
                         key: 'location of professional activity',
                         path: 'profession activity_location',
                         type: 'resource'
-                    }]
+                    }],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: false
+                    }
                 },
                 'group joining': {
                     graph: 'joined group',
@@ -97,7 +118,14 @@ define([
                         key: 'location of group joining event',
                         path: 'joined group_location',
                         type: 'resource'
-                    }]
+                    }],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: false
+                    }
                 },
                 'group leaving': {
                     graph: 'left group',
@@ -113,13 +141,21 @@ define([
                         key: 'location of group leaving event',
                         path: 'left group_location',
                         type: 'resource'
-                    }]
+                    }],
+                    children: {
+                        names: true,
+                        statements: true,
+                        identifiers: false,
+                        timespan: true,
+                        location: false
+                    }
                 },
             };
             self.nameCards = {};
             self.descriptionCards = {};
             self.documentationCards = {};
             self.existenceCards = {};
+            self.communicationCards = {};
             self.eventCards = {};
             self.summary = params.summary;
             self.cards = {};
@@ -143,6 +179,10 @@ define([
                     digitalReference: self.cards?.['digital reference for person'],
                 };
 
+                self.communicationCards = {
+                    contactPoints: self.cards?.['contact information for person'],
+                };
+
                 self.existenceCards = {
                     birth: { 
                         card: self.cards?.['birth event of person'],
@@ -150,6 +190,7 @@ define([
                             name: 'name for birth event',
                             timespan: 'timespan of birth event',
                             statement: 'statement about birth event',
+                            location: 'location of birth event',
                         }
                     },
                     death: {
@@ -157,7 +198,8 @@ define([
                         subCards: {
                             name: 'name for death event',
                             timespan: 'timespan of death event',
-                            statement: 'statement about death event'
+                            statement: 'statement about death event',
+                            location: 'location of death event'
                         }
                     },
                 };

@@ -103,6 +103,7 @@ define([
             self.documentationCards = {};
             self.existenceCards = {};
             self.eventCards = {};
+            self.communicationCards = {};
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -123,6 +124,10 @@ define([
 
                 self.documentationCards = {
                     digitalReference: self.cards?.['digital reference to group'],
+                };                
+                
+                self.communicationCards = {
+                    contactPoints: self.cards?.['address or contact point of group'],
                 };
 
                 self.existenceCards = {

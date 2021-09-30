@@ -3,7 +3,7 @@
 {% block report %}
 
 {% block body %}
- <!-- ko ifnot: inline -->
+ <!-- ko if: !inline && item.key -->
 <div data-bind="ifnot: inline">
     <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>
     <div class="afs-card-control" data-bind="if: item.card">
@@ -12,11 +12,11 @@
  </div>
  <!-- /ko -->
 
- <!-- ko if: inline && !small -->
+ <!-- ko if: inline && !small && item.key -->
 <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
 <!-- /ko --> 
 
-<!-- ko if: inline && small -->
+<!-- ko if: inline && small && item.key -->
 <h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
 <!-- /ko -->
 

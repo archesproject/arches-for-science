@@ -10,17 +10,17 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'}, 
-                {'id': 'existence', 'title': 'Existence'},
-                {'id': 'substance', 'title': 'Substance'},
-                {'id': 'actor-relations', 'title': 'Actor Relations'},
-                {'id': 'location', 'title': 'Location'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'sethood', 'title': 'Sethood'},
-                {'id': 'aboutness', 'title': 'Aboutness'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
-                {'id': 'json', 'title': 'JSON'},
+                {id: 'name', title: 'Names and Classifications'}, 
+                {id: 'existence', title: 'Existence'},
+                {id: 'substance', title: 'Substance'},
+                {id: 'actor-relations', title: 'Actor Relations'},
+                {id: 'location', title: 'Location'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'sethood', title: 'Sethood'},
+                {id: 'aboutness', title: 'Aboutness'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -32,7 +32,7 @@ define([
             self.documentationCards = {};
             self.existenceEvents = ['production', 'destruction', 'removal from object'];
             self.existenceDataConfig = {
-                'production': {
+                production: {
                     graph: 'production',
                     metadata: [{
                         key: 'creator in production event',
