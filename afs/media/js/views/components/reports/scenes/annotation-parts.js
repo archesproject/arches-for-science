@@ -32,7 +32,7 @@ define([
                         onEachFeature: function(feature, layer) {
                             layer.on('click', function() {
                                 if (feature.properties && feature.properties.tileId){
-                                    self.highlightAnnotation(feature.properties.tileId);
+                                    self.selectedAnnotationTileId(feature.properties.tileId);
                                 }
                             });
                         }
@@ -56,14 +56,6 @@ define([
             };
 
             self.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection);
-
-            self.highlightAnnotation = function(tileId){
-                if (tileId !== self.selectedAnnotationTileId()){
-                    self.selectedAnnotationTileId(tileId);
-                } else {
-                    self.selectedAnnotationTileId(null);
-                }
-            };
 
             self.selectedAnnotationTileId.subscribe(tileId => {
                 if (self.map()) {
