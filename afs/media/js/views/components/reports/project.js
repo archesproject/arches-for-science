@@ -13,13 +13,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'},
-                {'id': 'substance', 'title': 'Substance'},
-                {'id': 'temporal', 'title': 'Temporal Relations'},
-                {'id': 'parameters', 'title': 'Parameters & Outcomes'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
+                {id: 'name', title: 'Names and Classifications'},
+                {id: 'substance', title: 'Substance'},
+                {id: 'temporal', title: 'Temporal Relations'},
+                {id: 'parameters', title: 'Parameters & Outcomes'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -80,21 +81,21 @@ define([
             self.temporalData = ko.observable({
                 sections: [
                     {
-                        title: "Temporal Relations of Project", 
+                        title: 'Temporal Relations of Project', 
                         data: [{
                             key: 'Project Period', 
                             value: self.getRawNodeValue(self.resource(), 'during'), 
-                            card: self.cards?.["temporal relations of project"],
+                            card: self.cards?.['temporal relations of project'],
                             type: 'resource'
                         },{
                             key: 'Occurs After Event', 
                             value: self.getRawNodeValue(self.resource(), 'starts after'), 
-                            card: self.cards?.["temporal relations of project"],
+                            card: self.cards?.['temporal relations of project'],
                             type: 'resource'
                         },{
                             key: 'Occurs Before Event', 
                             value: self.getRawNodeValue(self.resource(), 'ends before'), 
-                            card: self.cards?.["temporal relations of project"],
+                            card: self.cards?.['temporal relations of project'],
                             type: 'resource'
                         }]
                     }
@@ -103,20 +104,20 @@ define([
             self.parameterData = ko.observable({
                 sections: [
                     {
-                        title: "Project Team", 
+                        title: 'Project Team', 
                         data: [{
                             key: 'project team', 
                             value: self.getRawNodeValue(self.resource(), 'carried out by'), 
-                            card: self.cards?.["project team"],
+                            card: self.cards?.['project team'],
                             type: 'resource'
                         }]
                     },
                     {
-                        title: "Activity Type of Project", 
+                        title: 'Activity Type of Project', 
                         data: [{
                             key: 'activity type of project', 
                             value: self.getRawNodeValue(self.resource(), 'technique'), 
-                            card: self.cards?.["activity type of project"],
+                            card: self.cards?.['activity type of project'],
                             type: 'resource'
                         }]
                     }
