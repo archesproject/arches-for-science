@@ -163,8 +163,8 @@
                 </div>
             </div>
             <!-- JSON Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'json'">
-                <div data-bind="component: {
+            <div class="afs-report-page afs-flex-col" data-bind="if: activeSection() === 'json'">
+                <div class="afs-flex-col" data-bind="component: {
                     name: 'views/components/reports/scenes/json',
                     params: {
                         resourceInstanceId: reportMetadata().resourceinstanceid,
