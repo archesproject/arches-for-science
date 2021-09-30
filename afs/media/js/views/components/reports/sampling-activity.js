@@ -68,11 +68,6 @@ define([
                 self.substanceCards = {
                     timespan: self.cards?.['dates of sampling activity'],
                 };
-
-                console.log(self.resource())
-                console.log(self.cards)
-
-
             };
 
             self.temporalData = ko.observable({
@@ -162,7 +157,6 @@ define([
                     return previous;
                 }), {features: [], type: 'FeatureCollection'})
             }: {};
-            console.log(self.annotation)
         },
         template: { require: 'text!templates/views/components/reports/sampling-activity.htm' }
     });
