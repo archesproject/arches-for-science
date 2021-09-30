@@ -3,6 +3,7 @@
 {% block report %}
 
 {% block body %}
+<!-- ko if: dataConfig.dimension -->
 <div class="afs-report-section">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.dimensions)}, css: {'fa-angle-double-right': visible.dimensions(), 'fa-angle-double-up': !visible.dimensions()}" class="fa toggle"></i> {% trans "Dimensions" %}</h2>
     <span data-bind="if: cards.dimension">
@@ -88,5 +89,14 @@
         <!-- /ko -->
     </div>
 </div>
+<!-- /ko -->
+<!-- ko if: dataConfig.timespan -->
+<div data-bind="component: {
+    name: 'views/components/reports/scenes/default',
+    params: {
+        data: timeSpanData,
+    }
+}"></div>
+<!-- /ko -->
 {% endblock body %}
 {% endblock report %}
