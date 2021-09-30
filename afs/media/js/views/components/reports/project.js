@@ -13,9 +13,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'documentation', 'title': 'Documentation'},
+                {id: 'name', title: 'Names and Classifications'},
+                {id: 'substance', title: 'Substance'},
+                {id: 'temporal', title: 'Temporal Relations'},
+                {id: 'parameters', title: 'Parameters & Outcomes'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -25,7 +30,12 @@ define([
                 exactMatch: undefined
             };
             self.documentationDataConfig = {
-                subjectOf: 'source'
+                label: undefined,
+                subjectOf: 'influenced by',
+            };
+            self.substanceDataConfig = {
+                dimension: undefined,
+                timespan: {path: 'timespan', key: 'dates of project'}
             };
             self.nameCards = {};
             self.descriptionCards = {};
@@ -38,16 +48,84 @@ define([
                 self.cards = self.createCardDictionary(cards)
 
                 self.nameCards = {
-                    name: self.cards.name,
-                    identifier: self.cards.Identifier,
-                    exactMatch: self.cards.ExactMatch,
-                    type: self.cards.Classification
-                }
-
-                self.descriptionCards = {
-                    statement: self.cards.Statement,
+                    name: self.cards?.['name of project'],
+                    identifier: self.cards?.['identifier for project'],
+                    type: self.cards?.['scale of project']
                 };
-            }
+                self.descriptionCards = {
+                    statement: self.cards?.['statement about project'],
+                };
+                self.documentationCards = {
+                    digitalReference: self.cards?.['digital reference to project'],
+                    subjectOf: self.cards?.['source reference work for project'],
+                };
+                self.substanceCards = {
+                    timespan: self.cards?.['dates of project'],
+                };
+            };
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Parthood', 
+                            data: [{
+                                key: 'parent project', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['parent project'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+            self.temporalData = ko.observable({
+                sections: [
+                    {
+                        title: 'Temporal Relations of Project', 
+                        data: [
+                            /*{
+                                key: 'Project Period', 
+                                value: self.getRawNodeValue(self.resource(), 'during'), 
+                                card: self.cards?.['temporal relations of project'],
+                                type: 'resource'
+                            },*/
+                            {
+                                key: 'Occurs After Event', 
+                                value: self.getRawNodeValue(self.resource(), 'starts after'), 
+                                card: self.cards?.['temporal relations of project'],
+                                type: 'resource'
+                            },{
+                                key: 'Occurs Before Event', 
+                                value: self.getRawNodeValue(self.resource(), 'ends before'), 
+                                card: self.cards?.['temporal relations of project'],
+                                type: 'resource'
+                            }
+                        ]
+                    }
+                ]
+            });
+            self.parameterData = ko.observable({
+                sections: [
+                    {
+                        title: 'Project Team', 
+                        data: [{
+                            key: 'project team', 
+                            value: self.getRawNodeValue(self.resource(), 'carried out by'), 
+                            card: self.cards?.['project team'],
+                            type: 'resource'
+                        }]
+                    },
+                    {
+                        title: 'Activity Type of Project', 
+                        data: [{
+                            key: 'activity type of project', 
+                            value: self.getRawNodeValue(self.resource(), 'technique'), 
+                            card: self.cards?.['activity type of project'],
+                            type: 'resource'
+                        }]
+                    }
+                ]
+            });
         },
         template: { require: 'text!templates/views/components/reports/project.htm' }
     });
