@@ -32,7 +32,7 @@ define([
                         onEachFeature: function(feature, layer) {
                             layer.on('click', function() {
                                 if (feature.properties && feature.properties.tileId){
-                                    self.highlightAnnotation(feature.properties.tileId);
+                                    self.selectedAnnotationTileId(feature.properties.tileId);
                                 }
                             });
                         }
