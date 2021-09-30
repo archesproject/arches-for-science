@@ -101,11 +101,26 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                         const eventTime = self.getRawNodeValue(eventData, `${existenceEventConfig}_time`)
                         if(eventTime) {
-                            const beginningStart = self.getNodeValue(eventTime, `${existenceEventConfig}_time_begin of the begin`);
-                            const beginningComplete = self.getNodeValue(eventTime, `${existenceEventConfig}_time_begin of the end`);
-                            const endingStart = self.getNodeValue(eventTime, `${existenceEventConfig}_time_end of the begin`);
-                            const endingComplete = self.getNodeValue(eventTime, `${existenceEventConfig}_time_end of the end`);
-
+                            const beginningStart = self.getNodeValue(eventTime, {
+                                testPaths: [
+                                    [`${existenceEventConfig}_time_begin of the begin`],
+                                    [`${existenceEventConfig}_begin of the begin`]
+                                ]});
+                            const beginningComplete = self.getNodeValue(eventTime, {
+                                testPaths: [
+                                    [`${existenceEventConfig}_time_begin of the end`],
+                                    [`${existenceEventConfig}_begin of the end`]
+                                ]});
+                            const endingStart = self.getNodeValue(eventTime, {
+                                testPaths: [
+                                    [`${existenceEventConfig}_time_end of the begin`],
+                                    [`${existenceEventConfig}_end of the begin`]
+                                ]});
+                            const endingComplete = self.getNodeValue(eventTime, {
+                                testPaths: [
+                                    [`${existenceEventConfig}_time_end of the end`],
+                                    [`${existenceEventConfig}_end of the end`]
+                                ]});
                             const name = self.getNodeValue(eventTime, {
                                 testPaths: [
                                     [
@@ -150,11 +165,13 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                         const parts = self.getRawNodeValue(eventData, dataConfig?.parts?.graph);
                         if(parts?.length){
-                            var partObservables = parts.map(x => {
+                            const partObservables = parts.map(x => {
                                 let partKeys = {};
-                                if(rootCardConfig?.subCards){
+                                if (rootCardConfig?.partCards) {
+                                    partKeys = rootCardConfig.partCards;
+                                } else if(rootCardConfig?.subCards){
                                     const subKeys = Object.keys(rootCardConfig?.subCards);
-                                    let partKeys = JSON.parse(JSON.stringify(rootCardConfig?.subCards));
+                                    partKeys = JSON.parse(JSON.stringify(rootCardConfig?.subCards));
                                     for(const key of subKeys){
                                         partKeys[key] += " part"
                                     }
