@@ -75,22 +75,25 @@ define([
                 sections: [
                     {
                         title: 'Temporal Relations of Sampling Activity', 
-                        data: [{
-                            key: 'Sampling Activity Period', 
-                            value: self.getRawNodeValue(self.resource(), 'during'), 
-                            card: self.cards?.['temporal relations of sampling activity'],
-                            type: 'resource'
-                        },{
-                            key: 'Occurs After Event', 
-                            value: self.getRawNodeValue(self.resource(), 'starts after'), 
-                            card: self.cards?.['occurs after event in sampling activity'],
-                            type: 'resource'
-                        },{
-                            key: 'Occurs Before Event', 
-                            value: self.getRawNodeValue(self.resource(), 'ends before'), 
-                            card: self.cards?.['occurs before event in sampling activity'],
-                            type: 'resource'
-                        }]
+                        data: [
+                            /*{
+                                key: 'Sampling Activity Period', 
+                                value: self.getRawNodeValue(self.resource(), 'during'), 
+                                card: self.cards?.['temporal relations of sampling activity'],
+                                type: 'resource'
+                            },*/
+                            {
+                                key: 'Occurs After Event', 
+                                value: self.getRawNodeValue(self.resource(), 'starts after'), 
+                                card: self.cards?.['occurs after event in sampling activity'],
+                                type: 'resource'
+                            },{
+                                key: 'Occurs Before Event', 
+                                value: self.getRawNodeValue(self.resource(), 'ends before'), 
+                                card: self.cards?.['occurs before event in sampling activity'],
+                                type: 'resource'
+                            }
+                        ]
                     }
                 ]
             });
