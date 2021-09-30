@@ -57,6 +57,14 @@ define([
 
             self.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection);
 
+            self.highlightAnnotation = function(tileId){
+                if (tileId !== self.selectedAnnotationTileId()){
+                    self.selectedAnnotationTileId(tileId);
+                } else {
+                    self.selectedAnnotationTileId(null);
+                }
+            };
+
             self.selectedAnnotationTileId.subscribe(tileId => {
                 if (self.map()) {
                     self.map().eachLayer(function(layer){
