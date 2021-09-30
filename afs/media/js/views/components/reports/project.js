@@ -82,22 +82,25 @@ define([
                 sections: [
                     {
                         title: 'Temporal Relations of Project', 
-                        data: [{
-                            key: 'Project Period', 
-                            value: self.getRawNodeValue(self.resource(), 'during'), 
-                            card: self.cards?.['temporal relations of project'],
-                            type: 'resource'
-                        },{
-                            key: 'Occurs After Event', 
-                            value: self.getRawNodeValue(self.resource(), 'starts after'), 
-                            card: self.cards?.['temporal relations of project'],
-                            type: 'resource'
-                        },{
-                            key: 'Occurs Before Event', 
-                            value: self.getRawNodeValue(self.resource(), 'ends before'), 
-                            card: self.cards?.['temporal relations of project'],
-                            type: 'resource'
-                        }]
+                        data: [
+                            /*{
+                                key: 'Project Period', 
+                                value: self.getRawNodeValue(self.resource(), 'during'), 
+                                card: self.cards?.['temporal relations of project'],
+                                type: 'resource'
+                            },*/
+                            {
+                                key: 'Occurs After Event', 
+                                value: self.getRawNodeValue(self.resource(), 'starts after'), 
+                                card: self.cards?.['temporal relations of project'],
+                                type: 'resource'
+                            },{
+                                key: 'Occurs Before Event', 
+                                value: self.getRawNodeValue(self.resource(), 'ends before'), 
+                                card: self.cards?.['temporal relations of project'],
+                                type: 'resource'
+                            }
+                        ]
                     }
                 ]
             });
