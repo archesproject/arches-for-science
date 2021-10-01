@@ -28,7 +28,6 @@
             <!-- ko if: eventDataArray[eventName].length > 0 && eventDataArray[eventName].some(x => x !== undefined) -->
             
             <!-- ko foreach: { data: eventDataArray[eventName], as: "eventData", noChildContext: true} -->
-            <span data-bind="text: console.log(eventData, eventData.tileid)"></span>
             <!-- ko if: !!eventData && eventData.tileid -->
             <div class="afs-report-subsection">
                 <h2 class="afs-report-section-title">{% trans "Event Details" %}</h2>

@@ -31,7 +31,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 sections: [{
                 title: 'TimeSpan', 
                 data: [{
-                    key: self.dataConfig.timespan.key || 'Timespan',
+                    key: self.dataConfig.timespan?.key || 'Timespan',
                     value: undefined,
                     card: self.cards.timespan,
                     type: 'timespan'
@@ -58,7 +58,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 const rawDimensionData = self.getRawNodeValue(params.data(), self.dataConfig.dimension);
                 
                 if(rawDimensionData) {
-                    const dimensionData = Array.isArray(dimensionData) ? rawDimensionData : [rawDimensionData];
+                    const dimensionData = Array.isArray(rawDimensionData) ? rawDimensionData : [rawDimensionData];
 
                     self.dimensions(dimensionData.map(x => {
                         const type = self.getNodeValue(x, `${self.dataConfig.dimension}_type`);

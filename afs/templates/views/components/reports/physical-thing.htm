@@ -117,8 +117,8 @@
                }"></div>
                <div class="afs-report-section">
                     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.parts)}, css: {'fa-angle-double-right': visible.parts(), 'fa-angle-double-up': !visible.parts()}" class="fa toggle"></i> {% trans "Parts" %}</h2>
-                    <span data-bind="if: cards.parts">
-                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards.parts)}"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
+                    <span data-bind="if: $data.cards && $data.cards['parts of object']">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile($data.cards['parts of object'])}"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
                     </span>
 
                     <div data-bind="visible: visible.parts" class="afs-report-collapsible-container pad-lft">
