@@ -47,12 +47,12 @@ define([
             samplingMotivationTile: self.samplingMotivationTile()
         };
 
-        var samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
-        var sampleStatementNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
-        var samplingNameNode = '033578c0-1d9d-11eb-a29f-024e0d439fdb';
-        var parentProjectNode = '03357879-1d9d-11eb-a29f-024e0d439fdb'; //related project
-        var overallObjectSampleNode = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb'; //related phys thing
-        var samplingDateNodegroup = '03357852-1d9d-11eb-a29f-024e0d439fdb';
+        const samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
+        const samplingNameNodegroup = '03357873-1d9d-11eb-a29f-024e0d439fdb';
+        const sampleStatementNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
+        const samplingDateNodegroup = '03357852-1d9d-11eb-a29f-024e0d439fdb';
+        const parentProjectNode = '03357879-1d9d-11eb-a29f-024e0d439fdb'; //related project
+        const overallObjectSampleNode = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb'; //related phys thing
 
         this.updatedValue = ko.pureComputed(function(){
             return {
@@ -77,17 +77,17 @@ define([
         });
         
         this.samplingDate.subscribe(function(val){
-            self.samplingName(["Sample for", self.physicalThingNameValue, val].join(' '));
+            self.samplingName(["Sampling for", self.physicalThingNameValue, val].join(' '));
         });
 
-        var selectPhysThingData = params.selectPhysThingData;
+        const selectPhysThingData = params.selectPhysThingData;
         this.projectValue = selectPhysThingData["project"];
         this.physicalThingNameValue = selectPhysThingData["physThingName"];
         this.physicalThingValue = selectPhysThingData["physicalThing"];
 
         params.form.save = async function(){
             params.form.complete(false);
-            const sampelingNameResponse = await self.saveName();
+            const sampelingNameResponse = await self.saveSamplingName();
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
 
@@ -139,8 +139,28 @@ define([
             });
         };
 
-        this.saveName = function(){
-            return self.saveNodeValue(samplingNameNode,self.samplingName(), self.samplingActivityResourceId(),self.samplingNameTile());
+        this.saveSamplingName = function() {
+            const languageValueId = ['bc35776b-996f-4fc1-bd25-9f6432c1f349']; //English
+            const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"]; //[primary title, preferred terms]
+
+            const samplingNameTileData = {
+                "tileid": ko.unwrap(self.samplingNameTile) || "",
+                "nodegroup_id": samplingNameNodegroup,
+                "parenttile_id": null,
+                "resourceinstance_id": ko.unwrap(self.samplingActivityResourceId) || "",
+                "sortorder": 0,
+                "tiles": {},
+                'data': {
+                    "03357890-1d9d-11eb-a29f-024e0d439fdb": null,
+                    "03357898-1d9d-11eb-a29f-024e0d439fdb": languageValueId,
+                    "033578a4-1d9d-11eb-a29f-024e0d439fdb": null,
+                    "033578b5-1d9d-11eb-a29f-024e0d439fdb": prefLabelIds,
+                    "033578c0-1d9d-11eb-a29f-024e0d439fdb": self.samplingName()
+                },
+                'transaction_id': params.form.workflowId
+            };
+            const samplingNameTileid = ko.unwrap(self.samplingNameTile) || uuid.generate();
+            return self.saveTile(samplingNameTileid, samplingNameTileData);
         };
 
         this.saveProject = function() {

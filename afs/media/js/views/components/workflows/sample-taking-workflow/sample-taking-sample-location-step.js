@@ -406,7 +406,7 @@ define([
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
 
                     if (type === "region") {
-                        selectedSampleLocationInstanceLabel = "Region for " + selectedSampleLocationInstanceLabel;
+                        selectedSampleLocationInstanceLabel = "Sample Area for " + selectedSampleLocationInstanceLabel;
                     }
                     
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedSampleLocationInstanceLabel;
