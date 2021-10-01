@@ -13,15 +13,18 @@
                 <div class="workflow-search-list search-result-details">
                     <div data-bind="css: {'loading-mask': reportDataLoading}">
                         <div data-bind="foreach: targetResources">
-                            <div data-bind="component: { 
-                                name: 'resource-report-abstract',
-                                params: {
-                                    report: $data.report,
-                                    summary: true,
-                                    disableDisambiguatedReport: true
-                                }
-                            }, css: {'selected-instance': $parent.value().map(function(resource){return resource}).indexOf($data['_source']['resourceinstanceid']) >= 0},
+                            <div class="search-result-item" data-bind="css: {'selected-instance': $parent.value().map(function(resource){return resource}).indexOf($data['_source']['resourceinstanceid']) >= 0},
                             click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}">
+                            <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
+                                <div class="summary-report-title" data-bind="text: $data._source.displayname"></div>
+                                <!--ko if: $data.identifier -->
+                                <div style="display: inline-flex">
+                                    <div data-bind="text: 'Gallery Systems TMS Id:'" class="summary-report-description"></div> 
+                                    <div data-bind="text: $data.identifier" class="summary-report-description" style='color: #2783d4'></div> 
+                                </div>
+                                <!--/ko-->
+                            </div>
+                            <div class="summary-report-description" data-bind="text: $($data._source.displaydescription).text() || 'No description'"></div>
                             </div>
                             <hr style="margin: 0"></hr>
                         </div>
@@ -57,7 +60,7 @@
                         <div class="wf-multi-tile-card-info-details">
                         <dt data-bind="text: $data.displayname"></dt>
                         <dd>
-                            <a data-bind="text: $data.displaydescription"></a>
+                            <a data-bind="text: $($data.displaydescription).text() || 'No description'"></a>
                         </dd>
                         </div>
                     </div>

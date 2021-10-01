@@ -4,17 +4,9 @@ define([
     'knockout',
     'knockout-mapping',
     'arches',
-    'models/graph',
-    'models/report',
-    'viewmodels/card',
-    'viewmodels/provisional-tile',
-    'report-templates',
-    'card-components',
     'bindings/select2-query',
     'views/components/search/paging-filter',
-], function($, _, ko, koMapping, arches, GraphModel, ReportModel, CardViewModel, ProvisionalTileViewModel, reportLookup) {
-
-    var graphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a'; // Physical Thing graph
+], function($, _, ko, koMapping, arches) {
     var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a'; // Name_content in Collection resource
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
     var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
@@ -56,7 +48,6 @@ define([
         this.targetResource = ko.observable();
         this.toggleRelationshipCandidacy = ko.observable();
         this.isResourceRelatable = ko.observable();
-        this.reportLookup = reportLookup;
         this.filters = {
             'paging-filter': ko.observable(),
             'search-results': ko.observable(),
@@ -367,7 +358,7 @@ define([
 
             self.reportDataLoading(true);
 
-            const setUpReports = function(reportData) {
+            const setUpReports = function() {
                 const filterParams = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&');
                 fetch(arches.urls.physical_thing_search_results + '?' + filterParams)
                     .then(response => response.json())
@@ -386,38 +377,21 @@ define([
         
                         self.totalResults(data['total_results']);
                         var resources = data['results']['hits']['hits'].map(source => {
-                            var tileData = {
-                                "tiles": source._source.tiles,
-                                "related_resources": [],
-                                "displayname": source._source.displayname,
-                                "resourceid": source._source.resourceinstanceid
-                            };
-                            
-                            tileData.templates = reportLookup;
-                            source.report = new ReportModel(_.extend(tileData, {
-                                graphModel: self.graphModel,
-                                graph: reportData[graphId].graph,
-                                datatypes: reportData[graphId].graph.datatypes
-                            }));
+                            source._source.tiles.forEach((tile) => {
+                                if (tile.data['22c15cfa-b498-11e9-b5e3-a4d18cec433a'] && 
+                                    tile.data['22c15cfa-b498-11e9-b5e3-a4d18cec433a'].length &&
+                                    tile.data['22c15cfa-b498-11e9-b5e3-a4d18cec433a'][0] === '26094e9c-2702-4963-adee-19ad118f0f5a') {
+                                    source.identifier = tile.data['22c169b5-b498-11e9-bdad-a4d18cec433a'];
+                                }
+                            });
+                            console.log(source);
                             return source;
                         });
                         self.targetResources(resources);
+                        self.reportDataLoading(false);
                     });
             };
-            fetch(arches.urls.api_bulk_resource_report + `?graph_ids=${[graphId]}&exclude=cards`)
-                .then(result => {
-                    return result.json();
-                }).then(function(data){
-                    if (!self.graphModel) {
-                        self.graphModel = new GraphModel({
-                            data: data[graphId].graph,
-                            datatypes: data[graphId].datatypes
-                        });
-                    }
-                    setUpReports(data);
-                }).then(function(){
-                    self.reportDataLoading(false);
-                });
+            setUpReports();
         };
 
         this.updateSearchResults = function(termFilter, pagingFilter) {
