@@ -63,7 +63,7 @@
                 <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 300px; width: 400px"></div>
             </div>
             <div style="width: 100%; padding-left: 30px;">
-                <table data-bind="datatable: tableConfig" class="table table-striped table-bordered" width="100%">
+                <table data-bind="datatable: $parent.tableConfig" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
                             <th>{% trans "Sample Name:" %}</th>

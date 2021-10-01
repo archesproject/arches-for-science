@@ -184,7 +184,7 @@ define([
                                     type: self.getResourceValue(statement, ['Statement_type','@display_value'])
                                 };
                             });
-                            var sampleMotivation = self.findStatementType(statements, "object/work type (category)").replace( /(<([^>]+)>)/ig, '');
+                            var sampleMotivation = self.findStatementType(statements, "sampling motivation").replace( /(<([^>]+)>)/ig, '');
                             var sampleDescription = self.findStatementType(statements, "sample description").replace( /(<([^>]+)>)/ig, '');
                         }
                         self.samplingLocations.push(
