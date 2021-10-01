@@ -384,7 +384,6 @@ define([
                                     source.identifier = tile.data['22c169b5-b498-11e9-bdad-a4d18cec433a'];
                                 }
                             });
-                            console.log(source);
                             return source;
                         });
                         self.targetResources(resources);
