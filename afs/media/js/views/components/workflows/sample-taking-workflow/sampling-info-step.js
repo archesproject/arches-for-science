@@ -77,7 +77,7 @@ define([
         });
         
         this.samplingDate.subscribe(function(val){
-            self.samplingName(["Sample for", self.physicalThingNameValue, val].join(' '));
+            self.samplingName(["Sampling for", self.physicalThingNameValue, val].join(' '));
         });
 
         var selectPhysThingData = params.selectPhysThingData;
@@ -108,6 +108,10 @@ define([
                 params.form.savedData(params.form.value());
                 params.form.lockExternalStep("select-project", true);
                 params.form.complete(true);
+
+                console.log(response1, response2, response3, response4, response5, response6);
+                console.log(params.form.hasUnsavedData());
+                console.log(params.form.complete(), params.form.saving(), params.form.loading(), params.pageVm.loading());
             });
         };
 
