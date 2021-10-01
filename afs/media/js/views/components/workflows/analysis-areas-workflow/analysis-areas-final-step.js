@@ -82,7 +82,7 @@ define([
                 let annotationCombined;
                 let info = [];
                 annotationCollection[canvas].forEach(function(annotation){
-                    name = annotation.annotationName;
+                    name = annotation.annotationLabel;
                     if (annotationCombined) {
                         annotationCombined.features = annotationCombined.features.concat(annotation.annotationJson.features);
                     } else {
@@ -90,7 +90,7 @@ define([
                     }
                     info.push({
                         tileId: annotation.tileId,
-                        name: annotation.annotationName,
+                        name: annotation.annotationLabel,
                         annotator: annotation.annotator,
                     });
                 });
