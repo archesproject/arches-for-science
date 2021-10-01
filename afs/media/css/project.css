@@ -724,10 +724,6 @@
     padding-left: 25px;
 }
 
-.workflow-component-element .row {
-    /* margin-bottom: 15px !important; */
-}
-
 .afs-experiment-name-block {
     padding-left: 30px;
 }
@@ -753,4 +749,28 @@
 .afs-workflow-manifest-manager-container .iiif-image-tools div.row:first-child {
     padding-left: 5px;
     margin-top: -10px;
+}
+
+.afs-final-step-section h5.summary-value.upload-dataset-name {
+    font-weight: 500;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.afs-project-workflow .new-provisional-edit-card-container .control-label {
+    padding-left: 0px;
+}
+
+.workflow-component-element .afs-project-workflow .widget-input-label {
+    padding-left: 0px;
+}
+
+.workflow-component-based-step-wrapper .afs-project-workflow .control-label {
+    padding-left: 0px;
 }

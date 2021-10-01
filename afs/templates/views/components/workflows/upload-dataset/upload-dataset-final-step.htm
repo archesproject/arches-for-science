@@ -53,9 +53,9 @@
     </div>
 
     <div class="afs-final-step-section">
-        <h5 class="summary-value">{% trans 'Files for Upload' %}</h5>
+        <h5 class="summary-value" style="margin-bottom: -10px;">{% trans 'Files for Upload' %}</h5>
         <!-- ko foreach: fileLists -->
-        <h5 class="summary-value" style="font-weight: 400; margin-top: -5px; font-size: 14px; padding-bottom: 10px;" data-bind="text: digitalResourceName"></h5>
+        <h5 class="summary-value upload-dataset-name" data-bind="text: digitalResourceName || 'Unnamed Dataset (nothing to upload)'"></h5>
         <div style="display: inline-flex; margin-top: -20px">
             <!-- ko if: $parent.hasAnnotatedParts -->
             <div style="border: solid 1px #ddd">
