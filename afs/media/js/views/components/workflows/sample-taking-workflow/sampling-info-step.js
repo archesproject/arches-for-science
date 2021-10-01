@@ -86,6 +86,7 @@ define([
         this.physicalThingValue = selectPhysThingData["physicalThing"];
 
         params.form.save = async function(){
+            params.form.complete(false);
             const sampelingNameResponse = await self.saveName();
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
