@@ -473,6 +473,7 @@ define([
 
                                             let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
                                             params.form.savedData(koMapping.toJS(mappedInstances));
+                                            params.form.value(params.form.savedData());
                                             params.form.complete(true);
                                         });
                                     });
