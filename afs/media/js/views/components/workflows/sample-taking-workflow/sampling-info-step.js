@@ -77,7 +77,7 @@ define([
         });
         
         this.samplingDate.subscribe(function(val){
-            self.samplingName(["Sample for", self.physicalThingNameValue, val].join(' '));
+            self.samplingName(["Sampling for", self.physicalThingNameValue, val].join(' '));
         });
 
         const selectPhysThingData = params.selectPhysThingData;
