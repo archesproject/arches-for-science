@@ -24,7 +24,7 @@
                                 </div>
                                 <!--/ko-->
                             </div>
-                            <div class="summary-report-description" data-bind="text: $($data._source.displaydescription).text() || 'No description'"></div>
+                            <div class="summary-report-description" data-bind="html: $data._source.displaydescription || 'No description'"></div>
                             </div>
                             <hr style="margin: 0"></hr>
                         </div>
@@ -60,7 +60,7 @@
                         <div class="wf-multi-tile-card-info-details">
                         <dt data-bind="text: $data.displayname"></dt>
                         <dd>
-                            <a data-bind="text: $($data.displaydescription).text() || 'No description'"></a>
+                            <a data-bind="html: $data.displaydescription || 'No description'"></a>
                         </dd>
                         </div>
                     </div>
