@@ -36,39 +36,43 @@ define([
                 digitalReference: {'name': 'Image Service', 'value': digitalReference['Digital Source']["@display_value"]},
             };
             var annotationCollection = {};
+            const regionResourceIds = self.regionInstances.map(x => x.regionResource);
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                const annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
-                const annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
-                const annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
-                const annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
-                const tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
-                if (annotationStr) {
-                    const annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
-                    if (annotationJson.features.length > 0){
-                        const currentManifestUrl = annotation['Part Identifier Assignment_Polygon Identifier']['geojson']['features'][0]['properties']['manifest'];
-                        if (currentManifestUrl === manifestUrl){
-                            const canvas = annotationJson.features[0].properties.canvas;
-                            annotationJson.features.forEach(function(feature){
-                                feature.properties.tileId = tileId;
-                            });
-                            if (canvas in annotationCollection) {
-                                annotationCollection[canvas].push({
-                                    tileId: tileId,
-                                    annotationName: annotationName,
-                                    annotationLabel: annotationLabel,
-                                    annotator: annotator,
-                                    annotationJson: annotationJson,
+                const annotationResourceId = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','resourceId']);
+                if (regionResourceIds.includes(annotationResourceId)) {
+                    const annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
+                    const annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
+                    const annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
+                    const annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
+                    const tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
+                    if (annotationStr) {
+                        const annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+                        if (annotationJson.features.length > 0){
+                            const currentManifestUrl = annotation['Part Identifier Assignment_Polygon Identifier']['geojson']['features'][0]['properties']['manifest'];
+                            if (currentManifestUrl === manifestUrl){
+                                const canvas = annotationJson.features[0].properties.canvas;
+                                annotationJson.features.forEach(function(feature){
+                                    feature.properties.tileId = tileId;
                                 });
-                            } else {
-                                annotationCollection[canvas] = [{
-                                    tileId: tileId,
-                                    annotationName: annotationName,
-                                    annotationLabel: annotationLabel,
-                                    annotator: annotator,
-                                    annotationJson: annotationJson,
-                                }];
-                            }    
-                        }
+                                if (canvas in annotationCollection) {
+                                    annotationCollection[canvas].push({
+                                        tileId: tileId,
+                                        annotationName: annotationName,
+                                        annotationLabel: annotationLabel,
+                                        annotator: annotator,
+                                        annotationJson: annotationJson,
+                                    });
+                                } else {
+                                    annotationCollection[canvas] = [{
+                                        tileId: tileId,
+                                        annotationName: annotationName,
+                                        annotationLabel: annotationLabel,
+                                        annotator: annotator,
+                                        annotationJson: annotationJson,
+                                    }];
+                                }    
+                            }
+                        }    
                     }    
                 }
             });
