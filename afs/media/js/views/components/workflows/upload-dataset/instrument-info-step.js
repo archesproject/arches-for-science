@@ -24,6 +24,9 @@ define([
         const nameTypeNodeId = '87e4092e-c457-11e9-8036-a4d18cec433a';
         // TODO: the default name type concept value needs to change/be confirmed.  
         const nameTypeConceptValue = ['ec635afd-beb1-426e-a21c-09866ea94d25'];
+        const languageConceptValue = ['bc35776b-996f-4fc1-bd25-9f6432c1f349'];
+        const nameLanguageNodeId = '87e3ec82-c457-11e9-89d8-a4d18cec433a';
+        const statementLanguageNodeId = '8ec31780-c457-11e9-9543-a4d18cec433a';
         const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
 
@@ -162,6 +165,7 @@ define([
                     let nameData = {};
                     nameData[nameNodeId] = self.nameValue();
                     nameData[nameTypeNodeId] = nameTypeConceptValue;
+                    nameData[nameLanguageNodeId] = languageConceptValue;
                     projectTileId = data.tileid;
                     return self.saveTile(nameData, nameNodeGroupId, data.resourceinstance_id, nameTileId);
                 })
@@ -181,6 +185,7 @@ define([
                     let parameterData = {};
                     parameterData[parameterNodeId] = self.parameterValue();
                     parameterData[statementTypeNodeId] = statementTypeConceptValue;
+                    parameterData[statementLanguageNodeId] = languageConceptValue;
                     procedureTileId = data.tileid;
                     return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
                 })
