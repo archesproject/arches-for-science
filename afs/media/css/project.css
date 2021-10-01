@@ -59,10 +59,6 @@
     height: 100%;
 }
 
-.object-search-step .selected-instance {
-    background-color: lightgrey;
-}
-
 .workflow-search-panel {
     background-color: #f3f3f3;
     border-bottom: #ddd solid 1px;
@@ -151,26 +147,23 @@
     overflow-y: auto;
 }
 
-.workflow-search-list .resource-report {
-    padding-left: 35px;
+.workflow-search-list .search-result-item {
     border: 1px solid #ddd;
     margin: 10px;
+    padding: 10px;
+}
+
+.object-search-step .selected-instance {
+    background-color: #eff7f9;
+    border: 1px solid #2783d4;
 }
 
 .tabbed-workflow-step-body .wf-multi-tile-step-list {
     padding-bottom: 60px !important;  /* overwrites manual style setting */
 }
 
-.tabbed-workflow-step-body .workflow-search-list .resource-report {
-    padding-left: unset;
-}
-
-.workflow-search-list .resource-report:hover {
+.workflow-search-list .search-result-item:hover {
     cursor: pointer;
-}
-
-.workflow-search-list .resource-report .summary-report-related-panel {
-    display: none;
 }
 
 .wf-multi-tile-btn-complete {
@@ -264,29 +257,6 @@
 .summary-report-editor-button {
     float: right;
     padding-top: 30px;
-}
-
-.physical-thing-search-list {
-    margin-left: -25px;
-    padding-left: 35px;
-}
-
-.tabbed-workflow-step-body .physical-thing-search-list-container {
-    width: calc(100vw - 50px);  /* side-nav width */
-}
-
-.tabbed-workflow-step-body .physical-thing-search-list {
-    margin: unset;
-    padding: unset;
-}
-
-.physical-thing-search-list .resource-report {
-    border-bottom: 1px solid #ddd;
-}
-
-.physical-thing-search-list .resource-report:hover {
-    cursor: pointer;
-    background: #fff;
 }
 
 .upload-dataset-related-widget {
