@@ -139,8 +139,8 @@ define([
         };
 
         this.saveSamplingName = function() {
-            const languageValueId = ['bc35776b-996f-4fc1-bd25-9f6432c1f349'] //English
-            const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"] //[primary title, preferred terms]
+            const languageValueId = ['bc35776b-996f-4fc1-bd25-9f6432c1f349']; //English
+            const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"]; //[primary title, preferred terms]
 
             const samplingNameTileData = {
                 "tileid": ko.unwrap(self.samplingNameTile) || "",
