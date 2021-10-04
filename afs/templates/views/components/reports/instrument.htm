@@ -1,65 +1,161 @@
-{% extends "views/report-templates/tabbed.htm" %} {% load i18n %} {% block summary %}
+{% extends "views/report-templates/default.htm" %} 
+{% load i18n %} 
+{% block report %}
+    {% block report_title_bar %}
+    <!-- Custom Template Report Title Bar -->
+    <div class="relative">
+
+        <!-- Title Block -->
+        <div class="afs-report-toolbar">
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Instrument" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+        </div>
+
+    </div>
+    {% endblock report_title_bar %}
+
+    
+    {% block body %}
+    <!-- Link nav -->
+    <div class="afs-report-anchor-container">
+        <ol class="afs-report-anchors breadcrumb">
+            <!-- ko foreach: {data: sections, as: 'section'} -->
+            <li data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="afs-report-a"></li>
+            <!-- /ko -->
+        </ol>
+    </div>
+    <div class="afs-tabbed-report">
+        <div class="afs-tabbed-report-content">
+            <!-- Names Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'name'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/name',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Description Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
+
+                    }
+                }"></div>
+            </div>
+            <!-- Documentation Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/documentation',
+                    params: {
+                        data: resource,
+                        cards: documentationCards,
+                        dataConfig: documentationDataConfig
+
+                    }
+                }"></div>
+            </div>
+            <!-- Existence Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: existenceCards,
+                        dataConfig: existenceDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Substance Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/substance',
+                    params: {
+                        data: resource,
+                        cards: substanceCards
+
+                    }
+                }"></div>
+            </div>
+           <!-- Actor Tab -->
+           <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: actorData,
+                    }
+                }"></div>
+            </div>   
+            <!-- Location Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: locationData,
+                    }
+                }"></div>
+            </div>
+            <!-- Parthood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
+            <!-- Sethood Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'sethood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: sethoodData,
+                    }
+                }"></div>
+            </div>           
+            <!-- JSON Tab -->
+           <div class="afs-report-page afs-flex-col" data-bind="if: activeSection() === 'json'">
+               <div class="afs-flex-col" data-bind="component: {
+                   name: 'views/components/reports/scenes/json',
+                   params: {
+                       resourceInstanceId: reportMetadata().resourceinstanceid,
+                   }
+               }"></div>
+           </div>
+        </div>
+    </div>
+
+                
+
+    {% endblock body %}
+{% endblock report %}
+
+{% block summary %}
 
 <div class="model-summary-report">
-    <!-- Header -->
-    <div>
-        <div class="summary-report-title">
-            <span data-bind="text: report.get('displayname') "></span>
-            <a class="summary-report-link" href="javascript(void);" data-bind="text: typeOfInstrument"></a>
-        </div>
+    <div class="afs-report-page">
+        <!-- Names -->
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/name',
+            params: {
+                data: resource,
+                cards: nameCards,
+                dataConfig: nameDataConfig
+            }
+        }"></div>
+        <!-- Description -->
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/description',
+            params: {
+                data: resource,
+                cards: descriptionCards,
+            }
+        }"></div>
     </div>
-
-    <div class="summary-report-subtitle">
-        <span>
-            <span class="subtitle-category">{% trans "Owned by:" %}</span>
-            <span class="subtitle-value" data-bind="if: owners().length > 0">
-                <span data-bind="foreach: owners">
-                    <span data-bind="if: $index() > 0">, </span>
-                    <a target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
-                </span>
-            </span>
-            <span class="subtitle-value-blank" data-bind="if: owners().length === 0">
-                {% trans "No information" %}
-            </span>
-        </span>
-        <span style="float: right; font-size: 13px;">{% trans "Type of Instrument" %}</span>
-    </div>
-
-    <!-- Description -->
-    <div class="summary-report-description">
-        <span class="subtitle-category">{% trans "Instrument Description:" %}</span>
-        <span class="subtitle-value">
-            <span data-bind="if: description.length > 0">
-                <div data-bind="html: description"></div>
-            </span>
-            <span data-bind="if: description.length === 0">
-                {% trans "No description available" %}
-            </span>
-        </span>
-    </div>
-
-    <!-- Related Observations -->
-    <div class="summary-report-related-panel">
-        <div class="summary-report-related">
-            {% trans "Related Observations:" %}
-        </div>
-        <div data-bind="if: observations().length > 0">
-            <div class="subtitle-value" data-bind="foreach: observations">
-                <a class="summary-report-related-list" target="_blank" data-bind="text: name, attr: { href: link }, click: function() { return true;}, clickBubble: false"></a>
-            </div>
-        </div>
-        <span data-bind="if: observations().length === 0">
-            {% trans "No associated observations" %}
-        </span>
-    </div>
-
-    <div class="summary-report-editor-button">
-        <a class="btn btn-mint btn-labeled fa fa-edit text-right" target="_blank"
-            data-bind="attr: { href: editorLink }, click: function() { return true;}, clickBubble: false">
-            {% trans "Edit Resource" %}
-        </a>
-    </div>
-
 </div>
 
 {% endblock summary %}
