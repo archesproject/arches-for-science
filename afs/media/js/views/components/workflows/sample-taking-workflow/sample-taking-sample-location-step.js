@@ -715,6 +715,23 @@ define([
                 });
             };
 
+            var saveSamplePhysicalThingRemovedFromTile = function(samplePhysicalThingRemovedFromTile, sampleAreaResourceInstanceId) {
+                return new Promise(function(resolve, _reject) {
+                    const physicalThingRemovedFromNodeId = '38814345-d2bd-11e9-b9d6-a4d18cec433a' // Removal from Object_Removed From (E22)
+                    samplePhysicalThingRemovedFromTile.data[physicalThingRemovedFromNodeId]([{
+                        "resourceId": sampleAreaResourceInstanceId,
+                        "resourceXresourceId": "",
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": ""
+                    }]);
+                    samplePhysicalThingRemovedFromTile.transactionId = params.form.workflowId;
+
+                    samplePhysicalThingRemovedFromTile.save().then(function(data) {
+                        resolve(data);
+                    });
+                });
+            }
+
             self.savingTile(true);
             getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
@@ -741,6 +758,12 @@ define([
                                             var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
 
                                             savePhysicalThingNameTile(samplePhysicalThingNameTile, "sample").then(function(samplePhysicalThingNameData) {
+                                                const physicalThingRemovedFromNodegroupId = 'b11f217a-d2bc-11e9-8dfa-a4d18cec433a' // Removal from Object (E80)
+
+                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingRemovedFromNodegroupId).then(function(samplePhysicalThingRemovedFromCard){
+                                                    var samplePhysicalThingRemovedFromTile = getWorkingTile(samplePhysicalThingRemovedFromCard);
+                                                    saveSamplePhysicalThingRemovedFromTile(samplePhysicalThingRemovedFromTile, regionPhysicalThingNameData.resourceinstance_id);
+                                                })
                                                 const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(samplePhysicalThingClassificationCard) {
