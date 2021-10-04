@@ -11,8 +11,8 @@ define(['underscore', 'knockout', 'arches', 'utils/report', 'bindings/datatable'
             self.add = params.addTile || self.addNewTile;
             self.data = ko.observable();
             self.data(ko.unwrap(params.data));
-            self.visible = {}
-            for(section of ko.unwrap(params.data).sections) {
+            self.visible = {};
+            for(const section of ko.unwrap(params.data).sections) {
                 self.visible[section.title] = ko.observable(true);
             }
         },

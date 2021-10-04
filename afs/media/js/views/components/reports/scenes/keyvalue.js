@@ -9,11 +9,10 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.edit = params.editTile || self.editTile;
             self.delete = params.deleteTile || self.deleteTile;
             self.add = params.addTile || self.addNewTile;
-            self.item = ko.unwrap(params.data)
-            self.visible = {}
+            self.item = ko.unwrap(params.data);
+            self.visible = {};
             self.inline = params.inline || false;
             self.small = params.small || false;
-
         },
         template: { require: 'text!templates/views/components/reports/scenes/keyvalue.htm' }
     });

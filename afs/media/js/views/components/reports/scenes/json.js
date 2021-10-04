@@ -28,7 +28,7 @@ define([
                 self.selectedJSON(JSON.stringify(self.json[format], null, 2));
                 self.selectedFormat(format);
                 (format == 'json-ld' ? self.codeMirrorJsonLDMode(true) && self.codeMirrorJsonMode(false) : self.codeMirrorJsonLDMode(false) && self.codeMirrorJsonMode(true));
-            }
+            };
             self.setSelectedJson('json');
         },
         template: {
