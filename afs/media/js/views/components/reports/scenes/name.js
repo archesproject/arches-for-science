@@ -45,7 +45,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 self.type(params.data.type);
             } else {
                 let nameData = params.data()[self.dataConfig.name];
-                if(nameData.length === undefined){
+                if(nameData?.length === undefined){
                     nameData = [nameData]
                 } 
 
