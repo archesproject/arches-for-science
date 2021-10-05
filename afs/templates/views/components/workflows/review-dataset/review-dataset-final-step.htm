@@ -1,9 +1,9 @@
 {% load i18n %}
 <!-- ko if: loading() === false -->
 <div class="final-step">
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
+    <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Created or Modified Resource Instance' %}</h5>
-        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+        <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
                     <div class="summary-value" 
@@ -14,9 +14,9 @@
         </div>
     </div>
 
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
+    <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Object' %}</h5>
-        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+        <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: reportVals.objectName.name + ':'"></div>
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
+    <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Dataset Name and Associated Files' %}</h5>
         <div style="display: inline-flex;">
             <div style="border: solid 1px #ddd; height: 300px">

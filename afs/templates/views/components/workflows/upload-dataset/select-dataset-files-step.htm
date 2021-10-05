@@ -29,7 +29,7 @@
         <label class="control-label">{% trans "Sampled Locations" %}</label>
         <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
         <div class="panel">
-            <div style="border-top: solid 1px#ddd; margin-top: 10px">
+            <div style="border-top: solid 1px#ddd; margin-top: 5px">
             <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
                 <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
                 <div class="panel">
@@ -65,7 +65,7 @@
 
 
 
-    <div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: 12px;">
+    <div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: -20px;">
         <!--ko if: files().length > 0 && selectedPart() -->
         <label class="control-label">{% trans "Available Files" %}</label>
         <div class="file-workbench-files" data-bind="foreach: {data: files, as: 'file'}">
@@ -76,10 +76,10 @@
         </div>
         <!--/ko-->
 
-        <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+        <div class="dropzone-photo-upload" style="height: 80px;" data-bind="dropzone: dropzoneOptions">
             <div class="file-workbench-links">
                 <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
-                    <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span><span>{% trans "to upload photos" %}</span>
+                    <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span><span>{% trans "to upload files" %}</span>
                 </a>
             </div>
             <div style="min-height: 100%;">

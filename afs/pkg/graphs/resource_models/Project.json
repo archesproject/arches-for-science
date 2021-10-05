@@ -184,14 +184,14 @@
                             "uniquetoallinstances": false
                         }
                     ],
-                    "cssclass": null,
+                    "cssclass": "afs-project-workflow",
                     "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "helpenabled": true,
+                    "helpenabled": false,
                     "helptext": "<p>Add more information on dates here. (See documentation)</p>\n",
                     "helptitle": null,
                     "instructions": "Enter the dates of the project. ",
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Dates of Project",
                     "nodegroup_id": "0b925e3a-ca85-11e9-a308-a4d18cec433a",
                     "sortorder": 11,
@@ -210,7 +210,7 @@
                             "uniquetoallinstances": false
                         }
                     ],
-                    "cssclass": null,
+                    "cssclass": "afs-project-workflow",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "helpenabled": false,
@@ -452,7 +452,7 @@
                             "uniquetoallinstances": false
                         }
                     ],
-                    "cssclass": null,
+                    "cssclass": "afs-project-workflow",
                     "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "helpenabled": false,
@@ -588,7 +588,7 @@
                             "uniquetoallinstances": false
                         }
                     ],
-                    "cssclass": null,
+                    "cssclass": "afs-project-workflow",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "helpenabled": false,
@@ -1069,14 +1069,6 @@
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "480abea1-f508-4129-af86-52a4358b0e8a",
-                                "id": "a4214e72-a6d5-4b17-ae40-f1fac63635ef",
-                                "sortorder": "",
-                                "text": "Getty Guide Title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
                                 "conceptid": "f4643b7d-2710-4aca-8892-c0eeed02dfe9",
                                 "id": "0798bf2c-ab07-43d7-81f4-f1e2d20251a1",
                                 "sortorder": "",
@@ -1085,94 +1077,14 @@
                             {
                                 "children": [],
                                 "collector": "",
-                                "conceptid": "0f0f9727-0dee-4ff5-bc8d-201aaf6ab338",
-                                "id": "37c3fdc5-5a8b-438a-8c6d-c82d450520c7",
+                                "conceptid": "18610abd-e0e5-48bb-9a7a-3830d75755d0",
+                                "id": "7d069762-bd96-44b8-afc8-4761389105c5",
                                 "sortorder": "",
-                                "text": "catalogue title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "fde9f103-4536-4d8d-8882-9efb5084362c",
-                                "id": "ec635afd-beb1-426e-a21c-09866ea94d25",
-                                "sortorder": "",
-                                "text": "display title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "763b6d6d-d745-4dc8-9605-122d7c15a2d8",
-                                "id": "8f9ca198-cd32-4c3e-9ab8-afa0625a6a57",
-                                "sortorder": "",
-                                "text": "foreign language title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "48b2dd36-2148-4ce6-a00a-40be229da73d",
-                                "id": "d690f5b9-1d0e-4263-9982-2d03d4331040",
-                                "sortorder": "",
-                                "text": "formal title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "c000d8be-cc35-430b-b250-5105395204d0",
-                                "id": "9a6ed3ee-9ebf-47c1-8617-e2bd6212470d",
-                                "sortorder": "",
-                                "text": "group titles"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "41d71deb-c14b-46b2-b174-074c9abd5e3f",
-                                "id": "f0fcac66-a454-4652-a67c-07569753bffd",
-                                "sortorder": "",
-                                "text": "informal title"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "09c5997e-86f4-4689-bc6e-169e299acb9b",
-                                "id": "e7d4b0bf-f37a-4af3-aa0b-4f63152ef9f6",
-                                "sortorder": "",
-                                "text": "primary name"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "e1888665-101f-4307-9906-6d9df78bd88c",
-                                "id": "a567e52a-2e33-40da-abcc-212bbd2413f2",
-                                "sortorder": "",
-                                "text": "published titles"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "15599306-151c-4508-8e9c-ba0f10a709b0",
-                                "id": "d9ca8f76-5cc2-4d88-a5d5-2aea468512fc",
-                                "sortorder": "",
-                                "text": "scholarly title "
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "fa579432-0d81-4d5e-a721-01015f8fbfe5",
-                                "id": "67fa9f61-f296-43f9-952d-39097d24741f",
-                                "sortorder": "",
-                                "text": "stage names"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "6dd419c8-178e-4144-b107-da5aaf329529",
-                                "id": "50a74d12-94f1-4dc8-96e1-ee881603a991",
-                                "sortorder": "",
-                                "text": "translated titles"
+                                "text": "primary title"
                             }
                         ],
                         "placeholder": "Select one or more types for this name",
-                        "url": "/concepts/dropdown?conceptid=9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "url": "/concepts/dropdown?conceptid=80028d07-9c98-48cf-84db-f77bc01c8bbc"
                     },
                     "id": "87aece42-cb70-11e9-bcfb-a4d18cec433a",
                     "label": "Name type",
@@ -2570,7 +2482,7 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                    "id": "73d9be7a-165f-11ec-a2a9-024e0d439fdb"
+                    "id": "ec8b5994-1c9e-11ec-b88a-367dda3a4045"
                 }
             ],
             "graphid": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
@@ -4417,9 +4329,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 12.1 (Ubuntu 12.1-1.pgdg18.04+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit",
-        "git hash": "b9a4dcbc9 2021-09-14 16:12:20 -0700",
-        "os": "Linux",
-        "os version": "4.15.0-1051-aws"
+        "db": "PostgreSQL 12.3 on x86_64-apple-darwin16.7.0, compiled by Apple LLVM version 8.1.0 (clang-802.0.42), 64-bit",
+        "git hash": "6d5919430 2021-09-27 12:07:55 -0700",
+        "os": "Darwin",
+        "os version": "20.4.0"
     }
 }

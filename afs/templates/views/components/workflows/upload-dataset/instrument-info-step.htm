@@ -1,7 +1,7 @@
 {% load i18n %}
 <div style="height: 100%; padding: 10px 24px;">
-    <div style="padding: 5px">
-        <div class="widget-input-label">Instrument*</div>
+    <div style="padding: 5px; margin-bottom: 15px;">
+        <div class="widget-input-label" style="margin-bottom: 5px;">Instrument*</div>
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
@@ -14,8 +14,8 @@
             }
         }"></div>
     </div>
-    <div style="padding: 5px">
-        <div class="widget-input-label">Procedure Used</div>
+    <div style="padding: 5px; margin-bottom: 15px;">
+        <div class="widget-input-label" style="margin-bottom: 5px;">Procedure Used</div>
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
@@ -28,9 +28,9 @@
             }
         }"></div>
     </div>
-    <div style="padding: 5px">
+    <div style="padding: 5px;">
         <div class="widget-input-label">Instrument Parameters</div>
-        <div style="margin: -10px -5px;" data-bind="component: {
+        <div style="margin-top: -20px;" data-bind="component: {
             name: 'rich-text-widget',
             params: {
                 renderContext: 'workflow', 
@@ -39,8 +39,8 @@
             }
         }"></div>
     </div>
-    <div style="padding: 5px">
-        <div style="color:#2b547c" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide experiment name' : 'Show experiment name'"></div>
+    <div class="afs-experiment-name-block">
+        <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide experiment name' : 'Show experiment name'"></div>
         <div data-bind="visible: showName">
             <div class="widget-input-label">Observation Name</div>
             <div style="margin: -10px -5px;" data-bind="component: {

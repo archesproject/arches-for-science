@@ -42,6 +42,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
     <link href="{% static 'css/unify.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
     <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link href="{% static 'css/project.css' %}" rel="stylesheet">
 
 </head>
 
@@ -64,12 +65,12 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
                         <span class="icon-bar"></span>
                     </button>
 
-                    <div class="relative" style="padding: 8px 10px 8px 100px; width: 300px;">
-                        <div class="navbar-brand-v5-icon-container">
-                            <img class="navbar-brand-v5-icon" src="{% static 'img/landing/arches_logo_dark.png' %}" alt="Arches Logo">
+                    <div class="relative" style="padding-left: 85px; width: 300px;">
+                        <div class="navbar-brand-v5-icon-container" style="top: 4px; height: 45px; width: 45px; background: #f9f9f9; border-radius: 50%; border: 1px solid #000;">
+                            <img class="navbar-brand-v5-icon" style="margin-top: -2px;" src="{% static 'img/landing/arches_logo_dark.png' %}" alt="Arches Logo">
                         </div>
-                        <div class="application-name" style="position: absolute; top: 5px; left: 160px;">
-                            <h2>{% trans "Arches/DISCO" %}</h2>
+                        <div class="application-name" style="position: absolute; top: 5px; left: 150px;">
+                            <h2 style="color: #f4f4f4;">{% trans "Arches/DISCO" %}</h2>
                         </div>
                     </div>
                 </div>
@@ -350,7 +351,7 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
 
 
     <!-- Footer -->
-    <div class="app-footer">
+    <div class="afs-app-footer">
 
         <!-- footer content container -->
         <div class="row">
@@ -373,8 +374,8 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
                 <h2 class="app-footer-heading">{% trans "Guides and Documentation" %}</h2>
 
                 <!-- Links -->
-                <div class="splash-links">
-                    <div class="row" style="padding-left: 80px;">
+                <div class="afs-splash-links">
+                    <div class="row" style="padding-left: 0px;">
                         <div class="col-lg-4">
                             <ul class="splash-link-container">
                                 <li>
@@ -436,7 +437,7 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
         <div class="app-footer-links">
             <a class="link-spacing" href="">{% trans "Terms & Conditions" %}</a>
             <a class="link-spacing" href="">{% trans "Privacy Policy" %}</a>
-            <a class="app-footer-arches-link" href="http://www.archesproject.org" target="_blank">Powered by Arches</a>
+            <a class="afs-app-footer-arches-link" href="http://www.archesproject.org" target="_blank">Powered by Arches</a>
         </div>
     </div>
     <!-- End Copyright Container -->
