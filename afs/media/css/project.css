@@ -1,3 +1,5 @@
+@import url(report_templates.css);
+
 .chart {
     margin-right: 105px;
     margin-left: 15px;
@@ -59,10 +61,6 @@
     height: 100%;
 }
 
-.object-search-step .selected-instance {
-    background-color: lightgrey;
-}
-
 .workflow-search-panel {
     background-color: #f3f3f3;
     border-bottom: #ddd solid 1px;
@@ -111,7 +109,7 @@
 
 .object-search-step .wf-multi-tile-step-list {
     /* border-left: 0px; */
-    background-color: #f3f3f3;
+    background-color: #f9f9f9;
 }
 
 .object-search-step .search-selection-controls {
@@ -151,26 +149,23 @@
     overflow-y: auto;
 }
 
-.workflow-search-list .resource-report {
-    padding-left: 35px;
+.workflow-search-list .search-result-item {
     border: 1px solid #ddd;
     margin: 10px;
+    padding: 10px;
+}
+
+.object-search-step .selected-instance {
+    background-color: #eff7f9;
+    border: 1px solid #2783d4;
 }
 
 .tabbed-workflow-step-body .wf-multi-tile-step-list {
     padding-bottom: 60px !important;  /* overwrites manual style setting */
 }
 
-.tabbed-workflow-step-body .workflow-search-list .resource-report {
-    padding-left: unset;
-}
-
-.workflow-search-list .resource-report:hover {
+.workflow-search-list .search-result-item:hover {
     cursor: pointer;
-}
-
-.workflow-search-list .resource-report .summary-report-related-panel {
-    display: none;
 }
 
 .wf-multi-tile-btn-complete {
@@ -264,29 +259,6 @@
 .summary-report-editor-button {
     float: right;
     padding-top: 30px;
-}
-
-.physical-thing-search-list {
-    margin-left: -25px;
-    padding-left: 35px;
-}
-
-.tabbed-workflow-step-body .physical-thing-search-list-container {
-    width: calc(100vw - 50px);  /* side-nav width */
-}
-
-.tabbed-workflow-step-body .physical-thing-search-list {
-    margin: unset;
-    padding: unset;
-}
-
-.physical-thing-search-list .resource-report {
-    border-bottom: 1px solid #ddd;
-}
-
-.physical-thing-search-list .resource-report:hover {
-    cursor: pointer;
-    background: #fff;
 }
 
 .upload-dataset-related-widget {
@@ -499,6 +471,7 @@
 .upload-dataset-select-dataset-files .file-workbench-files {
     margin-top: 0; 
     overflow-y: auto;
+    background: #fff;
 }
 
 .upload-dataset-select-dataset-files .file-workbench-file {
@@ -525,7 +498,8 @@
 }
 
 .upload-dataset-select-dataset-files #parts-panel .panel-collapse {
-    padding: 15px 15px;
+    padding: 5px 10px 15px 10px;
+    background: #fbfbfb;
 }
 
 .upload-dataset-select-dataset-files #parts-panel .dataset-name {
@@ -589,3 +563,216 @@
 .analysis-areas-workflow-regions-step .cke_contents {
     height: 120px !important;
 } 
+
+.afs-final-step-section {
+    padding: 15px 40px; 
+    display: flex; 
+    flex-direction: column
+}
+
+.afs-final-step-section:first-child {
+    margin-top: -15px;
+}
+
+.afs-final-step-section h5.summary-value {
+    font-size: 15px;
+}
+
+.afs-final-step-section .summary-value {
+    font-size: 14px;
+}
+
+.afs-final-step-section .summary-label {
+    font-size: 14px;
+}
+
+.afs-final-step-block {
+    display: inline-flex; 
+    width: inherit; 
+    justify-content: space-between;
+    margin-top: -5px;
+}
+
+.afs-final-step-block a .summary-value {
+    color: steelblue;
+}
+
+.afs-final-step-block a:hover .summary-value {
+    color: #2b547c;
+}
+
+.afs-final-step-block a.summary-value {
+    color: steelblue;
+}
+
+.afs-final-step-block a.summary-value:hover {
+    color: #2b547c;
+}
+
+.workflow-component-based-step-wrapper {
+    /* padding: 20px 20px 0px 20px; */
+}
+
+/* .workflow-component-based-step-wrapper .widget-input-label {
+    margin-top: 0px;
+} */
+
+.workflow-component-based-step-wrapper h4 {
+    padding-left: 25px;
+}
+
+.workflow-component-based-step-wrapper .workbench-card-wrapper {
+    border-top: none;
+    /* margin: -20px -20px -20px -20px;
+    height: calc(100% + 20px); */
+}
+
+/* .workflow-component-based-step-wrapper .workbench-card-wrapper .workbench-card-sidepanel {
+    border-top: 1px solid #ddd;
+    margin-top: -1px;
+} */
+
+.workflow-component-based-step-wrapper .iiif-leaflet {
+    background: #fff;
+}
+
+.workflow-component-based-step-wrapper .workflow-component div.row:first-child {
+    padding-left: 26px;
+}
+
+.afs-image-service-instructions {
+    padding-bottom: 8px;
+    padding-left: 28px;
+    margin-top: -8px;
+}
+
+.afs-workflow-required-tag {
+    background: #f2f2f2;
+    border: 1px solid #ddd;
+    color: #454545;
+    margin-left: 1px;
+    padding: 3px 8px;
+}
+
+.afs-sample-name .control-label, i {
+    display: none;
+}
+
+.afs-sample-name input {
+    margin-left: -21px;
+    width: 338px;
+}
+
+.afs-worfklow-summary-table-header {
+    border-top: none;
+    border-left: none !important;
+    border-right: none;
+}
+
+.afs-region-name .row.widget-wrapper {
+    padding-left: 5px !important;
+    margin-top: 3px;
+}
+
+.afs-region-name .row.widget-wrapper .widget-input-label {
+    display: none;
+}
+
+.afs-workflow-annotator .widget-input-label {
+    display: none;
+}
+
+.afs-workflow-option {
+    font-size: 14px;
+}
+
+.afs-workflow-option-instruction {
+    font-size: 13px;
+    color: #777;
+    margin-top: -5px;
+}
+
+.workflow-component-element .widget-input-label {
+    padding-left: 25px;
+}
+
+.afs-experiment-name-block {
+    padding-left: 30px;
+}
+
+.afs-experiment-name {
+    color: steelblue;
+    margin-bottom: 5px;
+}
+
+.afs-experiment-name:hover {
+    color: #2b547c;
+    cursor: pointer;
+}
+
+.afs-experiment-name-block .widget-input-label {
+    display: none;
+}
+
+.afs-experiment-name-block input {
+    margin-left: -20px;
+}
+
+.afs-workflow-manifest-manager-container .iiif-image-tools div.row:first-child {
+    padding-left: 5px;
+    margin-top: -10px;
+}
+
+.afs-final-step-section h5.summary-value.upload-dataset-name {
+    font-weight: 500;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.afs-project-workflow .new-provisional-edit-card-container .control-label {
+    padding-left: 0px;
+}
+
+.workflow-component-element .afs-project-workflow .widget-input-label {
+    padding-left: 0px;
+}
+
+.workflow-component-based-step-wrapper .afs-project-workflow .control-label {
+    padding-left: 0px;
+}
+
+.afs-app-footer-arches-link {
+    display: inline-block;
+    float: right;
+}
+
+.afs-app-footer {
+    background:#112E4C;
+    padding: 10px 70px 30px 70px;
+    border-top: 1px solid #000;
+}
+
+.organization-address {
+    color: #f1f1f1;
+    line-height: 1.25;
+    margin-top: 10px;
+}
+
+.afs-splash-links {
+    color: #f1f1f1;
+    margin-top: 10px;
+}
+
+.afs-splash-links .splash-link-address {
+    line-height: 1.25;
+}
+
+.copyright-container {
+    padding: 20px 70px;
+}

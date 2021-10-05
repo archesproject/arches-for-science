@@ -2,20 +2,10 @@
     "name": "Digital Resource Template",
     "component": "views/components/reports/digital-resource",
     "defaultconfig": {
-        "tabs": [{
-                "icon": "fa fa-info",
-                "name": "Identity",
-                "nodegroup_ids": []
-            },
-            {
-                "icon": "fa fa-chain",
-                "name": "Links",
-                "nodegroup_ids": []
-            }
-        ],
-        "activeTabIndex": 1
+        "uncompacted_reporting": true
     },
     "description": "Digital Resource report",
     "componentname": "digital-resource-report",
-    "templateid": "e6390e54-31c4-4055-b064-ea9296c1c13a"
+    "templateid": "e6390e54-31c4-4055-b064-ea9296c1c13a",
+    "preload_resource_data": false
 }

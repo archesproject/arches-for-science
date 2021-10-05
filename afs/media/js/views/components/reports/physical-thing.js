@@ -1,108 +1,362 @@
-define(['underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource', 'utils/physical-thing'], function(_, ko, arches, TabbedReportViewModel, resourceUtils, physicalThingUtils) {
+define([
+    'underscore', 
+    'knockout', 
+    'utils/report',
+    'bindings/datatable', 
+    'views/components/reports/scenes/annotation-parts'
+], function(_, ko, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
-            TabbedReportViewModel.apply(this, [params]);
+            Object.assign(self, reportUtils);
+            self.sections = [
+                {id: 'name', title: 'Names and Classifications'}, 
+                {id: 'existence', title: 'Existence'},
+                {id: 'substance', title: 'Substance'},
+                {id: 'actor-relations', title: 'Actor Relations'},
+                {id: 'location', title: 'Location'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'sethood', title: 'Sethood'},
+                {id: 'aboutness', title: 'Aboutness'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'json', title: 'JSON'},
+            ];
 
-            if (params.summary) {
-                var IdentifierContentnodeid = '22c169b5-b498-11e9-bdad-a4d18cec433a';
-                var IdentifierType = '22c15cfa-b498-11e9-b5e3-a4d18cec433a';
-                var GallerySystemsTMSid = '26094e9c-2702-4963-adee-19ad118f0f5a';
-                var CreatorProductionEvent = 'cc16893d-b497-11e9-94b0-a4d18cec433a';
-                var Statement = '1953016e-b498-11e9-9445-a4d18cec433a';
-                var PartOfSet = '63e49254-c444-11e9-afbe-a4d18cec433a';
-                var StatementType = '1952e470-b498-11e9-b261-a4d18cec433a';
-                this.gallerySystemsTMSid = resourceUtils.getNodeValues({
-                    nodeId: IdentifierContentnodeid,
-                    where: {
-                        nodeId: IdentifierType,
-                        contains: GallerySystemsTMSid
-                    },
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-
-                this.artists = ko.observableArray([]);
-                this.artistObjects = resourceUtils.getNodeValues({
-                    nodeId: CreatorProductionEvent,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-                this.artistObjects.forEach(function(artistObject) {
-                    resourceUtils.lookupResourceInstanceData(artistObject['resourceId'])
-                        .then(function(data) {
-                            self.artists.push({ name: data._source.displayname, link: arches.urls.resource + '/' + artistObject['resourceId'] });
-                        });
-                });
-
-                var DescriptionConceptvalueid = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
-                this.description = resourceUtils.getNodeValues({
-                    nodeId: Statement,
-                    where: {
-                        nodeid: StatementType,
-                        contains: DescriptionConceptvalueid
-                    },
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-
-
-                this.activities = ko.observableArray();
-                var collectionSet = resourceUtils.getNodeValues({
-                    nodeId: PartOfSet,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-                collectionSet.forEach(function(relatedResourceItem) {
-                    resourceUtils.lookupResourceInstanceData(relatedResourceItem.resourceId)
-                        .then(function(data) {
-                            self.activities.push({ name: data._source.displayname, link: arches.urls.resource + '/' + relatedResourceItem.resourceId });
-                        });
-                });
-
-
-                var getLabel = function(object) {
-                    var label = object.label;
-                    if (Array.isArray(label)) {
-                        label = object.label[0]["@value"];
+            self.annotationTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(6).fill(null)
+            };
+            self.reportMetadata = ko.observable(params.report?.report_json);
+            self.resource = ko.observable(self.reportMetadata()?.resource);
+            self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
+            self.activeSection = ko.observable('name');
+            self.visible = {parts: ko.observable(true)};
+            self.selectedAnnotationTileId = ko.observable(null);
+            self.nameCards = {};
+            self.descriptionCards = {};
+            self.documentationCards = {};
+            self.existenceEvents = ['production', 'destruction', 'removal from object'];
+            self.existenceDataConfig = {
+                production: {
+                    graph: 'production',
+                    metadata: [{
+                        key: 'creator in production event',
+                        path: 'production_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'physical object used in production event',
+                        path: 'production_used object',
+                        type: 'resource'
+                    },{
+                        key: 'production event technique',
+                        path: 'production_technique',
+                        type: 'resource'
+                    },{
+                        key: 'production event type',
+                        path: 'production_type',
+                        type: 'resource'
+                    },{
+                        key: 'location of production event',
+                        path: 'production_location',
+                        type: 'resource'
+                    },{
+                        key: 'influenced on production event',
+                        path: 'production_influence',
+                        type: 'resource'
+                    }],
+                    parts: {
+                        graph: 'production_part',
+                        metadata:[{
+                            key: 'creator of event',
+                            path: 'production_part_carried out by',
+                            type: 'resource'
+                        },{
+                            key: 'physical object used in production event',
+                            path: 'production_part_used object',
+                            type: 'resource'
+                        },{
+                            key: 'production event technique',
+                            path: 'production_part_technique',
+                            type: 'kv'
+                        },{
+                            key: 'production event type',
+                            path: 'production_part_type',
+                            type: 'kv'
+                        },{
+                            key: 'location of production event',
+                            path: 'production_part_location',
+                            type: 'resource'
+                        },{
+                            key: 'influenced on production event',
+                            path: 'production_part_influence',
+                            type: 'resource'
+                        }]
                     }
-                    return label;
+                },
+                'destruction': { 
+                    graph: 'destruction',
+                    metadata: [{
+                        key: 'location of destruction event',
+                        path: 'destruction_location',
+                        type: 'resource'
+                    },{
+                        key: 'destruction event type',
+                        path: 'destruction_type',
+                        type: 'kv'
+                    }]
+                }, 
+                'removal from object': {
+                    graph: 'removal from object',
+                    metadata: [{
+                        key: 'object removed by part removal event',
+                        path: 'removal from object_removed from',
+                        type: 'resource'
+                    },{
+                        key: 'person in part removal event',
+                        path: 'removal from object_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'removal from object event technique',
+                        path: 'removal from object_technique',
+                        type: 'kv'
+                    },{
+                        key: 'location of part removal event',
+                        path: 'removal from object_location',
+                        type: 'resource'
+                    },{
+                        key: 'influence on part removal event',
+                        path: 'removal from object_influence',
+                        type: 'resource'
+                    }]
+                }
+            };
+
+            self.setEvents = ['addition', 'removal'];
+            self.setDataConfig = {
+                addition: {
+                    graph: 'addition to collection',
+                    metadata: [{
+                        key: 'collection added to',
+                        path: 'addition to collection_added to',
+                        type: 'resource'
+                    },{
+                        key: 'addition event type',
+                        path: 'addition to collection_type',
+                        type: 'kv'
+                    },{
+                        key: 'person in removal event',
+                        path: 'addition to collection_carried out by',
+                        type: 'resource'
+                    }]
+                }, removal: {
+                    graph:'removal from set',
+                    metadata: [{
+                        key: 'collection removed from',
+                        path: 'removal from set_removed from',
+                        type: 'resource'
+                    },{
+                        key: 'removal event type',
+                        path: 'removal from set_type',
+                        type: 'kv'
+                    },{
+                        key: 'person in removal event',
+                        path: 'removal from set_carried out by',
+                        type: 'resource'
+                    }]
+                }};
+
+            self.existenceCards = {};
+            self.substanceCards = {};
+            self.setCards = {}
+            self.summary = params.summary;
+
+            if(params.report.cards){
+                const cards = params.report.cards;
+                
+                self.cards = self.createCardDictionary(cards);
+
+                if(self.cards?.['production event of object']) {
+                    const productionEventChildren = self.cards['production event of object'].tiles()?.[0]?.cards ? self.cards['production event of object'].tiles()[0].cards : self.cards['production event of object'].cards();
+                    self.cards['production event of object'].children = self.createCardDictionary(productionEventChildren);
+                }
+
+                self.nameCards = {
+                    name: self.cards?.['name of object'],
+                    identifier: self.cards?.['identifier of object'],
+                    exactMatch: self.cards?.['external uri for object'],
+                    type: self.cards?.['type of object']
                 };
 
-                this.manifests = ko.observableArray();
-                var parseManifestJson = function(manifestData) {
-                    var sequences = manifestData ? manifestData.sequences : [];
-                    var canvases = [];
-                    sequences.forEach(function(sequence) {
-                        if (sequence.canvases) {
-                            sequence.label = getLabel(sequence);
-                            sequence.canvases.forEach(function(canvas) {
-                                canvas.label = getLabel(canvas);
-                                if (typeof canvas.thumbnail === 'object')
-                                    canvas.thumbnail = canvas.thumbnail["@id"];
-                                else if (canvas.images && canvas.images[0] && canvas.images[0].resource)
-                                    canvas.thumbnail = canvas.images[0].resource["@id"];
-                                canvases.push(canvas);
-                            });
+                self.descriptionCards = {
+                    statement: self.cards?.['statement about object']
+                };
+
+                self.documentationCards = {
+                    digitalReference: self.cards?.['digital reference to object'],
+                    subjectOf: self.cards?.['source reference work for object']
+                };
+
+                self.existenceCards = {
+                    production: {
+                        card: self.cards?.['production event of object'],
+                        subCards: {
+                            name: 'name of production event',
+                            identifier: 'identifier of production event',
+                            timespan: 'timespan of production event',
+                            statement: 'statement about production event',
+                            part: 'production event part'
                         }
-                    });
-                    self.manifests.push(manifestData);
-                    return canvases;
+                    },
+                    destruction: {
+                        card:  self.cards?.['destruction event of object'],
+                        subCards: {
+                            name: 'name for destruction event',
+                            identifier: 'identifier for destruction event',
+                            timespan: 'timespan of destruction event',
+                            statement: 'statement about destruction event'
+                        }
+                    },
+                    'removal from object': { 
+                        card: self.cards?.['part removal event of object'],
+                        subCards: {
+                            name: 'name for part removal event',
+                            identifier: 'identifier for part removal event',
+                            timespan: 'timespan of part removal event',
+                            statement: 'statement about part removal event'
+                        }
+                    },
                 };
 
-                var getManifestData = function(manifestURLs) {
-                    manifestURLs.forEach(function(manifestURL) {
-                        window.fetch(manifestURL)
-                            .then(function(response) {
-                                return response.json();
-                            })
-                            .then(function(manifestData) {
-                                parseManifestJson(manifestData);
-                            });
-                    });
+                self.setCards = {
+                    addition: {
+                        card:  self.cards?.['addition event of object to collection'],
+                        subCards: {
+                            name: 'name for addition event',
+                            identifier: 'identifier for addition event',
+                            timespan: 'timespan of addition event',
+                            statement: 'statement about addition event'
+                        }
+                    },
+                    removal: {
+                        card:  self.cards?.['removal event of object from collection'],
+                        subCards: {
+                            name: 'name for addition event',
+                            identifier: 'identifier for addition event',
+                            timespan: 'timespan of addition event',
+                            statement: 'statement about addition event'
+                        }
+                    }
+                };        
+
+                self.substanceCards = {
+                    dimension: self.cards?.['dimension of object']
                 };
 
-                physicalThingUtils.getManifests(this.report.get('tiles')).then(function(manifests) {
-                    getManifestData(manifests);
-                });
             }
+
+            
+            self.aboutnessData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Aboutness', 
+                            data: [{
+                                key: 'text carried by object', 
+                                value: self.getRawNodeValue(self.resource(), 'carries'), 
+                                card: self.cards?.['text carried by object'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });            
+            
+            self.locationData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Current Location of Object', 
+                            data: [{
+                                key: 'current location', 
+                                value: self.getRawNodeValue(self.resource(), 'current location'), 
+                                card: self.cards?.['current location of object'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Parthood', 
+                            data: [{
+                                key: 'parent object', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['parent object'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.selectedAnnotationTileId = ko.observable();
+            const parts = self.getRawNodeValue(self.resource(), 'part identifier assignment')
+            self.annotation = parts ? {
+                    info: parts.map((x => {
+                        const annotator = self.getRawNodeValue(x, 'part identifier assignment_annotator'); //annotator
+                        const geometricAnnotationIdentifier = self.getNodeValue(x, 'part identifier assignment_polygon identifier', 'part identifier assignment_polygon identifier_classification');
+                        const label = self.getNodeValue(x, 'part identifier assignment_label'); // label/name
+                        const assignedPropertyType = self.getNodeValue(x, 'part identifier assignment_assigned property type'); 
+                        const physicalPartOfObject = self.getRawNodeValue(x, 'part identifier assignment_physical part of object'); // object part
+                        const tileId = self.getTileId(x);
+                        return {label, annotator, tileId, assignedPropertyType, physicalPartOfObject, geometricAnnotationIdentifier}
+                    })),
+                    card: self.cards?.['parts of object'],
+                    featureCollection: parts.reduce(((previous, current) => {
+                        const geojson = self.getNodeValue(current, 'part identifier assignment_polygon identifier');
+                        for (feature of geojson.features){
+                            feature.properties.tileId = self.getTileId(current);
+                            previous.features.push(feature);
+                        }
+                        return previous;
+                    }), {features: [], type: 'FeatureCollection'})
+                }: {};
+            
+
+            self.actorData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Actor Relations', 
+                            data: [{
+                                key: 'current owner of object', 
+                                value: self.getRawNodeValue(self.resource(), 'current owner'), 
+                                card: self.cards?.['current owner of object'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.parts = ko.observableArray();
+
+            self.sethoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Sethood', 
+                            data: [{
+                                key: 'Collection Object is Part Of', 
+                                value: self.getRawNodeValue(self.resource(), 'member of'), 
+                                card: self.cards?.['collection object is part of'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
         },
         template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
     });

@@ -13,9 +13,9 @@
             }
         }"></div>
     </div>
-    <div style="padding: 5px">
+    <div style="padding: 5px; margin-top: 25px;">
         <div class="widget-input-label">Sampling Date</div>
-        <div data-bind="component: {
+        <div style="margin: -25px 0px 0px 0px;" data-bind="component: {
             name: 'datepicker-widget',
             params: {
                 node: {'config': {'dateFormat': 'YYYY-MM-DD'}},
@@ -26,7 +26,7 @@
     </div>
     <div style="padding: 5px">
         <div class="widget-input-label">Sampling Technique</div>
-        <div style="margin: -10px -5px;" data-bind="component: {
+        <div style="margin: -25px 0px 10px 0px;" data-bind="component: {
             name: 'rich-text-widget',
             params: {
                 renderContext: 'workflow', 
@@ -36,7 +36,7 @@
     </div>
     <div style="padding: 5px">
         <div class="widget-input-label">Sampling Motivation</div>
-        <div style="margin: -10px -5px;" data-bind="component: {
+        <div style="margin: -25px 0px 10px 0px;" data-bind="component: {
             name: 'rich-text-widget',
             params: {
                 renderContext: 'workflow', 
@@ -44,11 +44,11 @@
             }
         }"></div>
     </div>
-    <div style="padding: 5px">
-        <div style="color:#2b547c; cursor: pointer;" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide sampling activity name' : 'Show sampling activity name'"></div>
+    <div style="padding: 5px; margin-top: -20px; margin-left: 3px;">
+        <div style="color:#2b547c; cursor: pointer; padding-left: 20px;" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide sampling activity name' : 'Show sampling activity name'"></div>
         <div data-bind="visible: showName">
-            <div class="widget-input-label">Sampling Activity Name</div>
-            <div style="margin: -10px -5px;" data-bind="component: {
+            <div class="widget-input-label" style="display: none;">Sampling Activity Name</div>
+            <div style="margin: -20px -5px 20px -5px;" data-bind="component: {
                 name: 'text-widget',
                 params: {
                     renderContext: 'workflow', 
@@ -57,4 +57,5 @@
             }"></div>
         </div>
     </div>
+    <div style="height: 20px;"></div>
 </div>

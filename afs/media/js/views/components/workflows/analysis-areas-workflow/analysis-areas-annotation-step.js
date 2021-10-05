@@ -118,7 +118,7 @@ define([
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedAnalysisAreaInstance()){
                 const baseName = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]) || "";
-                return `${baseName} [ ${self.physicalThingName()} ]`;
+                return `${baseName} [${self.physicalThingName()}]`;
             }
         })
 
@@ -473,6 +473,7 @@ define([
 
                                             let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
                                             params.form.savedData(koMapping.toJS(mappedInstances));
+                                            params.form.value(params.form.savedData());
                                             params.form.complete(true);
                                         });
                                     });
