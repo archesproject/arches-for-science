@@ -29,6 +29,7 @@ define([
         this.samplingDateTile = ko.observable(getProp("samplingDateTile"));
         this.samplingTechniqueTile = ko.observable(getProp("samplingTechniqueTile"));
         this.samplingMotivationTile = ko.observable(getProp("samplingMotivationTile"));
+        this.samplingActivityDigitalReferenceTile = ko.observable(getProp("samplingActivityDigitalReferenceTile"));
         this.showName = ko.observable(false);
 
         const snapshot = {
@@ -44,7 +45,8 @@ define([
             samplingNameTile: self.samplingNameTile(),
             samplingDateTile: self.samplingDateTile(),
             samplingTechniqueTile: self.samplingTechniqueTile(),
-            samplingMotivationTile: self.samplingMotivationTile()
+            samplingMotivationTile: self.samplingMotivationTile(),
+            samplingActivityDigitalReferenceTile: self.samplingActivityDigitalReferenceTile(),
         };
 
         const samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
@@ -69,6 +71,7 @@ define([
                 samplingDateTile: self.samplingDateTile(),
                 samplingTechniqueTile: self.samplingTechniqueTile(),
                 samplingMotivationTile: self.samplingMotivationTile(),
+                samplingActivityDigitalReferenceTile: self.samplingActivityDigitalReferenceTile(),
             };
         });
 
@@ -86,6 +89,8 @@ define([
         this.physicalThingValue = selectPhysThingData["physicalThing"];
 
         params.form.save = async function(){
+            params.form.complete(false);
+
             const sampelingNameResponse = await self.saveSamplingName();
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
@@ -96,14 +101,16 @@ define([
                 self.saveSamplers(),
                 self.saveSamplingDate(),
                 self.saveSamplingTechnique(),
-                self.saveSamplingMotivation()
-            ).done(function(response1, response2, response3, response4, response5, response6){
+                self.saveSamplingMotivation(),
+                self.saveDigitalReference()
+            ).done(function(response1, response2, response3, response4, response5, response6, response7){
                 self.projectTile(response1[0].tileid);
                 self.physicalThingTile(response2[0].tileid);
                 self.samplersTile(response3[0].tileid);
                 self.samplingDateTile(response4[0].tileid);
                 self.samplingTechniqueTile(response5[0].tileid);
                 self.samplingMotivationTile(response6[0].tileid);
+                self.samplingActivityDigitalReferenceTile(response7[0].tileid);
 
                 params.form.savedData(params.form.value());
                 params.form.lockExternalStep("select-project", true);
@@ -261,6 +268,24 @@ define([
             return self.saveTile(samplingMotivationTileid, samplingMotivationTileData);
         };
 
+        this.saveDigitalReference = function() {
+            const samplingActivityDigitalReferenceTileData = {
+                "tileid": '',
+                "data": {
+                    "4099e818-8e31-11eb-a9c4-faffc265b501": "1497d15a-1c3b-4ee9-a259-846bbab012ed", // Preferred Manifest concept value
+                    "4099e8e0-8e31-11eb-a9c4-faffc265b501": null
+                },
+                "nodegroup_id": '4099e584-8e31-11eb-a9c4-faffc265b501',
+                "parenttile_id": '',
+                "resourceinstance_id": ko.unwrap(self.samplingActivityResourceId),
+                "sortorder": 0,
+                "tiles": {},
+                "transaction_id": params.form.workflowId
+            };
+            const samplingActivityDigitalReferenceTileid = ko.unwrap(self.samplingActivityDigitalReferenceTile) || uuid.generate();
+            return self.saveTile(samplingActivityDigitalReferenceTileid, samplingActivityDigitalReferenceTileData);
+        };
+
         params.form.reset = function() {
             self.samplingActivityResourceId(snapshot.samplingActivityResourceId);
             self.samplers(snapshot.samplers);
@@ -275,6 +300,7 @@ define([
             self.samplingDateTile(snapshot.samplingDateTile);
             self.samplingTechniqueTile(snapshot.samplingTechniqueTile);
             self.samplingMotivationTile(snapshot.samplingMotivationTile);
+            self.samplingActivityDigitalReferenceTile(snapshot.samplingActivityDigitalReferenceTile);
         };
     }
 

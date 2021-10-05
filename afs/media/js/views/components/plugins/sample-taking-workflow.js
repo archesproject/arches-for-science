@@ -86,7 +86,8 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
-                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']"
+                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']",
+                                        samplingInfoData: "['sample-info']['sampling-info']",
                                     },
                                 },
                             ], 
