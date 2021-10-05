@@ -124,7 +124,7 @@ define([
 
         this.saveSamplingActivityDigitalReference = function(digitalResourceInstanceId){
             const samplingActivityDigitalReferenceTileData = {
-                "tileid": '',
+                "tileid": self.samplingActivityDigitalReferenceTileId,
                 "data": {
                     "4099e818-8e31-11eb-a9c4-faffc265b501": "1497d15a-1c3b-4ee9-a259-846bbab012ed", // Preferred Manifest concept value
                     "4099e8e0-8e31-11eb-a9c4-faffc265b501": [

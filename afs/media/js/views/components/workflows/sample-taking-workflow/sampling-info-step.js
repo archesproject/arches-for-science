@@ -95,22 +95,22 @@ define([
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
 
-            self.samplingActivityDigitalReferenceTile(self.samplingActivityDigitalReferenceTile() || uuid.generate()); //will be passed to the next step to create digital reference tile
-
             $.when(
                 self.saveProject(),
                 self.savePhysicalThing(),
                 self.saveSamplers(),
                 self.saveSamplingDate(),
                 self.saveSamplingTechnique(),
-                self.saveSamplingMotivation()
-            ).done(function(response1, response2, response3, response4, response5, response6){
+                self.saveSamplingMotivation(),
+                self.saveDigitalReference()
+            ).done(function(response1, response2, response3, response4, response5, response6, response7){
                 self.projectTile(response1[0].tileid);
                 self.physicalThingTile(response2[0].tileid);
                 self.samplersTile(response3[0].tileid);
                 self.samplingDateTile(response4[0].tileid);
                 self.samplingTechniqueTile(response5[0].tileid);
                 self.samplingMotivationTile(response6[0].tileid);
+                self.samplingActivityDigitalReferenceTile(response7[0].tileid);
 
                 params.form.savedData(params.form.value());
                 params.form.lockExternalStep("select-project", true);
@@ -266,6 +266,24 @@ define([
             };
             var samplingMotivationTileid = ko.unwrap(self.samplingMotivationTile) || uuid.generate();
             return self.saveTile(samplingMotivationTileid, samplingMotivationTileData);
+        };
+
+        this.saveDigitalReference = function() {
+            const samplingActivityDigitalReferenceTileData = {
+                "tileid": '',
+                "data": {
+                    "4099e818-8e31-11eb-a9c4-faffc265b501": "1497d15a-1c3b-4ee9-a259-846bbab012ed", // Preferred Manifest concept value
+                    "4099e8e0-8e31-11eb-a9c4-faffc265b501": null
+                },
+                "nodegroup_id": '4099e584-8e31-11eb-a9c4-faffc265b501',
+                "parenttile_id": '',
+                "resourceinstance_id": ko.unwrap(self.samplingActivityResourceId),
+                "sortorder": 0,
+                "tiles": {},
+                "transaction_id": params.form.workflowId
+            };
+            const samplingActivityDigitalReferenceTileid = ko.unwrap(self.samplingActivityDigitalReferenceTile) || uuid.generate();
+            return self.saveTile(samplingActivityDigitalReferenceTileid, samplingActivityDigitalReferenceTileData);
         };
 
         params.form.reset = function() {
