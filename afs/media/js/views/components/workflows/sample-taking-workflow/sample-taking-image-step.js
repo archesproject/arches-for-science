@@ -26,6 +26,9 @@ define([
         });
 
         this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
+        const samplingInfoData = koMapping.toJS(params.samplingInfoData);
+        this.samplingActivityResourceId = samplingInfoData.samplingActivityResourceId;
+        this.samplingActivityDigitalReferenceTileId = samplingInfoData.samplingActivityDigitalReferenceTile;
 
         this.physicalThingDigitalReferenceCard = ko.observable();
         this.physicalThingDigitalReferenceCard.subscribe(function(card) {
@@ -119,6 +122,38 @@ define([
             }
         };
 
+        this.saveSamplingActivityDigitalReference = function(digitalResourceInstanceId){
+            const samplingActivityDigitalReferenceTileData = {
+                "tileid": '',
+                "data": {
+                    "4099e818-8e31-11eb-a9c4-faffc265b501": "1497d15a-1c3b-4ee9-a259-846bbab012ed", // Preferred Manifest concept value
+                    "4099e8e0-8e31-11eb-a9c4-faffc265b501": [
+                        {
+                            "resourceId": digitalResourceInstanceId,
+                            "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                            "resourceXresourceId": "",
+                            "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                        }
+                    ]
+                },
+                "nodegroup_id": '4099e584-8e31-11eb-a9c4-faffc265b501',
+                "parenttile_id": '',
+                "resourceinstance_id": self.samplingActivityResourceId,
+                "sortorder": 0,
+                "tiles": {},
+                "transaction_id": params.form.workflowId
+            };
+
+            return window.fetch(arches.urls.api_tiles(self.samplingActivityDigitalReferenceTileId), {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(samplingActivityDigitalReferenceTileData),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+        };
+
         this.save = function() {
             params.form.complete(false);
             params.form.saving(true);
@@ -141,6 +176,7 @@ define([
 
                             self.digitalResourceServiceIdentifierTile.save().then(function(data) {
                                 params.form.savedData(data);
+                                self.saveSamplingActivityDigitalReference(data.resourceinstance_id);
     
                                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
     
@@ -177,8 +213,9 @@ define([
                     var matchingTile = manifestResourceData.tiles.find(function(tile) {
                         return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                     });
-    
+
                     params.form.savedData(matchingTile);
+                    self.saveSamplingActivityDigitalReference(matchingTile.resourceinstance_id);
                 }
 
                 params.form.complete(true);

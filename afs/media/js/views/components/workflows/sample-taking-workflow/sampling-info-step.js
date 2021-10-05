@@ -29,6 +29,7 @@ define([
         this.samplingDateTile = ko.observable(getProp("samplingDateTile"));
         this.samplingTechniqueTile = ko.observable(getProp("samplingTechniqueTile"));
         this.samplingMotivationTile = ko.observable(getProp("samplingMotivationTile"));
+        this.samplingActivityDigitalReferenceTile = ko.observable(getProp("samplingActivityDigitalReferenceTile"));
         this.showName = ko.observable(false);
 
         const snapshot = {
@@ -44,7 +45,8 @@ define([
             samplingNameTile: self.samplingNameTile(),
             samplingDateTile: self.samplingDateTile(),
             samplingTechniqueTile: self.samplingTechniqueTile(),
-            samplingMotivationTile: self.samplingMotivationTile()
+            samplingMotivationTile: self.samplingMotivationTile(),
+            samplingActivityDigitalReferenceTile: self.samplingActivityDigitalReferenceTile(),
         };
 
         const samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
@@ -69,6 +71,7 @@ define([
                 samplingDateTile: self.samplingDateTile(),
                 samplingTechniqueTile: self.samplingTechniqueTile(),
                 samplingMotivationTile: self.samplingMotivationTile(),
+                samplingActivityDigitalReferenceTile: self.samplingActivityDigitalReferenceTile(),
             };
         });
 
@@ -86,9 +89,13 @@ define([
         this.physicalThingValue = selectPhysThingData["physicalThing"];
 
         params.form.save = async function(){
+            params.form.complete(false);
+
             const sampelingNameResponse = await self.saveSamplingName();
             self.samplingActivityResourceId(sampelingNameResponse.resourceinstance_id);
             self.samplingNameTile(sampelingNameResponse.tileid);
+
+            self.samplingActivityDigitalReferenceTile(self.samplingActivityDigitalReferenceTile() || uuid.generate()); //will be passed to the next step to create digital reference tile
 
             $.when(
                 self.saveProject(),
@@ -275,6 +282,7 @@ define([
             self.samplingDateTile(snapshot.samplingDateTile);
             self.samplingTechniqueTile(snapshot.samplingTechniqueTile);
             self.samplingMotivationTile(snapshot.samplingMotivationTile);
+            self.samplingActivityDigitalReferenceTile(snapshot.samplingActivityDigitalReferenceTile);
         };
     }
 
