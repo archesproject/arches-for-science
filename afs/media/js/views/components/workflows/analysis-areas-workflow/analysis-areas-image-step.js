@@ -123,7 +123,7 @@ define([
             params.form.complete(false);
             params.form.saving(true);
 
-            params.form.lockExternalStep("object-step", true);
+            params.form.lockExternalStep("select-project", true);
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
                 self.digitalResourceNameTile.transactionId = params.form.workflowId;
                 self.digitalResourceNameTile.save().then(function(data) {
