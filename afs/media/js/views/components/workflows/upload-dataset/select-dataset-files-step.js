@@ -297,7 +297,7 @@ define([
                         formData.append('transaction_id', params.form.workflowId);
                         formData.append('data', JSON.stringify(fileTemplate));
                         formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
-                        const tileId = file.tileId() ?? uuid.generate();
+                        const tileId = file.tileId() || uuid.generate();
                         const tile = await window.fetch(arches.urls.api_tiles(tileId), {
                             method: 'POST',
                             credentials: 'include',
