@@ -4,6 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
+    'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-image-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
@@ -14,8 +15,8 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Object',
-                    name: 'object-step', /* unique to workflow */
+                    title: 'Project Info',
+                    name: 'select-project',  /* unique to workflow */
                     required: true,
                     informationboxdata: {
                         heading: 'Workflow Goal: Record Locations and Regions of Interest',
@@ -27,16 +28,15 @@ define([
                     },
                     layoutSections: [
                         {
-                            sectionTitle: 'Object or Sample',
                             componentConfigs: [
                                 { 
-                                    componentName: 'resource-instance-select-widget',
-                                    uniqueInstanceName: 'sample-object-resource-instance', /* unique to step */
-                                    tilesManaged: 'none',
+                                    componentName: 'select-phys-thing-step',
+                                    uniqueInstanceName: 'select-phys-thing', /* unique to step */
                                     parameters: {
                                         graphids: [
-                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
-                                        ],
+                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a', /* Project */
+                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
+                                        ],  
                                     },
                                 },
                             ], 
@@ -54,7 +54,7 @@ define([
                             If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
                         `,
                     },
-                    lockableExternalSteps: ['object-step'],
+                    lockableExternalSteps: ['select-project'],
                     layoutSections: [
                         {
                             sectionTitle: 'Image Service',
@@ -65,7 +65,7 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
-                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance']"
+                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']"
                                     },
                                 },
                             ], 
@@ -88,7 +88,7 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
-                                        physicalThingResourceId: "['object-step']['sample-object-resource-instance']",
+                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']",
                                         imageStepData: "['image-step']['image-service-instance'][0]['data']"
                                     },
                                 },
@@ -108,7 +108,7 @@ define([
                                     uniqueInstanceName: 'analysis-areas-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        sampleObjectResourceId: "['object-step']['sample-object-resource-instance']",
+                                        sampleObjectResourceId: "['select-project']['select-phys-thing']['physicalThing']",
                                         regionsStepData: "['regions-step']['annotation-instance']",
                                         imageStepData: "['image-step']['image-service-instance'][0]['data']",
                                         digitalReferenceResourceId: "['image-step']['image-service-instance'][0]['resourceinstance_id']"
