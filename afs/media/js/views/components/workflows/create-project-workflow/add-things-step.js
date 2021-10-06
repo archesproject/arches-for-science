@@ -149,15 +149,15 @@ define([
             self.complete(false);
             self.saving(true);
 
-            nameTileData = {
+            const nameTileData = {
                 "52aa1ade-c450-11e9-8326-a4d18cec433a": ["bc35776b-996f-4fc1-bd25-9f6432c1f349"], // English
                 "52aa1d0f-c450-11e9-aec4-a4d18cec433a": null,
                 "52aa1e1c-c450-11e9-91cc-a4d18cec433a": null,
                 "52aa1f17-c450-11e9-a114-a4d18cec433a": ["7d069762-bd96-44b8-afc8-4761389105c5"], // [primary title]
                 "52aa2007-c450-11e9-b5d4-a4d18cec433a": `Collection for ${researchActivityName}`,
-            }
+            };
 
-            nameTile = {
+            const nameTile = {
                 "tileid": ko.unwrap(self.collectionTileId) || "",
                 "nodegroup_id": collectionNameNodegroupId,
                 "parenttile_id": null,
@@ -166,7 +166,7 @@ define([
                 "tiles": {},
                 "data": nameTileData,
                 "transaction_id": params.form.workflowId
-            }
+            };
 
             window.fetch(arches.urls.api_tiles(ko.unwrap(self.collectionTileId) || uuid.generate()), {
                 method: 'POST',
