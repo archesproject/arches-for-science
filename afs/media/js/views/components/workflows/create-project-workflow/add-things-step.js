@@ -3,11 +3,12 @@ define([
     'underscore',
     'knockout',
     'knockout-mapping',
+    'uuid',
     'arches',
     'bindings/select2-query',
     'views/components/search/paging-filter',
-], function($, _, ko, koMapping, arches) {
-    var collectionNameNodeId = '52aa2007-c450-11e9-b5d4-a4d18cec433a'; // Name_content in Collection resource
+], function($, _, ko, koMapping, uuid, arches) {
+    var collectionNameNodegroupId = '52aa1673-c450-11e9-8640-a4d18cec433a'; // Name (E33) in Collection resource
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
     var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
 
@@ -148,18 +149,37 @@ define([
             self.complete(false);
             self.saving(true);
 
-            $.ajax({
-                url: arches.urls.api_node_value,
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    'nodeid': collectionNameNodeId,
-                    'data':  ("Collection for " + researchActivityName),
-                    'tileid': ko.unwrap(self.collectionTileId),
-                    'resourceinstanceid': ko.unwrap(self.collectionResourceId),
-                    'transaction_id': params.form.workflowId
+            const nameTileData = {
+                "52aa1ade-c450-11e9-8326-a4d18cec433a": ["bc35776b-996f-4fc1-bd25-9f6432c1f349"], // English
+                "52aa1d0f-c450-11e9-aec4-a4d18cec433a": null,
+                "52aa1e1c-c450-11e9-91cc-a4d18cec433a": null,
+                "52aa1f17-c450-11e9-a114-a4d18cec433a": ["7d069762-bd96-44b8-afc8-4761389105c5"], // [primary title]
+                "52aa2007-c450-11e9-b5d4-a4d18cec433a": `Collection for ${researchActivityName}`,
+            };
+
+            const nameTile = {
+                "tileid": ko.unwrap(self.collectionTileId) || "",
+                "nodegroup_id": collectionNameNodegroupId,
+                "parenttile_id": null,
+                "resourceinstance_id": ko.unwrap(self.collectionResourceId),
+                "sortorder": 0,
+                "tiles": {},
+                "data": nameTileData,
+                "transaction_id": params.form.workflowId
+            };
+
+            window.fetch(arches.urls.api_tiles(ko.unwrap(self.collectionTileId) || uuid.generate()), {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(nameTile),
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-            }).done(function(data) {
+            }).then(function(response) {
+                if (response.ok) {
+                    return response.json();
+                }
+            }).then(function(data) {
                 self.collectionResourceId(data.resourceinstance_id);
                 self.collectionTileId(data.tileid);
 
