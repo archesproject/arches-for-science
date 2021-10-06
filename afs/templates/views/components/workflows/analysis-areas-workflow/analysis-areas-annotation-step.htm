@@ -25,14 +25,16 @@
 {% endblock tabs %}
 
 {% block sidepanel %}
-    <!-- ko if: $data.activeTab() === 'dataset' -->
 
-    <div class="workbench-header-buffer">
-        <div class="workbench-card-sidepanel-header-container">
-            <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Regions'"></h4>
-        </div>
+<!-- ko if: $data.activeTab() === 'dataset' -->
+
+<div class="workbench-header-buffer">
+    <div class="workbench-card-sidepanel-header-container">
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Regions'"></h4>
     </div>
-
+</div>
+        
+<div class="workbench-content-container">
 
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
@@ -40,12 +42,7 @@
                 <div style="padding: 10px 0;">
                     <h5>{% trans 'Region locations' %}</h5>
             
-                    <div
-                        style="
-                            margin-left: 5px;
-                            margin-right: 15px;
-                        "
-                    >
+                    <div style="margin-left: 5px; margin-right: 15px;">
                         <input 
                             type="text" 
                             placeholder="{% trans 'filter...' %}"
@@ -53,7 +50,7 @@
                                 width: 100%;
                                 height: 36px;
                                 border: 1px solid #ddd;
-                                border-bottom: none;
+                                margin-bottom: 3px;
                             "
                             data-bind="textInput: $data.analysisAreaFilterTerm"
                         >
@@ -134,60 +131,18 @@
                 <!-- ko if: $data.selectedAnalysisAreaInstance() -->
                 {% block form_widgets %}
                     <form class="widgets" style="margin-bottom: 20px;">
-                        <!-- ko if: $data.partIdentifierAssignmentLabelWidget() -->
-                            <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Name for Region (Part)' %}</h5>
-                            <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()].isrequired}"></i>
-
-                            <div 
-                                data-bind='
-                                    component: {
-                                        name: self.form.widgetLookup[$data.partIdentifierAssignmentLabelWidget().widget_id()].name,
-                                        params: {
-                                            formData: self.physicalThingPartIdentifierAssignmentTile().formData,
-                                            tile: self.physicalThingPartIdentifierAssignmentTile(),
-                                            form: self.form,
-                                            config: $data.partIdentifierAssignmentLabelWidget().configJSON,
-                                            label: $data.partIdentifierAssignmentLabelWidget().label(),
-                                            value: self.physicalThingPartIdentifierAssignmentTile().data[$data.partIdentifierAssignmentLabelWidget().node_id()],
-                                            node: self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()],
-                                            expanded: self.expanded,
-                                            graph: self.form.graph,
-                                            type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
-                                        }
-                                    }, 
-                                    css:{
-                                        "active": $data.partIdentifierAssignmentLabelWidget().selected,
-                                        "hover": $data.partIdentifierAssignmentLabelWidget().hovered,
-                                        "$data.partIdentifierAssignmentLabelWidget()-preview": self.preview
-                                    }, 
-                                    click: function(data, e) {
-                                        if (!$data.partIdentifierAssignmentLabelWidget().selected() && self.preview) $data.partIdentifierAssignmentLabelWidget().selected(true);
-                                    }, 
-                                    event: {
-                                        mouseover: function(){
-                                            if (self.preview) $data.partIdentifierAssignmentLabelWidget().hovered(true);
-                                        },
-                                        mouseout: function(){
-                                            if (self.preview) $data.partIdentifierAssignmentLabelWidget().hovered(null);
-                                        }
-                                    }, 
-                                    visible: $data.partIdentifierAssignmentLabelWidget().visible
-                                '
-                            ></div>
-                        <!-- /ko -->
 
                         <div data-bind="foreach: {
-                                data:card.widgets, as: 'widget'
-                            }">
+                            data:card.widgets, as: 'widget'
+                        }">
                             <!-- ko if: ko.unwrap(self.form.nodeLookup[widget.node_id()].datatype) === 'annotation' -->
-                                <h5 class="analysis-areas-annotation-step-widget-title">
-                                    {% trans 'Location' %}
+                                <h5 class="analysis-areas-annotation-step-widget-title pad-top">
+                                    {% trans 'Location' %} <span class="afs-workflow-required-tag">{% trans 'required' %}</span>
                                 </h5>
 
                                 <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[widget.node_id()].isrequired}"></i>
 
-                                <div class="col-xs-12">
+                                <div class="col-xs-12" style="width: 342px;">
                                     <div class="style-tools-collapser" data-bind=" click: function() {
                                         self.showStylingTools(!self.showStylingTools());
                                     }">
@@ -343,11 +298,59 @@
                             <!-- /ko -->
                         </div>
 
+                        <!-- ko if: $data.partIdentifierAssignmentLabelWidget() -->
+                            <h5 class="analysis-areas-annotation-step-widget-title">
+                                {% trans 'Name for Region (Part)' %} <span class="afs-workflow-required-tag">{% trans 'required' %}</span>
+                            </h5>
+                            <i style="display: none;" data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()].isrequired}"></i>
+
+                            <div class="afs-region-name" data-bind='
+                                    component: {
+                                        name: self.form.widgetLookup[$data.partIdentifierAssignmentLabelWidget().widget_id()].name,
+                                        params: {
+                                            formData: self.physicalThingPartIdentifierAssignmentTile().formData,
+                                            tile: self.physicalThingPartIdentifierAssignmentTile(),
+                                            form: self.form,
+                                            config: $data.partIdentifierAssignmentLabelWidget().configJSON,
+                                            label: $data.partIdentifierAssignmentLabelWidget().label(),
+                                            value: self.physicalThingPartIdentifierAssignmentTile().data[$data.partIdentifierAssignmentLabelWidget().node_id()],
+                                            node: self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()],
+                                            expanded: self.expanded,
+                                            graph: self.form.graph,
+                                            type: "resource-editor",
+                                            disabled: !self.card.isWritable && !self.preview,
+                                        }
+                                    }, 
+                                    css:{
+                                        "active": $data.partIdentifierAssignmentLabelWidget().selected,
+                                        "hover": $data.partIdentifierAssignmentLabelWidget().hovered,
+                                        "$data.partIdentifierAssignmentLabelWidget()-preview": self.preview
+                                    }, 
+                                    click: function(data, e) {
+                                        if (!$data.partIdentifierAssignmentLabelWidget().selected() && self.preview) $data.partIdentifierAssignmentLabelWidget().selected(true);
+                                    }, 
+                                    event: {
+                                        mouseover: function(){
+                                            if (self.preview) $data.partIdentifierAssignmentLabelWidget().hovered(true);
+                                        },
+                                        mouseout: function(){
+                                            if (self.preview) $data.partIdentifierAssignmentLabelWidget().hovered(null);
+                                        }
+                                    }, 
+                                    visible: $data.partIdentifierAssignmentLabelWidget().visible
+                                '
+                            ></div>
+                            <div>
+                                <input disabled type="text" style="padding-left: 20px; margin-left: 5px; margin-top: -5px; width: 342px; height: 36px;" data-bind="textInput: areaName"></input>
+                            </div>
+                        <!-- /ko -->
+
+                        
                         <!-- ko if: $data.partIdentifierAssignmentAnnotatorWidget() -->
-                            <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Annotator' %}</h5>
+                            <h5 class="analysis-areas-annotation-step-widget-title pad-top">{% trans 'Annotator' %}</h5>
                             <i data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentAnnotatorWidget().node_id()].isrequired}"></i>
 
-                            <div 
+                            <div class="afs-workflow-annotator" style="margin-left: -20px;"
                                 data-bind='
                                     component: {
                                         name: self.form.widgetLookup[$data.partIdentifierAssignmentAnnotatorWidget().widget_id()].name,
@@ -390,37 +393,30 @@
                 <!-- /ko -->
 
                 {% block form_buttons %}
-                    <!-- ko if: $data.tileDirty() -->
-                    <div
-                        style="
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 0 5px;
-                        "
-                    >
-                        <button 
-                            class="btn btn-success" 
-                            style="width: 48%;"
-                            data-bind="click: $data.saveAnalysisAreaTile"
-                        >
-                            <i class="ion-android-cloud-done"></i>
-                            <span style="padding-left: 4px">{% trans 'Save' %}</span>
-                        </button>
-                        <button 
-                            class="btn btn-danger" 
-                            style="width: 48%;"
-                            data-bind="click: $data.resetAnalysisAreasTile"
-                        >
-                            <i class="ion-android-cancel"></i>
-                            <span style="padding-left: 4px">{% trans 'Cancel' %}</span>
-                        </button>
-                    </div>
-                    <!-- /ko -->
                 {% endblock form_buttons %}
+
             </div>
         </div>
     </div>
-    <!-- /ko -->
+</div>
+<!-- /ko -->
+<div class="workbench-button-panel">
+    <button 
+        class="btn btn-success" 
+        data-bind="click: $data.saveAnalysisAreaTile, css: {disabled: !$data.tileDirty()}""
+    >
+        <i class="ion-android-cloud-done"></i>
+        <span>{% trans 'Save' %}</span>
+    </button>
+    <button 
+        class="btn btn-danger" 
+        data-bind="click: $data.resetAnalysisAreasTile, css: {disabled: !$data.tileDirty()}"
+    >
+        <i class="ion-android-cancel}"></i>
+        <span>{% trans 'Cancel' %}</span>
+    </button>
+</div>
 
-    {{ block.super }}
+{{ block.super }}
+
 {% endblock sidepanel %}

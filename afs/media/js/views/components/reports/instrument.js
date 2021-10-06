@@ -1,69 +1,164 @@
-define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils) {
+define([
+    'jquery', 
+    'underscore', 
+    'knockout', 
+    'arches', 
+    'viewmodels/tabbed-report', 
+    'utils/resource', 
+    'utils/report', 
+    'views/components/reports/scenes/name', 
+    'views/components/reports/scenes/description', 
+    'views/components/reports/scenes/documentation', 
+    'views/components/reports/scenes/existence', 
+    'views/components/reports/scenes/substance',  
+    'views/components/reports/scenes/json', 
+    'views/components/reports/scenes/default' 
+], 
+    function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
-            TabbedReportViewModel.apply(this, [params]);
+            Object.assign(self, reportUtils);
+            self.sections = [
+                {'id': 'name', 'title': 'Names and Classifications'}, 
+                {'id': 'existence', 'title': 'Existence'},
+                {'id': 'substance', 'title': 'Substance'},
+                {'id': 'actor-relations', 'title': 'Actor Relations'},
+                {'id': 'location', 'title': 'Location'},
+                {'id': 'parthood', 'title': 'Parthood'},
+                {'id': 'sethood', 'title': 'Sethood'},
+                {'id': 'description', 'title': 'Description'},
+                {'id': 'documentation', 'title': 'Documentation'},
+                {'id': 'json', 'title': 'JSON'},
+            ];
+            self.reportMetadata = ko.observable(params.report?.report_json);
+            self.resource = ko.observable(self.reportMetadata()?.resource);
+            self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
+            self.activeSection = ko.observable('name');
+            self.nameDataConfig = { 'exactMatch': undefined };
+            self.documentationDataConfig = {
+                'subjectOf': undefined, 
+            };
+            self.existenceDataConfig = {
+                'production': {
+                    graph: 'production',
+                    metadata: [{
+                        key: 'production event type',
+                        path: 'production_type',
+                        type: 'resource'
+                    },{
+                        key: 'producer',
+                        path: 'production_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'production event location',
+                        path: 'production_location',
+                        type: 'resource'
+                    }]
+                },
+            };
+            self.nameCards = {};
+            self.descriptionCards = {}
+            self.documentationCards = {};
+            self.existenceCards = {};
+            self.substanceCards = {};
+            self.summary = params.summary;
 
-            if (params.summary) {
+            if(params.report.cards){
+                const cards = params.report.cards;
+                
+                self.cards = self.createCardDictionary(cards);
 
-                this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;
+                self.nameCards = {
+                    name: self.cards?.["name of instrument"],
+                    identifier: self.cards?.["identifier for instrument"],
+                    type: self.cards?.["type of instrument"]
+                };
+                self.existenceCards = {
+                    production: {
+                        card: self.cards?.["production event of instrument"],
+                        subCards: {
+                            name: 'name for production event',
+                            identifier: 'identifier for production event',
+                            timespan: 'timespan of production event',
+                            statement: 'statement about production event',
+                        }
+                    }
+                };
 
-                var ownerId = 'b6c9ba34-99f6-11ea-a9b7-3af9d3b32b71';
-                this.owners = ko.observableArray([]);
-                this.ownerObjs = resourceUtils.getNodeValues({
-                    nodeId: ownerId,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-                this.ownerObjs.forEach(function(ownerObj) {
-                    if (ownerObj) {
-                        resourceUtils.lookupResourceInstanceData(ownerObj.resourceId)
-                            .then(function(data) {
-                                self.owners.push({ name: data._source.displayname, link: arches.urls.resource_report + ownerObj.resourceId });
-                            });
-                    }});
+                self.documentationCards = {
+                    digitalReference: self.cards?.["digital reference to instrument"],
+                };
 
-                var descriptionConceptValueId = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
-                var statementTextId = 'b6cba3ee-99f6-11ea-a9b7-3af9d3b32b71';
-                var statementTypeId = 'b6cb842c-99f6-11ea-a9b7-3af9d3b32b71';
-                this.description = resourceUtils.getNodeValues({
-                    nodeId: statementTextId,
-                    where: {
-                        nodeId: statementTypeId,
-                        contains: descriptionConceptValueId
-                    },
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-
-                var typeId = 'b6c9f4cc-99f6-11ea-a9b7-3af9d3b32b71';
-                this.typeOfInstrument = ko.observable();
-                this.typeOfInstrumentId = resourceUtils.getNodeValues({
-                    nodeId: typeId,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-
-                if (this.typeOfInstrumentId.length) {
-                    $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfInstrumentId, {
-                        dataType: "json"
-                    }).done(function(data) {
-                        self.typeOfInstrument(data.value);
-                    });
+                self.descriptionCards = {
+                    statement: self.cards?.['statement about instrument']
+                };
+                self.substanceCards = {
+                    dimension: self.cards?.['dimension of instrument']
                 }
-
-                this.observations  = ko.observableArray([]);
-                var usedInstrumentId = '1acc9d59-c458-11e9-99e4-a4d18cec433a';
-                $.ajax(arches.urls.related_resources + self.report.attributes.resourceid, {
-                    dataType: "json"
-                }).done(function(data) {
-                    data.related_resources.resource_relationships.forEach(function(relatedResource) {
-                        if (relatedResource.nodeid === usedInstrumentId) {
-                            resourceUtils.lookupResourceInstanceData(relatedResource.resourceinstanceidfrom)
-                                .then(function(data) {
-                                    self.observations.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
-                                });
-                        }});
-                });
             }
+
+            self.locationData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Location", 
+                            data: [{
+                                key: 'current location', 
+                                value: self.getRawNodeValue(self.resource(), 'current location'), 
+                                card: self.cards?.['current location of instrument'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Parthood", 
+                            data: [{
+                                key: 'parent instrument', 
+                                value: self.getRawNodeValue(self.resource(), 'part of'), 
+                                card: self.cards?.['parent instrument'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+
+            self.actorData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Actor Relations", 
+                            data: [{
+                                key: 'current owner', 
+                                value: self.getRawNodeValue(self.resource(), 'current owner'), 
+                                card: self.cards?.['current owner of instrument'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.sethoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: "Sethood", 
+                            data: [{
+                                key: 'Member of Set', 
+                                value: self.getRawNodeValue(self.resource(), 'member of'), 
+                                card: self.cards?.['part of set'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
         },
         template: { require: 'text!templates/views/components/reports/instrument.htm' }
     });

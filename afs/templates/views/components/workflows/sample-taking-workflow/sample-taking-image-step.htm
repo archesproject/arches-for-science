@@ -1,16 +1,11 @@
-
-<div
-    style="padding-bottom: 8px;"
->
+<div class="afs-image-service-instructions">
     <p>
         Select an existing image service for your object that you can use to draw the locations of your observations.
         Or upload image(s) to create a new service.
     </p>
 
     <!-- ko foreach: [...physicalThingDigitalReferencePreferredManifestResourceData(), ...physicalThingDigitalReferenceAlternateManifestResourceData()] -->
-        <div
-            style="display: flex;"
-        >
+        <div style="display: flex; padding-left: 5px;">
             <input 
                 style="
                     cursor: pointer;
@@ -33,17 +28,14 @@
     <!-- /ko -->
 </div>
 
-<button
-    class="btn btn-success"
-    data-bind="click: openManifestManager"
->
+<button class="btn btn-success" style="margin-left: 28px;" data-bind="click: openManifestManager">
     <i class="ion-android-cloud-done"></i>
     <span>
         Create new Image Service
     </span>
 </button>
 
-<div 
+<div class="afs-workflow-manifest-manager-container"
     style="
         position: fixed;
         top: 50px;

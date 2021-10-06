@@ -10,10 +10,13 @@ define([
     function viewModel(params) {
         var self = this;
 
-        var objectStepData = params.form.externalStepData['objectstep']['data'];
-        params.form.resourceId = objectStepData['sample-object-resource-instance'][0][1];
-        var regionsStepData = params.form.externalStepData.regionsstep.data["annotation-instance"];
-        this.regionInstances = regionsStepData.map(function(data){
+        params.form.resourceId(params.sampleObjectResourceId);
+        const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+        const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId];
+        const digitalReferenceResourceId = params.digitalReferenceResourceId;
+
+        
+        this.regionInstances = params.regionsStepData.map(function(data){
             return {
                 regionName: data.data["3e541cc6-859b-11ea-97eb-acde48001122"],
                 regionResource: data.data["b240c366-8594-11ea-97eb-acde48001122"][0]["resourceId"],
@@ -25,47 +28,55 @@ define([
         this.objectAnnotations = ko.observableArray();
         this.resourceData.subscribe(function(val){
             this.displayName = val['displayname'] || 'unnamed';
+            const digitalReference = val.resource['Digital Reference'].find(function(val){
+                return val['Digital Source']['resourceId'] === digitalReferenceResourceId;
+            });
             this.reportVals = {
                 parentObject: {'name': 'Object', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
-                digitalReference: {'name': 'Image Service', 'value': this.getResourceValue(val.resource['Digital Reference'][0],['Digital Source','@display_value'])},
+                digitalReference: {'name': 'Image Service', 'value': digitalReference['Digital Source']["@display_value"]},
             };
             var annotationCollection = {};
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
-                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
-                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
-                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
-                var tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
+                const annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
+                const annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
+                const annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
+                const annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
+                const tileId = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@tile_id']);
                 if (annotationStr) {
-                    var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
-                    var canvas = annotationJson.features[0].properties.canvas;
-                    annotationJson.features.forEach(function(feature){
-                        feature.properties.tileId = tileId;
-                    });
-                    if (canvas in annotationCollection) {
-                        annotationCollection[canvas].push({
-                            tileId: tileId,
-                            annotationName: annotationName,
-                            annotationLabel: annotationLabel,
-                            annotator: annotator,
-                            annotationJson: annotationJson,
-                        });
-                    } else {
-                        annotationCollection[canvas] = [{
-                            tileId: tileId,
-                            annotationName: annotationName,
-                            annotationLabel: annotationLabel,
-                            annotator: annotator,
-                            annotationJson: annotationJson,
-                        }];
-                    }
+                    const annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+                    if (annotationJson.features.length > 0){
+                        const currentManifestUrl = annotation['Part Identifier Assignment_Polygon Identifier']['geojson']['features'][0]['properties']['manifest'];
+                        if (currentManifestUrl === manifestUrl){
+                            const canvas = annotationJson.features[0].properties.canvas;
+                            annotationJson.features.forEach(function(feature){
+                                feature.properties.tileId = tileId;
+                            });
+                            if (canvas in annotationCollection) {
+                                annotationCollection[canvas].push({
+                                    tileId: tileId,
+                                    annotationName: annotationName,
+                                    annotationLabel: annotationLabel,
+                                    annotator: annotator,
+                                    annotationJson: annotationJson,
+                                });
+                            } else {
+                                annotationCollection[canvas] = [{
+                                    tileId: tileId,
+                                    annotationName: annotationName,
+                                    annotationLabel: annotationLabel,
+                                    annotator: annotator,
+                                    annotationJson: annotationJson,
+                                }];
+                            }    
+                        }
+                    }    
                 }
             });
 
-            for (var canvas in annotationCollection) {
-                var name;
+            for (const canvas in annotationCollection) {
+                let name;
                 let annotationCombined;
-                var info = [];
+                let info = [];
                 annotationCollection[canvas].forEach(function(annotation){
                     name = annotation.annotationName;
                     if (annotationCombined) {
@@ -75,12 +86,12 @@ define([
                     }
                     info.push({
                         tileId: annotation.tileId,
-                        label: annotation.annotationLabel,
+                        name: annotation.annotationName,
                         annotator: annotation.annotator,
                     });
                 });
 
-                var leafletConfig = self.prepareAnnotation(annotationCombined);
+                const leafletConfig = self.prepareAnnotation(annotationCombined);
                 self.objectAnnotations.push({
                     name: name,
                     info: info,

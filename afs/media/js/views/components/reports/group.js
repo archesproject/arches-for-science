@@ -1,82 +1,199 @@
-define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils) {
+define([
+    'jquery',
+    'underscore',
+    'knockout',
+    'arches',
+    'utils/resource',
+    'utils/report',
+    'views/components/reports/scenes/name',
+    'views/components/reports/scenes/communication'
+], function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('group-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
-            TabbedReportViewModel.apply(this, [params]);
+            Object.assign(self, reportUtils);
+            self.sections = [
+                {id: 'name', title: 'Names and Classifications'},
+                {id: 'existence', title: 'Existence'},
+                {id: 'events', title: 'Events'},
+                {id: 'location', title: 'Location'},
+                {id: 'parthood', title: 'Parthood'},
+                {id: 'description', title: 'Description'},
+                {id: 'documentation', title: 'Documentation'},
+                {id: 'communication', title: 'Communication'},
+                {id: 'json', title: 'JSON'}
+            ];
+            self.reportMetadata = ko.observable(params.report?.report_json);
+            self.resource = ko.observable(self.reportMetadata()?.resource);
+            self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
+            self.activeSection = ko.observable('name');
+            self.sourceData = ko.observable({
+                sections:
+                    [
+                        {
+                            title: 'References',
+                            data: [{
+                                key: 'source reference work',
+                                value: self.getRawNodeValue(self.resource(), 'source'),
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
 
-            if (params.summary) {
+            self.nameDataConfig = {
+                exactMatch: 'exact match',
+            };
+            self.documentationDataConfig = {
+                subjectOf: undefined,
+                label: undefined
+            };
 
-                this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;
+            self.existenceEvents = ['formation', 'dissolution'];
+            self.existenceDataConfig = {
+                formation: {
+                    graph: 'formation', 
+                    metadata: [{
+                        key: 'person in formation event',
+                        path: 'formation_carried out by',
+                        type: 'resource'
+                    },{
+                        key: 'location of formation event',
+                        path: 'formation_location',
+                        type: 'resource'
+                    }]
+                },
+                dissolution: {
+                    graph: 'dissolution',
+                    metadata: [{
+                        key: 'source reference for dissolution event',
+                        path: 'dissolution_source',
+                        type: 'resource'
+                    },{
+                        key: 'location of dissolution event',
+                        path: 'dissolution_location',
+                        type: 'resource'
+                    }]
+                },
+            };
 
-                var FounderID = '3b5f8617-c05e-11e9-9ca5-a4d18cec433a';
-                this.founders = ko.observableArray([]);
-                this.founderObjs = resourceUtils.getNodeValues({
-                    nodeId: FounderID,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
-                this.founderObjs.forEach(function(founderObj) {
-                    if (founderObj) {
-                        resourceUtils.lookupResourceInstanceData(founderObj.resourceId)
-                            .then(function(data) {
-                                self.founders.push({ name: data._source.displayname, link: arches.urls.resource_report + founderObj.resourceId });
-                            });
-                    }});
+            self.eventEvents = ['professional activity'];
+            self.eventDataConfig = {
+                'professional activity': {
+                    graph: 'professional activity', 
+                    metadata: [{
+                        key: 'professional activity type',
+                        path: 'professional activity_type',
+                        type: 'kv'
+                    },{
+                        key: 'location of professional activity',
+                        path: 'professional activity_location',
+                        type: 'resource'
+                    },{
+                        key: 'source reference work for professional activity',
+                        path: 'professional activity_source',
+                        type: 'resource'
+                    }]
+                },
+            };
 
-                var FormationDateId = "3b5f7497-c05e-11e9-8b4a-a4d18cec433a"; //Begining of Begining
-                this.formationDate = resourceUtils.getNodeValues({
-                    nodeId: FormationDateId,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+            self.nameCards = {};
+            self.descriptionCards = {};
+            self.documentationCards = {};
+            self.existenceCards = {};
+            self.eventCards = {};
+            self.communicationCards = {};
+            self.summary = params.summary;
 
-                var DissolutionDateId = "ae7d8ae8-d284-11e9-a201-a4d18cec433a"; //End of End
-                this.dissolutionDate = resourceUtils.getNodeValues({
-                    nodeId: DissolutionDateId,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+            if(params.report.cards){
+                const cards = params.report.cards;
+                
+                self.cards = self.createCardDictionary(cards)
 
-                var TypeId = '97f2c366-b323-11e9-98a8-a4d18cec433a';
-                this.typeOfGroup = ko.observable();
-                this.typeOfGroupId = resourceUtils.getNodeValues({
-                    nodeId: TypeId,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+                self.nameCards = {
+                    name: self.cards?.['name of group'],
+                    identifier: self.cards?.['identifier of group'],
+                    exactMatch: self.cards?.['external uri of group'],
+                    type: self.cards?.['type of group']
+                };
 
-                if (this.typeOfGroupId.length) {
-                    $.ajax(arches.urls.concept_value + '?valueid=' + self.typeOfGroupId, {
-                        dataType: "json"
-                    }).done(function(data) {
-                        self.typeOfGroup(data.value);
-                    });
-                }
+                self.descriptionCards = {
+                    statement: self.cards?.['statement about group'],
+                };
 
-                this.members  = ko.observableArray([]);
-                var PersonMemberOfNodeid = 'b3026e1c-b31f-11e9-aa4a-a4d18cec433a';
+                self.documentationCards = {
+                    digitalReference: self.cards?.['digital reference to group'],
+                };                
+                
+                self.communicationCards = {
+                    contactPoints: self.cards?.['address or contact point of group'],
+                };
 
-                $.ajax(arches.urls.related_resources + self.report.attributes.resourceid, {
-                    dataType: "json"
-                }).done(function(data) {
-                    data.related_resources.resource_relationships.forEach(function(relatedResource) {
-                        if (relatedResource.nodeid === PersonMemberOfNodeid) {
-                            resourceUtils.lookupResourceInstanceData(relatedResource.resourceinstanceidfrom)
-                                .then(function(data) {
-                                    self.members.push({ name: data._source.displayname, link: arches.urls.resource_report + relatedResource.resourceinstanceidfrom });
-                                });
-                        }});
-                });
-
-                var DescriptionConceptValueId = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
-                var StatementTextId = '32dba023-c05e-11e9-aa88-a4d18cec433a';
-                var StatementTypeId = '32db9a8f-c05e-11e9-9e7b-a4d18cec433a';
-                this.description = resourceUtils.getNodeValues({
-                    nodeId: StatementTextId,
-                    where: {
-                        nodeId: StatementTypeId,
-                        contains: DescriptionConceptValueId
+                self.existenceCards = {
+                    formation: { 
+                        card: self.cards?.['formation event of group'],
+                        subCards: {
+                            name: 'name for formation event',
+                            identifier: 'identifier for formation event',
+                            timespan: 'timespan of formation event',
+                            statement: 'statement about formation event',
+                        }
                     },
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+                    dissolution: {
+                        card:  self.cards?.['dissolution event of group'],
+                        subCards: {
+                            name: 'name for formation event',
+                            identifier: 'identifier for dissolution event',
+                            timespan: 'timespan of dissolution event',
+                            statement: 'statement about dissolution event'
+                        }
+                    },
+                };
+
+
+                self.eventCards = {
+                    'professional activity': { 
+                        card: self.cards?.['professional activity group known for'],
+                        subCards: {
+                            name: 'name for professional activity',
+                            identifier: 'identifier for professional activity',
+                            timespan: 'timespan of professional activity',
+                            statement: 'statement about professional activity',
+                        }
+                    },
+                };
             }
+            
+            self.locationData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Location', 
+                            data: [{
+                                key: 'residence or associated location of group', 
+                                value: self.getRawNodeValue(self.resource(), 'residence'), 
+                                card: self.cards?.['residence or associated location of group'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+            self.parthoodData = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Parthood', 
+                            data: [{
+                                key: 'parent group', 
+                                value: self.getRawNodeValue(self.resource(), 'member of'), 
+                                card: self.cards?.['parent group'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
         },
         template: { require: 'text!templates/views/components/reports/group.htm' }
     });

@@ -1,12 +1,13 @@
 {% load i18n %}
 
 <div>
-    <div style="display: inline-flex;">
+    <div style="display: inline-flex; flex-direction: column; margin-top: -20px; width: 100%;">
         <div style="border: solid 1px #ddd">
-            <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 300px; width: 400px"></div>
+            <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
         </div>
-        <div style="width: 600px; padding-left: 30px;">
-            <table data-bind="datatable: annotationTableConfig" class="table table-striped table-bordered" width="100%">
+
+        <div style="width: 100%; padding-left: 30px;">
+            <table data-bind="datatable: annotationTableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd; margin-bottom: 8px; margin-left: -20px;" width="100%">
                 <thead>
                     <tr>
                         <th>{% trans "Region Name:" %}</th>
@@ -21,14 +22,14 @@
                         click: function() {
                             $parent.highlightAnnotation(part.tileId);
                         }">
-                        <td><div class="summary-value" data-bind="text: part.label"></div></td>
+                        <td><div class="summary-value" data-bind="text: part.name"></div></td>
                         <td><div class="summary-value" data-bind="text: part.annotator"></div></td>
                     </tr>
                 <tbody>
             </table>
             <div class="final-step-section-block-item">
-                <div class="block-item files-metadata">
-                    <div class="summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
+                <div class="block-item files-metadata" style="display: inline-flex; margin-left: -25px; color: #777;">
+                    <div class="" style="font-size: 13px; padding-right: 3px;" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
                 </div>
             </div>
         </div>

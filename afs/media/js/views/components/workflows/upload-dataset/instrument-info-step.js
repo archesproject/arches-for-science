@@ -15,7 +15,7 @@ define([
         const parameterNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a'; // parameter are 'Statement' cards
         const nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         const nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
-        const projectInfo = params.form.externalStepData.projectinfo.data['select-phys-thing-step'][0][1];
+        const projectInfo = params.projectInfoData;
         const physThingName = projectInfo.physThingName;
         const observedThingNodeId = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
         const observedThingInstanceId = projectInfo.physicalThing;
@@ -24,13 +24,16 @@ define([
         const nameTypeNodeId = '87e4092e-c457-11e9-8036-a4d18cec433a';
         // TODO: the default name type concept value needs to change/be confirmed.  
         const nameTypeConceptValue = ['ec635afd-beb1-426e-a21c-09866ea94d25'];
+        const languageConceptValue = ['bc35776b-996f-4fc1-bd25-9f6432c1f349'];
+        const nameLanguageNodeId = '87e3ec82-c457-11e9-89d8-a4d18cec433a';
+        const statementLanguageNodeId = '8ec31780-c457-11e9-9543-a4d18cec433a';
         const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
 
         const getProp = function(key, prop) {
-            if (ko.unwrap(params.value) && params.value()[key])
-                return params.value()[key][prop] || params.value()[key];
-            else {
+            if (ko.unwrap(params.value) && params.value()[key]) {
+                return prop ? params.value()[key][prop] : params.value()[key];
+            } else {
                 return null;
             } 
         };
@@ -136,9 +139,15 @@ define([
             params.form.hasUnsavedData(false);
         };
 
+        self.instrumentValue.subscribe(function(val){
+            params.form.dirty(Boolean(val));
+        });
+
         params.form.save = function() {
-            if(!self.instrumentValue()){
-                params.form.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
+            params.form.complete(false);
+            if (!self.instrumentValue()){
+                params.form.error(true);
+                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
                 return;
             }
 
@@ -156,6 +165,7 @@ define([
                     let nameData = {};
                     nameData[nameNodeId] = self.nameValue();
                     nameData[nameTypeNodeId] = nameTypeConceptValue;
+                    nameData[nameLanguageNodeId] = languageConceptValue;
                     projectTileId = data.tileid;
                     return self.saveTile(nameData, nameNodeGroupId, data.resourceinstance_id, nameTileId);
                 })
@@ -175,15 +185,17 @@ define([
                     let parameterData = {};
                     parameterData[parameterNodeId] = self.parameterValue();
                     parameterData[statementTypeNodeId] = statementTypeConceptValue;
+                    parameterData[statementLanguageNodeId] = languageConceptValue;
                     procedureTileId = data.tileid;
                     return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
                 })
                 .then(function(data) {
                     parameterTileId = data.tileid;
                     self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
-                    params.form.savedData(params.form.addedData());
+                    params.form.savedData(params.form.value());
                     params.form.complete(true);
-                    params.form.alert("");
+                    params.form.dirty(false);
+                    params.pageVm.alert("");
                 });
         };
     }

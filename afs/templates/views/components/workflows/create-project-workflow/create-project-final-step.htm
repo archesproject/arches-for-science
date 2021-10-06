@@ -1,9 +1,9 @@
 {% load i18n %}
 <!-- ko if: loading() === false -->
 <div class="final-step">
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
-        <h5 class="summary-value">{% trans 'Created Resource Instance' %}</h5>
-        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+    <div class="afs-final-step-section">
+        <h5 class="summary-value">{% trans 'Created Resource Instance(s)' %}</h5>
+        <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
                     <div class="summary-value" 
@@ -18,9 +18,9 @@
             </div>
         </div>
     </div>
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
+    <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Project Details' %}</h5>
-        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+        <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: reportVals.projectName.name + ':'"></div>
@@ -42,9 +42,9 @@
         </div>
     </div>
 
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
+    <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Used Physical Things' %}</h5>
-        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+        <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <!-- ko foreach: collectionOfPhysThings -->
                 <a class="summary-value" data-bind="clickBubble: false, attr: {href: $parent.urls.resource + '/' + resourceid}, text: name"></a>
@@ -53,9 +53,9 @@
         </div>
     </div>
 
-    <div class="afs-final-step-section" style="padding: 15px; display: flex; flex-direction: column">
+    <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Related Resource' %}</h5>
-        <div style="display: inline-flex; width: inherit; justify-content: space-between;">
+        <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
                     <div class="summary-value" data-bind="text: reportVals.collection.value"></div>

@@ -4,23 +4,24 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
+    'utils/resource',
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, IIIFAnnotationViewmodel) {
+    'text!templates/views/components/iiif-popup.htm',
+], function(_, $, arches, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
         
-        var selectProjectStepData = params.form.externalStepData['selectprojectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(selectProjectStepData['select-phys-thing'][0][1]['physicalThing']);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
+        this.samplingActivityResourceId = koMapping.toJS(params.samplingActivityResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        var imageStepData = params.form.externalStepData['imagestep']['data']['image-service-instance'][0];
-        this.manifestUrl = ko.observable(imageStepData.data[digitalResourceServiceIdentifierContentNodeId]);
-
-        var sampleInfoStepData = params.form.externalStepData['sampleinfostep']['data'];
-        this.samplingActivityResourceId = koMapping.toJS(sampleInfoStepData['sampling-info'][0][1]['samplingActivityResourceId']);
+        const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+        const sampleMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
+        this.analysisAreaResourceIds = [];
+        this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.samplingActivitySamplingUnitCard = ko.observable();
         this.samplingActivityStatementCard = ko.observable();
@@ -90,14 +91,19 @@ define([
 
         this.sampleLocationFilterTerm = ko.observable();
         this.filteredSampleLocationInstances = ko.computed(function() {
+            const samplesOnly = self.sampleLocationInstances().filter(function(a){
+                const analysisAreaResourceIds = self.analysisAreaResourceIds.map(item => item.resourceid);
+                const partId = ko.unwrap(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId)
+                return !analysisAreaResourceIds.includes(partId);
+            });
             if (self.sampleLocationFilterTerm()) {
-                return self.sampleLocationInstances().filter(function(sampleLocationInstance) {
+                return samplesOnly.filter(function(sampleLocationInstance) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                     return sampleLocationInstance.data[partIdentifierAssignmentLabelNodeId]().includes(self.sampleLocationFilterTerm());
                 });
             }
             else {
-                return self.sampleLocationInstances();
+                return samplesOnly;
             }
         });
 
@@ -116,6 +122,14 @@ define([
                 self.getManifestData();
             }
         });
+
+        this.sampleName = ko.computed(function() {
+            var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+            if (self.selectedSampleLocationInstance()){
+                const baseName = self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]() || "";
+                return `${baseName} [${params.physicalThingName}]`;
+            }
+        })
 
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
@@ -185,7 +199,7 @@ define([
         this.removeFeatureFromCanvas = function(feature) {
             var annotationNodes = self.annotationNodes();
             
-            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNodeName = "Sample Locations";
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
@@ -211,7 +225,7 @@ define([
             var annotationNodes = self.annotationNodes();
             
             if (self.selectedSampleLocationInstanceFeatures()) {
-                var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                var physicalThingAnnotationNodeName = "Sample Locations";
                 var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                     return annotationNode.name === physicalThingAnnotationNodeName;
                 });
@@ -242,7 +256,7 @@ define([
         };
 
         this.updateSampleLocationInstances = function() {
-            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNodeName = "Sample Locations";
             var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
@@ -289,7 +303,6 @@ define([
             self.selectedSampleLocationInstance(sampleLocationInstance);
 
             if (self.selectedSampleLocationInstance() && self.samplingActivitySamplingUnitCard()) {
-                var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
 
                 var selectedSampleLocationParentPhysicalThingData = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
                 
@@ -316,51 +329,55 @@ define([
                     self.fetchCardFromResourceId(samplingAreaSampleCreatedParentPhysicalThingResourceId, physicalThingStatementNodegroupId).then(function(samplingAreaSampleCreatedParentPhysicalThingStatementCard) {
                         var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
                         var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
-        
-                        var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630"
+
+                        var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
+
                         var sampleDescriptionTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
                             return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleDescriptionConceptId);
                         });
         
+                        var samplingMotivationTile = samplingAreaSampleCreatedParentPhysicalThingStatementCard.tiles().find(function(tile) {
+                            return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleMotivationConceptId);
+                        });
+
                         if (sampleDescriptionTile) {
                             var sampleDescriptionContent = ko.unwrap(sampleDescriptionTile.data[physicalThingStatementContentNodeId]);
 
                             self.sampleDescriptionWidgetValue(sampleDescriptionContent);
                             self.previouslySavedSampleDescriptionWidgetValue(sampleDescriptionContent);
                         }
+
+                        if (samplingMotivationTile) {
+                            var sampleMotivationContent = ko.unwrap(samplingMotivationTile.data[physicalThingStatementContentNodeId]);
+            
+                            self.motivationForSamplingWidgetValue(sampleMotivationContent);
+                            self.previouslySavedMotivationForSamplingWidgetValue(sampleMotivationContent);
+                        }
                     });
                 }
-
-                var samplingActivityStatementNodegroupId = '0335786d-1d9d-11eb-a29f-024e0d439fdb';  // Statement (E33)
-                self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingActivityStatementNodegroupId).then(function(samplingActivityStatementCard) {
-                    var samplingActivityStatementTypeNodeId = '033578b7-1d9d-11eb-a29f-024e0d439fdb';  // Statement_type (E55)
-                    var samplingMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
-                    
-                    var motivationForSamplingTile = samplingActivityStatementCard.tiles().find(function(tile) {
-                        return ko.unwrap(tile.data[samplingActivityStatementTypeNodeId]).includes(samplingMotivationConceptId);
-                    });
-
-                    if (motivationForSamplingTile) {
-                        var samplingActivityStatementContentNodeId = '033578c1-1d9d-11eb-a29f-024e0d439fdb';  // Statement_content (xsd:string)
-                        var motivationForSamplingContent = ko.unwrap(motivationForSamplingTile.data[samplingActivityStatementContentNodeId]);
-        
-                        self.motivationForSamplingWidgetValue(motivationForSamplingContent);
-                        self.previouslySavedMotivationForSamplingWidgetValue(motivationForSamplingContent);
-                    }
-                });
             }
         };
+
+        this.resetDescriptions = function(){
+            const previouslySavedSampleDescriptionWidgetValue = ko.unwrap(self.previouslySavedSampleDescriptionWidgetValue);
+            const previouslySavedMotivationForSamplingWidgetValue = ko.unwrap(self.previouslySavedMotivationForSamplingWidgetValue);
+            
+            self.sampleDescriptionWidgetValue(previouslySavedSampleDescriptionWidgetValue);
+            self.motivationForSamplingWidgetValue(previouslySavedMotivationForSamplingWidgetValue);
+
+        }
 
         this.resetSampleLocationTile = function() {
             self.tile.reset();
             self.resetCanvasFeatures();
+            self.resetDescriptions();
             self.drawFeatures([]);
             self.highlightAnnotation();
             self.selectedFeature(null);
         };
 
         this.setPhysicalThingGeometriesToVisible = function(annotationNodes) {
-            var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+            var physicalThingAnnotationNodeName = "Sample Locations";
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
@@ -372,9 +389,10 @@ define([
         this.saveSampleLocationTile = function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
-            if (self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId].features().length === 0 ||
+            const featureCollection = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])
+            if (!ko.unwrap(featureCollection?.features)?.length ||
                 !self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()) { //Sample Name Node
-                    params.form.alert(new params.form.AlertViewModel(
+                    params.pageVm.alert(new params.form.AlertViewModel(
                         "ep-alert-red",
                         "Missing Values",
                         "Sample Location and Sample Name are Required",
@@ -382,17 +400,39 @@ define([
                     return;    
                 }
 
-            var savePhysicalThingNameTile = function(physicalThingNameTile) {
+            var savePhysicalThingNameTile = function(physicalThingNameTile, type) {
                 return new Promise(function(resolve, _reject) {
-                    var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                    var selectedSampleLocationInstanceLabel = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]);
-                    
+                    var selectedSampleLocationInstanceLabel = ko.unwrap(self.sampleName);
                     var physicalThingNameContentNodeId = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'; // Name_content (xsd:string)
+
+                    if (type === "region") {
+                        selectedSampleLocationInstanceLabel = "Sample Area for " + selectedSampleLocationInstanceLabel;
+                    }
+                    
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedSampleLocationInstanceLabel;
                     physicalThingNameTile.transactionId = params.form.workflowId;
 
                     physicalThingNameTile.save().then(function(physicalThingNameData) {
                         resolve(physicalThingNameData);
+                    });
+                });
+            };
+
+            const savePhysicalThingClassificationTile = function(physicalThingClassificationTile, type) {
+                const sampleLocationTypeConceptId = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123';
+                const sampleTypeConceptId = '77d8cf19-ce9c-4e0a-bde1-9148d870e11c';
+                return new Promise(function(resolve, _reject) {
+                    const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
+                    if (type === "region") {
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [sampleLocationTypeConceptId];
+                    }
+                    else { // type === "sample"
+                        physicalThingClassificationTile.data[physicalThingClassificationNodeId] = [sampleTypeConceptId];
+                    }
+                    physicalThingClassificationTile.transactionId = params.form.workflowId;
+
+                    physicalThingClassificationTile.save().then(function(physicalThingClassificationData) {
+                        resolve(physicalThingClassificationData);
                     });
                 });
             };
@@ -421,8 +461,6 @@ define([
                     var physicalThingPartOfResourceXResourceId = physicalThingPartOfData.data[physicalThingPartOfNodeId][0]['resourceXresourceId'];
                     
                     var selectedSampleLocationInstance = self.selectedSampleLocationInstance();
-                    
-                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';   
     
                     selectedSampleLocationInstance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]([{
                         "resourceId": physicalThingPartOfData.resourceinstance_id,
@@ -441,7 +479,7 @@ define([
             var updateAnnotations = function() {
                 return new Promise(function(resolve, _reject) {
                     /* updates selected annotations */ 
-                    var physicalThingAnnotationNodeName = "Physical Thing - Part Identifier Assignment_Polygon Identifier";
+                    var physicalThingAnnotationNodeName = "Sample Locations";
                     var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
                         return annotationNode.name === physicalThingAnnotationNodeName;
                     });
@@ -555,7 +593,6 @@ define([
             var getRegionPhysicalThingNameCard = function() {
                 return new Promise(function(resolve, _reject) {
                     var physicalThingNameNodegroupId = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a';  // Name (E33)
-                    var partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122';       
                     var partIdentifierAssignmentPhysicalPartOfObjectData = ko.unwrap(self.tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
         
                     if (partIdentifierAssignmentPhysicalPartOfObjectData) { /* if editing Physical Thing */
@@ -601,7 +638,7 @@ define([
 
             var getWorkingPhysicalThingSamplingDescriptionTile = function(physicalThingStatementCard) {
                 var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630"
-                var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
+                var physicalThingStatementTypeNodeId = "1952e470-b498-11e9-b261-a4d18cec433a"; // Statement_type (E55)
 
                 if (physicalThingStatementCard.tiles() && physicalThingStatementCard.tiles().length) {
 
@@ -621,43 +658,48 @@ define([
                 }
             };
 
-            var getWorkingSamplingActivitySamplingMotivationTile = function(samplingActivityStatementCard) {
-                var samplingMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
-                var samplingActivityStatementTypeNodeId = '033578b7-1d9d-11eb-a29f-024e0d439fdb';  // Statement_type (E55)
+            var getWorkingPhysicalThingSamplingMotivationTile = function(physicalThingStatementCard) {
+                var physicalThingStatementTypeNodeId = "1952e470-b498-11e9-b261-a4d18cec433a"; // Statement_type (E55)
 
-                if (samplingActivityStatementCard.tiles() && samplingActivityStatementCard.tiles().length) {
-                    var previouslySavedTile = samplingActivityStatementCard.tiles().find(function(tile) {
-                        return ko.unwrap(tile.data[samplingActivityStatementTypeNodeId]).includes(samplingMotivationConceptId);
+                if (physicalThingStatementCard.tiles() && physicalThingStatementCard.tiles().length) {
+
+                    var previouslySavedTile = physicalThingStatementCard.tiles().find(function(tile) {
+                        return ko.unwrap(tile.data[physicalThingStatementTypeNodeId]).includes(sampleMotivationConceptId);
                     });
 
                     if (previouslySavedTile) {
                         return previouslySavedTile;
                     }
                     else {
-                        return samplingActivityStatementCard.getNewTile();
+                        return physicalThingStatementCard.getNewTile();
                     }
                 }
                 else {
-                    return samplingActivityStatementCard.getNewTile();
+                    return physicalThingStatementCard.getNewTile();
                 }
             };
 
-            var savePhysicalThingSampleDescriptionStatementTile = function(physicalThingStatementTile) {
+
+            var savePhysicalThingStatementTile = function(physicalThingStatementTile, type) {
                 var sampleDescriptionConceptId = "9886efe9-c323-49d5-8d32-5c2a214e5630";
 
                 return new Promise(function(resolve, _reject) {
                     if (self.sampleDescriptionWidgetValue()) {
-                        /* statment content logic */ 
                         var physicalThingStatementContentNodeId = '1953016e-b498-11e9-9445-a4d18cec433a';  // Statement_content (xsd:string)
-                        physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.sampleDescriptionWidgetValue();
-    
-                        /* statement type logic */ 
                         var physicalThingStatementTypeNodeId = '1952e470-b498-11e9-b261-a4d18cec433a'; // Statement_type (E55)
     
                         var physicalThingStatementTypeData = ko.unwrap(physicalThingStatementTile.data[physicalThingStatementTypeNodeId]);
-    
-                        if (!physicalThingStatementTypeData.includes(sampleDescriptionConceptId)) {
-                            physicalThingStatementTypeData.push(sampleDescriptionConceptId);
+
+                        if (type === "description") {
+                            physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.sampleDescriptionWidgetValue();
+                            if (!physicalThingStatementTypeData.includes(sampleDescriptionConceptId)) {
+                                physicalThingStatementTypeData = [sampleDescriptionConceptId];
+                            }
+                        } else if (type === "motivation") {
+                            physicalThingStatementTile.data[physicalThingStatementContentNodeId] = self.motivationForSamplingWidgetValue();
+                            if (!physicalThingStatementTypeData.includes(sampleMotivationConceptId)) {
+                                physicalThingStatementTypeData = [sampleMotivationConceptId];
+                            }
                         }
     
                         physicalThingStatementTile.data[physicalThingStatementTypeNodeId] = physicalThingStatementTypeData;
@@ -673,84 +715,95 @@ define([
                 });
             };
 
-            var saveSamplingActivityMotivationForSamplingStatementTile = function(samplingActivityStatementTile) {
-                var samplingMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
-                
+            var saveSamplePhysicalThingRemovedFromTile = function(samplePhysicalThingRemovedFromTile, sampleAreaResourceInstanceId) {
                 return new Promise(function(resolve, _reject) {
-                    if (self.motivationForSamplingWidgetValue()) {
-                        /* statment content logic */ 
-                        var samplingActivityStatementContentNodeId = '033578c1-1d9d-11eb-a29f-024e0d439fdb';  // Statement_content (xsd:string)
-                        samplingActivityStatementTile.data[samplingActivityStatementContentNodeId] = self.motivationForSamplingWidgetValue();
-    
-                        /* statement type logic */ 
-                        var samplingActivityStatementTypeNodeId = '033578b7-1d9d-11eb-a29f-024e0d439fdb'; // Statement_type (E55)
-    
-                        var samplingActivityStatementTypeData = ko.unwrap(samplingActivityStatementTile.data[samplingActivityStatementTypeNodeId]);
-                        if (!samplingActivityStatementTypeData.includes(samplingMotivationConceptId)) {
-                            samplingActivityStatementTypeData.push(samplingMotivationConceptId);
-                        }
-                        
-                        samplingActivityStatementTile.transactionId = params.form.workflowId;
+                    const physicalThingRemovedFromNodeId = '38814345-d2bd-11e9-b9d6-a4d18cec433a' // Removal from Object_Removed From (E22)
+                    samplePhysicalThingRemovedFromTile.data[physicalThingRemovedFromNodeId]([{
+                        "resourceId": sampleAreaResourceInstanceId,
+                        "resourceXresourceId": "",
+                        "ontologyProperty": "",
+                        "inverseOntologyProperty": ""
+                    }]);
+                    samplePhysicalThingRemovedFromTile.transactionId = params.form.workflowId;
 
-                        samplingActivityStatementTile.save().then(function(data) {
-                            resolve(data);
-                        });
-                    }
-                    else {
-                        resolve(null);
-                    }
+                    samplePhysicalThingRemovedFromTile.save().then(function(data) {
+                        resolve(data);
+                    });
                 });
-            };
+            }
 
             self.savingTile(true);
             getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
-                savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(regionPhysicalThingNameData) {
-                    var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                savePhysicalThingNameTile(regionPhysicalThingNameTile, "region").then(function(regionPhysicalThingNameData) {
+                    const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
-                    self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
-                        var physicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+                    self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
+                        var physicalThingClassificationTile = getWorkingTile(regionPhysicalThingClassificationCard);
 
-                        savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
-                            var samplingUnitNodegroupId = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Unit (E80)
-                
-                            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
-                                var samplingActivitySamplingUnitTile = getWorkingSamplingActivityUnitTile(samplingActivitySamplingUnitCard, regionPhysicalThingNameData);
-            
-                                getSamplePhysicalThingNameCard(samplingActivitySamplingUnitTile).then(function(samplePhysicalThingNameCard) {
-                                    var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
+                        savePhysicalThingClassificationTile(physicalThingClassificationTile, "region").then(function(regionPhysicalThingClassificationData) {
+                            var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
 
-                                    savePhysicalThingNameTile(samplePhysicalThingNameTile).then(function(samplePhysicalThingNameData) {
-                                        var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
-                                        
-                                        self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
-                                            var physicalThingSampleDescriptionStatementTile = getWorkingPhysicalThingSamplingDescriptionTile(physicalThingStatementCard);
+                            self.fetchCardFromResourceId(regionPhysicalThingClassificationData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
+                                var physicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
 
-                                            savePhysicalThingSampleDescriptionStatementTile(physicalThingSampleDescriptionStatementTile).then(function(_physicalThingStatmentSampleDescriptionData) {
-                                                var samplingActivityStatementNodegroupId = '0335786d-1d9d-11eb-a29f-024e0d439fdb';  // Statement (E33)
+                                savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
+                                    var samplingUnitNodegroupId = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Unit (E80)
+                        
+                                    self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
+                                        var samplingActivitySamplingUnitTile = getWorkingSamplingActivityUnitTile(samplingActivitySamplingUnitCard, regionPhysicalThingNameData);
+                    
+                                        getSamplePhysicalThingNameCard(samplingActivitySamplingUnitTile).then(function(samplePhysicalThingNameCard) {
+                                            var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
 
-                                                self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingActivityStatementNodegroupId).then(function(samplingActivityStatementCard) {
-                                                    var samplingActivitySamplingMotivationTile = getWorkingSamplingActivitySamplingMotivationTile(samplingActivityStatementCard);
+                                            savePhysicalThingNameTile(samplePhysicalThingNameTile, "sample").then(function(samplePhysicalThingNameData) {
+                                                const physicalThingRemovedFromNodegroupId = 'b11f217a-d2bc-11e9-8dfa-a4d18cec433a' // Removal from Object (E80)
 
-                                                    saveSamplingActivityMotivationForSamplingStatementTile(samplingActivitySamplingMotivationTile).then(function(_samplingActivitySamplingMotivationData) {
-                                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
-                                                            saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
-                                                                // fetches again for updated data
-                                                                // self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(updatedSamplingActivitySamplingUnitCard) {
-                                                                    updateAnnotations().then(function(_physicalThingAnnotationNode) {
-                                                                        self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
-                                                                        
-                                                                        self.updateSampleLocationInstances();
-                                                                        self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
-            
-                                                                        self.savingTile(false);
-                                                                        params.dirty(true);
+                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingRemovedFromNodegroupId).then(function(samplePhysicalThingRemovedFromCard){
+                                                    var samplePhysicalThingRemovedFromTile = getWorkingTile(samplePhysicalThingRemovedFromCard);
+                                                    saveSamplePhysicalThingRemovedFromTile(samplePhysicalThingRemovedFromTile, regionPhysicalThingNameData.resourceinstance_id);
+                                                })
+                                                const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
-                                                                        params.form.alert("");
-                                                                        self.drawFeatures([]);
+                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(samplePhysicalThingClassificationCard) {
+                                                    var physicalThingClassificationTile = getWorkingTile(samplePhysicalThingClassificationCard);
+                            
+                                                    savePhysicalThingClassificationTile(physicalThingClassificationTile, "sample").then(function(samplePhysicalThingClassificationData) {
+                                                        var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
+                                                        
+                                                        self.fetchCardFromResourceId(samplePhysicalThingClassificationData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
+                                                            var physicalThingSampleDescriptionStatementTile = getWorkingPhysicalThingSamplingDescriptionTile(physicalThingStatementCard);
+
+                                                            savePhysicalThingStatementTile(physicalThingSampleDescriptionStatementTile, "description").then(function(_physicalThingStatmentSampleDescriptionData) {
+                                                                var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
+
+                                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
+                                                                    var physicalThingSamplingMotivationTile = getWorkingPhysicalThingSamplingMotivationTile(physicalThingStatementCard);
+
+                                                                    savePhysicalThingStatementTile(physicalThingSamplingMotivationTile, "motivation").then(function(_samplingActivitySamplingMotivationData) {
+                                                                        saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
+                                                                            saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
+                                                                                // fetches again for updated data
+                                                                                // self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(updatedSamplingActivitySamplingUnitCard) {
+                                                                                    updateAnnotations().then(function(_physicalThingAnnotationNode) {
+                                                                                        self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
+                                                                                        
+                                                                                        self.updateSampleLocationInstances();
+                                                                                        self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
+                            
+                                                                                        self.savingTile(false);
+                                                                                        params.dirty(true);
+                                                                                        params.form.complete(true);
+
+                                                                                        params.pageVm.alert("");
+                                                                                        self.drawFeatures([]);
+                                                                                    });
+                                                                                // });
+                                                                            });
+                                                                        });
                                                                     });
-                                                                // });
+                                                                });
                                                             });
                                                         });
                                                     });
@@ -831,8 +884,31 @@ define([
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
-            self.sampleLocationInstances(card.tiles());
+            const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
+            const analysisAreaTypeConceptId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
+            const related = card.tiles().map((tile) => {
+                return {
+                    'resourceid': ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId(),
+                    'tileid': tile.tileid
+                }
+            });
 
+            Promise.all(related.map(resource => ResourceUtils.lookupResourceInstanceData(resource.resourceid))).then((values) => {
+                values.forEach((value) => {
+                    const nodevals = ResourceUtils.getNodeValues({
+                        nodeId: classificationNodeId,
+                        where: {
+                            nodeId: classificationNodeId,
+                            contains: analysisAreaTypeConceptId
+                        }
+                    }, value._source.tiles);
+                    if (nodevals.includes(analysisAreaTypeConceptId)) {
+                        self.analysisAreaResourceIds.push(related.find(tile => value._id === tile.resourceid));
+                    }
+                });
+                self.sampleLocationInstances(card.tiles());
+                self.analysisAreaTileIds = self.analysisAreaResourceIds.map(item => item.tileid);
+            })
             /* 
                 subscription to features lives here because we _only_ want it to run once, on blank starting tile, when a user places a feature on the map
             */
@@ -869,34 +945,132 @@ define([
                         self.featureLayers.push(layer)
                     }
 
+                    if (self.analysisAreaTileIds.includes(feature.properties.tileId)){
+                        const analysisArea = self.analysisAreaResourceIds.find(analysisArea => analysisArea.tileid === feature.properties.tileId);
+                        var popup = L.popup({
+                            closeButton: false,
+                            maxWidth: 349
+                        })
+                            .setContent(iiifPopup)
+                            .on('add', function() {
+                                var popupData = {
+                                    'closePopup': function() {
+                                        popup.remove();
+                                    },
+                                    'name': ko.observable(''),
+                                    'description': ko.observable(''),
+                                    'graphName': feature.properties.graphName,
+                                    'resourceinstanceid': analysisArea.resourceid,
+                                    'reportURL': arches.urls.resource_report
+                                };
+                                window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
+                                    .then(function(response) {
+                                        return response.json();
+                                    })
+                                    .then(function(descriptors) {
+                                        popupData.name(descriptors.displayname);
+                                        const description = `<strong>Analysis Area</strong>
+                                            <br>Analysis Areas may not be modified in the sample taking workflow
+                                            <br>${descriptors['map_popup'] !== "Undefined" ? descriptors['map_popup'] : ''}`
+                                        popupData.description(description);
+                                    });
+                                var popupElement = popup.getElement()
+                                    .querySelector('.mapboxgl-popup-content');
+                                ko.applyBindingsToDescendants(popupData, popupElement);
+                            });
+                        layer.bindPopup(popup);
+                    }
+
                     layer.on({
-                        click: function() {
 
-                            self.drawFeatures([]);
-                            self.featureClick = true;
+                        click: function() {              
+                            const sampleLocationInstance = self.getSampleLocationTileFromFeatureId(feature.id);
                             
-                            var sampleLocationInstance = self.getSampleLocationTileFromFeatureId(feature.id);
+                            if (sampleLocationInstance && !self.analysisAreaTileIds.includes(sampleLocationInstance.tileid)) {
+                                self.drawFeatures([]);
+                                self.featureClick = true;
 
-                            if (!self.selectedSampleLocationInstance() || self.selectedSampleLocationInstance().tileid !== sampleLocationInstance.tileid ) {
-                                self.selectSampleLocationInstance(sampleLocationInstance);
+                                if (!self.selectedSampleLocationInstance() || self.selectedSampleLocationInstance().tileid !== sampleLocationInstance.tileid ) {
+                                    self.selectSampleLocationInstance(sampleLocationInstance);
+                                }
+                                else {
+                                    self.tile.reset();
+                                    self.resetCanvasFeatures();
+    
+                                    const selectedFeature = ko.toJS(self.selectedSampleLocationInstanceFeatures().find(function(selectedSampleLocationInstanceFeature) {
+                                        return ko.unwrap(selectedSampleLocationInstanceFeature.id) === feature.id;
+                                    }));
+    
+                                    self.selectedFeature(selectedFeature);
+                                    self.removeFeatureFromCanvas(self.selectedFeature());
+    
+                                    self.drawFeatures([selectedFeature]);
+                                } 
                             }
-                            else {
-                                self.tile.reset();
-                                self.resetCanvasFeatures();
-
-                                var selectedFeature = ko.toJS(self.selectedSampleLocationInstanceFeatures().find(function(selectedSampleLocationInstanceFeature) {
-                                    return ko.unwrap(selectedSampleLocationInstanceFeature.id) === feature.id;
-                                }));
-
-                                self.selectedFeature(selectedFeature);
-                                self.removeFeatureFromCanvas(self.selectedFeature());
-
-                                self.drawFeatures([selectedFeature]);
-                            } 
                         },
                     })
+                },
+                buildAnnotationNodes: function(json) {
+                    let sampleAnnotations = ko.observableArray();
+                    let analysisAreaAnnotations = ko.observableArray();
+                    var updateAnnotations = function() {
+                        var canvas = self.canvas();
+                        if (canvas) {
+                            window.fetch(arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
+                                .then(function(response) {
+                                    return response.json();
+                                })
+                                .then(function(json) {
+                                    json.features.forEach(function(feature) {
+                                        feature.properties.graphName = "Physical Thing";
+                                        if (self.analysisAreaTileIds.includes(feature.properties.tileId)) {
+                                            feature.properties.type = 'analysis_area';
+                                            feature.properties.color = '#AC53F5';
+                                            feature.properties.fillColor = '#AC53F5';
+                                            analysisAreaAnnotations.push(feature);
+                                        } else {
+                                            feature.properties.type = 'sample_location';
+                                            sampleAnnotations.push(feature);
+                                        }
+                                    });
+                                    const editNodeActiveState = ko.observable(false);
+                                    editNodeActiveState.subscribe(function(active){
+                                        if (!active) {
+                                            self.resetSampleLocationTile();
+                                        }
+                                    });
+                                    self.annotationNodes([
+                                        {
+                                            name: "Sample Locations",
+                                            icon: "fa fa-eyedropper",
+                                            active: editNodeActiveState,
+                                            opacity: ko.observable(100),
+                                            annotations: sampleAnnotations
+                                        },
+                                        {
+                                            name: "Analysis Areas",
+                                            icon: "fa fa-eye",
+                                            active: ko.observable(false),
+                                            opacity: ko.observable(100),
+                                            annotations: analysisAreaAnnotations
+                                        },
+                                    ])
+                                });
+                        }
+                    };
+                    self.canvas.subscribe(updateAnnotations);
+                    updateAnnotations();
                 }
             }]);
+
+            this.map.subscribe(function(map){
+                map.on('click', function(e){
+                    const clickedFeatureLayer = $(e.originalEvent.path[0]).hasClass('leaflet-interactive')
+                    if (!clickedFeatureLayer) {
+                        self.resetSampleLocationTile()
+                    }
+                })
+            });
 
             /* overwrites iiif-annotation method */ 
             self.updateTiles = function() {

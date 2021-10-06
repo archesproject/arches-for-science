@@ -24,6 +24,8 @@ TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
 
 APP_PATHNAME = ""
 
+BYPASS_CARDINALITY_TILE_VALIDATION = False
+
 CANTALOUPE_DIR = os.path.join(APP_ROOT, "uploadedfiles")
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"
 
@@ -237,6 +239,7 @@ RENDERERS += [
     # },
 ]
 
+DOCKER = False
 
 try:
     from .package_settings import *
@@ -248,7 +251,8 @@ try:
 except ImportError:
     pass
 
-try:
-    from .settings_docker import *
-except ImportError:
-    pass
+if DOCKER:
+    try:
+        from .settings_docker import *
+    except ImportError:
+        pass

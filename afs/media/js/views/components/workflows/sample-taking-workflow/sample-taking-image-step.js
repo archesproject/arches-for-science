@@ -10,6 +10,7 @@ define([
 ], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel) {
     function viewModel(params) {
         var self = this;
+        params.pageVm.loading(true);
 
         this.isManifestManagerHidden = ko.observable(true);
         this.shouldShowEditService = ko.observable(false);
@@ -24,8 +25,10 @@ define([
             }
         });
 
-        var selectProjectStepData = params.form.externalStepData['selectprojectstep']['data'];
-        this.physicalThingResourceId = koMapping.toJS(selectProjectStepData['select-phys-thing'][0][1]['physicalThing']);
+        this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
+        const samplingInfoData = koMapping.toJS(params.samplingInfoData);
+        this.samplingActivityResourceId = samplingInfoData.samplingActivityResourceId;
+        this.samplingActivityDigitalReferenceTileId = samplingInfoData.samplingActivityDigitalReferenceTile;
 
         this.physicalThingDigitalReferenceCard = ko.observable();
         this.physicalThingDigitalReferenceCard.subscribe(function(card) {
@@ -106,8 +109,8 @@ define([
             var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
             
             /* will not have tiles if creating a new manifest */ 
-            if (manifestResourceData && manifestResourceData.tiles && params.form.previouslyPersistedComponentData) {
-                var previouslyPersistedTileId = params.form.previouslyPersistedComponentData[0].tileid;
+            if (manifestResourceData && manifestResourceData.tiles && params.form.savedData()) {
+                var previouslyPersistedTileId = params.form.savedData().tileid;
 
                 var tileMatchingPreviouslyPersistedTile = manifestResourceData.tiles.find(function(tile) {
                     return tile.tileid === previouslyPersistedTileId;
@@ -117,6 +120,38 @@ define([
                     return manifestResourceData;
                 }
             }
+        };
+
+        this.saveSamplingActivityDigitalReference = function(digitalResourceInstanceId){
+            const samplingActivityDigitalReferenceTileData = {
+                "tileid": self.samplingActivityDigitalReferenceTileId,
+                "data": {
+                    "4099e818-8e31-11eb-a9c4-faffc265b501": "1497d15a-1c3b-4ee9-a259-846bbab012ed", // Preferred Manifest concept value
+                    "4099e8e0-8e31-11eb-a9c4-faffc265b501": [
+                        {
+                            "resourceId": digitalResourceInstanceId,
+                            "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                            "resourceXresourceId": "",
+                            "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                        }
+                    ]
+                },
+                "nodegroup_id": '4099e584-8e31-11eb-a9c4-faffc265b501',
+                "parenttile_id": '',
+                "resourceinstance_id": self.samplingActivityResourceId,
+                "sortorder": 0,
+                "tiles": {},
+                "transaction_id": params.form.workflowId
+            };
+
+            return window.fetch(arches.urls.api_tiles(self.samplingActivityDigitalReferenceTileId), {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(samplingActivityDigitalReferenceTileData),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
         };
 
         this.save = function() {
@@ -140,7 +175,8 @@ define([
                             self.digitalResourceServiceIdentifierTile.transactionId = params.form.workflowId;
 
                             self.digitalResourceServiceIdentifierTile.save().then(function(data) {
-                                params.form.savedData.push(data);
+                                params.form.savedData(data);
+                                self.saveSamplingActivityDigitalReference(data.resourceinstance_id);
     
                                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
     
@@ -177,8 +213,9 @@ define([
                     var matchingTile = manifestResourceData.tiles.find(function(tile) {
                         return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                     });
-    
-                    params.form.savedData.push(matchingTile);
+
+                    params.form.savedData(matchingTile);
+                    self.saveSamplingActivityDigitalReference(matchingTile.resourceinstance_id);
                 }
 
                 params.form.complete(true);
@@ -187,8 +224,8 @@ define([
         };
 
         this.reset = function() {
-            if (params.form.previouslyPersistedComponentData) {
-                var previouslyPersistedResourceId = params.form.previouslyPersistedComponentData[0].resourceinstance_id;
+            if (params.form.savedData()) {
+                var previouslyPersistedResourceId = params.form.savedData().resourceinstance_id;
 
                 var preferredManifestResourceData = self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });
                 var alternateManifestResourceData = self.physicalThingDigitalReferenceAlternateManifestResourceData().find(function(manifestData) { return manifestData.resourceid === previouslyPersistedResourceId; });
@@ -270,28 +307,41 @@ define([
             
             var tiles = card.tiles() || [];
 
+            const hasManifest = tiles.some(function(tile) {
+                var digitalReferenceTypeValue = ko.unwrap(tile.data[digitalReferenceTypeNodeId]);
+                return (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ));
+            });
+
+            if (!hasManifest){
+                params.pageVm.loading(false);
+            }
+
             tiles.forEach(function(tile) {
                 var digitalReferenceTypeValue = ko.unwrap(tile.data[digitalReferenceTypeNodeId]);
 
                 if (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ))  {
                     var physicalThingManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
                     
-                    $.getJSON( arches.urls.api_card + physicalThingManifestResourceId ).then(function(data) {
-                        if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
-                            self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
-                        }
-                        else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
-                            self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
-                        }
-                        
-                        var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
-                        if (resourceData) {
-                            self.selectedPhysicalThingImageServiceName(resourceData.displayname);
-                        }
-                        else if (!self.selectedPhysicalThingImageServiceName()) {
-                            self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
-                        }
-                    });
+                    $.getJSON( arches.urls.api_card + physicalThingManifestResourceId )
+                        .then(function(data) {
+                            if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
+                                self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
+                            }
+                            else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
+                                self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
+                            }
+                            
+                            var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
+                            if (resourceData) {
+                                self.selectedPhysicalThingImageServiceName(resourceData.displayname);
+                            }
+                            else if (!self.selectedPhysicalThingImageServiceName()) {
+                                self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
+                            }
+                        })
+                        .always(function() {
+                            params.pageVm.loading(false);
+                        });
                 }
             });
         };
