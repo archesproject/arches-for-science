@@ -161,10 +161,10 @@ define([
                 resourcesToUpdate.push({
                     resourceid: value,
                     action: 'remove',
-                })
-            })
+                });
+            });
 
-            const memberOfSetNodegroupId = '63e49254-c444-11e9-afbe-a4d18cec433a'
+            const memberOfSetNodegroupId = '63e49254-c444-11e9-afbe-a4d18cec433a';
             return $.ajax({
                 url: arches.urls.root + 'updateresourcelist',
                 type: 'POST',
@@ -175,8 +175,8 @@ define([
                     transactionid : params.form.workflowId,
                     data: JSON.stringify(resourcesToUpdate)
                 }
-            })
-        }
+            });
+        };
 
         this.submit = function() {
             self.complete(false);
