@@ -26,7 +26,7 @@ define([
 
         this.samplingActivitySamplingUnitCard = ko.observable();
         this.samplingActivityStatementCard = ko.observable();
-
+        this.physThingSearchResultsLookup = {};
         this.savingTile = ko.observable();
 
         this.selectedFeature = ko.observable();
@@ -740,7 +740,7 @@ define([
                 savePhysicalThingNameTile(regionPhysicalThingNameTile, "region").then(function(regionPhysicalThingNameData) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
-                    StepUtils.saveThingToProject(regionPhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId).then(function() {
+                    StepUtils.saveThingToProject(regionPhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
                         
                     self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
                         var physicalThingClassificationTile = getWorkingTile(regionPhysicalThingClassificationCard);
@@ -763,7 +763,7 @@ define([
                                             savePhysicalThingNameTile(samplePhysicalThingNameTile, "sample").then(function(samplePhysicalThingNameData) {
                                                 const physicalThingRemovedFromNodegroupId = 'b11f217a-d2bc-11e9-8dfa-a4d18cec433a' // Removal from Object (E80)
 
-                                                StepUtils.saveThingToProject(samplePhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId).then(function() {
+                                                StepUtils.saveThingToProject(samplePhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
 
                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingRemovedFromNodegroupId).then(function(samplePhysicalThingRemovedFromCard){
                                                     var samplePhysicalThingRemovedFromTile = getWorkingTile(samplePhysicalThingRemovedFromCard);
@@ -902,6 +902,7 @@ define([
 
             Promise.all(related.map(resource => ResourceUtils.lookupResourceInstanceData(resource.resourceid))).then((values) => {
                 values.forEach((value) => {
+                    self.physThingSearchResultsLookup[value._id] = value;
                     const nodevals = ResourceUtils.getNodeValues({
                         nodeId: classificationNodeId,
                         where: {
