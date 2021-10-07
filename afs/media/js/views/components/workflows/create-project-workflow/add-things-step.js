@@ -220,9 +220,8 @@ define([
                     .done(data => {
                         self.usedSetTileId(data.tileid);
                         self.addCollectionToPhysicalThings()
-                            .done((response) => {
-                                console.log(response);
-                            }).fail((err) => {
+                            .fail((err) => {
+                                // eslint-disable-next-line no-console
                                 console.log(err);
                                 const startValue = ko.unwrap(self.startValue);
                                 self.value(startValue);
@@ -232,7 +231,7 @@ define([
                                         value: ko.unwrap(self.value),
                                         projectResourceId: ko.unwrap(self.projectResourceId),
                                         collectionResourceId: ko.unwrap(self.collectionResourceId),
-                                        collectionTileId: ko.unwrap(self.collectionTileId),                            
+                                        collectionTileId: ko.unwrap(self.collectionTileId), 
                                         usedSetTileId: ko.unwrap(self.usedSetTileId),
                                     }
                                 );
