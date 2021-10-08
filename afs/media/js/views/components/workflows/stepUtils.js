@@ -2,7 +2,7 @@ define(['arches', 'uuid', 'utils/resource'], function(arches, uuid, ResourceUtil
     return {
         saveThingToProject: async function(physicalThingInstanceId, projectSetInstanceId, workflowId, resourceLookup){
             let thing;
-            let tileId = uuid.generate();
+            let tileId = "";
             let alreadySaved = false;
             const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             const data = {};
@@ -17,7 +17,7 @@ define(['arches', 'uuid', 'utils/resource'], function(arches, uuid, ResourceUtil
             if (resourceLookup[physicalThingInstanceId]) {
                 thing = resourceLookup[physicalThingInstanceId];
             } else {
-                thing = await ResourceUtils.lookupResourceInstanceData(physicalThingInstanceId);
+                thing = await ResourceUtils.lookupResourceInstanceData(physicalThingInstanceId, false);
             }
 
             const tile = thing._source.tiles.find((tile) => {
@@ -49,7 +49,7 @@ define(['arches', 'uuid', 'utils/resource'], function(arches, uuid, ResourceUtil
             };
 
             if (!alreadySaved) {
-                return window.fetch(arches.urls.api_tiles(tileId), {
+                return window.fetch(arches.urls.api_tiles(tileId || uuid.generate()), {
                     method: 'POST',
                     credentials: 'include',
                     body: JSON.stringify(tileObj),
