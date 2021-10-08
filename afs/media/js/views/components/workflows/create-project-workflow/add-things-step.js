@@ -270,6 +270,7 @@ define([
 
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
+            minimumInputLength: 2,
             placeholder: 'find a physical thing: enter an artist, object name, artwork title or object number',
             clickBubble: true,
             multiple: false,
@@ -289,9 +290,23 @@ define([
                     return data;
                 },
                 results: function(data, page) {
+                    var value = document.getElementsByClassName('select2-input')[0].value;
                     var results = data.terms;
-                    var filteredResults = results.filter(function(result){ return result.context_label.includes("Physical Thing"); });
+                    searchTerm = {
+                        type: 'string',
+                        context: '',
+                        context_label: 'Search Term',
+                        id: value,
+                        text: value,
+                        value: value
+                    }
+                    results.unshift(searchTerm)
                     self.termOptions = results;
+
+                    var filteredResults = results.filter(function(result){
+                        return result.context_label.includes("Physical Thing") ||
+                            result.context_label.includes("Search Term"); 
+                    });
                     return {
                         results: filteredResults,
                         more: data.count >= (page * limit)
@@ -302,9 +317,15 @@ define([
                 return item.id;
             },
             formatResult: function(item) {
+                if (item.context_label === 'Search Term') {
+                    return `<strong>${item.text}</strong>`;
+                }
                 return item.text + ' (' + item.context_label + ')';
             },
             formatSelection: function(item) {
+                if (item.context_label === 'Search Term') {
+                    return item.text;
+                }
                 return item.text + ' (' + item.context_label + ')';
             },
             clear: function() {
@@ -381,7 +402,7 @@ define([
         };
 
         this.selectedTerm.subscribe(function(val) {
-            var termFilter = self.termOptions[val];
+            var termFilter = self.termOptions.find(x => val == x.id);
             self.updateSearchResults(termFilter);
         });
 
