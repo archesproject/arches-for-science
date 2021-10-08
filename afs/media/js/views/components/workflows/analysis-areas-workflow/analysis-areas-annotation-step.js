@@ -23,7 +23,7 @@ define([
         this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.savingTile = ko.observable();
-        this.collectionRelationshipsSaved = [];
+        this.physThingSearchResultsLookup = {};
 
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
@@ -454,7 +454,7 @@ define([
                 savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(physicalThingNameData) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
 
-                    StepUtils.saveThingToProject(physicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId).then(function() {
+                    StepUtils.saveThingToProject(physicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
 
                         self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
                            const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingClassificationCard);
