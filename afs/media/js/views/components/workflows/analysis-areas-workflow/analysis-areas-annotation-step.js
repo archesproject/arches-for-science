@@ -4,12 +4,13 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
+    'views/components/workflows/stepUtils',
     'utils/resource',
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
-], function(_, $, arches, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+], function(_, $, arches, ko, koMapping, StepUtils, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -22,6 +23,7 @@ define([
         this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
 
         this.savingTile = ko.observable();
+        this.physThingSearchResultsLookup = {};
 
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
@@ -452,29 +454,32 @@ define([
                 savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(physicalThingNameData) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
 
-                    self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
-                       const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingClassificationCard);
+                    StepUtils.saveThingToProject(physicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
 
-                       savePhysicalThingClassificationTile(regionPhysicalThingPartOfTile).then(function(physicalThingClassificationData) {
-                            const physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
-            
-                            self.fetchCardFromResourceId(physicalThingClassificationData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
-                                const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
-
-                                savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
-                                    updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
-                                        updateAnnotations().then(function(_physicalThingAnnotationNode) {
-                                            self.updateAnalysisAreaInstances();
-            
-                                            self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
-                                            self.savingTile(false);
-                                            params.pageVm.alert("")
-                                            self.drawFeatures([]);
-
-                                            let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
-                                            params.form.savedData(koMapping.toJS(mappedInstances));
-                                            params.form.value(params.form.savedData());
-                                            params.form.complete(true);
+                        self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
+                           const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingClassificationCard);
+    
+                           savePhysicalThingClassificationTile(regionPhysicalThingPartOfTile).then(function(physicalThingClassificationData) {
+                                const physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
+                
+                                self.fetchCardFromResourceId(physicalThingClassificationData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
+                                    const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
+    
+                                    savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
+                                        updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
+                                            updateAnnotations().then(function(_physicalThingAnnotationNode) {
+                                                self.updateAnalysisAreaInstances();
+                
+                                                self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
+                                                self.savingTile(false);
+                                                params.pageVm.alert("")
+                                                self.drawFeatures([]);
+    
+                                                let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
+                                                params.form.savedData(koMapping.toJS(mappedInstances));
+                                                params.form.value(params.form.savedData());
+                                                params.form.complete(true);
+                                            });
                                         });
                                     });
                                 });

@@ -24,7 +24,7 @@ define([
         this.validateThing = componentParams.validateThing;
         this.projectValue = ko.observable();
         this.physicalThingValue = ko.observable();
-        this.physicalThingSetValue = ko.observable();
+        this.setsThatBelongToTheProject = ko.observable();
         this.hasSetWithPhysicalThing = ko.observable();
         this.isPhysicalThingValid = ko.observable();
         this.originalValue = params.form.value();
@@ -32,7 +32,7 @@ define([
         this.updateValues = function(val){
             if (val !== null) {
                 self.physicalThingValue(val.physicalThing);
-                self.physicalThingSetValue(val.physicalThingSet);
+                self.setsThatBelongToTheProject(val.physicalThingSet);
                 self.projectValue(val.project);
             }
         };
@@ -56,10 +56,10 @@ define([
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
                         });
                         if (setTile && Object.keys(setTile.data).includes(self.physThingSetNodegroupId) && setTile.data[self.physThingSetNodegroupId].length) {
-                            self.physicalThingSetValue(null);
+                            self.setsThatBelongToTheProject(null);
                             setTileResourceInstanceIds = setTile.data[self.physThingSetNodegroupId].map((instance) => instance.resourceId);
                             if (setTileResourceInstanceIds) {
-                                self.physicalThingSetValue(setTileResourceInstanceIds);
+                                self.setsThatBelongToTheProject(setTileResourceInstanceIds);
                             }
                             self.physicalThingValue(null);
                         } else {
@@ -71,12 +71,12 @@ define([
         });
 
         this.termFilter = ko.pureComputed(function(){
-            if (ko.unwrap(self.physicalThingSetValue)) {
+            if (ko.unwrap(self.setsThatBelongToTheProject)) {
                 self.hasSetWithPhysicalThing(true);
                 var query = {"op": "and"};
                 query[self.physicalThingPartOfSetNodeId] = {
                     "op": "or",
-                    "val":  ko.unwrap(self.physicalThingSetValue)
+                    "val":  ko.unwrap(self.setsThatBelongToTheProject)
                 };
                 return function(term, queryString) {
                     queryString.set('advanced-search', JSON.stringify([query]));
@@ -105,11 +105,20 @@ define([
                 x.nodegroup_id == self.partNodeGroupId &&
                 x.data?.[self.partManifestNodeId]?.features?.[0]?.properties?.manifest)
 
+            // Below in defining the 'projectSet' we make sure that we know the collection that the physical thing came from.
+            // We need this in order to place child things in the same collection.
+            // It remains possible that if the selected physical thing belongs to two different collections
+            // within the same selected project we cannot know in which collection we should put it's samples/analysis areas.
+            // In this case we are defaulting to the first collection in the project's list of collections that contains the physical thing.
+            const setsThatBelongToTheSelectedThing = physThing.tiles.find(x => x.nodegroup_id === self.physicalThingPartOfSetNodeId)?.data[self.physicalThingPartOfSetNodeId].map(y => y.resourceId);
+            const projectSet = setsThatBelongToTheSelectedThing.find(setid => self.setsThatBelongToTheProject().includes(setid))
+
             if(!self.validateThing || (digitalReferencesWithManifest.length && partsWithManifests.length)) {
                 params.value({
                     physThingName: physThing.displayname,
                     physicalThing: val,
-                    physicalThingSet: self.physicalThingSetValue(),
+                    projectSet: projectSet,
+                    physicalThingSet: self.setsThatBelongToTheProject(),
                     project: self.projectValue(),
                 });
                 self.isPhysicalThingValid(true);

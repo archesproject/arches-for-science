@@ -89,7 +89,8 @@ define([
                                     parameters: {
                                         graphid: '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']",
-                                        imageStepData: "['image-step']['image-service-instance'][0]['data']"
+                                        imageStepData: "['image-step']['image-service-instance'][0]['data']",
+                                        projectSet: "['select-project']['select-phys-thing']['projectSet']"
                                     },
                                 },
                             ], 
