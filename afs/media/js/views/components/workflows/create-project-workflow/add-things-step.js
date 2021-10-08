@@ -292,15 +292,14 @@ define([
                 results: function(data, page) {
                     var value = document.getElementsByClassName('select2-input')[0].value;
                     var results = data.terms;
-                    searchTerm = {
+                    results.unshift({
                         type: 'string',
                         context: '',
                         context_label: 'Search Term',
                         id: value,
                         text: value,
                         value: value
-                    }
-                    results.unshift(searchTerm)
+                    });
                     self.termOptions = results;
 
                     var filteredResults = results.filter(function(result){
