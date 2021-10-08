@@ -185,6 +185,17 @@ ONTOLOGY_NAMESPACES = {
 
 RENDERERS += [
     {
+        "name": "fors-reader",
+        "title": "ASD Hi Res FieldSpec4",
+        "description": "Use for exports from all our ASD High Resolution Field Spectroscopy",
+        "id": "88dccb59-14e3-4445-8f1b-07f0470b38bb",
+        "iconclass": "fa fa-bar-chart-o",
+        "component": "views/components/cards/file-renderers/fors-reader",
+        "ext": "txt",
+        "type": "text/plain",
+        "exclude": "",
+    },
+    {
         "name": "xrf-reader",
         "title": "HP Spectrometer XRF ASCII Output",
         "description": "Use for exports from all our HP XRF outputs",
