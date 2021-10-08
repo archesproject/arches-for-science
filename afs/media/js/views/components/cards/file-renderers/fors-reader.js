@@ -28,7 +28,7 @@ define(['jquery',
                             series.value.push(Number(rec[0]));
                             rec.splice(0, 1);
                             const average = rec.reduce((a,b) => Number(a) + Number(b), 0) / rec.length;
-                            series.count.push(average*yfactor)
+                            series.count.push(average*yfactor);
                         }
                     }
                 });
