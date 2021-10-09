@@ -290,8 +290,8 @@ define([
                     return data;
                 },
                 results: function(data, page) {
-                    var value = document.getElementsByClassName('select2-input')[0].value;
-                    var results = data.terms;
+                    const value = window.document.getElementsByClassName('select2-input')[0].value;
+                    const results = data.terms;
                     results.unshift({
                         type: 'string',
                         context: '',
@@ -302,7 +302,7 @@ define([
                     });
                     self.termOptions = results;
 
-                    var filteredResults = results.filter(function(result){
+                    const filteredResults = results.filter(function(result){
                         return result.context_label.includes("Physical Thing") ||
                             result.context_label.includes("Search Term"); 
                     });
@@ -401,7 +401,7 @@ define([
         };
 
         this.selectedTerm.subscribe(function(val) {
-            var termFilter = self.termOptions.find(x => val == x.id);
+            const termFilter = self.termOptions.find(x => val == x.id);
             self.updateSearchResults(termFilter);
         });
 
