@@ -408,7 +408,7 @@ define([
 
                     if (type === "region") {
                         const baseName = self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]() || "";
-                        selectedSampleLocationInstanceLabel = `${baseName} [Sample Area of ${params.physicalThingName}]`;
+                        selectedSampleLocationInstanceLabel = `${baseName} [ Sample Area of ${params.physicalThingName} ]`;
                     }
                     
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedSampleLocationInstanceLabel;
