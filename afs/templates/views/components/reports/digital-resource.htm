@@ -87,8 +87,8 @@
             <div data-bind="if: activeSection() === 'carriers'">
                 <div class="afs-report-section">
                     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.carriers)}, css: {'fa-angle-double-right': visible.files(), 'fa-angle-double-up': !visible.files()}" class="fa toggle"></i> {% trans "Files" %}</h2>
-                    <span data-bind="if: cards.name && (!files().length || cards.files.cardinality == 'n')">
-                        <a class="afs-report-a" data-bind="click: function(){add(cards.name)}"><i class="fa fa-mail-reply"></i> {% trans "Add Name" %}</a>
+                    <span data-bind="if: cards['files of digital resource'] && (!files().length || cards['files of digital resource'].cardinality == 'n')">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['files of digital resource'])}"><i class="fa fa-mail-reply"></i> {% trans "Add File" %}</a>
                     </span>
                 
                     <!-- Collapsible content -->
