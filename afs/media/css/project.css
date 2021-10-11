@@ -747,6 +747,13 @@
     padding-left: 0px;
 }
 
+.afs-workflow-table-contents {
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .afs-app-footer-arches-link {
     display: inline-block;
     float: right;
