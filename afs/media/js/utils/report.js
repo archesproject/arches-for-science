@@ -32,8 +32,34 @@ define([
             }
         }
     };
+    
+    const checkNestedData = (resource, ...args) => {
+        if(!resource) { return false; }
+        for (key of Object.keys(resource)){
+            if(args.includes(key)){ continue; }
+            const rawValue = getRawNodeValue(resource, key);
+            if(!rawValue || (typeof (rawValue) !== 'object')) { continue; }
+            if(processRawNodeValue(rawValue) != '--'){
+                return true;
+            } else {
+                try{
+                if(checkNestedData(rawValue)) {
+                    return true;
+                }}
+                catch(e){
+                    console.log(e);
+                }
+            }
+        }
+        return false;
+    };
 
     const processRawNodeValue = (rawValue) => {
+        if(typeof rawValue === 'string') {
+            return rawValue;
+        } else if(!rawValue) {
+            return '--';
+        }
         const nodeValue = rawValue?.['@display_value'] || rawValue?.['display_value'];
         const geojson = rawValue?.geojson;
         if(geojson){
@@ -149,6 +175,10 @@ define([
         getNodeValue: (resource, ...args) => {
             const rawValue = getRawNodeValue(resource, ...args);
             return processRawNodeValue(rawValue);
-        }
+        },
+
+        // see if there's any node with a valid displayable value.  If yes, return true.
+        // potentially useful for deeply nested resources
+        nestedDataExists: checkNestedData
     } 
 });
