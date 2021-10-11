@@ -128,7 +128,7 @@ define([
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedSampleLocationInstance()){
                 const baseName = self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]() || "";
-                return `${baseName} [ Sample of ${params.physicalThingName} ]`;
+                return `${baseName} [Sample of ${params.physicalThingName}]`;
             }
         })
 
@@ -408,7 +408,7 @@ define([
 
                     if (type === "region") {
                         const baseName = self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]() || "";
-                        selectedSampleLocationInstanceLabel = `${baseName} [ Sample Area of ${params.physicalThingName} ]`;
+                        selectedSampleLocationInstanceLabel = `${baseName} [Sample Area of ${params.physicalThingName}]`;
                     }
                     
                     physicalThingNameTile.data[physicalThingNameContentNodeId] = selectedSampleLocationInstanceLabel;
