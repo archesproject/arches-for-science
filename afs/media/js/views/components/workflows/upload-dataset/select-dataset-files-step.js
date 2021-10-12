@@ -27,7 +27,7 @@ define([
             const rendererLookup = {
                 "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
-                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"},
+                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "fors-renderer", rendererid: "88dccb59-14e3-4445-8f1b-07f0470b38bb"},
                 "image": {rendererid: "5e05aa2e-5db0-4922-8938-b4d2b7919733", renderer: "imagereader"},
                 "pdf": {rendererid: "09dec059-1ee8-4fbd-85dd-c0ab0428aa94", renderer: "pdfreader"},
             };
@@ -284,7 +284,7 @@ define([
                             content: window.URL.createObjectURL(file),
                             error: file.error
                         };
-                        if (file.name.split('.').pop() === 'txt'){
+                        if (['txt', 'dx'].includes(file.name.split('.').pop())) {
                             fileInfo.renderer = rendererLookup[observationInfo.instrument.value].rendererid;
                         } else if (file.type.split('/').includes('image')) {
                             fileInfo.renderer = rendererLookup["image"].rendererid
