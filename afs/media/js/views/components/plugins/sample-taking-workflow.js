@@ -112,6 +112,7 @@ define([
                                         physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']",
                                         physicalThingName: "['select-project']['select-phys-thing']['physThingName']",
                                         imageServiceInstanceData: "['image-step']['image-service-instance'][0]['data']",
+                                        projectSet: "['select-project']['select-phys-thing']['projectSet']",
                                         samplingActivityResourceId: "['sample-info']['sampling-info']['samplingActivityResourceId']", 
                                     },
                                 },
