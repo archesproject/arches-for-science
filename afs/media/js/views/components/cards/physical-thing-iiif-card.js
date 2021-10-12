@@ -6,7 +6,7 @@ define([
 ], function(ko, _, IIIFCardComponentViewModel, physicalThingUtils) {
     return ko.components.register('physical-thing-iiif-card', {
         viewModel: function(params) {
-            console.log('branch rename test');
+            console.log('branch rename test 2');
             var self = this;
             IIIFCardComponentViewModel.apply(this, [params]);
             if (this.form && this.state === 'form') {
