@@ -717,15 +717,18 @@ define([
                 });
             };
 
-            var saveSamplePhysicalThingRemovedFromTile = function(samplePhysicalThingRemovedFromTile, sampleAreaResourceInstanceId) {
+            const savePhysicalThingRemovedFromTile = function(samplePhysicalThingRemovedFromTile, removedFromResourceInstanceIds) {
                 return new Promise(function(resolve, _reject) {
                     const physicalThingRemovedFromNodeId = '38814345-d2bd-11e9-b9d6-a4d18cec433a' // Removal from Object_Removed From (E22)
-                    samplePhysicalThingRemovedFromTile.data[physicalThingRemovedFromNodeId]([{
-                        "resourceId": sampleAreaResourceInstanceId,
-                        "resourceXresourceId": "",
-                        "ontologyProperty": "",
-                        "inverseOntologyProperty": ""
-                    }]);
+                    const tileDataObj = removedFromResourceInstanceIds.map(resourceId => 
+                        ({
+                            "resourceId": resourceId,
+                            "resourceXresourceId": "",
+                            "ontologyProperty": "",
+                            "inverseOntologyProperty": ""
+                        })
+                    );
+                    samplePhysicalThingRemovedFromTile.data[physicalThingRemovedFromNodeId](tileDataObj)
                     samplePhysicalThingRemovedFromTile.transactionId = params.form.workflowId;
 
                     samplePhysicalThingRemovedFromTile.save().then(function(data) {
@@ -742,7 +745,7 @@ define([
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
                     StepUtils.saveThingToProject(regionPhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
-                        
+
                     self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
                         var physicalThingClassificationTile = getWorkingTile(regionPhysicalThingClassificationCard);
 
@@ -764,12 +767,19 @@ define([
                                             savePhysicalThingNameTile(samplePhysicalThingNameTile, "sample").then(function(samplePhysicalThingNameData) {
                                                 const physicalThingRemovedFromNodegroupId = 'b11f217a-d2bc-11e9-8dfa-a4d18cec433a' // Removal from Object (E80)
 
-                                                StepUtils.saveThingToProject(samplePhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
+                                                self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(samplePhysicalThingPartOfCard){
+                                                    const samplePhysicalThingPartOfTile = getWorkingTile(samplePhysicalThingPartOfCard);
+                                                    savePhysicalThingPartOfTile(samplePhysicalThingPartOfTile);
+                                                });
 
                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingRemovedFromNodegroupId).then(function(samplePhysicalThingRemovedFromCard){
-                                                    var samplePhysicalThingRemovedFromTile = getWorkingTile(samplePhysicalThingRemovedFromCard);
-                                                    saveSamplePhysicalThingRemovedFromTile(samplePhysicalThingRemovedFromTile, regionPhysicalThingNameData.resourceinstance_id);
-                                                })
+                                                    const samplePhysicalThingRemovedFromTile = getWorkingTile(samplePhysicalThingRemovedFromCard);
+                                                    const removedFromPhysicalThingResourceIds = [self.physicalThingResourceId, regionPhysicalThingNameData.resourceinstance_id];
+                                                    savePhysicalThingRemovedFromTile(samplePhysicalThingRemovedFromTile, removedFromPhysicalThingResourceIds);
+                                                });
+
+                                                StepUtils.saveThingToProject(samplePhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
+
                                                 const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(samplePhysicalThingClassificationCard) {
