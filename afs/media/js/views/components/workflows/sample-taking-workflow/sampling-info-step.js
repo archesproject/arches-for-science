@@ -23,7 +23,6 @@ define([
         this.samplingMotivation = ko.observable(getProp("samplingMotivation"));
         this.samplingName = ko.observable(getProp("samplingName"));
         this.projectTile = ko.observable(getProp("projectTile"));
-        this.physicalThingTile = ko.observable(getProp("physicalThingTile"));
         this.samplersTile = ko.observable(getProp("samplersTile"));
         this.samplingNameTile = ko.observable(getProp("samplingNameTile"));
         this.samplingDateTile = ko.observable(getProp("samplingDateTile"));
@@ -40,7 +39,6 @@ define([
             samplingMotivation: self.samplingMotivation(),
             samplingName: self.samplingName(),
             projectTile: self.projectTile(),
-            physicalThingTile: self.physicalThingTile(),
             samplersTile: self.samplersTile(),
             samplingNameTile: self.samplingNameTile(),
             samplingDateTile: self.samplingDateTile(),
@@ -54,7 +52,6 @@ define([
         const sampleStatementNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
         const samplingDateNodegroup = '03357852-1d9d-11eb-a29f-024e0d439fdb';
         const parentProjectNode = '03357879-1d9d-11eb-a29f-024e0d439fdb'; //related project
-        const overallObjectSampleNode = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb'; //related phys thing
 
         this.updatedValue = ko.pureComputed(function(){
             return {
@@ -65,7 +62,6 @@ define([
                 samplingTechnique: self.samplingTechnique(),
                 samplingMotivation: self.samplingMotivation(),
                 projectTile: self.projectTile(),
-                physicalThingTile: self.physicalThingTile(),      
                 samplingNameTile: self.samplingNameTile(),
                 samplersTile: self.samplersTile(),
                 samplingDateTile: self.samplingDateTile(),
@@ -97,20 +93,18 @@ define([
 
             $.when(
                 self.saveProject(),
-                self.savePhysicalThing(),
                 self.saveSamplers(),
                 self.saveSamplingDate(),
                 self.saveSamplingTechnique(),
                 self.saveSamplingMotivation(),
                 self.saveDigitalReference()
-            ).done(function(response1, response2, response3, response4, response5, response6, response7){
+            ).done(function(response1, response2, response3, response4, response5, response6){
                 self.projectTile(response1[0].tileid);
-                self.physicalThingTile(response2[0].tileid);
-                self.samplersTile(response3[0].tileid);
-                self.samplingDateTile(response4[0].tileid);
-                self.samplingTechniqueTile(response5[0].tileid);
-                self.samplingMotivationTile(response6[0].tileid);
-                self.samplingActivityDigitalReferenceTile(response7[0].tileid);
+                self.samplersTile(response2[0].tileid);
+                self.samplingDateTile(response3[0].tileid);
+                self.samplingTechniqueTile(response4[0].tileid);
+                self.samplingMotivationTile(response5[0].tileid);
+                self.samplingActivityDigitalReferenceTile(response6[0].tileid);
 
                 params.form.savedData(params.form.value());
                 params.form.lockExternalStep("select-project", true);
@@ -177,16 +171,6 @@ define([
                 'resourceXresourceId':''
             }];
             return self.saveNodeValue(parentProjectNode, JSON.stringify(data), self.samplingActivityResourceId(), self.projectTile());
-        };
-
-        this.savePhysicalThing = function() {
-            var data = [{
-                'resourceId': self.physicalThingValue,  // resourceid of the physical thing
-                'ontologyProperty': '',
-                'inverseOntologyProperty':'',
-                'resourceXresourceId':''
-            }];
-            return self.saveNodeValue(overallObjectSampleNode, JSON.stringify(data), self.samplingActivityResourceId(), self.physicalThingTile());
         };
 
         this.saveSamplers = function() {
@@ -294,7 +278,6 @@ define([
             self.samplingMotivation(snapshot.samplingMotivation);
             self.samplingName(snapshot.samplingName);
             self.projectTile(snapshot.projectTile);
-            self.physicalThingTile(snapshot.physicalThingTile);
             self.samplersTile(snapshot.samplersTile);
             self.samplingNameTile(snapshot.samplingNameTile);
             self.samplingDateTile(snapshot.samplingDateTile);
