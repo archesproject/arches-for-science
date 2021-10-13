@@ -480,7 +480,19 @@ define([
                     const related = await resourceUtils.lookupResourceInstanceData(part.resourceid);
                     const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501"; 
                     const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
+                    const digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501';
                     const datasetTile = related?._source.tiles.find((tile) => tile.nodegroup_id === digitalReferenceNodeGroupId);
+                    const manifestValueIds = [
+                        '1497d15a-1c3b-4ee9-a259-846bbab012ed', // Preferred Manifest
+                        '305c62f0-7e3d-4d52-a210-b451491e6100', // IIIF Manifest
+                        '00d5a7a6-ff2f-4c44-ac85-7a8ab1a6fb70' // Alternate Manifest
+                    ];
+                    const datasetValueIds = [
+                        '4bb83364-a32a-493a-b3c9-b0aa6f279d51', // Dataset
+                        'fe03bc60-ba4e-4fd0-97db-66af93bcc703', // FORS Dataset
+                        'c7812e3b-7576-4b78-a033-f82c6f96e6d2', // Raman Dataset
+                        'bf173b8f-c883-468b-bf08-dea52f5864ff' // XRF Dataset
+                    ];
                     part.datasetFiles = part.datasetFiles || ko.observableArray([]);
                     part.datasetName = part.datasetName || ko.observable();
                     part.datasetId = part.datasetId || ko.observable();
@@ -488,7 +500,7 @@ define([
                     part.resourceReferenceId = part.resourceReferenceId || ko.observable();
                     part.nameDirty = part.nameDirty || ko.observable(false);
                     part.displayname = part.data[physicalThingPartNameNodeId];
-                    if (datasetTile) {
+                    if (datasetTile && !manifestValueIds.includes(datasetTile.data[digitalReferenceTypeNodeId])) {
                         const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
                         const datasetName =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).data[datasetNameNodeId];
                         const nameTileId =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).tileid;
