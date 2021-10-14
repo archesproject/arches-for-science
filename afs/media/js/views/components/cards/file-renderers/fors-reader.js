@@ -22,16 +22,12 @@ define(['jquery',
                         }
                         if (val.startsWith('##YUNITS')) {
                             const yunits = val.split('=')[1];
-                            if (yunits) {
-                                metadata.yunits = `${yunits[0].toUpperCase()}${yunits.slice(1).toLowerCase()}`;
-                            }
+                            metadata.yunits = yunits ? `${yunits[0].toUpperCase()}${yunits.slice(1).toLowerCase()}` : '';
                         }
                     }
                     if (val.startsWith('Spectrum file is ')) {
                         const yunits = val.split(' ')[3];
-                        if (yunits) {
-                            metadata.yunits = `${yunits[0].toUpperCase()}${yunits.slice(1).toLowerCase()}`;
-                        }
+                        metadata.yunits = yunits ? `${yunits[0].toUpperCase()}${yunits.slice(1).toLowerCase()}` : '';
                     }
                     let rec;
                     if (val.includes('\t')) {
