@@ -17,6 +17,9 @@ define(['jquery',
                     }
                 });
             };
+            this.chartTitle("XRF Spectrum");
+            this.xAxisLabel("Energy");
+            this.yAxisLabel("Counts");
         },
         template: { require: 'text!templates/views/components/cards/file-renderers/afs-reader.htm' }
     });
