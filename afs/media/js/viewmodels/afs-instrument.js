@@ -246,7 +246,6 @@ define(['jquery',
                             self.seriesData.push({data: series, name: self.displayContent.name});
                         }
                     } catch(e) {
-                        console.log(e)
                         self.displayContent.validRenderer(false);
                     }
                     self.loading(false);
