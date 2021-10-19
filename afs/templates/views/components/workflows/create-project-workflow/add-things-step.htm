@@ -12,21 +12,20 @@
             <div class="workflow-search-list-container"> 
                 <div class="workflow-search-list search-result-details">
                     <div data-bind="css: {'loading-mask': reportDataLoading}">
-                        <div data-bind="foreach: targetResources">
+                        <div class="afs-project-search-result-details-container" data-bind="foreach: targetResources">
                             <div class="search-result-item" data-bind="css: {'selected-instance': $parent.value().map(function(resource){return resource}).indexOf($data['_source']['resourceinstanceid']) >= 0},
                             click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}">
-                            <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
-                                <div class="summary-report-title" data-bind="text: $data._source.displayname"></div>
-                                <!--ko if: $data.identifier -->
-                                <div style="display: inline-flex">
-                                    <div data-bind="text: 'Gallery Systems TMS Id:'" class="summary-report-description"></div> 
-                                    <div data-bind="text: $data.identifier" class="summary-report-description" style='color: #2783d4'></div> 
+                                <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
+                                    <div class="summary-report-title" data-bind="text: $data._source.displayname"></div>
+                                    <!--ko if: $data.identifier -->
+                                    <div style="display: inline-flex; display: none;">
+                                        <div data-bind="text: 'Gallery Systems TMS Id:'" class="summary-report-description"></div> 
+                                        <div data-bind="text: $data.identifier" class="summary-report-description" style='color: #2783d4'></div> 
+                                    </div>
+                                    <!--/ko-->
                                 </div>
-                                <!--/ko-->
+                                <div class="summary-report-description" data-bind="html: $data._source.displaydescription || 'No description'"></div>
                             </div>
-                            <div class="summary-report-description" data-bind="html: $data._source.displaydescription || 'No description'"></div>
-                            </div>
-                            <hr style="margin: 0"></hr>
                         </div>
                     </div>
                 </div>
