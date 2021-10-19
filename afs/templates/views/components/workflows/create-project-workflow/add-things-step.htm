@@ -17,12 +17,6 @@
                             click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}">
                                 <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
                                     <div class="summary-report-title" data-bind="text: $data._source.displayname"></div>
-                                    <!--ko if: $data.identifier -->
-                                    <div style="display: inline-flex; display: none;">
-                                        <div data-bind="text: 'Gallery Systems TMS Id:'" class="summary-report-description"></div> 
-                                        <div data-bind="text: $data.identifier" class="summary-report-description" style='color: #2783d4'></div> 
-                                    </div>
-                                    <!--/ko-->
                                 </div>
                                 <div class="summary-report-description" data-bind="html: $data._source.displaydescription || 'No description'"></div>
                             </div>
