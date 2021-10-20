@@ -654,7 +654,11 @@
     padding: 3px 8px;
 }
 
-.afs-sample-name .control-label i {
+.afs-sample-name .form-group .widget-input-label {
+    display: none;
+}
+
+.afs-sample-name .form-group i {
     display: none;
 }
 
@@ -676,6 +680,18 @@
 
 .afs-region-name .row.widget-wrapper .widget-input-label {
     display: none;
+}
+
+.afs-calculated-name {
+    padding-left: 5px; 
+    margin-left: 5px; 
+    width: 338px; 
+    height: 36px; 
+    margin-top: -5px; 
+    margin-bottom: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .afs-workflow-annotator .widget-input-label {
