@@ -16,6 +16,9 @@ define(['jquery',
                         series.value.push(Number(rec[0]));
                     }
                 });
+                this.chartTitle("Raman Spectrum");
+                this.xAxisLabel("Raman Shift (cm<sup>-1</sup>)");
+                this.yAxisLabel("Intensity");
             };
         },
         template: { require: 'text!templates/views/components/cards/file-renderers/afs-reader.htm' }

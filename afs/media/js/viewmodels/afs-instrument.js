@@ -29,11 +29,11 @@ define(['jquery',
         var renderer = this.displayContent.renderer.id;
 
         var formatDefaults = {
-            'title': localStore.getItem(renderer + 'title') || 'Sample Reflectance',
+            'title': localStore.getItem(renderer + 'title') || '',
             'titlesize': localStore.getItem(renderer + 'titlesize') || 24, 
-            'xaxislabel': localStore.getItem(renderer + 'xaxislabel') || "Energy",
+            'xaxislabel': localStore.getItem(renderer + 'xaxislabel') || "",
             'xaxislabelsize': localStore.getItem(renderer + 'xaxislabelsize') || 17,
-            'yaxislabel': localStore.getItem(renderer + 'yaxislabel') || "Count",
+            'yaxislabel': localStore.getItem(renderer + 'yaxislabel') || "",
             'yaxislabelsize': localStore.getItem(renderer + 'yaxislabelsize') || 17,
         };
 
