@@ -79,10 +79,10 @@ define([
                                         const title = titleArrary[0].trim();
                                         const type = titleArrary[1].startsWith('Region') ? 'Analysis Area':
                                             titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
-                                            'Part';
+                                                'Part';
                                         const parent = titleArrary[1].startsWith('Region') ? titleArrary[1].replace('Region of ','').replace(']',''):
                                             titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
-                                            titleArrary[1].replace(']','');
+                                                titleArrary[1].replace(']','');
                                         const description = `${title} is a ${type} of ${parent} created before`;
                                         var popupData = {
                                             closePopup: function() {
