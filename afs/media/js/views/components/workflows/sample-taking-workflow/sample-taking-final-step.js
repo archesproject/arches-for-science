@@ -65,12 +65,12 @@ define([
                                     const titleArrary = feature.properties.locationName.split('[');
                                     const title = titleArrary[0].trim();
                                     const type = titleArrary[1].startsWith('Region') ? 'Analysis Area':
-                                                 titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
-                                                 'Part';
+                                        titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
+                                        'Part';
                                     const parent = titleArrary[1].startsWith('Region') ? titleArrary[1].replace('Region of ','').replace(']',''):
-                                                 titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
-                                                 titleArrary[1].replace(']','');
-                                    const description = `${title} is a ${type} of ${parent},\n which is created before`
+                                        titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
+                                        titleArrary[1].replace(']','');
+                                    const description = `${title} is a ${type} of ${parent},\n which is created before`;
                                     var popupData = {
                                         closePopup: function() {
                                             popup.remove();
@@ -132,7 +132,7 @@ define([
                             });
                         }
                     });
-                })
+                });
             }
         };
 
@@ -198,7 +198,7 @@ define([
             });
 
             // get the parent physical thing's all the parts and prepare the annotation "partsAnnotationCollection"
-            const parentPhyiscalThingResourceId = self.getResourceValue(val.resource["Sampling Unit"][0], ['Sampling Area','Overall Object Sampled','resourceId'])
+            const parentPhyiscalThingResourceId = self.getResourceValue(val.resource["Sampling Unit"][0], ['Sampling Area','Overall Object Sampled','resourceId']);
             const parentPhyiscalThing = ko.observable();
             self.getResourceData(parentPhyiscalThingResourceId, parentPhyiscalThing);
             parentPhyiscalThing.subscribe(function(val){ // 2nd request
@@ -229,7 +229,7 @@ define([
                             }];
                         }
                     }
-                })
+                });
 
                 // add the annotation of parts to the final object
                 self.annotationStatus = ko.observable();
@@ -238,10 +238,9 @@ define([
                 const numberOfCanvases = Object.keys(sampleAnnotationCollection).length;
                 let canvasCounter = 0;
                 for (const canvas in sampleAnnotationCollection) {
-                    const partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
                     let samplingLocations = ko.observableArray();
                     let annotationCombined;
-                    const sampleArearResourceIds = sampleAnnotationCollection[canvas].map(sample => sample.sampleAreaResourceId)
+                    const sampleArearResourceIds = sampleAnnotationCollection[canvas].map(sample => sample.sampleAreaResourceId);
                     partsAnnotationCollection[canvas].forEach(function(part){
                         if (!sampleArearResourceIds.includes(part.sampleAreaResourceId)){
                             if (annotationCombined) {
@@ -310,7 +309,7 @@ define([
                         if (canvasCounter === numberOfCanvases) {self.loading(false);}
                     });
                 }    
-            })
+            });
         }, this);
     }
 

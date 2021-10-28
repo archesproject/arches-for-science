@@ -7,8 +7,7 @@ define([
     'views/components/iiif-viewer',
     'bindings/leaflet',
     'bindings/datatable',
-    'text!templates/views/components/iiif-popup.htm',
-], function(ko, geojsonExtent, L, arches, iiifPopup) {
+], function(ko, geojsonExtent, L, arches) {
     return ko.components.register('views/components/annotation-summary', {
         viewModel: function(params) {
             var self = this;
@@ -53,8 +52,7 @@ define([
                         Report
                     </a>
                 </div>
-            </div>`
-
+            </div>`;
 
             this.prepareAnnotation = function(featureCollection) {
                 var canvas = featureCollection.features[0].properties.canvas;
@@ -77,16 +75,15 @@ define([
                                 })
                                     .setContent(popupHtml)
                                     .on('add', function() {
-                                        console.log("reached here")
                                         const titleArrary = feature.properties.name.split('[');
                                         const title = titleArrary[0].trim();
                                         const type = titleArrary[1].startsWith('Region') ? 'Analysis Area':
-                                                        titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
-                                                        'Part';
+                                            titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
+                                            'Part';
                                         const parent = titleArrary[1].startsWith('Region') ? titleArrary[1].replace('Region of ','').replace(']',''):
-                                                        titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
-                                                        titleArrary[1].replace(']','');
-                                        const description = `${title} is a ${type} of ${parent} created before`
+                                            titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
+                                            titleArrary[1].replace(']','');
+                                        const description = `${title} is a ${type} of ${parent} created before`;
                                         var popupData = {
                                             closePopup: function() {
                                                 popup.remove();
