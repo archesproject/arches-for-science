@@ -20,6 +20,7 @@ import ast
 import os
 import csv
 import json
+from django.core import management
 from django.core.management.base import BaseCommand
 from arches.app.models.system_settings import settings
 from arches.app.models.models import TileModel
@@ -49,12 +50,10 @@ class Command(BaseCommand):
                     prod_tile = self.create_prod_tile(record)
                     self.create_prod_time_tile(prod_tile.tileid, record, date_datatype)
                     self.create_prod_statement_tile(prod_tile.tileid, record, concept_list_datatype)
-                    try:
-                        Resource(record['ResourceID']).index()
-                    except Exception as e:
-                        print('failed to index')
-                        print(record)
-                        print(e)
+        self.reindex_instances()
+
+    def reindex_instances(self):
+        management.call_command("es", "index_resources_by_type", resource_types=["9519cb4f-b25b-11e9-8c7b-a4d18cec433a"])
 
     def build_prod(self, lines):
         production_events = {}
