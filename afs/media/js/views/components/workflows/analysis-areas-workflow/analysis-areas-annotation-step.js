@@ -469,7 +469,6 @@ define([
                                                 self.savingTile(false);
                                                 params.pageVm.alert("")
                                                 self.drawFeatures([]);
-                                                console.log(self.analysisAreasOnlySnapshot)
                                                 let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
                                                 params.form.savedData({
                                                     data: koMapping.toJS(mappedInstances),
