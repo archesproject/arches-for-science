@@ -242,33 +242,14 @@ define([
         };
 
         this.updateAnalysisAreaInstances = function() {
-            var physicalThingAnnotationNodeName = "Analysis Areas";
-            var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
-                return annotationNode.name === physicalThingAnnotationNodeName;
-            });
-
-            self.analysisAreaInstances(self.card.tiles())
-
-            // TO DO - The following code checks the tiles against the annotations that come from the annotation service for the current canvas.
-            // We need all the tiles from the entire manifest, so we need another way to ensure that the current tiles all come from the current manifest. 
-            // This could be done by checking the path to the canvas in the tile with the current canvas's path.
-
-            // if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
-            //     var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
-            //         return annotation.properties.tileId;
-            //     });
-            //     self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
-            // }
-            // else {
-            //     var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
-            //         var annotationTileIds = annotations.map(function(annotation) {
-            //             return annotation.properties.tileId;
-            //         });
-            //         self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
-    
-            //         physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
-            //     });
-            // }
+            canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id'])
+            const tilesBelongingToManifest = self.card.tiles().filter(
+                tile => canvasids.find(
+                    canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
+                    )
+                );
+            
+            self.analysisAreaInstances(tilesBelongingToManifest);
         };
 
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
