@@ -92,6 +92,7 @@ define([
                 const partId = ko.unwrap(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId)
                 return !sampleLocationResourceIds.includes(partId);
             });
+            self.analysisAreasOnlySnapshot = analysisAreasOnly.map(tile => tile.tileid);
             if (self.analysisAreaFilterTerm()) {
                 return analysisAreasOnly.filter(function(analysisAreaInstance) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
@@ -468,9 +469,12 @@ define([
                                                 self.savingTile(false);
                                                 params.pageVm.alert("")
                                                 self.drawFeatures([]);
-    
+                                                console.log(self.analysisAreasOnlySnapshot)
                                                 let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
-                                                params.form.savedData(koMapping.toJS(mappedInstances));
+                                                params.form.savedData({
+                                                    data: koMapping.toJS(mappedInstances),
+                                                    currentAnalysisAreas: self.analysisAreasOnlySnapshot,
+                                                });
                                                 params.form.value(params.form.savedData());
                                                 params.form.complete(true);
                                             });
