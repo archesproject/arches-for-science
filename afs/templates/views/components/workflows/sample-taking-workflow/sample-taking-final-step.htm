@@ -62,7 +62,7 @@
     <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Sampling Locations' %}</h5>
         <!-- ko foreach: sampleAnnotations -->
-        <div style="display: inline-flex; flex-direction: column;">
+        <div style="display: inline-flex; flex-direction: column; padding-bottom: 25px;">
             <div style="border: solid 1px #ddd">
                 <div class="iiif-leaflet" data-bind="leaflet: leafletConfig, click: function(){$parent.switchMap($parent.map)}" style="height: 500px; width: 100%;"></div>
             </div>
