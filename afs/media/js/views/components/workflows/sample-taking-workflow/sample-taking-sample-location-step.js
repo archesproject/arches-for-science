@@ -14,7 +14,7 @@ define([
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
-        
+        this.existingParts = params.partsTileIds;
         this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
         this.samplingActivityResourceId = koMapping.toJS(params.samplingActivityResourceId);
         
@@ -92,6 +92,7 @@ define([
 
         this.sampleLocationFilterTerm = ko.observable();
         this.filteredSampleLocationInstances = ko.computed(function() {
+            console.log(self.sampleLocationInstances())
             const samplesOnly = self.sampleLocationInstances().filter(function(a){
                 const analysisAreaResourceIds = self.analysisAreaResourceIds.map(item => item.resourceid);
                 const partId = ko.unwrap(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId)

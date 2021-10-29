@@ -530,6 +530,11 @@
     padding-left: 6px;
 }
 
+.dataset-table tr.disabled {
+    pointer-events: none;
+    color: grey;
+}
+
 .analysis-areas-workflow-regions-step .row.widget-wrapper {
     padding-bottom: 10px;
     padding-top: 5px;
@@ -823,6 +828,10 @@
     padding-bottom: 10px;
     color: #999;
     margin-top: 0px;
+}
+
+.afs-final-step-section tr.disabled {
+    background: #DBF3FA !important;
 }
 
 .afs-project-search-result-details-container .search-result-item:hover {
