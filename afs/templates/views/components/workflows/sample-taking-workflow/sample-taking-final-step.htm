@@ -64,7 +64,7 @@
         <!-- ko foreach: sampleAnnotations -->
         <div style="display: inline-flex; flex-direction: column; padding-bottom: 25px;">
             <div style="border: solid 1px #ddd">
-                <div class="iiif-leaflet" data-bind="leaflet: leafletConfig, click: function(){$parent.switchMap($parent.map)}" style="height: 500px; width: 100%;"></div>
+                <div class="iiif-leaflet" data-bind="leaflet: leafletConfig, click: function(){if ($parent.switchMap){$parent.switchMap($parent.map)}}" style="height: 500px; width: 100%;"></div>
             </div>
             <div style="width: 100%; padding-top: 10px;">
                 <table data-bind="datatable: $parent.tableConfig" class="table table-striped" width="100%" style="border-bottom: 1px solid #ddd; margin-bottom: 8px;">
