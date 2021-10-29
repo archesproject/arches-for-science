@@ -97,13 +97,14 @@ define([
                 return; 
             }
             const physThing = (await resourceUtils.lookupResourceInstanceData(val))?._source;
-            
+
             const digitalReferencesWithManifest = physThing.tiles.
                 filter(x => x.nodegroup_id == self.digitalReferenceNodeGroupId &&
                     self.manifestConcepts.includes(x?.data?.[self.digitalReferenceTypeNodeId]));
             const partsWithManifests = physThing.tiles.filter(x => 
                 x.nodegroup_id == self.partNodeGroupId &&
                 x.data?.[self.partManifestNodeId]?.features?.[0]?.properties?.manifest)
+            const partsTileIds = partsWithManifests.map(part => part.tileid);
 
             // Below in defining the 'projectSet' we make sure that we know the collection that the physical thing came from.
             // We need this in order to place child things in the same collection.
@@ -118,6 +119,7 @@ define([
                     physThingName: physThing.displayname,
                     physicalThing: val,
                     projectSet: projectSet,
+                    partsTileIds: partsTileIds,
                     physicalThingSet: self.setsThatBelongToTheProject(),
                     project: self.projectValue(),
                 });
