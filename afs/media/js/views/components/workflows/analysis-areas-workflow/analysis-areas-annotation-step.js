@@ -19,6 +19,8 @@ define([
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+        const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
+        this.allFeatureIds = [];
         this.sampleLocationResourceIds = [];
         this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
 
@@ -42,15 +44,27 @@ define([
         this.analysisAreaInstances = ko.observableArray();
         
         this.selectedAnalysisAreaInstance = ko.observable();
+
+        this.switchCanvas = function(tile){
+            const canvasPath = tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas()
+            if (self.canvas() !== canvasPath) {
+                var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasPath);
+                if (canvas) {
+                    self.canvasClick(canvas);       
+                }
+            }
+        };
+
         this.selectedAnalysisAreaInstance.subscribe(function(selectedAnalysisAreaInstance) {
             self.highlightAnnotation();
 
             if (selectedAnalysisAreaInstance) {
-                /* TODO: switchCanvas logic */ 
-                
                 self.tile = selectedAnalysisAreaInstance;
                 params.tile = selectedAnalysisAreaInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedAnalysisAreaInstance);
+                if (ko.unwrap(selectedAnalysisAreaInstance.data[physicalThingPartAnnotationNodeId])?.features) {
+                    self.switchCanvas(selectedAnalysisAreaInstance)
+                }
             }
         });
 
@@ -142,13 +156,6 @@ define([
             });
         };
 
-        this.switchCanvas = function(canvasId){
-            var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasId);
-            if (canvas) {
-                self.canvasClick(canvas);              
-            }
-        };
-
         this.getAnnotationProperty = function(tile, property){
             return tile.data[self.annotationNodeId].features[0].properties[property];
         };
@@ -214,11 +221,11 @@ define([
                 });
                 
                 var unaddedSelectedAnalysisAreaInstanceFeatures = self.selectedAnalysisAreaInstanceFeatures().reduce(function(acc, feature) {
-                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id))) {
+                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id)) &&
+                        feature.properties.canvas === self.canvas) {
                         feature.properties.tileId = self.selectedAnalysisAreaInstance().tileid;
                         acc.push(ko.toJS(feature));
                     }
-    
                     return acc;
                 }, []);
     
@@ -240,22 +247,28 @@ define([
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
 
-            if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
-                var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
-                    return annotation.properties.tileId;
-                });
-                self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
-            }
-            else {
-                var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
-                    var annotationTileIds = annotations.map(function(annotation) {
-                        return annotation.properties.tileId;
-                    });
-                    self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+            self.analysisAreaInstances(self.card.tiles())
+
+            // TO DO - The following code checks the tiles against the annotations that come from the annotation service for the current canvas.
+            // We need all the tiles from the entire manifest, so we need another way to ensure that the current tiles all come from the current manifest. 
+            // This could be done by checking the path to the canvas in the tile with the current canvas's path.
+
+            // if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
+            //     var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
+            //         return annotation.properties.tileId;
+            //     });
+            //     self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
+            // }
+            // else {
+            //     var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
+            //         var annotationTileIds = annotations.map(function(annotation) {
+            //             return annotation.properties.tileId;
+            //         });
+            //         self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
     
-                    physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
-                });
-            }
+            //         physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
+            //     });
+            // }
         };
 
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
@@ -680,9 +693,9 @@ define([
                     })
                 },
                 buildAnnotationNodes: function(json) {
-                    let sampleAnnotations = ko.observableArray();
-                    let analysisAreaAnnotations = ko.observableArray();
                     var updateAnnotations = function() {
+                        let sampleAnnotations = ko.observableArray();
+                        let analysisAreaAnnotations = ko.observableArray();
                         var canvas = self.canvas();
                         if (canvas) {
                             window.fetch(arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
@@ -702,7 +715,7 @@ define([
                                             analysisAreaAnnotations.push(feature);
                                         }
                                     });
-                                    const editNodeActiveState = ko.observable(false);
+                                    const editNodeActiveState = ko.observable(true);
                                     editNodeActiveState.subscribe(function(active){
                                         if (!active) {
                                             self.resetAnalysisAreasTile();
@@ -724,6 +737,7 @@ define([
                                             annotations: sampleAnnotations
                                         }
                                     ])
+                                    self.highlightAnnotation();
                                 });
                         }
                     };
