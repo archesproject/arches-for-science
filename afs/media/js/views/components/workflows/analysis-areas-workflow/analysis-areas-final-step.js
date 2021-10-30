@@ -15,12 +15,13 @@ define([
         const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId];
         const digitalReferenceResourceId = params.digitalReferenceResourceId;
 
-        this.regionInstances = params.regionsStepData.map(function(data){
+        this.regionInstances = params.regionsStepData.data.map(function(data){
             return {
                 regionName: data.data["3e541cc6-859b-11ea-97eb-acde48001122"],
                 regionResource: data.data["b240c366-8594-11ea-97eb-acde48001122"][0]["resourceId"],
             };
         });
+        const currentAnalysisAreas = params.regionsStepData.currentAnalysisAreas;
 
         SummaryStep.apply(this, [params]);
 
@@ -87,14 +88,13 @@ define([
                     } else {
                         annotationCombined = annotation.annotationJson;
                     }
-                    if (self.regionResourceIds.includes(annotation.resourceId)) {
+                    if (currentAnalysisAreas.includes(annotation.tileId)) {
                         info.push({
                             tileId: annotation.tileId,
                             name: annotation.annotationName,
                             annotator: annotation.annotator,
                         });
                     } else {
-                        //should not let the default color changed by this grey color
                         annotation.annotationJson.features.map(feature => {
                             feature.properties.color = '#999999';
                             feature.properties.fillColor = '#999999';
