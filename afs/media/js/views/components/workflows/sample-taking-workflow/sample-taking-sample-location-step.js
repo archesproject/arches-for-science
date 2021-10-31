@@ -1046,8 +1046,8 @@ define([
                                         feature.properties.graphName = "Physical Thing";
                                         if (self.analysisAreaTileIds.includes(feature.properties.tileId)) {
                                             feature.properties.type = 'analysis_area';
-                                            feature.properties.color = '#AC53F5';
-                                            feature.properties.fillColor = '#AC53F5';
+                                            feature.properties.color = '#999999';
+                                            feature.properties.fillColor = '#999999';
                                             analysisAreaAnnotations.push(feature);
                                         } else {
                                             feature.properties.type = 'sample_location';
