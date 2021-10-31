@@ -730,15 +730,6 @@ define([
                 }
             }]);
 
-            this.map.subscribe(function(map){
-                map.on('click', function(e){
-                    const clickedFeatureLayer = $(e.originalEvent.path[0]).hasClass('leaflet-interactive')
-                    if (!clickedFeatureLayer) {
-                        self.resetAnalysisAreasTile()
-                    }
-                })
-            });
-
             /* overwrites iiif-annotation methods */ 
             self.updateTiles = function() {
                 _.each(self.featureLookup, function(value) {

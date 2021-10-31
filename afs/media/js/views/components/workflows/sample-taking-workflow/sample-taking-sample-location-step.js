@@ -1080,15 +1080,6 @@ define([
                 }
             }]);
 
-            this.map.subscribe(function(map){
-                map.on('click', function(e){
-                    const clickedFeatureLayer = $(e.originalEvent.path[0]).hasClass('leaflet-interactive')
-                    if (!clickedFeatureLayer) {
-                        self.resetSampleLocationTile()
-                    }
-                })
-            });
-
             /* overwrites iiif-annotation method */ 
             self.updateTiles = function() {
                 _.each(self.featureLookup, function(value) {
