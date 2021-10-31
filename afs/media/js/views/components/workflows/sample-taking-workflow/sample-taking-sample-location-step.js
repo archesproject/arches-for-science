@@ -21,6 +21,7 @@ define([
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
         const sampleMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
+        const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
         this.analysisAreaResourceIds = [];
         this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
 
@@ -51,6 +52,17 @@ define([
         this.sampleLocationInstances = ko.observableArray();
         
         this.selectedSampleLocationInstance = ko.observable();
+
+        this.switchCanvas = function(tile){
+            const canvasPath = tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas()
+            if (self.canvas() !== canvasPath) {
+                var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasPath);
+                if (canvas) {
+                    self.canvasClick(canvas);       
+                }
+            }
+        };
+
         this.selectedSampleLocationInstance.subscribe(function(selectedSampleLocationInstance) {
             self.highlightAnnotation();
 
@@ -58,6 +70,9 @@ define([
                 self.tile = selectedSampleLocationInstance;
                 params.tile = selectedSampleLocationInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedSampleLocationInstance);
+                if (ko.unwrap(ko.unwrap(selectedSampleLocationInstance.data[physicalThingPartAnnotationNodeId])?.features)) {
+                    self.switchCanvas(selectedSampleLocationInstance)
+                }
             }
         });
 
@@ -162,13 +177,6 @@ define([
             });
         };
 
-        this.switchCanvas = function(canvasId){
-            var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasId);
-            if (canvas) {
-                self.canvasClick(canvas);              
-            }
-        };
-
         this.getAnnotationProperty = function(tile, property){
             return tile.data[self.annotationNodeId].features[0].properties[property];
         };
@@ -234,7 +242,8 @@ define([
                 });
                 
                 var unaddedSelectedSampleLocationInstanceFeatures = self.selectedSampleLocationInstanceFeatures().reduce(function(acc, feature) {
-                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id))) {
+                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id)) &&
+                        feature.properties.canvas === self.canvas) {
                         feature.properties.tileId = self.selectedSampleLocationInstance().tileid;
                         acc.push(ko.toJS(feature));
                     }
@@ -255,27 +264,14 @@ define([
         };
 
         this.updateSampleLocationInstances = function() {
-            var physicalThingAnnotationNodeName = "Sample Locations";
-            var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
-                return annotationNode.name === physicalThingAnnotationNodeName;
-            });
+            canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id'])
+            const tilesBelongingToManifest = self.card.tiles().filter(
+                tile => canvasids.find(
+                    canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
+                    )
+                );
 
-            if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
-                var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
-                    return annotation.properties.tileId;
-                });
-                self.sampleLocationInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
-            }
-            else {
-                var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
-                    var annotationTileIds = annotations.map(function(annotation) {
-                        return annotation.properties.tileId;
-                    });
-                    self.sampleLocationInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
-    
-                    physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
-                });
-            }
+            self.sampleLocationInstances(tilesBelongingToManifest);
         };
 
         this.selectSampleLocationInstance = function(sampleLocationInstance) {
@@ -1028,9 +1024,17 @@ define([
                     })
                 },
                 buildAnnotationNodes: function(json) {
-                    let sampleAnnotations = ko.observableArray();
-                    let analysisAreaAnnotations = ko.observableArray();
+                    editNodeActiveState = ko.observable(true);
+                    nonEditNodeActiveState = ko.observable(true);
+                    editNodeActiveState.subscribe(function(active){
+                        if (!active) {
+                            self.resetSampleLocationTile();
+                            updateAnnotations();
+                        }
+                    });
                     var updateAnnotations = function() {
+                        let sampleAnnotations = ko.observableArray();
+                        let analysisAreaAnnotations = ko.observableArray();
                         var canvas = self.canvas();
                         if (canvas) {
                             window.fetch(arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
@@ -1050,12 +1054,6 @@ define([
                                             sampleAnnotations.push(feature);
                                         }
                                     });
-                                    const editNodeActiveState = ko.observable(false);
-                                    editNodeActiveState.subscribe(function(active){
-                                        if (!active) {
-                                            self.resetSampleLocationTile();
-                                        }
-                                    });
                                     self.annotationNodes([
                                         {
                                             name: "Sample Locations",
@@ -1067,11 +1065,12 @@ define([
                                         {
                                             name: "Analysis Areas",
                                             icon: "fa fa-eye",
-                                            active: ko.observable(false),
+                                            active: nonEditNodeActiveState,
                                             opacity: ko.observable(100),
                                             annotations: analysisAreaAnnotations
                                         },
                                     ])
+                                    self.highlightAnnotation();
                                 });
                         }
                     };
