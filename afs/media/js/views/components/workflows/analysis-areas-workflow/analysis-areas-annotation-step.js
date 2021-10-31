@@ -677,6 +677,14 @@ define([
                     })
                 },
                 buildAnnotationNodes: function(json) {
+                    const editNodeActiveState = ko.observable(true);
+                    const nonEditNodeActiveState = ko.observable(true);
+                    editNodeActiveState.subscribe(function(active){
+                        if (!active) {
+                            self.resetAnalysisAreasTile();
+                            updateAnnotations();
+                        }
+                    });
                     var updateAnnotations = function() {
                         let sampleAnnotations = ko.observableArray();
                         let analysisAreaAnnotations = ko.observableArray();
@@ -699,12 +707,6 @@ define([
                                             analysisAreaAnnotations.push(feature);
                                         }
                                     });
-                                    const editNodeActiveState = ko.observable(true);
-                                    editNodeActiveState.subscribe(function(active){
-                                        if (!active) {
-                                            self.resetAnalysisAreasTile();
-                                        }
-                                    });
                                     self.annotationNodes([
                                         {
                                             name: "Analysis Areas",
@@ -716,7 +718,7 @@ define([
                                         {
                                             name: "Sample Locations",
                                             icon: "fa fa-eyedropper",
-                                            active: ko.observable(false),
+                                            active: nonEditNodeActiveState,
                                             opacity: ko.observable(100),
                                             annotations: sampleAnnotations
                                         }
