@@ -55,8 +55,6 @@ define([
             self.highlightAnnotation();
 
             if (selectedSampleLocationInstance) {
-                /* TODO: switchCanvas logic */ 
-                
                 self.tile = selectedSampleLocationInstance;
                 params.tile = selectedSampleLocationInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedSampleLocationInstance);
