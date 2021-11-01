@@ -677,6 +677,14 @@ define([
                     })
                 },
                 buildAnnotationNodes: function(json) {
+                    const editNodeActiveState = ko.observable(true);
+                    const nonEditNodeActiveState = ko.observable(true);
+                    editNodeActiveState.subscribe(function(active){
+                        if (!active) {
+                            self.resetAnalysisAreasTile();
+                            updateAnnotations();
+                        }
+                    });
                     var updateAnnotations = function() {
                         let sampleAnnotations = ko.observableArray();
                         let analysisAreaAnnotations = ko.observableArray();
@@ -691,18 +699,12 @@ define([
                                         feature.properties.graphName = "Physical Thing";
                                         if (self.sampleLocationTileIds.includes(feature.properties.tileId)) {
                                             feature.properties.type = 'sample_location';
-                                            feature.properties.color = '#AC53F5';
-                                            feature.properties.fillColor = '#AC53F5';
+                                            feature.properties.color = '#999999';
+                                            feature.properties.fillColor = '#999999';
                                             sampleAnnotations.push(feature);
                                         } else {
                                             feature.properties.type = 'analysis_area';
                                             analysisAreaAnnotations.push(feature);
-                                        }
-                                    });
-                                    const editNodeActiveState = ko.observable(true);
-                                    editNodeActiveState.subscribe(function(active){
-                                        if (!active) {
-                                            self.resetAnalysisAreasTile();
                                         }
                                     });
                                     self.annotationNodes([
@@ -716,7 +718,7 @@ define([
                                         {
                                             name: "Sample Locations",
                                             icon: "fa fa-eyedropper",
-                                            active: ko.observable(false),
+                                            active: nonEditNodeActiveState,
                                             opacity: ko.observable(100),
                                             annotations: sampleAnnotations
                                         }
@@ -729,15 +731,6 @@ define([
                     updateAnnotations();
                 }
             }]);
-
-            this.map.subscribe(function(map){
-                map.on('click', function(e){
-                    const clickedFeatureLayer = $(e.originalEvent.path[0]).hasClass('leaflet-interactive')
-                    if (!clickedFeatureLayer) {
-                        self.resetAnalysisAreasTile()
-                    }
-                })
-            });
 
             /* overwrites iiif-annotation methods */ 
             self.updateTiles = function() {
