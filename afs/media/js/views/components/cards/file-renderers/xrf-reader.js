@@ -8,7 +8,12 @@ define(['jquery',
         viewModel: function(params) {
             AfsInstrumentViewModel.apply(this, [params]);
             this.parse = function(data, series){
-                var vals = data.split('Energy Counts')[1].trim().split('\n');
+                let vals;
+                try {
+                    vals = data.split('Energy Counts')[1].trim().split('\n');
+                } catch(e) {
+                    vals = data.split('\n');
+                }
                 vals.forEach(function(val){
                     var rec = val.trim().split(/[ ,]+/);
                     if (Number(rec[1]) > 30 && rec[0] > 0.5) {
