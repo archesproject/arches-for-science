@@ -79,9 +79,17 @@ class Command(BaseCommand):
         nodegroupid = "7c486328-d380-11e9-b88e-a4d18cec433a"
         tile = Tile().get_blank_tile_from_nodegroup_id(nodegroupid, resourceid=record["ResourceID"])
         tile.data["29d5ecb8-79a5-11ea-8ae2-acde48001122"] = self.concept_list_datatype.transform_value_for_tile(record["File_Name_type"])
-        tile.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = self.file_list_datatype.transform_value_for_tile(record["File"])
+        file = self.file_list_datatype.transform_value_for_tile(record["File"])[0]
+        if ('renderer' not in file):
+            if ('RM' in file['name']):
+                file['renderer'] = '94fa1720-6773-4f99-b49b-4ea0926b3933'
+            elif ('FORS' in file['name'] or file['name'].endswith('dx')):
+                file['renderer'] = '88dccb59-14e3-4445-8f1b-07f0470b38bb'
+            elif (file['name'].endswith('txt')):
+                file['renderer'] = '31be40ae-dbe6-4f41-9c13-1964d7d17042'
+        # arches-for-science-prj/afs/uploadedfiles
+        tile.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [file]
         tile.save()
-        print("saved file", record["File"])
         return tile
 
     def create_name_tile(self, record, parenttileid):
