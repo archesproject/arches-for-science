@@ -140,7 +140,6 @@ class Command(BaseCommand):
             "cc1650d4-b497-11e9-9965-a4d18cec433a": None,
             "cc168005-b497-11e9-a303-a4d18cec433a": None,
             "d80e5eaa-32ea-11ec-a2aa-024e0d439fdb": None,
-            "cc15bb30-b497-11e9-b68a-a4d18cec433a": None,
             "cc16893d-b497-11e9-94b0-a4d18cec433a": None,
             "cc16adf5-b497-11e9-9a90-a4d18cec433a": None,
             "cc16aff3-b497-11e9-84be-a4d18cec433a": None,
@@ -151,6 +150,14 @@ class Command(BaseCommand):
             print(line['ResourceID'])
         except Exception as e:
             pass
+
+        try:
+            tile_template["cc15bb30-b497-11e9-b68a-a4d18cec433a"] = json.loads(line["Production_location"])
+        except Exception as e:
+            try:
+                tile_template["cc15bb30-b497-11e9-b68a-a4d18cec433a"] = ast.literal_eval(line["Production_location"])
+            except Exception as e:
+                tile_template = None
 
         try:
             tile_template["cc16893d-b497-11e9-94b0-a4d18cec433a"] = json.loads(line["Production_carried_out_by2"])
