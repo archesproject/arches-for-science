@@ -62,12 +62,12 @@
     <div class="afs-final-step-section">
         <h5 class="summary-value">{% trans 'Sampling Locations' %}</h5>
         <!-- ko foreach: sampleAnnotations -->
-        <div style="display: inline-flex; flex-direction: column;">
+        <div style="display: inline-flex; flex-direction: column; padding-bottom: 25px;">
             <div style="border: solid 1px #ddd">
-                <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%;"></div>
+                <div class="iiif-leaflet" data-bind="leaflet: leafletConfig, click: function(){if ($parent.switchMap){$parent.switchMap($parent.map)}}" style="height: 500px; width: 100%;"></div>
             </div>
             <div style="width: 100%; padding-top: 10px;">
-                <table data-bind="datatable: tableConfig" class="table table-striped" width="100%" style="border-bottom: 1px solid #ddd; margin-bottom: 8px;">
+                <table data-bind="datatable: $parent.tableConfig" class="table table-striped" width="100%" style="border-bottom: 1px solid #ddd; margin-bottom: 8px;">
                     <thead>
                         <tr>
                             <th class="afs-worfklow-summary-table-header">{% trans "Sample Name:" %}</th>
@@ -75,24 +75,22 @@
                             <th class="afs-worfklow-summary-table-header">{% trans "Sampling Motivation" %}</th>
                         </tr>
                     </thead>
-                    <tbody data-bind="foreach: {data: samplingLocations, as: 'loc'}">
+                    <tbody data-bind="foreach: {data: samplingLocations, as: 'location'}">
                         <tr style="cursor: pointer"
                             data-bind="
-                            css:
-                                {'selected': $parents[1].selectedAnnotationTileId() === loc.tileId }, 
-                            click: function() {
-                                $parents[1].highlightAnnotation(loc.tileId);
-                            }">
-                            <td><div class="summary-value" data-bind="text: loc.samplingLocationName"></div></td>
-                            <td><div class="summary-value" data-bind="text: loc.sampleDescription"></div></td>
-                            <td><div class="summary-value" data-bind="text: loc.sampleMotivation"></div></td>
+                                css: {'selected': $parents[1].selectedAnnotationTileId() === location.tileId }, 
+                                click: function() { $parents[1].highlightAnnotation(location.tileId); }
+                            ">
+                            <td><div class="summary-value" data-bind="text: location.samplingLocationName"></div></td>
+                            <td><div class="summary-value" data-bind="text: location.sampleDescription"></div></td>
+                            <td><div class="summary-value" data-bind="text: location.sampleMotivation"></div></td>
                         </tr>
                     <tbody>
                 </table>
                 <div class="final-step-section-block-item">
                     <div style="display: inline-flex; padding-left: 5px; color: #777;">
                         <div class="summary-label" style="font-size: 13px; padding-right: 3px;">{% trans 'Sampled locations:' %}</div>
-                        <div class="summary-value" style="font-size: 13px;" data-bind='text: samplingLocations.length'></div>
+                        <div class="summary-value" style="font-size: 13px;" data-bind='text: samplingLocations().length'></div>
                     </div>
                 </div>
             </div>

@@ -654,7 +654,11 @@
     padding: 3px 8px;
 }
 
-.afs-sample-name .control-label i {
+.afs-sample-name .form-group .widget-input-label {
+    display: none;
+}
+
+.afs-sample-name .form-group i {
     display: none;
 }
 
@@ -676,6 +680,18 @@
 
 .afs-region-name .row.widget-wrapper .widget-input-label {
     display: none;
+}
+
+.afs-calculated-name {
+    padding-left: 5px; 
+    margin-left: 5px; 
+    width: 338px; 
+    height: 36px; 
+    margin-top: -5px; 
+    margin-bottom: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .afs-workflow-annotator .widget-input-label {
@@ -735,6 +751,10 @@
     border-bottom: 1px solid #ddd;
 }
 
+.afs-final-step-section tr.selected {
+    background: #DBF3FA !important;
+}
+
 .afs-project-workflow .new-provisional-edit-card-container .control-label {
     padding-left: 0px;
 }
@@ -782,4 +802,38 @@
 
 .copyright-container {
     padding: 20px 70px;
+}
+
+.afs-project-search-result-details-container {
+    padding: 0px;
+}
+
+.afs-project-search-result-details-container .search-result-item {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-bottom: 1px solid #eee;
+}
+
+.afs-project-search-result-details-container .search-result-item .summary-report-title {
+    font-size: 15px;
+    padding-left: 30px;
+    padding-top: 15px;
+}
+
+.afs-project-search-result-details-container .search-result-item .summary-report-description {
+    font-size: 13px;
+    padding-left: 30px;
+    padding-bottom: 10px;
+    color: #999;
+    margin-top: 0px;
+}
+
+.afs-project-search-result-details-container .search-result-item:hover {
+    background: #E0F0FE;
+}
+
+.afs-project-search-result-details-container .search-result-item.selected-instance {
+    background-color: #eff7f9;
+    border-bottom: 1px solid #ddd !important;
 }

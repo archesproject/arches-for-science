@@ -15,13 +15,13 @@ define([
         const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId];
         const digitalReferenceResourceId = params.digitalReferenceResourceId;
 
-        
-        this.regionInstances = params.regionsStepData.map(function(data){
+        this.regionInstances = params.regionsStepData.data.map(function(data){
             return {
                 regionName: data.data["3e541cc6-859b-11ea-97eb-acde48001122"],
                 regionResource: data.data["b240c366-8594-11ea-97eb-acde48001122"][0]["resourceId"],
             };
         });
+        const currentAnalysisAreas = params.regionsStepData.currentAnalysisAreas;
 
         SummaryStep.apply(this, [params]);
 
@@ -36,7 +36,9 @@ define([
                 digitalReference: {'name': 'Image Service', 'value': digitalReference['Digital Source']["@display_value"]},
             };
             var annotationCollection = {};
+            self.regionResourceIds = self.regionInstances.map(x => x.regionResource);
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
+                const annotationResourceId = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','resourceId']);
                 const annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
                 const annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
                 const annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
@@ -53,6 +55,7 @@ define([
                             });
                             if (canvas in annotationCollection) {
                                 annotationCollection[canvas].push({
+                                    resourceId: annotationResourceId,
                                     tileId: tileId,
                                     annotationName: annotationName,
                                     annotationLabel: annotationLabel,
@@ -61,6 +64,7 @@ define([
                                 });
                             } else {
                                 annotationCollection[canvas] = [{
+                                    resourceId: annotationResourceId,
                                     tileId: tileId,
                                     annotationName: annotationName,
                                     annotationLabel: annotationLabel,
@@ -84,20 +88,32 @@ define([
                     } else {
                         annotationCombined = annotation.annotationJson;
                     }
-                    info.push({
-                        tileId: annotation.tileId,
-                        name: annotation.annotationName,
-                        annotator: annotation.annotator,
-                    });
+                    if (currentAnalysisAreas.includes(annotation.tileId)) {
+                        info.push({
+                            tileId: annotation.tileId,
+                            name: annotation.annotationName,
+                            annotator: annotation.annotator,
+                        });
+                    } else {
+                        annotation.annotationJson.features.map(feature => {
+                            feature.properties.color = '#999999';
+                            feature.properties.fillColor = '#999999';
+                            feature.properties.tileId = annotation.tileId;
+                            feature.properties.name = annotation.annotationName;
+                            feature.properties.active = false;
+                        });
+                    }
                 });
 
                 const leafletConfig = self.prepareAnnotation(annotationCombined);
-                self.objectAnnotations.push({
-                    name: name,
-                    info: info,
-                    leafletConfig: leafletConfig,
-                    featureCollection: annotationCombined,
-                });
+                if (info.length > 0) {
+                    self.objectAnnotations.push({
+                        name: name,
+                        info: info,
+                        leafletConfig: leafletConfig,
+                        featureCollection: annotationCombined,
+                    });
+                }
             }
             this.loading(false);
         }, this);

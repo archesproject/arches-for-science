@@ -19,6 +19,8 @@ define([
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
+        const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
+        this.allFeatureIds = [];
         this.sampleLocationResourceIds = [];
         this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
 
@@ -42,15 +44,27 @@ define([
         this.analysisAreaInstances = ko.observableArray();
         
         this.selectedAnalysisAreaInstance = ko.observable();
+
+        this.switchCanvas = function(tile){
+            const canvasPath = tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas()
+            if (self.canvas() !== canvasPath) {
+                var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasPath);
+                if (canvas) {
+                    self.canvasClick(canvas);       
+                }
+            }
+        };
+
         this.selectedAnalysisAreaInstance.subscribe(function(selectedAnalysisAreaInstance) {
             self.highlightAnnotation();
 
             if (selectedAnalysisAreaInstance) {
-                /* TODO: switchCanvas logic */ 
-                
                 self.tile = selectedAnalysisAreaInstance;
                 params.tile = selectedAnalysisAreaInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedAnalysisAreaInstance);
+                if (ko.unwrap(selectedAnalysisAreaInstance.data[physicalThingPartAnnotationNodeId])?.features) {
+                    self.switchCanvas(selectedAnalysisAreaInstance)
+                }
             }
         });
 
@@ -78,6 +92,7 @@ define([
                 const partId = ko.unwrap(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId)
                 return !sampleLocationResourceIds.includes(partId);
             });
+            self.analysisAreasOnlySnapshot = analysisAreasOnly.map(tile => tile.tileid);
             if (self.analysisAreaFilterTerm()) {
                 return analysisAreasOnly.filter(function(analysisAreaInstance) {
                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
@@ -140,13 +155,6 @@ define([
                     return ko.unwrap(analysisAreaInstanceFeature.id) === featureId;
                 });
             });
-        };
-
-        this.switchCanvas = function(canvasId){
-            var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasId);
-            if (canvas) {
-                self.canvasClick(canvas);              
-            }
         };
 
         this.getAnnotationProperty = function(tile, property){
@@ -214,11 +222,11 @@ define([
                 });
                 
                 var unaddedSelectedAnalysisAreaInstanceFeatures = self.selectedAnalysisAreaInstanceFeatures().reduce(function(acc, feature) {
-                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id))) {
+                    if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id)) &&
+                        feature.properties.canvas === self.canvas) {
                         feature.properties.tileId = self.selectedAnalysisAreaInstance().tileid;
                         acc.push(ko.toJS(feature));
                     }
-    
                     return acc;
                 }, []);
     
@@ -235,27 +243,14 @@ define([
         };
 
         this.updateAnalysisAreaInstances = function() {
-            var physicalThingAnnotationNodeName = "Analysis Areas";
-            var physicalThingAnnotationNode = self.annotationNodes().find(function(annotationNode) {
-                return annotationNode.name === physicalThingAnnotationNodeName;
-            });
-
-            if (physicalThingAnnotationNode.annotations() && physicalThingAnnotationNode.annotations().length) {
-                var annotationTileIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
-                    return annotation.properties.tileId;
-                });
-                self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
-            }
-            else {
-                var physicalThingAnnotationNodeSubscription = physicalThingAnnotationNode.annotations.subscribe(function(annotations) {
-                    var annotationTileIds = annotations.map(function(annotation) {
-                        return annotation.properties.tileId;
-                    });
-                    self.analysisAreaInstances(self.card.tiles().filter(function(tile) { return annotationTileIds.includes(tile.tileid) }));
-    
-                    physicalThingAnnotationNodeSubscription.dispose(); /* self-disposing subscription runs once */
-                });
-            }
+            canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id'])
+            const tilesBelongingToManifest = self.card.tiles().filter(
+                tile => canvasids.find(
+                    canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
+                    )
+                );
+            
+            self.analysisAreaInstances(tilesBelongingToManifest);
         };
 
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
@@ -474,9 +469,11 @@ define([
                                                 self.savingTile(false);
                                                 params.pageVm.alert("")
                                                 self.drawFeatures([]);
-    
                                                 let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
-                                                params.form.savedData(koMapping.toJS(mappedInstances));
+                                                params.form.savedData({
+                                                    data: koMapping.toJS(mappedInstances),
+                                                    currentAnalysisAreas: self.analysisAreasOnlySnapshot,
+                                                });
                                                 params.form.value(params.form.savedData());
                                                 params.form.complete(true);
                                             });
@@ -680,9 +677,17 @@ define([
                     })
                 },
                 buildAnnotationNodes: function(json) {
-                    let sampleAnnotations = ko.observableArray();
-                    let analysisAreaAnnotations = ko.observableArray();
+                    const editNodeActiveState = ko.observable(true);
+                    const nonEditNodeActiveState = ko.observable(true);
+                    editNodeActiveState.subscribe(function(active){
+                        if (!active) {
+                            self.resetAnalysisAreasTile();
+                            updateAnnotations();
+                        }
+                    });
                     var updateAnnotations = function() {
+                        let sampleAnnotations = ko.observableArray();
+                        let analysisAreaAnnotations = ko.observableArray();
                         var canvas = self.canvas();
                         if (canvas) {
                             window.fetch(arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
@@ -694,18 +699,12 @@ define([
                                         feature.properties.graphName = "Physical Thing";
                                         if (self.sampleLocationTileIds.includes(feature.properties.tileId)) {
                                             feature.properties.type = 'sample_location';
-                                            feature.properties.color = '#AC53F5';
-                                            feature.properties.fillColor = '#AC53F5';
+                                            feature.properties.color = '#999999';
+                                            feature.properties.fillColor = '#999999';
                                             sampleAnnotations.push(feature);
                                         } else {
                                             feature.properties.type = 'analysis_area';
                                             analysisAreaAnnotations.push(feature);
-                                        }
-                                    });
-                                    const editNodeActiveState = ko.observable(false);
-                                    editNodeActiveState.subscribe(function(active){
-                                        if (!active) {
-                                            self.resetAnalysisAreasTile();
                                         }
                                     });
                                     self.annotationNodes([
@@ -719,11 +718,12 @@ define([
                                         {
                                             name: "Sample Locations",
                                             icon: "fa fa-eyedropper",
-                                            active: ko.observable(false),
+                                            active: nonEditNodeActiveState,
                                             opacity: ko.observable(100),
                                             annotations: sampleAnnotations
                                         }
                                     ])
+                                    self.highlightAnnotation();
                                 });
                         }
                     };
@@ -731,15 +731,6 @@ define([
                     updateAnnotations();
                 }
             }]);
-
-            this.map.subscribe(function(map){
-                map.on('click', function(e){
-                    const clickedFeatureLayer = $(e.originalEvent.path[0]).hasClass('leaflet-interactive')
-                    if (!clickedFeatureLayer) {
-                        self.resetAnalysisAreasTile()
-                    }
-                })
-            });
 
             /* overwrites iiif-annotation methods */ 
             self.updateTiles = function() {
