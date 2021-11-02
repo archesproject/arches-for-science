@@ -30,6 +30,10 @@
     display: none !important;
 }
 
+.pad-btm-sm {
+    padding-bottom: 5px;
+}
+
 .afs-report-toolbar {
     width: 100%;
     height: 50px;
@@ -265,6 +269,11 @@ i.toggle:hover {
     position: absolute;
     width: 100%;
     height: auto;
+}
+
+.afs-table tr {
+    height: 33px;
+    border-top: 1px solid #ddd;
 }
 
 .afs-table thead th {
@@ -554,6 +563,7 @@ i.toggle:hover {
     font-size: 14px;
     color: #888;
     margin-bottom: 20px;
+    margin-left: 10px;
 }
 
 .afs-report-subsection-firstchild .afs-nodata-note {
@@ -630,6 +640,16 @@ i.toggle:hover {
 .afs-block-value {
     color: #777;
     display: inline-block;
+}
+
+.afs-block-value-url {
+    color: #12548A;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.afs-block-value-url:hover {
+    color: #D5A60F;
 }
 
 .afs-summary-block-title h2 {
