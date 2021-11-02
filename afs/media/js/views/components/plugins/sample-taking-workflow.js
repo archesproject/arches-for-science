@@ -41,7 +41,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Sample Info',
+                    title: 'Sampling Activity Info',
                     name: 'sample-info',  /* unique to workflow */
                     description: 'The date that the sample was taken',
                     informationboxdata: {
