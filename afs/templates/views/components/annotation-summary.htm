@@ -1,13 +1,13 @@
 {% load i18n %}
 
 <div>
-    <div style="display: inline-flex; flex-direction: column; margin-top: -20px; width: 100%;">
+    <div style="display: inline-flex; flex-direction: column; width: 100%;">
         <div style="border: solid 1px #ddd">
             <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
         </div>
 
-        <div style="width: 100%; padding-left: 30px;">
-            <table data-bind="datatable: annotationTableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd; margin-left: -20px; margin-bottom: 40px !important;" width="100%">
+        <div style="width: 100%; padding-left: 10px;">
+            <table data-bind="datatable: annotationTableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd;" width="100%">
                 <thead>
                     <tr>
                         <th>{% trans "Region Name:" %}</th>
@@ -28,7 +28,7 @@
                 <tbody>
             </table>
             <div class="final-step-section-block-item">
-                <div class="block-item files-metadata" style="display: inline-flex; margin-left: -25px; color: #777;">
+                <div class="block-item files-metadata" style="display: inline-flex; color: #777;">
                     <div class="" style="font-size: 13px; padding-right: 3px;" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
                 </div>
             </div>
