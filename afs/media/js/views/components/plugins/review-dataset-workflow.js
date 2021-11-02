@@ -60,7 +60,7 @@ define([
                 {
                     title: 'File Interpretation',
                     name: 'file-interpretation',
-                    required: true,
+                    required: false,
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
                     hiddenWorkflowButtons: ['undo', 'save'],
                     informationboxdata: {
@@ -93,7 +93,7 @@ define([
                                     uniqueInstanceName: 'review-dataset-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        sampleObjectResourceInstanceId: "['review-datasets-object']['sample-object-resource-instance']",
+                                        sampleObjectResourceInstanceId: "['review-dataset-object']['sample-object-resource-instance']",
                                         selectedDatasets: "['select-datasets']['dataset-select-instance']"
                                     },
                                 },
