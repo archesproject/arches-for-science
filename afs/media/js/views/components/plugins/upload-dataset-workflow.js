@@ -162,7 +162,7 @@ define([
                     title: 'File Interpretation',
                     name: 'file-interpretation',
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
-                    required: true,
+                    required: false,
                     hiddenWorkflowButtons: ['undo', 'save'],
                     informationboxdata: {
                         heading: 'Select the instrument used for the analysis',

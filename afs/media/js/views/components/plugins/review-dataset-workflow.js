@@ -60,7 +60,7 @@ define([
                 {
                     title: 'File Interpretation',
                     name: 'file-interpretation',
-                    required: true,
+                    required: false,
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
                     hiddenWorkflowButtons: ['undo', 'save'],
                     informationboxdata: {
