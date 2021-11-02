@@ -55,7 +55,7 @@ class Command(BaseCommand):
                     prod_tile = self.create_prod_tile(record)
                     self.create_prod_time_tile(prod_tile.tileid, record, date_datatype)
                     self.create_prod_statement_tile(prod_tile.tileid, record, concept_list_datatype)
-                    print('saved', record['ResourceID'])
+                    print("saved", record["ResourceID"])
         self.reindex_instances()
 
     def reindex_instances(self):
@@ -145,9 +145,11 @@ class Command(BaseCommand):
             "cc16aff3-b497-11e9-84be-a4d18cec433a": None,
         }
         try:
-            tile_template['d80e5eaa-32ea-11ec-a2aa-024e0d439fdb'] = self.geo_datatype.transform_value_for_tile(line["Production_location_geo"])
-            print(tile_template['d80e5eaa-32ea-11ec-a2aa-024e0d439fdb'])
-            print(line['ResourceID'])
+            tile_template["d80e5eaa-32ea-11ec-a2aa-024e0d439fdb"] = self.geo_datatype.transform_value_for_tile(
+                line["Production_location_geo"]
+            )
+            print(tile_template["d80e5eaa-32ea-11ec-a2aa-024e0d439fdb"])
+            print(line["ResourceID"])
         except Exception as e:
             pass
 

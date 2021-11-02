@@ -33,7 +33,6 @@ class Command(BaseCommand):
     Adds file tiles from csv
     """
 
-
     def add_arguments(self, parser):
         parser.add_argument(
             "-s", "--source", default="afs-test-pkg/pkg/business_data/Digital Resources.csv", action="store", dest="source", help=""
@@ -49,15 +48,15 @@ class Command(BaseCommand):
             records = lines
             files_cleared = []
             for record in records:
-                if record['ResourceID'] not in files_cleared:
-                    self.delete_existing_tiles('7c486328-d380-11e9-b88e-a4d18cec433a', record)
-                    files_cleared.append(record['ResourceID'])
+                if record["ResourceID"] not in files_cleared:
+                    self.delete_existing_tiles("7c486328-d380-11e9-b88e-a4d18cec433a", record)
+                    files_cleared.append(record["ResourceID"])
                 if record["File"] not in (None, ""):
                     parent_tile = self.create_file_tile(record)
                     if parent_tile is not None:
                         self.create_name_tile(record, parent_tile.tileid)
                         self.create_statement_tile(record, parent_tile.tileid)
-                        print(record['ResourceID'])
+                        print(record["ResourceID"])
 
     def reindex_instances(self):
         management.call_command("es", "index_resources_by_type", resource_types=["9519cb4f-b25b-11e9-8c7b-a4d18cec433a"])
@@ -73,26 +72,28 @@ class Command(BaseCommand):
                 deleted_tiles.append(tile.tileid)
                 tile.delete()
         except Exception as e:
-            print('failed to delete tiles')
-        print('tiles deleted', deleted_tiles)
+            print("failed to delete tiles")
+        print("tiles deleted", deleted_tiles)
 
     def create_file_tile(self, record):
         nodegroupid = "7c486328-d380-11e9-b88e-a4d18cec433a"
         tile = Tile().get_blank_tile_from_nodegroup_id(nodegroupid, resourceid=record["ResourceID"])
-        tile.data['29d5ecb8-79a5-11ea-8ae2-acde48001122'] = self.concept_list_datatype.transform_value_for_tile(record["File_Name_type"])
-        tile.data['7c486328-d380-11e9-b88e-a4d18cec433a'] = self.file_list_datatype.transform_value_for_tile(record["File"])
+        tile.data["29d5ecb8-79a5-11ea-8ae2-acde48001122"] = self.concept_list_datatype.transform_value_for_tile(record["File_Name_type"])
+        tile.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = self.file_list_datatype.transform_value_for_tile(record["File"])
         tile.save()
-        print('saved file', record["File"])
+        print("saved file", record["File"])
         return tile
 
     def create_name_tile(self, record, parenttileid):
         nodegroupid = "17fc58ec-79a5-11ea-8ae2-acde48001122"
         tile = Tile().get_blank_tile_from_nodegroup_id(nodegroupid, resourceid=record["ResourceID"])
         tile.parenttile_id = parenttileid
-        tile.data['17fc5b9e-79a5-11ea-8ae2-acde48001122'] = self.concept_list_datatype.transform_value_for_tile(record["File_Name_type"])
-        tile.data['17fc5e14-79a5-11ea-8ae2-acde48001122'] = record["File_Name_content"]
-        tile.data['17fc5cfc-79a5-11ea-8ae2-acde48001122'] = self.concept_list_datatype.transform_value_for_tile(record["File_Name_language"])
-        print('saved name')
+        tile.data["17fc5b9e-79a5-11ea-8ae2-acde48001122"] = self.concept_list_datatype.transform_value_for_tile(record["File_Name_type"])
+        tile.data["17fc5e14-79a5-11ea-8ae2-acde48001122"] = record["File_Name_content"]
+        tile.data["17fc5cfc-79a5-11ea-8ae2-acde48001122"] = self.concept_list_datatype.transform_value_for_tile(
+            record["File_Name_language"]
+        )
+        print("saved name")
         tile.save()
         return tile
 
@@ -100,8 +101,10 @@ class Command(BaseCommand):
         nodegroupid = "ca226fe2-78ed-11ea-a33b-acde48001122"
         tile = Tile().get_blank_tile_from_nodegroup_id(nodegroupid, resourceid=record["ResourceID"])
         tile.parenttile_id = parenttileid
-        tile.data['ca2272c6-78ed-11ea-a33b-acde48001122'] = self.concept_list_datatype.transform_value_for_tile(record["File_Statement_type"])
-        tile.data['ca227726-78ed-11ea-a33b-acde48001122'] = record["File_Statement_content"]
-        print('saved statement')
+        tile.data["ca2272c6-78ed-11ea-a33b-acde48001122"] = self.concept_list_datatype.transform_value_for_tile(
+            record["File_Statement_type"]
+        )
+        tile.data["ca227726-78ed-11ea-a33b-acde48001122"] = record["File_Statement_content"]
+        print("saved statement")
         tile.save()
         return tile
