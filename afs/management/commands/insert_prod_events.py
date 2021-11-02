@@ -25,6 +25,7 @@ from django.core.management.base import BaseCommand
 from arches.app.models.system_settings import settings
 from arches.app.models.models import TileModel
 from arches.app.datatypes.datatypes import DateDataType
+from arches.app.datatypes.datatypes import GeojsonFeatureCollectionDataType
 from arches.app.datatypes.concept_types import ConceptListDataType
 from arches.app.models.resource import Resource
 
@@ -43,6 +44,7 @@ class Command(BaseCommand):
         src = os.path.join(settings.APP_ROOT, options["source"])
         concept_list_datatype = ConceptListDataType()
         date_datatype = DateDataType()
+        self.geo_datatype = GeojsonFeatureCollectionDataType()
         with open(src) as f:
             lines = csv.DictReader(f)
             prod_tile = None
@@ -53,6 +55,7 @@ class Command(BaseCommand):
                     prod_tile = self.create_prod_tile(record)
                     self.create_prod_time_tile(prod_tile.tileid, record, date_datatype)
                     self.create_prod_statement_tile(prod_tile.tileid, record, concept_list_datatype)
+                    print("saved", record["ResourceID"])
         self.reindex_instances()
 
     def reindex_instances(self):
@@ -72,6 +75,8 @@ class Command(BaseCommand):
                 "Production_Statement_type",
                 "Production_Statement_content",
                 "Production_Statement_label",
+                "Production_location_geo",
+                "Production_location",
             ]
 
             event = {
@@ -85,6 +90,8 @@ class Command(BaseCommand):
                 "Production_Statement_type": line["Production_Statement_type"],
                 "Production_Statement_content": line["Production_Statement_content"],
                 "Production_Statement_label": line["Production_Statement_label"],
+                "Production_location_geo": line["Production_location_geo"],
+                "Production_location": line["Production_location"],
             }
             if resourceid not in production_events:
                 production_events[resourceid] = event
@@ -132,17 +139,27 @@ class Command(BaseCommand):
             "cc1611e6-b497-11e9-b277-a4d18cec433a": None,
             "cc1650d4-b497-11e9-9965-a4d18cec433a": None,
             "cc168005-b497-11e9-a303-a4d18cec433a": None,
-            "cc16893d-b497-11e9-94b0-a4d18cec433a": [
-                {
-                    "resourceId": "d540519b-9937-4423-803e-00d096075859",
-                    "ontologyProperty": "",
-                    "resourceXresourceId": "0730c122-36bb-11ec-bf23-0242ac1a0007",
-                    "inverseOntologyProperty": "",
-                }
-            ],
+            "d80e5eaa-32ea-11ec-a2aa-024e0d439fdb": None,
+            "cc16893d-b497-11e9-94b0-a4d18cec433a": None,
             "cc16adf5-b497-11e9-9a90-a4d18cec433a": None,
             "cc16aff3-b497-11e9-84be-a4d18cec433a": None,
         }
+        try:
+            tile_template["d80e5eaa-32ea-11ec-a2aa-024e0d439fdb"] = self.geo_datatype.transform_value_for_tile(
+                line["Production_location_geo"]
+            )
+            print(tile_template["d80e5eaa-32ea-11ec-a2aa-024e0d439fdb"])
+            print(line["ResourceID"])
+        except Exception as e:
+            pass
+
+        try:
+            tile_template["cc15bb30-b497-11e9-b68a-a4d18cec433a"] = json.loads(line["Production_location"])
+        except Exception as e:
+            try:
+                tile_template["cc15bb30-b497-11e9-b68a-a4d18cec433a"] = ast.literal_eval(line["Production_location"])
+            except Exception as e:
+                tile_template = None
 
         try:
             tile_template["cc16893d-b497-11e9-94b0-a4d18cec433a"] = json.loads(line["Production_carried_out_by2"])
