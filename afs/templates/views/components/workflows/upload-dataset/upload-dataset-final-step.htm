@@ -57,13 +57,13 @@
         <!-- ko foreach: {data: fileLists, as: 'fileList'} -->
         <!-- ko if: fileList().length > 0 -->
         <h5 class="summary-value upload-dataset-name" data-bind="text: digitalResourceName || 'Unnamed Dataset (nothing to upload)'"></h5>
-        <div style="display: inline-flex; margin-top: -20px">
+        <div style="margin-top: -20px">
             <!-- ko if: $parent.hasAnnotatedParts -->
             <div style="border: solid 1px #ddd">
                 <div class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 300px; width: 400px"></div>
             </div>
             <!-- /ko -->
-            <div style="width: 100%px; padding-left: 30px;">
+            <div style="width: 100%; padding-left: 10px; padding-right: 10px; margin-bottom: 20px;">
                 <table data-bind="datatable: $parent.tableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd" width="100%">
                     <thead>
                         <tr>
