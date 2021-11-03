@@ -41,7 +41,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        src = os.path.join(settings.APP_ROOT, options["source"])
+        src = options["source"]
         concept_list_datatype = ConceptListDataType()
         date_datatype = DateDataType()
         self.geo_datatype = GeojsonFeatureCollectionDataType()
@@ -159,7 +159,7 @@ class Command(BaseCommand):
             try:
                 tile_template["cc15bb30-b497-11e9-b68a-a4d18cec433a"] = ast.literal_eval(line["Production_location"])
             except Exception as e:
-                tile_template = None
+                tile_template["cc15bb30-b497-11e9-b68a-a4d18cec433a"] = None
 
         try:
             tile_template["cc16893d-b497-11e9-94b0-a4d18cec433a"] = json.loads(line["Production_carried_out_by2"])
@@ -167,7 +167,7 @@ class Command(BaseCommand):
             try:
                 tile_template["cc16893d-b497-11e9-94b0-a4d18cec433a"] = ast.literal_eval(line["Production_carried_out_by2"])
             except Exception as e:
-                tile_template = None
+                tile_template["cc16893d-b497-11e9-94b0-a4d18cec433a"] = None
 
         old_tile_tileid = self.delete_existing_tile(nodegroupid, line)
         tile = self.save_new_tile(nodegroupid, line, tile_template, old_tile_tileid)

@@ -41,7 +41,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.concept_list_datatype = ConceptListDataType()
         self.file_list_datatype = FileListDataType()
-        src = os.path.join(settings.APP_ROOT, options["source"])
+        src = options["source"]
         with open(src) as f:
             lines = csv.DictReader(f)
             parent_tile = None
@@ -52,11 +52,20 @@ class Command(BaseCommand):
                     self.delete_existing_tiles("7c486328-d380-11e9-b88e-a4d18cec433a", record)
                     files_cleared.append(record["ResourceID"])
                 if record["File"] not in (None, ""):
-                    parent_tile = self.create_file_tile(record)
-                    if parent_tile is not None:
-                        self.create_name_tile(record, parent_tile.tileid)
-                        self.create_statement_tile(record, parent_tile.tileid)
-                        print(record["ResourceID"])
+                    try:
+                        parent_tile = self.create_file_tile(record)
+                        if parent_tile is not None:
+                            try:
+                                self.create_name_tile(record, parent_tile.tileid)
+                            except Exception as e:
+                                print(e)
+                            try:
+                                self.create_statement_tile(record, parent_tile.tileid)
+                            except Exception as e:
+                                print(e)
+                            print(record["ResourceID"])
+                    except Exception as e:
+                        print(e)
 
     def reindex_instances(self):
         management.call_command("es", "index_resources_by_type", resource_types=["9519cb4f-b25b-11e9-8c7b-a4d18cec433a"])
