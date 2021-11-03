@@ -362,17 +362,6 @@ define([
             }
 
             this.save = async() => {
-                const incompleteInputs = self.getIncompleteInputs();
-                if(incompleteInputs.length) { 
-                    params.pageVm.alert(new params.form.AlertViewModel(
-                        'ep-alert-red', 
-                        "Dataset Name Required", 
-                        `A dataset name was not provided for parts: ${incompleteInputs.map(x => x.displayname).join(', ')}`
-                    ));
-                    return;
-                } else {
-                    params.pageVm.alert('');
-                }
                 
                 params.form.lockExternalStep("select-instrument-and-files", true);
                 const parts = self.parts();
@@ -441,12 +430,6 @@ define([
                 }
             };
 
-            this.getIncompleteInputs = ko.pureComputed(() => {
-                return self.parts().filter(part => {
-                    return !part.datasetName() && part.datasetFiles().length;
-                })
-            });
-            
             this.canBeSaved = ko.pureComputed(() => {
                 return self.parts().filter(part => part.datasetName && !part.datasetId())
                     .some(part => part.datasetFiles().length) ||
