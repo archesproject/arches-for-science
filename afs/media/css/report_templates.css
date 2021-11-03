@@ -34,6 +34,10 @@
     padding-bottom: 5px;
 }
 
+.pad-top-sm {
+    padding-top: 5px;
+}
+
 .afs-report-toolbar {
     width: 100%;
     height: 50px;
@@ -209,6 +213,13 @@ i.toggle:hover {
     font-size: 17px;
     font-weight: 500;
     margin: 5px 0px;
+    display: inline-block;
+}
+
+.afs-report-section-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 5px 0px 0px 0px;
     display: inline-block;
 }
 
@@ -472,6 +483,7 @@ i.toggle:hover {
 }
 .afs-keyvalue > h4 {
     margin: 2px;
+    font-weight: 400;
 }
 
 .afs-block-attributes.actor-name {
@@ -640,10 +652,12 @@ i.toggle:hover {
 .afs-block-value {
     color: #777;
     display: inline-block;
+    font-size: 14px;
 }
 
 .afs-block-value-url {
     color: #12548A;
+    font-size: 14px;
     font-weight: 600;
     display: inline-block;
 }

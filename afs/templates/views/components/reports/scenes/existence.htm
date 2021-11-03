@@ -6,7 +6,7 @@
 <div data-bind="foreach: {data: events, as: 'eventName', noChildContext: true}" class="afs-report-section">
     <div>
         <i data-bind="click: function() {toggleVisibility(visible[eventName])}, css: {'fa-angle-double-right': visible[eventName](), 'fa-angle-double-up': !visible[eventName]()}" class="fa toggle"></i>
-        <h2 data-bind="text: eventName + ' Event'" class="afs-report-section-title"></h2>
+        <h2 class="afs-report-section-title" data-bind="text: eventName + ' Event'" class="afs-report-section-title"></h2>
         <span data-bind="if: cards[eventName] && cards[eventName].card && !cards[eventName].card.tiles().length,">
             <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
                 <i class="fa fa-mail-reply"></i> {% trans "Add Event" %}
@@ -30,7 +30,7 @@
             <!-- ko foreach: { data: eventDataArray[eventName], as: "eventData", noChildContext: true} -->
             <!-- ko if: !!eventData && eventData.tileid -->
             <div class="afs-report-subsection">
-                <h2 class="afs-report-section-title">{% trans "Event Details" %}</h2>
+                <h2 class="afs-report-section-subtitle">{% trans "Event Details" %}</h2>
                 <h3 style="display: block ;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}, css: {'fa-angle-double-right': eventData.visible(), 'fa-angle-double-up': !eventData.visible()}" class="fa toggle"></i> {% trans "Event: " %} <span></span></h3>
                 <!-- <a class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Event" %}</a>-->
 
@@ -239,7 +239,7 @@
                 </div>
             </div>
             <div data-bind="if: eventData.parts && eventData.parts().length" class="afs-report-subsection">
-                <h2 class="afs-report-section-title">{% trans "Event Parts" %}</h2>
+                <h2 class="afs-report-section-subtitle">{% trans "Event Parts" %}</h2>
                 <a data-bind="if: cards[eventName].parts, click: function(){addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
             
                 <!-- Event Part -->

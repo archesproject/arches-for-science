@@ -114,7 +114,7 @@
                     <!-- ko if: Array.isArray(item.value.instance_details) -->
                         <div data-bind="foreach: {data: item.value.instance_details, as: 'instance', noChildContext: true}, style: { display: inline ? 'inline': '' }">
                             <div class="afs-block-value">
-                                <a data-bind="text: $data.getNodeValue(instance), attr: { href: $data.getResourceLink(instance) }"></a><!-- ko if: $index() < item.value.instance_details.length - 1 -->, <!-- /ko -->
+                                <a class="afs-block-value-url" data-bind="text: $data.getNodeValue(instance), attr: { href: $data.getResourceLink(instance) }"></a><!-- ko if: $index() < item.value.instance_details.length - 1 -->, <!-- /ko -->
                             </div>
                         </div>
                     <!-- /ko --> 
