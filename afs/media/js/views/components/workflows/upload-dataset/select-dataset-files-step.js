@@ -155,7 +155,9 @@ define([
                     "transaction_id": params.form.workflowId
                 };
 
-                nameTemplate.data[datasetNameNodeId] = part.datasetName() || "";
+                const physThingName = params.projectInfo.physThingName;
+                const datasetName = part.datasetName() ? `${part.datasetName()} (${physThingName})`: `Dataset (${physThingName})`
+                nameTemplate.data[datasetNameNodeId] = datasetName;
 
                 const tile = await window.fetch(arches.urls.api_tiles(part.datasetId() || ""), {
                     method: 'POST',

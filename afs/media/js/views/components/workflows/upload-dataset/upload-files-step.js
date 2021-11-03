@@ -213,10 +213,12 @@ define([
 
             this.saveDatasetName = async() => {
                 //Tile structure for the Digital Resource 'Name' nodegroup
+                const physThingName = params.projectinfo["select-phys-thing-step"].physThingName;
+                const datasetName = self.datasetName() ? `${self.datasetName()} (${physThingName})`: `Dataset (${physThingName})`
                 const nameTemplate = {
                     "tileid": self.datasetNameTileId,
                     "data": {
-                        "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a": self.datasetName(),
+                        "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a": datasetName,
                         "d2fdc0d4-ca7a-11e9-95cf-a4d18cec433a": ["8f40c740-3c02-4839-b1a4-f1460823a9fe"],
                         "d2fdb92b-ca7a-11e9-af41-a4d18cec433a": ["bc35776b-996f-4fc1-bd25-9f6432c1f349"],
                         "d2fdbc38-ca7a-11e9-a31a-a4d18cec433a": null,
