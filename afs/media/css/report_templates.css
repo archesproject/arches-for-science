@@ -472,6 +472,7 @@ i.toggle:hover {
 .afs-block-attributes h6 {
     font-size: 14px;
     font-weight: 400;
+    color: #2f527a;
     margin: 2px 0px;
     display: inline-block;
     padding: 5px 0px 0px 0px;
@@ -503,9 +504,8 @@ i.toggle:hover {
     margin: 0px;
 }
 
-
 .afs-report-subsection-firstchild {
-    padding: 0px 0px 15px 30px;;
+    padding: 0px 0px 25px 30px;;
     min-height: 50px;
 }
 
@@ -514,7 +514,8 @@ i.toggle:hover {
     font-size: 14px;
     font-weight: 500;
     color: #454545;
-    margin-bottom: 6px
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ddd;
 }
 
 .afs-report-subsection-firstchild:last-child {
@@ -533,6 +534,10 @@ i.toggle:hover {
     border-top: 1px solid #ddd;
 }
 
+.afs-summary-value {
+    color: #777;
+    margin-left: 5px;
+}
 
 .firstchild-container .afs-table {
     margin-bottom: -10px;
@@ -655,7 +660,11 @@ i.toggle:hover {
     font-size: 14px;
 }
 
-.afs-block-value-url {
+.afs-block-value a {
+    color: #777;
+}
+
+a.afs-block-value-url {
     color: #12548A;
     font-size: 14px;
     font-weight: 600;

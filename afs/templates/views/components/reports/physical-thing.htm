@@ -131,7 +131,7 @@
                         <div data-bind="with: annotation, as: 'annotation', noChildContext: true">
                         <div data-bind="component: { name: 'views/components/reports/scenes/annotation-parts', params: {annotation: annotation, selectedAnnotationTileId: selectedAnnotationTileId}}"></div>
                         </div>
-                        <div class="afs-table pad-btm">
+                        <div class="afs-table pad-btm-sm">
                             <table class="table table-striped" cellspacing="0" width="100%">
                                 <thead>
                                     <tr class="afs-table-header">
@@ -178,7 +178,7 @@
                         </div>
                         <div class="final-step-section-block-item">
                             <div class="block-item files-metadata">
-                                <div class="summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
+                                <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
                             </div>
                         </div>
                         <!-- /ko -->

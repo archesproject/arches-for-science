@@ -20,9 +20,9 @@
 <h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
 <!-- /ko -->
 
- <!-- ko if: !item.value && item.type != 'timespan' -->
+<!-- ko if: !item.value && item.type != 'timespan' -->
 <div data-bind="style: { display: inline ? 'inline': '' }" class="afs-block-value">--</div>
- <!-- /ko -->
+<!-- /ko -->
 
  <!-- ko if: item.type == 'kv'-->
  <div class="afs-block-value" data-bind="text: item.value"></div>
