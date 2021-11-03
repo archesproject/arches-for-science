@@ -155,9 +155,7 @@ define([
                     "transaction_id": params.form.workflowId
                 };
 
-                const physThingName = params.projectInfo.physThingName;
-                const datasetName = part.datasetName() ? `${part.datasetName()} (${physThingName})`: `Dataset (${physThingName})`
-                nameTemplate.data[datasetNameNodeId] = datasetName;
+                nameTemplate.data[datasetNameNodeId] = part.calcDatasetName();
 
                 const tile = await window.fetch(arches.urls.api_tiles(part.datasetId() || ""), {
                     method: 'POST',
@@ -472,9 +470,7 @@ define([
                 });
 
                 const thingResource = await resourceUtils.lookupResourceInstanceData(this.physicalThing);
-
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
-
 
                 self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);               
                 for (const part of parts) {
@@ -497,6 +493,13 @@ define([
                     ];
                     part.datasetFiles = part.datasetFiles || ko.observableArray([]);
                     part.datasetName = part.datasetName || ko.observable();
+
+                    const childPhysThingName = related._source.displayname;
+                    part.calcDatasetName = ko.computed(function() {
+                        const basename = part.datasetName() || 'Dataset';
+                        return `${basename} (${childPhysThingName})`
+                    });
+    
                     part.datasetId = part.datasetId || ko.observable();
                     part.nameTileId = part.nameTileId || ko.observable();
                     part.resourceReferenceId = part.resourceReferenceId || ko.observable();
