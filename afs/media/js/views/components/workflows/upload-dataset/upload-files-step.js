@@ -213,7 +213,7 @@ define([
 
             this.saveDatasetName = async() => {
                 //Tile structure for the Digital Resource 'Name' nodegroup
-                const physThingName = params.projectinfo["select-phys-thing-step"].physThingName;
+                const physThingName = params.projectinfo["select-phys-thing-step"].savedData().physThingName;
                 const datasetName = self.datasetName() ? `${self.datasetName()} (${physThingName})`: `Dataset (${physThingName})`
                 const nameTemplate = {
                     "tileid": self.datasetNameTileId,
