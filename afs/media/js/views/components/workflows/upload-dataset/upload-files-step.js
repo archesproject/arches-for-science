@@ -193,6 +193,7 @@ define([
 
                     params.form.savedData(dataToSave);
                     params.form.complete(true);
+                    params.form.dirty(false);
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
