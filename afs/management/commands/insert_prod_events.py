@@ -56,12 +56,12 @@ class Command(BaseCommand):
                 if record["Production_carried_out_by2"] not in (None, ""):
                     try:
                         prod_tile = self.create_prod_tile(record)
-                        if (prod_tile):
+                        if prod_tile:
                             self.create_prod_time_tile(prod_tile.tileid, record, date_datatype)
                             self.create_prod_statement_tile(prod_tile.tileid, record, concept_list_datatype)
                             print("saved", record["ResourceID"])
                     except Exception as e:
-                        print('failed to save', record)
+                        print("failed to save", record)
                         print(e)
         self.reindex_relations()
 
@@ -112,24 +112,26 @@ class Command(BaseCommand):
     def delete_existing_tile(self, nodegroupid, line):
         old_tile_tileid = None
         try:
-            tiles = TileModel.objects.filter(nodegroup_id=nodegroupid, resourceinstance_id=line['ResourceID'])
+            tiles = TileModel.objects.filter(nodegroup_id=nodegroupid, resourceinstance_id=line["ResourceID"])
             if len(tiles) > 0:
                 old_tile_model = tiles[0]
                 old_tile = Tile.objects.get(pk=old_tile_model.tileid)
                 old_tile_tileid = old_tile.tileid
                 old_tile.delete()
         except Exception as e:
-            print('failed to delete', line["ResourceID"])
+            print("failed to delete", line["ResourceID"])
             print(e)
         return old_tile_tileid
 
     def save_new_tile(self, nodegroupid, line, tile_template, old_tile_tileid, parenttileid=None):
         try:
-            tile = Tile(nodegroup_id=nodegroupid,
-                    resourceinstance_id=line["ResourceID"],
-                    data=tile_template,
-                    tileid=old_tile_tileid,
-                    parenttile_id=parenttileid)
+            tile = Tile(
+                nodegroup_id=nodegroupid,
+                resourceinstance_id=line["ResourceID"],
+                data=tile_template,
+                tileid=old_tile_tileid,
+                parenttile_id=parenttileid,
+            )
             tile.save()
         except Exception as e:
             print("failed to create tile for ", line["ResourceID"])
