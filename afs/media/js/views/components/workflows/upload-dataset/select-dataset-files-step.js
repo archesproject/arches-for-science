@@ -400,7 +400,7 @@ define([
                                 datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
                                 datasetId: x.datasetId(),
                                 nameTileId: x.nameTileId(),
-                                datasetName: x.datasetName(),
+                                datasetName: x.datasetName() || '',
                                 resourceReferenceId: x.resourceReferenceId(),
                                 tileid: x.tileid
                             };
@@ -524,7 +524,7 @@ define([
                             self.annotationNodes.valueHasMutated();
                         }
                     }
-                    if(!part.datasetName.getSubscriptionsCount()){
+                    if(part.datasetName.getSubscriptionsCount()){
                         part.datasetName.subscribe((newValue) => {
                             const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
                             if(newValue != datasetSnapshot?.datasetName) {
