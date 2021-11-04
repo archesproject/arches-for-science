@@ -17,6 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import ast
+from logging import exception
 import os
 import csv
 import json
@@ -24,6 +25,7 @@ from django.core import management
 from django.core.management.base import BaseCommand
 from arches.app.models.system_settings import settings
 from arches.app.models.models import TileModel
+from arches.app.models.tile import Tile
 from arches.app.datatypes.datatypes import DateDataType
 from arches.app.datatypes.datatypes import GeojsonFeatureCollectionDataType
 from arches.app.datatypes.concept_types import ConceptListDataType
@@ -52,14 +54,19 @@ class Command(BaseCommand):
             for event in events.items():
                 record = event[1]
                 if record["Production_carried_out_by2"] not in (None, ""):
-                    prod_tile = self.create_prod_tile(record)
-                    self.create_prod_time_tile(prod_tile.tileid, record, date_datatype)
-                    self.create_prod_statement_tile(prod_tile.tileid, record, concept_list_datatype)
-                    print("saved", record["ResourceID"])
-        self.reindex_instances()
+                    try:
+                        prod_tile = self.create_prod_tile(record)
+                        if prod_tile:
+                            self.create_prod_time_tile(prod_tile.tileid, record, date_datatype)
+                            self.create_prod_statement_tile(prod_tile.tileid, record, concept_list_datatype)
+                            print("saved", record["ResourceID"])
+                    except Exception as e:
+                        print("failed to save", record)
+                        print(e)
+        self.reindex_relations()
 
-    def reindex_instances(self):
-        management.call_command("es", "index_resources_by_type", resource_types=["9519cb4f-b25b-11e9-8c7b-a4d18cec433a"])
+    def reindex_relations(self):
+        management.call_command("es", "index_resource_relations")
 
     def build_prod(self, lines):
         production_events = {}
@@ -103,28 +110,31 @@ class Command(BaseCommand):
         return production_events
 
     def delete_existing_tile(self, nodegroupid, line):
+        old_tile_tileid = None
         try:
-            old_tile = TileModel.objects.get(
-                nodegroup_id=nodegroupid,
-                resourceinstance_id=line["ResourceID"],
-            )
-            old_tile_tileid = old_tile.tileid
-            old_tile.delete()
+            tiles = TileModel.objects.filter(nodegroup_id=nodegroupid, resourceinstance_id=line["ResourceID"])
+            if len(tiles) > 0:
+                old_tile_model = tiles[0]
+                old_tile = Tile.objects.get(pk=old_tile_model.tileid)
+                old_tile_tileid = old_tile.tileid
+                old_tile.delete()
         except Exception as e:
-            old_tile_tileid = None
+            print("failed to delete", line["ResourceID"])
+            print(e)
         return old_tile_tileid
 
     def save_new_tile(self, nodegroupid, line, tile_template, old_tile_tileid, parenttileid=None):
         try:
-            tile = TileModel.objects.create(
+            tile = Tile(
                 nodegroup_id=nodegroupid,
                 resourceinstance_id=line["ResourceID"],
                 data=tile_template,
                 tileid=old_tile_tileid,
                 parenttile_id=parenttileid,
             )
+            tile.save()
         except Exception as e:
-            print("failed to create tile")
+            print("failed to create tile for ", line["ResourceID"])
             print(e)
             tile = None
         return tile
