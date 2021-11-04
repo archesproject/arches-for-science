@@ -57,11 +57,6 @@ define([
         });
         this.digitalResourceServiceTile = digitalResourceServiceCard.getNewTile();
 
-        const digitalResourceTypeNodegroupId = '09c1778a-ca7b-11e9-860b-a4d18cec433a';
-        const digitalResourceTypeCard = params.form.topCards.find(function(topCard) {
-            return topCard.nodegroupid === digitalResourceTypeNodegroupId;
-        });
-        this.digitalResourceTypeTile = digitalResourceTypeCard.getNewTile();
 
         var digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
         var digitalResourceServiceIdentifierCard = digitalResourceServiceCard.cards().find(function(topCard) {
@@ -69,13 +64,12 @@ define([
         });
         this.digitalResourceServiceIdentifierTile = digitalResourceServiceIdentifierCard.getNewTile();
 
-        const digitalResourceNameContentNodeId = 'd2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a';
-        const digitalResourceStatementContentNodeId = 'da1fbca1-ca7a-11e9-8256-a4d18cec433a';
-        const digitalResourceServiceTypeConformanceNodeId = 'cec360bd-ca7f-11e9-9ab7-a4d18cec433a';
-        const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        const digitalResourceServiceIdentifierTypeNodeId = '56f8e759-ca7c-11e9-bda1-a4d18cec433a';
-        const digitalResourceServiceTypeNodeId= '5ceedd21-ca7c-11e9-a60f-a4d18cec433a';
-        const digitalResourceTypeNodeId = '09c1778a-ca7b-11e9-860b-a4d18cec433a';
+
+        var digitalResourceNameContentNodeId = 'd2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a';
+        var digitalResourceStatementContentNodeId = 'da1fbca1-ca7a-11e9-8256-a4d18cec433a';
+        var digitalResourceServiceTypeConformanceNodeId = 'cec360bd-ca7f-11e9-9ab7-a4d18cec433a';
+        var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+        var digitalResourceServiceIdentifierTypeNodeId = '56f8e759-ca7c-11e9-bda1-a4d18cec433a';
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
@@ -133,15 +127,10 @@ define([
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
                 self.digitalResourceNameTile.transactionId = params.form.workflowId;
                 self.digitalResourceNameTile.save().then(function(data) {
-                    self.digitalResourceTypeTile.resourceinstance_id = data.resourceinstance_id;
-                    self.digitalResourceTypeTile.data[digitalResourceTypeNodeId](['305c62f0-7e3d-4d52-a210-b451491e6100']); // [IIIF Manifest]
-                    self.digitalResourceTypeTile.transactionId = params.form.workflowId;
-                    self.digitalResourceTypeTile.save();
                     self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
                     self.digitalResourceStatementTile.transactionId = params.form.workflowId;
                     self.digitalResourceStatementTile.save().then(function(data) {
                         self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
-                        self.digitalResourceServiceTile.data[digitalResourceServiceTypeNodeId](['e208df66-9e61-498b-8071-3024aa7bed30']); // web service
                         self.digitalResourceServiceTile.transactionId = params.form.workflowId;
                         self.digitalResourceServiceTile.save().then(function(data) {
                             self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
