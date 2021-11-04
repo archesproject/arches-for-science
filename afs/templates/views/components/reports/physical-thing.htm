@@ -221,7 +221,9 @@
 {% endblock report %}
 
 {% block summary %}
-
+<div class="afs-summary-report-header">
+    <h1 class="afs-summary-report-title"><span data-bind="text: displayname" class="afs-report-instance-name"></span><span class="afs-report-name pad-lft-sm">{% trans "(Physical Thing)" %}</span></h1>
+</div>
 <div class="model-summary-report">
     <div class="afs-report-page">
         <!-- Names -->
@@ -233,7 +235,7 @@
             }
         }"></div>
         <!-- Description -->
-        <div data-bind="component: {
+        <div class="margin-top-summary" data-bind="component: {
             name: 'views/components/reports/scenes/description',
             params: {
                 data: resource,
