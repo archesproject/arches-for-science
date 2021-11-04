@@ -53,6 +53,7 @@ define([
             'paging-filter': ko.observable(),
             'search-results': ko.observable(),
         };
+        this.termFilter = ko.observable();
         this.totalResults = ko.observable();
         this.query = ko.observable(getQueryObject());
         this.selectedTerm = ko.observable();
@@ -401,12 +402,12 @@ define([
         };
 
         this.selectedTerm.subscribe(function(val) {
-            const termFilter = self.termOptions.find(x => val == x.id);
-            self.updateSearchResults(termFilter);
+            self.termFilter(self.termOptions.find(x => val == x.id));
+            self.updateSearchResults(self.termFilter());
         });
 
         this.query.subscribe(function(query) {
-            self.updateSearchResults(null, query['paging-filter']);
+            self.updateSearchResults(self.termFilter(), query['paging-filter']);
         });
 
         this.initialize();
