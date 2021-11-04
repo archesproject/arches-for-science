@@ -65,7 +65,7 @@ class Command(BaseCommand):
                         print(e)
         self.reindex_relations()
 
-    def reindex_instances(self):
+    def reindex_relations(self):
         management.call_command("es", "index_resource_relations")
 
     def build_prod(self, lines):
