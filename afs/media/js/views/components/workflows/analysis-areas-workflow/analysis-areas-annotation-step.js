@@ -26,6 +26,7 @@ define([
 
         this.savingTile = ko.observable();
         this.savingMessage = ko.observable();
+        this.savingProgress = ko.observable();
         this.physThingSearchResultsLookup = {};
 
         this.selectedFeature = ko.observable();
@@ -448,16 +449,19 @@ define([
                 const regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
                 self.savingMessage(`Saving Analysis Area Name ...`);
+                self.savingProgress('2');
                 savePhysicalThingNameTile(regionPhysicalThingNameTile).then(function(physicalThingNameData) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
 
                     self.savingMessage(`Saving Analysis Area to the Project ...`);
+                    self.savingProgress('4');
                     StepUtils.saveThingToProject(physicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
 
                         self.fetchCardFromResourceId(physicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
                            const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingClassificationCard);
     
                            self.savingMessage(`Saving Analysis Area Classification ...`);
+                           self.savingProgress('6');
                            savePhysicalThingClassificationTile(regionPhysicalThingPartOfTile).then(function(physicalThingClassificationData) {
                                 const physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
                 
@@ -465,16 +469,20 @@ define([
                                     const regionPhysicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
     
                                     self.savingMessage(`Saving Relationship between Analysis Area and Parent (${self.physicalThingName()}) ...`);
+                                    self.savingProgress('8');
                                     savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
                                         self.savingMessage(`Updating Relationship between Analysis Area and Parent (${self.physicalThingName()}) ...`);
+                                        self.savingProgress('10');
                                         updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
                                             self.savingMessage(`Updating Annotations ...`);
+                                            self.savingProgress('10');
                                             updateAnnotations().then(function(_physicalThingAnnotationNode) {
                                                 self.updateAnalysisAreaInstances();
                 
                                                 self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
                                                 self.savingTile(false);
                                                 self.savingMessage('');
+                                                self.savingProgress('0');
                                                 params.pageVm.alert("");
                                                 self.drawFeatures([]);
                                                 let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});

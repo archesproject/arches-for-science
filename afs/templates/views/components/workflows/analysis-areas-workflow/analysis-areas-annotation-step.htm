@@ -4,6 +4,19 @@
 {% block workbench %}
 <div class='loading-mask' data-bind="visible: $data.savingTile()"></div>
 <div class="afs-saving-message" data-bind="visible: $data.savingTile(), text: savingMessage"></div>
+<progress
+    style="
+        top: 40%;
+        left: 35%;
+        width: 30%;
+        height: 25px;
+        text-align: center;
+        position: absolute;
+        z-index: 100000001;
+    "
+    max='10'
+    data-bind="visible: $data.savingTile(), value: savingProgress">
+</progress>
 <!-- ko if: $data.hasExternalCardData() -->
     <!-- ko with: $data, as: 'self' -->
         {{ block.super }}
