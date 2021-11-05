@@ -23,7 +23,7 @@ define(['jquery',
                 });
             };
             this.chartTitle("XRF Spectrum");
-            this.xAxisLabel("Energy");
+            this.xAxisLabel("keV");
             this.yAxisLabel("Count");
         },
         template: { require: 'text!templates/views/components/cards/file-renderers/afs-reader.htm' }
