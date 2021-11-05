@@ -803,7 +803,9 @@ define([
 
                                                                     self.savingMessage(`Saving Sample Motivation ...`);
                                                                     savePhysicalThingStatementTile(physicalThingSamplingMotivationTile, "motivation").then(function(_samplingActivitySamplingMotivationData) {
+                                                                        self.savingMessage(`Saving Relationship between Sample and Sampling Activity ...`);
                                                                         saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
+                                                                            self.savingMessage(`Saving Relationship between Sample Area and Parent (${params.physicalThingName}) ...`);
                                                                             saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
                                                                                 // fetches again for updated data
                                                                                 // self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(updatedSamplingActivitySamplingUnitCard) {

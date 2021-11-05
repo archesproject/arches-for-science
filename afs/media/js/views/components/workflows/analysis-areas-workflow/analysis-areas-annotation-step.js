@@ -466,7 +466,9 @@ define([
     
                                     self.savingMessage(`Saving Relationship between Analysis Area and Parent (${self.physicalThingName()}) ...`);
                                     savePhysicalThingPartOfTile(regionPhysicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
+                                        self.savingMessage(`Updating Relationship between Analysis Area and Parent (${self.physicalThingName()}) ...`);
                                         updateSelectedAnalysisAreaInstance(regionPhysicalThingPartOfData).then(function(_data) {
+                                            self.savingMessage(`Updating Annotations ...`);
                                             updateAnnotations().then(function(_physicalThingAnnotationNode) {
                                                 self.updateAnalysisAreaInstances();
                 
