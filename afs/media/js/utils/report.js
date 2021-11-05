@@ -79,7 +79,8 @@ define([
         defaultTableConfig: {
             responsive: {
                 breakpoints: [
-                    {name: 'bigdesktop', width: Infinity},
+                    {name: 'infinity', width: Infinity},
+                    {name: 'bigdesktop', width: 1900},
                     {name: 'meddesktop', width: 1480},
                     {name: 'smalldesktop', width: 1280},
                     {name: 'medium', width: 1188},

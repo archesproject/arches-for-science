@@ -57,7 +57,7 @@
                         <tbody data-bind="dataTablesForEach: { data: digitalReference, dataTableOptions: digitalReferenceTableConfig }">
                             <tr>
                                 <td data-bind="text: type"></td>
-                                <td><a data-bind="text: source, attr: {href: link}"></a></td>
+                                <td><a class="afs-block-value-url" data-bind="text: source, attr: {href: link}"></a></td>
                                 <td class="afs-table-control">
                                     <div data-bind="if: $parent.cards && $parent.cards.digitalReference">
                                         <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.digitalReference)}">
@@ -102,7 +102,7 @@
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: subjectOf, dataTableOptions: subjectOfTableConfig }">
                             <tr>
-                                <td><a data-bind="text: display, attr: {href: link}"></a></td>
+                                <td><a class="afs-block-value-url" data-bind="text: display, attr: {href: link}"></a></td>
                             </tr>
                         </tbody>
                     </table>
