@@ -31,13 +31,13 @@
             <!-- ko if: !!eventData && eventData.tileid -->
             <div class="afs-report-subsection">
                 <h2 class="afs-report-section-subtitle">{% trans "Event Summary" %}</h2>
-                <h3 style="display: block ;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}, css: {'fa-angle-double-right': eventData.visible(), 'fa-angle-double-up': !eventData.visible()}" class="fa toggle"></i> {% trans "Event: " %} <span></span></h3>
                 <!-- <a class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Event" %}</a>-->
-
+                <h3 style="display: block ;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}, css: {'fa-angle-double-right': eventData.visible(), 'fa-angle-double-up': !eventData.visible()}" class="fa toggle"></i> {% trans "Event: " %} <span></span></h3>
                 <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
 
                 <div data-bind="visible: eventData.visible" class="afs-report-collapsible-container">
-                    <div class="afs-report-subsection-container">
+                    
+                    <div class="afs-report-event-section afs-report-subsection-container">
                         <div style="width:75%" data-bind="foreach: {data: eventData.metadata, as: 'item'}" class="afs-report-subsection-two-column">
                             <div class="afs-keyvalue" data-bind="component: {
                                 name: 'views/components/reports/scenes/keyvalue',
@@ -243,7 +243,7 @@
                 <a data-bind="if: cards[eventName].parts, click: function(){addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
             
                 <!-- Event Part -->
-                <div data-bind="foreach:{ data: eventData.parts }" class="part">
+                <div class="afs-report-event-section" data-bind="foreach:{ data: eventData.parts }" class="part">
                     <div>
                         <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part: " %} <span data-bind="text: name"></span></h3>
                         <div class="afs-part-expanded" data-bind="visible: visible">

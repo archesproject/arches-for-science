@@ -105,7 +105,7 @@
             <!-- ko ifnot: item.value.instance_details -->
                 <div data-bind="style: { display: inline ? 'inline': '' }">
                     <div class="afs-block-value">
-                        <a data-bind="text: $data.getNodeValue(item.value), attr: { href: $data.getResourceLink(item.value) }"></a>
+                        <a class="afs-block-value-url" data-bind="text: $data.getNodeValue(item.value), attr: { href: $data.getResourceLink(item.value) }"></a>
                     </div>
                 </div>
             <!-- /ko -->

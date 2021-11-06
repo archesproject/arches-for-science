@@ -431,6 +431,7 @@ i.toggle:hover {
     display: flex;
     padding-left: 12px;
     margin-bottom: 15px;
+    padding-top: 5px;
 }
 
 .afs-report-subsection-container.no-flex {
@@ -540,6 +541,10 @@ i.toggle:hover {
 
 .firstchild-container {
     /* border-top: 1px solid #ddd; */
+}
+
+.afs-report-collapsible-container:not(:first-child) {
+    border-top: 1px solid #ddd;
 }
 
 .afs-summary-value {
