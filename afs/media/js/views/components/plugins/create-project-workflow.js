@@ -34,6 +34,19 @@ define([
                                 },
                             ], 
                         },
+                        {
+                            componentConfigs: [
+                                {
+                                    componentName: 'default-card',
+                                    uniqueInstanceName: 'project-type', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                                        nodegroupid: '0b92b8c0-ca85-11e9-adef-a4d18cec433a',
+                                    },
+                                },
+                            ], 
+                        },
                     ]
                 },
                 {
