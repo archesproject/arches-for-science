@@ -459,7 +459,7 @@ i.toggle:hover {
 }
 
 .afs-report-subsection-item.flex.column-order.pad-btm {
-    padding-bottom: 5px;
+    padding-bottom: 15px;
 }
 
 .afs-report-subsection-item.flex.column-order .afs-block-attributes h6 {
@@ -543,8 +543,9 @@ i.toggle:hover {
     /* border-top: 1px solid #ddd; */
 }
 
-.afs-report-collapsible-container:not(:first-child) {
+.afs-report-event-section {
     border-top: 1px solid #ddd;
+    margin-top: 2px;
 }
 
 .afs-summary-value {
