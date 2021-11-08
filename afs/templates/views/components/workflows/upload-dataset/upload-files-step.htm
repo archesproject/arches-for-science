@@ -12,9 +12,13 @@
 
 <div class="file-workbench-filter" style="padding-left: 46px;  padding-right: 46px; display:flex; align-items: flex-end;">
     <div class="dataset-name" style="flex-grow: 1;">
-        <label class="control-label">{% trans "Dataset Name (required)" %}</label>
+        <label class="control-label">{% trans "Dataset Name" %}</label>
         <input type="text" class="form-control" style="width: 50%; height:initial"
             data-bind="textInput: datasetName"></input>
+        <div>
+            <input class="afs-calculated-datasetname" disabled type="text" style="width: 50%;" data-bind="textInput: calcDatasetName"></input>
+        </div>
+
     </div>
     <div style="padding-left: 20px;">
         <!-- ko if: dirty -->

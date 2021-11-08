@@ -16,8 +16,14 @@ define([
                 "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
                 "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "UNK", rendererid: "UNK"}
             };
+            const physThingName = params.projectinfo["select-phys-thing-step"].savedData().physThingName;
+
             this.datasetId = undefined;
             this.datasetName = ko.observable();
+            this.calcDatasetName = ko.computed(function() {
+                const basename = self.datasetName() || 'Dataset';
+                return `${basename} (${physThingName})`
+            });
             this.datasetNameTileId = "";
             this.files = ko.observableArray();
             this.observationReferenceTileId = "";
@@ -113,7 +119,7 @@ define([
             this.dirty = params.form.dirty;
 
             this.datasetName.subscribe(function(name) {
-                params.form.dirty(name !== "" && name !== params.form.value()?.datasetName && self.files().length > 0);
+                params.form.dirty(name !== params.form.value()?.datasetName && self.files().length > 0);
             });
             this.files.subscribe(function(files){
                 params.form.dirty(false);
@@ -165,17 +171,6 @@ define([
             };
 
             this.save = async() => {
-                if(!self.datasetName()) { 
-                    params.pageVm.alert(new params.form.AlertViewModel(
-                        'ep-alert-red', 
-                        "Dataset Name Required", 
-                        `A dataset name was not provided`
-                    ));
-                    return;
-                } else {
-                    params.pageVm.alert('');
-                }
-
                 try {
                     // For each part of parent phys thing, create a digital resource with a Name tile
                     const datasetResourceId = (await self.saveDatasetName());
@@ -198,6 +193,7 @@ define([
 
                     params.form.savedData(dataToSave);
                     params.form.complete(true);
+                    params.form.dirty(false);
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
@@ -216,7 +212,7 @@ define([
                 const nameTemplate = {
                     "tileid": self.datasetNameTileId,
                     "data": {
-                        "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a": self.datasetName(),
+                        "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a": self.calcDatasetName(),
                         "d2fdc0d4-ca7a-11e9-95cf-a4d18cec433a": ["8f40c740-3c02-4839-b1a4-f1460823a9fe"],
                         "d2fdb92b-ca7a-11e9-af41-a4d18cec433a": ["bc35776b-996f-4fc1-bd25-9f6432c1f349"],
                         "d2fdbc38-ca7a-11e9-a31a-a4d18cec433a": null,

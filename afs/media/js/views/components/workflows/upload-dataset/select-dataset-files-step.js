@@ -155,7 +155,7 @@ define([
                     "transaction_id": params.form.workflowId
                 };
 
-                nameTemplate.data[datasetNameNodeId] = part.datasetName() || "";
+                nameTemplate.data[datasetNameNodeId] = part.calcDatasetName();
 
                 const tile = await window.fetch(arches.urls.api_tiles(part.datasetId() || ""), {
                     method: 'POST',
@@ -362,22 +362,10 @@ define([
             }
 
             this.save = async() => {
-                const incompleteInputs = self.getIncompleteInputs();
-                if(incompleteInputs.length) { 
-                    params.pageVm.alert(new params.form.AlertViewModel(
-                        'ep-alert-red', 
-                        "Dataset Name Required", 
-                        `A dataset name was not provided for parts: ${incompleteInputs.map(x => x.displayname).join(', ')}`
-                    ));
-                    return;
-                } else {
-                    params.pageVm.alert('');
-                }
                 
                 params.form.lockExternalStep("select-instrument-and-files", true);
                 const parts = self.parts();
                 for (const part of parts) {
-                    if(!part.datasetName()) { continue; }
                     try {
                         // For each part of parent phys thing, create a digital resource with a Name tile
                         const dataset = (await self.saveDatasetName(part));
@@ -412,7 +400,7 @@ define([
                                 datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
                                 datasetId: x.datasetId(),
                                 nameTileId: x.nameTileId(),
-                                datasetName: x.datasetName(),
+                                datasetName: x.datasetName() || '',
                                 resourceReferenceId: x.resourceReferenceId(),
                                 tileid: x.tileid
                             };
@@ -441,12 +429,6 @@ define([
                 }
             };
 
-            this.getIncompleteInputs = ko.pureComputed(() => {
-                return self.parts().filter(part => {
-                    return !part.datasetName() && part.datasetFiles().length;
-                })
-            });
-            
             this.canBeSaved = ko.pureComputed(() => {
                 return self.parts().filter(part => part.datasetName && !part.datasetId())
                     .some(part => part.datasetFiles().length) ||
@@ -470,9 +452,7 @@ define([
                 });
 
                 const thingResource = await resourceUtils.lookupResourceInstanceData(this.physicalThing);
-
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
-
 
                 self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);               
                 for (const part of parts) {
@@ -495,6 +475,13 @@ define([
                     ];
                     part.datasetFiles = part.datasetFiles || ko.observableArray([]);
                     part.datasetName = part.datasetName || ko.observable();
+
+                    const childPhysThingName = related._source.displayname;
+                    part.calcDatasetName = ko.computed(function() {
+                        const basename = part.datasetName() || 'Dataset';
+                        return `${basename} (${childPhysThingName})`
+                    });
+    
                     part.datasetId = part.datasetId || ko.observable();
                     part.nameTileId = part.nameTileId || ko.observable();
                     part.resourceReferenceId = part.resourceReferenceId || ko.observable();
@@ -537,7 +524,7 @@ define([
                             self.annotationNodes.valueHasMutated();
                         }
                     }
-                    if(!part.datasetName.getSubscriptionsCount()){
+                    if(part.datasetName.getSubscriptionsCount()){
                         part.datasetName.subscribe((newValue) => {
                             const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
                             if(newValue != datasetSnapshot?.datasetName) {
