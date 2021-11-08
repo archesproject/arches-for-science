@@ -3,6 +3,7 @@
 
 {% block workbench %}
 <div class='loading-mask' data-bind="visible: $data.savingTile()"></div>
+<div class="afs-saving-message" data-bind="visible: $data.savingTile(), text: savingMessage"></div>
 <!-- ko if: $data.hasExternalCardData() -->
     <!-- ko with: $data, as: 'self' -->
         {{ block.super }}
