@@ -38,7 +38,7 @@
                 <div data-bind="visible: eventData.visible" class="afs-report-collapsible-container">
                     
                     <div class="afs-report-event-section afs-report-subsection-container">
-                        <div style="width:75%" data-bind="foreach: {data: eventData.metadata, as: 'item'}" class="afs-report-subsection-two-column">
+                        <div style="width:95%" data-bind="foreach: {data: eventData.metadata, as: 'item'}" class="afs-report-subsection-two-column">
                             <div class="afs-keyvalue" data-bind="component: {
                                 name: 'views/components/reports/scenes/keyvalue',
                                 params: {
@@ -118,7 +118,7 @@
                                     <thead>
                                         <tr class="afs-table-header">
                                             <th>{% trans "Statement" %}</th>
-                                            <th>{% trans "Type" %}</th>
+                                            <th class="none">{% trans "Type" %}</th>
                                             <th class="none">{% trans "Language" %}</th>
                                             <th class="none">{% trans "Name of Statement" %}</th>
                                             <th class="afs-table-control all"></th>
@@ -255,7 +255,7 @@
                             <!-- Show this if there is Event data (Top Card) -->
                             <div class="afs-report-event-section afs-report-collapsible-container">
                                 <div class="afs-report-subsection-container">
-                                    <div  style="width:75%;" data-bind="foreach: {data: $data.metadata, as: 'item' }" class="afs-report-subsection-two-column">
+                                    <div  style="width:95%;" data-bind="foreach: {data: $data.metadata, as: 'item' }" class="afs-report-subsection-two-column">
                                         <div afs-report-subsection-two-column>  
                                             <div class="afs-keyvalue" data-bind="component: {
                                                 name: 'views/components/reports/scenes/keyvalue',
@@ -287,7 +287,7 @@
                                                     <tr class="afs-table-header">
                                                         <th>{% trans "Name" %}</th>
                                                         <th class="min-tabletl">{% trans "Type" %}</th>
-                                                        <th class="min-medium">{% trans "Language" %}</th>
+                                                        <th class="none">{% trans "Language" %}</th>
                                                         <th class="afs-table-control all"></th>
                                                     </tr>
                                                 </thead>
@@ -331,7 +331,7 @@
                                                 <thead>
                                                     <tr class="afs-table-header">
                                                         <th>{% trans "Statement" %}</th>
-                                                        <th>{% trans "Type" %}</th>
+                                                        <th class="none">{% trans "Type" %}</th>
                                                         <th class="none">{% trans "Language" %}</th>
                                                         <th class="none">{% trans "Name of Statement" %}</th>
                                                         <th class="afs-table-control all"></th>

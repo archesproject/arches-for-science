@@ -106,14 +106,13 @@
 <div class="afs-report-section">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.classifications)}, css: {'fa-angle-double-right': visible.classifications(), 'fa-angle-double-up': !visible.classifications()}" class="fa toggle"></i> {% trans "Classification" %}</h2>
     
-
     <!-- Collapsible content -->
     <div data-bind="visible: visible.classifications" class="afs-report-collapsible-container pad-lft">
 
         <!-- ko if: type || exactMatch().length -->
         <div class="afs-report-subsection" >
             <div>
-                <div class="afs-report-subsection-item">
+                <div class="afs-report-subsection-item pad-btm-sm">
                     <div data-bind="if: dataConfig.type">
                         <div class="afs-block-attributes pad-btm-sm">
                             <div>

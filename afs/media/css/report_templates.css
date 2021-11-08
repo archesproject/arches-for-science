@@ -12,6 +12,11 @@
 {
     display: inline;
 }
+
+.afs-table table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before {
+    top: 7px;
+}
+
 .afs-part-expanded
 {
     display: inline;
@@ -217,6 +222,10 @@ i.toggle:hover {
     cursor: pointer;
 }
 
+.afs-report-section i:hover {
+    cursor: pointer;
+}
+
 .afs-report-section-title {
     font-size: 17px;
     font-weight: 500;
@@ -364,15 +373,17 @@ i.toggle:hover {
 .afs-table-control {
     padding: 6px;
     color: #999;
+    max-width: 60px;
 }
 
 .afs-table thead .afs-table-control {
     border: none;
     width: 58px;
+    max-width: 58px;
 }
 
 .afs-table-control i {
-    padding: 7px 6px;
+    padding: 7px 4px;
     color: steelblue;
     font-size: 12px;
 }

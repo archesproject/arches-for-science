@@ -128,7 +128,7 @@
                         <!-- /ko -->
                         
                         <!-- ko if: Array.isArray(annotation.info) -->
-                        <div data-bind="with: annotation, as: 'annotation', noChildContext: true">
+                        <div class="pad-top-sm" data-bind="with: annotation, as: 'annotation', noChildContext: true">
                         <div data-bind="component: { name: 'views/components/reports/scenes/annotation-parts', params: {annotation: annotation, selectedAnnotationTileId: selectedAnnotationTileId}}"></div>
                         </div>
                         <div class="afs-table pad-btm-sm">
@@ -149,10 +149,10 @@
                                             <div data-bind="text: part.label"></div>
                                         </td>
                                         <td>
-                                            <a data-bind="text: $parent.getNodeValue(part.physicalPartOfObject), attr: {href: $parent.getResourceLink(part.physicalPartOfObject)}"></a>
+                                            <a class="afs-block-value-url" data-bind="text: $parent.getNodeValue(part.physicalPartOfObject), attr: {href: $parent.getResourceLink(part.physicalPartOfObject)}"></a>
                                         </td>
                                         <td>
-                                            <a data-bind="text: $parent.getNodeValue(part.annotator), attr: {href: $parent.getResourceLink(part.annotator)}"></a>
+                                            <a class="afs-block-value-url" data-bind="text: $parent.getNodeValue(part.annotator), attr: {href: $parent.getResourceLink(part.annotator)}"></a>
                                         </td>
                                         <td data-bind="text: part.assignedPropertyType"></td>
                                         <td data-bind="text: part.geometricAnnotationIdentifier"></td>
