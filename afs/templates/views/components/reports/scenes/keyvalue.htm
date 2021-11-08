@@ -13,11 +13,11 @@
  <!-- /ko -->
 
  <!-- ko if: inline && !small && item.key -->
-<h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
+<h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4><span>:</span>
 <!-- /ko --> 
 
 <!-- ko if: inline && small && item.key -->
-<h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
+<h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4><span>:</span>
 <!-- /ko -->
 
 <!-- ko if: !item.value && item.type != 'timespan' -->
@@ -72,7 +72,7 @@
 </div>
 <!-- /ko -->
 <!-- ko ifnot: item.value -->
-<div class="afs-nodata-note">No timespan available for this resource</div>
+<div class="afs-nodata-note pad-btm">No timespan available for this resource</div>
 <!-- /ko -->
 <!-- /ko -->
 
