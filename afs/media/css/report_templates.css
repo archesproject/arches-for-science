@@ -12,6 +12,11 @@
 {
     display: inline;
 }
+
+.afs-table table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before {
+    top: 7px;
+}
+
 .afs-part-expanded
 {
     display: inline;
@@ -28,6 +33,22 @@
 
 .scroll-y footer {
     display: none !important;
+}
+
+.pad-btm-sm {
+    padding-bottom: 5px;
+}
+
+.pad-top-sm {
+    padding-top: 5px;
+}
+
+.pad-lft-sm {
+    padding-left: 5px;
+}
+
+.margin-top-summary {
+    margin-top: 0px;
 }
 
 .afs-report-toolbar {
@@ -200,10 +221,21 @@ i.toggle:hover {
     cursor: pointer;
 }
 
+.afs-report-section i:hover {
+    cursor: pointer;
+}
+
 .afs-report-section-title {
     font-size: 17px;
     font-weight: 500;
     margin: 5px 0px;
+    display: inline-block;
+}
+
+.afs-report-section-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 5px 0px 0px 0px;
     display: inline-block;
 }
 
@@ -264,6 +296,11 @@ i.toggle:hover {
     position: absolute;
     width: 100%;
     height: auto;
+}
+
+.afs-table tr {
+    height: 33px;
+    border-top: 1px solid #ddd;
 }
 
 .afs-table thead th {
@@ -335,15 +372,17 @@ i.toggle:hover {
 .afs-table-control {
     padding: 6px;
     color: #999;
+    max-width: 60px;
 }
 
 .afs-table thead .afs-table-control {
     border: none;
     width: 58px;
+    max-width: 58px;
 }
 
 .afs-table-control i {
-    padding: 7px 6px;
+    padding: 7px 4px;
     color: steelblue;
     font-size: 12px;
 }
@@ -402,6 +441,12 @@ i.toggle:hover {
     display: flex;
     padding-left: 12px;
     margin-bottom: 15px;
+    padding-top: 5px;
+    background: #f6f8fa;
+    padding-bottom: 15px;
+    border: 1px solid #e9e9e9;
+    border-top: none;
+    border-radius: 2px;
 }
 
 .afs-report-subsection-container.no-flex {
@@ -429,7 +474,7 @@ i.toggle:hover {
 }
 
 .afs-report-subsection-item.flex.column-order.pad-btm {
-    padding-bottom: 5px;
+    padding-bottom: 15px;
 }
 
 .afs-report-subsection-item.flex.column-order .afs-block-attributes h6 {
@@ -451,6 +496,7 @@ i.toggle:hover {
 .afs-block-attributes h6 {
     font-size: 14px;
     font-weight: 400;
+    color: #2f527a;
     margin: 2px 0px;
     display: inline-block;
     padding: 5px 0px 0px 0px;
@@ -462,6 +508,7 @@ i.toggle:hover {
 }
 .afs-keyvalue > h4 {
     margin: 2px;
+    font-weight: 400;
 }
 
 .afs-block-attributes.actor-name {
@@ -481,9 +528,8 @@ i.toggle:hover {
     margin: 0px;
 }
 
-
 .afs-report-subsection-firstchild {
-    padding: 0px 0px 15px 30px;;
+    padding: 0px 0px 25px 30px;;
     min-height: 50px;
 }
 
@@ -492,7 +538,8 @@ i.toggle:hover {
     font-size: 14px;
     font-weight: 500;
     color: #454545;
-    margin-bottom: 6px
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ddd;
 }
 
 .afs-report-subsection-firstchild:last-child {
@@ -508,9 +555,18 @@ i.toggle:hover {
 }
 
 .firstchild-container {
-    border-top: 1px solid #ddd;
+    /* border-top: 1px solid #ddd; */
 }
 
+.afs-report-event-section {
+    border-top: 1px solid #ddd;
+    margin-top: 2px;
+}
+
+.afs-summary-value {
+    color: #777;
+    margin-left: 5px;
+}
 
 .firstchild-container .afs-table {
     margin-bottom: -10px;
@@ -541,6 +597,10 @@ i.toggle:hover {
     padding-top: 5px;
 }
 
+.afs-table .table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #f6f8fa90 !important;
+}
+
 .line-clamp-1 {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -553,6 +613,7 @@ i.toggle:hover {
     font-size: 14px;
     color: #888;
     margin-bottom: 20px;
+    margin-left: 10px;
 }
 
 .afs-report-subsection-firstchild .afs-nodata-note {
@@ -629,6 +690,22 @@ i.toggle:hover {
 .afs-block-value {
     color: #777;
     display: inline-block;
+    font-size: 14px;
+}
+
+.afs-block-value a {
+    color: #777;
+}
+
+a.afs-block-value-url {
+    color: #12548A;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.afs-block-value-url:hover {
+    color: #D5A60F;
 }
 
 .afs-summary-block-title h2 {
@@ -747,4 +824,23 @@ i.toggle:hover {
     width: calc(100% - 10px);
     border: 1px solid #ddd;
     background: #f6f6f6;
+}
+
+.afs-summary-report-header {
+    height: 50px;
+    background: #fff;
+    position: fixed;
+    top: 101px;
+    width: 100%;
+    margin-bottom: 60px;
+    z-index: 10;
+}
+
+.afs-summary-report-title {
+    font-size: 19px;
+    font-weight: 400;
+    margin-left: 30px;
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+    display: inline-block;
 }

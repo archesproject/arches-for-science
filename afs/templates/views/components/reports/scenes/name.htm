@@ -25,7 +25,7 @@
                             <tr class="afs-table-header">
                                 <th>{% trans "Name" %}</th>
                                 <th class="min-tabletl">{% trans "Type" %}</th>
-                                <th class="min-medium">{% trans "Language" %}</th>
+                                <th class="none">{% trans "Language" %}</th>
                                 <th class="afs-table-control all"></th>
                             </tr>
                         </thead>
@@ -106,18 +106,19 @@
 <div class="afs-report-section">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.classifications)}, css: {'fa-angle-double-right': visible.classifications(), 'fa-angle-double-up': !visible.classifications()}" class="fa toggle"></i> {% trans "Classification" %}</h2>
     
-
     <!-- Collapsible content -->
     <div data-bind="visible: visible.classifications" class="afs-report-collapsible-container pad-lft">
 
         <!-- ko if: type || exactMatch().length -->
         <div class="afs-report-subsection" >
             <div>
-                <div class="afs-report-subsection-ite" style="padding-top: 10px;">
+                <div class="afs-report-subsection-item pad-btm-sm">
                     <div data-bind="if: dataConfig.type">
-                        <div class="afs-block-attributes pad-btm">
+                        <div class="afs-block-attributes pad-btm-sm">
                             <div>
-                                <h4 class="afs-block-key">Type: </h4>
+                                <h4 class="afs-block-key">Type: 
+                                    <div class="afs-block-value" data-bind="text: type"></div>
+                                </h4>
                                 <div class="afs-card-control" data-bind="if: cards.type && type() != '--'">
                                     <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Type" %}</a>
                                 </div>
@@ -125,31 +126,31 @@
                                     <a class="afs-report-a" data-bind="click: function(){add(cards.type)}"><i class="fa fa-mail-reply"></i> {% trans "Add Type" %}</a>
                                 </div>
                             </div>
-                            <div class="afs-block-value" data-bind="text: type"></div>
                         </div>
                     </div>
                     <div data-bind="if: dataConfig.exactMatch">
                         <div class="afs-block-attributes">
                             <div>
-                                <h4 class="afs-block-key">Exact Match: </h4>
+                                <h4 class="afs-block-key">Exact Match: 
+                                    <div class="afs-block-value">
+                                        <!-- ko foreach: exactMatch -->
+                                        <span data-bind="if: $data != '--'">
+                                            <a class="afs-block-value-url" data-bind="attr: {href: $data}">
+                                                <span data-bind="text: $data"></span><span data-bind="if: $index() !== $parent.exactMatch().length-1">,</span>
+                                            </a>
+                                        </span>
+                                        <!-- /ko -->
+                                        <!-- ko if: exactMatch().length === 0 -->
+                                        <span>--</span>
+                                        <!-- /ko -->
+                                    </div>
+                                </h4>
                                 <div class="afs-card-control" data-bind="if: cards.exactMatch && !exactMatch().length">
                                     <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Add Exact Match" %}</a>
                                 </div>
                                 <div class="afs-card-control" data-bind="if: cards.exactMatch && exactMatch().length">
                                     <a class="afs-report-a" data-bind="click: function(){add(cards.exactMatch)}"><i class="fa fa-mail-reply"></i> {% trans "Edit Exact Match" %}</a>
                                 </div>
-                            </div>
-                            <div class="afs-block-value">
-                                <!-- ko foreach: exactMatch -->
-                                <span data-bind="if: $data != '--'">
-                                    <a data-bind="attr: {href: $data}">
-                                        <span data-bind="text: $data"></span><span data-bind="if: $index() !== $parent.exactMatch().length-1">,</span>
-                                    </a>
-                                </span>
-                                <!-- /ko -->
-                                <!-- ko if: exactMatch().length === 0 -->
-                                <span>--</span>
-                                <!-- /ko -->
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,6 @@
 <div data-bind="if: dataConfig.label" class="afs-report-section">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.label)}, css: {'fa-angle-double-right': visible.label(), 'fa-angle-double-up': !visible.label()}" class="fa toggle"></i> {% trans "Metadata" %}</h2>
     
-
     <!-- Collapsible content -->
     <div data-bind="visible: visible.label" class="afs-report-collapsible-container pad-lft">
 
@@ -17,7 +16,7 @@
         <!-- ko if: label() -->
         <div class="afs-report-subsection" >
             <div class="firstchild-container">
-                <div class="afs-report-subsection-ite pad-top">
+                <div class="afs-report-subsection-ite pad-top-sm">
                     <div class="afs-block-attributes pad-btm">
                         <h4 class="afs-block-key">Label: </h4>
                         <div class="afs-block-value" data-bind="text: label"></div>
@@ -57,7 +56,7 @@
                         <tbody data-bind="dataTablesForEach: { data: digitalReference, dataTableOptions: digitalReferenceTableConfig }">
                             <tr>
                                 <td data-bind="text: type"></td>
-                                <td><a data-bind="text: source, attr: {href: link}"></a></td>
+                                <td><a class="afs-block-value-url" data-bind="text: source, attr: {href: link}"></a></td>
                                 <td class="afs-table-control">
                                     <div data-bind="if: $parent.cards && $parent.cards.digitalReference">
                                         <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.digitalReference)}">
@@ -102,7 +101,7 @@
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: subjectOf, dataTableOptions: subjectOfTableConfig }">
                             <tr>
-                                <td><a data-bind="text: display, attr: {href: link}"></a></td>
+                                <td><a class="afs-block-value-url" data-bind="text: display, attr: {href: link}"></a></td>
                             </tr>
                         </tbody>
                     </table>

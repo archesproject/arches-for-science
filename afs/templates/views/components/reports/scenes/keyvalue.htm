@@ -13,16 +13,16 @@
  <!-- /ko -->
 
  <!-- ko if: inline && !small && item.key -->
-<h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
+<h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4><span>:</span>
 <!-- /ko --> 
 
 <!-- ko if: inline && small && item.key -->
-<h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>     
+<h6 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4><span>:</span>
 <!-- /ko -->
 
- <!-- ko if: !item.value && item.type != 'timespan' -->
+<!-- ko if: !item.value && item.type != 'timespan' -->
 <div data-bind="style: { display: inline ? 'inline': '' }" class="afs-block-value">--</div>
- <!-- /ko -->
+<!-- /ko -->
 
  <!-- ko if: item.type == 'kv'-->
  <div class="afs-block-value" data-bind="text: item.value"></div>
@@ -72,7 +72,7 @@
 </div>
 <!-- /ko -->
 <!-- ko ifnot: item.value -->
-<div class="afs-nodata-note">No timespan available for this resource</div>
+<div class="afs-nodata-note pad-btm">No timespan available for this resource</div>
 <!-- /ko -->
 <!-- /ko -->
 
@@ -105,7 +105,7 @@
             <!-- ko ifnot: item.value.instance_details -->
                 <div data-bind="style: { display: inline ? 'inline': '' }">
                     <div class="afs-block-value">
-                        <a data-bind="text: $data.getNodeValue(item.value), attr: { href: $data.getResourceLink(item.value) }"></a>
+                        <a class="afs-block-value-url" data-bind="text: $data.getNodeValue(item.value), attr: { href: $data.getResourceLink(item.value) }"></a>
                     </div>
                 </div>
             <!-- /ko -->
@@ -114,7 +114,7 @@
                     <!-- ko if: Array.isArray(item.value.instance_details) -->
                         <div data-bind="foreach: {data: item.value.instance_details, as: 'instance', noChildContext: true}, style: { display: inline ? 'inline': '' }">
                             <div class="afs-block-value">
-                                <a data-bind="text: $data.getNodeValue(instance), attr: { href: $data.getResourceLink(instance) }"></a><!-- ko if: $index() < item.value.instance_details.length - 1 -->, <!-- /ko -->
+                                <a class="afs-block-value-url" data-bind="text: $data.getNodeValue(instance), attr: { href: $data.getResourceLink(instance) }"></a><!-- ko if: $index() < item.value.instance_details.length - 1 -->, <!-- /ko -->
                             </div>
                         </div>
                     <!-- /ko --> 
