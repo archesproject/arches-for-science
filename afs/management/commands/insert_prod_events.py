@@ -53,7 +53,7 @@ class Command(BaseCommand):
             events = self.build_prod(lines)
             for event in events.items():
                 record = event[1]
-                if record["Production_carried_out_by2"] not in (None, ""):
+                if any([record[col] not in (None, '') for col in ("Production_carried_out_by2","Production_location","Production_location_geo")]):
                     try:
                         prod_tile = self.create_prod_tile(record)
                         if prod_tile:
