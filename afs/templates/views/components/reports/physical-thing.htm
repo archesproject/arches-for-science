@@ -128,10 +128,10 @@
                         <!-- /ko -->
                         
                         <!-- ko if: Array.isArray(annotation.info) -->
-                        <div data-bind="with: annotation, as: 'annotation', noChildContext: true">
+                        <div class="pad-top-sm" data-bind="with: annotation, as: 'annotation', noChildContext: true">
                         <div data-bind="component: { name: 'views/components/reports/scenes/annotation-parts', params: {annotation: annotation, selectedAnnotationTileId: selectedAnnotationTileId}}"></div>
                         </div>
-                        <div class="afs-table pad-btm">
+                        <div class="afs-table pad-btm-sm">
                             <table class="table table-striped" cellspacing="0" width="100%">
                                 <thead>
                                     <tr class="afs-table-header">
@@ -149,10 +149,10 @@
                                             <div data-bind="text: part.label"></div>
                                         </td>
                                         <td>
-                                            <a data-bind="text: $parent.getNodeValue(part.physicalPartOfObject), attr: {href: $parent.getResourceLink(part.physicalPartOfObject)}"></a>
+                                            <a class="afs-block-value-url" data-bind="text: $parent.getNodeValue(part.physicalPartOfObject), attr: {href: $parent.getResourceLink(part.physicalPartOfObject)}"></a>
                                         </td>
                                         <td>
-                                            <a data-bind="text: $parent.getNodeValue(part.annotator), attr: {href: $parent.getResourceLink(part.annotator)}"></a>
+                                            <a class="afs-block-value-url" data-bind="text: $parent.getNodeValue(part.annotator), attr: {href: $parent.getResourceLink(part.annotator)}"></a>
                                         </td>
                                         <td data-bind="text: part.assignedPropertyType"></td>
                                         <td data-bind="text: part.geometricAnnotationIdentifier"></td>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="final-step-section-block-item">
                             <div class="block-item files-metadata">
-                                <div class="summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
+                                <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
                             </div>
                         </div>
                         <!-- /ko -->
@@ -221,7 +221,9 @@
 {% endblock report %}
 
 {% block summary %}
-
+<div class="afs-summary-report-header">
+    <h1 class="afs-summary-report-title"><span data-bind="text: displayname" class="afs-report-instance-name"></span><span class="afs-report-name pad-lft-sm">{% trans "(Physical Thing)" %}</span></h1>
+</div>
 <div class="model-summary-report">
     <div class="afs-report-page">
         <!-- Names -->
@@ -233,7 +235,7 @@
             }
         }"></div>
         <!-- Description -->
-        <div data-bind="component: {
+        <div class="margin-top-summary" data-bind="component: {
             name: 'views/components/reports/scenes/description',
             params: {
                 data: resource,

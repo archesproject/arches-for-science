@@ -43,6 +43,9 @@
                         <div class="dataset-name">
                             <label class="control-label">{% trans "Dataset Name*" %}</label>
                             <input type="text" class="form-control" placeholder="Dataset name" data-bind="textInput: part.datasetName">
+                            <div>
+                                <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;" data-bind="textInput: part.calcDatasetName"></input>
+                            </div>
                         </div>
                         <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
                         <div class="file-workbench-files" data-bind="foreach: {data: part.datasetFiles, as: 'file'}">

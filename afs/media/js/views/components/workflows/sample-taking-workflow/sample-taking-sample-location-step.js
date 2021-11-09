@@ -14,7 +14,7 @@ define([
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
-        
+
         this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
         this.samplingActivityResourceId = koMapping.toJS(params.samplingActivityResourceId);
         
@@ -29,6 +29,7 @@ define([
         this.samplingActivityStatementCard = ko.observable();
         this.physThingSearchResultsLookup = {};
         this.savingTile = ko.observable();
+        this.savingMessage = ko.observable();
 
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
@@ -735,6 +736,7 @@ define([
             getRegionPhysicalThingNameCard().then(function(regionPhysicalThingNameCard) {
                 var regionPhysicalThingNameTile = getWorkingTile(regionPhysicalThingNameCard);
 
+                self.savingMessage(`Saving Sample Area Name ...`);
                 savePhysicalThingNameTile(regionPhysicalThingNameTile, "region").then(function(regionPhysicalThingNameData) {
                     const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
 
@@ -743,12 +745,14 @@ define([
                     self.fetchCardFromResourceId(regionPhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(regionPhysicalThingClassificationCard) {
                         var physicalThingClassificationTile = getWorkingTile(regionPhysicalThingClassificationCard);
 
+                        self.savingMessage(`Saving Sample Area Classification ...`);
                         savePhysicalThingClassificationTile(physicalThingClassificationTile, "region").then(function(regionPhysicalThingClassificationData) {
                             var physicalThingPartOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'; // part of (E22)
 
                             self.fetchCardFromResourceId(regionPhysicalThingClassificationData.resourceinstance_id, physicalThingPartOfNodeId).then(function(regionPhysicalThingPartOfCard) {
                                 var physicalThingPartOfTile = getWorkingTile(regionPhysicalThingPartOfCard);
 
+                                self.savingMessage(`Saving Relationship between Sample Area and Parent (${params.physicalThingName}) ...`);
                                 savePhysicalThingPartOfTile(physicalThingPartOfTile).then(function(regionPhysicalThingPartOfData) {
                                     var samplingUnitNodegroupId = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Unit (E80)
                         
@@ -758,20 +762,24 @@ define([
                                         getSamplePhysicalThingNameCard(samplingActivitySamplingUnitTile).then(function(samplePhysicalThingNameCard) {
                                             var samplePhysicalThingNameTile = getWorkingTile(samplePhysicalThingNameCard);
 
+                                            self.savingMessage(`Saving Sample Name ...`);
                                             savePhysicalThingNameTile(samplePhysicalThingNameTile, "sample").then(function(samplePhysicalThingNameData) {
                                                 const physicalThingRemovedFromNodegroupId = 'b11f217a-d2bc-11e9-8dfa-a4d18cec433a' // Removal from Object (E80)
 
                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingPartOfNodeId).then(function(samplePhysicalThingPartOfCard){
                                                     const samplePhysicalThingPartOfTile = getWorkingTile(samplePhysicalThingPartOfCard);
+                                                    self.savingMessage(`Saving Relationship between Sample and Parent (${params.physicalThingName}) ...`);
                                                     savePhysicalThingPartOfTile(samplePhysicalThingPartOfTile);
                                                 });
 
                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingRemovedFromNodegroupId).then(function(samplePhysicalThingRemovedFromCard){
                                                     const samplePhysicalThingRemovedFromTile = getWorkingTile(samplePhysicalThingRemovedFromCard);
                                                     const removedFromPhysicalThingResourceIds = [self.physicalThingResourceId, regionPhysicalThingNameData.resourceinstance_id];
+                                                    self.savingMessage(`Saving Relationship between Sample and Sample Area ...`);
                                                     savePhysicalThingRemovedFromTile(samplePhysicalThingRemovedFromTile, removedFromPhysicalThingResourceIds);
                                                 });
 
+                                                self.savingMessage(`Saving Sample to the Project ...`);
                                                 StepUtils.saveThingToProject(samplePhysicalThingNameData.resourceinstance_id, params.projectSet, params.form.workflowId, self.physThingSearchResultsLookup).then(function() {
 
                                                 const physicalThingClassificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'; // type (E55)
@@ -779,20 +787,25 @@ define([
                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingClassificationNodeId).then(function(samplePhysicalThingClassificationCard) {
                                                     var physicalThingClassificationTile = getWorkingTile(samplePhysicalThingClassificationCard);
                             
+                                                    self.savingMessage(`Saving Sample Classification ...`);
                                                     savePhysicalThingClassificationTile(physicalThingClassificationTile, "sample").then(function(samplePhysicalThingClassificationData) {
                                                         var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
                                                         
                                                         self.fetchCardFromResourceId(samplePhysicalThingClassificationData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
                                                             var physicalThingSampleDescriptionStatementTile = getWorkingPhysicalThingSamplingDescriptionTile(physicalThingStatementCard);
 
+                                                            self.savingMessage(`Saving Sample Description ...`);
                                                             savePhysicalThingStatementTile(physicalThingSampleDescriptionStatementTile, "description").then(function(_physicalThingStatmentSampleDescriptionData) {
                                                                 var physicalThingStatementNodegroupId = '1952bb0a-b498-11e9-a679-a4d18cec433a';  // Statement (E33)
 
                                                                 self.fetchCardFromResourceId(samplePhysicalThingNameData.resourceinstance_id, physicalThingStatementNodegroupId).then(function(physicalThingStatementCard) {
                                                                     var physicalThingSamplingMotivationTile = getWorkingPhysicalThingSamplingMotivationTile(physicalThingStatementCard);
 
+                                                                    self.savingMessage(`Saving Sample Motivation ...`);
                                                                     savePhysicalThingStatementTile(physicalThingSamplingMotivationTile, "motivation").then(function(_samplingActivitySamplingMotivationData) {
+                                                                        self.savingMessage(`Saving Relationship between Sample and Sampling Activity ...`);
                                                                         saveSamplingActivitySamplingUnitTile(samplingActivitySamplingUnitTile, regionPhysicalThingNameData, samplePhysicalThingNameData).then(function(_samplingActivitySamplingUnitData) {
+                                                                            self.savingMessage(`Saving Relationship between Sample Area and Parent (${params.physicalThingName}) ...`);
                                                                             saveSelectedSampleLocationInstance(regionPhysicalThingPartOfData).then(function(_selectedSampleLocationInstanceData) {
                                                                                 // fetches again for updated data
                                                                                 // self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(updatedSamplingActivitySamplingUnitCard) {
@@ -803,6 +816,7 @@ define([
                                                                                         self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
                             
                                                                                         self.savingTile(false);
+                                                                                        self.savingMessage('');
                                                                                         params.dirty(true);
                                                                                         params.form.complete(true);
 

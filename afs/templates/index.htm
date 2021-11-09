@@ -82,7 +82,7 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
                         </li>
 
                         <li>
-                            <a href="{% url 'search_home' %}">{% trans "Search Arches" %}</a>
+                            <a href="{% url 'search_home' %}">{% trans "Search" %}</a>
                         </li>
 
                         {% if user|can_create_resource_instance and user.username != 'anonymous' %}
@@ -155,7 +155,7 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
                     <!-- SLIDE 1 -->
                     <li data-transition="fade" data-slotamount="9" data-masterspeed="0" data-title="Slide 1">
                         <!-- MAIN IMAGE -->
-                        <img src="{% static 'img/landing/museum_at_night.jpg' %}" alt="slidebg1" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                        <img src="{% static 'img/landing/irises.jpg' %}" alt="slidebg1" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
 
                         <!-- LAYERS -->
                         <!-- NEW LAYER -->
@@ -170,7 +170,7 @@ The data-spy and data-target are part of the built-in Bootstrap scrollspy functi
 
                         <!-- Attribution -->
                         <div class="image-attribution">
-                            <span>{% trans "Getty Museem, Los Angeles | Michelle Prevost https://www.flickr.com/photos/photogism/ | (CC BY-NC-ND 2.0)" %}</span>
+                            <span>{% trans "Imaging of Irises | Getty Conservation Institute | (CC BY-NC-ND 2.0)" %}</span>
                         </div>
                     </li>
 

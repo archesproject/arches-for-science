@@ -6,7 +6,7 @@
 <div data-bind="foreach: {data: events, as: 'eventName', noChildContext: true}" class="afs-report-section">
     <div>
         <i data-bind="click: function() {toggleVisibility(visible[eventName])}, css: {'fa-angle-double-right': visible[eventName](), 'fa-angle-double-up': !visible[eventName]()}" class="fa toggle"></i>
-        <h2 data-bind="text: eventName + ' Event'" class="afs-report-section-title"></h2>
+        <h2 class="afs-report-section-title" data-bind="text: eventName + ' Event'" class="afs-report-section-title"></h2>
         <span data-bind="if: cards[eventName] && cards[eventName].card && !cards[eventName].card.tiles().length,">
             <a data-bind="{click:function(){addNewTile(cards[eventName].card)}}" class="afs-report-a">
                 <i class="fa fa-mail-reply"></i> {% trans "Add Event" %}
@@ -30,15 +30,15 @@
             <!-- ko foreach: { data: eventDataArray[eventName], as: "eventData", noChildContext: true} -->
             <!-- ko if: !!eventData && eventData.tileid -->
             <div class="afs-report-subsection">
-                <h2 class="afs-report-section-title">{% trans "Event Details" %}</h2>
-                <h3 style="display: block ;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}, css: {'fa-angle-double-right': eventData.visible(), 'fa-angle-double-up': !eventData.visible()}" class="fa toggle"></i> {% trans "Event: " %} <span></span></h3>
+                <h2 class="afs-report-section-subtitle" style="display: block; margin-bottom: 5px;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}, css: {'fa-angle-double-right': eventData.visible(), 'fa-angle-double-up': !eventData.visible()}" class="fa toggle"></i> {% trans "Event Summary " %} <span></span></h2>
                 <!-- <a class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Event" %}</a>-->
-
+ 
                 <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
 
                 <div data-bind="visible: eventData.visible" class="afs-report-collapsible-container">
-                    <div class="afs-report-subsection-container">
-                        <div style="width:75%" data-bind="foreach: {data: eventData.metadata, as: 'item'}" class="afs-report-subsection-two-column">
+                    
+                    <div class="afs-report-event-section afs-report-subsection-container">
+                        <div style="width:95%" data-bind="foreach: {data: eventData.metadata, as: 'item'}" class="afs-report-subsection-two-column">
                             <div class="afs-keyvalue" data-bind="component: {
                                 name: 'views/components/reports/scenes/keyvalue',
                                 params: {
@@ -73,7 +73,7 @@
                                         <tr class="afs-table-header">
                                             <th>{% trans "Name" %}</th>
                                             <th class="min-tabletl">{% trans "Type" %}</th>
-                                            <th class="min-medium">{% trans "Language" %}</th>
+                                            <th class="none">{% trans "Language" %}</th>
                                             <th class="afs-table-control all"></th>
                                         </tr>
                                     </thead>
@@ -117,8 +117,8 @@
                                 <table class="table table-striped" cellspacing="0" width="100%">
                                     <thead>
                                         <tr class="afs-table-header">
-                                            <th>{% trans "Type" %}</th>
                                             <th>{% trans "Statement" %}</th>
+                                            <th class="none">{% trans "Type" %}</th>
                                             <th class="none">{% trans "Language" %}</th>
                                             <th class="none">{% trans "Name of Statement" %}</th>
                                             <th class="afs-table-control all"></th>
@@ -126,8 +126,8 @@
                                     </thead>
                                     <tbody  data-bind="dataTablesForEach: { data: eventData.statements, dataTableOptions: statementsTableConfig}">
                                         <tr>
-                                            <td data-bind="text: type"></td>
                                             <td data-bind="text: content" class="line-clamp-1" style="vertical-align: unset; padding-top: 7px;"></td>
+                                            <td data-bind="text: type"></td>
                                             <td data-bind="text: language"></td>
                                             <td data-bind="text: name"></td>
                                             <td class="afs-table-control">
@@ -239,13 +239,13 @@
                 </div>
             </div>
             <div data-bind="if: eventData.parts && eventData.parts().length" class="afs-report-subsection">
-                <h2 class="afs-report-section-title">{% trans "Event Parts" %}</h2>
+                <h2 class="afs-report-section-subtitle">{% trans "Event Parts" %}</h2>
                 <a data-bind="if: cards[eventName].parts, click: function(){addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
             
                 <!-- Event Part -->
                 <div data-bind="foreach:{ data: eventData.parts }" class="part">
                     <div>
-                        <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part: " %} <span data-bind="text: name"></span></h3>
+                        <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part " %} <span data-bind="text: name"></span></h3>
                         <div class="afs-part-expanded" data-bind="visible: visible">
                             <a data-bind="click: function(){editTile(tileid, cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Part" %}</a>
             
@@ -253,15 +253,20 @@
                             <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
             
                             <!-- Show this if there is Event data (Top Card) -->
-                            <div class="afs-report-collapsible-container">
-                                <div style="width:75%" data-bind="foreach: {data: $data.metadata, as: 'item' }" class="afs-report-subsection-two-column">
-                                    <div class="afs-keyvalue" data-bind="component: {
-                                        name: 'views/components/reports/scenes/keyvalue',
-                                        params: {
-                                            data: item,
-                                            inline: true
-                                        }
-                                    }"></div>
+                            <div class="afs-report-event-section afs-report-collapsible-container">
+                                <div class="afs-report-subsection-container">
+                                    <div  style="width:95%;" data-bind="foreach: {data: $data.metadata, as: 'item' }" class="afs-report-subsection-two-column">
+                                        <div afs-report-subsection-two-column>  
+                                            <div class="afs-keyvalue" data-bind="component: {
+                                                name: 'views/components/reports/scenes/keyvalue',
+                                                params: {
+                                                    data: item,
+                                                    inline: true
+                                                }
+                                            }">
+                                            </div>
+                                        </div>  
+                                    </div>
                                 </div>
                             
                                 <!-- Event First Generation Cards -->
@@ -282,7 +287,7 @@
                                                     <tr class="afs-table-header">
                                                         <th>{% trans "Name" %}</th>
                                                         <th class="min-tabletl">{% trans "Type" %}</th>
-                                                        <th class="min-medium">{% trans "Language" %}</th>
+                                                        <th class="none">{% trans "Language" %}</th>
                                                         <th class="afs-table-control all"></th>
                                                     </tr>
                                                 </thead>
@@ -325,8 +330,8 @@
                                             <table class="table table-striped" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr class="afs-table-header">
-                                                        <th>{% trans "Type" %}</th>
                                                         <th>{% trans "Statement" %}</th>
+                                                        <th class="none">{% trans "Type" %}</th>
                                                         <th class="none">{% trans "Language" %}</th>
                                                         <th class="none">{% trans "Name of Statement" %}</th>
                                                         <th class="afs-table-control all"></th>
@@ -334,8 +339,8 @@
                                                 </thead>
                                                 <tbody  data-bind="dataTablesForEach: { data: statements, dataTableOptions: $parent.statementsTableConfig}">
                                                     <tr>
-                                                        <td data-bind="text: type"></td>
                                                         <td data-bind="text: content" class="line-clamp-1" style="vertical-align: unset; padding-top: 7px;"></td>
+                                                        <td data-bind="text: type"></td>
                                                         <td data-bind="text: language"></td>
                                                         <td data-bind="text: name"></td>
                                                         <td class="afs-table-control">
@@ -408,7 +413,7 @@
                                     <div class="afs-nodata-note">No timespan for this event</div>
             
                                     <!-- Show this block if there's data -->
-                                    <div class="firstchild-container">
+                                    <div class="firstchild-container pad-top-sm">
                                         <div class="afs-report-subsection-item flex">
                                             <div class="afs-block-attributes timespan">
                                                 <h6 class="afs-block-key">Beginning of the beginning: </h6>
