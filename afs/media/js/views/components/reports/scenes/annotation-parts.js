@@ -11,13 +11,11 @@ define([
     return ko.components.register('views/components/reports/scenes/annotation-parts', {
         viewModel: function(params) {
             var self = this;
-            console.log(params)
             Object.assign(self, reportUtils);
             self.maps = ko.observableArray();
             self.selectedAnnotationTileId = params.selectedAnnotationTileId || ko.observable();
             self.annotations = [];
 
-            self.includeTable = params.includeTable || false;
             self.annotationTableConfig = params.annotationTableConfig;
             self.annotationTableHeader = params.annotationTableHeader;
 
@@ -73,7 +71,6 @@ define([
                 let annotationCombined;
                 let annotationInfo = [];
                 annotationCollection[canvas].forEach(function(annotation){
-                    console.log(annotationCombined)
                     if (annotationCombined) {
                         annotationCombined.features = annotationCombined.features.concat(annotation.featureCollection.features);
                     } else {

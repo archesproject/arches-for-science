@@ -1,25 +1,33 @@
 {% load i18n %}
 
-<div style="" data-bind="foreach: {data: annotations, as: 'annotation', noChildContext: true}">
+<div style="margin-bottom: 20px;" data-bind="foreach: {data: annotations, as: 'annotation', noChildContext: true}">
     <div style="border: solid 1px #ddd; height: 300px; width: 100%; margin: 10px">
         <div class="iiif-leaflet" data-bind="leaflet: annotation.leafletConfig"></div>
     </div>
-    <!-- ko if: includeTable -->
     <table class="table table-striped" cellspacing="0" width="100%">
         <thead data-bind="html: annotationTableHeader"></thead>
         <tbody data-bind="dataTablesForEach: { data: annotation.info, as: 'part', noChildContext: true, dataTableOptions: $parent.annotationTableConfig }">
             <tr>
+                <!-- ko if: getResourceLink(part.column1) -->
                 <td>
-                    <div data-bind="text: part.label"></div>
+                    <a class="afs-block-value-url" data-bind="text: getNodeValue(part.column1), attr: {href: getResourceLink(part.column1)}"></a>
+                </td>
+                <!-- /ko -->
+                <!-- ko ifnot: getResourceLink(part.column1) -->
+                <td data-bind="text: part.column1"></td>
+                <!-- /ko -->
+                <td>
+                    <a class="afs-block-value-url" data-bind="text: getNodeValue(part.column2), attr: {href: getResourceLink(part.column2)}"></a>
                 </td>
                 <td>
-                    <a class="afs-block-value-url" data-bind="text: getNodeValue(part.physicalPartOfObject), attr: {href: getResourceLink(part.physicalPartOfObject)}"></a>
+                    <a class="afs-block-value-url" data-bind="text: getNodeValue(part.column3), attr: {href: getResourceLink(part.column3)}"></a>
                 </td>
-                <td>
-                    <a class="afs-block-value-url" data-bind="text: getNodeValue(part.annotator), attr: {href: undefined}"></a>
-                </td>
-                <td data-bind="text: part.assignedPropertyType"></td>
-                <td data-bind="text: part.geometricAnnotationIdentifier"></td>
+                <!-- ko if: part.column4 -->
+                <td data-bind="text: part.column4"></td>
+                <!-- /ko -->
+                <!-- ko if: part.column5 -->
+                <td data-bind="text: part.column4"></td>
+                <!-- /ko -->
                 <td style="width: 110px;" class="afs-table-control">
                     <div>
                         <div style="display:inline" data-bind="if: annotation.card && annotation.card">
@@ -44,5 +52,4 @@
             <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
         </div>
     </div>
-    <!-- /ko -->
 <div>

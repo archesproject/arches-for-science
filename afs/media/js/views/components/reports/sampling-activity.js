@@ -27,6 +27,15 @@ define([
                 ...self.defaultTableConfig,
                 columns: Array(4).fill(null)
             };
+
+            self.annotationTableHeader = 
+                `<tr class="afs-table-header">
+                    <th>Sampling Area</th>
+                    <th>Sample Created</th>
+                    <th>Overall Object</th>
+                    <th class="afs-table-control all"></th>
+                </tr>`
+
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
@@ -145,15 +154,15 @@ define([
             const parts = self.getRawNodeValue(self.resource(), 'sampling unit')
             self.annotation = parts ? {
                 info: parts.map((x => {
-                    const overallObjectSampled = self.getRawNodeValue(x, 'sampling area', 'overall object sampled');
-                    const samplingArea = self.getRawNodeValue(x, 'sampling area');
-                    const sampleCreated = self.getRawNodeValue(x, 'sample created');
+                    const column1 = self.getRawNodeValue(x, 'sampling area'); //sampling Area
+                    const column2 = self.getRawNodeValue(x, 'sample created'); //sample Created
+                    const column3 = self.getRawNodeValue(x, 'sampling area', 'overall object sampled'); //overall Object Sampled
                     const tileId = self.getTileId(x);
                     const featureCollection = self.getNodeValue(x, 'sampling area', 'sampling area identification', 'Sampling Area Visualization');
                     for (feature of featureCollection.features){
                         feature.properties.tileId = tileId;
                     }
-                return {overallObjectSampled, samplingArea, sampleCreated, tileId, featureCollection}
+                return {column1, column2, column3, tileId, featureCollection}
                 })),
                 card: self.cards?.['Sampling Unit for Sampling Activity'],
             }: {};
