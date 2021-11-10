@@ -77,7 +77,7 @@ define([
                 self.annotations.push({
                     leafletConfig: leafletConfig,
                 });
-            };
+            }
 
             self.selectedAnnotationTileId.subscribe(tileId => {
                 if (self.maps()) {
