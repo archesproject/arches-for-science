@@ -31,11 +31,11 @@ define([
 
             self.annotationTableHeader = 
                 `<tr class="afs-table-header">
-                    <th>{% trans "Region Name" %}</th>
-                    <th>{% trans "Part of Object" %}</th>
-                    <th class="min-tabletl">{% trans "Annotator" %}</th>
-                    <th class="none">{% trans "Assigned Property Type" %}</th>
-                    <th class="none">{% trans "Geometric Annotation Identifier" %}</th>
+                    <th>Region Name</th>
+                    <th>Part of Object</th>
+                    <th class="min-tabletl">Annotator</th>
+                    <th class="none">Assigned Property Type</th>
+                    <th class="none">Geometric Annotation Identifier</th>
                     <th class="afs-table-control all"></th>
                 </tr>`
 
@@ -317,21 +317,20 @@ define([
             const parts = self.getRawNodeValue(self.resource(), 'part identifier assignment')
             self.annotation = parts ? {
                     info: parts.map((x => {
-                        const annotator = self.getRawNodeValue(x, 'part identifier assignment_annotator'); //annotator
-                        const geometricAnnotationIdentifier = self.getNodeValue(x, 'part identifier assignment_polygon identifier', 'part identifier assignment_polygon identifier_classification');
-                        const label = self.getNodeValue(x, 'part identifier assignment_label'); // label/name
-                        const assignedPropertyType = self.getNodeValue(x, 'part identifier assignment_assigned property type'); 
-                        const physicalPartOfObject = self.getRawNodeValue(x, 'part identifier assignment_physical part of object'); // object part
+                        const column1 = self.getNodeValue(x, 'part identifier assignment_label'); // label/name
+                        const column2 = self.getRawNodeValue(x, 'part identifier assignment_physical part of object'); // object part
+                        const column3 = self.getRawNodeValue(x, 'part identifier assignment_annotator'); //annotator
+                        const column4 = self.getNodeValue(x, 'part identifier assignment_assigned property type'); 
+                        const column5 = self.getNodeValue(x, 'part identifier assignment_polygon identifier', 'part identifier assignment_polygon identifier_classification');
                         const tileId = self.getTileId(x);
                         const featureCollection = self.getNodeValue(x, 'part identifier assignment_polygon identifier');
                         for (feature of featureCollection.features){
                             feature.properties.tileId = tileId;
                         }
-                        return {label, annotator, tileId, assignedPropertyType, physicalPartOfObject, geometricAnnotationIdentifier, featureCollection}
+                        return {column1, column2, column3, column4, column5, tileId, featureCollection}
                     })),
                     card: self.cards?.['parts of object'],
                 }: {};
-            
 
             self.actorData = ko.observable({
                 sections: 

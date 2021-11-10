@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div style="margin-bottom: 20px;" data-bind="foreach: {data: annotations, as: 'annotation', noChildContext: true}">
+<div data-bind="foreach: {data: annotations, as: 'annotation', noChildContext: true}">
     <div style="border: solid 1px #ddd; height: 300px; width: 100%; margin: 10px">
         <div class="iiif-leaflet" data-bind="leaflet: annotation.leafletConfig"></div>
     </div>
@@ -47,7 +47,7 @@
             </tr>
         </tbody>
     </table>
-    <div class="final-step-section-block-item">
+    <div class="final-step-section-block-item" style="margin-bottom: 60px;">
         <div class="block-item files-metadata">
             <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
         </div>
