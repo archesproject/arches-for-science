@@ -149,17 +149,13 @@ define([
                     const samplingArea = self.getRawNodeValue(x, 'sampling area');
                     const sampleCreated = self.getRawNodeValue(x, 'sample created');
                     const tileId = self.getTileId(x);
-                    return {overallObjectSampled, samplingArea, sampleCreated, tileId}
+                    const featureCollection = self.getNodeValue(x, 'sampling area', 'sampling area identification', 'Sampling Area Visualization');
+                    for (feature of featureCollection.features){
+                        feature.properties.tileId = tileId;
+                    }
+                return {overallObjectSampled, samplingArea, sampleCreated, tileId, featureCollection}
                 })),
                 card: self.cards?.['Sampling Unit for Sampling Activity'],
-                featureCollection: parts.reduce(((previous, current) => {
-                    const geojson = self.getNodeValue(current, 'sampling area', 'sampling area identification', 'Sampling Area Visualization');
-                    for (feature of geojson.features){
-                        feature.properties.tileId = self.getTileId(current);
-                        previous.features.push(feature);
-                    }
-                    return previous;
-                }), {features: [], type: 'FeatureCollection'})
             }: {};
         },
         template: { require: 'text!templates/views/components/reports/sampling-activity.htm' }

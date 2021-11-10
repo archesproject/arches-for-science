@@ -1,7 +1,48 @@
 {% load i18n %}
 
-<div style="display:flex; flex-wrap: wrap" data-bind="foreach: annotations">
-    <div style="border: solid 1px #ddd; flex-direction: row; flex-wrap: wrap; height: 300px; width: 300px; margin: 10px">
-        <div class="iiif-leaflet" data-bind="leaflet: leafletConfig"></div>
+<div style="" data-bind="foreach: {data: annotations, as: 'annotation', noChildContext: true}">
+    <div style="border: solid 1px #ddd; height: 300px; width: 100%; margin: 10px">
+        <div class="iiif-leaflet" data-bind="leaflet: annotation.leafletConfig"></div>
     </div>
+    <!-- ko if: includeTable -->
+    <table class="table table-striped" cellspacing="0" width="100%">
+        <thead data-bind="html: annotationTableHeader"></thead>
+        <tbody data-bind="dataTablesForEach: { data: annotation.info, as: 'part', noChildContext: true, dataTableOptions: $parent.annotationTableConfig }">
+            <tr>
+                <td>
+                    <div data-bind="text: part.label"></div>
+                </td>
+                <td>
+                    <a class="afs-block-value-url" data-bind="text: getNodeValue(part.physicalPartOfObject), attr: {href: getResourceLink(part.physicalPartOfObject)}"></a>
+                </td>
+                <td>
+                    <a class="afs-block-value-url" data-bind="text: getNodeValue(part.annotator), attr: {href: undefined}"></a>
+                </td>
+                <td data-bind="text: part.assignedPropertyType"></td>
+                <td data-bind="text: part.geometricAnnotationIdentifier"></td>
+                <td style="width: 110px;" class="afs-table-control">
+                    <div>
+                        <div style="display:inline" data-bind="if: annotation.card && annotation.card">
+                            <a style="display:inline" data-bind="click: function() {editTile(part.tileId, annotation.card)}">
+                                <i style="display:inline" class="fa fa-mail-reply"></i>
+                            </a>
+                            <a style="display:inline" data-bind="click: function() {deleteTile(part.tileId, annotation.card)}">
+                                <i style="display:inline" class="fa fa-trash"></i>
+                            </a>
+                        </div>
+                        <a style="display:inline" data-bind="click: function(){selectedAnnotationTileId(part.tileId)}">
+                            <i class="fa fa-globe"></i>
+                        </a>
+                        <i style="display:inline" data-bind="visible: selectedAnnotationTileId() === part.tileId" class="fa fa-arrow-left"></i>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="final-step-section-block-item">
+        <div class="block-item files-metadata">
+            <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info.length'></div>
+        </div>
+    </div>
+    <!-- /ko -->
 <div>

@@ -11,11 +11,15 @@ define([
     return ko.components.register('views/components/reports/scenes/annotation-parts', {
         viewModel: function(params) {
             var self = this;
-
+            console.log(params)
             Object.assign(self, reportUtils);
             self.maps = ko.observableArray();
             self.selectedAnnotationTileId = params.selectedAnnotationTileId || ko.observable();
             self.annotations = [];
+
+            self.includeTable = params.includeTable || false;
+            self.annotationTableConfig = params.annotationTableConfig;
+            self.annotationTableHeader = params.annotationTableHeader;
 
             self.prepareAnnotation = function(featureCollection) {
                 var canvas = featureCollection.features[0].properties.canvas;
@@ -57,25 +61,31 @@ define([
             };
 
             let annotationCollection = {};
-            params.annotation.featureCollection.features.forEach(function(feature){
-                const canvas = feature.properties.canvas;
+            params.annotation.info.forEach(function(info){
+                const canvas = info.featureCollection.features[0].properties.canvas;
                 if (canvas in annotationCollection) {
-                    annotationCollection[canvas].push(feature);
+                    annotationCollection[canvas].push(info);
                 } else {
-                    annotationCollection[canvas] = [feature];
+                    annotationCollection[canvas] = [info];
                 }
             });
             for (const canvas in annotationCollection){
-                let annotationCombined = {
-                    type: "FeatureCollection",
-                    features: []
-                };
+                let annotationCombined;
+                let annotationInfo = [];
                 annotationCollection[canvas].forEach(function(annotation){
-                    annotationCombined.features.push(annotation);
+                    console.log(annotationCombined)
+                    if (annotationCombined) {
+                        annotationCombined.features = annotationCombined.features.concat(annotation.featureCollection.features);
+                    } else {
+                        annotationCombined = annotation.featureCollection;
+                    }
+                    annotationInfo.push(annotation);
                 });
                 const leafletConfig = this.prepareAnnotation(annotationCombined);
                 self.annotations.push({
                     leafletConfig: leafletConfig,
+                    info: annotationInfo,
+                    card: params.annotation.card,
                 });
             }
 

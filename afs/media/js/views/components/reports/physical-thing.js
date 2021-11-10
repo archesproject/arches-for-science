@@ -28,6 +28,17 @@ define([
                 ...self.defaultTableConfig,
                 columns: Array(6).fill(null)
             };
+
+            self.annotationTableHeader = 
+                `<tr class="afs-table-header">
+                    <th>{% trans "Region Name" %}</th>
+                    <th>{% trans "Part of Object" %}</th>
+                    <th class="min-tabletl">{% trans "Annotator" %}</th>
+                    <th class="none">{% trans "Assigned Property Type" %}</th>
+                    <th class="none">{% trans "Geometric Annotation Identifier" %}</th>
+                    <th class="afs-table-control all"></th>
+                </tr>`
+
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
@@ -312,17 +323,13 @@ define([
                         const assignedPropertyType = self.getNodeValue(x, 'part identifier assignment_assigned property type'); 
                         const physicalPartOfObject = self.getRawNodeValue(x, 'part identifier assignment_physical part of object'); // object part
                         const tileId = self.getTileId(x);
-                        return {label, annotator, tileId, assignedPropertyType, physicalPartOfObject, geometricAnnotationIdentifier}
+                        const featureCollection = self.getNodeValue(x, 'part identifier assignment_polygon identifier');
+                        for (feature of featureCollection.features){
+                            feature.properties.tileId = tileId;
+                        }
+                        return {label, annotator, tileId, assignedPropertyType, physicalPartOfObject, geometricAnnotationIdentifier, featureCollection}
                     })),
                     card: self.cards?.['parts of object'],
-                    featureCollection: parts.reduce(((previous, current) => {
-                        const geojson = self.getNodeValue(current, 'part identifier assignment_polygon identifier');
-                        for (feature of geojson.features){
-                            feature.properties.tileId = self.getTileId(current);
-                            previous.features.push(feature);
-                        }
-                        return previous;
-                    }), {features: [], type: 'FeatureCollection'})
                 }: {};
             
 
