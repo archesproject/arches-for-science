@@ -13,8 +13,9 @@ define([
             var self = this;
 
             Object.assign(self, reportUtils);
-            self.map = ko.observable();
+            self.maps = ko.observableArray();
             self.selectedAnnotationTileId = params.selectedAnnotationTileId || ko.observable();
+            self.annotations = [];
 
             self.prepareAnnotation = function(featureCollection) {
                 var canvas = featureCollection.features[0].properties.canvas;
@@ -44,7 +45,7 @@ define([
                             [extent[3]+1, extent[2]+1]
                         ]);
                     }, 250);
-                    self.map(map);
+                    self.maps.push(map);
                 };
 
                 return {
@@ -55,22 +56,45 @@ define([
                 };
             };
 
-            self.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection);
+            let annotationCollection = {};
+            params.annotation.featureCollection.features.forEach(function(feature){
+                const canvas = feature.properties.canvas;
+                if (canvas in annotationCollection) {
+                    annotationCollection[canvas].push(feature);
+                } else {
+                    annotationCollection[canvas] = [feature];
+                }
+            });
+            for (const canvas in annotationCollection){
+                let annotationCombined = {
+                    type: "FeatureCollection",
+                    features: []
+                };
+                annotationCollection[canvas].forEach(function(annotation){
+                    annotationCombined.features.push(annotation);
+                });
+                const leafletConfig = this.prepareAnnotation(annotationCombined);
+                self.annotations.push({
+                    leafletConfig: leafletConfig,
+                });
+            };
 
             self.selectedAnnotationTileId.subscribe(tileId => {
-                if (self.map()) {
-                    self.map().eachLayer(function(layer){
-                        if (layer.eachLayer) {
-                            layer.eachLayer(function(feature){
-                                const defaultColor = feature.feature.properties.color;
+                if (self.maps()) {
+                    self.maps().forEach(function(map){
+                        map.eachLayer(function(layer){
+                            if (layer.eachLayer) {
+                                layer.eachLayer(function(feature){
+                                    const defaultColor = feature.feature.properties.color;
 
-                                if (tileId === feature.feature.properties.tileId) {
-                                    feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
-                                } else {
-                                    feature.setStyle({color: defaultColor, fillColor: defaultColor});
-                                }
-                            });
-                        }
+                                    if (tileId === feature.feature.properties.tileId) {
+                                        feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                                    } else {
+                                        feature.setStyle({color: defaultColor, fillColor: defaultColor});
+                                    }
+                                });
+                            }
+                        });
                     });
                 }
             });
