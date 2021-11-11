@@ -6,8 +6,9 @@ define([
     function viewModel(params) {
         var self = this;
         this.digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
-        this.physicalThingResourceId = ko.observable(params.physicalThingResourceId);
+        this.physicalThingResourceId = ko.observable();
         this.relatedDigitalResources = ko.observableArray();
+
         this.dataLoaded = ko.observable(false);
 
         const getDigitalResources = async function(resourceid) {
@@ -19,7 +20,18 @@ define([
             if (result.ok) {
                 const results = await result.json();
                 const resources = results.resources;
-                resources.forEach(resource => resource.selected = ko.observable(false));
+
+                resources.forEach(function(resource) {
+                    resource.selected = ko.observable(false);
+                    if(params.value()) {
+                        params.value().digitalResources.forEach(function(val) {
+                            if (val.resourceid === resource.resourceid) {
+                                resource.selected(val.selected);
+                            }
+                        });
+                    }
+                });
+                console.log(resources)
                 self.relatedDigitalResources(resources);
                 self.dataLoaded(true);
             }
@@ -40,8 +52,12 @@ define([
             params.value(data);
         });
 
-        getDigitalResources(params.physicalThingResourceId);
         this.physicalThingResourceId.subscribe(getDigitalResources);
+
+        if (params.value()) {
+            self.physicalThingResourceId(params.value().resourceid);
+            getDigitalResources(params.value().resourceid);
+        }
     }
 
     ko.components.register('select-dataset', {
