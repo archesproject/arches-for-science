@@ -366,6 +366,7 @@ define([
                 params.form.lockExternalStep("select-instrument-and-files", true);
                 const parts = self.parts();
                 for (const part of parts) {
+                    if (!part.datasetName() && part.datasetFiles().length === 0) { continue; }
                     try {
                         // For each part of parent phys thing, create a digital resource with a Name tile
                         const dataset = (await self.saveDatasetName(part));
