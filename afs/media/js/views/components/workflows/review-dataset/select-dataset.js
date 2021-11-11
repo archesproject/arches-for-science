@@ -29,6 +29,7 @@ define([
             return self.relatedDigitalResources().map(function(resource){
                 return {
                     resourceid: resource.resourceid,
+                    partresourceid: resource.partresourceid,
                     selected: resource.selected()
                 };
             });
