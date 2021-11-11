@@ -27,8 +27,8 @@ define([
                 }, 
                 []
             )
-        } else if (datasetInfo["dataset-select-instance"]){
-            var datasetIds = datasetInfo["dataset-select-instance"].savedData()?.reduce(
+        } else if (datasetInfo["select-dataset-instances"]){
+            var datasetIds = datasetInfo["select-dataset-instances"].savedData()?.digitalResources?.reduce(
                 (acc, res) => {
                     if (res.resourceid && res.selected === true) { 
                         acc.push(res.resourceid)

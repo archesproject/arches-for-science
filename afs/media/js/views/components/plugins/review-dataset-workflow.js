@@ -14,28 +14,6 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Object',
-                    name: 'review-dataset-object',  /* unique to workflow */
-                    required: true,
-                    layoutSections: [
-                        {
-                            sectionTitle: 'Select an Object',
-                            componentConfigs: [
-                                { 
-                                    componentName: 'resource-instance-select-widget',
-                                    uniqueInstanceName: 'sample-object-resource-instance', /* unique to step */
-                                    tilesManaged: 'none',
-                                    parameters: {
-                                        graphids: [
-                                            '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
-                                        ],
-                                    },
-                                },
-                            ], 
-                        },
-                    ],
-                },
-                {
                     title: 'Datasets',
                     name: 'select-datasets', /* unique to workflow */
                     required: true,
@@ -44,13 +22,12 @@ define([
                             componentConfigs: [
                                 { 
                                     componentName: 'select-dataset',
-                                    uniqueInstanceName: 'dataset-select-instance', /* unique to step */
+                                    uniqueInstanceName: 'select-dataset-instances', /* unique to step */
                                     tilesManaged: 'none',
                                     parameters: {
                                         graphids: [
                                             '9519cb4f-b25b-11e9-8c7b-a4d18cec433a',  /* physical thing */
                                         ],
-                                        physicalThingResourceId: "['review-dataset-object']['sample-object-resource-instance']"
                                     },
                                 },
                             ], 
@@ -75,7 +52,7 @@ define([
                                     uniqueInstanceName: 'file-interpretation', /* unique to step */
                                     parameters: {
                                         activeTab: 'edit',
-                                        datasetInfo: "['select-datasets']"
+                                        datasetInfo: "['select-datasets']['dataset-select-instance']['digitalResources']"
                                     },
                                 },
                             ], 
@@ -93,8 +70,8 @@ define([
                                     uniqueInstanceName: 'review-dataset-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        sampleObjectResourceInstanceId: "['review-dataset-object']['sample-object-resource-instance']",
-                                        selectedDatasets: "['select-datasets']['dataset-select-instance']"
+                                        sampleObjectResourceInstanceId: "['select-datasets']['select-dataset-instances']['resourceid']",
+                                        selectedDatasets: "['select-datasets']['select-dataset-instances']['digitalResources']"
                                     },
                                 },
                             ], 
