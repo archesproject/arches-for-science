@@ -31,7 +31,6 @@ define([
                         });
                     }
                 });
-                console.log(resources)
                 self.relatedDigitalResources(resources);
                 self.dataLoaded(true);
             }
