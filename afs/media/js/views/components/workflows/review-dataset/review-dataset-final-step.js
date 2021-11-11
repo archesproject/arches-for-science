@@ -99,9 +99,9 @@ define([
                 objectName: {'name': 'Object Name', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
             };
 
-            var parentPhysThingResourceId = this.getResourceValue(val.resource, ['part of', 'resourceId']);
+            // var parentPhysThingResourceId = this.getResourceValue(val.resource, ['part of', 'resourceId']);
             var parentPhysThingData = ko.observable();
-            self.getResourceData(parentPhysThingResourceId, parentPhysThingData);
+            self.getResourceData(val.resourceinstanceid, parentPhysThingData);
             parentPhysThingData.subscribe(function(val){
                 if (val.resource["Part Identifier Assignment"].length > 0){
                     var parentPhysThings = val.resource["Part Identifier Assignment"].map(function(part){
@@ -113,10 +113,10 @@ define([
                     });
                 }
                 parentPhysThings.forEach(function(thing){
-                    if (thing.resourceid === self.resourceid){
+                    // if (thing.resourceid === self.resourceid){
                         var annotationJson = JSON.parse(thing.annotation.replaceAll("'",'"'));
                         self.leafletConfig = self.prepareAnnotation(annotationJson);
-                    }
+                    // }
                 });
                 self.resourceLoading(false);
                 if (!self.digitalResourceLoading()){
