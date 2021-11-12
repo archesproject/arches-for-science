@@ -18,7 +18,7 @@ define([
                     required: true,
                     informationboxdata: {
                         heading: 'Project Name',
-                        text: 'Identify the project and its objectives',
+                        text: 'Identify the project by giving it a name',
                     },
                     layoutSections: [
                         {
@@ -42,7 +42,7 @@ define([
                     required: false,
                     informationboxdata: {
                         heading: 'Project Statement',
-                        text: 'Set the Project Statement',
+                        text: 'Indicate the objectives or motivation of the project',
                     },
                     layoutSections: [
                         {
@@ -67,7 +67,7 @@ define([
                     required: true,
                     informationboxdata: {
                         heading: 'Project Start',
-                        text: 'Set the Project Timespan',
+                        text: 'Indicate the date the project started if known',
                     },
                     layoutSections: [
                         {
@@ -92,8 +92,8 @@ define([
                     name: 'set-project-team',  /* unique to workflow */
                     required: false,
                     informationboxdata: {
-                        heading: 'Project Timespan',
-                        text: 'Set the Project Timespan',
+                        heading: 'Project Team',
+                        text: 'Add the names of people involved in the project',
                     },                    
                     layoutSections: [
                         {

@@ -18,7 +18,7 @@ define([
             this.componentName = 'upload-dataset-workflow';
 
             var sampleLocationStep = {
-                title: 'Sample Location',
+                title: 'Data Files and Location',
                 name: 'select-dataset-files-step',
                 required: true,
                 workflowstepclass: 'upload-dataset-step-workflow-component-based-step',

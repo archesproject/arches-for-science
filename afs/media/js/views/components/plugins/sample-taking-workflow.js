@@ -21,7 +21,7 @@ define([
                     required: true,
                     informationboxdata: {
                         heading: 'Projects and related object',
-                        text: 'Select the project and object that your are sampling',
+                        text: 'Select the project and object that you are sampling',
                     },
                     layoutSections: [
                         {
