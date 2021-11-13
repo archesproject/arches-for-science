@@ -171,12 +171,14 @@ define([
                     ]
             });
 
-            self.files = ko.observableArray(self.getRawNodeValue(self.resource(), 'file').map(x => {
-                const name =  self.getNodeValue(x, 'file_details', 0, 'name');
-                const tileid =  self.getTileId(x);
-                const metadataExists = self.nestedDataExists(x, '@node_id', '@tile_id', 'file_details');
-                return {name, metadataExists, tileid}
-            }));
+            self.files = ko.observableArray(
+                self.getRawNodeValue(self.resource(), 'file')?.map(x => {
+                    const name =  self.getNodeValue(x, 'file_details', 0, 'name');
+                    const tileid =  self.getTileId(x);
+                    const metadataExists = self.nestedDataExists(x, '@node_id', '@tile_id', 'file_details');
+                    return {name, metadataExists, tileid}
+                }
+            ));
 
             self.sethoodData = ko.observable({
                 sections: 
