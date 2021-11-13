@@ -32,6 +32,7 @@ define([
                 return val['Digital Source']['resourceId'] === digitalReferenceResourceId;
             });
             this.reportVals = {
+                projectName: {'name': 'Project', 'value': params.relatedProjectData.projectName, 'resourceid': params.relatedProjectData.project},
                 parentObject: {'name': 'Object', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
                 digitalReference: {'name': 'Image Service', 'value': digitalReference['Digital Source']["@display_value"]},
             };
