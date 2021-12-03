@@ -24,13 +24,13 @@
 <div data-bind="style: { display: inline ? 'inline': '' }" class="afs-block-value">--</div>
 <!-- /ko -->
 
- <!-- ko if: item.type == 'kv'-->
- <div class="afs-block-value" data-bind="text: item.value"></div>
- <!-- /ko --> 
+<!-- ko if: item.type == 'kv'-->
+<div class="afs-block-value" data-bind="text: item.value"></div>
+<!-- /ko --> 
 
- <!-- ko if: item.type == 'href'-->
- <div class="afs-block-value"><a data-bind="text: item.value, attr: { href: item.href }"></a></div>
- <!-- /ko -->  
+<!-- ko if: item.type == 'href'-->
+<div class="afs-block-value"><a data-bind="text: item.value, attr: { href: item.href }"></a></div>
+<!-- /ko -->  
 
 <!-- ko if: item.type == 'timespan' -->
 <!-- ko if: item.value -->
@@ -76,7 +76,7 @@
 <!-- /ko -->
 <!-- /ko -->
 
- <!-- ko if: item.type == 'resource'-->
+<!-- ko if: item.type == 'resource'-->
     <!-- ko if: item.value -->
         <!-- ko if: item.value && Array.isArray(item.value) -->
             <!-- ko foreach: {data: item, as: 'instance', noChildContext: true}-->
@@ -125,6 +125,12 @@
             <!-- /ko -->
         <!-- /ko -->
     <!-- /ko -->
- <!-- /ko -->
+<!-- /ko -->
+
+<!-- ko if: inline -->
+<div class="afs-card-control" data-bind="if: item.card">
+    <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
+</div>
+<!-- /ko --> 
  {% endblock body %}
 {% endblock report %}
