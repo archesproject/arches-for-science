@@ -119,7 +119,7 @@
                                                         <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['files of digital resource'])}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards['files of digital resource'])}">
+                                                        <a data-bind="click: $parent.deleteTile.bind($data, tileid, $parent.cards['files of digital resource'])">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>

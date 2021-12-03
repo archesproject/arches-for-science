@@ -139,7 +139,7 @@
                                                 <a style="display:inline" data-bind="click: function() {$parent.editTile(part.tileId, annotation.card)}">
                                                     <i style="display:inline" class="fa fa-mail-reply"></i>
                                                 </a>
-                                                <a style="display:inline" data-bind="click: function() {$parent.deleteTile(part.tileId, annotation.card)}">
+                                                <a style="display:inline" data-bind="click: $parent.deleteTile.bind(part.tileId, annotation.card)">
                                                     <i style="display:inline" class="fa fa-trash"></i>
                                                 </a>
                                             </div>

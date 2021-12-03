@@ -162,7 +162,7 @@
                                                 <a style="display:inline" data-bind="click: function() {$parent.editTile(part.tileId, $parent.annotation.card)}">
                                                     <i style="display:inline" class="fa fa-mail-reply"></i>
                                                 </a>
-                                                <a style="display:inline" data-bind="click: function() {$parent.deleteTile(part.tileId, $parent.annotation.card)}">
+                                                <a style="display:inline" data-bind="click: $parent.deleteTile.bind($data, part.tileId, $parent.annotation.card)">
                                                     <i style="display:inline" class="fa fa-trash"></i>
                                                 </a>
                                             </div>

@@ -44,7 +44,7 @@
                                         <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.dimension)}">
                                             <i class="fa fa-mail-reply"></i>
                                         </a>
-                                        <a data-bind="click: function() {$parent.delete(tileid, $parent.cards.dimension)}">
+                                        <a data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.dimension)">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </div>
