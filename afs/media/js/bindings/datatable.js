@@ -57,16 +57,7 @@ define([
                 table.destroy();
             }
             ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
-            const opt = options.dataTableOptions;
-            Object.assign(opt, {drawCallback: function(settings){
-                console.log(settings);
-            }})
-            table = $(element).closest('table').DataTable(opt);
-
-            table.deleteTileRow = (tileid) => {
-                removedTiles.push(tileid);
-                console.log(tileid);
-            }
+            table = $(element).closest('table').DataTable(options.dataTableOptions);
 
             if (options.dataTableOptions.paging) {
                 if (table.page.info().pages - ko.bindingHandlers.dataTablesForEach.page == 0)
