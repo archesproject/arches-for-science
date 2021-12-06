@@ -57,6 +57,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                             location: false
                         },
                         names: ko.observableArray(),
+                        title: ko.observable(),
                         visible: ko.observable(true),
                         identifiers: ko.observableArray(),
                         statements: ko.observableArray(),
@@ -200,11 +201,17 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         for(configuration of dataConfig.metadata){
                             const key = configuration.key;
                             const type = configuration.type;
+
+                            const nodeValue = self.getNodeValue(eventData, {testPaths: [[configuration.path]]})
                             
                             const value = 
                                 type == 'resource' ? 
                                     self.getRawNodeValue(eventData, {testPaths: [[configuration.path]]}) : 
-                                    self.getNodeValue(eventData, {testPaths: [[configuration.path]]});
+                                    nodeValue;
+                            
+                            if(configuration.title && nodeValue != "--"){
+                                eventObservables.title(self.getNodeValue(eventData, {testPaths: [[configuration.path]]}));
+                            }
                             existenceEventMetadata.push({key, type, value})
                         }
                         eventObservables.metadata(existenceEventMetadata);
@@ -220,6 +227,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             } else {
                 for(existenceEvent of self.events){
                     self.visible[existenceEvent] = ko.observable(true);
+                    self.visible[existenceEvent].parts = ko.observable(true);
                     self.eventDataArray[existenceEvent] = extractEventData(existenceEvent, self.getRawNodeValue(params.data(), self.dataConfig?.[existenceEvent]?.graph), self.dataConfig?.[existenceEvent], self.cards?.[existenceEvent], params.metadata);
                 }
             }

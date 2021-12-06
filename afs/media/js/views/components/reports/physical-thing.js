@@ -56,6 +56,7 @@ define([
                     },{
                         key: 'production event type',
                         path: 'production_type',
+                        title: true,
                         type: 'resource'
                     },{
                         key: 'location of production event',
@@ -83,6 +84,7 @@ define([
                         },{
                             key: 'production event type',
                             path: 'production_part_type',
+                            title: true,
                             type: 'kv'
                         },{
                             key: 'location of production event',
