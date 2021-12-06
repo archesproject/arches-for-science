@@ -1,6 +1,7 @@
 define([
-    'arches'
-], function(arches) {
+    'arches',
+    'knockout'
+], function(arches, ko) {
     const standardizeNode = (obj) => {
         if(obj){
             const keys = Object.keys(obj);
@@ -49,7 +50,8 @@ define([
         }
         throw Error("Couldn't delete; tile was not found.")
     };
-    
+    const removedTiles = ko.observableArray();
+
     const checkNestedData = (resource, ...args) => {
         if(!resource) { return false; }
         for (key of Object.keys(resource)){
@@ -118,6 +120,8 @@ define([
             }],
         },
 
+        removedTiles: removedTiles,
+
         // used to collapse sections within a tab
         toggleVisibility: (observable) => { observable(!observable()) },
 
@@ -131,7 +135,9 @@ define([
             }
             const eventTarget = params?.[1]?.target;
             if(eventTarget) {
-                $(eventTarget).closest("table").DataTable().row($(eventTarget).closest("tr")).remove().draw();
+                const table = $(eventTarget).closest("table").DataTable();
+                removedTiles.push(tileid);
+                table.row($(eventTarget).closest("tr")).remove().draw();
             }
         },
 
