@@ -201,7 +201,11 @@
                                     <div 
                                         class="add-new-feature" 
                                         data-bind="
-                                            visible: !self.disableDrawing(),
+                                            visible: !self.disableDrawing() && 
+                                                    (widget.config.multiFeature() || 
+                                                    (!widget.config.multiFeature() && 
+                                                        (self.selectedSampleLocationInstanceFeatures() === undefined || 
+                                                         self.selectedSampleLocationInstanceFeatures().length < 1))),
                                             click: self.clearEditedGeometries,
                                         "
                                     >

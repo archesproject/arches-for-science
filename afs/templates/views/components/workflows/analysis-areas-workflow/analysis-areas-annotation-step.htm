@@ -203,7 +203,11 @@
                                         <div 
                                             class="add-new-feature" 
                                             data-bind="{
-                                                visible: !self.disableDrawing(),
+                                                visible: !self.disableDrawing() && 
+                                                    (widget.config.multiFeature() || 
+                                                    (!widget.config.multiFeature() && 
+                                                        (self.selectedAnalysisAreaInstanceFeatures() === undefined || 
+                                                        self.selectedAnalysisAreaInstanceFeatures().length < 1))),
                                                 click: self.clearEditedGeometries,
                                             }"
                                         >
