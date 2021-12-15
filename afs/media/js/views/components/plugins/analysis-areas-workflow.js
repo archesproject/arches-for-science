@@ -110,6 +110,7 @@ define([
                                     tilesManaged: 'none',
                                     parameters: {
                                         sampleObjectResourceId: "['select-project']['select-phys-thing']['physicalThing']",
+                                        relatedProjectData: "['select-project']['select-phys-thing']",
                                         regionsStepData: "['regions-step']['annotation-instance']",
                                         imageStepData: "['image-step']['image-service-instance'][0]['data']",
                                         digitalReferenceResourceId: "['image-step']['image-service-instance'][0]['resourceinstance_id']"

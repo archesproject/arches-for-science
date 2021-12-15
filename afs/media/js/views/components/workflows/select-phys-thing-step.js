@@ -23,6 +23,7 @@ define([
         this.projectGraphId = componentParams.graphids[1];
         this.validateThing = componentParams.validateThing;
         this.projectValue = ko.observable();
+        this.projectNameValue = ko.observable();
         this.physicalThingValue = ko.observable();
         this.setsThatBelongToTheProject = ko.observable();
         this.hasSetWithPhysicalThing = ko.observable();
@@ -51,6 +52,7 @@ define([
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
                     function(data){
+                        self.projectNameValue(data._source.displayname);
                         let setTileResourceInstanceIds;
                         let setTile = data._source.tiles.find(function(tile){
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
@@ -120,6 +122,7 @@ define([
                     projectSet: projectSet,
                     physicalThingSet: self.setsThatBelongToTheProject(),
                     project: self.projectValue(),
+                    projectName: self.projectNameValue(),
                 });
                 self.isPhysicalThingValid(true);
             } else {
