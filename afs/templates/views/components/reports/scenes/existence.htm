@@ -409,9 +409,11 @@
                                 <div class="afs-report-subsection-firstchild">
                                     <h5>Event Part Timespan</h5>
                                     <a data-bind="if: $data.cards && $data.cards.timespan, click: function(){$parent.addNewTile(cards.timespan)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit Part Timespan" %}</a>
-                                    <!-- Show this block if there's NO data -->
+                                    <!-- ko ifnot: timespan() -->
                                     <div class="afs-nodata-note">No timespan for this event</div>
-            
+                                    <!-- /ko -->
+                                    
+                                    <!-- ko if: timespan() -->
                                     <!-- Show this block if there's data -->
                                     <div class="firstchild-container pad-top-sm">
                                         <div class="afs-report-subsection-item flex">
@@ -449,6 +451,7 @@
                                             </div>
                                         </div>
                                     </div> 
+                                    <!--/ko-->
                                 </div>
                             </div>
                         </div>
