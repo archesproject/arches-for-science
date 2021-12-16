@@ -39,7 +39,7 @@
                                         <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.name)}">
                                             <i class="fa fa-mail-reply"></i>
                                         </a>
-                                        <a data-bind="click: function() {$parent.delete(tileid, $parent.cards.name)}">
+                                        <a data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.name)">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </div>
@@ -88,7 +88,7 @@
                                         <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.identifier)}">
                                             <i class="fa fa-mail-reply"></i>
                                         </a>
-                                        <a data-bind="click: function() {$parent.delete(tileid, $parent.cards.identifier)}">
+                                        <a data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.identifier)">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </div>

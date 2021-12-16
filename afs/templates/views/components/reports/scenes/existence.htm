@@ -84,7 +84,7 @@
                                                     <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.name)}">
                                                         <i class="fa fa-mail-reply"></i>
                                                     </a>
-                                                    <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.name)}">
+                                                    <a data-bind="click: $parent.deleteTile.bind($data, tileid, eventData.cards.name)">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -132,7 +132,7 @@
                                                     <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.statement)}">
                                                         <i class="fa fa-mail-reply"></i>
                                                     </a>
-                                                    <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.statement)}">
+                                                    <a data-bind="click:$parent.deleteTile.bind($data, tileid, eventData.cards.statement)">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -176,7 +176,7 @@
                                                     <a data-bind="click: function() {$parent.editTile(tileid, eventData.cards.identifier)}">
                                                         <i class="fa fa-mail-reply"></i>
                                                     </a>
-                                                    <a data-bind="click: function() {$parent.deleteTile(tileid, eventData.cards.identifier)}">
+                                                    <a data-bind="click: $parent.deleteTile.bind($data, tileid, eventData.cards.identifier)">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -300,7 +300,7 @@
                                                                 <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.name)}">
                                                                     <i class="fa fa-mail-reply"></i>
                                                                 </a>
-                                                                <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.name)}">
+                                                                <a data-bind="click: $parents[1].deleteTile.bind($data, tileid, $parent.cards.name)">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                             </div>
@@ -347,7 +347,7 @@
                                                                 <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.statement)}">
                                                                     <i class="fa fa-mail-reply"></i>
                                                                 </a>
-                                                                <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.statement)}">
+                                                                <a data-bind="click: $parents[1].deleteTile.bind($data, tileid, $parent.cards.statement)">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                             </div>
@@ -391,7 +391,7 @@
                                                                 <a data-bind="click: function() {$parents[1].editTile(tileid, $parent.cards.identifier)}">
                                                                     <i class="fa fa-mail-reply"></i>
                                                                 </a>
-                                                                <a data-bind="click: function() {$parents[1].deleteTile(tileid, $parent.cards.identifier)}">
+                                                                <a data-bind="click: $parents[1].deleteTile.bind($data, tileid, $parent.cards.identifier)">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                             </div>

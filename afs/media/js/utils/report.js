@@ -1,6 +1,7 @@
 define([
-    'arches'
-], function(arches) {
+    'arches',
+    'knockout'
+], function(arches, ko) {
     const standardizeNode = (obj) => {
         if(obj){
             const keys = Object.keys(obj);
@@ -32,7 +33,25 @@ define([
             }
         }
     };
-    
+
+    const deleteTile = async (tileid, card) => {
+        const tile = card.tiles().find(y => tileid == y.tileid);
+        if(tile){
+            return $.ajax({
+                type: "DELETE",
+                url: arches.urls.tile,
+                data: JSON.stringify(tile.getData())
+            }).success(() => {
+                const tiles = card.tiles();
+                const tileIndex = tiles.indexOf(tile);
+                tiles.splice(tileIndex, 1);
+                card.tiles(tiles);
+            });
+        }
+        throw Error("Couldn't delete; tile was not found.")
+    };
+    const removedTiles = ko.observableArray();
+
     const checkNestedData = (resource, ...args) => {
         if(!resource) { return false; }
         for (key of Object.keys(resource)){
@@ -101,16 +120,24 @@ define([
             }],
         },
 
+        removedTiles: removedTiles,
+
         // used to collapse sections within a tab
         toggleVisibility: (observable) => { observable(!observable()) },
 
-        // Functions used for interacting with card tree
-        deleteTile: (tileid, card) => {
-            const tile = card.tiles().find(y => tileid == y.tileid)
-            if(tile){
-                tile.deleteTile((err) => { 
-                    console.log(err); 
-                }, () => {});
+        deleteTile: async(tileid, card, ...params) => {
+            try {
+                await deleteTile(tileid, card);
+            }
+            catch(e) {
+                console.log(e);
+                return;
+            }
+            const eventTarget = params?.[1]?.target;
+            if(eventTarget) {
+                const table = $(eventTarget).closest("table").DataTable();
+                removedTiles.push(tileid);
+                table.row($(eventTarget).closest("tr")).remove().draw();
             }
         },
 
@@ -165,7 +192,7 @@ define([
                     return `${arches.urls.resource}\\${resourceId}`;
                 }
             }
-        },        
+        },   
         
         getTileId: (node) => {
             if(node){
