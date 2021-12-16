@@ -8,6 +8,7 @@ define([
         var self = this;
         var componentParams = params.form.componentData.parameters;
         this.physThingSetNodegroupId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
+        this.physThingTypeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
         this.physicalThingPartOfSetNodeId = '63e49254-c444-11e9-afbe-a4d18cec433a';
         this.partNodeGroupId = 'fec59582-8593-11ea-97eb-acde48001122';
         this.partManifestNodeId = '97c30c42-8594-11ea-97eb-acde48001122';
@@ -23,6 +24,7 @@ define([
         this.projectGraphId = componentParams.graphids[1];
         this.validateThing = componentParams.validateThing;
         this.projectValue = ko.observable();
+        this.projectNameValue = ko.observable();
         this.physicalThingValue = ko.observable();
         this.setsThatBelongToTheProject = ko.observable();
         this.hasSetWithPhysicalThing = ko.observable();
@@ -51,6 +53,7 @@ define([
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
                     function(data){
+                        self.projectNameValue(data._source.displayname);
                         let setTileResourceInstanceIds;
                         let setTile = data._source.tiles.find(function(tile){
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
@@ -113,13 +116,29 @@ define([
             const setsThatBelongToTheSelectedThing = physThing.tiles.find(x => x.nodegroup_id === self.physicalThingPartOfSetNodeId)?.data[self.physicalThingPartOfSetNodeId].map(y => y.resourceId);
             const projectSet = setsThatBelongToTheSelectedThing.find(setid => self.setsThatBelongToTheProject().includes(setid))
 
-            if(!self.validateThing || (digitalReferencesWithManifest.length && partsWithManifests.length)) {
+            const analysisAreaValueId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
+            const sampleAreaValueId = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123';
+            const isArea = physThing.tiles.filter(x =>
+                x.nodegroup_id == self.physThingTypeNodeId &&
+                (x.data?.[self.physThingTypeNodeId].includes(analysisAreaValueId) ||
+                x.data?.[self.physThingTypeNodeId].includes(sampleAreaValueId))
+            ).length > 0;
+
+            let canNonDestructiveObservation = false;
+            let canDestructiveObservation = false;
+            if (params.datasetRoute) {
+                canNonDestructiveObservation = (params.datasetRoute == 'non-destructive' && digitalReferencesWithManifest.length && partsWithManifests.length)
+                canDestructiveObservation= (params.datasetRoute == 'destructive' && !isArea)
+            }
+
+            if(!self.validateThing || canNonDestructiveObservation || canDestructiveObservation){
                 params.value({
                     physThingName: physThing.displayname,
                     physicalThing: val,
                     projectSet: projectSet,
                     physicalThingSet: self.setsThatBelongToTheProject(),
                     project: self.projectValue(),
+                    projectName: self.projectNameValue(),
                 });
                 self.isPhysicalThingValid(true);
             } else {

@@ -30,10 +30,7 @@
             <!-- ko foreach: { data: eventDataArray[eventName], as: "eventData", noChildContext: true} -->
             <!-- ko if: !!eventData && eventData.tileid -->
             <div class="afs-report-subsection">
-                <h2 class="afs-report-section-subtitle" style="display: block; margin-bottom: 5px;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}, css: {'fa-angle-double-right': eventData.visible(), 'fa-angle-double-up': !eventData.visible()}" class="fa toggle"></i> {% trans "Event Summary " %} <span></span></h2>
-                <!-- <a class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Event" %}</a>-->
- 
-                <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
+                <h2 class="afs-report-section-subtitle" style="display: block; margin-bottom: 5px;"><i data-bind="click: function() {toggleVisibility(eventData.visible)}, css: {'fa-angle-double-right': eventData.visible(), 'fa-angle-double-up': !eventData.visible()}" class="fa toggle"></i> {% trans "Event Summary " %}<span data-bind="if: eventData.title">:</span> <span data-bind="text: eventData.title"></span><span></span></h2>
 
                 <div data-bind="visible: eventData.visible" class="afs-report-collapsible-container">
                     
@@ -238,21 +235,23 @@
                     <!--/ko-->
                 </div>
             </div>
-            <div data-bind="if: eventData.parts && eventData.parts().length" class="afs-report-subsection">
+            <div data-bind="if: eventData.parts" class="afs-report-subsection">
+                <i data-bind="click: function() {toggleVisibility(visible[eventName].parts)}, css: {'fa-angle-double-right': visible[eventName].parts(), 'fa-angle-double-up': !visible[eventName].parts()}" class="fa toggle"></i>
                 <h2 class="afs-report-section-subtitle">{% trans "Event Parts" %}</h2>
                 <a data-bind="if: cards[eventName].parts, click: function(){addNewTile(cards[eventName].parts)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
-            
+                <div data-bind="if: visible[eventName].parts">
+                <!-- ko ifnot: eventData.parts().length -->
+                <div class="afs-nodata-note afs-top-card">No parts for this event</div>
+                <!-- /ko -->
+
                 <!-- Event Part -->
-                <div data-bind="foreach:{ data: eventData.parts }" class="part">
+                <!-- ko if: eventData.parts().length -->
+                <div data-bind="foreach:{ data: eventData.parts, as: 'part' }" class="part">
                     <div>
-                        <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part " %} <span data-bind="text: name"></span></h3>
+                        <h3><i data-bind="click: function(){$parent.toggleVisibility(visible)}" class="fa fa-angle-double-right"></i> {% trans "Event Part " %}<span data-bind="if: title">:</span> <span data-bind="text: title"></span></h3>
                         <div class="afs-part-expanded" data-bind="visible: visible">
-                            <a data-bind="click: function(){editTile(tileid, cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Part" %}</a>
+                            <a data-bind="if: eventData.cards.part, click: function(){$parent.editTile(tileid, eventData.cards.part)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit this Part" %}</a>
             
-                            <!-- Show this block if there's NO data -->
-                            <div class="afs-nodata-note afs-top-card" style="display: none;">No information for this event</div>
-            
-                            <!-- Show this if there is Event data (Top Card) -->
                             <div class="afs-report-event-section afs-report-collapsible-container">
                                 <div class="afs-report-subsection-container">
                                     <div  style="width:95%;" data-bind="foreach: {data: $data.metadata, as: 'item' }" class="afs-report-subsection-two-column">
@@ -409,9 +408,11 @@
                                 <div class="afs-report-subsection-firstchild">
                                     <h5>Event Part Timespan</h5>
                                     <a data-bind="if: $data.cards && $data.cards.timespan, click: function(){$parent.addNewTile(cards.timespan)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit Part Timespan" %}</a>
-                                    <!-- Show this block if there's NO data -->
+                                    <!-- ko ifnot: timespan() -->
                                     <div class="afs-nodata-note">No timespan for this event</div>
-            
+                                    <!-- /ko -->
+                                    
+                                    <!-- ko if: timespan() -->
                                     <!-- Show this block if there's data -->
                                     <div class="firstchild-container pad-top-sm">
                                         <div class="afs-report-subsection-item flex">
@@ -449,10 +450,13 @@
                                             </div>
                                         </div>
                                     </div> 
+                                    <!--/ko-->
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- /ko -->
                 </div>
             </div>
             <!-- /ko -->

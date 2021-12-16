@@ -11,10 +11,13 @@ define([
     return ko.components.register('views/components/reports/scenes/annotation-parts', {
         viewModel: function(params) {
             var self = this;
-
             Object.assign(self, reportUtils);
-            self.map = ko.observable();
+            self.maps = ko.observableArray();
             self.selectedAnnotationTileId = params.selectedAnnotationTileId || ko.observable();
+            self.annotations = [];
+
+            self.annotationTableConfig = params.annotationTableConfig;
+            self.annotationTableHeader = params.annotationTableHeader;
 
             self.prepareAnnotation = function(featureCollection) {
                 var canvas = featureCollection.features[0].properties.canvas;
@@ -44,7 +47,7 @@ define([
                             [extent[3]+1, extent[2]+1]
                         ]);
                     }, 250);
-                    self.map(map);
+                    self.maps.push(map);
                 };
 
                 return {
@@ -55,22 +58,50 @@ define([
                 };
             };
 
-            self.leafletConfig = this.prepareAnnotation(params.annotation.featureCollection);
+            let annotationCollection = {};
+            params.annotation.info.forEach(function(info){
+                const canvas = info.featureCollection.features[0].properties.canvas;
+                if (canvas in annotationCollection) {
+                    annotationCollection[canvas].push(info);
+                } else {
+                    annotationCollection[canvas] = [info];
+                }
+            });
+            for (const canvas in annotationCollection){
+                let annotationCombined;
+                let annotationInfo = [];
+                annotationCollection[canvas].forEach(function(annotation){
+                    if (annotationCombined) {
+                        annotationCombined.features = annotationCombined.features.concat(annotation.featureCollection.features);
+                    } else {
+                        annotationCombined = annotation.featureCollection;
+                    }
+                    annotationInfo.push(annotation);
+                });
+                const leafletConfig = this.prepareAnnotation(annotationCombined);
+                self.annotations.push({
+                    leafletConfig: leafletConfig,
+                    info: annotationInfo,
+                    card: params.annotation.card,
+                });
+            }
 
             self.selectedAnnotationTileId.subscribe(tileId => {
-                if (self.map()) {
-                    self.map().eachLayer(function(layer){
-                        if (layer.eachLayer) {
-                            layer.eachLayer(function(feature){
-                                const defaultColor = feature.feature.properties.color;
+                if (self.maps()) {
+                    self.maps().forEach(function(map){
+                        map.eachLayer(function(layer){
+                            if (layer.eachLayer) {
+                                layer.eachLayer(function(feature){
+                                    const defaultColor = feature.feature.properties.color;
 
-                                if (tileId === feature.feature.properties.tileId) {
-                                    feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
-                                } else {
-                                    feature.setStyle({color: defaultColor, fillColor: defaultColor});
-                                }
-                            });
-                        }
+                                    if (tileId === feature.feature.properties.tileId) {
+                                        feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                                    } else {
+                                        feature.setStyle({color: defaultColor, fillColor: defaultColor});
+                                    }
+                                });
+                            }
+                        });
                     });
                 }
             });

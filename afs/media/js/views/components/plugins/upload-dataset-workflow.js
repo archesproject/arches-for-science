@@ -129,6 +129,7 @@ define([
                                             '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Physical Thing */
                                         ],
                                         validateThing: true,
+                                        datasetRoute: "['dataset-step']['dataset-step']"
                                     },
                                 },
                             ], 

@@ -91,15 +91,6 @@
                     }
                 }"></div>
             </div>          
-             <!-- JSON Tab -->
-            <div class="afs-report-page afs-flex-col" data-bind="if: activeSection() === 'json'">
-                <div class="afs-flex-col" data-bind="component: {
-                    name: 'views/components/reports/scenes/json',
-                    params: {
-                        resourceInstanceId: reportMetadata().resourceinstanceid,
-                    }
-                }"></div>
-            </div>
             <!-- Communication Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'communication'">
                 <div data-bind="component: {
@@ -107,6 +98,15 @@
                     params: {
                         data: resource,
                         cards: communicationCards
+                    }
+                }"></div>
+            </div>
+             <!-- JSON Tab -->
+             <div class="afs-report-page afs-flex-col" data-bind="if: activeSection() === 'json'">
+                <div class="afs-flex-col" data-bind="component: {
+                    name: 'views/components/reports/scenes/json',
+                    params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
                     }
                 }"></div>
             </div>

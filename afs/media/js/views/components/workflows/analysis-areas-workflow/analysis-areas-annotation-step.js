@@ -47,7 +47,8 @@ define([
         this.selectedAnalysisAreaInstance = ko.observable();
 
         this.switchCanvas = function(tile){
-            const canvasPath = tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas()
+            const features = ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features);
+            const canvasPath = features?.[0]?.properties.canvas();
             if (self.canvas() !== canvasPath) {
                 var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasPath);
                 if (canvas) {
@@ -807,7 +808,7 @@ define([
                         selectedAnalysisAreaInstanceFeaturesNode.features(updatedSelectedAnalysisAreaInstanceFeatures);
                     }
                     else {
-                        selectedAnalysisAreaInstanceFeaturesNode.features = updatedSelectedAnalysisAreaInstanceFeatures;
+                        selectedAnalysisAreaInstanceFeaturesNode.features = ko.observableArray(updatedSelectedAnalysisAreaInstanceFeatures);
                     }
 
                     selectedAnalysisAreaInstance.data[partIdentifierAssignmentPolygonIdentifierNodeId] = selectedAnalysisAreaInstanceFeaturesNode;
