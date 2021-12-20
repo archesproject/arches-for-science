@@ -69,7 +69,7 @@ define([
             });
             for (const canvas in annotationCollection){
                 let annotationCombined;
-                let annotationInfo = [];
+                let annotationInfo = ko.observableArray();
                 annotationCollection[canvas].forEach(function(annotation){
                     if (annotationCombined) {
                         annotationCombined.features = annotationCombined.features.concat(annotation.featureCollection.features);
