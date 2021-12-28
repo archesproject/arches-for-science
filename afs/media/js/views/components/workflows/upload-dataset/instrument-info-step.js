@@ -146,7 +146,7 @@ define([
         params.form.save = function() {
             params.form.complete(false);
             if (!self.instrumentValue()){
-                params.form.error(true);
+                params.form.error(new Error("Selecting an instrument is required."));
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
                 return;
             }
