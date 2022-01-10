@@ -198,11 +198,11 @@ define([
                 "tiles": {},
                 'data': {
                     "03357892-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate(), //begin of the begin
-                    "0335789d-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate(), //begin of the end
-                    "033578a1-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate(), //end of the begin
+                    "0335789d-1d9d-11eb-a29f-024e0d439fdb": null, //begin of the end
+                    "033578a1-1d9d-11eb-a29f-024e0d439fdb": null, //end of the begin
                     "033578ae-1d9d-11eb-a29f-024e0d439fdb": null,  //label
                     "033578af-1d9d-11eb-a29f-024e0d439fdb": null,  //type
-                    "033578c2-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate()  //end of the end
+                    "033578c2-1d9d-11eb-a29f-024e0d439fdb": null  //end of the end
                 },
                 'transaction_id': params.form.workflowId
             };
