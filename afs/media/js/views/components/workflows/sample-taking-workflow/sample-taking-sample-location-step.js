@@ -21,6 +21,7 @@ define([
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
         const partIdentifierAssignmentPhysicalPartOfObjectNodeId = 'b240c366-8594-11ea-97eb-acde48001122'; 
         const sampleMotivationConceptId = "7060892c-4d91-4ab3-b3de-a95e19931a61";
+        const samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
         const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
         this.analysisAreaResourceIds = [];
         this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
@@ -53,6 +54,7 @@ define([
         this.sampleLocationInstances = ko.observableArray();
         
         this.selectedSampleLocationInstance = ko.observable();
+        this.selectedSampleRelatedSamplingActivity = ko.observable();
 
         this.switchCanvas = function(tile){
             const features = ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features)
@@ -79,6 +81,9 @@ define([
         });
 
         this.tileDirty = ko.computed(function() {
+            if(self.samplingActivityResourceId != self.selectedSampleRelatedSamplingActivity()){
+                return false;
+            }
             if (
                 self.sampleDescriptionWidgetValue() && self.sampleDescriptionWidgetValue() !== self.previouslySavedSampleDescriptionWidgetValue()
             ) {
@@ -276,7 +281,7 @@ define([
             self.sampleLocationInstances(tilesBelongingToManifest);
         };
 
-        this.selectSampleLocationInstance = function(sampleLocationInstance) {
+        this.selectSampleLocationInstance = async function(sampleLocationInstance) {
             self.sampleDescriptionWidgetValue(null);
             self.previouslySavedSampleDescriptionWidgetValue(null);
             
@@ -316,6 +321,14 @@ define([
                         return ko.unwrap(data[0].resourceId) === selectedSampleLocationParentPhysicalThingResourceId;
                     }
                 });
+
+                if(selectedSampleLocationParentPhysicalThingResourceId){
+                    const selectedResourceRelatedResources = await(await window.fetch(`${arches.urls.related_resources}${selectedSampleLocationParentPhysicalThingResourceId}`)).json();
+                    const relatedSamplingActivity = selectedResourceRelatedResources?.related_resources?.related_resources?.filter(x => x?.graph_id == samplingActivityGraphId);
+                    self.selectedSampleRelatedSamplingActivity(relatedSamplingActivity?.[0].resourceinstanceid);
+                } else {
+                    self.selectedSampleRelatedSamplingActivity(self.samplingActivityResourceId);
+                }
 
                 if (samplingActivitySamplingUnitTile) {
                     var samplingAreaSampleCreatedNodeId = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb';  // Sample Created (E22)
@@ -384,6 +397,8 @@ define([
         };
 
         this.saveSampleLocationTile = function() {
+            // don't save if tile isn't dirty.
+            if(!self.tileDirty()){ return; }
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
             const featureCollection = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])
