@@ -57,6 +57,14 @@ define([
         this.selectedSampleLocationInstance = ko.observable();
         this.selectedSampleRelatedSamplingActivity = ko.observable();
 
+        this.sampleLocationDisabled = ko.computed(() => {
+            if(self.samplingActivityResourceId != self.selectedSampleRelatedSamplingActivity()){
+                return true;
+            } else {
+                return false;
+            }
+        })
+
         this.switchCanvas = function(tile){
             const features = ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features)
             const canvasPath = features?.[0]?.properties.canvas()
@@ -82,7 +90,7 @@ define([
         });
 
         this.tileDirty = ko.computed(function() {
-            if(self.samplingActivityResourceId != self.selectedSampleRelatedSamplingActivity()){
+            if(self.sampleLocationDisabled()){
                 return false;
             }
             if (
@@ -1047,9 +1055,13 @@ define([
                                     }));
     
                                     self.selectedFeature(selectedFeature);
-                                    self.removeFeatureFromCanvas(self.selectedFeature());
-    
-                                    self.drawFeatures([selectedFeature]);
+                                    if(self.selectedSampleRelatedSamplingActivity() == self.samplingActivityResourceId)
+                                    {
+                                        self.removeFeatureFromCanvas(self.selectedFeature());
+                                        self.drawFeatures([selectedFeature]);
+                                    } else {
+                                        self.highlightAnnotation()
+                                    }
                                 } 
                             }
                         },

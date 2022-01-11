@@ -239,7 +239,7 @@
                                             }
                                         "></select>
                                     </div>
-                                    <div class="add-new-feature" data-bind="visible: self.disableDrawing">
+                                    <div class="add-new-feature" data-bind="visible: !self.sampleLocationDisabled() && self.disableDrawing">
                                         <select data-placeholder="{% trans "Add a new feature..." %}" data-bind="
                                             value: self.featureLookup[widget.node_id()].selectedTool,
                                             valueAllowUnset: true,
@@ -279,13 +279,13 @@
                                             <td>
                                                 <span class="map-card-feature-name" data-bind="text: feature.geometry.type"></span>
                                             </td>
-                                            <td class="map-card-feature-tool">
+                                            <td class="map-card-feature-tool" data-bind="visible: !self.sampleLocationDisabled()">
                                                 <a href="javascript:void(0);" data-bind="click: function() { self.editFeature(feature); }, clickBubble: false">
                                                     <i class="fa fa-pencil map-card-feature-edit"></i>
                                                     {% trans "Edit" %}
                                                 </a>
                                             </td>
-                                            <td class="map-card-feature-tool">
+                                            <td class="map-card-feature-tool" data-bind="visible: !self.sampleLocationDisabled()">
                                                 <a href="javascript:void(0);" data-bind="click: function() { self.deleteFeature(feature); }, clickBubble: false">
                                                     <i class="fa fa-trash map-card-feature-delete"></i>
                                                     {% trans "Delete" %}
@@ -305,7 +305,6 @@
                                 {% trans 'Sample Name' %} <span class="afs-workflow-required-tag">{% trans 'required' %}</span>
                             </h5>
                             <i style="display: none;" data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()].isrequired}"></i>
-
                             <div class="afs-sample-name"
                                 data-bind='
                                     component: {
@@ -321,7 +320,7 @@
                                             expanded: self.expanded,
                                             graph: self.form.graph,
                                             type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
+                                            disabled: $data.sampleLocationDisabled || (!self.card.isWritable && !self.preview),
                                         }
                                     }, 
                                     css:{
@@ -344,7 +343,7 @@
                                 '
                             ></div>
                             <div>
-                                <input class="afs-calculated-name" disabled type="text" style="" data-bind="textInput: sampleName"></input>
+                                <input class="afs-calculated-name" disabled type="text" data-bind="textInput: sampleName"></input>
                             </div>
                         <!-- /ko -->
 
@@ -357,6 +356,7 @@
                                         name: "rich-text-widget",
                                         params: {
                                             renderContext: "workflow",
+                                            disabled: $data.sampleLocationDisabled,
                                             value: $data.sampleDescriptionWidgetValue,
                                         }
                                     }, 
@@ -367,13 +367,14 @@
 
                         <!-- BEGIN motivation for sampling -->
                             <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Motivation for Sampling' %}</h5>
-
+                            <span data-bind="text: console.log($data.sampleLocationDisabled())"></span>
                             <div class="afs-workflow-sample-desc" style="margin-left: -21px; margin-top: -18px;"
                                 data-bind='
                                     component: {
                                         name: "rich-text-widget",
                                         params: {
                                             renderContext: "workflow",
+                                            disabled: $data.sampleLocationDisabled,
                                             value: $data.motivationForSamplingWidgetValue,
                                         }
                                     }, 
