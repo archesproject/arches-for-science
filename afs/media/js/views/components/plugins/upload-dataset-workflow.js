@@ -75,7 +75,7 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Dataset',
+                    title: 'Dataset Type',
                     name: 'dataset-step', /* unique to workflow */
                     required: true,
                     layoutSections: [
