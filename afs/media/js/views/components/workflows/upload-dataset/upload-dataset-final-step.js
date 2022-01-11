@@ -30,7 +30,7 @@ define([
         };
 
         this.hasAnnotatedParts = Array.isArray(params.uploadedDatasets);
-        this.uploadedDatasets = this.hasAnnotatedParts ? params.uploadedDatasets : [params.uploadedDataset["upload-files-step"].savedData()];
+        this.uploadedDatasets = this.hasAnnotatedParts ? params.uploadedDatasets : [params.uploadedDataset];
 
         this.parentPhysThingData = ko.observableArray();
         this.parentPhysThingRelatedData = ko.observableArray();
@@ -39,25 +39,27 @@ define([
         this.getResourceData(params.parentPhysThingResourceId, this.parentPhysThingData);
 
         this.parentPhysThingData.subscribe(function(val){
-            val.resource['Part Identifier Assignment'].forEach(function(annotation){
-                var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
-                var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
-                var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
-                var tileId = self.getResourceValue(annotation,['@tile_id']);
-                var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
-                if (annotationStr) {
-                    var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
-                    var leafletConfig = self.prepareAnnotation(annotationJson);
-                }
-
-                self.parentPhysThingAnnotations.push({
-                    tileId: tileId,
-                    name: annotationName,
-                    label: annotationLabel,
-                    annotator: annotator,
-                    leafletConfig: leafletConfig,
+            if (val.resource['Part Identifier Assignment']){
+                val.resource['Part Identifier Assignment'].forEach(function(annotation){
+                    var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
+                    var annotationLabel = self.getResourceValue(annotation,['Part Identifier Assignment_Label','@display_value']);
+                    var annotator = self.getResourceValue(annotation,['Part Identifier Assignment_Annotator','@display_value']);
+                    var tileId = self.getResourceValue(annotation,['@tile_id']);
+                    var annotationStr = self.getResourceValue(annotation,['Part Identifier Assignment_Polygon Identifier','@display_value']);
+                    if (annotationStr) {
+                        var annotationJson = JSON.parse(annotationStr.replaceAll("'",'"'));
+                        var leafletConfig = self.prepareAnnotation(annotationJson);
+                    }
+    
+                    self.parentPhysThingAnnotations.push({
+                        tileId: tileId,
+                        name: annotationName,
+                        label: annotationLabel,
+                        annotator: annotator,
+                        leafletConfig: leafletConfig,
+                    });
                 });
-            });
+            };
 
             this.uploadedDatasets.forEach(function(dataset){
                 var selectedDatasetData = ko.observableArray();

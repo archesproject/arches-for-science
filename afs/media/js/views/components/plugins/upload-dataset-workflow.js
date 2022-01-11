@@ -198,7 +198,7 @@ define([
                                     parameters: {
                                         observationInstanceResourceId: "['select-instrument-and-files']['instrument-info']['observationInstanceId']",
                                         uploadedDatasets: "['select-dataset-files-step']['select-dataset-files-step']['parts']",
-                                        uploadedDataset: "['upload-files']['upload-files-step]",
+                                        uploadedDataset: "['upload-files']['upload-files-step']",
                                         parentPhysThingResourceId: "['project-info']['select-phys-thing-step']['physicalThing']"
                                     },
                                 },
