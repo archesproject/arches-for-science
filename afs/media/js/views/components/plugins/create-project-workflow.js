@@ -64,7 +64,7 @@ define([
                 {
                     title: 'Project Start',
                     name: 'set-project-timespan',  /* unique to workflow */
-                    required: true,
+                    required: false,
                     informationboxdata: {
                         heading: 'Project Start',
                         text: 'Indicate the date the project started if known',
