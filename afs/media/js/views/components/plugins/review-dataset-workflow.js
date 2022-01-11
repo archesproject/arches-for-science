@@ -42,7 +42,7 @@ define([
                     hiddenWorkflowButtons: ['undo', 'save'],
                     informationboxdata: {
                         heading: 'Add interpretations for the uploaded dataset',
-                        text: 'Select a file from the dataset, select a reader if necessary, and add any special parameters/interpreation for the individual dataset file',
+                        text: 'Select a file from a dataset and add any relevant parameter and interpretation details.',
                     },
                     layoutSections: [
                         {
