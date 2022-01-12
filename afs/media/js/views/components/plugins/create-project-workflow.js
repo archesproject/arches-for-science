@@ -16,6 +16,7 @@ define([
                     title: 'Project Name',
                     name: 'set-project-name',  /* unique to workflow */
                     required: true,
+                    workflowstepclass: 'create-project-project-name-step',
                     informationboxdata: {
                         heading: 'Project Name',
                         text: 'Identify the project and its objectives',
