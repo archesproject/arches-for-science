@@ -285,8 +285,18 @@ define([
                     )
                 );
 
+            tilesBelongingToManifest.forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
             self.sampleLocationInstances(tilesBelongingToManifest);
         };
+
+        this.sampleLocationInstances.subscribe(async (instances) => {
+            for(const instance of instances) {
+                const instanceResourceId = ko.unwrap(ko.unwrap(instance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])?.[0]?.resourceId);
+                const currentResourceRelatedResources = await(await window.fetch(`${arches.urls.related_resources}${instanceResourceId}`)).json();
+                const relatedSamplingActivity = currentResourceRelatedResources?.related_resources?.related_resources?.filter(x => x?.graph_id == samplingActivityGraphId);
+                instance.samplingActivityResourceId(relatedSamplingActivity?.[0]?.resourceinstanceid);
+            }
+        });
 
         this.selectSampleLocationInstance = async function(sampleLocationInstance) {
             self.sampleDescriptionWidgetValue(null);
@@ -321,16 +331,21 @@ define([
                 } 
 
                 let samplingActivitySamplingUnitCard = self.samplingActivitySamplingUnitCard();
-                if(selectedSampleLocationParentPhysicalThingResourceId){
+                if(self.selectedSampleLocationInstance()?.samplingActivityResourceId) {
+                    self.selectedSampleRelatedSamplingActivity(self.selectedSampleLocationInstance().samplingActivityResourceId());
+                } else if (selectedSampleLocationParentPhysicalThingResourceId){
                     const selectedResourceRelatedResources = await(await window.fetch(`${arches.urls.related_resources}${selectedSampleLocationParentPhysicalThingResourceId}`)).json();
                     const relatedSamplingActivity = selectedResourceRelatedResources?.related_resources?.related_resources?.filter(x => x?.graph_id == samplingActivityGraphId);
                     self.selectedSampleRelatedSamplingActivity(relatedSamplingActivity?.[0].resourceinstanceid);
-                    if(self.selectedSampleRelatedSamplingActivity() != self.samplingActivityResourceId) {
-                        samplingActivitySamplingUnitCard = await self.fetchCardFromResourceId(self.selectedSampleRelatedSamplingActivity(), samplingUnitNodegroupId);
-                    }
                 } else {
                     self.selectedSampleRelatedSamplingActivity(self.samplingActivityResourceId);
                 }
+
+                if(self.selectedSampleRelatedSamplingActivity() && self.selectedSampleRelatedSamplingActivity() != self.samplingActivityResourceId) {
+                    samplingActivitySamplingUnitCard = await self.fetchCardFromResourceId(self.selectedSampleRelatedSamplingActivity(), samplingUnitNodegroupId);
+                }
+
+                if(!samplingActivitySamplingUnitCard) { return; }
 
                 var samplingAreaNodeId = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb';  // Sampling Area (E22)
                 var samplingActivitySamplingUnitTile = samplingActivitySamplingUnitCard.tiles().find(function(tile) {
@@ -959,6 +974,7 @@ define([
                         self.analysisAreaResourceIds.push(related.find(tile => value._id === tile.resourceid));
                     }
                 });
+                card.tiles().forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
                 self.sampleLocationInstances(card.tiles());
                 self.analysisAreaTileIds = self.analysisAreaResourceIds.map(item => item.tileid);
             })
