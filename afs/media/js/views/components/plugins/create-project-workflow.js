@@ -16,6 +16,7 @@ define([
                     title: 'Project Name',
                     name: 'set-project-name',  /* unique to workflow */
                     required: true,
+                    workflowstepclass: 'create-project-project-name-step',
                     informationboxdata: {
                         heading: 'Project Name',
                         text: 'Identify the project by giving it a name',
@@ -30,6 +31,19 @@ define([
                                     parameters: {
                                         graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                                         nodegroupid: '0b926359-ca85-11e9-ac9c-a4d18cec433a',
+                                    },
+                                },
+                            ], 
+                        },
+                        {
+                            componentConfigs: [
+                                {
+                                    componentName: 'default-card',
+                                    uniqueInstanceName: 'project-type', /* unique to step */
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+                                        nodegroupid: '0b92b8c0-ca85-11e9-adef-a4d18cec433a',
                                     },
                                 },
                             ], 
@@ -64,7 +78,7 @@ define([
                 {
                     title: 'Project Start',
                     name: 'set-project-timespan',  /* unique to workflow */
-                    required: true,
+                    required: false,
                     informationboxdata: {
                         heading: 'Project Start',
                         text: 'Indicate the date the project started if known',

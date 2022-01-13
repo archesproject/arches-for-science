@@ -75,7 +75,7 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Dataset',
+                    title: 'Dataset Type',
                     name: 'dataset-step', /* unique to workflow */
                     required: true,
                     layoutSections: [
@@ -137,12 +137,12 @@ define([
                     ],
                 },
                 {
-                    title: 'Instrument',
+                    title: 'Observation Info',
                     name: 'select-instrument-and-files',
                     required: true,
                     informationboxdata: {
-                        heading: 'Select the instrument used for the analysis',
-                        text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
+                        heading: 'Add the observation information used for the analysis',
+                        text: 'Select the instrument, the procedure, and add any special parameters/configuration for the instrument',
                     },
                     lockableExternalSteps: ['project-info'],
                     layoutSections: [
@@ -166,8 +166,8 @@ define([
                     required: false,
                     hiddenWorkflowButtons: ['undo', 'save'],
                     informationboxdata: {
-                        heading: 'Select the instrument used for the analysis',
-                        text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
+                        heading: 'Add interpretations for the uploaded dataset',
+                        text: 'Select a file from a dataset and add any relevant parameter and interpretation details',
                     },
                     layoutSections: [
                         {
@@ -198,7 +198,7 @@ define([
                                     parameters: {
                                         observationInstanceResourceId: "['select-instrument-and-files']['instrument-info']['observationInstanceId']",
                                         uploadedDatasets: "['select-dataset-files-step']['select-dataset-files-step']['parts']",
-                                        uploadedDataset: "['upload-files']['upload-files-step]",
+                                        uploadedDataset: "['upload-files']['upload-files-step']",
                                         parentPhysThingResourceId: "['project-info']['select-phys-thing-step']['physicalThing']"
                                     },
                                 },

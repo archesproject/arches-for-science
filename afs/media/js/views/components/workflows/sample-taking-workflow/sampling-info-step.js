@@ -22,9 +22,11 @@ define([
         this.samplingTechnique = ko.observable(getProp("samplingTechnique"));
         this.samplingMotivation = ko.observable(getProp("samplingMotivation"));
         this.samplingName = ko.observable(getProp("samplingName"));
+        this.samplingType = ko.observable(getProp("samplingType"));
         this.projectTile = ko.observable(getProp("projectTile"));
         this.samplersTile = ko.observable(getProp("samplersTile"));
         this.samplingNameTile = ko.observable(getProp("samplingNameTile"));
+        this.samplingTypeTile = ko.observable(getProp("samplingTypeTile"));
         this.samplingDateTile = ko.observable(getProp("samplingDateTile"));
         this.samplingTechniqueTile = ko.observable(getProp("samplingTechniqueTile"));
         this.samplingMotivationTile = ko.observable(getProp("samplingMotivationTile"));
@@ -38,9 +40,11 @@ define([
             samplingTechnique: self.samplingTechnique(),
             samplingMotivation: self.samplingMotivation(),
             samplingName: self.samplingName(),
+            samplingType: self.samplingType(),
             projectTile: self.projectTile(),
             samplersTile: self.samplersTile(),
             samplingNameTile: self.samplingNameTile(),
+            samplingTypeTile: self.samplingTypeTile(),
             samplingDateTile: self.samplingDateTile(),
             samplingTechniqueTile: self.samplingTechniqueTile(),
             samplingMotivationTile: self.samplingMotivationTile(),
@@ -49,6 +53,7 @@ define([
 
         const samplersNode = '03357870-1d9d-11eb-a29f-024e0d439fdb'; //also a nodegroupid
         const samplingNameNodegroup = '03357873-1d9d-11eb-a29f-024e0d439fdb';
+        const samplingTypeNodegroup = '0434ccce-1d9f-11eb-a29f-024e0d439fdb';
         const sampleStatementNodegroup = '0335786d-1d9d-11eb-a29f-024e0d439fdb';
         const samplingDateNodegroup = '03357852-1d9d-11eb-a29f-024e0d439fdb';
         const parentProjectNode = '03357879-1d9d-11eb-a29f-024e0d439fdb'; //related project
@@ -57,12 +62,14 @@ define([
             return {
                 samplingActivityResourceId: self.samplingActivityResourceId(),
                 samplingName: self.samplingName(),
+                samplingType: self.samplingType(),
                 samplers: self.samplers(),
                 samplingDate: self.samplingDate(),
                 samplingTechnique: self.samplingTechnique(),
                 samplingMotivation: self.samplingMotivation(),
                 projectTile: self.projectTile(),
                 samplingNameTile: self.samplingNameTile(),
+                samplingTypeTile: self.samplingTypeTile(),
                 samplersTile: self.samplersTile(),
                 samplingDateTile: self.samplingDateTile(),
                 samplingTechniqueTile: self.samplingTechniqueTile(),
@@ -95,16 +102,18 @@ define([
                 self.saveProject(),
                 self.saveSamplers(),
                 self.saveSamplingDate(),
+                self.saveSamplingType(),
                 self.saveSamplingTechnique(),
                 self.saveSamplingMotivation(),
                 self.saveDigitalReference()
-            ).done(function(response1, response2, response3, response4, response5, response6){
+            ).done(function(response1, response2, response3, response4, response5, response6, response7){
                 self.projectTile(response1[0].tileid);
                 self.samplersTile(response2[0].tileid);
                 self.samplingDateTile(response3[0].tileid);
-                self.samplingTechniqueTile(response4[0].tileid);
-                self.samplingMotivationTile(response5[0].tileid);
-                self.samplingActivityDigitalReferenceTile(response6[0].tileid);
+                self.samplingTypeTile(response4[0].tileid);
+                self.samplingTechniqueTile(response5[0].tileid);
+                self.samplingMotivationTile(response6[0].tileid);
+                self.samplingActivityDigitalReferenceTile(response7[0].tileid);
 
                 params.form.savedData(params.form.value());
                 params.form.lockExternalStep("select-project", true);
@@ -163,6 +172,21 @@ define([
             return self.saveTile(samplingNameTileid, samplingNameTileData);
         };
 
+        this.saveSamplingType = function() {
+            const samplingTypeTileData = {
+                "tileid": ko.unwrap(self.samplingTypeTile) || "",
+                "nodegroup_id": samplingTypeNodegroup,
+                "parenttile_id": null,
+                "resourceinstance_id": ko.unwrap(self.samplingActivityResourceId) || "",
+                "sortorder": 0,
+                "tiles": {},
+                'data': {"0434ccce-1d9f-11eb-a29f-024e0d439fdb": self.samplingType()},
+                'transaction_id': params.form.workflowId
+            };
+            const samplingTypeTileid = ko.unwrap(self.samplingTypeTile) || uuid.generate();
+            return self.saveTile(samplingTypeTileid, samplingTypeTileData);
+        };
+
         this.saveProject = function() {
             var data = [{
                 'resourceId': self.projectValue,  // resourceid of the project
@@ -198,11 +222,11 @@ define([
                 "tiles": {},
                 'data': {
                     "03357892-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate(), //begin of the begin
-                    "0335789d-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate(), //begin of the end
-                    "033578a1-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate(), //end of the begin
+                    "0335789d-1d9d-11eb-a29f-024e0d439fdb": null, //begin of the end
+                    "033578a1-1d9d-11eb-a29f-024e0d439fdb": null, //end of the begin
                     "033578ae-1d9d-11eb-a29f-024e0d439fdb": null,  //label
                     "033578af-1d9d-11eb-a29f-024e0d439fdb": null,  //type
-                    "033578c2-1d9d-11eb-a29f-024e0d439fdb": self.samplingDate()  //end of the end
+                    "033578c2-1d9d-11eb-a29f-024e0d439fdb": null  //end of the end
                 },
                 'transaction_id': params.form.workflowId
             };
@@ -277,9 +301,11 @@ define([
             self.samplingTechnique(snapshot.samplingTechnique);
             self.samplingMotivation(snapshot.samplingMotivation);
             self.samplingName(snapshot.samplingName);
+            self.samplingType(snapshot.samplingType);
             self.projectTile(snapshot.projectTile);
             self.samplersTile(snapshot.samplersTile);
             self.samplingNameTile(snapshot.samplingNameTile);
+            self.samplingTypeTile(snapshot.samplingTypeTile);
             self.samplingDateTile(snapshot.samplingDateTile);
             self.samplingTechniqueTile(snapshot.samplingTechniqueTile);
             self.samplingMotivationTile(snapshot.samplingMotivationTile);
