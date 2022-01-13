@@ -42,7 +42,7 @@
                     <div class="panel-collapse collapse" data-bind="attr: { id: part.tileid }, css: { in: $index() == 0}">
                         <div class="dataset-name">
                             <label class="control-label">{% trans "Dataset Name*" %}</label>
-                            <input type="text" class="form-control" placeholder="Dataset name" data-bind="textInput: part.datasetName">
+                            <input type="text" class="form-control" placeholder="Dataset name" data-bind="enable: self.selectedPartHasCurrentObservation(), textInput: part.datasetName">
                             <div>
                                 <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;" data-bind="textInput: part.calcDatasetName"></input>
                             </div>
@@ -68,7 +68,7 @@
 
 
 
-    <div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: -20px;">
+    <div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: -20px;" data-bind="if: self.selectedPartHasCurrentObservation()">
         <!--ko if: files().length > 0 && selectedPart() -->
         <label class="control-label">{% trans "Available Files" %}</label>
         <div class="file-workbench-files" data-bind="foreach: {data: files, as: 'file'}">
