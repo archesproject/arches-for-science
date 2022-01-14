@@ -52,6 +52,7 @@ define([
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
         this.locked = params.form.locked;
+        this.procedureSearchString = location.origin + '/search?advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22dc946b1e-c070-11e9-a005-a4d18cec433a%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%2260d1e09c-0f14-4348-ae14-57fdb9ef87c4%22%7D%7D%5D';
 
         const snapshot = {
             instrumentValue: self.instrumentValue(),
