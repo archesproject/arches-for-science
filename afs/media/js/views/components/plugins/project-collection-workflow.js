@@ -1,0 +1,89 @@
+define([
+    'knockout',
+    'jquery',
+    'arches',
+    'viewmodels/workflow',
+    'viewmodels/workflow-step',
+    'views/components/workflows/create-project-workflow/add-things-step',
+    'views/components/workflows/create-project-workflow/create-project-final-step'
+], function(ko, $, arches, Workflow) {
+    return ko.components.register('project-collection-workflow', {
+        viewModel: function(params) {
+            this.componentName = 'project-collection-workflow';
+
+            this.stepConfig = [
+                {
+                    title: 'Select Project',
+                    name: 'select-project',  /* unique to workflow */
+                    required: true,
+                    informationboxdata: {
+                        heading: 'Select Project',
+                        text: 'Select a project to update',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                {
+                                    componentName: 'select-project-step',
+                                    uniqueInstanceName: 'select-project', /* unique to step */
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ]
+                },
+                {
+                    title: 'Add Objects to Your Project',
+                    name: 'object-search-step',  /* unique to workflow */
+                    required: true,
+                    workflowstepclass: 'create-project-add-things-step',
+                    informationboxdata: {
+                        heading: 'Add Objects',
+                        text: 'Add Objects to Your Project',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                {
+                                    componentName: 'add-things-step',
+                                    uniqueInstanceName: 'add-phys-things',
+                                    tilesManaged: 'one',
+                                    parameters: {
+                                        graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
+                                        nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
+                                        nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)
+                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
+                                        researchActivityStepData: "['set-project-name']['project-name'][0]"
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    title: 'Summary',
+                    name: 'project-collection-complete',  /* unique to workflow */
+                    description: 'Summary',
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'project-collection-final-step',
+                                    uniqueInstanceName: 'project-collection-final',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                }
+            ];
+
+            Workflow.apply(this, [params]);
+        },
+        template: { require: 'text!templates/views/components/plugins/project-collection-workflow.htm' }
+    });
+});
