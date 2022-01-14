@@ -29,6 +29,7 @@ define([
         const statementLanguageNodeId = '8ec31780-c457-11e9-9543-a4d18cec433a';
         const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
+        const relatedGraphIds = ['b6c819b8-99f6-11ea-a9b7-3af9d3b32b71']
 
         const getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key]) {
@@ -59,11 +60,7 @@ define([
             procedureValue: self.procedureValue(),
             parameterValue: self.parameterValue()
         };
-        this.procedureValue.subscribe(val=>{
-            if (val === 'a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a'){
-                self.procedureValue(null);
-            }
-        })
+
         this.createRelatedInstance = function(val){
             return [{
                 resourceId: val,
@@ -76,7 +73,7 @@ define([
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
 
         this.instrumentValue.subscribe(function(val){
-            if (val) {
+            if (val && !relatedGraphIds.includes(val)) {
                 let instrumentData = resourceUtils.lookupResourceInstanceData(val);
                 self.instrumentInstance(self.createRelatedInstance(val));
                 instrumentData.then(function(data){
