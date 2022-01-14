@@ -86,7 +86,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
                     if(eventData) {
                         const eventNamesValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_name`);
-                        if(eventNamesValue) {
+                        if(eventNamesValue && self.nestedDataExists(eventNamesValue)) {
                             const eventNames = !eventNamesValue.length ? [eventNamesValue] : eventNamesValue; 
                         
                             eventObservables.names(eventNames.map(x => {
@@ -99,7 +99,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         }
 
                         const eventIdentifiersValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_identifier`);
-                        if(eventIdentifiersValue){
+                        if(eventIdentifiersValue && self.nestedDataExists(eventIdentifiersValue)){
                             const eventIdentifiers = !eventIdentifiersValue.length ? [eventIdentifiersValue] : eventIdentifiersValue; 
                             eventObservables.identifiers(eventIdentifiers.map(x => {
                                 const name = self.getNodeValue(x, `${existenceEventConfig}_identifier_content`);
@@ -110,12 +110,12 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         }
 
                         const eventLocationValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_location`);
-                        if(eventLocationValue){
+                        if(eventLocationValue && self.nestedDataExists(eventLocationValue)){
                             eventObservables.location(eventLocationValue);
                         }
 
                         const eventTime = self.getRawNodeValue(eventData, `${existenceEventConfig}_time`)
-                        if(eventTime) {
+                        if(eventTime && self.nestedDataExists(eventTime)) {
                             const beginningStart = self.getNodeValue(eventTime, {
                                 testPaths: [
                                     [`${existenceEventConfig}_time_begin of the begin`],
@@ -166,7 +166,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         }
 
                         const eventStatementValue = self.getRawNodeValue(eventData, `${existenceEventConfig}_statement`);
-                        if(eventStatementValue){
+                        if(eventStatementValue && self.nestedDataExists(eventStatementValue)){
                             const eventStatement = !eventStatementValue.length ? [eventStatementValue] : eventStatementValue
                             eventObservables.statements(eventStatement.map(x => {
                                 const content = self.getNodeValue(x, `${existenceEventConfig}_statement_content`);

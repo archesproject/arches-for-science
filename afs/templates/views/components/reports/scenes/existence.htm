@@ -196,12 +196,15 @@
                         <h5>Event Timespan</h5>
                         <span data-bind="if: eventData.cards && eventData.cards.timespan">
                             <a data-bind="click: function(){addNewTile(eventData.cards.timespan)}" class="afs-report-a">
-                                <i class="fa fa-mail-reply"></i> {% trans "Edit Event Timespan" %}
+                                <i class="fa fa-mail-reply"></i> 
+                                <!-- ko if: eventData.timespan() -->
+                                {% trans "Edit Event Timespan" %}
+                                <!--/ko-->
+                                <!-- ko if: !eventData.timespan() -->
+                                {% trans "Add Event Timespan" %}
+                                <!--/ko-->
                             </a>
                         </span>
-                        <!-- Show this block if there's NO data -->
-                        <div class="afs-nodata-note" style="display: none;">No timespan for this event</div>
-
                         <!-- Show this block if there's data -->
                         <div data-bind="component: {
                             name: 'views/components/reports/scenes/keyvalue',
@@ -271,7 +274,15 @@
                                 <!-- Event First Generation Cards -->
                                 <div class="afs-report-subsection-firstchild">
                                     <h5>Event Part Names</h5>
-                                    <a data-bind="if: $data.cards && $data.cards.name, click: function(){$parent.addNewTile(cards.name)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit Part Name" %}</a>
+                                    <a data-bind="if: $data.cards && $data.cards.name, click: function(){$parent.addNewTile(cards.name)}" class="afs-report-a">
+                                        <i class="fa fa-mail-reply"></i>
+                                        <!-- ko if: $data.names().length -->
+                                        {% trans "Edit Part Names" %}
+                                        <!--/ko-->
+                                        <!-- ko if: !$data.names().length -->
+                                        {% trans "Add Part Names" %}
+                                        <!--/ko-->
+                                    </a>
                                     <!-- ko ifnot: $data.names().length -->
                                     <div class="afs-nodata-note">No names for this part</div>
                                     <!-- /ko -->
@@ -316,7 +327,15 @@
                                 <!-- Event First Generation Cards -->
                                 <div class="afs-report-subsection-firstchild">
                                     <h5>Event Part Statements</h5>
-                                    <a data-bind="if: $data.cards && $data.cards.statement, click: function(){$parent.addNewTile($data.cards.statement)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit Part Statement" %}</a>
+                                    <a data-bind="if: $data.cards && $data.cards.statement, click: function(){$parent.addNewTile($data.cards.statement)}" class="afs-report-a">
+                                        <i class="fa fa-mail-reply"></i> 
+                                        <!-- ko if: $data.statements().length -->
+                                        {% trans "Edit Part Statement" %}
+                                        <!--/ko-->
+                                        <!-- ko if: !$data.statements().length -->
+                                        {% trans "Add Part Statement" %}
+                                        <!--/ko-->
+                                    </a>
                                     
                                     <!-- ko ifnot: $data.statements().length -->
                                     <div class="afs-nodata-note">No statements for this part</div>
@@ -363,7 +382,15 @@
                                 <!-- Event First Generation Cards -->
                                 <div class="afs-report-subsection-firstchild">
                                     <h5>Event Part Identifiers</h5>
-                                    <a data-bind="if: $data.cards && $data.cards.identifier, click: function(){$parent.addNewTile($data.cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit Part Identifier" %}</a>
+                                    <a data-bind="if: $data.cards && $data.cards.identifier, click: function(){$parent.addNewTile($data.cards.identifier)}" class="afs-report-a">
+                                        <i class="fa fa-mail-reply"></i>
+                                        <!-- ko if: identifiers().length -->
+                                        {% trans "Edit Part Identifier" %}
+                                        <!--/ko-->
+                                        <!-- ko if: !identifiers().length -->
+                                        {% trans "Add Part Identifier" %}
+                                        <!--/ko-->
+                                    </a>
                                     
                                     <!-- ko ifnot: identifiers().length -->
                                     <div class="afs-nodata-note">No identifiers for this part</div>
@@ -407,7 +434,15 @@
                                 <!-- Event First Generation Cards -->
                                 <div class="afs-report-subsection-firstchild">
                                     <h5>Event Part Timespan</h5>
-                                    <a data-bind="if: $data.cards && $data.cards.timespan, click: function(){$parent.addNewTile(cards.timespan)}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Edit Part Timespan" %}</a>
+                                    <a data-bind="if: $data.cards && $data.cards.timespan, click: function(){$parent.addNewTile(cards.timespan)}" class="afs-report-a">
+                                        <i class="fa fa-mail-reply"></i>
+                                        <!-- ko if: timespan() -->
+                                        {% trans "Edit Part Timespan" %}
+                                        <!--/ko-->
+                                        <!-- ko if: !timespan() -->
+                                        {% trans "Add Part Timespan" %}
+                                        <!--/ko-->
+                                    </a>
                                     <!-- ko ifnot: timespan() -->
                                     <div class="afs-nodata-note">No timespan for this event</div>
                                     <!-- /ko -->
