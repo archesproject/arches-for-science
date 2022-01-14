@@ -59,7 +59,11 @@ define([
             procedureValue: self.procedureValue(),
             parameterValue: self.parameterValue()
         };
-
+        this.procedureValue.subscribe(val=>{
+            if (val === 'a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a'){
+                self.procedureValue(null);
+            }
+        })
         this.createRelatedInstance = function(val){
             return [{
                 resourceId: val,
@@ -144,12 +148,47 @@ define([
             params.form.dirty(Boolean(val));
         });
 
+        this.saveTextualWorkType = function(){
+            const textualWorkTypeNodegroupId= "dc946b1e-c070-11e9-a005-a4d18cec433a";
+            const procedureValueId = "60d1e09c-0f14-4348-ae14-57fdb9ef87c4";
+
+            window.fetch(arches.urls.api_resources(self.procedureValue()) + '?format=json&compact=false')
+            .then(response => response.json())
+            .then(data => {
+                const textualWorkTypeTileId = data.resource.type['@tile_id'];
+                window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(tile => {
+                    if (!tile.data[textualWorkTypeNodegroupId].includes(procedureValueId)){
+                        tile.data[textualWorkTypeNodegroupId].push(procedureValueId);
+                        window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                            method: 'POST',
+                            credentials: 'include',
+                            body: JSON.stringify(tile),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        })
+                    }
+                });
+            })
+        };
+
         params.form.save = function() {
             params.form.complete(false);
             if (!self.instrumentValue()){
                 params.form.error(new Error("Selecting an instrument is required."));
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
                 return;
+            }
+            if (self.procedureValue()){
+                self.saveTextualWorkType();
             }
 
             let observedThingData = {};
