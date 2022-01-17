@@ -136,7 +136,6 @@ define([
             self.instrumentValue(snapshot.instrumentValue);
             self.procedureValue(snapshot.procedureValue);
             self.parameterValue(snapshot.parameterValue);
-            params.form.hasUnsavedData(false);
         };
 
         self.instrumentValue.subscribe(function(val){

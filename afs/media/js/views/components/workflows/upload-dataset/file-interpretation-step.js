@@ -54,6 +54,11 @@ define([
             }
             return false;
         });
+
+        this.dirty.subscribe((newval) => {
+            params.form.dirty(self.dirty());
+        })
+
         this.save = function(){
             for (var value of Object.values(params.value())) {
                 if(value.fileStatementParameter.dirty()){
@@ -63,9 +68,10 @@ define([
                     value.fileStatementInterpretation.save();
                 }
             }
+            params.form.savedData(params.value());
             params.form.complete(true);
         };
-
+        params.form.save = this.save;
         params.form.reset = function(){
             for (var value of Object.values(params.value())) {
                 value.fileStatementParameter.reset();
@@ -195,7 +201,8 @@ define([
         };
         datasetIds.forEach(function(datasetId){
             self.getDigitalResource(datasetId);
-        })
+        });
+        params.form.savedData(params.form.value());
 
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();

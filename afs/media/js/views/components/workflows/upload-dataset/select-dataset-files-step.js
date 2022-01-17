@@ -125,6 +125,7 @@ define([
                     self.selectedPart().datasetFiles.push(file);
                     self.parts.valueHasMutated();
                     self.files.remove(file);
+                    self.updateValue();
                 }
             }
 
@@ -361,6 +362,24 @@ define([
                 self.parts.valueHasMutated();
             }
 
+            this.getStepValue = () => {
+                return { 
+                    observationReferenceTileId: self.observationReferenceTileId(),
+                    parts: self.parts().map(x => 
+                        {
+                            return {
+                                datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
+                                datasetId: x.datasetId(),
+                                nameTileId: x.nameTileId(),
+                                datasetName: x.datasetName() || '',
+                                resourceReferenceId: x.resourceReferenceId(),
+                                tileid: x.tileid
+                            };
+                        }
+                    )
+                };
+            }
+
             this.save = async() => {
                 
                 params.form.lockExternalStep("select-instrument-and-files", true);
@@ -393,25 +412,20 @@ define([
                     console.log('Couldn\'t create observation cross references.');
                 }
 
-                params.form.savedData({ 
-                    observationReferenceTileId: self.observationReferenceTileId(),
-                    parts: self.parts().map(x => 
-                        {
-                            return {
-                                datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
-                                datasetId: x.datasetId(),
-                                nameTileId: x.nameTileId(),
-                                datasetName: x.datasetName() || '',
-                                resourceReferenceId: x.resourceReferenceId(),
-                                tileid: x.tileid
-                            };
-                        }
-                    )
-                });
+                params.form.savedData(this.getStepValue());
+                params.form.value(params.form.savedData())
 
                 self.snapshot = params.form.savedData();
+
                 params.form.complete(true);
             };
+
+            params.form.save = self.save;
+            params.form.reset = self.cancel;
+            
+            this.updateValue = () => {
+                params.form.value(self.getStepValue());
+            }
 
             this.dropzoneOptions = {
                 url: "arches.urls.root",
@@ -533,6 +547,7 @@ define([
                             } else {
                                 part.nameDirty(false);
                             }
+                            self.updateValue()
                         });
                     }
                 };
