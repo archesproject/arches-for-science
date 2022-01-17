@@ -95,7 +95,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Sample Location',
+                    title: 'Sample Info',
                     name: 'sample-location-step', /* unique to workflow */
                     required: true,
                     workflowstepclass: 'analysis-areas-workflow-regions-step',

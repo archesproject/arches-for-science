@@ -20,6 +20,9 @@ define([
             const physicalThingPartNodeId = "b240c366-8594-11ea-97eb-acde48001122";
             const projectInfo = params.projectInfo;
             const observationInfo = params.observationInfo;
+            const observationResourceId = params.observationInfo.observationInstanceId;
+            const observationGraphId = "615b11ee-c457-11e9-910c-a4d18cec433a";
+            const digitalResourceGraphId = "707cbd78-ca7a-11e9-990b-a4d18cec433a";
             const datasetNameNodeGroupId = "d2fdae3d-ca7a-11e9-ad84-a4d18cec433a";
             const datasetNameNodeId = "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a";
             const datasetFileNodeGroupId = "7c486328-d380-11e9-b88e-a4d18cec433a";
@@ -38,6 +41,7 @@ define([
             this.selectedPart = ko.observable();
             this.partFilter = ko.observable("");
             this.annotations = ko.observableArray([]);
+            this.selectedPartObservationId = ko.observable();
             this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
             this.observationReferenceTileId = ko.observable();
@@ -51,6 +55,14 @@ define([
             this.files = ko.observableArray([]);
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
+
+            this.selectedPartHasCurrentObservation = ko.computed(() => {
+                if(!self.selectedPart()?.observationResourceId){
+                    return true;
+                } else {
+                    return self.selectedPart().observationResourceId == observationResourceId;
+                }
+            })
 
             this.switchCanvas = function(canvasId){
                 var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasId);
@@ -86,7 +98,9 @@ define([
                 return tile.data[physicalThingPartAnnotationNodeId].features[0].properties[property];
             };
 
-            this.selectedPart.subscribe(function(data){
+            this.selectedPart.subscribe(async (data) => {
+                self.selectedPartObservationId(self.selectedPart().observationResourceId);
+
                 self.annotations([data]);
                 if (self.annotations().length) {
                     self.selectedAnnotationTile(self.annotations()[0]);
@@ -120,7 +134,7 @@ define([
             };
 
             this.addFileToPart = (file) => {
-                if(self.selectedPart) {
+                if(self.selectedPart() && self.selectedPartHasCurrentObservation()) {
                     file.tileId = ko.observable();
                     self.selectedPart().datasetFiles.push(file);
                     self.parts.valueHasMutated();
@@ -130,7 +144,7 @@ define([
             }
 
             this.removeFileFromPart = (file) => {
-                if(self.selectedPart) {
+                if(self.selectedPart() && self.selectedPartHasCurrentObservation()) {
                     self.selectedPart().datasetFiles.remove(file);
                     self.files.push(file);
                 }
@@ -185,14 +199,29 @@ define([
                     "data": {},
                     "nodegroup_id": recordedValueNodeId,
                     "parenttile_id": null,
-                    "resourceinstance_id": observationInfo.observationInstanceId,
+                    "resourceinstance_id": observationResourceId,
                     "sortorder": 1,
                     "tiles": {},
                     "transaction_id": params.form.workflowId
                 };
+
+                const getPartObservationId = async (part) => {
+                    if(part.datasetId()) {
+                        const selectedDatasetCrossReferences = await (await window.fetch(`${arches.urls.related_resources}${part.datasetId()}`)).json();
+                        const relatedObservation = selectedDatasetCrossReferences?.related_resources?.related_resources?.filter(x => x?.graph_id == observationGraphId);
+                        part.observationResourceId = relatedObservation?.[0]?.resourceinstanceid;
+                        if(part.datasetId() == self.selectedPart().datasetId()){
+                            self.selectedPart.valueHasMutated()
+                        }
+                    }
+                };
+
+                await Promise.all(self.parts().map(getPartObservationId));
                 
                 digitalReferenceTile.data[recordedValueNodeId] = 
-                    self.parts().filter(x => x.datasetId()).map(part => { 
+                    self.parts().filter((part) => {
+                        return ((part.datasetId() && (!part.observationResourceId || part.observationResourceId === observationResourceId)) ? true : false); // observation reference already exists
+                    }).map(part => { 
                         return {
                             "resourceId": part.datasetId(),
                             "ontologyProperty": "",

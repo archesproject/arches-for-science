@@ -41,8 +41,8 @@ define([
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
                     hiddenWorkflowButtons: ['undo', 'save'],
                     informationboxdata: {
-                        heading: 'Select the instrument used for the analysis',
-                        text: 'Select the instrument, add any special parameters/configuration for the instrument, and upload the dataset files',
+                        heading: 'Add interpretations for the uploaded dataset',
+                        text: 'Select a file from a dataset and add any relevant parameter and interpretation details.',
                     },
                     layoutSections: [
                         {

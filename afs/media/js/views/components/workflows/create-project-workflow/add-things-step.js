@@ -318,15 +318,12 @@ define([
             },
             formatResult: function(item) {
                 if (item.context_label === 'Search Term') {
-                    return `<strong>${item.text}</strong>`;
+                    return `<strong><u>${item.text}</u></strong>`;
                 }
-                return item.text + ' (' + item.context_label + ')';
+                return item.text;
             },
             formatSelection: function(item) {
-                if (item.context_label === 'Search Term') {
-                    return item.text;
-                }
-                return item.text + ' (' + item.context_label + ')';
+                return item.text;
             },
             clear: function() {
                 self.selectedTerm();
