@@ -35,32 +35,10 @@ define([
 
         this.resourceData.subscribe(function(val){
             this.displayName = val['displayname'] || 'unnamed';
-            this.displaydescription = val['displaydescription'] || "none";
             this.reportVals = {
                 projectName: {'name': 'Project Name', 'value': this.getResourceValue(val.resource['Name'][0],['Name_content','@display_value'])},
-                projectTimespan: {'name': 'Project Timespan', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@display_value'])},
-                projectTeam: {'name': 'Project Team', 'value': this.getResourceValue(val.resource, ['carried out by','@display_value'])},
                 collection: {'name': 'Related Collection', 'value': this.getResourceValue(val.resource['Used Set'], ['@display_value'])},
             };
-
-            var findStatement= function(type){
-                try {
-                    self.reportVals.statements = val.resource['Statement'].map(function(statement){
-                        return {
-                            content:  {'name': 'Project Statement', 'value': self.getResourceValue(statement, ['Statement_content','@display_value'])},
-                            type: {'name': 'type', 'value': self.getResourceValue(statement, ['Statement_type','@display_value'])}
-                        };
-                    });
-                } catch(e) {
-                    self.reportVals.statements = [];
-                }
-                var foundStatement = self.reportVals.statements.find(function(statement) {
-                    return statement.type.value.split(",").indexOf(type) > -1;
-                });
-                return foundStatement ? foundStatement.content : {'name': 'Project Statement', 'value': 'None'};
-            };
-
-            this.reportVals.projectStatement = findStatement('description');
 
             this.resourceLoading(false);
             if (!this.collectionLoading()){
