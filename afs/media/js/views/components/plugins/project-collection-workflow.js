@@ -4,8 +4,9 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
+    'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/create-project-workflow/add-things-step',
-    'views/components/workflows/create-project-workflow/create-project-final-step'
+    'views/components/workflows/project-collection-workflow/project-collection-final-step'
 ], function(ko, $, arches, Workflow) {
     return ko.components.register('project-collection-workflow', {
         viewModel: function(params) {
@@ -22,17 +23,20 @@ define([
                     },
                     layoutSections: [
                         {
+                            sectionTitle: 'Select Project',
                             componentConfigs: [
                                 {
-                                    componentName: 'select-project-step',
+                                    componentName: 'resource-instance-select-widget',
                                     uniqueInstanceName: 'select-project', /* unique to step */
-                                    tilesManaged: 'none',
                                     parameters: {
+                                        graphids: [
+                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Project */
+                                        ],
                                     },
                                 },
                             ], 
                         },
-                    ]
+                    ],
                 },
                 {
                     title: 'Add Objects to Your Project',
@@ -54,8 +58,8 @@ define([
                                         graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
                                         nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
                                         nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)
-                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
-                                        researchActivityStepData: "['set-project-name']['project-name'][0]"
+                                        resourceid: "['select-project']['select-project']",
+                                        action: "update",
                                     },
                                 },
                             ],
