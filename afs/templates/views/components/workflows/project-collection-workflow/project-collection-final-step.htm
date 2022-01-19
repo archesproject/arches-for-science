@@ -5,9 +5,9 @@
         <h5 class="summary-value">{% trans 'Project' %}</h5>
         <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
-                <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
+                <a data-bind="attr: { href: urls.resource + '/' + projectResourceId}" target="_blank">
                     <div class="summary-value" 
-                        data-bind = "text: displayName">
+                        data-bind = "text: projectName">
                     </div>
                 </a>
             </div>
@@ -18,9 +18,9 @@
         <h5 class="summary-value">{% trans 'Related Collection' %}</h5>
         <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
-                <a data-bind="attr: { href: urls.resource + '/' + collectionResourceId}" target="_blank">
+                <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
                     <div class="summary-value" 
-                        data-bind = "text: reportVals.collection.value">
+                        data-bind = "text: collectionName">
                     </div>
                 </a>
             </div>

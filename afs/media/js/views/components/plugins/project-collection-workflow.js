@@ -78,8 +78,8 @@ define([
                                     uniqueInstanceName: 'project-collection-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        resourceid: "['select-project']['select-project']",
-                                        collectionResourceId: "['object-search-step']['add-phys-things'][0]['collectionResourceId']",
+                                        projectResourceId: "['select-project']['select-project']",
+                                        resourceid: "['object-search-step']['add-phys-things'][0]['collectionResourceId']",
                                     },
                                 },
                             ], 
