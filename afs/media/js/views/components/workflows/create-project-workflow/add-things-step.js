@@ -45,7 +45,6 @@ define([
             var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
             this.projectResourceId(researchActivityStepData.resourceInstanceId);    
         } else if (params.resourceid){
-            console.log(params.resourceid)
             this.projectResourceId(params.resourceid);
         }
 
@@ -119,7 +118,6 @@ define([
         };
 
         this.initialize = function(){
-            console.log(params.value())
             if (params.value()) {
                 const cachedValue = ko.unwrap(params.value);
                 if (cachedValue['collectionResourceId']){
@@ -203,26 +201,26 @@ define([
             self.saving(true);
             if (params.action === "update") {
                 self.addCollectionToPhysicalThings()
-                .then(() => {
-                    params.form.lockExternalStep("select-project", true);
-                })
-                .fail((err) => {
-                    // eslint-disable-next-line no-console
-                    console.log(err);
-                    const startValue = ko.unwrap(self.startValue);
-                    self.value(startValue);
-                }).always(() => {
-                    self.savedData(
-                        {
-                            value: ko.unwrap(self.value),
-                            projectResourceId: ko.unwrap(self.projectResourceId),
-                            collectionResourceId: ko.unwrap(self.collectionResourceId),
-                            collectionTileId: ko.unwrap(self.collectionTileId), 
-                        }
-                    );
-                    self.saving(false);
-                    self.complete(true);
-                });
+                    .then(() => {
+                        params.form.lockExternalStep("select-project", true);
+                    })
+                    .fail((err) => {
+                        // eslint-disable-next-line no-console
+                        console.log(err);
+                        const startValue = ko.unwrap(self.startValue);
+                        self.value(startValue);
+                    }).always(() => {
+                        self.savedData(
+                            {
+                                value: ko.unwrap(self.value),
+                                projectResourceId: ko.unwrap(self.projectResourceId),
+                                collectionResourceId: ko.unwrap(self.collectionResourceId),
+                                collectionTileId: ko.unwrap(self.collectionTileId), 
+                            }
+                        );
+                        self.saving(false);
+                        self.complete(true);
+                    });
             } else {
                 const nameTileData = {
                     "52aa1ade-c450-11e9-8326-a4d18cec433a": ["bc35776b-996f-4fc1-bd25-9f6432c1f349"], // English
