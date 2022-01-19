@@ -203,6 +203,9 @@ define([
             self.saving(true);
             if (params.action === "update") {
                 self.addCollectionToPhysicalThings()
+                .then(() => {
+                    params.form.lockExternalStep("select-project", true);
+                })
                 .fail((err) => {
                     // eslint-disable-next-line no-console
                     console.log(err);

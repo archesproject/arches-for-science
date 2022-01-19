@@ -47,6 +47,7 @@ define([
                         heading: 'Add Objects',
                         text: 'Add Objects to Your Project',
                     },
+                    lockableExternalSteps: ['select-project'],
                     layoutSections: [
                         {
                             componentConfigs: [
