@@ -220,7 +220,10 @@ define([
             if(!!selectedFile){
                 self.selected(true);
                 self.displayContent = self.getDisplayContent(selectedFile.file_details[0]);
-                self.selectedRenderer(self.getFileFormatRenderer(selectedFile.file_details[0].renderer));
+                const renderer = self.getFileFormatRenderer(selectedFile.file_details[0].renderer);
+                require([renderer.component], () => {
+                    self.selectedRenderer(renderer);
+                });
                 // self.selectedFile(selectedFile);
                 var file = params.value()[selectedFile['@tile_id']];
                 self.fileStatementParameter(file.fileStatementParameter.fileStatement());
