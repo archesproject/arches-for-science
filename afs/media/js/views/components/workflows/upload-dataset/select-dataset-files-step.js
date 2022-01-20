@@ -55,6 +55,8 @@ define([
             this.files = ko.observableArray([]);
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
+            this.savingMessage = ko.observable();
+            this.savingFile = ko.observable(false);
 
             this.selectedPartHasCurrentObservation = ko.computed(() => {
                 if(!self.selectedPart()?.observationResourceId){
@@ -272,6 +274,7 @@ define([
 
             this.saveDatasetFiles = async (part, datasetNameTileResourceId) => {
                 //Tile structure for the Digital Resource 'File' nodegroup
+                self.savingFile(true);
                 const fileTemplate = {
                     "tileid": "",
                     "data": {
@@ -291,6 +294,7 @@ define([
                 const datasetFilesArray = part.datasetFiles();
                 for(let i = 0; i < datasetFilesArray.length; ++i){
                     const file = datasetFilesArray[i];
+                    self.savingMessage(`Uploading ${file.name}`);
                     let fileInfo;
                     // file has already been uploaded
                     if (file.tileId()){ continue; }
@@ -338,8 +342,9 @@ define([
                             json = await tile.json();
                             file.tileId(json.tileid);
                         }
-                    } 
-                }  
+                    }
+                }
+                self.savingFile(false);
             };
 
             this.saveDigitalResourceToChildPhysThing = async (part) => {
@@ -392,7 +397,7 @@ define([
             }
 
             this.save = async() => {
-                
+
                 params.form.lockExternalStep("select-instrument-and-files", true);
                 const parts = self.parts();
                 for (const part of parts) {
