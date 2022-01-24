@@ -111,7 +111,27 @@ define([
             self.collectionResourceId(projectRelatedResources.related_resources.related_resources.find(x=>x.graph_id==="1b210ef3-b25c-11e9-a037-a4d18cec433a").resourceinstanceid);
 
             const collectionRelatedResources = await (await window.fetch(`${arches.urls.related_resources}${self.collectionResourceId()}`)).json();
-            self.startValue(collectionRelatedResources.related_resources.related_resources.filter(rr => rr.graph_id==="9519cb4f-b25b-11e9-8c7b-a4d18cec433a").map(rr => rr.resourceinstanceid));
+            const childPhysicalThingsValueIds = [
+                '77d8cf19-ce9c-4e0a-bde1-9148d870e11c', //sample
+                '7375a6fb-0bfb-4bcf-81a3-6180cdd26123', //sample location
+                '31d97bdd-f10f-4a26-958c-69cb5ab69af1', //anlysis area
+            ]
+
+            self.startValue(
+                collectionRelatedResources.related_resources.related_resources
+                    .filter(rr =>
+                        rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
+                    )
+                    .filter(rr =>
+                        !rr.tiles.find(tile =>
+                            tile.nodegroup_id === "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a" &&
+                            tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
+                                childPhysicalThingsValueIds.includes(value))
+                        )
+                    )
+                    .map(rr => rr.resourceinstanceid)
+            );
+
             self.startValue().forEach(function(val){
                 self.value.push(val);
             });
