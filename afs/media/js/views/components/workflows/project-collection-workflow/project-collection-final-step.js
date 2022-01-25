@@ -26,7 +26,7 @@ define([
             ).displayname;
 
             const collectionOfPhysThings = val['related_resources'].filter(rr =>
-                rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
+                rr.graph_id === physicalThingGraphId
             );
 
             self.collectionOfParentPhysThings(collectionOfPhysThings.filter(rr =>
@@ -35,7 +35,7 @@ define([
                     tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
                         childPhysicalThingsValueIds.includes(value))
                 )
-            ).map(rr => {return {'name': rr.displayname, resourceid: rr.resourceinstanceid}}));
+            ).map(rr => {return {'name': rr.displayname, resourceid: rr.resourceinstanceid};}));
 
             self.collectionOfChildPhysThings(collectionOfPhysThings.filter(rr =>
                 rr.tiles.find(tile =>
@@ -43,7 +43,7 @@ define([
                     tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
                         childPhysicalThingsValueIds.includes(value))
                 )
-            ).map(rr => {return {'name': rr.displayname, resourceid: rr.resourceinstanceid}}));
+            ).map(rr => {return {'name': rr.displayname, resourceid: rr.resourceinstanceid};}));
 
             this.loading(false);
         }, this);
