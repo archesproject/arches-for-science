@@ -115,7 +115,7 @@ define([
                 '77d8cf19-ce9c-4e0a-bde1-9148d870e11c', //sample
                 '7375a6fb-0bfb-4bcf-81a3-6180cdd26123', //sample location
                 '31d97bdd-f10f-4a26-958c-69cb5ab69af1', //anlysis area
-            ]
+            ];
 
             self.startValue(
                 collectionRelatedResources.related_resources.related_resources
