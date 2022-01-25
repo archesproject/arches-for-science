@@ -42,7 +42,7 @@ define([
                     title: 'Add Objects to Your Project',
                     name: 'object-search-step',  /* unique to workflow */
                     required: false,
-                    workflowstepclass: 'project-collection-add-things-step',
+                    workflowstepclass: 'create-project-add-things-step',
                     informationboxdata: {
                         heading: 'Update Objects',
                         text: 'Update Objects in Your Project',
