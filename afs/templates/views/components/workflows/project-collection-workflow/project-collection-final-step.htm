@@ -31,7 +31,15 @@
         <h5 class="summary-value">{% trans 'Used Physical Things' %}</h5>
         <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
-                <!-- ko foreach: collectionOfPhysThings -->
+                <!-- ko foreach: collectionOfParentPhysThings -->
+                <a class="summary-value" data-bind="clickBubble: false, attr: {href: $parent.urls.resource + '/' + resourceid}, text: name"></a>
+                <!-- /ko -->
+            </div>
+        </div>
+        <h5 class="summary-value">{% trans 'Child Physical Things' %}</h5>
+        <div class="afs-final-step-block">
+            <div style="display: flex; flex-direction: column;">
+                <!-- ko foreach: collectionOfChildPhysThings -->
                 <a class="summary-value" data-bind="clickBubble: false, attr: {href: $parent.urls.resource + '/' + resourceid}, text: name"></a>
                 <!-- /ko -->
             </div>
