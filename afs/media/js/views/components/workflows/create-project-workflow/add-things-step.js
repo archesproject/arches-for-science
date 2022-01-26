@@ -365,7 +365,7 @@ define([
 
                     const filteredResults = results.filter(function(result){
                         return (result.context_label.includes("Physical Thing") || result.context_label.includes("Search Term")) && 
-                            !(result.text.includes("Sample") || result.text.includes("Analysis") || result.text.includes("Region"));
+                            !(result.text.includes("[Sample") || result.text.includes("[Analysis") || result.text.includes("[Region"));
                     });
                     return {
                         results: filteredResults,
