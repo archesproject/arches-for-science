@@ -40,9 +40,13 @@ define([
         this.usedSetTileId = ko.observable();
         this.reportDataLoading = ko.observable(params.loading());
 
-        var researchActivityStepData = params.researchActivityStepData;
-        var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
-        this.projectResourceId(researchActivityStepData.resourceInstanceId);
+        if (params.researchActivityStepData){
+            var researchActivityStepData = params.researchActivityStepData;
+            var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
+            this.projectResourceId(researchActivityStepData.resourceInstanceId);    
+        } else if (params.resourceid){
+            this.projectResourceId(params.resourceid);
+        }
 
         this.selectedTab = ko.observable();
         this.searchResults = {'timestamp': ko.observable()};
@@ -102,6 +106,37 @@ define([
             });
         }, null, "arrayChange");
 
+        const loadExistingCollection = async function(){
+            const projectRelatedResources = await (await window.fetch(`${arches.urls.related_resources}${self.projectResourceId()}`)).json();
+            self.collectionResourceId(projectRelatedResources.related_resources.related_resources.find(x=>x.graph_id==="1b210ef3-b25c-11e9-a037-a4d18cec433a").resourceinstanceid);
+
+            const collectionRelatedResources = await (await window.fetch(`${arches.urls.related_resources}${self.collectionResourceId()}`)).json();
+            const childPhysicalThingsValueIds = [
+                '77d8cf19-ce9c-4e0a-bde1-9148d870e11c', //sample
+                '7375a6fb-0bfb-4bcf-81a3-6180cdd26123', //sample location
+                '31d97bdd-f10f-4a26-958c-69cb5ab69af1', //anlysis area
+            ];
+
+            self.startValue(
+                collectionRelatedResources.related_resources.related_resources
+                    .filter(rr =>
+                        rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
+                    )
+                    .filter(rr =>
+                        !rr.tiles.find(tile =>
+                            tile.nodegroup_id === "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a" &&
+                            tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
+                                childPhysicalThingsValueIds.includes(value))
+                        )
+                    )
+                    .map(rr => rr.resourceinstanceid)
+            );
+
+            self.startValue().forEach(function(val){
+                self.value.push(val);
+            });
+        };
+
         this.initialize = function(){
             if (params.value()) {
                 const cachedValue = ko.unwrap(params.value);
@@ -120,6 +155,8 @@ define([
                         self.value.push(val);
                     });
                 }
+            } else if (params.action === "update") {
+                loadExistingCollection();
             }
         };
 
@@ -182,65 +219,88 @@ define([
         this.submit = function() {
             self.complete(false);
             self.saving(true);
-
-            const nameTileData = {
-                "52aa1ade-c450-11e9-8326-a4d18cec433a": ["bc35776b-996f-4fc1-bd25-9f6432c1f349"], // English
-                "52aa1d0f-c450-11e9-aec4-a4d18cec433a": null,
-                "52aa1e1c-c450-11e9-91cc-a4d18cec433a": null,
-                "52aa1f17-c450-11e9-a114-a4d18cec433a": ["7d069762-bd96-44b8-afc8-4761389105c5"], // [primary title]
-                "52aa2007-c450-11e9-b5d4-a4d18cec433a": `Collection for ${researchActivityName}`,
-            };
-
-            const nameTile = {
-                "tileid": ko.unwrap(self.collectionTileId) || "",
-                "nodegroup_id": collectionNameNodegroupId,
-                "parenttile_id": null,
-                "resourceinstance_id": ko.unwrap(self.collectionResourceId),
-                "sortorder": 0,
-                "tiles": {},
-                "data": nameTileData,
-                "transaction_id": params.form.workflowId
-            };
-
-            window.fetch(arches.urls.api_tiles(ko.unwrap(self.collectionTileId) || uuid.generate()), {
-                method: 'POST',
-                credentials: 'include',
-                body: JSON.stringify(nameTile),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            }).then(function(response) {
-                if (response.ok) {
-                    return response.json();
-                }
-            }).then(function(data) {
-                self.collectionResourceId(data.resourceinstance_id);
-                self.collectionTileId(data.tileid);
-
-                createActivityUsedSet()
-                    .done(data => {
-                        self.usedSetTileId(data.tileid);
-                        self.addCollectionToPhysicalThings()
-                            .fail((err) => {
-                                // eslint-disable-next-line no-console
-                                console.log(err);
-                                const startValue = ko.unwrap(self.startValue);
-                                self.value(startValue);
-                            }).always(() => {
-                                self.savedData(
-                                    {
-                                        value: ko.unwrap(self.value),
-                                        projectResourceId: ko.unwrap(self.projectResourceId),
-                                        collectionResourceId: ko.unwrap(self.collectionResourceId),
-                                        collectionTileId: ko.unwrap(self.collectionTileId), 
-                                        usedSetTileId: ko.unwrap(self.usedSetTileId),
-                                    }
-                                );
-                                self.saving(false);
-                                self.complete(true);
-                            });
+            if (params.action === "update") {
+                self.addCollectionToPhysicalThings()
+                    .then(() => {
+                        params.form.lockExternalStep("select-project", true);
+                    })
+                    .fail((err) => {
+                        // eslint-disable-next-line no-console
+                        console.log(err);
+                        const startValue = ko.unwrap(self.startValue);
+                        self.value(startValue);
+                    }).always(() => {
+                        self.savedData(
+                            {
+                                value: ko.unwrap(self.value),
+                                projectResourceId: ko.unwrap(self.projectResourceId),
+                                collectionResourceId: ko.unwrap(self.collectionResourceId),
+                                collectionTileId: ko.unwrap(self.collectionTileId), 
+                            }
+                        );
+                        self.saving(false);
+                        self.complete(true);
                     });
-            });
+            } else {
+                const nameTileData = {
+                    "52aa1ade-c450-11e9-8326-a4d18cec433a": ["bc35776b-996f-4fc1-bd25-9f6432c1f349"], // English
+                    "52aa1d0f-c450-11e9-aec4-a4d18cec433a": null,
+                    "52aa1e1c-c450-11e9-91cc-a4d18cec433a": null,
+                    "52aa1f17-c450-11e9-a114-a4d18cec433a": ["7d069762-bd96-44b8-afc8-4761389105c5"], // [primary title]
+                    "52aa2007-c450-11e9-b5d4-a4d18cec433a": `Collection for ${researchActivityName}`,
+                };
+    
+                const nameTile = {
+                    "tileid": ko.unwrap(self.collectionTileId) || "",
+                    "nodegroup_id": collectionNameNodegroupId,
+                    "parenttile_id": null,
+                    "resourceinstance_id": ko.unwrap(self.collectionResourceId),
+                    "sortorder": 0,
+                    "tiles": {},
+                    "data": nameTileData,
+                    "transaction_id": params.form.workflowId
+                };
+    
+                window.fetch(arches.urls.api_tiles(ko.unwrap(self.collectionTileId) || uuid.generate()), {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: JSON.stringify(nameTile),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                }).then(function(data) {
+                    self.collectionResourceId(data.resourceinstance_id);
+                    self.collectionTileId(data.tileid);
+    
+                    createActivityUsedSet()
+                        .done(data => {
+                            self.usedSetTileId(data.tileid);
+                            self.addCollectionToPhysicalThings()
+                                .fail((err) => {
+                                    // eslint-disable-next-line no-console
+                                    console.log(err);
+                                    const startValue = ko.unwrap(self.startValue);
+                                    self.value(startValue);
+                                }).always(() => {
+                                    self.savedData(
+                                        {
+                                            value: ko.unwrap(self.value),
+                                            projectResourceId: ko.unwrap(self.projectResourceId),
+                                            collectionResourceId: ko.unwrap(self.collectionResourceId),
+                                            collectionTileId: ko.unwrap(self.collectionTileId), 
+                                            usedSetTileId: ko.unwrap(self.usedSetTileId),
+                                        }
+                                    );
+                                    self.saving(false);
+                                    self.complete(true);
+                                });
+                        });
+                });    
+            }
         };
 
         params.form.save = self.submit;
