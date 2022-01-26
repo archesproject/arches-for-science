@@ -58,8 +58,7 @@
                                 <h3 class="rr-splash-description">{% trans "This file can't be displayed." %}</h3>
 
                                 <!-- Splash Instructions -->
-                                <h3 class="rr-splash-description">{% trans "It may be a proprietary format or there
-                                    isn't a loader available yet " %}</h3>
+                                <h3 class="rr-splash-description">{% trans "It may be a proprietary format or there isn't a loader available yet " %}</h3>
 
                                 <!-- Splash Instructions -->
                                 <h3 class="rr-splash-description">{% trans "to present it in this webpage." %}</h3>
@@ -71,14 +70,12 @@
                                 <div class="">
                                     <!--ko if: displayContent.validRenderer === false -->
                                     <h4 class="loader-error-message">{% trans 'Unable to parse your file with the '%}
-                                        <span data-bind="text:displayContent.renderer.title"></span>{% trans '
-                                        loader'%}
+                                        <span data-bind="text:displayContent.renderer.title"></span>{% trans 'loader'%}
                                     </h4>
                                     <!--/ko-->
 
                                     <h2>{% trans 'Select File Loader' %}</h2>
-                                    <h4>{% trans 'Select the loader best suited for processing and visualizing the
-                                        selected file' %}</h4>
+                                    <h4>{% trans 'Select the loader best suited for processing and visualizing the selected file' %}</h4>
                                     <div style="display: flex; flex-flow: wrap; padding: 15px 25px;">
 
                                         <!--ko foreach: displayContent.availableRenderers -->
@@ -122,8 +119,11 @@
                             </div>
                             <div class="file-upload-footer">
                                 <span class="loader-selector"
-                                    data-bind="component: { name: 'views/components/simple-switch', params: {value: applyToAll, config:{label: '{% trans "
-                                    Apply the same loader to all selected files in the dataset" %}'}}}"></span>
+                                    data-bind="component: {
+                                        name: 'views/components/simple-switch',
+                                        params: {value: applyToAll, config:{label: '{% trans "Apply the same loader to all selected files in the dataset" %}'}}
+                                    }"
+                                ></span>
                             </div>
                             <!--/ko-->
                         </div>
