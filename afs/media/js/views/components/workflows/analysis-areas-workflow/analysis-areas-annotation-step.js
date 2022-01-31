@@ -10,6 +10,7 @@ define([
     'viewmodels/card',
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
+    'views/components/resource-instance-nodevalue',
 ], function(_, $, arches, ko, koMapping, StepUtils, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
