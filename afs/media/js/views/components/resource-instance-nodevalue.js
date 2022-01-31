@@ -47,7 +47,7 @@ define([
                     url: arches.urls.related_resources + self.relatedResourceId + "?paginate=false",
                     dataType: 'json',
                     results: function(data) {
-                        const filteredResources = data.related_resources.filter(resource => relatedResourceNodeValues.includes(resource.resourceinstanceid))
+                        const filteredResources = data.related_resources.filter(resource => relatedResourceNodeValues.includes(resource.resourceinstanceid));
                         return {
                             results: filteredResources,
                         };
