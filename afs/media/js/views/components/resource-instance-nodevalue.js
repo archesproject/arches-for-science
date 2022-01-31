@@ -8,8 +8,6 @@ define([
     return ko.components.register('views/components/resource-instance-nodevalue', {
         viewModel: function(params) {
             const self = this;
-            let resourceLookup = {};
-            let graphCache = {};
             let relatedResourceNodeValues;
 
             ResourceInstanceSelectViewModel.apply(this, [params]);
