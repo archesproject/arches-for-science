@@ -209,6 +209,7 @@ define([
             ];
             
             Workflow.apply(this, [params]);
+            this.quitUrl = arches.urls.plugin('init-workflow');
         },
         template: { require: 'text!templates/views/components/plugins/upload-dataset-workflow.htm' }
     });
