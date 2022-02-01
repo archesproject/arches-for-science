@@ -2,9 +2,8 @@ define([
     'arches',
     'uuid',
     'knockout',
-    'utils/resource',
     'viewmodels/card',
-], function(arches, uuid, ko, resourceUtils) {
+], function(arches, uuid, ko) {
    
     function viewModel(params) {
 
@@ -101,16 +100,16 @@ define([
                     "7d069762-bd96-44b8-afc8-4761389105c5",
                     "8f40c740-3c02-4839-b1a4-f1460823a9fe"
                 ]
-            }
+            };
 
             const typeTileData = {
                 "0b92b8c0-ca85-11e9-adef-a4d18cec433a": self.typeValue()
-            }
+            };
 
             return self.saveTile(nameTileData, nameNodeGroupId, self.projectResourceId(), nameTileId)
                 .then(function(data) {
-                    nameTileid = data.tileid;
-                    self.projectResourceId(data.resourceinstance_id)
+                    nameTileId = data.tileid;
+                    self.projectResourceId(data.resourceinstance_id);
                     return self.saveTile(typeTileData, typeNodeGroupId, data.resourceinstance_id, typeTileId);
                 })
                 .then(function(data) {
