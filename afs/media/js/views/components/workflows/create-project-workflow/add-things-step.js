@@ -40,10 +40,10 @@ define([
         this.usedSetTileId = ko.observable();
         this.reportDataLoading = ko.observable(params.loading());
 
-        if (params.researchActivityStepData){
-            var researchActivityStepData = params.researchActivityStepData;
-            var researchActivityName = JSON.parse(researchActivityStepData["tileData"])[activityNameNodeId];
-            this.projectResourceId(researchActivityStepData.resourceInstanceId);    
+        if (params.projectStepData){
+            const projectStepData = params.projectStepData;
+            const projectName = projectStepData.name.value;
+            this.projectResourceId(projectStepData.projectResourceId);    
         } else if (params.resourceid){
             this.projectResourceId(params.resourceid);
         }
@@ -247,7 +247,7 @@ define([
                     "52aa1d0f-c450-11e9-aec4-a4d18cec433a": null,
                     "52aa1e1c-c450-11e9-91cc-a4d18cec433a": null,
                     "52aa1f17-c450-11e9-a114-a4d18cec433a": ["7d069762-bd96-44b8-afc8-4761389105c5"], // [primary title]
-                    "52aa2007-c450-11e9-b5d4-a4d18cec433a": `Collection for ${researchActivityName}`,
+                    "52aa2007-c450-11e9-b5d4-a4d18cec433a": `Collection for ${projectName}`,
                 };
     
                 const nameTile = {
