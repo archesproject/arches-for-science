@@ -39,10 +39,11 @@ define([
         this.collectionTileId = ko.observable();
         this.usedSetTileId = ko.observable();
         this.reportDataLoading = ko.observable(params.loading());
+        let projectName;
 
         if (params.projectStepData){
             const projectStepData = params.projectStepData;
-            const projectName = projectStepData.name.value;
+            projectName = projectStepData.name.value;
             this.projectResourceId(projectStepData.projectResourceId);    
         } else if (params.resourceid){
             this.projectResourceId(params.resourceid);
