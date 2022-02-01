@@ -4,6 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
+    'views/components/workflows/create-project-workflow/project-name-step',
     'views/components/workflows/create-project-workflow/add-things-step',
     'views/components/workflows/create-project-workflow/create-project-final-step'
 ], function(ko, $, arches, Workflow) {
@@ -25,25 +26,9 @@ define([
                         {
                             componentConfigs: [
                                 {
-                                    componentName: 'default-card',
+                                    componentName: 'project-name-step',
                                     uniqueInstanceName: 'project-name', /* unique to step */
-                                    tilesManaged: 'one',
                                     parameters: {
-                                        graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                                        nodegroupid: '0b926359-ca85-11e9-ac9c-a4d18cec433a',
-                                    },
-                                },
-                            ], 
-                        },
-                        {
-                            componentConfigs: [
-                                {
-                                    componentName: 'default-card',
-                                    uniqueInstanceName: 'project-type', /* unique to step */
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                                        nodegroupid: '0b92b8c0-ca85-11e9-adef-a4d18cec433a',
                                     },
                                 },
                             ], 
