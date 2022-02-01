@@ -2,6 +2,14 @@
 {% load staticfiles %}
 {% load i18n %}
 
+{% block workbench %}
+<div class='loading-mask' data-bind="visible: savingFile"></div>
+<div class="afs-saving-message" data-bind="visible: savingFile, text: savingMessage()"></div>
+<!-- ko with: $data, as: 'self' -->
+    {{ block.super }}
+<!-- /ko -->
+{% endblock workbench %}
+
 {% block tabs %}
 <div class="workbench-card-sidebar-tab" data-bind="click: function() {
     toggleTab('dataset');
@@ -15,8 +23,6 @@
 {% endblock tabs %}
 
 {% block sidepanel %}
-<div class="afs-saving-message" data-bind="visible: savingFile, text: savingMessage"></div>
-
 <!--ko foreach: { data: [$data], as: 'self' }-->
 <!--ko if: activeTab() === 'dataset'-->
 <div class="workbench-header-buffer">
