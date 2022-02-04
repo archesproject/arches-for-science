@@ -4,6 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/workflow-step',
+    'views/components/workflows/create-project-workflow/project-name-step',
     'views/components/workflows/create-project-workflow/add-things-step',
     'views/components/workflows/create-project-workflow/create-project-final-step'
 ], function(ko, $, arches, Workflow) {
@@ -16,7 +17,6 @@ define([
                     title: 'Project Name',
                     name: 'set-project-name',  /* unique to workflow */
                     required: true,
-                    workflowstepclass: 'create-project-project-name-step',
                     informationboxdata: {
                         heading: 'Project Name',
                         text: 'Identify the project by giving it a name',
@@ -25,25 +25,9 @@ define([
                         {
                             componentConfigs: [
                                 {
-                                    componentName: 'default-card',
+                                    componentName: 'project-name-step',
                                     uniqueInstanceName: 'project-name', /* unique to step */
-                                    tilesManaged: 'one',
                                     parameters: {
-                                        graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                                        nodegroupid: '0b926359-ca85-11e9-ac9c-a4d18cec433a',
-                                    },
-                                },
-                            ], 
-                        },
-                        {
-                            componentConfigs: [
-                                {
-                                    componentName: 'default-card',
-                                    uniqueInstanceName: 'project-type', /* unique to step */
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
-                                        nodegroupid: '0b92b8c0-ca85-11e9-adef-a4d18cec433a',
                                     },
                                 },
                             ], 
@@ -68,7 +52,7 @@ define([
                                     parameters: {
                                         graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                                         nodegroupid: '0b92a414-ca85-11e9-b725-a4d18cec433a',
-                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
+                                        resourceid: "['set-project-name']['project-name']['projectResourceId']",
                                     },
                                 },
                             ], 
@@ -93,7 +77,7 @@ define([
                                     parameters: {
                                         graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                                         nodegroupid: '0b925e3a-ca85-11e9-a308-a4d18cec433a',
-                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
+                                        resourceid: "['set-project-name']['project-name']['projectResourceId']",
                                         hiddenNodes: ['0b92f57d-ca85-11e9-a353-a4d18cec433a', '0b931623-ca85-11e9-b235-a4d18cec433a', '0b930905-ca85-11e9-8aca-a4d18cec433a'],
                                     },
                                 },
@@ -119,7 +103,7 @@ define([
                                     parameters: {
                                         graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                                         nodegroupid: 'dbaa2022-9ae7-11ea-ab62-dca90488358a',
-                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
+                                        resourceid: "['set-project-name']['project-name']['projectResourceId']",
                                     },
                                 },
                             ], 
@@ -146,8 +130,8 @@ define([
                                         graphid: '1b210ef3-b25c-11e9-a037-a4d18cec433a', //Collection graph
                                         nodegroupid: '466f81d4-c451-11e9-b7c9-a4d18cec433a', //Curation in Collection
                                         nodeid: '466fa421-c451-11e9-9a6d-a4d18cec433a', //Curation_used in Collection (physical thing)
-                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
-                                        researchActivityStepData: "['set-project-name']['project-name'][0]"
+                                        resourceid: "['set-project-name']['project-name']['projectResourceId']",
+                                        projectStepData: "['set-project-name']['project-name']"
                                     },
                                 },
                             ],
@@ -166,7 +150,7 @@ define([
                                     uniqueInstanceName: 'create-project-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        resourceid: "['set-project-name']['project-name'][0]['resourceInstanceId']",
+                                        resourceid: "['set-project-name']['project-name']['projectResourceId']",
                                         collectionResourceId: "['object-search-step']['add-phys-things'][0]['collectionResourceId']",
                                     },
                                 },
