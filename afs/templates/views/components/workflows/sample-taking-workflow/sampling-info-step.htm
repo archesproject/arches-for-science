@@ -3,13 +3,16 @@
     <div style="padding: 5px">
         <div class="widget-input-label">{% trans "Samplers" %}</div>
         <div data-bind="component: {
-            name: 'resource-instance-multiselect-widget',
+            name: 'views/components/resource-instance-nodevalue',
             params: {
                 graphids: [
                     'f71f7b9c-b25b-11e9-901e-a4d18cec433a',
                 ],
                 renderContext: 'workflow', 
+                multiple: true,
                 value: samplers,
+                relatedResourceId: projectValue,
+                relatedNodeId: 'dbaa2022-9ae7-11ea-ab62-dca90488358a'
             }
         }"></div>
     </div>

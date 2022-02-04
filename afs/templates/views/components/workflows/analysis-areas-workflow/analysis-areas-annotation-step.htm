@@ -356,7 +356,7 @@
                             <div class="afs-workflow-annotator" style="margin-left: -20px;"
                                 data-bind='
                                     component: {
-                                        name: self.form.widgetLookup[$data.partIdentifierAssignmentAnnotatorWidget().widget_id()].name,
+                                        name: "views/components/resource-instance-nodevalue",
                                         params: {
                                             formData: self.physicalThingPartIdentifierAssignmentTile().formData,
                                             tile: self.physicalThingPartIdentifierAssignmentTile(),
@@ -369,6 +369,8 @@
                                             graph: self.form.graph,
                                             type: "resource-editor",
                                             disabled: !self.card.isWritable && !self.preview,
+                                            relatedResourceId: projectResourceId,
+                                            relatedNodeId: "dbaa2022-9ae7-11ea-ab62-dca90488358a",
                                         }
                                     }, 
                                     css:{

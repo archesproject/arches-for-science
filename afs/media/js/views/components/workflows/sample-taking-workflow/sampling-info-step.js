@@ -4,6 +4,7 @@ define([
     'arches',
     'knockout',
     'uuid',
+    'views/components/resource-instance-nodevalue',
 ], function(_, $, arches, ko, uuid) {
     function viewModel(params) {
         var self = this;
