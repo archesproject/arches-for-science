@@ -124,9 +124,19 @@ LOGGING = {
             "filename": os.path.join(APP_ROOT, "arches.log"),
             "formatter": "console",
         },
-        "console": {"level": "WARNING", "class": "logging.StreamHandler", "formatter": "console",},
+        "console": {
+            "level": "WARNING",
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+        },
     },
-    "loggers": {"arches": {"handlers": ["file", "console"], "level": "WARNING", "propagate": True,}},
+    "loggers": {
+        "arches": {
+            "handlers": ["file", "console"],
+            "level": "WARNING",
+            "propagate": True,
+        }
+    },
 }
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
