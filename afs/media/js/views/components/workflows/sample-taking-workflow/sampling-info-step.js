@@ -245,7 +245,6 @@ define([
                 "tiles": {},
                 'data': {
                     '0335789a-1d9d-11eb-a29f-024e0d439fdb': ['bc35776b-996f-4fc1-bd25-9f6432c1f349'],
-                    '033578a8-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['df8e4cf6-9b0b-472f-8986-83d5b2ca28a0','72202a9f-1551-4cbc-9c7a-73c02321f3ea'],
                     '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingTechnique()
@@ -266,7 +265,6 @@ define([
                 "tiles": {},
                 'data': {
                     '0335789a-1d9d-11eb-a29f-024e0d439fdb': ['bc35776b-996f-4fc1-bd25-9f6432c1f349'],
-                    '033578a8-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['7060892c-4d91-4ab3-b3de-a95e19931a61'],
                     '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingMotivation()
