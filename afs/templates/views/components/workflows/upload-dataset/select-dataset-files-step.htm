@@ -25,13 +25,12 @@
 {% block sidepanel %}
 <!--ko foreach: { data: [$data], as: 'self' }-->
 <!--ko if: activeTab() === 'dataset'-->
-<div class="workbench-header-buffer">
-    <div class="workbench-card-sidepanel-header-container">
-        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">{% trans 'Manage Dataset' %}</h4>
-    </div>
+<div class="workbench-card-sidepanel-header-container">
+    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">{% trans 'Manage Dataset' %}</h4>
 </div>
+<div class="workbench-card-sidepanel-border"></div>
+<div class="workbench-card-sidepanel-body">
 
-<div class="workbench-content-container">
     <div class="iiif-image-tools upload-dataset-select-dataset-files">
         <!--ko if: annotations().length > 0-->
         <label class="control-label">{% trans "Sampled Locations" %}</label>

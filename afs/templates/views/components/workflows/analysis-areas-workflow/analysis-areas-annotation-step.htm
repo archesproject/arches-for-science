@@ -29,13 +29,11 @@
 
 <!-- ko if: $data.activeTab() === 'dataset' -->
 
-<div class="workbench-header-buffer">
-    <div class="workbench-card-sidepanel-header-container">
-        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Regions'"></h4>
-    </div>
+<div class="workbench-card-sidepanel-header-container">
+    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Regions'"></h4>
 </div>
-        
-<div class="workbench-content-container">
+<div class="workbench-card-sidepanel-border"></div>
+<div class="workbench-card-sidepanel-body">
 
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">

@@ -146,12 +146,11 @@
 {% block sidepanel %}
 
 <!--ko if: activeTab() === 'edit' -->
-<div class="workbench-header-buffer">
-    <div class="workbench-card-sidepanel-header-container">
-        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Dataset Details'"></h4>
-    </div>
+<div class="workbench-card-sidepanel-header-container">
+    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Dataset Details'"></h4>
 </div>
-<div class="workbench-content-container">
+<div class="workbench-card-sidepanel-border"></div>
+<div class="workbench-card-sidepanel-body">
     <div class="file-workbench-filter">
         <h2 class="file-workbench-filter-header">{% trans 'Datasets' %}</h2>
         <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
