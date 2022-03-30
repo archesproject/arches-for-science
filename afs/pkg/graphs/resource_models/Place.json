@@ -94,7 +94,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": "Name of Place",
                     "nodegroup_id": "1be4c387-c071-11e9-ba22-a4d18cec433a",
                     "sortorder": 0,
@@ -243,7 +243,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": "Geospatial Definition of Place",
                     "nodegroup_id": "6c874bcf-c071-11e9-9605-a4d18cec433a",
                     "sortorder": 7,
@@ -269,7 +269,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": "External URI for Place",
                     "nodegroup_id": "75da0923-d325-11e9-8b03-a4d18cec433a",
                     "sortorder": 4,
@@ -1393,28 +1393,30 @@
             "functions_x_graphs": [
                 {
                     "config": {
-                        "description": {
-                            "nodegroup_id": "23e25605-c071-11e9-9d09-a4d18cec433a",
-                            "string_template": "<content>"
-                        },
-                        "map_popup": {
-                            "nodegroup_id": "6c874bcf-c071-11e9-9605-a4d18cec433a",
-                            "string_template": "<defined by>"
-                        },
-                        "name": {
-                            "nodegroup_id": "1be4c387-c071-11e9-ba22-a4d18cec433a",
-                            "string_template": "<content>"
+                        "descriptor_types": {
+                            "description": {
+                                "nodegroup_id": "23e25605-c071-11e9-9d09-a4d18cec433a",
+                                "string_template": "<content>"
+                            },
+                            "map_popup": {
+                                "nodegroup_id": "6c874bcf-c071-11e9-9605-a4d18cec433a",
+                                "string_template": "<defined by>"
+                            },
+                            "name": {
+                                "nodegroup_id": "1be4c387-c071-11e9-ba22-a4d18cec433a",
+                                "string_template": "<content>"
+                            }
                         },
                         "triggering_nodegroups": []
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
-                    "id": "d93abb71-7832-11ec-86e3-797acac7d1e3"
+                    "id": "f7acf100-b048-11ec-88a2-0242ac1a0007"
                 }
             ],
             "graphid": "cc8ed633-b25b-11e9-a13a-a4d18cec433a",
             "iconclass": "fa fa-map-marker",
-            "is_editable": false,
+            "is_editable": true,
             "isactive": true,
             "isresource": true,
             "jsonldcontext": null,
@@ -1501,6 +1503,7 @@
             ],
             "nodes": [
                 {
+                    "alias": "type_n4",
                     "config": {
                         "rdmCollection": "09f4f591-5654-4518-931b-7ab382fbc100"
                     },
@@ -1521,6 +1524,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation",
                     "config": null,
                     "datatype": "semantic",
                     "description": "",
@@ -1539,6 +1543,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_carried_out_by",
                     "config": {
                         "graphs": [
                             {
@@ -1570,6 +1575,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_time_begin_of_the_begin",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
                     },
@@ -1590,6 +1596,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_time",
                     "config": null,
                     "datatype": "semantic",
                     "description": "",
@@ -1608,6 +1615,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_time_end_of_the_end",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
                     },
@@ -1628,6 +1636,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_time_type",
                     "config": {
                         "rdmCollection": "c53d3557-e033-4aa1-b020-0dc2b690025f"
                     },
@@ -1648,6 +1657,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_time_label",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -1666,6 +1676,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_digital_reference",
                     "config": {
                         "graphs": [
                             {
@@ -1693,6 +1704,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_textual_reference",
                     "config": {
                         "graphs": [
                             {
@@ -1720,6 +1732,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_time_begin_of_the_end",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
                     },
@@ -1740,6 +1753,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement_creation_time_end_of_the_begin",
                     "config": {
                         "dateFormat": "YYYY-MM-DD"
                     },
@@ -1760,6 +1774,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "textual_reference",
                     "config": {},
                     "datatype": "semantic",
                     "description": "",
@@ -1778,6 +1793,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "textual_source",
                     "config": {
                         "graphs": [
                             {
@@ -1807,6 +1823,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "textual_reference_type",
                     "config": {
                         "rdmCollection": "8b7faa16-3846-4360-b767-bb2c823b6550"
                     },
@@ -1827,6 +1844,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "name_n1",
                     "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
@@ -1845,6 +1863,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "language",
                     "config": {
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
                     },
@@ -1865,6 +1884,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "source_n1",
                     "config": {
                         "graphs": [
                             {
@@ -1893,6 +1913,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "_label_n1",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
@@ -1911,6 +1932,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "type_n1",
                     "config": {
                         "rdmCollection": "80028d07-9c98-48cf-84db-f77bc01c8bbc"
                     },
@@ -1931,6 +1953,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "content",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
@@ -1949,6 +1972,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "identifier",
                     "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
@@ -1967,6 +1991,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "type",
                     "config": {
                         "rdmCollection": "4096365e-4fe7-412d-906c-16f3d356e8be"
                     },
@@ -1987,6 +2012,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "_label_n3",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
@@ -2005,6 +2031,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "content_n1",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the identifier.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -2023,6 +2050,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "source",
                     "config": {
                         "graphs": [
                             {
@@ -2051,6 +2079,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "name",
                     "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
@@ -2069,6 +2098,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "statement",
                     "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
@@ -2087,6 +2117,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "language_n2",
                     "config": {
                         "graphid": null,
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
@@ -2108,6 +2139,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "type_n2",
                     "config": {
                         "rdmCollection": "80028d07-9c98-48cf-84db-f77bc01c8bbc"
                     },
@@ -2128,6 +2160,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "type_n3",
                     "config": {
                         "rdmCollection": "f44f7240-35c5-49e8-a0e3-2ffe308f0862"
                     },
@@ -2148,6 +2181,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "_label_n2",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
@@ -2166,6 +2200,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "_label",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
@@ -2184,6 +2219,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "content_n3",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
@@ -2202,6 +2238,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "language_n1",
                     "config": {
                         "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
                     },
@@ -2222,6 +2259,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "content_n2",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -2240,6 +2278,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "source_n2",
                     "config": {
                         "graphs": [
                             {
@@ -2268,6 +2307,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "part_of",
                     "config": {
                         "graphs": [
                             {
@@ -2296,6 +2336,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "approximated_by",
                     "config": {
                         "graphs": [
                             {
@@ -2324,6 +2365,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "defined_by",
                     "config": {
                         "addToMap": true,
                         "advancedStyle": "",
@@ -2367,6 +2409,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "external_uri",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -2385,6 +2428,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "digital_reference",
                     "config": null,
                     "datatype": "semantic",
                     "description": "",
@@ -2403,6 +2447,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "digital_reference_type",
                     "config": {
                         "rdmCollection": "933cf221-2d71-478f-998a-a5e088457971"
                     },
@@ -2423,6 +2468,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "digital_source",
                     "config": {
                         "graphs": [
                             {
@@ -2452,6 +2498,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "_label_n4",
                     "config": null,
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
@@ -2470,6 +2517,7 @@
                     "sortorder": 0
                 },
                 {
+                    "alias": "place",
                     "config": null,
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -2492,6 +2540,7 @@
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
+                "alias": "place",
                 "config": null,
                 "datatype": "semantic",
                 "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
@@ -2513,11 +2562,5 @@
             "template_id": "50000000-0000-0000-0000-000000000004",
             "version": ""
         }
-    ],
-    "metadata": {
-        "db": "PostgreSQL 12.9 (Ubuntu 12.9-0ubuntu0.20.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0, 64-bit",
-        "git hash": "26f1a0370 2021-11-11 12:17:14 -0800",
-        "os": "Linux",
-        "os version": "5.11.0-1028-aws"
-    }
+    ]
 }
