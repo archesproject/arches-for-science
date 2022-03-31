@@ -41,19 +41,9 @@
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
     width: 100%;
     background-color: #fafafa;
     border-top: 1px solid #ddd;
-    flex-shrink: 0;
-}
-
-.workbench-content-container {
-    padding-bottom: 70px;
-    flex: 1; 
-    overflow: auto;
 }
 
 .workbench-button-panel button {
@@ -477,10 +467,6 @@
     padding: 0px;
 }
 
-.upload-dataset-select-dataset-files {
-    margin-top: 20px;
-}
-
 .upload-dataset-select-dataset-files .file-workbench-files {
     margin-top: 0; 
     overflow-y: auto;
@@ -670,10 +656,6 @@
     color: #454545;
     margin-left: 1px;
     padding: 3px 8px;
-}
-
-.upload-dataset-step-workflow-component-based-step .workbench-card-sidepanel-header-container {
-    position: absolute;
 }
 
 .afs-sample-name .form-group .widget-input-label {
