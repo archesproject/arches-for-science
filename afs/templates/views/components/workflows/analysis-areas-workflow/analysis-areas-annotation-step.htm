@@ -394,15 +394,11 @@
                     </form>
                 {% endblock form_widgets %}
                 <!-- /ko -->
-
-                {% block form_buttons %}
-                {% endblock form_buttons %}
-
             </div>
         </div>
     </div>
 </div>
-<!-- /ko -->
+{% block form_buttons %}
 <div class="workbench-button-panel">
     <button 
         class="btn btn-success" 
@@ -419,7 +415,7 @@
         <span>{% trans 'Cancel' %}</span>
     </button>
 </div>
-
+{% endblock form_buttons %}
+<!-- /ko -->
 {{ block.super }}
-
 {% endblock sidepanel %}
