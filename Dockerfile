@@ -59,7 +59,7 @@ COPY ./arches ${ARCHES_ROOT}
 # From here, run commands from ARCHES_ROOT
 WORKDIR ${ARCHES_ROOT}
 
-RUN pip install -e . && pip install -r arches/install/requirements_dev.txt
+RUN pip install -e . --user --no-use-pep517 && pip install -r arches/install/requirements_dev.txt
 
 COPY /afs/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
 RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh &&\
