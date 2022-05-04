@@ -220,6 +220,12 @@ define([
                             timespan: 'timespan of production event',
                             statement: 'statement about production event',
                             part: 'production event part'
+                        },
+                        partCards: { 
+                            name: 'name for production event part',
+                            identifier: 'identifier for production event part',
+                            timespan: 'timespan of production event part',
+                            statement: 'statement about production event part'
                         }
                     },
                     destruction: {
