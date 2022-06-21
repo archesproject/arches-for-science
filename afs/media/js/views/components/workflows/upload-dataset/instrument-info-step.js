@@ -152,28 +152,34 @@ define([
             window.fetch(arches.urls.api_resources(self.procedureValue()) + '?format=json&compact=false')
                 .then(response => response.json())
                 .then(data => {
-                    const textualWorkTypeTileId = data.resource.type['@tile_id'];
-                    window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
-                        method: 'GET',
-                        credentials: 'include',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                        .then(response => response.json())
-                        .then(tile => {
-                            if (!tile.data[textualWorkTypeNodegroupId].includes(procedureValueId)){
-                                tile.data[textualWorkTypeNodegroupId].push(procedureValueId);
-                                window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
-                                    method: 'POST',
-                                    credentials: 'include',
-                                    body: JSON.stringify(tile),
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                });
-                            }
-                        });
+                    const textualWorkTypeTileId = data.resource.type?.['@tile_id'];
+                    if (textualWorkTypeTileId){
+                        window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                            method: 'GET',
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(tile => {
+                                if (!tile.data[textualWorkTypeNodegroupId].includes(procedureValueId)){
+                                    tile.data[textualWorkTypeNodegroupId].push(procedureValueId);
+                                    window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                                        method: 'POST',
+                                        credentials: 'include',
+                                        body: JSON.stringify(tile),
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                    });
+                                }
+                            });
+                    } else {
+                        const typeTileData = {};
+                        typeTileData[textualWorkTypeNodegroupId] = [procedureValueId];
+                        return self.saveTile(typeTileData, textualWorkTypeNodegroupId, self.procedureValue())
+                    }
                 });
         };
 
