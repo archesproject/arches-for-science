@@ -123,13 +123,6 @@ define([
                     .filter(rr =>
                         rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
                     )
-                    .filter(rr =>
-                        !rr.tiles.find(tile =>
-                            tile.nodegroup_id === "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a" &&
-                            tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
-                                childPhysicalThingsValueIds.includes(value))
-                        )
-                    )
                     .map(rr => rr.resourceinstanceid)
             );
 
