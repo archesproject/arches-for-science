@@ -430,10 +430,14 @@ define([
 
                 params.form.savedData({ 
                     observationReferenceTileId: self.observationReferenceTileId(),
-                    parts: self.parts().map(x => 
+                    parts: self.parts().map(x =>
                         {
+                            fileObjects = x.datasetFiles().map(file => { 
+                                delete file.dataURL;
+                                return file;
+                            } );
                             return {
-                                datasetFiles: x.datasetFiles().map(x => { return {...x, tileId: x.tileId()} }),
+                                datasetFiles: fileObjects.map(x => { return {...x, tileId: x.tileId()} }),
                                 datasetId: x.datasetId(),
                                 nameTileId: x.nameTileId(),
                                 datasetName: x.datasetName() || '',
