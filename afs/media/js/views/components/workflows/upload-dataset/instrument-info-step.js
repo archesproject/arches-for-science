@@ -29,6 +29,7 @@ define([
         const statementLanguageNodeId = '8ec31780-c457-11e9-9543-a4d18cec433a';
         const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
         const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
+        const relatedGraphIds = ['b6c819b8-99f6-11ea-a9b7-3af9d3b32b71'];
 
         const getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key]) {
@@ -52,6 +53,7 @@ define([
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.showName = ko.observable(false);
         this.locked = params.form.locked;
+        this.procedureSearchString = location.origin + '/search?advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22dc946b1e-c070-11e9-a005-a4d18cec433a%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%2260d1e09c-0f14-4348-ae14-57fdb9ef87c4%22%7D%7D%5D';
 
         const snapshot = {
             instrumentValue: self.instrumentValue(),
@@ -71,7 +73,7 @@ define([
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
 
         this.instrumentValue.subscribe(function(val){
-            if (val) {
+            if (val && !relatedGraphIds.includes(val)) {
                 let instrumentData = resourceUtils.lookupResourceInstanceData(val);
                 self.instrumentInstance(self.createRelatedInstance(val));
                 instrumentData.then(function(data){
@@ -143,12 +145,53 @@ define([
             params.form.dirty(Boolean(val));
         });
 
+        this.saveTextualWorkType = function(){
+            const textualWorkTypeNodegroupId= "dc946b1e-c070-11e9-a005-a4d18cec433a";
+            const procedureValueId = "60d1e09c-0f14-4348-ae14-57fdb9ef87c4";
+
+            window.fetch(arches.urls.api_resources(self.procedureValue()) + '?format=json&compact=false')
+                .then(response => response.json())
+                .then(data => {
+                    const textualWorkTypeTileId = data.resource.type?.['@tile_id'];
+                    if (textualWorkTypeTileId){
+                        window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                            method: 'GET',
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(tile => {
+                                if (!tile.data[textualWorkTypeNodegroupId].includes(procedureValueId)){
+                                    tile.data[textualWorkTypeNodegroupId].push(procedureValueId);
+                                    window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                                        method: 'POST',
+                                        credentials: 'include',
+                                        body: JSON.stringify(tile),
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                    });
+                                }
+                            });
+                    } else {
+                        const typeTileData = {};
+                        typeTileData[textualWorkTypeNodegroupId] = [procedureValueId];
+                        return self.saveTile(typeTileData, textualWorkTypeNodegroupId, self.procedureValue())
+                    }
+                });
+        };
+
         params.form.save = function() {
             params.form.complete(false);
             if (!self.instrumentValue()){
                 params.form.error(new Error("Selecting an instrument is required."));
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
                 return;
+            }
+            if (self.procedureValue()){
+                self.saveTextualWorkType();
             }
 
             let observedThingData = {};
