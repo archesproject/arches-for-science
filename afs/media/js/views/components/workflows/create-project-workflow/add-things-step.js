@@ -123,13 +123,6 @@ define([
                     .filter(rr =>
                         rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
                     )
-                    .filter(rr =>
-                        !rr.tiles.find(tile =>
-                            tile.nodegroup_id === "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a" &&
-                            tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
-                                childPhysicalThingsValueIds.includes(value))
-                        )
-                    )
                     .map(rr => rr.resourceinstanceid)
             );
 
@@ -365,8 +358,8 @@ define([
                     self.termOptions = results;
 
                     const filteredResults = results.filter(function(result){
-                        return (result.context_label.includes("Physical Thing") || result.context_label.includes("Search Term")) && 
-                            !(result.text.includes("[Sample") || result.text.includes("[Analysis") || result.text.includes("[Region"));
+                        return result.context_label.includes("Physical Thing") ||
+                        result.context_label.includes("Search Term");
                     });
                     return {
                         results: filteredResults,
@@ -405,38 +398,6 @@ define([
                     delete self.filters[key];
                 }
             });
-
-            const advancedSearchFilter = [
-                {
-                    "op":"and",
-                    "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a":{
-                        "op":"!",
-                        "val":"31d97bdd-f10f-4a26-958c-69cb5ab69af1"
-                    }
-                },
-                {
-                    "op":"and",
-                    "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a":{
-                        "op":"!",
-                        "val":"7375a6fb-0bfb-4bcf-81a3-6180cdd26123"
-                    }
-                },
-                {
-                    "op":"and",
-                    "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a":{
-                        "op":"!",
-                        "val":"77d8cf19-ce9c-4e0a-bde1-9148d870e11c"
-                    }
-                },
-                {
-                    "op":"or",
-                    "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a":{
-                        "op":"null",
-                        "val":""
-                    }
-                }
-            ];
-            filters["advanced-search"] = JSON.stringify(advancedSearchFilter);
 
             if (termFilter) {
                 termFilter['inverted'] = false;
