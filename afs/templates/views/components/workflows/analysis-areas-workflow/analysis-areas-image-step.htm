@@ -7,7 +7,7 @@
 
     <!-- ko foreach: [...physicalThingDigitalReferencePreferredManifestResourceData(), ...physicalThingDigitalReferenceAlternateManifestResourceData()] -->
         <div
-            style="display: flex;"
+            style="display: flex; align-items: center;"
         >
             <input 
                 style="
@@ -22,12 +22,15 @@
                 }"
             />
             <label 
-                style="cursor: pointer;"
+                style="cursor: pointer; margin-right: 5px;"
                 data-bind="
                     text: $data.displayname,
                     click: function() { $parent.selectedPhysicalThingImageServiceName($data.displayname) }
                 "
             ></label>
+            <span class="iiif-gallery-canvas-thumbnail">
+                <img data-bind="attr: { src: $data.thumbnail }">
+            </span>
         </div>
     <!-- /ko -->
 </div>

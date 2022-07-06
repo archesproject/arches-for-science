@@ -222,7 +222,8 @@ define([
                 && !self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.manifestData()['label']; })
             ) {
                 self.physicalThingDigitalReferencePreferredManifestResourceData.push({
-                    'displayname': self.manifestData()['label']
+                    'displayname': self.manifestData()['label'],
+                    'thumbnail': self.manifestData().sequences[0].canvases[0].thumbnail
                 });
 
                 self.selectedPhysicalThingImageServiceName(self.manifestData()['label']);
@@ -267,6 +268,18 @@ define([
             });
         };
 
+        this.getThumnail = function(digitalResourceData) {
+            const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
+                return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+            });
+            return window.fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId])
+                .then(function(response){
+                    if(response.ok) {
+                        return response.json();
+                    }
+                });
+        };
+
         /* function used for getting the names of digital resources already related to physical thing */ 
         this.getPhysicalThingRelatedDigitalReferenceData = function(card) {
             var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
@@ -294,20 +307,24 @@ define([
 
                     $.getJSON( arches.urls.api_card + physicalThingManifestResourceId )
                         .then(function(data) {
-                            if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
-                                self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
-                            }
-                            else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
-                                self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
-                            }
-                            
-                            var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
-                            if (resourceData) {
-                                self.selectedPhysicalThingImageServiceName(resourceData.displayname);
-                            }
-                            else if (!self.selectedPhysicalThingImageServiceName()) {
-                                self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
-                            }
+                            self.getThumnail(data)
+                                .then(function(json) {
+                                    data.thumbnail = json.sequences[0].canvases[0].thumbnail['@id'];
+                                    if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
+                                        self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
+                                    }
+                                    else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
+                                        self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
+                                    }
+                                    
+                                    var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
+                                    if (resourceData) {
+                                        self.selectedPhysicalThingImageServiceName(resourceData.displayname);
+                                    }
+                                    else if (!self.selectedPhysicalThingImageServiceName()) {
+                                        self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
+                                    }
+                                });
                         })
                         .always(function() {
                             params.pageVm.loading(false);
