@@ -18,13 +18,13 @@
                 }"
             />
             <label 
-                style="cursor: pointer; margin-right: 5px;"
+                style="cursor: pointer;"
                 data-bind="
                     text: $data.displayname,
                     click: function() { $parent.selectedPhysicalThingImageServiceName($data.displayname) }
                 "
             ></label>
-            <span class="iiif-gallery-canvas-thumbnail">
+            <span style="margin: 5px;" class="iiif-gallery-canvas-thumbnail">
                 <img data-bind="attr: { src: $data.thumbnail }">
             </span>
         </div>
