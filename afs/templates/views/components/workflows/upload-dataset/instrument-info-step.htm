@@ -14,6 +14,18 @@
             }
         }"></div>
     </div>
+    <div style="padding: 5px;">
+        <div class="widget-input-label" style="margin-top: 10px;">{% trans "Observation Date" %}</div>
+        <div style="margin: -20px 0px 0px 0px;" data-bind="component: {
+            name: 'datepicker-widget',
+            params: {
+                node: {'config': {'dateFormat': 'YYYY-MM-DD'}},
+                renderContext: 'workflow', 
+                value: dateValue,
+                disabled: locked
+            }
+        }"></div>
+    </div>
     <div style="padding: 5px; margin-bottom: 15px;">
         <div class="widget-input-label" style="margin-bottom: 5px;">Procedure Used</div>
         <div data-bind="component: {
@@ -41,7 +53,7 @@
             }
         }"></div>
     </div>
-    <div class="afs-experiment-name-block">
+    <div style="padding-bottom: 50px;" class="afs-experiment-name-block">
         <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide experiment name' : 'Show experiment name'"></div>
         <div data-bind="visible: showName">
             <div class="widget-input-label">Observation Name</div>
