@@ -1,0 +1,160 @@
+{% extends "views/components/file-workbench.htm" %}
+
+{% load static %}
+{% load i18n %}
+
+
+{% block content_management %}
+<!-- ko if: card.widgets().length > 0 -->
+<div>
+    <div class="card-display-panel">
+        <div>
+            <div id="hidden-dz-previews" style="display:none"></div>
+            <!--ko if: displayContent() -->
+                        <!--ko foreach: fileFormatRenderers-->
+                            <!--ko if: $data.id && $parent.displayContent().renderer && $parent.displayContent().renderer.id === $data.id && $parent.rendererComponentName -->
+                                <!-- ko component: {
+                                    name: $parent.rendererComponentName,
+                                    params: {
+                                        fileViewer: $parent,
+                                        card: $parent.card,
+                                        selected: $parent.selected,
+                                        state: $data.state,
+                                        displayContent: $parent.displayContent,
+                                        context: 'render',
+                                        loading: $parent.loading
+                                        }
+                                    } --> 
+                                <!-- /ko -->
+                            <!--/ko-->
+                        <!--/ko-->
+                    <!--ko if: !$parent.displayContent().renderer || $parent.displayContent().validRenderer() === false -->
+                    <div class="file-chart-upload-panel">
+                        <div class="gallery-controls new-tile">
+                            <div class="dropzone-photo-upload">
+                                <div class="file-select-window">
+                                    <!--ko if: $parent.displayContent().availableRenderers.length === 0 -->
+                                    <div class="bord-top file-select" style="padding-bottom: 90px;">
+
+                                        <!-- Image -->
+                                        <div class="img-lg img-circle rr-splash-img-container">
+                                            <img class="rr-splash-img" src="/media/img/answers.png" alt="Resource Editor">
+                                        </div>
+
+                                        <!-- Splash Title -->
+                                        <h2 class="rr-splash-title">{% trans 'Unable to display the selected file' %}</h2>
+
+                                        <!-- Splash Instructions -->
+                                        <h3 class="rr-splash-description">{% trans "This file can't be displayed." %}</h3>
+
+                                        <!-- Splash Instructions -->
+                                        <h3 class="rr-splash-description">{% trans "It may be a proprietary format or there isn't a loader available yet " %}</h3>
+
+                                        <!-- Splash Instructions -->
+                                        <h3 class="rr-splash-description">{% trans "to present it in this webpage." %}</h3>
+                                    </div>
+                                    <!--/ko-->
+                                    
+                                    <!--ko if: $parent.displayContent().availableRenderers.length > 0 -->
+                                    <div class="bord-top file-select loader-select">
+                                        <div class="">
+                                            <!--ko if: $parent.displayContent().validRenderer() === false -->
+                                            <h4 class="loader-error-message">{% trans 'Unable to parse your file with the '%}
+                                                <span data-bind="text:$parent.displayContent().renderer.title"></span>{% trans ' loader'%}
+                                            </h4>
+                                            <!--/ko-->
+                                            
+                                            <h2>{% trans 'Select File Loader' %}</h2>
+                                            <h4>{% trans 'Select the loader best suited for processing and visualizing the selected file' %}</h4>
+                                            <div style="display: flex; flex-flow: wrap; padding: 15px 25px;">
+
+                                            <!--ko foreach: $parent.displayContent().availableRenderers -->
+                                            <div>
+                                                <div class="r-grid-item relative" style="border: 1px solid #c4c4c4">
+                                                    <div class="" style="display:flex; flex-direction: column; background-color: #fdfdfd">
+                                                        <h4 class="r-select-title" data-bind="text: $data.title"></h4>
+                                                    </div>
+                                                    <div>
+                                                        <div class="r-select-card" style="color: #30517a; background-color: #fdfdfd">
+                                                            <div class="r-select-circle loader-button" style="top: 55px">
+                                                                <span><i data-bind="attr:{class: ($data.iconclass +' r-select-icon')}" class="fa fa fa-user r-select-icon"></i></span>
+                                                            </div>
+                                                            <div class="r-desc-container">
+                                                                <p data-bind="text: $data.description" style="color: #30517a; background-color: #fdfdfd" class="r-select-desc"></p> 
+                                                            </div>  
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- card Tools -->
+                                                    <div class="r-select-card-footer">
+                                                        <div class="">
+                                                            <div data-bind="click: function(){$parent.applyRendererToSelected($data)}" style="border-top: 1px solid #c4c4c4;" class="btn btn-primary btn-resource-select" role="button">
+                                                            {% trans 'Select' %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/ko-->
+                                        </div>
+                                    </div>
+                                    <br>  
+                                </div>
+                                <div class="file-upload-footer">
+                                    <span class="loader-selector" data-bind="component: { name: 'views/components/simple-switch', params: {value: applyToAll, config:{label: '{% trans "Apply the same loader to all selected files in the dataset" %}'}}}"></span>
+                                </div>
+                                <!--/ko-->
+                               </div>
+                    
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                        <!--/ko-->
+                    <!--/ko-->
+
+        </div>
+    </div>
+
+    <!--ko if: self.displayContent() === undefined -->
+    <div class="file-chart-upload-panel">
+        <div class="gallery-controls new-tile">
+            <div class="dropzone-photo-upload" data-bind="uppy: uppyOptions">
+                <div class="file-select-window">
+                   <div class="bord-top pad-ver file-select">
+                       <div class="" style="padding: 5px">
+                           <h2>{% trans 'Upload Files' %}</h2>
+                           <h4>{% trans 'Drag & Drop your files onto this panel to upload' %}</h4>
+                       </div>
+                       <button type="button" class="btn btn-lg btn-file-select fileinput-button dz-clickable" data-bind="css: uniqueidClass">
+                           <i class="fa fa-file"></i>
+                           <span>{% trans "Select Files" %}</span>
+                       </button>
+                       <br>
+                       <div style="padding: 10px">{% trans "Adding files to this record is " %}
+                           <span><strong>{% trans "optional." %}</strong></span>
+                           <br>
+                           {% trans "You may upload as many files as you wish; check with the site admin on the maximum file size." %}
+                       </div>
+
+                   </div>
+                   <div class="file-upload-footer">
+                       <!-- ko if: acceptedFiles() !== null -->
+                       <span data-bind="text: ('The following file formats may be uploaded: ' + acceptedFiles())"></span>
+                       <!-- /ko -->
+                       <!-- ko if: !acceptedFiles() -->
+                       <span>{% trans 'Images formatted as .jpg, .png files may be uploaded. Other formats may require a loader to view.' %}</span>
+                       <!-- /ko -->
+                   </div>
+               </div>
+               <div class="uppy-progress"></div>
+            </div>
+        </div>
+    </div>
+    <!--/ko-->
+
+
+</div>
+<!-- /ko -->
+{% endblock content_management %}
