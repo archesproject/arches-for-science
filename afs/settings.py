@@ -5,6 +5,7 @@ Django settings for afs project.
 import os
 import arches
 import inspect
+from django.utils.translation import gettext_lazy as _
 
 try:
     from arches.settings import *
@@ -17,6 +18,7 @@ STATIC_ROOT = ""
 
 DATATYPE_LOCATIONS.append("afs.datatypes")
 FUNCTION_LOCATIONS.append("afs.functions")
+ETL_MODULE_LOCATIONS.append("afs.etl_modules")
 SEARCH_COMPONENT_LOCATIONS.append("afs.search_components")
 TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "functions", "templates"))
 TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "widgets", "templates"))
@@ -47,6 +49,14 @@ ELASTICSEARCH_CUSTOM_INDEXES = []
 #     'module': 'afs.search_indexes.sample_index.SampleIndex',
 #     'name': 'my_new_custom_index' <-- follow ES index naming rules
 # }]
+
+LANGUAGES = [
+    # ("de", _("German")),
+    ("en", _("English")),
+    # ("en-gb", _("British English")),
+    # ("es", _("Spanish")),
+    # ("ar", _("Arabic")),
+]
 
 DATABASES = {
     "default": {
