@@ -1,8 +1,6 @@
 import os
 from django.core.exceptions import ImproperlyConfigured
 import ast
-import requests
-import sys
 
 
 def get_env_variable(var_name):
@@ -25,10 +23,6 @@ def get_optional_env_variable(var_name):
 MODE = get_env_variable("DJANGO_MODE")
 
 DEBUG = ast.literal_eval(get_env_variable("DJANGO_DEBUG"))
-
-COUCHDB_URL = "http://{}:{}@{}:{}".format(
-    get_env_variable("COUCHDB_USER"), get_env_variable("COUCHDB_PASS"), get_env_variable("COUCHDB_HOST"), get_env_variable("COUCHDB_PORT")
-)  # defaults to localhost:5984
 
 DATABASES = {
     "default": {

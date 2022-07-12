@@ -3,7 +3,7 @@ Django settings for afs project.
 """
 
 import os
-import arches
+from arches import __version__
 import inspect
 from django.utils.translation import gettext_lazy as _
 
@@ -177,6 +177,7 @@ USER_GRAPH_CARDWIDGETS_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 MOBILE_OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 MOBILE_DEFAULT_ONLINE_BASEMAP = {"default": "mapbox://styles/mapbox/streets-v9"}
 
+SESSION_COOKIE_NAME = f"{APP_NAME}_{__version__}"
 APP_TITLE = "Arches for Science"
 COPYRIGHT_TEXT = "All Rights Reserved."
 COPYRIGHT_YEAR = "2019"
