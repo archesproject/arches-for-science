@@ -1,0 +1,48 @@
+{
+    "resource_model_id": "1ff53f7c-b559-11ec-b02e-acde48001122",
+    "resource_model_name": "ETL Test",
+    "nodes": [
+        {
+            "arches_nodeid": "2e0dcbd8-b559-11ec-b02e-acde48001122",
+            "arches_node_name": "Description",
+            "file_field_name": "Description",
+            "data_type": "string",
+            "export": true
+        },
+        {
+            "arches_nodeid": "51b3d93a-e356-11ec-9f7d-0242ac1a0009",
+            "arches_node_name": "Images",
+            "file_field_name": "Images",
+            "data_type": "file-list",
+            "export": true
+        },
+        {
+            "arches_nodeid": "2793ce9c-b559-11ec-b02e-acde48001122",
+            "arches_node_name": "Label",
+            "file_field_name": "Label",
+            "data_type": "string",
+            "export": true
+        },
+        {
+            "arches_nodeid": "27f1bf34-b559-11ec-b02e-acde48001122",
+            "arches_node_name": "Name Content",
+            "file_field_name": "Name Content",
+            "data_type": "string",
+            "export": true
+        },
+        {
+            "arches_nodeid": "2ea9b462-b559-11ec-b02e-acde48001122",
+            "arches_node_name": "Number",
+            "file_field_name": "Number",
+            "data_type": "number",
+            "export": true
+        },
+        {
+            "arches_nodeid": "26f59722-b559-11ec-b02e-acde48001122",
+            "arches_node_name": "Order",
+            "file_field_name": "Order",
+            "data_type": "number",
+            "export": true
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+{% extends "views/components/etl_modules/base-import.htm" %}
+{% load i18n %}
+
+{% block task_details %}
+<!-- ko ifnot: loading() -->
+    <div class="branch-csv-etl">
+        <!-- ko ifnot: response() -->
+        <div class="file-select loader-select">
+            <div>
+                <button class="btn btn-shim btn-labeled btn-lg fa fa-check btn-primary" style="margin-right: 8px;" data-bind="click: checkEndpoint">{% trans "Get Data" %}</button>
+            </div>
+        </div>
+        <!-- /ko -->
+
+        <!-- ko if: response() -->
+        <div style="padding-top: 20px" class="branch-xl-metadata-container">
+            <p>Data to be staged for download:</p>
+            <code data-bind="text: JSON.stringify(response())"></code>
+        </div>
+
+        <div  class="tabbed-workflow-footer, etl-module-footer">
+           <button class="btn btn-shim btn-labeled btn-lg fa fa-check btn-primary" style="margin-right: 8px;" data-bind="click: function(){ start(); }">{% trans "Submit" %}</button>
+           <button class="btn btn-shim btn-labeled btn-lg fa fa-times btn-danger" data-bind="click: function(){ response(null); }">{% trans "Cancel" %}</button>
+        </div>
+        <!-- /ko -->
+    </div>
+<!--/ko-->
+{% endblock task_details %}
+
+{% block etl_status %}
+<div class="branch-csv-etl" style="display: grid; row-gap: 2px; height:fit-content; margin-top: -5px;">
+    <h4 class="summary-title">{% trans "Json Import Summary" %}</h4>
+    <div class="branch-csv-etl-load-summmary">
+        <p>Heres some infor about your load</p>
+    </div>
+</div>
+{% endblock etl_status %}
