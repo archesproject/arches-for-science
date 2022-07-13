@@ -40,7 +40,7 @@ class ReportView(View):
                         if key in p.text:
                             p.text = p.text.replace("<" + key + ">", tile.data[key])
             doc.save(bytestream)
-            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
         elif template.endswith("pptx"):
             pptx = Presentation(template)
@@ -61,6 +61,6 @@ class ReportView(View):
             return HttpResponseServerError("Could not find requested template")
 
         response = HttpResponse(content=bytestream.read())
-        response['Content-Type'] = mime
-        response['Content-Disposition'] = "attachment; filename={}".format(title)
+        response["Content-Type"] = mime
+        response["Content-Disposition"] = "attachment; filename={}".format(title)
         return response
