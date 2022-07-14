@@ -140,8 +140,8 @@ define([
         this.resourceData.subscribe(function(val){ // 1st request
             this.displayName = val.displayname;
             this.reportVals = {
-                projectName: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
-                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Sampling Unit'][0], ['Sampling Area','Overall Object Sampled','@display_value'])},
+                projectName: {'name': 'Part of Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
+                sampledObjectName: {'name': 'Object Name', 'value': this.getResourceValue(val.resource['Sampling Unit'][0], ['Sampling Area','Overall Object Sampled','@display_value'])},
                 samplers: {'name': 'Samplers', 'value': this.getResourceValue(val.resource, ['carried out by','@display_value'])},
                 samplingDate: {'name': 'Sampling Date', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@display_value'])},
                 samplingActivityName: {'name': 'Sampling Activity Name', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
