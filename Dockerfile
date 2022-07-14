@@ -44,11 +44,6 @@ RUN set -ex \
     && apt-get install -y nodejs \
     && npm install -g yarn
 
-# Install Yarn components
-RUN mkdir -p ${APP_ROOT}/afs/app/media/packages
-WORKDIR ${APP_ROOT}/afs
-RUN yarn install
-
 WORKDIR ${WEB_ROOT}
 
 RUN rm -rf /root/.cache/pip/*
@@ -60,7 +55,7 @@ COPY ./arches ${ARCHES_ROOT}
 # From here, run commands from ARCHES_ROOT
 WORKDIR ${ARCHES_ROOT}
 
-RUN pip install -e . --user --no-use-pep517 && pip install -r arches/install/requirements_dev.txt
+RUN pip install -e . --user --no-use-pep517 && pip install -r arches/install/requirements.txt && pip install -r arches/install/requirements_dev.txt
 
 COPY /afs/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
 RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh &&\
