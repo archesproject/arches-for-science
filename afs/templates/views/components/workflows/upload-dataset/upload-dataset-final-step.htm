@@ -2,36 +2,13 @@
 <!-- ko if: loading() === false -->
 <div class="final-step">
     <div class="afs-final-step-section">
-        <h5 class="summary-value">{% trans 'Created or Modified Resource Instance' %}</h5>
-        <div class="afs-final-step-block">
-            <div style="display: flex; flex-direction: column;">
-                <a data-bind="attr: { href: urls.resource + '/' + resourceid}" target="_blank">
-                    <div class="summary-value" 
-                        data-bind = "text: reportVals.observationName.value + ' ({% trans 'Observation Resource Instance' %})'">
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="afs-final-step-section">
-        <h5 class="summary-value">{% trans 'Related Project/Object' %}</h5>
+        <h5 class="summary-value">{% trans 'Observation Event' %}</h5>
         <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: reportVals.project.name + ':'"></div>
-                    <div class="summary-value" data-bind="text: reportVals.project.value"></div>
+                    <div class="summary-label" data-bind="text: reportVals.observationName.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.observationName.value"></div>
                 </div>
-                <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: reportVals.usedObject.name + ':'"></div>
-                    <div class="summary-value" data-bind="text: reportVals.usedObject.value"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="afs-final-step-section">
-        <h5 class="summary-value">{% trans 'Observation Details' %}</h5>
-        <div class="afs-final-step-block">
-            <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: reportVals.usedInstrument.name + ':'"></div>
                     <div class="summary-value" data-bind="text: reportVals.usedInstrument.value"></div>
@@ -40,20 +17,30 @@
                     <div class="summary-label" data-bind="text: reportVals.usedProcess.name + ':'"></div>
                     <div class="summary-value" data-bind="text: reportVals.usedProcess.value"></div>
                 </div>
-                <div style="display: inline-flex;">
-                    <div class="summary-label" data-bind="text: reportVals.observationName.name + ':'"></div>
-                    <div class="summary-value" data-bind="text: reportVals.observationName.value"></div>
-                </div>
                 <div class="pad-top">
                     <div class="summary-label" data-bind="text: reportVals.statement.name + ':'"></div>
                     <div class="summary-value" data-bind="html: reportVals.statement.value"></div>
                 </div>
+                <div style="display: inline-flex;">
+                    <div class="summary-label" data-bind="text: reportVals.project.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.project.value"></div>
+                </div>
             </div>
         </div>
     </div>
-
     <div class="afs-final-step-section">
-        <h5 class="summary-value" style="margin-bottom: -10px;">{% trans 'Files for Upload' %}</h5>
+        <h5 class="summary-value">{% trans 'Object Observed' %}</h5>
+        <div class="afs-final-step-block">
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: inline-flex;">
+                    <div class="summary-label" data-bind="text: reportVals.usedObject.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.usedObject.value"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="afs-final-step-section">
+        <h5 class="summary-value" style="margin-bottom: -10px;">{% trans 'Observations' %}</h5>
         <!-- ko foreach: {data: fileLists, as: 'fileList'} -->
         <!-- ko if: fileList().length > 0 -->
         <h5 class="summary-value upload-dataset-name" data-bind="text: digitalResourceName || 'Unnamed Dataset (nothing to upload)'"></h5>
