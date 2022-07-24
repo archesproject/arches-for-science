@@ -9,7 +9,7 @@ ENV ARCHES_ROOT=${WEB_ROOT}/arches
 ENV WHEELS=/wheels
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update && apt-get install -y make software-properties-common
+RUN apt update && apt-get update && apt-get install -y make software-properties-common
 
 # Get the pre-built python wheels from the build environment
 RUN mkdir ${WEB_ROOT}
