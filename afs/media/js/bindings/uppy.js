@@ -14,7 +14,7 @@ define([
             ko.applyBindingsToDescendants(innerBindingContext, element);
             var options = valueAccessor() || {};
             const UppyContainer = window.Uppy;
-            const uppy = new UppyContainer.Core({debug: true, autoProceed: true}).use(UppyContainer.DragDrop, {
+            const uppy = new UppyContainer.Core({debug: true, autoProceed: true}).use(UppyContainer.Dashboard, {
                 inline: options.inline,
                 target: element,
                 autoProceed: true,

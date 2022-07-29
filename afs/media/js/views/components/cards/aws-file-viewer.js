@@ -14,7 +14,7 @@ define([
     'bindings/dropzone',
     'bindings/uppy'
 ], function($, ko, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers) {
-    return ko.components.register('file-viewer', {
+    return ko.components.register('aws-file-viewer-card', {
         viewModel: function(params) {
             params.configKeys = ['acceptedFiles', 'maxFilesize'];
     
@@ -387,7 +387,7 @@ define([
                 };
                 newtile.data[self.fileListNodeId]([tilevalue]);
                 try{
-                    newtile.formData.append('file-list_' + self.fileListNodeId, new Blob(), file.name);
+                    newtile.formData.append('file-list_' + self.fileListNodeId + "_preloaded", new Blob(), file.name);
                 } catch(x){
                     console.log(x);
                 }
@@ -422,7 +422,7 @@ define([
             };
         },
         template: {
-            require: 'text!templates/views/components/cards/file-viewer.htm'
+            require: 'text!templates/views/components/card_components/aws-file-viewer.htm'
         }
     });
 });

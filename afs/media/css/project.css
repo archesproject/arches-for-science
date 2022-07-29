@@ -1,6 +1,7 @@
 @import url(report_templates.css);
-@import '../packages/@uppy/core/dist/style.css';
-@import '../packages/@uppy/progress-bar/dist/style.css';
+@import '../packages/@uppy/core/dist/style.min.css';
+@import '../packages/@uppy/dashboard/dist/style.min.css';
+@import '../packages/@uppy/progress-bar/dist/style.min.css';
 
 .nav>li>a:focus {
     text-decoration: none;
@@ -867,4 +868,8 @@
     text-align: center;
     position: absolute;
     z-index: 100000001;
+}
+
+.uppy-Dashboard-inner{
+    padding: 12px 0;
 }
