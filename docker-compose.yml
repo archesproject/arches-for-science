@@ -1,8 +1,7 @@
 version: '3.8'
 services:
-
     afs:
-      container_name: afs
+      container_name: afs6-2
       image: fargeo/afs
       build:
         context: ..
@@ -11,48 +10,19 @@ services:
       volumes:
         - ../arches/:/web_root/arches
         - ./:/web_root/afs
-        - cantaloupe-data:/web_root/afs/afs/uploadedfiles
+        - cantaloupe-data-afs6-2:/web_root/afs/afs/uploadedfiles
       env_file:
         - ./docker/env_file.env
       ports:
         - 8001:8000
-      # depends_on:
-      #   - db_afs
-      #   - elasticsearch_afs
-      #   - couchdb_afs
       stdin_open: true
       tty: true
 
-    # afs_livereload:
-    #   profiles:
-    #     - livereload
-    #   container_name: afs_livereload
-    #   image: fargeo/afs
-    #   build:
-    #     context: ..
-    #     dockerfile: afs/Dockerfile
-    #   command: run_livereload
-    #   volumes:
-    #     - ../arches/:/web_root/arches
-    #     - ./:/web_root/afs
-    #     - cantaloupe-data:/web_root/afs/afs/uploadedfiles
-    #   env_file:
-    #     - ./docker/env_file.env
-    #   ports:
-    #     - 35729:35729      
-    #   depends_on:
-    #       - afs
-    #   stdin_open: true
-    #   tty: true
-
-
-    # for documentation on using the uclalibrary cantaloupe image:        
-    # https://gitlab.com/ucla-library/docker-cantaloupe/-/blob/master/configs/cantaloupe.properties.default-dev
     cantaloupe_afs:
-      container_name: cantaloupe_afs
+      container_name: cantaloupe-afs6-2
       image: uclalibrary/cantaloupe:5.0.3-0
       volumes:
-        - cantaloupe-data:/imageroot
+        - cantaloupe-data-afs6-2:/imageroot
       ports:
         - 8183:8182
       env_file:
@@ -61,9 +31,9 @@ services:
 networks:
   default:
     external: true
-    name: arches_dev
+    name: arches6-2-dev
 
 volumes:
-    arches-log:
-    arches-static:
-    cantaloupe-data:
+    arches-log-afs6-2:
+    arches-static-afs6-2:
+    cantaloupe-data-afs6-2:

@@ -31,6 +31,7 @@ RUN set -ex \
         python3.8-distutils \
         python3.8-venv \
         dos2unix \
+        git \
     " \
     && apt-get install -y --no-install-recommends curl \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
