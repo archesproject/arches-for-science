@@ -6,7 +6,7 @@ define([
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name',
-    'views/components/reports/scenes/communication'
+    'views/components/reports/scenes/contacts'
 ], function($, _, ko, arches, resourceUtils, reportUtils) {
     return ko.components.register('group-report', {
         viewModel: function(params) {
@@ -14,14 +14,16 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'existence', title: 'Existence'},
+                {id: 'name', title: 'Names, Identifiers, Classifications'},
+                {id: 'description', title: 'Description'},
+                {id: 'existence', title: 'Timeline'},
                 {id: 'events', title: 'Events'},
                 {id: 'location', title: 'Location'},
                 {id: 'parthood', title: 'Parthood'},
-                {id: 'description', title: 'Description'},
                 {id: 'documentation', title: 'Documentation'},
-                {id: 'communication', title: 'Communication'},
+                {id: 'contacts', title: 'Contacts'},
+                {id: 'members', title: 'Group Members'},
+                {id: 'entities', title: 'Larger Entities'},
                 {id: 'json', title: 'JSON'}
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -103,7 +105,7 @@ define([
             self.documentationCards = {};
             self.existenceCards = {};
             self.eventCards = {};
-            self.communicationCards = {};
+            self.contactCards = {};
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -126,7 +128,7 @@ define([
                     digitalReference: self.cards?.['digital reference to group'],
                 };                
                 
-                self.communicationCards = {
+                self.contactCards = {
                     contactPoints: self.cards?.['address or contact point of group'],
                 };
 

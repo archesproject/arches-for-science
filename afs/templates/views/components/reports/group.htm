@@ -108,12 +108,12 @@
                 }"></div>
             </div>      
             <!-- Communication Tab, unique to person -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'communication'">
+            <div class="afs-report-page" data-bind="if: activeSection() === 'contacts'">
                 <div data-bind="component: {
-                    name: 'views/components/reports/scenes/communication',
+                    name: 'views/components/reports/scenes/contacts',
                     params: {
                         data: resource,
-                        cards: communicationCards
+                        cards: contactCards
                     }
                 }"></div>
             </div>
