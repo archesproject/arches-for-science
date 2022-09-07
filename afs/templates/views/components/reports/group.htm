@@ -37,13 +37,22 @@
                     }
                 }"></div>
             </div>
-            <!-- Description Tab -->
+            <!-- Description & Professional Events Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/description',
                     params: {
                         data: resource,
                         cards: descriptionCards,
+                    }
+                }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: eventCards,
+                        events: eventEvents,
+                        dataConfig: eventDataConfig,
                     }
                 }"></div>
             </div>
@@ -65,7 +74,7 @@
                     }
                 }"></div>
             </div>
-            <!-- Existence Tab -->
+            <!-- Timeline Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/existence',
@@ -74,18 +83,6 @@
                         cards: existenceCards,
                         events: existenceEvents,
                         dataConfig: existenceDataConfig,
-                    }
-                }"></div>
-            </div>
-            <!-- Events Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'events'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/existence',
-                    params: {
-                        data: resource,
-                        cards: eventCards,
-                        events: eventEvents,
-                        dataConfig: eventDataConfig,
                     }
                 }"></div>
             </div>
