@@ -18,7 +18,6 @@ define([
                 {id: 'description', title: 'Description'},
                 {id: 'existence', title: 'Timeline'},
                 {id: 'location', title: 'Location'},
-                {id: 'parthood', title: 'Parthood'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'communication', title: 'Contacts'},
                 {id: 'members', title: 'Group Members'},
