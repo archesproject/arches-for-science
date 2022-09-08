@@ -178,6 +178,14 @@
 }
 
 
+.wf-multi-tile-card-info-details p {
+    max-height: 100px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 .model-summary-report {
     background: #fff;
     padding: 0px 30px 30px 30px;
