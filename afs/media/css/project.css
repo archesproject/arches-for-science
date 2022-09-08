@@ -441,6 +441,14 @@
     color: #2b547c;
 }
 
+.final-step .summary-value p {
+    max-height: 100px;
+    max-width: 800px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .final-step .file-list .file-upload-card {
     border-bottom: 1px solid #D3E5F4;
     border-radius: 2px;
