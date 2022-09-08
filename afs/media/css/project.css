@@ -222,6 +222,14 @@
     line-height: 1.4;
 }
 
+.summary-report-description p {
+    max-height: 100px;
+    max-width: 800px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .summary-report-manifests {
     margin-bottom: 10px;
     font-size: 14px;
