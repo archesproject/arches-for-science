@@ -900,7 +900,37 @@ define([
             params.form.saving(false);
         };
 
-        this.loadExternalCardData = function(data) {
+        this.identifyAnalysisAreas = function(card) {
+            const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
+            const analysisAreaTypeConceptId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
+            const related = card.tiles().map((tile) => {
+                return {
+                    'resourceid': ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId(),
+                    'tileid': tile.tileid
+                }
+            });
+
+            return Promise.all(related.map(resource => ResourceUtils.lookupResourceInstanceData(resource.resourceid))).then((values) => {
+                values.forEach((value) => {
+                    self.physThingSearchResultsLookup[value._id] = value;
+                    const nodevals = ResourceUtils.getNodeValues({
+                        nodeId: classificationNodeId,
+                        where: {
+                            nodeId: classificationNodeId,
+                            contains: analysisAreaTypeConceptId
+                        }
+                    }, value._source.tiles);
+                    if (nodevals.includes(analysisAreaTypeConceptId)) {
+                        self.analysisAreaResourceIds.push(related.find(tile => value._id === tile.resourceid));
+                    }
+                });
+                card.tiles().forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
+                self.sampleLocationInstances(card.tiles());
+                self.analysisAreaTileIds = self.analysisAreaResourceIds.map(item => item.tileid);
+            });
+        };
+
+        this.loadExternalCardData = async function(data) {
             var partIdentifierAssignmentNodeGroupId = 'fec59582-8593-11ea-97eb-acde48001122';  // Part Identifier Assignment (E13) 
 
             var partIdentifierAssignmentCardData = data.cards.find(function(card) {
@@ -951,33 +981,7 @@ define([
             self.physicalThingPartIdentifierAssignmentCard(card);
             self.physicalThingPartIdentifierAssignmentTile(tile);
 
-            const classificationNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
-            const analysisAreaTypeConceptId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
-            const related = card.tiles().map((tile) => {
-                return {
-                    'resourceid': ko.unwrap(tile.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])[0].resourceId(),
-                    'tileid': tile.tileid
-                }
-            });
-
-            Promise.all(related.map(resource => ResourceUtils.lookupResourceInstanceData(resource.resourceid))).then((values) => {
-                values.forEach((value) => {
-                    self.physThingSearchResultsLookup[value._id] = value;
-                    const nodevals = ResourceUtils.getNodeValues({
-                        nodeId: classificationNodeId,
-                        where: {
-                            nodeId: classificationNodeId,
-                            contains: analysisAreaTypeConceptId
-                        }
-                    }, value._source.tiles);
-                    if (nodevals.includes(analysisAreaTypeConceptId)) {
-                        self.analysisAreaResourceIds.push(related.find(tile => value._id === tile.resourceid));
-                    }
-                });
-                card.tiles().forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
-                self.sampleLocationInstances(card.tiles());
-                self.analysisAreaTileIds = self.analysisAreaResourceIds.map(item => item.tileid);
-            })
+            await self.identifyAnalysisAreas(params.card);
             /* 
                 subscription to features lives here because we _only_ want it to run once, on blank starting tile, when a user places a feature on the map
             */
