@@ -37,6 +37,11 @@
             </div>
         </div>
         <h5 class="summary-value">{% trans 'Child Physical Things' %}</h5>
+        <!-- ko ifnot: collectionOfChildPhysThings().length -->
+        <div class="afs-nodata-note">No children of this physical thing</div>
+        <!-- /ko -->
+
+        <!-- ko if: collectionOfChildPhysThings().length -->
         <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <!-- ko foreach: collectionOfChildPhysThings -->
@@ -44,6 +49,7 @@
                 <!-- /ko -->
             </div>
         </div>
+        <!-- /ko -->
     </div>
 </div>
 <!-- /ko -->
