@@ -860,7 +860,9 @@ define([
                                                                                         self.savingMessage('');
                                                                                         params.dirty(true);
                                                                                         params.form.complete(true);
-
+                                                                                        let mappedInstances = self.sampleLocationInstances().map((instance) => { return { "data": instance.data }});
+                                                                                        params.form.savedData(mappedInstances);                                                                            
+                                                                                        params.form.value(params.form.savedData());
                                                                                         params.pageVm.alert("");
                                                                                         self.drawFeatures([]);
                                                                                     });
