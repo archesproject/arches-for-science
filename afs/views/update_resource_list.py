@@ -55,7 +55,7 @@ class UpdateResourceListView(View):
         tile.data[name_node_id] = "Collection for " + project_name
         tile.save(transaction_id=transaction_id)
 
-        return collection_resourceinstance_id
+        return collection_resourceinstance_id, tile.tileid
 
     def add_collection_to_project(self, resourceinstaneid, r_resourceinstaneid, transaction_id):
         used_set_node_id = "cc5d6df3-d477-11e9-9f59-a4d18cec433a" # Project nodegroup (hidden nodegroup)
@@ -73,11 +73,16 @@ class UpdateResourceListView(View):
         data = JSONDeserializer().deserialize(request.POST.get("data"))
         transaction_id = request.POST.get("transactionid", None)
         project_name = Resource.objects.get(pk=project_resourceid).name
-
+        ret = {}
         with transaction.atomic():
             if collection_resourceid is None:
-                collection_resourceid = self.create_new_collection(transaction_id, project_name)
-                project_name_tile_id = self.add_collection_to_project(project_resourceid, collection_resourceid, transaction_id)
+                collection_resourceid, collection_name_tile_id = self.create_new_collection(transaction_id, project_name)
+                project_used_set_tile_id = self.add_collection_to_project(project_resourceid, collection_resourceid, transaction_id)
+                ret = {
+                    "collectionResourceid": collection_resourceid,
+                    "collectionNameTileId": collection_name_tile_id,
+                    "projectUsedSetTileId": project_used_set_tile_id
+                }
 
             try:
                 for datum in data:
@@ -105,7 +110,7 @@ class UpdateResourceListView(View):
                         tile.data[member_of_set_node_id] = [rr for rr in rr_data if rr["resourceId"] != collection_resourceid]
                         tile.save(transaction_id=transaction_id)
 
-                return JSONResponse({"result": "success"})
+                return JSONResponse({"result": ret})
 
             except Exception as e:
                 logger.exception(e)

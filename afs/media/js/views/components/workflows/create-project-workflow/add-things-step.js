@@ -217,7 +217,18 @@ define([
                     data: JSON.stringify(resourcesToUpdate)
                 }})
                 .then((response) => {
-                    console.log(response)
+                    self.collectionResourceId(response.result.collectionResourceid || ko.unwrap(self.collectionResourceId));
+                    self.collectionTileId(response.result.collectionNameTileId || ko.unwrap(self.collectionTileId));
+                    self.usedSetTileId(response.result.projectUsedSetTileId || ko.unwrap(self.usedSetTileId));
+                    self.savedData(
+                        {
+                            value: ko.unwrap(self.value),
+                            projectResourceId: ko.unwrap(self.projectResourceId),
+                            collectionResourceId: ko.unwrap(self.collectionResourceId),
+                            collectionTileId: ko.unwrap(self.collectionTileId), 
+                            usedSetTileId: ko.unwrap(self.usedSetTileId),
+                        }
+                    );
                     if (params.action === "update") {
                         params.form.lockExternalStep("select-project", true);
                     }
@@ -228,15 +239,6 @@ define([
                     const startValue = ko.unwrap(self.startValue);
                     self.value(startValue);
                 }).always(() => {
-                    self.savedData(
-                        {
-                            value: ko.unwrap(self.value),
-                            projectResourceId: ko.unwrap(self.projectResourceId),
-                            collectionResourceId: ko.unwrap(self.collectionResourceId),
-                            collectionTileId: ko.unwrap(self.collectionTileId), 
-                            usedSetTileId: ko.unwrap(self.usedSetTileId),
-                        }
-                    );
                     self.saving(false);
                     self.complete(true);
                 });
