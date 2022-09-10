@@ -19,14 +19,15 @@ related_resource_template = {
     "inverseOntologyProperty": "",
 }
 
+
 class UpdateResourceListView(View):
     """
-    This view 
+    This view
     1. assumes one project resource, one collection resource, multiple physical thing resources
     1. if user send a collection resourceid, add or remove that resource id to the physical things in the data
     3. if user does not send any collection resourceid,
         a. create a collection instance
-        b. add the collection to the project and 
+        b. add the collection to the project and
         c. add/remove the tile of the related collection to/from physical things (member_of_set_nodegroup_id)
 
     The request body should look like this
@@ -58,7 +59,7 @@ class UpdateResourceListView(View):
         return collection_resourceinstance_id, tile.tileid
 
     def add_collection_to_project(self, resourceinstaneid, r_resourceinstaneid, transaction_id):
-        used_set_node_id = "cc5d6df3-d477-11e9-9f59-a4d18cec433a" # Project nodegroup (hidden nodegroup)
+        used_set_node_id = "cc5d6df3-d477-11e9-9f59-a4d18cec433a"  # Project nodegroup (hidden nodegroup)
         related_resource_template["resourceId"] = r_resourceinstaneid
         tile = Tile.get_blank_tile(nodeid=used_set_node_id, resourceid=resourceinstaneid)
         tile.data[used_set_node_id] = [related_resource_template]
@@ -67,7 +68,7 @@ class UpdateResourceListView(View):
         return tile.tileid
 
     def post(self, request):
-        member_of_set_node_id = "63e49254-c444-11e9-afbe-a4d18cec433a" #Physical Thing nodegroup
+        member_of_set_node_id = "63e49254-c444-11e9-afbe-a4d18cec433a"  # Physical Thing nodegroup
         project_resourceid = request.POST.get("projectresourceid", None)
         collection_resourceid = request.POST.get("collectionresourceid", None)
         data = JSONDeserializer().deserialize(request.POST.get("data"))
@@ -81,7 +82,7 @@ class UpdateResourceListView(View):
                 ret = {
                     "collectionResourceid": collection_resourceid,
                     "collectionNameTileId": collection_name_tile_id,
-                    "projectUsedSetTileId": project_used_set_tile_id
+                    "projectUsedSetTileId": project_used_set_tile_id,
                 }
 
             try:
