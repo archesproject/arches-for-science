@@ -11,15 +11,15 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'}, 
-                {id: 'existence', title: 'Existence'},
-                {id: 'substance', title: 'Substance'},
-                {id: 'actor-relations', title: 'Actor Relations'},
-                {id: 'location', title: 'Location'},
-                {id: 'parthood', title: 'Parthood'},
-                {id: 'sethood', title: 'Sethood'},
-                {id: 'aboutness', title: 'Aboutness'},
+                {id: 'name', title: 'Names, Identifiers, Classification'}, 
                 {id: 'description', title: 'Description'},
+                {id: 'existence', title: 'Key Events'},
+                {id: 'substance', title: 'Physical Description'},
+                {id: 'actor-relations', title: 'Provenance'},
+                {id: 'location', title: 'Location'},
+                {id: 'parthood', title: 'Components'},
+                {id: 'sethood', title: 'Related Collection and Sets'},
+                {id: 'aboutness', title: 'Content and Iconography'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
