@@ -45,9 +45,6 @@ define([
             self.physicalThingProvenanceDescriptionTypes = [
                 "provenance statement"
             ]
-            self.physicalThingCreditLineDescriptionTypes = [
-                "credit line"
-            ]
             self.physicalThingPhysicalDescriptionTypes = [
                 "dimensions description",
                 "materials/technique description"
