@@ -13,11 +13,11 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'description', title: 'Description'},
                 {id: 'name', title: 'Names, Identifiers, Classification'},
                 {id: 'substance', title: 'Project Timeline'},
                 {id: 'parthood', title: 'Parent Project'},
                 {id: 'components', title: 'Component Projects'},
+                {id: 'description', title: 'Description'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
@@ -67,7 +67,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Parent Project', 
                             data: [{
                                 key: 'parent project', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
