@@ -46,8 +46,14 @@
                         cards: descriptionCards,
                     }
                 }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parameterData,
+                    }
+                }"></div>
             </div>
-            <!-- documentation Tab -->
+            <!-- Documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/documentation',
@@ -55,15 +61,6 @@
                         data: resource,
                         cards: documentationCards,
                         dataConfig: documentationDataConfig
-                    }
-                }"></div>
-            </div>
-            <!-- Temportal Relationship Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'temporal'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/default',
-                    params: {
-                        data: temporalData,
                     }
                 }"></div>
             </div>
@@ -76,7 +73,7 @@
                     }
                 }"></div>
             </div>
-            <!-- Substance Tab -->
+            <!-- Project Timeline Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/substance',
@@ -86,13 +83,10 @@
                         dataConfig: substanceDataConfig
                     }
                 }"></div>
-            </div>
-            <!-- Parameters & Outcomes Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'parameters'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
-                        data: parameterData,
+                        data: temporalData,
                     }
                 }"></div>
             </div>
