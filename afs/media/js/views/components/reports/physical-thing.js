@@ -203,7 +203,7 @@ define([
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards?.['statement about object']
+                    statement: self.cards?.['statement or interpretation about object']
                 };
 
                 self.documentationCards = {
