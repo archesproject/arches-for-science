@@ -23,18 +23,20 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             }
             Object.assign(self.dataConfig, params.dataConfig || {});
 
+            self.requestedTypes = params.requestedTypes;
+
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
             if(params?.compiled){
                 self.statements(params.data.statements);
             } else {
                 let statementData = params.data()[self.dataConfig.statement];
-                
+
                 if(statementData) {
                     if(statementData.length === undefined){
                         statementData = [statementData];
                     }
 
-                    self.statements(statementData.map(x => {
+                    self.statements(statementData.reduce((result, x) => {
                         const type = self.getNodeValue(x, {
                             testPaths: [
                                 [`${self.dataConfig.statement.toLowerCase()}_type`], 
@@ -53,10 +55,24 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
 
 
                         const tileid = self.getTileId(x);
-                        return { type, content, name, language, tileid };
-                    }));
-                }
 
+                        const types = type.split(",");
+
+                        if (!!self.requestedTypes && !Array.isArray(self.requestedTypes)) {
+                            self.requestedTypes = [self.requestedTypes];
+                        }
+                        if (!self.requestedTypes || (self.requestedTypes && _.intersection(types, self.requestedTypes).length > 0)) {
+                            result.push({
+                                type: type, 
+                                content: content,
+                                language: language,
+                                tileid: tileid
+                            })
+                        }
+                        return result;
+                    }, []));
+                }
+                console.log(self.statements())
             } 
 
         },
