@@ -14,14 +14,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'existence', title: 'Existence'},
-                {id: 'events', title: 'Events'},
-                {id: 'location', title: 'Location'},
-                {id: 'parthood', title: 'Parthood'},
+                {id: 'name', title: 'Names, Identifiers, Classifications'},
                 {id: 'description', title: 'Description'},
+                {id: 'existence', title: 'Timeline'},
+                {id: 'location', title: 'Location'},
                 {id: 'documentation', title: 'Documentation'},
-                {id: 'communication', title: 'Communication'},
+                {id: 'communication', title: 'Contacts'},
+                {id: 'members', title: 'Group Members'},
+                {id: 'entities', title: 'Larger Entities'},
                 {id: 'json', title: 'JSON'}
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);

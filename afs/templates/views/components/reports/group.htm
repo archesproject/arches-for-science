@@ -46,6 +46,15 @@
                         cards: descriptionCards,
                     }
                 }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: eventCards,
+                        events: eventEvents,
+                        dataConfig: eventDataConfig,
+                    }
+                }"></div>
             </div>
             <!-- Documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
@@ -65,7 +74,7 @@
                     }
                 }"></div>
             </div>
-            <!-- Existence Tab -->
+            <!-- Timeline Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/existence',
@@ -77,20 +86,8 @@
                     }
                 }"></div>
             </div>
-            <!-- Events Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'events'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/existence',
-                    params: {
-                        data: resource,
-                        cards: eventCards,
-                        events: eventEvents,
-                        dataConfig: eventDataConfig,
-                    }
-                }"></div>
-            </div>
-            <!-- Parthood Tab --> 
-            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+            <!-- Larger Entities Tab --> 
+            <div class="afs-report-page" data-bind="if: activeSection() === 'entities'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
