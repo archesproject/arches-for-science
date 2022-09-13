@@ -10,10 +10,6 @@
             style="display: flex; align-items: center;"
         >
             <input 
-                style="
-                    cursor: pointer;
-                    margin-right: 5px;
-                "
                 type="radio" 
                 data-bind="{
                     value: $data.displayname,
@@ -22,13 +18,12 @@
                 }"
             />
             <label 
-                style="cursor: pointer;"
                 data-bind="
                     text: $data.displayname,
                     click: function() { $parent.selectedPhysicalThingImageServiceName($data.displayname) }
                 "
             ></label>
-            <span style="margin: 5px;" class="iiif-gallery-canvas-thumbnail">
+            <span class="iiif-gallery-canvas-thumbnail">
                 <img data-bind="attr: { src: $data.thumbnail }">
             </span>
         </div>
