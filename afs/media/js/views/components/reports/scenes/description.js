@@ -24,6 +24,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             self.requestedTypes = params.requestedTypes;
+            self.excludedTypes = params.excludedTypes;
 
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
             if(params?.compiled){
@@ -61,7 +62,11 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         if (!!self.requestedTypes && !Array.isArray(self.requestedTypes)) {
                             self.requestedTypes = [self.requestedTypes];
                         }
-                        if (!self.requestedTypes || (self.requestedTypes && _.intersection(types, self.requestedTypes).length > 0)) {
+                        if (
+                            (!self.requestedTypes && !self.excludedTypes) ||
+                            (self.requestedTypes && _.intersection(types, self.requestedTypes).length > 0) ||
+                            (self.excludedTypes && _.intersection(types, self.excludedTypes).length == 0)
+                        ) {
                             result.push({
                                 type: type, 
                                 content: content,
@@ -72,7 +77,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         return result;
                     }, []));
                 }
-                console.log(self.statements())
             } 
 
         },

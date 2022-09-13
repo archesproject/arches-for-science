@@ -50,6 +50,10 @@ define([
                 "materials/technique description"
             ]
 
+            self.physicalThingExcludedDescriptionTypes = _.union(
+                self.physicalThingProvenanceDescriptionTypes, self.physicalThingPhysicalDescriptionTypes
+            )
+
             self.annotationTableConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(6).fill(null)
