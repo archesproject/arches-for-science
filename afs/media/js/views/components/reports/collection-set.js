@@ -13,10 +13,12 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'existence', title: 'Existence'},
-                {id: 'events', title: 'Events'},
+                {id: 'name', title: 'Names, Identifiers, Classification'},
                 {id: 'description', title: 'Description'},
+                {id: 'existence', title: 'Timeline'},
+                {id: 'events', title: 'Events'},
+                {id: 'projects', title: 'Related Projects'},
+                {id: 'publications', title: 'Publications'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
@@ -80,7 +82,8 @@ define([
                 const cards = params.report.cards;
                 
                 self.cards = self.createCardDictionary(cards)
-
+                console.log(self.cards)
+                console.log(self.resource())
                 self.nameCards = {
                     name: self.cards?.['name of collection'],
                     identifier: self.cards?.['identifier of collection'],
@@ -124,11 +127,27 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Used In', 
+                            title: 'Related Projects', 
                             data: [{
                                 key: 'Related Projects', 
                                 value: self.getRawNodeValue(self.resource(), 'used in'), 
                                 card: self.cards?.['related project of collection'],
+                                type: 'resource'
+                            }]
+                        }
+                    ]
+            });
+
+
+            self.textualReference = ko.observable({
+                sections: 
+                    [
+                        {
+                            title: 'Textual Reference', 
+                            data: [{
+                                key: 'Textual Reference', 
+                                value: self.getRawNodeValue(self.resource(), 'textual reference'), 
+                                card: self.cards?.['textual reference to collection'],
                                 type: 'resource'
                             }]
                         }

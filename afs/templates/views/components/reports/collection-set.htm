@@ -70,6 +70,24 @@
                     }
                 }"></div>
             </div>
+            <!-- Project Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'projects'">                
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: usedInData,
+                    }
+                }"></div>
+            </div>
+            <!-- Publication Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'publications'">                
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: textualReference,
+                    }
+                }"></div>
+            </div>
             <!-- Events Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'events'">                
                 <div data-bind="component: {
