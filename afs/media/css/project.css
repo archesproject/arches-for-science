@@ -650,6 +650,22 @@
     margin-top: -8px;
 }
 
+.afs-image-service-list-item input,
+.afs-image-service-list-item label {
+    margin: 0px 5px 0px 0px;
+    cursor: pointer;
+}
+
+.afs-image-service-list-item .iiif-gallery-canvas-thumbnail {
+    margin-left: 10px;
+}
+
+.afs-image-service-list-item {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
 .afs-workflow-required-tag {
     background: #f2f2f2;
     border: 1px solid #ddd;
