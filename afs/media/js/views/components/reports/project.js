@@ -41,6 +41,33 @@ define([
             self.documentationCards = {};
             self.summary = params.summary;
 
+            self.collectionOfChildProjects = ko.observableArray();
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const relatedResources = async() => {
+                const result = await reportUtils.getRelatedResources(resourceId);
+                console.log(result);
+                const rrs = result?.related_resources;
+                console.log(rrs);
+                let childProjects =[];
+
+                const relationships = result?.resource_relationships;
+                for (indv_relationship in relationships) {
+                    if (relationships[indv_relationship]?.resourceinstancefrom_graphid ===
+                        relationships[indv_relationship]?.resourceinstanceto_graphid) {
+                            childProjects.push(relationships[indv_relationship]?.resourceinstanceidfrom);
+                    };
+                }
+
+                self.collectionOfChildProjects = rrs.filter(rr => 
+                    childProjects.includes(rr.resourceinstanceid));
+
+                console.log(childProjects);
+                console.log(self.collectionOfChildProjects);
+            };
+
+            relatedResources();
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
@@ -120,6 +147,19 @@ define([
                             key: 'activity type of project', 
                             value: self.getRawNodeValue(self.resource(), 'technique'), 
                             card: self.cards?.['activity type of project'],
+                            type: 'resource'
+                        }]
+                    }
+                ]
+            });
+            self.componentData = ko.observable({
+                sections: [
+                    {
+                        title: 'Child Project', 
+                        data: [{
+                            key: 'parent project', 
+                            value: self.getRawNodeValue(self.resource(), 'part of'), 
+                            card: self.cards?.['parent project'],
                             type: 'resource'
                         }]
                     }
