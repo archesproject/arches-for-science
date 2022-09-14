@@ -24,7 +24,7 @@ class UpdateResourceListView(View):
     """
     This view
     1. assumes one project resource, one collection resource, multiple physical thing resources
-    1. if user send a collection resourceid, add or remove that resource id to the physical things in the data
+    2. if user send a collection resourceid, add or remove that resource id to the physical things in the data
     3. if user does not send any collection resourceid,
         a. create a collection instance
         b. add the collection to the project and
