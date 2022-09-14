@@ -120,6 +120,11 @@ define([
             }],
         },
 
+        getRelatedResources: async(resourceid) => {
+            return (window.fetch(arches.urls.related_resources + resourceid + "?paginate=false")
+                .then(response => response.json()))
+        },
+
         removedTiles: removedTiles,
 
         // used to collapse sections within a tab
