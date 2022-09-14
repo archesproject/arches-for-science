@@ -73,6 +73,45 @@
                     }
                 }"></div>
             </div>
+            <!-- Component Project Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'components'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.childProjects)}, css: {'fa-angle-double-right': visible.childProjects(), 'fa-angle-double-up': !visible.childProjects()}" class="fa toggle"></i> {% trans "Child Projects" %}</h2>
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.childProjects" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfChildProjects().length -->
+                        <div class="afs-nodata-note">No child projects for this project</div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: collectionOfChildProjects().length -->
+                        <div class="afs-report-subsection" >
+                            <div>
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Project" %}</th>
+                                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                                <th class="none">{% trans "Language" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfChildProjects, dataTableOptions: childProjectTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: graph_id"></td>
+                                                <td data-bind="text: resourceinstanceid"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
             <!-- Project Timeline Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
                 <div data-bind="component: {
