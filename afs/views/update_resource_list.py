@@ -1,5 +1,3 @@
-from ast import Pass
-import json
 import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -7,9 +5,8 @@ from django.utils.translation import ugettext as _
 from django.views.generic import View
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
-from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
+from arches.app.utils.betterJSONSerializer import JSONDeserializer
 from arches.app.utils.response import JSONResponse
-from arches.app.views.tile import TileData as TileView
 
 logger = logging.getLogger(__name__)
 related_resource_template = {
