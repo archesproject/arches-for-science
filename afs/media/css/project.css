@@ -865,3 +865,10 @@
     position: absolute;
     z-index: 100000001;
 }
+
+.afs-report-page .td-display-description {
+    max-width: 30vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

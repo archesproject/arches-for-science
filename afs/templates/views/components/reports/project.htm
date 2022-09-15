@@ -92,16 +92,22 @@
                                         <thead>
                                             <tr class="afs-table-header">
                                                 <th>{% trans "Project" %}</th>
-                                                <th class="min-tabletl">{% trans "Type" %}</th>
-                                                <th class="none">{% trans "Language" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="none">{% trans "Visit Resource" %}</th>
                                                 <th class="afs-table-control all"></th>
                                             </tr>
                                         </thead>
                                         <tbody data-bind="dataTablesForEach: { data: collectionOfChildProjects, dataTableOptions: childProjectTableConfig }">
                                             <tr>
                                                 <td data-bind="text: displayname"></td>
-                                                <td data-bind="text: graph_id"></td>
-                                                <td data-bind="text: resourceinstanceid"></td>
+                                                <td data-bind="text: displaydescription" class="td-display-description"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-globe"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

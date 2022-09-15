@@ -43,7 +43,7 @@ define([
 
             self.childProjectTableConfig = {
                 ...self.defaultTableConfig,
-                columns: Array(3).fill(null)
+                columns: Array(4).fill(null)
             };
 
             self.collectionOfChildProjects = ko.observableArray();
@@ -67,6 +67,10 @@ define([
 
                 self.collectionOfChildProjects(rrs.filter(rr => 
                     childProjects.includes(rr.resourceinstanceid)));
+                
+                for (child of self.collectionOfChildProjects()) {
+                    child.link = reportUtils.getResourceLink({resourceId: child.resourceinstanceid});
+                }
             };
 
             relatedResources();
