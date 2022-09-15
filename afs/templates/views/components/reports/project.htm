@@ -93,18 +93,17 @@
                                             <tr class="afs-table-header">
                                                 <th>{% trans "Project" %}</th>
                                                 <th class="min-tabletl">{% trans "Description" %}</th>
-                                                <th class="none">{% trans "Visit Resource" %}</th>
-                                                <th class="afs-table-control all"></th>
+                                                <th class="afs-table-control all">{% trans "Visit Resource" %}</th>
                                             </tr>
                                         </thead>
                                         <tbody data-bind="dataTablesForEach: { data: collectionOfChildProjects, dataTableOptions: childProjectTableConfig }">
                                             <tr>
                                                 <td data-bind="text: displayname"></td>
-                                                <td data-bind="text: displaydescription" class="td-display-description"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: link">
                                                         <a data-bind="attr: { href: link }">
-                                                            <i class="fa fa-globe"></i>
+                                                            <i class="fa fa-link"></i>
                                                         </a>
                                                     </div>
                                                 </td>
