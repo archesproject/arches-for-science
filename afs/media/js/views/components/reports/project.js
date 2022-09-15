@@ -43,7 +43,7 @@ define([
 
             self.childProjectTableConfig = {
                 ...self.defaultTableConfig,
-                columns: Array(4).fill(null)
+                columns: Array(3).fill(null)
             };
 
             self.collectionOfChildProjects = ko.observableArray();
@@ -52,28 +52,22 @@ define([
             };
 
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
-            const relatedResources = async() => {
+            const loadRelatedResources = async() => {
                 const result = await reportUtils.getRelatedResources(resourceId);
-                const rrs = result?.related_resources;
-                let childProjects =[];
-
+                const relatedResources = result?.related_resources;
                 const relationships = result?.resource_relationships;
-                for (indv_relationship in relationships) {
-                    if (relationships[indv_relationship]?.resourceinstancefrom_graphid ===
-                        relationships[indv_relationship]?.resourceinstanceto_graphid) {
-                            childProjects.push(relationships[indv_relationship]?.resourceinstanceidfrom);
-                    };
-                }
 
-                self.collectionOfChildProjects(rrs.filter(rr => 
-                    childProjects.includes(rr.resourceinstanceid)));
-                
-                for (child of self.collectionOfChildProjects()) {
-                    child.link = reportUtils.getResourceLink({resourceId: child.resourceinstanceid});
-                }
+                const relatedProjects = relationships.filter(relationship => 
+                    relationship?.resourceinstancefrom_graphid === relationship?.resourceinstanceto_graphid).map(
+                        relatedProject => relatedProject.resourceinstanceidfrom);
+                    
+                self.collectionOfChildProjects(relatedResources.filter(relatedResource => 
+                    relatedProjects.includes(relatedResource.resourceinstanceid)));
+
+                self.collectionOfChildProjects().map(child => child.link = reportUtils.getResourceLink({resourceId: child.resourceinstanceid}));
             };
 
-            relatedResources();
+            loadRelatedResources();
 
             if(params.report.cards){
                 const cards = params.report.cards;
