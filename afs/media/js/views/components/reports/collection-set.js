@@ -22,6 +22,9 @@ define([
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
+            self.visible = {
+                textualReference: ko.observable(true)
+            };
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
@@ -78,12 +81,28 @@ define([
             self.eventCards = {};
             self.summary = params.summary;
 
+            self.textualReferenceTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            }
+
+            self.textualReference = ko.observableArray();
+            const textualReferenceNode = self.getRawNodeValue(self.resource(), 'textual reference');
+            if(Array.isArray(textualReferenceNode)){
+                self.textualReference(textualReferenceNode.map(node => {
+                    const textualSource = self.getNodeValue(node, 'textual source');
+                    const textualSourceLink = self.getResourceLink(self.getRawNodeValue(node, 'textual source'));
+                    const textualReferenceType = self.getNodeValue(node, 'textual reference type');
+                    const tileid = self.getTileId(node);
+                    return {textualSource, textualSourceLink, textualReferenceType, tileid};
+                }));
+            }
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
                 self.cards = self.createCardDictionary(cards)
-                console.log(self.cards)
-                console.log(self.resource())
+
                 self.nameCards = {
                     name: self.cards?.['name of collection'],
                     identifier: self.cards?.['identifier of collection'],
@@ -127,27 +146,11 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Related Projects', 
+                            title: 'Related Project', 
                             data: [{
-                                key: 'Related Projects', 
+                                key: 'Related Project', 
                                 value: self.getRawNodeValue(self.resource(), 'used in'), 
                                 card: self.cards?.['related project of collection'],
-                                type: 'resource'
-                            }]
-                        }
-                    ]
-            });
-
-
-            self.textualReference = ko.observable({
-                sections: 
-                    [
-                        {
-                            title: 'Textual Reference', 
-                            data: [{
-                                key: 'Textual Reference', 
-                                value: self.getRawNodeValue(self.resource(), 'textual reference'), 
-                                card: self.cards?.['textual reference to collection'],
                                 type: 'resource'
                             }]
                         }

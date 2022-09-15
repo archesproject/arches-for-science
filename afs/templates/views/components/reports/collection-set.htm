@@ -80,22 +80,56 @@
                 }"></div>
             </div>
             <!-- Publication Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'publications'">                
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/default',
-                    params: {
-                        data: textualReference,
-                    }
-                }"></div>
+            <div class="afs-report-page" data-bind="if: activeSection() === 'publications'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.textualReference)}, css: {'fa-angle-double-right': visible.textualReference(), 'fa-angle-double-up': !visible.textualReference()}"  class="fa toggle"></i> {% trans "Textual Reference" %}</h2>
+                    <a data-bind="{if: cards['textual reference to collection'], click: function(){addNewTile(cards['textual reference to collection'])}}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add textual reference" %}</a>
+
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.textualReference" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: textualReference().length -->
+                        <div class="afs-nodata-note">{% trans "No textual references for this collection" %}</div>
+                        <!-- /ko -->
+
+                        <!-- ko if: textualReference().length -->
+                        <div class="afs-report-subsection">
+                            <div class="firstchild-container">
+                                <div class="afs-table">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans "Textual Source" %}</th>
+                                                <th>{% trans "Textual Reference Type" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: textualReference, dataTableOptions: textualReferenceTableConfig}">
+                                            <tr>
+                                                <td><a class="afs-table-link" data-bind="text: textualSource, attr: {href: textualSourceLink}"></a></td>                                                
+                                                <td data-bind="text: textualReferenceType"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: $parent.cards['textual reference to collection']">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['textual reference to collection'])}">
+                                                            <i class="fa fa-mail-reply"></i>
+                                                        </a>
+                                                        <a data-bind="click:  function() {$parent.deleteTile(tileid, $parent.cards['textual reference to collection'])}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
             </div>
             <!-- Events Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'events'">                
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/default',
-                    params: {
-                        data: usedInData,
-                    }
-                }"></div>
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/existence',
                     params: {
