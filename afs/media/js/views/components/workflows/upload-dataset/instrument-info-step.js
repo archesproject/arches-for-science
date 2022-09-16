@@ -224,32 +224,25 @@ define([
             nameData[nameNodeId] = self.nameValue();
             nameData[nameTypeNodeId] = nameTypeConceptValue;
             nameData[nameLanguageNodeId] = languageConceptValue;
-            //projectTileId = data.tileid;
             tiles['nameTile'] = self.buildTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId);
 
             let dateData = {};
             dateData[dateNodeId] = self.dateValue();
-            //nameTileId = data.tileid;
             tiles['dateTile'] = self.buildTile(dateData, dateNodeGroupId, self.observationInstanceId(), dateTileId);
 
             let instrumentData = {};
             instrumentData[instrumentNodeId] = self.instrumentInstance();
-            //dateTileId = data.tileid;
             tiles['instrumentTile'] = self.buildTile(instrumentData, instrumentNodeId, self.observationInstanceId(), instrumentTileId);
 
             let procedureData = {};
             procedureData[procedureNodeId] = self.procedureInstance();
-            // instrumentTileId = data.tileid;
             tiles['procedureTile'] = self.buildTile(procedureData, procedureNodeId, self.observationInstanceId(), procedureTileId);
 
             let parameterData = {};
             parameterData[parameterNodeId] = self.parameterValue();
             parameterData[statementTypeNodeId] = statementTypeConceptValue;
             parameterData[statementLanguageNodeId] = languageConceptValue;
-            // procedureTileId = data.tileid;
             tiles['parameterTile'] = self.buildTile(parameterData, parameterNodeGroupId, self.observationInstanceId(), parameterTileId);
-
-
 
             return window.fetch(arches.urls.root + 'instrument-info-form-save', {
                 method: 'POST',
@@ -261,7 +254,6 @@ define([
             }).then(function(response) {
                 return response.json();
             }).then(function(json){
-                console.log(json);
                 observedThingTileid = json.observedThingTile.tileid;
                 projectTileId = json.partOfProjectTile.tileid;
                 nameTileId = json.nameTile.tileid;
@@ -282,55 +274,6 @@ define([
                   params.form.loading(false);
             });
 
-            // return self.saveTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid)
-            //     .then(function(data) {
-            //         let partOfProjectData = {};
-            //         observedThingTileid = data.tileid;
-            //         partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId);
-            //         return self.saveTile(partOfProjectData, projectNodeId, data.resourceinstance_id, projectTileId);
-            //     })
-            //     .then(function(data) {
-            //         let nameData = {};
-            //         nameData[nameNodeId] = self.nameValue();
-            //         nameData[nameTypeNodeId] = nameTypeConceptValue;
-            //         nameData[nameLanguageNodeId] = languageConceptValue;
-            //         projectTileId = data.tileid;
-            //         return self.saveTile(nameData, nameNodeGroupId, data.resourceinstance_id, nameTileId);
-            //     })
-            //     .then(function(data) {
-            //         let dateData = {};
-            //         dateData[dateNodeId] = self.dateValue();
-            //         nameTileId = data.tileid;
-            //         return self.saveTile(dateData, dateNodeGroupId, data.resourceinstance_id, dateTileId);
-            //     })
-            //     .then(function(data) {
-            //         let instrumentData = {};
-            //         instrumentData[instrumentNodeId] = self.instrumentInstance();
-            //         dateTileId = data.tileid;
-            //         return self.saveTile(instrumentData, instrumentNodeId, data.resourceinstance_id, instrumentTileId);
-            //     })
-            //     .then(function(data) {
-            //         let procedureData = {};
-            //         procedureData[procedureNodeId] = self.procedureInstance();
-            //         instrumentTileId = data.tileid;
-            //         return self.saveTile(procedureData, procedureNodeId, data.resourceinstance_id, procedureTileId);
-            //     })
-            //     .then(function(data) {
-            //         let parameterData = {};
-            //         parameterData[parameterNodeId] = self.parameterValue();
-            //         parameterData[statementTypeNodeId] = statementTypeConceptValue;
-            //         parameterData[statementLanguageNodeId] = languageConceptValue;
-            //         procedureTileId = data.tileid;
-            //         return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
-            //     })
-            //     .then(function(data) {
-            //         parameterTileId = data.tileid;
-            //         self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
-            //         params.form.savedData(params.form.value());
-            //         params.form.complete(true);
-            //         params.form.dirty(false);
-            //         params.pageVm.alert("");
-            //     });
         };
     }
 

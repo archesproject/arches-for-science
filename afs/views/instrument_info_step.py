@@ -14,8 +14,10 @@ class InstrumentInfoStepFormSaveView(View):
     def post(self, request):
         data = JSONDeserializer().deserialize(request.body)
         transaction_id = request.POST.get("transaction_id", None)
+        
         resource = Resource()
         resource.graph_id = "615b11ee-c457-11e9-910c-a4d18cec433a"
+        
         for key, tiledata in data.items():
             tile = Tile(tiledata)
             data[key] = tile
