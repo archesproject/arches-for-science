@@ -177,10 +177,8 @@
     font-weight: 800;
 }
 
-
 .wf-multi-tile-card-info-details {
-    max-height: 100px;
-    max-width: 150px;
+    max-width: calc(100%);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
@@ -230,9 +228,8 @@
     line-height: 1.4;
 }
 
-.summary-report-description {
-    max-height: 100px;
-    max-width: 800px;
+.object-search-step .summary-report-description {
+    max-width: 75vw;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -439,14 +436,6 @@
 
 .final-step .summary-value {
     color: #2b547c;
-}
-
-.final-step .summary-value {
-    max-height: 100px;
-    max-width: 800px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .final-step .file-list .file-upload-card {
