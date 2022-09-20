@@ -305,6 +305,8 @@ define([
             self.motivationForSamplingWidgetValue(null);
             self.previouslySavedMotivationForSamplingWidgetValue(null);
 
+            self.sampleListShowing(false);
+
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
@@ -887,6 +889,10 @@ define([
         });
     });
 };
+        this.sampleListShowing = ko.observable(false);
+        this.showSampleList = function() {
+            self.sampleListShowing(!self.sampleListShowing());
+        };
 
         this.loadNewSampleLocationTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
