@@ -36,6 +36,7 @@ define([
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
         this.isFeatureBeingEdited = ko.observable(false);
+        this.sampleListShowing = ko.observable(false);
 
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
@@ -889,7 +890,7 @@ define([
         });
     });
 };
-        this.sampleListShowing = ko.observable(false);
+
         this.showSampleList = function() {
             self.sampleListShowing(!self.sampleListShowing());
         };
