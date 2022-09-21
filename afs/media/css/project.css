@@ -181,7 +181,11 @@
     max-width: calc(100%);
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; 
+}
+
+.wf-multi-tile-card-info-details dd {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .model-summary-report {
