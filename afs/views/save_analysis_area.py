@@ -159,18 +159,18 @@ class SaveAnalysisAreaView(View):
                 part_of_tile = self.save_physical_thing_part_of_tile(analysis_area_physical_thing_resourceid, transaction_id, parent_physical_thing_resourceid)
                 physical_part_of_object_tile = self.save_parent_physical_thing_part_of_tile(parent_physical_thing_resourceid, analysis_area_physical_thing_resourceid, transaction_id, part_identifier_assignment_tile_data, part_identifier_assignment_tile_id)
 
-                analysis_area_physical_thing_resource.index()
-                res = {
-                    'nameTile': name_tile,
-                    'typeTile': type_tile,
-                    'memberOfTile': member_of_tile,
-                    'partOfTile': part_of_tile,
-                    'physicalPartOfObjectTile': physical_part_of_object_tile,
-                }
+            res = {
+                'nameTile': name_tile,
+                'typeTile': type_tile,
+                'memberOfTile': member_of_tile,
+                'partOfTile': part_of_tile,
+                'physicalPartOfObjectTile': physical_part_of_object_tile,
+            }
+            analysis_area_physical_thing_resource.index()
             return JSONResponse({"result": res})
 
         except Exception as e:
             logger.exception(e)
-            response = {"result": "failed", "message": [_("Request Failed"), _("Unable to save")]}
+            response = {"result": e, "message": [_("Request Failed"), _("Unable to save")]}
             return JSONResponse(response, status=500)
 
