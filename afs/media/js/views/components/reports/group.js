@@ -201,20 +201,20 @@ define([
             };
 
             self.collectionOfGroupMembers = ko.observableArray();
+            self.collectionOfLargerEntities = ko.observableArray();
             self.visible = {
                 groupMembers: ko.observable(true),
+                largerEntities: ko.observable(true),
             };
 
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
             const loadRelatedResources = async() => {
                 const result = await reportUtils.getRelatedResources(resourceId);
                 const relatedResources = result?.related_resources;
-                const relationships = result?.resource_relationships;
+                const parents = result?.resource_relationships.map(relationship => relationship.resourceinstanceidto);
+                const children = result?.resource_relationships.map(relationship => relationship.resourceinstanceidfrom);
                 const groupGraphID = '07883c9e-b25c-11e9-975a-a4d18cec433a';
                 const personGraphID = 'f71f7b9c-b25b-11e9-901e-a4d18cec433a';
-                // console.log(result);
-                // console.log(relatedResources);
-                // console.log(result?.node_config_lookup);
 
                 let relatedPeopleandGroups = relatedResources.filter(resource => resource?.graph_id === personGraphID || resource?.graph_id === groupGraphID);
                 relatedPeopleandGroups.map(element => {
@@ -222,8 +222,10 @@ define([
                     element.resourceType = result?.node_config_lookup[element.graph_id].name
                 });
 
-                // self.collectionOfGroupMembers(relatedPeopleandGroups);
-                // console.log(relatedPeopleandGroups);
+                self.collectionOfGroupMembers(relatedPeopleandGroups.filter(relatedPersonGroup => 
+                    children.includes(relatedPersonGroup.resourceinstanceid)));
+                self.collectionOfLargerEntities(relatedPeopleandGroups.filter(relatedPersonGroup => 
+                    parents.includes(relatedPersonGroup.resourceinstanceid)));
             };
 
             loadRelatedResources();

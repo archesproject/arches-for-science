@@ -113,8 +113,8 @@
                                         <tbody data-bind="dataTablesForEach: { data: collectionOfGroupMembers, dataTableOptions: groupMemberTableConfig }">
                                             <tr>
                                                 <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: resourceType"></td>
                                                 <td data-bind="text: displaydescription" class="display-description"></td>
-                                                <td data-bind="text: type"></td>
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: link">
                                                         <a data-bind="attr: { href: link }">
@@ -134,12 +134,49 @@
             </div>
             <!-- Larger Entities Tab --> 
             <div class="afs-report-page" data-bind="if: activeSection() === 'entities'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/default',
-                    params: {
-                        data: parthoodData,
-                    }
-                }"></div>
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.largerEntities)}, css: {'fa-angle-double-right': visible.largerEntities(), 'fa-angle-double-up': !visible.largerEntities()}" class="fa toggle"></i> {% trans "Group Members" %}</h2>
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.largerEntities" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfLargerEntities().length -->
+                        <div class="afs-nodata-note">No people or sub-groups associated with this group.</div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: collectionOfLargerEntities().length -->
+                        <div class="afs-report-subsection" >
+                            <div>
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Group Member" %}</th>
+                                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfLargerEntities, dataTableOptions: groupMemberTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: resourceType"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
             </div>
             <!-- Location Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
