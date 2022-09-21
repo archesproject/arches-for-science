@@ -34,8 +34,9 @@ class SaveAnalysisAreaView(View):
         resource = Resource()
         resource.graph_id = physical_thing_graphid
         resource.save(transaction_id=transaction_id)
+        resourceid = str(resource.pk)
 
-        return resource
+        return resourceid
 
     def save_node(self, resourceinstanceid, nodeid, transactionid, nodevalue, tileid=None):
         if tileid is not None:
@@ -152,8 +153,7 @@ class SaveAnalysisAreaView(View):
         try:
             with transaction.atomic():
                 if analysis_area_physical_thing_resourceid is None:
-                    analysis_area_physical_thing_resource = self.create_physical_thing_resource(transaction_id)
-                    analysis_area_physical_thing_resourceid = str(analysis_area_physical_thing_resource.pk)
+                    analysis_area_physical_thing_resourceid = self.create_physical_thing_resource(transaction_id)
 
                 name_tile = self.save_physical_thing_name(analysis_area_physical_thing_resourceid, transaction_id, name)
                 type_tile = self.save_physical_thing_type(analysis_area_physical_thing_resourceid, transaction_id)
@@ -178,6 +178,7 @@ class SaveAnalysisAreaView(View):
                 "partOfTile": part_of_tile,
                 "physicalPartOfObjectTile": physical_part_of_object_tile,
             }
+            analysis_area_physical_thing_resource = Resource.objects.get(pk=analysis_area_physical_thing_resourceid)
             analysis_area_physical_thing_resource.index()
             return JSONResponse({"result": res})
 
