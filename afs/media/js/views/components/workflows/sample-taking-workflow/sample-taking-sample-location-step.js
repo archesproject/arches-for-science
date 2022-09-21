@@ -165,11 +165,19 @@ define([
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
 
+            let subscription = self.sampleLocationInstances.subscribe(function(){
+                if (self.sampleLocationInstances().length > 0) {
+                    self.showSampleList(true);
+                }
+                subscription.dispose();
+            });
+
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
 
-            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
+            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId)
+            .then(function(samplingActivitySamplingUnitCard) {
                 self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
             });
 
@@ -855,10 +863,8 @@ define([
                                                                                 // self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(updatedSamplingActivitySamplingUnitCard) {
                                                                                     updateAnnotations().then(function(_physicalThingAnnotationNode) {
                                                                                         self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
-                                                                                        
                                                                                         self.updateSampleLocationInstances();
-                                                                                        self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
-                            
+                                                                                        self.showSampleList(true);
                                                                                         self.savingTile(false);
                                                                                         self.savingMessage('');
                                                                                         params.dirty(true);

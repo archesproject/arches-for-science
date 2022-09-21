@@ -144,6 +144,12 @@ define([
         })
 
         this.initialize = function() {
+            let subscription = self.analysisAreaInstances.subscribe(function(){
+                if (self.analysisAreaInstances().length > 0) {
+                    self.showSampleList(true);
+                }
+                subscription.dispose();
+            });
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
@@ -480,8 +486,7 @@ define([
                                             self.savingMessage(`Updating Annotations ...`);
                                             updateAnnotations().then(function(_physicalThingAnnotationNode) {
                                                 self.updateAnalysisAreaInstances();
-                
-                                                self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
+                                                self.showSampleList(true);
                                                 self.savingTile(false);
                                                 self.savingMessage('');
                                                 params.pageVm.alert("");
