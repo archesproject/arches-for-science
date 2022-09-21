@@ -65,6 +65,9 @@ define([
                     relatedProjects.includes(relatedResource.resourceinstanceid)));
 
                 self.collectionOfChildProjects().map(child => child.link = reportUtils.getResourceLink({resourceId: child.resourceinstanceid}));
+                self.collectionOfChildProjects().forEach(child => child.displaydescription = reportUtils.stripTags(child.displaydescription));
+                // self.collectionOfChildProjects().map(child => {reportUtils.stripTags(child.displaydescription)});
+                console.log(self.collectionOfChildProjects());
             };
 
             loadRelatedResources();
