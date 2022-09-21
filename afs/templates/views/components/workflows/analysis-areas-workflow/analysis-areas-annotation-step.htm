@@ -146,8 +146,7 @@
                 </div>
 
                 {% block form_widgets %}
-                    <form class="widgets" data-bind="style: {opacity: $data.selectedAnalysisAreaInstance() ? '1' : '0'}"
-                        style="transition: opacity 1s; margin-bottom: 20px; margin-top: 10px; margin-left: 5px; opacity: 0;">
+                    <form class="widgets afs-sample-location-form-widgets" data-bind="style: {opacity: $data.selectedAnalysisAreaInstance() && !sampleListShowing() ? '1' : '0'}">
 
                         <div data-bind="foreach: {
                             data:card.widgets, as: 'widget'
