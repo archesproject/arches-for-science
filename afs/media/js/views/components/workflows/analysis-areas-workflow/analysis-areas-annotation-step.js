@@ -32,6 +32,7 @@ define([
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
         this.isFeatureBeingEdited = ko.observable(false);
+        this.sampleListShowing = ko.observable(false);
 
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
@@ -258,6 +259,8 @@ define([
 
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
             var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
+
+            self.sampleListShowing(false);
             
             if (previouslySelectedAnalysisAreaInstance && previouslySelectedAnalysisAreaInstance.tileid !== analysisAreaInstance.tileid) {
                 /* resets any changes not explicity saved to the tile */ 
@@ -273,6 +276,10 @@ define([
             
             self.selectedAnalysisAreaInstance(analysisAreaInstance);
 
+        };
+
+        this.showSampleList = function() {
+            self.sampleListShowing(!self.sampleListShowing());
         };
 
         this.resetAnalysisAreasTile = function() {
