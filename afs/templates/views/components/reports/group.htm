@@ -86,6 +86,52 @@
                     }
                 }"></div>
             </div>
+            <!-- Group Members Tab --> 
+            <div class="afs-report-page" data-bind="if: activeSection() === 'members'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.groupMembers)}, css: {'fa-angle-double-right': visible.groupMembers(), 'fa-angle-double-up': !visible.groupMembers()}" class="fa toggle"></i> {% trans "Group Members" %}</h2>
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.groupMembers" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfGroupMembers().length -->
+                        <div class="afs-nodata-note">No people or sub-groups associated with this group.</div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: collectionOfGroupMembers().length -->
+                        <div class="afs-report-subsection" >
+                            <div>
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Group Member" %}</th>
+                                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfGroupMembers, dataTableOptions: groupMemberTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
+                                                <td data-bind="text: type"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
             <!-- Larger Entities Tab --> 
             <div class="afs-report-page" data-bind="if: activeSection() === 'entities'">
                 <div data-bind="component: {

@@ -194,6 +194,39 @@ define([
                         }
                     ]
             });
+
+            self.groupMemberTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(4).fill(null)
+            };
+
+            self.collectionOfGroupMembers = ko.observableArray();
+            self.visible = {
+                groupMembers: ko.observable(true),
+            };
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const loadRelatedResources = async() => {
+                const result = await reportUtils.getRelatedResources(resourceId);
+                const relatedResources = result?.related_resources;
+                const relationships = result?.resource_relationships;
+                const groupGraphID = '07883c9e-b25c-11e9-975a-a4d18cec433a';
+                const personGraphID = 'f71f7b9c-b25b-11e9-901e-a4d18cec433a';
+                // console.log(result);
+                // console.log(relatedResources);
+                // console.log(result?.node_config_lookup);
+
+                let relatedPeopleandGroups = relatedResources.filter(resource => resource?.graph_id === personGraphID || resource?.graph_id === groupGraphID);
+                relatedPeopleandGroups.map(element => {
+                    element.link = reportUtils.getResourceLink({resourceId: element.resourceinstanceid}),
+                    element.resourceType = result?.node_config_lookup[element.graph_id].name
+                });
+
+                // self.collectionOfGroupMembers(relatedPeopleandGroups);
+                // console.log(relatedPeopleandGroups);
+            };
+
+            loadRelatedResources();
         },
         template: { require: 'text!templates/views/components/reports/group.htm' }
     });
