@@ -16,17 +16,19 @@ related_resource_template = {
     "inverseOntologyProperty": "",
 }
 
+
 class SaveAnalysisAreaView(View):
     """
-        Updates the Parent physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
-            the annotation (Part Identifier Assignment) (fec59582-8593-11ea-97eb-acde48001122)
+    Updates the Parent physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
+        the annotation (Part Identifier Assignment) (fec59582-8593-11ea-97eb-acde48001122)
 
-        Creates Analysis Area physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
-            the name (b9c1d8a6-b497-11e9-876b-a4d18cec433a)
-            the type (8ddfe3ab-b31d-11e9-aff0-a4d18cec433a) 
-            the parent object (part of) (f8d5fe4c-b31d-11e9-9625-a4d18cec433a) 
-            the related collection (memeber of) (63e49254-c444-11e9-afbe-a4d18cec433a)
+    Creates Analysis Area physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
+        the name (b9c1d8a6-b497-11e9-876b-a4d18cec433a)
+        the type (8ddfe3ab-b31d-11e9-aff0-a4d18cec433a)
+        the parent object (part of) (f8d5fe4c-b31d-11e9-9625-a4d18cec433a)
+        the related collection (memeber of) (63e49254-c444-11e9-afbe-a4d18cec433a)
     """
+
     def create_physical_thing_resource(self, transaction_id):
         physical_thing_graphid = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
         resource = Resource()
@@ -105,30 +107,30 @@ class SaveAnalysisAreaView(View):
         return tile
 
     def save_physical_thing_name(self, resourceid, transactionid, name):
-        physical_thing_name_nodeid = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'
+        physical_thing_name_nodeid = "b9c1d8a6-b497-11e9-876b-a4d18cec433a"
         tile = self.save_node(resourceid, physical_thing_name_nodeid, transactionid, name)
         return tile
 
     def save_physical_thing_type(self, resourceid, transactionid):
-        physical_thing_type_nodeid = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'
-        physical_thing_type = ["31d97bdd-f10f-4a26-958c-69cb5ab69af1"] # analysis area
+        physical_thing_type_nodeid = "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"
+        physical_thing_type = ["31d97bdd-f10f-4a26-958c-69cb5ab69af1"]  # analysis area
         tile = self.save_node(resourceid, physical_thing_type_nodeid, transactionid, physical_thing_type)
         return tile
 
     def save_physical_thing_related_collection(self, resourceinstanceid, transactionid, related_resourceid):
-        physical_thing_member_of_nodeid = '63e49254-c444-11e9-afbe-a4d18cec433a'
+        physical_thing_member_of_nodeid = "63e49254-c444-11e9-afbe-a4d18cec433a"
         tile = self.save_related_resource_node(resourceinstanceid, physical_thing_member_of_nodeid, transactionid, related_resourceid)
         return tile
 
     def save_physical_thing_part_of_tile(self, resourceid, transactionid, related_resourceid):
-        physical_thing_part_of_nodeid = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'
+        physical_thing_part_of_nodeid = "f8d5fe4c-b31d-11e9-9625-a4d18cec433a"
         tile = self.save_related_resource_node(resourceid, physical_thing_part_of_nodeid, transactionid, related_resourceid)
         return tile
 
     def save_parent_physical_thing_part_of_tile(self, resourceid, related_resourceid, transactionid, tiledata, tileid):
         print(tiledata)
-        part_identifier_assignment_nodegroupid = 'fec59582-8593-11ea-97eb-acde48001122'
-        physical_part_of_object_nodeid = 'b240c366-8594-11ea-97eb-acde48001122'
+        part_identifier_assignment_nodegroupid = "fec59582-8593-11ea-97eb-acde48001122"
+        physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         related_resource_template["resourceId"] = related_resourceid
         tiledata[physical_part_of_object_nodeid] = [related_resource_template]
         print(tiledata)
@@ -142,29 +144,39 @@ class SaveAnalysisAreaView(View):
         part_identifier_assignment_tile_data = JSONDeserializer().deserialize(request.POST.get("partIdentifierAssignmentTileData"))
         part_identifier_assignment_tile_id = request.POST.get("partIdentifierAssignmentTileId") or None
         name = request.POST.get("analysisAreaName")
-        physical_part_of_object_nodeid = 'b240c366-8594-11ea-97eb-acde48001122'
+        physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         analysis_area_physical_thing_resourceid = None
         if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
-            analysis_area_physical_thing_resourceid = part_identifier_assignment_tile_data[physical_part_of_object_nodeid][0]['resourceId']
-        
+            analysis_area_physical_thing_resourceid = part_identifier_assignment_tile_data[physical_part_of_object_nodeid][0]["resourceId"]
+
         try:
             with transaction.atomic():
                 if analysis_area_physical_thing_resourceid is None:
                     analysis_area_physical_thing_resource = self.create_physical_thing_resource(transaction_id)
                     analysis_area_physical_thing_resourceid = str(analysis_area_physical_thing_resource.pk)
-                
+
                 name_tile = self.save_physical_thing_name(analysis_area_physical_thing_resourceid, transaction_id, name)
                 type_tile = self.save_physical_thing_type(analysis_area_physical_thing_resourceid, transaction_id)
-                member_of_tile = self.save_physical_thing_related_collection(analysis_area_physical_thing_resourceid, transaction_id, collection_resourceid)
-                part_of_tile = self.save_physical_thing_part_of_tile(analysis_area_physical_thing_resourceid, transaction_id, parent_physical_thing_resourceid)
-                physical_part_of_object_tile = self.save_parent_physical_thing_part_of_tile(parent_physical_thing_resourceid, analysis_area_physical_thing_resourceid, transaction_id, part_identifier_assignment_tile_data, part_identifier_assignment_tile_id)
+                member_of_tile = self.save_physical_thing_related_collection(
+                    analysis_area_physical_thing_resourceid, transaction_id, collection_resourceid
+                )
+                part_of_tile = self.save_physical_thing_part_of_tile(
+                    analysis_area_physical_thing_resourceid, transaction_id, parent_physical_thing_resourceid
+                )
+                physical_part_of_object_tile = self.save_parent_physical_thing_part_of_tile(
+                    parent_physical_thing_resourceid,
+                    analysis_area_physical_thing_resourceid,
+                    transaction_id,
+                    part_identifier_assignment_tile_data,
+                    part_identifier_assignment_tile_id,
+                )
 
             res = {
-                'nameTile': name_tile,
-                'typeTile': type_tile,
-                'memberOfTile': member_of_tile,
-                'partOfTile': part_of_tile,
-                'physicalPartOfObjectTile': physical_part_of_object_tile,
+                "nameTile": name_tile,
+                "typeTile": type_tile,
+                "memberOfTile": member_of_tile,
+                "partOfTile": part_of_tile,
+                "physicalPartOfObjectTile": physical_part_of_object_tile,
             }
             analysis_area_physical_thing_resource.index()
             return JSONResponse({"result": res})
@@ -173,4 +185,3 @@ class SaveAnalysisAreaView(View):
             logger.exception(e)
             response = {"result": e, "message": [_("Request Failed"), _("Unable to save")]}
             return JSONResponse(response, status=500)
-
