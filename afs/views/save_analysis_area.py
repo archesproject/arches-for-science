@@ -22,7 +22,7 @@ class SaveAnalysisAreaView(View):
             the annotation (Part Identifier Assignment) (fec59582-8593-11ea-97eb-acde48001122)
 
         Creates Analysis Area physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
-            the name (b9c1ced7-b497-11e9-a4da-a4d18cec433a)
+            the name (b9c1d8a6-b497-11e9-876b-a4d18cec433a)
             the type (8ddfe3ab-b31d-11e9-aff0-a4d18cec433a) 
             the parent object (part of) (f8d5fe4c-b31d-11e9-9625-a4d18cec433a) 
             the related collection (memeber of) (63e49254-c444-11e9-afbe-a4d18cec433a)
@@ -32,10 +32,8 @@ class SaveAnalysisAreaView(View):
         resource = Resource()
         resource.graph_id = physical_thing_graphid
         resource.save(transaction_id=transaction_id)
-        physical_thing_resource_id = str(resource.pk)
-        resource.index()
 
-        return physical_thing_resource_id
+        return resource
 
     def save_node(self, resourceinstanceid, nodeid, transactionid, nodevalue, tileid=None):
         if tileid is not None:
@@ -52,16 +50,10 @@ class SaveAnalysisAreaView(View):
 
     def save_tile(self, resourceinstanceid, nodegroupid, transactionid, tiledata, tileid=None):
         if tileid is not None:
-            print("I have a tileid: ", tileid)
             tile = Tile.objects.get(pk=tileid)
         else:
-            print("I don't have a tileid: ", tileid)
             tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=nodegroupid, resourceid=resourceinstanceid)
-        print(tile)
-        print(tile.data)
         tile.data = tiledata
-        print(tile)
-        print(tile.data)
         tile.save(transaction_id=transactionid)
 
         return tile
@@ -69,8 +61,7 @@ class SaveAnalysisAreaView(View):
     def save_related_resource_node(self, resourceinstanceid, nodeid, transactionid, related_resourceid, tileid=None):
         if tileid is not None:
             tile = Tile.objects.get(pk=tileid)
-            tile.data[nodeid](0)["resourceId"] = related_resourceid
-            # do I want to update resource x resource data?
+            tile.data[nodeid][0]["resourceId"] = related_resourceid
         else:
             try:
                 tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup=nodeid)
@@ -114,7 +105,7 @@ class SaveAnalysisAreaView(View):
         return tile
 
     def save_physical_thing_name(self, resourceid, transactionid, name):
-        physical_thing_name_nodeid = 'b9c1ced7-b497-11e9-a4da-a4d18cec433a'
+        physical_thing_name_nodeid = 'b9c1d8a6-b497-11e9-876b-a4d18cec433a'
         tile = self.save_node(resourceid, physical_thing_name_nodeid, transactionid, name)
         return tile
 
@@ -134,8 +125,13 @@ class SaveAnalysisAreaView(View):
         tile = self.save_related_resource_node(resourceid, physical_thing_part_of_nodeid, transactionid, related_resourceid)
         return tile
 
-    def save_parent_physical_thing_part_of_tile(self, resourceid, transactionid, tiledata, tileid):
+    def save_parent_physical_thing_part_of_tile(self, resourceid, related_resourceid, transactionid, tiledata, tileid):
+        print(tiledata)
         part_identifier_assignment_nodegroupid = 'fec59582-8593-11ea-97eb-acde48001122'
+        physical_part_of_object_nodeid = 'b240c366-8594-11ea-97eb-acde48001122'
+        related_resource_template["resourceId"] = related_resourceid
+        tiledata[physical_part_of_object_nodeid] = [related_resource_template]
+        print(tiledata)
         tile = self.save_tile(resourceid, part_identifier_assignment_nodegroupid, transactionid, tiledata, tileid)
         return tile
 
@@ -154,17 +150,16 @@ class SaveAnalysisAreaView(View):
         try:
             with transaction.atomic():
                 if analysis_area_physical_thing_resourceid is None:
-                    analysis_area_physical_thing_resourceid = self.create_physical_thing_resource(transaction_id)
-                    related_resource_template["resourceId"] = analysis_area_physical_thing_resourceid
-                    part_identifier_assignment_tile_data[physical_part_of_object_nodeid] = [related_resource_template]
-
-                # analysis_area_physical_thing_resource = Resource.objects.get(pk=analysis_area_physical_thing_resourceid)
+                    analysis_area_physical_thing_resource = self.create_physical_thing_resource(transaction_id)
+                    analysis_area_physical_thing_resourceid = str(analysis_area_physical_thing_resource.pk)
                 
                 name_tile = self.save_physical_thing_name(analysis_area_physical_thing_resourceid, transaction_id, name)
                 type_tile = self.save_physical_thing_type(analysis_area_physical_thing_resourceid, transaction_id)
                 member_of_tile = self.save_physical_thing_related_collection(analysis_area_physical_thing_resourceid, transaction_id, collection_resourceid)
-                part_of_tile = self.save_physical_thing_part_of_tile(analysis_area_physical_thing_resourceid, transaction_id, collection_resourceid)
-                physical_part_of_object_tile = self.save_parent_physical_thing_part_of_tile(parent_physical_thing_resourceid, transaction_id, part_identifier_assignment_tile_data, part_identifier_assignment_tile_id)
+                part_of_tile = self.save_physical_thing_part_of_tile(analysis_area_physical_thing_resourceid, transaction_id, parent_physical_thing_resourceid)
+                physical_part_of_object_tile = self.save_parent_physical_thing_part_of_tile(parent_physical_thing_resourceid, analysis_area_physical_thing_resourceid, transaction_id, part_identifier_assignment_tile_data, part_identifier_assignment_tile_id)
+
+                analysis_area_physical_thing_resource.index()
                 res = {
                     'nameTile': name_tile,
                     'typeTile': type_tile,
