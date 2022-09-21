@@ -94,17 +94,16 @@
                                                         flex-direction: column;
                                                     ">
                                     <!-- ko foreach: $data.filteredSampleLocationInstances -->
-                                    <tr style="cursor: pointer;" data-bind="
-                                                                scrollTo: $parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid,
-                                                                style: {
-                                                                    background: (function() {
-                                                                        if ($parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid) {
-                                                                            return '#afd7f7';
-                                                                        }
-                                                                    })()
-                                                                },
-                                                            ">
-                                        <td class="map-card-feature-tool">
+                                    <tr data-bind="scrollTo: $parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid,
+                                        style: {
+                                            background: (function() {
+                                                if ($parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid) {
+                                                    return '#afd7f7';
+                                                }
+                                            })()
+                                        },
+                                    ">
+                                        <td style="cursor: pointer;" class="map-card-feature-tool">
                                             <a href="javascript:void(0);"
                                                 data-bind="click: function() { $parent.selectSampleLocationInstance($data); }, clickBubble: false">
                                                 <i class="fa fa-pencil map-card-feature-edit"></i>
@@ -127,7 +126,8 @@
                 </div>
 
                 {% block form_widgets %}
-                    <form class="widgets" data-bind="style: {opacity: $data.selectedSampleLocationInstance() ? '1' : '0'}" style="transition: opacity 1s; margin-bottom: 20px; margin-top: 10px; margin-left: 5px; opacity: 0;">
+                    <form class="widgets" data-bind="style: {opacity: $data.selectedSampleLocationInstance() ? '1' : '0'}" 
+                        style="transition: opacity 1s; margin-bottom: 20px; margin-top: 10px; margin-left: 5px; opacity: 0;">
                         <!-- BEGIN geometry table -->
                         <div data-bind="foreach: {
                             data:card.widgets, as: 'widget'
