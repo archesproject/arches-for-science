@@ -464,7 +464,7 @@ define([
         this.initialize();
 
         this.stripTags = (original) => {
-            return original.replace(/(<([^>]+)>)/gi, "")
+            return original.replace(/(<([^>]+)>)/gi, "");
         };
     }
 
