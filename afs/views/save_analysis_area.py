@@ -125,6 +125,7 @@ class SaveAnnotationView(View):
         tile = self.save_tile(resourceid, part_identifier_assignment_nodegroupid, transactionid, tiledata, tileid)
         return tile
 
+
 class SaveAnalysisAreaView(SaveAnnotationView):
     """
     Updates the Parent physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
