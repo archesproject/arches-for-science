@@ -219,7 +219,9 @@ define([
                 let relatedPeopleandGroups = relatedResources.filter(resource => resource?.graph_id === personGraphID || resource?.graph_id === groupGraphID);
                 relatedPeopleandGroups.map(element => {
                     element.link = reportUtils.getResourceLink({resourceId: element.resourceinstanceid}),
-                    element.resourceType = result?.node_config_lookup[element.graph_id].name
+                    element.resourceType = result?.node_config_lookup[element.graph_id].name,
+                    element.displaydescription = reportUtils.stripTags(element.displaydescription)
+                    return element
                 });
 
                 self.collectionOfGroupMembers(relatedPeopleandGroups.filter(relatedPersonGroup => 
