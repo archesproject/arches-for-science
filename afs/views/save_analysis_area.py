@@ -17,18 +17,7 @@ related_resource_template = {
 }
 
 
-class SaveAnalysisAreaView(View):
-    """
-    Updates the Parent physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
-        the annotation (Part Identifier Assignment) (fec59582-8593-11ea-97eb-acde48001122)
-
-    Creates Analysis Area physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
-        the name (b9c1d8a6-b497-11e9-876b-a4d18cec433a)
-        the type (8ddfe3ab-b31d-11e9-aff0-a4d18cec433a)
-        the parent object (part of) (f8d5fe4c-b31d-11e9-9625-a4d18cec433a)
-        the related collection (memeber of) (63e49254-c444-11e9-afbe-a4d18cec433a)
-    """
-
+class SaveAnnotationView(View):
     def create_physical_thing_resource(self, transaction_id):
         physical_thing_graphid = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
         resource = Resource()
@@ -129,14 +118,24 @@ class SaveAnalysisAreaView(View):
         return tile
 
     def save_parent_physical_thing_part_of_tile(self, resourceid, related_resourceid, transactionid, tiledata, tileid):
-        print(tiledata)
         part_identifier_assignment_nodegroupid = "fec59582-8593-11ea-97eb-acde48001122"
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         related_resource_template["resourceId"] = related_resourceid
         tiledata[physical_part_of_object_nodeid] = [related_resource_template]
-        print(tiledata)
         tile = self.save_tile(resourceid, part_identifier_assignment_nodegroupid, transactionid, tiledata, tileid)
         return tile
+
+class SaveAnalysisAreaView(SaveAnnotationView):
+    """
+    Updates the Parent physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
+        the annotation (Part Identifier Assignment) (fec59582-8593-11ea-97eb-acde48001122)
+
+    Creates Analysis Area physical thing (9519cb4f-b25b-11e9-8c7b-a4d18cec433a)
+        the name (b9c1d8a6-b497-11e9-876b-a4d18cec433a)
+        the type (8ddfe3ab-b31d-11e9-aff0-a4d18cec433a)
+        the parent object (part of) (f8d5fe4c-b31d-11e9-9625-a4d18cec433a)
+        the related collection (memeber of) (63e49254-c444-11e9-afbe-a4d18cec433a)
+    """
 
     def post(self, request):
         parent_physical_thing_resourceid = request.POST.get("parentPhysicalThingResourceid")
@@ -180,6 +179,8 @@ class SaveAnalysisAreaView(View):
             }
             analysis_area_physical_thing_resource = Resource.objects.get(pk=analysis_area_physical_thing_resourceid)
             analysis_area_physical_thing_resource.index()
+            parent_physical_thing_resource = Resource.objects.get(pk=parent_physical_thing_resourceid)
+            parent_physical_thing_resource.index()
             return JSONResponse({"result": res})
 
         except Exception as e:
