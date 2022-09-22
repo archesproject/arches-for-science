@@ -25,7 +25,6 @@ define([
                 {'id': 'location', 'title': 'Location'},
                 {'id': 'component', 'title': 'Components'},
                 {'id': 'instrument', 'title': 'Instrument Configuration'},
-                {'id': 'service', 'title': 'Service Notes'},
                 {'id': 'documentation', 'title': 'Documentation'},
                 {'id': 'json', 'title': 'JSON'},
             ];
