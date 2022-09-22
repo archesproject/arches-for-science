@@ -56,6 +56,7 @@ define([
 
                 self.documentationCards = {
                     digitalReference: self.cards?.["digital reference to instrument"],
+                    textualReference: self.cards?.["textual reference to instrument"],
                 };
 
                 self.descriptionCards = {

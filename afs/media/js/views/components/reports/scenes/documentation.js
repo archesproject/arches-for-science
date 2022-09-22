@@ -9,6 +9,11 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 columns: Array(3).fill(null)
             };
 
+            self.textualReferenceTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+
             self.subjectOfTableConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(1).fill(null)
@@ -17,6 +22,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.dataConfig = {
                 label: '_label',
                 digitalReference: 'Digital Reference',
+                textualReference: 'Textual Reference',
                 subjectOf: 'subject of'
             }
 
@@ -25,19 +31,25 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.delete = params.deleteTile || self.deleteTile;
             self.add = params.addTile || self.addNewTile;
             self.digitalReference = ko.observableArray();
+            self.textualReference = ko.observableArray();
             self.label = ko.observable();
             self.subjectOf = ko.observableArray();
             self.visible = {
                 digitalReference: ko.observable(true),
+                textualReference: ko.observable(true),
                 subjectOf: ko.observable(true),
                 label: ko.observable(true)
             }
             self.subjectOfDisplay = ko.observable(true);
-            self.digitalReferenceDisplay = ko.observable(true)
+            self.digitalReferenceDisplay = ko.observable(true);
+            self.textualReferenceDisplay = ko.observable(true);
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             if(!self.dataConfig.digitalReference){
                 self.toggleVisibility(self.digitalReferenceDisplay);
+            }
+            if(!self.dataConfig.textualReference){
+                self.toggleVisibility(self.textualReferenceDisplay);
             }
             if(!self.dataConfig.subjectOf) {
                 self.toggleVisibility(self.subjectOfDisplay);
@@ -47,6 +59,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             if(params?.compiled){
                 self.label(params.data.label);
                 self.digitalReference(params.data.digitalReference);
+                self.textualReference(params.data.textualReference);
                 self.subjectOf(params.data.subjectOf);
             } else {
                 if(self.dataConfig.label) {
@@ -75,6 +88,35 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                                 testPaths: [
                                     ["digital reference_digital source"], 
                                     ["digital source"]
+                                ]}));
+                            const tileid = x?.['@tile_id'];
+                            return { link, type, source, tileid };
+                        }));
+                    }
+                }
+
+                if(self.dataConfig.textualReference){
+                    let textualReferenceData = params.data()[self.dataConfig.textualReference];
+                    if(textualReferenceData) {
+                        if(textualReferenceData.length === undefined){
+                            textualReferenceData = [textualReferenceData];
+                        } 
+
+                        self.textualReference(textualReferenceData.map(x => {
+                            const type = self.getNodeValue(x, {
+                                testPaths: [
+                                    ["textual reference_digital reference type"], 
+                                    ["textual reference type"]
+                                ]});
+                            const source = self.getNodeValue(x, {
+                                testPaths: [
+                                    ["textual reference_digital source"], 
+                                    ["textual source"]
+                                ]});
+                            const link = self.getResourceLink(self.getRawNodeValue(x, {
+                                testPaths: [
+                                    ["textual reference_digital source"], 
+                                    ["textual source"]
                                 ]}));
                             const tileid = x?.['@tile_id'];
                             return { link, type, source, tileid };
