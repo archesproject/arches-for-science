@@ -9,10 +9,11 @@ define([
     'utils/resource',
     'models/graph',
     'viewmodels/card',
+    'viewmodels/tile',
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
     'views/components/resource-instance-nodevalue',
-], function(_, $, Cookies, arches, ko, koMapping, StepUtils, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+], function(_, $, Cookies, arches, ko, koMapping, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -47,9 +48,6 @@ define([
         this.analysisAreaInstances = ko.observableArray();
         
         this.selectedAnalysisAreaInstance = ko.observable();
-
-        this.analysisAreaInstances.subscribe(val=> console.log(val))
-        this.selectedAnalysisAreaInstance.subscribe(val=> console.log(val))
 
         this.switchCanvas = function(tile){
             const features = ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features);
@@ -94,7 +92,6 @@ define([
 
         this.analysisAreaFilterTerm = ko.observable();
         this.filteredAnalysisAreaInstances = ko.computed(function() {
-            console.log("is this triggered!")
             const analysisAreasOnly = self.analysisAreaInstances().filter(function(a){
                 const sampleLocationResourceIds = self.sampleLocationResourceIds.map(item => item.resourceid);
                 const partId = ko.unwrap(a.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]()[0].resourceId)
@@ -251,13 +248,33 @@ define([
         };
 
         this.updateAnalysisAreaInstances = function() {
-            canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id'])
+            const canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id']);
+
+            const tileids = self.card.tiles().map(tile => tile.tileid);
+            if (self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid){
+                if (!tileids.includes(self.selectedAnalysisAreaInstance().tileid)) {
+                    self.card.tiles.push(self.selectedAnalysisAreaInstance());
+                } else {
+                    self.card.tiles().forEach(function(tile){
+                        if (tile.tileid === self.selectedAnalysisAreaInstance().tileid) {
+                            Object.keys(tile.data).map(key => {
+                                if (ko.isObservable(tile.data[key])) {
+                                    tile.data[key](self.selectedAnalysisAreaInstance().data[key]());
+                                } else if (key !== '__ko_mapping__') {
+                                    Object.keys(tile.data[key]).map(childkey => {
+                                        tile.data[key][childkey](self.selectedAnalysisAreaInstance().data[key][childkey]());
+                                    });
+                                };
+                            });
+                        };
+                    });
+                }
+            };
             const tilesBelongingToManifest = self.card.tiles().filter(
                 tile => canvasids.find(
                     canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
                     )
                 );
-            
             self.analysisAreaInstances(tilesBelongingToManifest);
         };
 
@@ -352,28 +369,37 @@ define([
                 partIdentifierAssignmentResourceId: self.selectedAnalysisAreaInstance().resourceinstance_id,
                 transactionId: params.form.workflowId,
                 analysisAreaName: self.areaName(),
-            }
-            // window.fetch(arches.urls.root + 'saveanalysisarea', {
-            //     method: 'POST',
-            //     credentials: 'include',
-            //     body: data,
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         "X-CSRFToken": Cookies.get('csrftoken')
-            //     },
-            // })
-            // .then(function(response){
-            //     if(response.ok){
-            //         return response.json();
-            //     }
-            // })
+            };
+
             $.ajax({
                 url: arches.urls.root + 'saveanalysisarea',
                 type: 'POST',
                 data: data,
                 dataType: 'json',
             })
-            .then(function(_data){
+            .then(function(data){
+                const tile = data.result.physicalPartOfObjectTile;
+
+                self.builtTile = new TileViewModel({
+                    tile: tile,
+                    card: self.card,
+                    graphModel: self.card.params.graphModel,
+                    resourceId: tile.resourceinstance_id,
+                    displayname: self.card.params.displayname,
+                    handlers: self.card.params.handlers,
+                    userisreviewer: self.card.params.userisreviewer,
+                    cards: self.card.params.cards,
+                    tiles: self.card.params.tiles,
+                    selection: self.card.params.selection,
+                    scrollTo: self.card.params.scrollTo,
+                    filter: self.card.params.filter,
+                    provisionalTileViewModel: self.card.params.provisionalTileViewModel,
+                    loading: self.card.params.loading,
+                    cardwidgets: self.card.params.cardwidgets,
+                });
+
+                self.selectedAnalysisAreaInstance(self.builtTile);
+
                 updateAnnotations().then(function(_physicalThingAnnotationNode) {
                     self.updateAnalysisAreaInstances();
                 
