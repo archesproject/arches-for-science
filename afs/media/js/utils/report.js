@@ -120,6 +120,11 @@ define([
             }],
         },
 
+        getRelatedResources: async(resourceid) => {
+            return (window.fetch(arches.urls.related_resources + resourceid + "?paginate=false")
+                .then(response => response.json()))
+        },
+
         removedTiles: removedTiles,
 
         // used to collapse sections within a tab
@@ -205,6 +210,10 @@ define([
             return processRawNodeValue(rawValue);
         },
 
+        stripTags (original) {
+            return original.replace(/(<([^>]+)>)/gi, "");
+        },
+        
         // see if there's any node with a valid displayable value.  If yes, return true.
         // potentially useful for deeply nested resources
         nestedDataExists: checkNestedData
