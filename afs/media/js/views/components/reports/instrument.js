@@ -9,8 +9,6 @@ define([
     'views/components/reports/scenes/name', 
     'views/components/reports/scenes/description', 
     'views/components/reports/scenes/documentation', 
-    'views/components/reports/scenes/existence', 
-    'views/components/reports/scenes/substance',  
     'views/components/reports/scenes/json', 
     'views/components/reports/scenes/default' 
 ], 
@@ -21,14 +19,13 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'}, 
-                {'id': 'existence', 'title': 'Existence'},
-                {'id': 'substance', 'title': 'Substance'},
+                {'id': 'name', 'title': 'Names, Identifiers, Classification'},
+                {'id': 'description', 'title': 'Description'},
                 {'id': 'actor-relations', 'title': 'Actor Relations'},
                 {'id': 'location', 'title': 'Location'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'sethood', 'title': 'Sethood'},
-                {'id': 'description', 'title': 'Description'},
+                {'id': 'component', 'title': 'Components'},
+                {'id': 'instrument', 'title': 'Instrument Configuration'},
+                {'id': 'service', 'title': 'Service Notes'},
                 {'id': 'documentation', 'title': 'Documentation'},
                 {'id': 'json', 'title': 'JSON'},
             ];
@@ -40,29 +37,10 @@ define([
             self.documentationDataConfig = {
                 'subjectOf': undefined, 
             };
-            self.existenceDataConfig = {
-                'production': {
-                    graph: 'production',
-                    metadata: [{
-                        key: 'production event type',
-                        path: 'production_type',
-                        type: 'resource'
-                    },{
-                        key: 'producer',
-                        path: 'production_carried out by',
-                        type: 'resource'
-                    },{
-                        key: 'production event location',
-                        path: 'production_location',
-                        type: 'resource'
-                    }]
-                },
-            };
+            
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
-            self.existenceCards = {};
-            self.substanceCards = {};
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -75,17 +53,6 @@ define([
                     identifier: self.cards?.["identifier for instrument"],
                     type: self.cards?.["type of instrument"]
                 };
-                self.existenceCards = {
-                    production: {
-                        card: self.cards?.["production event of instrument"],
-                        subCards: {
-                            name: 'name for production event',
-                            identifier: 'identifier for production event',
-                            timespan: 'timespan of production event',
-                            statement: 'statement about production event',
-                        }
-                    }
-                };
 
                 self.documentationCards = {
                     digitalReference: self.cards?.["digital reference to instrument"],
@@ -94,9 +61,6 @@ define([
                 self.descriptionCards = {
                     statement: self.cards?.['statement about instrument']
                 };
-                self.substanceCards = {
-                    dimension: self.cards?.['dimension of instrument']
-                }
             }
 
             self.locationData = ko.observable({

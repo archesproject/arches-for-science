@@ -59,28 +59,6 @@
                     }
                 }"></div>
             </div>
-            <!-- Existence Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/existence',
-                    params: {
-                        data: resource,
-                        cards: existenceCards,
-                        dataConfig: existenceDataConfig
-                    }
-                }"></div>
-            </div>
-            <!-- Substance Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/substance',
-                    params: {
-                        data: resource,
-                        cards: substanceCards
-
-                    }
-                }"></div>
-            </div>
            <!-- Actor Tab -->
            <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
                 <div data-bind="component: {
@@ -100,7 +78,7 @@
                 }"></div>
             </div>
             <!-- Parthood Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+            <div class="afs-report-page" data-bind="if: activeSection() === 'component'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
@@ -109,7 +87,7 @@
                 }"></div>
             </div>
             <!-- Sethood Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'sethood'">
+            <div class="afs-report-page" data-bind="if: activeSection() === 'instrument'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
