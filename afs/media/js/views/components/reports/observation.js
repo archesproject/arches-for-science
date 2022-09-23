@@ -17,11 +17,10 @@ define([
                 {id: 'name', title: 'Names, Identifiers, Classification'},
                 {id: 'description', title: 'Description'},
                 {id: 'substance', title: 'Dates'},
-                {id: 'parameters', title: 'Parameters & Outcomes'},
+                {id: 'data', title: 'Data'},
                 {id: 'parthood', title: 'Parent Project'},
                 {id: 'objects', title: 'Related Objects'},
                 {id: 'documentation', title: 'Documentation'},
-                {id: 'data', title: 'Data'},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -98,22 +97,22 @@ define([
                     ]
             });
 
-            self.parthoodData = ko.observable({
+            self.dataData = ko.observable({
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Parameters & Outcomes', 
                             data: [{
-                                key: 'parent event of observation', 
-                                value: self.getRawNodeValue(self.resource(), 'part of'), 
-                                card: self.cards?.['parent event of observation'],
+                                key: 'recorded value of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'recorded value'), 
+                                card: self.cards?.['recorded value of observation'],
                                 type: 'resource'
                             }]
                         }
                     ]
             });
 
-            self.parameterData = ko.observable({
+            self.descriptionData = ko.observable({
                 sections: 
                     [
                         {
@@ -132,11 +131,6 @@ define([
                                 key: 'object observed during observation', 
                                 value: self.getRawNodeValue(self.resource(), 'observed'), 
                                 card: self.cards?.['object observed during observation'],
-                                type: 'resource'
-                            },{
-                                key: 'recorded value of observation', 
-                                value: self.getRawNodeValue(self.resource(), 'recorded value'), 
-                                card: self.cards?.['recorded value of observation'],
                                 type: 'resource'
                             },{
                                 key: 'person carrying out observation', 

@@ -46,6 +46,12 @@
                         cards: descriptionCards,
                     }
                 }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: descriptionData,
+                    }
+                }"></div>
             </div>
             <!-- Documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
@@ -58,16 +64,7 @@
                     }
                 }"></div>
             </div>            
-            <!-- Location Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/default',
-                    params: {
-                        data: locationData,
-                    }
-                }"></div>
-            </div>
-            <!-- Parthood Tab -->
+            <!-- Parent Project Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
@@ -76,7 +73,7 @@
                     }
                 }"></div>
             </div>
-            <!-- Substance Tab -->
+            <!-- Dates Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/substance',
@@ -87,12 +84,12 @@
                     }
                 }"></div>
             </div>
-            <!-- Parameters & Outcomes Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'parameters'">
+            <!-- Data Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'data'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
-                        data: parameterData,
+                        data: dataData,
                     }
                 }"></div>
             </div>  
