@@ -42,20 +42,41 @@ define([
             self.documentationCards = {};
             self.summary = params.summary;
 
+            self.textualReferenceTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+
+            self.visible = {
+                textualReference: ko.observable(true),
+            }
+            
+            self.textualReference = ko.observableArray();
+            self.textualReferenceDisplay = ko.observable(true);
+            
+            const textualReferenceData = self.resource()['Textual Reference'];
+            if(textualReferenceData) {self.textualReference(textualReferenceData.map(x => {
+                const type = x['Textual Reference Type']['@display_value'];
+                const link = reportUtils.getResourceLink({resourceId: x['Textual Source']['resourceId']});
+                const source = x['Textual Source']['@display_value'];
+                const tileid = x?.['@tile_id'];
+                return {link, type, source, tileid}
+            }))};
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
                 self.cards = self.createCardDictionary(cards);
 
                 self.nameCards = {
-                    name: self.cards?.["name of instrument"],
-                    identifier: self.cards?.["identifier for instrument"],
-                    type: self.cards?.["type of instrument"]
+                    name: self.cards?.['name of instrument'],
+                    identifier: self.cards?.['identifier for instrument'],
+                    type: self.cards?.['type of instrument']
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.["digital reference to instrument"],
-                    textualReference: self.cards?.["textual reference to instrument"],
+                    digitalReference: self.cards?.['digital reference to instrument'],
+                    textualReference: self.cards?.['textual reference to instrument']
                 };
 
                 self.descriptionCards = {
