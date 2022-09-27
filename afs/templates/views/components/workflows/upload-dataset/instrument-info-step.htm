@@ -1,7 +1,7 @@
 {% load i18n %}
 <div style="height: 100%; padding: 10px 24px;">
     <div style="padding: 5px; margin-bottom: 15px;">
-        <div class="widget-input-label" style="margin-bottom: 5px;">Instrument*</div>
+        <div class="widget-input-label" style="margin-bottom: 5px;">{% trans "Instrument*" %}</div>
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
@@ -14,8 +14,20 @@
             }
         }"></div>
     </div>
+    <div style="padding: 5px;">
+        <div class="widget-input-label" style="margin-top: 10px;">{% trans "Observation Date" %}</div>
+        <div style="margin: -20px 0px 0px 0px;" data-bind="component: {
+            name: 'datepicker-widget',
+            params: {
+                node: {'config': {'dateFormat': 'YYYY-MM-DD'}},
+                renderContext: 'workflow', 
+                value: dateValue,
+                disabled: locked
+            }
+        }"></div>
+    </div>
     <div style="padding: 5px; margin-bottom: 15px;">
-        <div class="widget-input-label" style="margin-bottom: 5px;">Procedure Used</div>
+        <div class="widget-input-label" style="margin-bottom: 5px;">{% trans "Procedure Used" %}</div>
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
@@ -31,7 +43,7 @@
         }"></div>
     </div>
     <div style="padding: 5px;">
-        <div class="widget-input-label">Instrument Parameters</div>
+        <div class="widget-input-label">{% trans "Instrument Parameters" %}</div>
         <div style="margin-top: -20px;" data-bind="component: {
             name: 'rich-text-widget',
             params: {
@@ -41,10 +53,10 @@
             }
         }"></div>
     </div>
-    <div class="afs-experiment-name-block">
-        <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide experiment name' : 'Show experiment name'"></div>
+    <div style="padding-bottom: 50px;" class="afs-experiment-name-block">
+        <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())}, text: showName() ? '{% trans "Hide experiment name" %}' : '{% trans "Show experiment name" %}'"></div>
         <div data-bind="visible: showName">
-            <div class="widget-input-label">Observation Name</div>
+            <div class="widget-input-label">{% trans "Observation Name" %}</div>
             <div style="margin: -10px -5px;" data-bind="component: {
                 name: 'text-widget',
                 params: {
