@@ -513,7 +513,7 @@ define([
                 dataType: 'json',
             })
             .then(function(data){
-                const tile = data.result.physicalPartOfObjectTile;
+                const tile = data.result.parentPhysicalThing.physicalPartOfObjectTile;
 
                 self.builtTile = new TileViewModel({
                     tile: tile,
