@@ -60,7 +60,7 @@ define([
                 const link = reportUtils.getResourceLink({resourceId: x['Textual Source']['resourceId']});
                 const source = x['Textual Source']['@display_value'];
                 const tileid = x?.['@tile_id'];
-                return {link, type, source, tileid}
+                return {link, type, source, tileid};
             }))};
 
             if(params.report.cards){
