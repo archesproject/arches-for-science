@@ -181,23 +181,23 @@ class SaveAnalysisAreaView(SaveAnnotationView):
                     part_identifier_assignment_tile_id,
                 )
 
-            res = {
-                "nameTile": name_tile,
-                "typeTile": type_tile,
-                "memberOfTile": member_of_tile,
-                "partOfTile": part_of_tile,
-                "physicalPartOfObjectTile": physical_part_of_object_tile,
-            }
-            analysis_area_physical_thing_resource = Resource.objects.get(pk=analysis_area_physical_thing_resourceid)
-            analysis_area_physical_thing_resource.index()
-            parent_physical_thing_resource = Resource.objects.get(pk=parent_physical_thing_resourceid)
-            parent_physical_thing_resource.index()
-            return JSONResponse({"result": res})
-
         except Exception as e:
             logger.exception(e)
             response = {"result": e, "message": [_("Request Failed"), _("Unable to save")]}
             return JSONResponse(response, status=500)
+
+        res = {
+            "nameTile": name_tile,
+            "typeTile": type_tile,
+            "memberOfTile": member_of_tile,
+            "partOfTile": part_of_tile,
+            "physicalPartOfObjectTile": physical_part_of_object_tile,
+        }
+        analysis_area_physical_thing_resource = Resource.objects.get(pk=analysis_area_physical_thing_resourceid)
+        analysis_area_physical_thing_resource.index()
+        parent_physical_thing_resource = Resource.objects.get(pk=parent_physical_thing_resourceid)
+        parent_physical_thing_resource.index()
+        return JSONResponse({"result": res})
 
 
 class SaveSampleAreaView(SaveAnnotationView):
