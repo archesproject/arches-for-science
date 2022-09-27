@@ -226,7 +226,7 @@ class SaveSampleAreaView(SaveAnnotationView):
             try:
                 tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
                 for t in tiles:
-                    if tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
+                    if t.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                         tile = t
                 if tile is None:
                     tile = Tile.get_blank_tile_from_nodegroup_id(
@@ -238,9 +238,9 @@ class SaveSampleAreaView(SaveAnnotationView):
                     nodegroup_id=sampling_unit_nodegroupid, resourceid=sampling_activity_resourceid
                 )
 
-        tile.data[overall_object_sampled_nodeid] = get_related_resource_template(parent_physical_thing_resourceid)
-        tile.data[sampling_area_nodeid] = get_related_resource_template(sample_area_physical_thing_resourceid)
-        tile.data[sampling_area_sample_created_nodeid] = get_related_resource_template(sample_physical_thing_resourceid)
+        tile.data[overall_object_sampled_nodeid] = [get_related_resource_template(parent_physical_thing_resourceid)]
+        tile.data[sampling_area_nodeid] = [get_related_resource_template(sample_area_physical_thing_resourceid)]
+        tile.data[sampling_area_sample_created_nodeid] = [get_related_resource_template(sample_physical_thing_resourceid)]
         tile.data[sampling_area_visualization_nodeid] = sample_area_visualization
 
         tile.save(transaction_id=transactionid)
@@ -252,7 +252,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         statement_type_nodeid = "1952e470-b498-11e9-b261-a4d18cec433a"
         statement_content_nodeid = "1953016e-b498-11e9-9445-a4d18cec433a"
 
-        statement_type = {
+        statement_types = {
             "motivation": "7060892c-4d91-4ab3-b3de-a95e19931a61",
             "description": "9886efe9-c323-49d5-8d32-5c2a214e5630",
         }
@@ -262,9 +262,9 @@ class SaveSampleAreaView(SaveAnnotationView):
         else:
             tile = None
             try:
-                tiles = Tile.objects.filter(resourceinstance=resourceid, nodegroup=resourceid)
+                tiles = Tile.objects.filter(resourceinstance=resourceid, nodegroup=statement_nodegroupid)
                 for t in tiles:
-                    if statement_type[type] in t.data[statement_type_nodeid]:
+                    if statement_types[type] in t.data[statement_type_nodeid]:
                         tile = t
                 if tile is None:
                     tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=statement_nodegroupid, resourceid=resourceid)
@@ -273,7 +273,7 @@ class SaveSampleAreaView(SaveAnnotationView):
                 tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=statement_nodegroupid, resourceid=resourceid)
 
         tile.data[statement_content_nodeid] = statement
-        tile.data[statement_type_nodeid] = [statement_type[type]]
+        tile.data[statement_type_nodeid] = [statement_types[type]]
         tile.save()
 
         return tile
@@ -313,8 +313,8 @@ class SaveSampleAreaView(SaveAnnotationView):
         sampling_unit_tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
         if len(sampling_unit_tiles) > 0:
             for sampling_unit_tile in sampling_unit_tiles:
-                if sampling_unit_tile[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
-                    sample_physical_thing_resourceid = sampling_unit_tile[sampling_area_sample_created_nodeid][0]["resourceId"]
+                if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
+                    sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
         base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid]
         sample_name = "{} [Sample of {}]".format(base_name, parent_physical_thing_name)
@@ -388,43 +388,42 @@ class SaveSampleAreaView(SaveAnnotationView):
                     part_identifier_assignment_tile_data,
                     part_identifier_assignment_tile_id,
                 )
-
-            sample_area_physical_thing_resource = Resource.objects.get(pk=sample_area_physical_thing_resourceid)
-            sample_area_physical_thing_resource.index()
-            sample_physical_thing_resource = Resource.objects.get(pk=sample_physical_thing_resourceid)
-            sample_physical_thing_resource.index()
-            sampling_activity_resource = Resource.objects.get(pk=sampling_activity_resourceid)
-            sampling_activity_resource.index()
-            parent_physical_thing_resource = Resource.objects.get(pk=parent_physical_thing_resourceid)
-            parent_physical_thing_resource.index()
-
-            res = {
-                "sample": {
-                    "nameTile": sample_name_tile,
-                    "typeTile": sample_type_tile,
-                    "memberOfTile": sample_member_of_tile,
-                    "partOfTile": sample_part_of_tile,
-                    "removedFromTile": removed_from_tile,
-                },
-                "sampleArea": {
-                    "nameTile": sample_area_name_tile,
-                    "typeTile": sample_area_type_tile,
-                    "memberOfTile": sample_area_member_of_tile,
-                    "partOfTile": sample_area_part_of_tile,
-                },
-                "samplingActivity": {
-                    "samplingUnitTile": sampling_unit_tile,
-                    "samplingDescriptionTile": sample_description_tile,
-                    "samplingMotivationTile": sample_motivation_tile,
-                },
-                "parentPhysicalThing": {
-                    "physicalPartOfObjectTile": physical_part_of_object_tile,
-                },
-            }
-
-            return JSONResponse({"result": res})
-
         except Exception as e:
             logger.exception(e)
             response = {"result": e, "message": [_("Request Failed"), _("Unable to save")]}
             return JSONResponse(response, status=500)
+
+        sample_area_physical_thing_resource = Resource.objects.get(pk=sample_area_physical_thing_resourceid)
+        sample_area_physical_thing_resource.index()
+        sample_physical_thing_resource = Resource.objects.get(pk=sample_physical_thing_resourceid)
+        sample_physical_thing_resource.index()
+        sampling_activity_resource = Resource.objects.get(pk=sampling_activity_resourceid)
+        sampling_activity_resource.index()
+        parent_physical_thing_resource = Resource.objects.get(pk=parent_physical_thing_resourceid)
+        parent_physical_thing_resource.index()
+
+        res = {
+            "sample": {
+                "nameTile": sample_name_tile,
+                "typeTile": sample_type_tile,
+                "memberOfTile": sample_member_of_tile,
+                "partOfTile": sample_part_of_tile,
+                "removedFromTile": removed_from_tile,
+            },
+            "sampleArea": {
+                "nameTile": sample_area_name_tile,
+                "typeTile": sample_area_type_tile,
+                "memberOfTile": sample_area_member_of_tile,
+                "partOfTile": sample_area_part_of_tile,
+            },
+            "samplingActivity": {
+                "samplingUnitTile": sampling_unit_tile,
+                "samplingDescriptionTile": sample_description_tile,
+                "samplingMotivationTile": sample_motivation_tile,
+            },
+            "parentPhysicalThing": {
+                "physicalPartOfObjectTile": physical_part_of_object_tile,
+            },
+        }
+
+        return JSONResponse({"result": res})
