@@ -33,47 +33,66 @@
 
     <div class="iiif-image-tools upload-dataset-select-dataset-files">
         <!--ko if: annotations().length > 0-->
-        <label class="control-label">{% trans "Sampled Locations" %}</label>
-        <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
+        <div style="width:100%; display: flex; justify-content: center;">
+            <button class="btn btn-md btn-mint" data-bind="visible: !self.showDatasetDetails(), click: function(){self.showDatasetDetails(true)}">{% trans "Show Selected Dataset Details" %}</button>
+            <button class="btn btn-md btn-mint" data-bind="visible: self.showDatasetDetails, click: function(){self.showDatasetDetails(false)}">{% trans "Show Dataset List" %}</button>
+        </div>
+        <div style="margin-top:10px" data-bind="visible: !self.showDatasetDetails()">
+            <label class="control-label">{% trans "Sampled Locations" %}</label>
+            <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
+        </div>
         <div class="panel">
-            <div style="border-top: solid 1px#ddd; margin-top: 5px">
-            <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
-                <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
-                <div class="panel">
-                    <a role="button" data-toggle="collapse" data-parent="#parts-panel" aria-expanded="false" data-bind="click: function(){ $parent.selectedPart(part); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
-                        <div style="height: 35px; padding: 10px;" class="file-workbench-file" data-bind="click: function(){}, clickBubble: part.tileid != $parent.selectedPart().tileid, css: {staged: part.tileid === self.selectedPart().tileid }">
-                            <i class="fa" data-bind="css: { 'fa-angle-right': $parent.selectedPart().tileid != part.tileid, 'fa-angle-down': $parent.selectedPart().tileid == part.tileid }"></i> 
-                            <span class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname"></span>
+            <div style="margin-top: 10px">
+                <div data-bind="visible: !self.showDatasetDetails()">
+                    <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
+                        <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
+                        <div class="panel">
+                            <a role="button" data-parent="#parts-panel" aria-expanded="false" data-bind="click: function(){ $parent.showDatasetDetails(true); $parent.selectedPart(part); $parent.showEditDatasetName(false); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
+                                <div style="height: 35px; padding: 10px;" class="file-workbench-file" data-bind="click: function(){}, clickBubble: part.tileid != $parent.selectedPart().tileid, css: {staged: part.tileid === self.selectedPart().tileid }">
+                                    <span class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname"></span>
+                                </div>
+                            </a>
+                            
                         </div>
-                    </a>
-                    <div class="panel-collapse collapse" data-bind="attr: { id: part.tileid }, css: { in: $index() == 0}">
-                        <div class="dataset-name">
-                            <label class="control-label">{% trans "Dataset Name*" %}</label>
-                            <input type="text" class="form-control" placeholder="Dataset name" data-bind="enable: self.selectedPartHasCurrentObservation(), textInput: part.datasetName">
-                            <div>
-                                <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;" data-bind="textInput: part.calcDatasetName"></input>
+                        <!--/ko-->
+                    </div>
+                </div>
+
+                <div data-bind="visible: self.showDatasetDetails">
+                    <div class="panel-collapse collapse" data-bind="attr: { id: selectedPart().tileid }, css: { in: $index() == 0}">
+                        <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
+                        <div class="file-workbench-files" data-bind="foreach: {data: selectedPart().datasetFiles, as: 'file'}">
+                            <div class='file-workbench-file' data-bind="css: {staged: false}">
+                                <i class="fa" data-bind="
+                                    css: { 'fa-check': file.tileId, 'fa-trash': !file.tileId },
+                                    style: { color: file.tileId ? 'green' : 'black' }"></i>
+                                <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
                             </div>
                         </div>
-                        <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
-                        <div class="file-workbench-files" data-bind="foreach: {data: part.datasetFiles, as: 'file'}">
-                            <div class='file-workbench-file' data-bind="click: function(){ !file.tileId() ? self.removeFileFromPart(file): '' }, css: {staged: false}">
-                                <i class="fa" data-bind="
-                                    css: { 'fa-check': file.tileId(), 'fa-trash': !file.tileId() },
-                                    style: { color: file.tileId() ? 'green' : 'black' }"></i>
-                                <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name || file.upload?.filename"></span>
+                        <div class="dataset-name">
+                            <label class="control-label">{% trans "Dataset Name*" %}</label>
+                            <input type="text" class="form-control" placeholder="Dataset name" data-bind="visible: showEditDatasetName(), enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
+                            <div data-bind="click: function(){showEditDatasetName(true);}">
+                                <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;" data-bind="textInput: selectedPart().calcDatasetName"></input>
                             </div>
                         </div>
                     </div>
+
+                    <div class="dropzone-photo-upload" style="height: 80px;" data-bind="dropzone: dropzoneOptions">
+                        <div class="file-workbench-links">
+                            <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                                <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span><span>{% trans "to upload files" %}</span>
+                            </a>
+                        </div>
+                        <div style="min-height: 100%;">
+                            <div id="hidden-dz-previews" style="display:none"></div>
+                        </div>
+                    </div>
                 </div>
-                <!--/ko-->
-            </div>
             </div>
         </div>
         <!--/ko-->
     </div>
-
-
-
 
     <div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: -20px;" data-bind="if: self.selectedPartHasCurrentObservation()">
         <!--ko if: files().length > 0 && selectedPart() -->
@@ -86,29 +105,7 @@
         </div>
         <!--/ko-->
 
-        <div class="dropzone-photo-upload" style="height: 80px;" data-bind="dropzone: dropzoneOptions">
-            <div class="file-workbench-links">
-                <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
-                    <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span><span>{% trans "to upload files" %}</span>
-                </a>
-            </div>
-            <div style="min-height: 100%;">
-                <div id="hidden-dz-previews" style="display:none"></div>
-            </div>
-        </div>
-
     </div>
-</div>
-<div class="workbench-button-panel">
-    <button class="btn btn-success" data-bind="click: function(){$data.save()}, css: {disabled: !canBeSaved()}">
-        <i class="ion-android-cloud-done"></i> 
-        {% trans "Save" %}
-    </button>
-    <button class="btn btn-danger" data-bind="click: function(){$data.cancel()}, css: {disabled: !canBeSaved()}">
-        <i class="ion-android-cancel"></i>
-        {% trans "Cancel" %}
-    </button>
-    
 </div>
 
 
@@ -116,39 +113,3 @@
 <!--/ko-->
 {{ block.super }}
 {% endblock sidepanel %}
-
-{% block main_menu %}
-
-<div class="file-chart-upload-panel">
-    <div class="gallery-controls new-tile">
-        <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
-            <div class="file-select-window">
-                <div class="bord-top pad-ver file-select">
-                    <div class="" style="padding: 5px">
-                        <h2>{% trans 'Upload Files' %}</h2>
-                        <h4>{% trans 'Drag & Drop your files onto this panel to upload' %}</h4>
-                    </div>
-                    <button type="button" class="btn btn-lg btn-file-select upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
-                        <i class="fa fa-file"></i>
-                        <span>{% trans "Select Files" %}</span>
-                    </button>
-                    <br>
-                    <div style="padding: 10px">{% trans "Adding files to this record is " %}
-                        <span><strong>{% trans "optional." %}</strong></span>
-                        <br>
-                        {% trans "You may upload as many files as you wish; check with the site admin on the maximum file size." %}
-                    </div>
-
-                </div>
-                <div class="file-upload-footer">
-                    <span data-bind="text: ('The following file formats may be uploaded: csv')"></span>
-                </div>
-            </div>
-
-        </div>
-        <div style="min-height: 100%;">
-            <div id="hidden-dz-previews" style="display:none"></div>
-        </div>
-    </div>
-</div>
-{% endblock main_menu %}
