@@ -10,6 +10,8 @@ from arches.app.utils.betterJSONSerializer import JSONDeserializer
 from arches.app.utils.response import JSONResponse
 
 logger = logging.getLogger(__name__)
+
+
 def get_related_resource_template(resourceid):
     return {
         "resourceId": resourceid,
@@ -107,9 +109,9 @@ class SaveAnnotationView(View):
     def save_physical_thing_type(self, resourceid, transactionid, type):
         physical_thing_type_nodeid = "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"
         physical_thing_types = {
-            'analysis_area': ["31d97bdd-f10f-4a26-958c-69cb5ab69af1"],
-            'sample_area': ['7375a6fb-0bfb-4bcf-81a3-6180cdd26123'],
-            'sample': ['77d8cf19-ce9c-4e0a-bde1-9148d870e11c']
+            "analysis_area": ["31d97bdd-f10f-4a26-958c-69cb5ab69af1"],
+            "sample_area": ["7375a6fb-0bfb-4bcf-81a3-6180cdd26123"],
+            "sample": ["77d8cf19-ce9c-4e0a-bde1-9148d870e11c"],
         }
         physical_thing_type = physical_thing_types[type]
         tile = self.save_node(resourceid, physical_thing_type_nodeid, physical_thing_type_nodeid, transactionid, physical_thing_type)
@@ -164,7 +166,7 @@ class SaveAnalysisAreaView(SaveAnnotationView):
                     analysis_area_physical_thing_resourceid = self.create_physical_thing_resource(transaction_id)
 
                 name_tile = self.save_physical_thing_name(analysis_area_physical_thing_resourceid, transaction_id, name)
-                type_tile = self.save_physical_thing_type(analysis_area_physical_thing_resourceid, transaction_id, 'analysis_area')
+                type_tile = self.save_physical_thing_type(analysis_area_physical_thing_resourceid, transaction_id, "analysis_area")
                 member_of_tile = self.save_physical_thing_related_collection(
                     analysis_area_physical_thing_resourceid, transaction_id, collection_resourceid
                 )
@@ -199,20 +201,21 @@ class SaveAnalysisAreaView(SaveAnnotationView):
 
 
 class SaveSampleAreaView(SaveAnnotationView):
-    def save_sampling_unit_tile(self,
-            sampling_activity_resourceid,
-            parent_physical_thing_resourceid,
-            sample_area_physical_thing_resourceid,
-            sample_physical_thing_resourceid,
-            part_identifier_assignment_tile_data,
-            transactionid,
-            tileid=None,
-        ):
-        sampling_unit_nodegroupid = 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb'
-        overall_object_sampled_nodeid = 'b3e171aa-1d9d-11eb-a29f-024e0d439fdb'
-        sampling_area_nodeid = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb'
-        sampling_area_sample_created_nodeid = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb'
-        sampling_area_visualization_nodeid = 'b3e171ae-1d9d-11eb-a29f-024e0d439fdb'
+    def save_sampling_unit_tile(
+        self,
+        sampling_activity_resourceid,
+        parent_physical_thing_resourceid,
+        sample_area_physical_thing_resourceid,
+        sample_physical_thing_resourceid,
+        part_identifier_assignment_tile_data,
+        transactionid,
+        tileid=None,
+    ):
+        sampling_unit_nodegroupid = "b3e171a7-1d9d-11eb-a29f-024e0d439fdb"
+        overall_object_sampled_nodeid = "b3e171aa-1d9d-11eb-a29f-024e0d439fdb"
+        sampling_area_nodeid = "b3e171ac-1d9d-11eb-a29f-024e0d439fdb"
+        sampling_area_sample_created_nodeid = "b3e171ab-1d9d-11eb-a29f-024e0d439fdb"
+        sampling_area_visualization_nodeid = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb"
         part_identifier_assignment_polygon_identifier_nodeid = "97c30c42-8594-11ea-97eb-acde48001122"
         sample_area_visualization = part_identifier_assignment_tile_data[part_identifier_assignment_polygon_identifier_nodeid]
 
@@ -223,14 +226,17 @@ class SaveSampleAreaView(SaveAnnotationView):
             try:
                 tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
                 for t in tiles:
-                    if tile.data[sampling_area_nodeid][0]['resourceId'] == sample_area_physical_thing_resourceid:
+                    if tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                         tile = t
                 if tile is None:
-                    tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=sampling_unit_nodegroupid, resourceid=sampling_activity_resourceid)
+                    tile = Tile.get_blank_tile_from_nodegroup_id(
+                        nodegroup_id=sampling_unit_nodegroupid, resourceid=sampling_activity_resourceid
+                    )
 
             except ObjectDoesNotExist as e:
-                tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=sampling_unit_nodegroupid, resourceid=sampling_activity_resourceid)
-
+                tile = Tile.get_blank_tile_from_nodegroup_id(
+                    nodegroup_id=sampling_unit_nodegroupid, resourceid=sampling_activity_resourceid
+                )
 
         tile[overall_object_sampled_nodeid] = get_related_resource_template(parent_physical_thing_resourceid)
         tile[sampling_area_nodeid] = get_related_resource_template(sample_area_physical_thing_resourceid)
@@ -240,11 +246,11 @@ class SaveSampleAreaView(SaveAnnotationView):
         tile.save(transaction_id=transactionid)
 
         return tile
-        
+
     def save_sample_statement_tile(self, resourceid, statement, type, tileid=None):
         statement_nodegroupid = "1952bb0a-b498-11e9-a679-a4d18cec433a"
-        statement_type_nodeid = '1952e470-b498-11e9-b261-a4d18cec433a'
-        statement_content_nodeid = '1953016e-b498-11e9-9445-a4d18cec433a'
+        statement_type_nodeid = "1952e470-b498-11e9-b261-a4d18cec433a"
+        statement_content_nodeid = "1953016e-b498-11e9-9445-a4d18cec433a"
 
         statement_type = {
             "motivation": "7060892c-4d91-4ab3-b3de-a95e19931a61",
@@ -272,20 +278,21 @@ class SaveSampleAreaView(SaveAnnotationView):
 
         return tile
 
-
     def save_removed_from_tile(self, sample_resourceid, removed_from_resourceids, transactionid):
-        removed_from_nodeid = '38814345-d2bd-11e9-b9d6-a4d18cec433a'
-        removal_from_object_nodegroupid = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a" 
+        removed_from_nodeid = "38814345-d2bd-11e9-b9d6-a4d18cec433a"
+        removal_from_object_nodegroupid = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a"
         removed_from_related_list = [get_related_resource_template(resourceid) for resourceid in removed_from_resourceids]
-        tile = self.save_node(sample_resourceid, removal_from_object_nodegroupid, removed_from_nodeid, transactionid, removed_from_related_list)
+        tile = self.save_node(
+            sample_resourceid, removal_from_object_nodegroupid, removed_from_nodeid, transactionid, removed_from_related_list
+        )
         tile.save(transaction_id=transactionid)
 
     def post(self, request):
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         part_identifier_assignment_label_nodeid = "3e541cc6-859b-11ea-97eb-acde48001122"
         part_identifier_assignment_polygon_identifier_nodeid = "97c30c42-8594-11ea-97eb-acde48001122"
-        sampling_area_nodeid = 'b3e171ac-1d9d-11eb-a29f-024e0d439fdb'
-        sampling_area_sample_created_nodeid = 'b3e171ab-1d9d-11eb-a29f-024e0d439fdb'
+        sampling_area_nodeid = "b3e171ac-1d9d-11eb-a29f-024e0d439fdb"
+        sampling_area_sample_created_nodeid = "b3e171ab-1d9d-11eb-a29f-024e0d439fdb"
         sampling_unit_nodegroupid = "b3e171a7-1d9d-11eb-a29f-024e0d439fdb"
 
         parent_physical_thing_resourceid = request.POST.get("parentPhysicalThingResourceid")
@@ -297,7 +304,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         transaction_id = request.POST.get("transactionId")
         part_identifier_assignment_tile_data = JSONDeserializer().deserialize(request.POST.get("partIdentifierAssignmentTileData"))
         part_identifier_assignment_tile_id = request.POST.get("partIdentifierAssignmentTileId") or None
-        
+
         sample_area_physical_thing_resourceid = None
         if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
             sample_area_physical_thing_resourceid = part_identifier_assignment_tile_data[physical_part_of_object_nodeid][0]["resourceId"]
@@ -310,17 +317,17 @@ class SaveSampleAreaView(SaveAnnotationView):
                     sample_physical_thing_resourceid = sampling_unit_tile[sampling_area_sample_created_nodeid][0]["resourceId"]
 
         base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid]
-        sample_name = "{} [Sample of {}]".format(base_name, parent_physical_thing_name) 
-        sample_area_name = "{} [Sample Area of {}]".format(base_name, parent_physical_thing_name) 
+        sample_name = "{} [Sample of {}]".format(base_name, parent_physical_thing_name)
+        sample_area_name = "{} [Sample Area of {}]".format(base_name, parent_physical_thing_name)
 
-        print('parent_physical_thing_resourceid',parent_physical_thing_resourceid)
-        print('collection_resourceid',collection_resourceid)
-        print('transaction_id',transaction_id)
-        print('part_identifier_assignment_tile_data',part_identifier_assignment_tile_data)
-        print('part_identifier_assignment_tile_id',part_identifier_assignment_tile_id)
-        print('physical_part_of_object_nodeid',physical_part_of_object_nodeid)
-        print('sample_area_physical_thing_resourceid',sample_area_physical_thing_resourceid)
-        print('base_name',base_name)
+        print("parent_physical_thing_resourceid", parent_physical_thing_resourceid)
+        print("collection_resourceid", collection_resourceid)
+        print("transaction_id", transaction_id)
+        print("part_identifier_assignment_tile_data", part_identifier_assignment_tile_data)
+        print("part_identifier_assignment_tile_id", part_identifier_assignment_tile_id)
+        print("physical_part_of_object_nodeid", physical_part_of_object_nodeid)
+        print("sample_area_physical_thing_resourceid", sample_area_physical_thing_resourceid)
+        print("base_name", base_name)
 
         try:
             with transaction.atomic():
@@ -328,7 +335,9 @@ class SaveSampleAreaView(SaveAnnotationView):
                 if sample_area_physical_thing_resourceid is None:
                     sample_area_physical_thing_resourceid = self.create_physical_thing_resource(transaction_id)
 
-                sample_area_name_tile = self.save_physical_thing_name(sample_area_physical_thing_resourceid, transaction_id, sample_area_name)
+                sample_area_name_tile = self.save_physical_thing_name(
+                    sample_area_physical_thing_resourceid, transaction_id, sample_area_name
+                )
                 sample_area_type_tile = self.save_physical_thing_type(sample_area_physical_thing_resourceid, transaction_id, "sample_area")
                 sample_area_member_of_tile = self.save_physical_thing_related_collection(
                     sample_area_physical_thing_resourceid, transaction_id, collection_resourceid
@@ -366,12 +375,10 @@ class SaveSampleAreaView(SaveAnnotationView):
                 )
 
                 sample_description_tile = self.save_sample_statement_tile(
-                    sample_physical_thing_resourceid, sample_description, 'description'
+                    sample_physical_thing_resourceid, sample_description, "description"
                 )
 
-                sample_motivation_tile = self.save_sample_statement_tile(
-                    sample_physical_thing_resourceid, sample_motivation, 'motivation'
-                )
+                sample_motivation_tile = self.save_sample_statement_tile(sample_physical_thing_resourceid, sample_motivation, "motivation")
 
                 # saving the parent physical thing area resource and tiles
                 physical_part_of_object_tile = self.save_parent_physical_thing_part_of_tile(
@@ -412,7 +419,7 @@ class SaveSampleAreaView(SaveAnnotationView):
                 },
                 "parentPhysicalThing": {
                     "physicalPartOfObjectTile": physical_part_of_object_tile,
-                }
+                },
             }
 
             return JSONResponse({"result": res})
