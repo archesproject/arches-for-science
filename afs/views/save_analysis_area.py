@@ -238,10 +238,10 @@ class SaveSampleAreaView(SaveAnnotationView):
                     nodegroup_id=sampling_unit_nodegroupid, resourceid=sampling_activity_resourceid
                 )
 
-        tile[overall_object_sampled_nodeid] = get_related_resource_template(parent_physical_thing_resourceid)
-        tile[sampling_area_nodeid] = get_related_resource_template(sample_area_physical_thing_resourceid)
-        tile[sampling_area_sample_created_nodeid] = get_related_resource_template(sample_physical_thing_resourceid)
-        tile[sampling_area_visualization_nodeid] = sample_area_visualization
+        tile.data[overall_object_sampled_nodeid] = get_related_resource_template(parent_physical_thing_resourceid)
+        tile.data[sampling_area_nodeid] = get_related_resource_template(sample_area_physical_thing_resourceid)
+        tile.data[sampling_area_sample_created_nodeid] = get_related_resource_template(sample_physical_thing_resourceid)
+        tile.data[sampling_area_visualization_nodeid] = sample_area_visualization
 
         tile.save(transaction_id=transactionid)
 
