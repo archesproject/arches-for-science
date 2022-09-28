@@ -514,6 +514,22 @@
     width: 100%;
 }
 
+.iiif-card-feature-edit {
+    padding: 5px;
+}
+
+.iiif-card-feature-tool {
+    width:  25px;
+}
+
+.style-tools-panel .form-group {
+    margin-bottom: 5px;
+}
+
+.style-tools-panel .form-group label {
+    padding-right: 5px;
+}
+
 .analysis-areas-workflow-regions-step .iiif-gallery-sequence-label,
 .upload-dataset-step-workflow-component-based-step .iiif-gallery-sequence-label {
     display: none;
@@ -528,10 +544,11 @@
 }
 
 .analysis-areas-workflow-regions-step .dataset-table tr {
-    height: 28px;
+    height: 32px;
     display: flex;
     align-items: center;
     padding-left: 6px;
+    border-bottom: 1px solid #D3E5F4;
 }
 
 .analysis-areas-workflow-regions-step .row.widget-wrapper {
@@ -648,6 +665,22 @@
     padding-bottom: 8px;
     padding-left: 28px;
     margin-top: -8px;
+}
+
+.afs-image-service-list-item input,
+.afs-image-service-list-item label {
+    margin: 0px 5px 0px 0px;
+    cursor: pointer;
+}
+
+.afs-image-service-list-item .iiif-gallery-canvas-thumbnail {
+    margin-left: 10px;
+}
+
+.afs-image-service-list-item {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
 }
 
 .afs-workflow-required-tag {
@@ -852,9 +885,9 @@
 }
 
 .afs-saving-message {
-    font-size: 20px;
-    color: #eee;
-    text-shadow: 2px 2px 4px #000;
+    font-size: 24px;
+    color: #454545;
+    text-shadow: 2px 2px 3px #eee;
     font-weight: 600;
     top: 25%;
     left: 25%;
@@ -864,4 +897,12 @@
     text-align: center;
     position: absolute;
     z-index: 100000001;
+}
+
+.afs-sample-location-form-widgets {
+    transition: opacity 1s;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-left: 5px;
+    opacity: 0;
 }
