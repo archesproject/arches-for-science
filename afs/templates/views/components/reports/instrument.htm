@@ -59,8 +59,8 @@
                 }"></div>
                 <div class="afs-report-section">
                     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.textualReference)}, css: {'fa-angle-double-right': visible.textualReference(), 'fa-angle-double-up': !visible.textualReference()}" class="fa toggle"></i> {% trans "Textual Reference" %}</h2>
-                    <span data-bind="if: cards['textual reference to instrument'] && (!textualReference().length || cards['textual reference to instrument'].cardinality == 'n')">
-                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['textual reference to instrument'])}"><i class="fa fa-mail-reply"></i> {% trans "Add Textual Reference" %}</a>
+                    <span data-bind="if: textualReferenceCards && (!textualReference().length || textualReferenceCards.cardinality == 'n')">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(textualReferenceCards)}"><i class="fa fa-mail-reply"></i> {% trans "Add Textual Reference" %}</a>
                     </span>
                 
                     <!-- Collapsible content -->
@@ -87,11 +87,11 @@
                                                 <td data-bind="text: type"></td>
                                                 <td><a class="afs-block-value-url" data-bind="text: source, attr: {href: link}"></a></td>
                                                 <td class="afs-table-control">
-                                                    <div data-bind="if: $parent.cards && $parent.cards['textual reference to instrument']">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['textual reference to instrument'])}">
+                                                    <div data-bind="if: $parent.cards && $parent.textualReferenceCards">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.textualReferenceCards)}">
                                                             <i class="fa fa-mail-reply"></i>
                                                         </a>
-                                                        <a data-bind="click: $parent.deleteTile.bind($data, tileid, $parent.cards['textual reference to instrument'])">
+                                                        <a data-bind="click: $parent.deleteTile.bind($data, tileid, $parent.textualReferenceCards)">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </div>
@@ -125,7 +125,7 @@
                     }
                 }"></div>
             </div>
-            <!-- Parthood Tab -->
+            <!-- Parent Instrument Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'component'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
@@ -134,7 +134,7 @@
                     }
                 }"></div>
             </div>
-            <!-- Sethood Tab -->
+            <!-- Instrument Configuration Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'instrument'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',

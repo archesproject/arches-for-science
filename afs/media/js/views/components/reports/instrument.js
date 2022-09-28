@@ -40,6 +40,7 @@ define([
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
+            self.textualReferenceCards = {};
             self.summary = params.summary;
 
             self.textualReferenceTableConfig = {
@@ -55,11 +56,12 @@ define([
             self.textualReferenceDisplay = ko.observable(true);
             
             const textualReferenceData = self.resource()['Textual Reference'];
+            
             if(textualReferenceData) {self.textualReference(textualReferenceData.map(x => {
-                const type = x['Textual Reference Type']['@display_value'];
-                const link = reportUtils.getResourceLink({resourceId: x['Textual Source']['resourceId']});
-                const source = x['Textual Source']['@display_value'];
-                const tileid = x?.['@tile_id'];
+                const type = self.getNodeValue(x, "textual reference type");
+                const source = self.getNodeValue(x, "textual source");
+                const link = self.getResourceLink(self.getRawNodeValue(x, "textual source"));
+                const tileid = self.getTileId(x);
                 return {link, type, source, tileid};
             }))};
 
@@ -75,9 +77,10 @@ define([
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.['digital reference to instrument'],
-                    textualReference: self.cards?.['textual reference to instrument']
+                    digitalReference: self.cards?.['digital reference to instrument']
                 };
+
+                self.textualReferenceCards = self.cards?.['textual reference to instrument'];
 
                 self.descriptionCards = {
                     statement: self.cards?.['statement about instrument']
@@ -103,7 +106,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Parthood", 
+                            title: "Parent Instrument", 
                             data: [{
                                 key: 'parent instrument', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -134,7 +137,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Sethood", 
+                            title: "Instrument Configuration", 
                             data: [{
                                 key: 'Member of Set', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
