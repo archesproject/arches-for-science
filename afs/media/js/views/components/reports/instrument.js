@@ -57,13 +57,15 @@ define([
             
             const textualReferenceData = self.resource()['Textual Reference'];
             
-            if(textualReferenceData) {self.textualReference(textualReferenceData.map(x => {
-                const type = self.getNodeValue(x, "textual reference type");
-                const source = self.getNodeValue(x, "textual source");
-                const link = self.getResourceLink(self.getRawNodeValue(x, "textual source"));
-                const tileid = self.getTileId(x);
-                return {link, type, source, tileid};
-            }))};
+            if(textualReferenceData) {
+                self.textualReference(textualReferenceData.map(x => {
+                    const type = self.getNodeValue(x, "textual reference type");
+                    const source = self.getNodeValue(x, "textual source");
+                    const link = self.getResourceLink(self.getRawNodeValue(x, "textual source"));
+                    const tileid = self.getTileId(x);
+                    return {link, type, source, tileid};
+                }));
+            };
 
             if(params.report.cards){
                 const cards = params.report.cards;
