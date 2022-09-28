@@ -534,8 +534,10 @@ define([
                 });
 
                 self.selectedSampleLocationInstance(self.builtTile);
+                self.selectedSampleLocationInstance().samplingActivityResourceId = ko.observable(self.samplingActivityResourceId);
 
-                updateAnnotations().then(function(_physicalThingAnnotationNode) {
+                updateAnnotations().then(async function(_physicalThingAnnotationNode) {
+                    const samplingActivitySamplingUnitCard = await self.fetchCardFromResourceId(self.selectedSampleRelatedSamplingActivity(), samplingUnitNodegroupId);
                     self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
                     
                     self.updateSampleLocationInstances();
@@ -545,7 +547,7 @@ define([
                     params.dirty(true);
                     params.form.complete(true);
                     let mappedInstances = self.sampleLocationInstances().map((instance) => { return { "data": instance.data }});
-                    params.form.savedData(mappedInstances);                                                                            
+                    params.form.savedData(mappedInstances);
                     params.form.value(params.form.savedData());
                     self.drawFeatures([]);
                 });
