@@ -9,8 +9,6 @@ define([
     'views/components/reports/scenes/name', 
     'views/components/reports/scenes/description', 
     'views/components/reports/scenes/documentation', 
-    'views/components/reports/scenes/existence', 
-    'views/components/reports/scenes/substance',  
     'views/components/reports/scenes/json', 
     'views/components/reports/scenes/default' 
 ], 
@@ -21,14 +19,12 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names and Classifications'}, 
-                {'id': 'existence', 'title': 'Existence'},
-                {'id': 'substance', 'title': 'Substance'},
+                {'id': 'name', 'title': 'Names, Identifiers, Classification'},
+                {'id': 'description', 'title': 'Description'},
                 {'id': 'actor-relations', 'title': 'Actor Relations'},
                 {'id': 'location', 'title': 'Location'},
-                {'id': 'parthood', 'title': 'Parthood'},
-                {'id': 'sethood', 'title': 'Sethood'},
-                {'id': 'description', 'title': 'Description'},
+                {'id': 'component', 'title': 'Components'},
+                {'id': 'instrument', 'title': 'Instrument Configuration'},
                 {'id': 'documentation', 'title': 'Documentation'},
                 {'id': 'json', 'title': 'JSON'},
             ];
@@ -40,30 +36,36 @@ define([
             self.documentationDataConfig = {
                 'subjectOf': undefined, 
             };
-            self.existenceDataConfig = {
-                'production': {
-                    graph: 'production',
-                    metadata: [{
-                        key: 'production event type',
-                        path: 'production_type',
-                        type: 'resource'
-                    },{
-                        key: 'producer',
-                        path: 'production_carried out by',
-                        type: 'resource'
-                    },{
-                        key: 'production event location',
-                        path: 'production_location',
-                        type: 'resource'
-                    }]
-                },
-            };
+            
             self.nameCards = {};
             self.descriptionCards = {}
             self.documentationCards = {};
-            self.existenceCards = {};
-            self.substanceCards = {};
+            self.textualReferenceCards = {};
             self.summary = params.summary;
+
+            self.textualReferenceTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+
+            self.visible = {
+                textualReference: ko.observable(true),
+            }
+            
+            self.textualReference = ko.observableArray();
+            self.textualReferenceDisplay = ko.observable(true);
+            
+            const textualReferenceData = self.resource()['Textual Reference'];
+            
+            if(textualReferenceData) {
+                self.textualReference(textualReferenceData.map(x => {
+                    const type = self.getNodeValue(x, "textual reference type");
+                    const source = self.getNodeValue(x, "textual source");
+                    const link = self.getResourceLink(self.getRawNodeValue(x, "textual source"));
+                    const tileid = self.getTileId(x);
+                    return {link, type, source, tileid};
+                }));
+            };
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -71,32 +73,20 @@ define([
                 self.cards = self.createCardDictionary(cards);
 
                 self.nameCards = {
-                    name: self.cards?.["name of instrument"],
-                    identifier: self.cards?.["identifier for instrument"],
-                    type: self.cards?.["type of instrument"]
-                };
-                self.existenceCards = {
-                    production: {
-                        card: self.cards?.["production event of instrument"],
-                        subCards: {
-                            name: 'name for production event',
-                            identifier: 'identifier for production event',
-                            timespan: 'timespan of production event',
-                            statement: 'statement about production event',
-                        }
-                    }
+                    name: self.cards?.['name of instrument'],
+                    identifier: self.cards?.['identifier for instrument'],
+                    type: self.cards?.['type of instrument']
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.["digital reference to instrument"],
+                    digitalReference: self.cards?.['digital reference to instrument']
                 };
+
+                self.textualReferenceCards = self.cards?.['textual reference to instrument'];
 
                 self.descriptionCards = {
                     statement: self.cards?.['statement about instrument']
                 };
-                self.substanceCards = {
-                    dimension: self.cards?.['dimension of instrument']
-                }
             }
 
             self.locationData = ko.observable({
@@ -118,7 +108,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Parthood", 
+                            title: "Parent Instrument", 
                             data: [{
                                 key: 'parent instrument', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -149,7 +139,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Sethood", 
+                            title: "Instrument Configuration", 
                             data: [{
                                 key: 'Member of Set', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 

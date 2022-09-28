@@ -40,12 +40,13 @@ define([
             return $.ajax({
                 type: "DELETE",
                 url: arches.urls.tile,
-                data: JSON.stringify(tile.getData())
-            }).success(() => {
-                const tiles = card.tiles();
-                const tileIndex = tiles.indexOf(tile);
-                tiles.splice(tileIndex, 1);
-                card.tiles(tiles);
+                data: JSON.stringify(tile.getData()),
+                success: () => {
+                    const tiles = card.tiles();
+                    const tileIndex = tiles.indexOf(tile);
+                    tiles.splice(tileIndex, 1);
+                    card.tiles(tiles);
+                }
             });
         }
         throw Error("Couldn't delete; tile was not found.")
