@@ -41,6 +41,38 @@ define([
             self.documentationCards = {};
             self.summary = params.summary;
 
+            self.childProjectTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+
+            self.collectionOfChildProjects = ko.observableArray();
+            self.visible = {
+                childProjects: ko.observable(true),
+            };
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const loadRelatedResources = async() => {
+                const result = await reportUtils.getRelatedResources(resourceId);
+                const relatedResources = result?.related_resources;
+                const relationships = result?.resource_relationships;
+
+                const relatedProjects = relationships.filter(relationship => 
+                    relationship?.resourceinstancefrom_graphid === relationship?.resourceinstanceto_graphid).map(
+                        relatedProject => relatedProject.resourceinstanceidfrom);
+                    
+                self.collectionOfChildProjects(relatedResources.filter(relatedResource => 
+                    relatedProjects.includes(relatedResource.resourceinstanceid)));
+
+                self.collectionOfChildProjects().map(child => child.link = reportUtils.getResourceLink({resourceId: child.resourceinstanceid}));
+                self.collectionOfChildProjects().map(child => { 
+                    child.displaydescription = reportUtils.stripTags(child.displaydescription)
+                    return child
+                });
+            };
+
+            loadRelatedResources();
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 

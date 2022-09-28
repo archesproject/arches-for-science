@@ -177,6 +177,16 @@
     font-weight: 800;
 }
 
+.wf-multi-tile-card-info-details {
+    max-width: calc(100%);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.wf-multi-tile-card-info-details dd {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
 .model-summary-report {
     background: #fff;
@@ -220,6 +230,13 @@
     color: #888;
     margin-bottom: 10px;
     line-height: 1.4;
+}
+
+.object-search-step .summary-report-description {
+    max-width: 75vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .summary-report-manifests {
@@ -881,6 +898,12 @@
     position: absolute;
     z-index: 100000001;
 }
+
+.afs-report-page .display-description {
+    max-width: 40vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 .afs-sample-location-form-widgets {
     transition: opacity 1s;
