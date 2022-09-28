@@ -73,6 +73,54 @@
                     }
                 }"></div>
             </div>
+            <!-- Related Objects Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'objects'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedObjects)}, css: {'fa-angle-double-right': visible.relatedObjects(), 'fa-angle-double-up': !visible.relatedObjects()}" class="fa toggle"></i> {% trans "Related Objects" %}</h2>
+                    <span data-bind="if: relatedObjectsCards && (!collectionOfRelatedObjects().length || relatedObjectsCards.cardinality == 'n')">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(relatedObjectsCards)}"><i class="fa fa-mail-reply"></i> {% trans "Add Related Object" %}</a>
+                    </span>
+                    
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.relatedObjects" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfRelatedObjects().length -->
+                        <div class="afs-nodata-note">No objects related to this observation</div>
+                        <!-- /ko -->
+
+                        <!-- ko if: collectionOfRelatedObjects().length -->
+                        <div class="afs-report-subsection" >
+                            <div>
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Object" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfRelatedObjects, dataTableOptions: relatedObjectsTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
             <!-- Dates Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
                 <div data-bind="component: {

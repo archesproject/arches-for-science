@@ -42,7 +42,34 @@ define([
             self.descriptionCards = {};
             self.documentationCards = {};
             self.substanceCards = {};
+            self.relatedObjectsCards = {};
             self.summary = params.summary;
+
+            self.relatedObjectsTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+
+            self.collectionOfRelatedObjects = ko.observableArray();
+            self.visible = {
+                relatedObjects: ko.observable(true),
+            };
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const loadRelatedResources = async() => {
+                const result = await reportUtils.getRelatedResources(resourceId);
+                const physicalThingGraphID = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+                const relatedPhysicalThings = result?.related_resources.filter(resource => 
+                    resource?.graph_id === physicalThingGraphID);
+                
+                self.collectionOfRelatedObjects(relatedPhysicalThings.map(element => {
+                    element.link = reportUtils.getResourceLink({resourceId: element.resourceinstanceid}),
+                    element.displaydescription = reportUtils.stripTags(element.displaydescription)
+                    return element
+                }));
+            };
+
+            loadRelatedResources();
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -62,6 +89,9 @@ define([
                 self.documentationCards = {
                     digitalReference: self.cards?.['digital reference to observation'],
                 };
+
+                self.relatedObjectsCards = self.cards?.['object observed during observation'];
+
                 self.substanceCards = {
                     timespan: self.cards?.['timespan of observation'],
                 };
@@ -86,7 +116,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Parent Event',
                             data: [{
                                 key: 'parent event of observation', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -101,7 +131,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parameters & Outcomes', 
+                            title: 'Recorded Value',
                             data: [{
                                 key: 'recorded value of observation', 
                                 value: self.getRawNodeValue(self.resource(), 'recorded value'), 
