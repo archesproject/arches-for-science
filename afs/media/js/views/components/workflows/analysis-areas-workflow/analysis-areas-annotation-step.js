@@ -405,6 +405,7 @@ define([
                 
                     self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
                     self.savingTile(false);
+                    params.pageVm.alert("");
                     self.drawFeatures([]);
                     let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
                     params.form.savedData({
