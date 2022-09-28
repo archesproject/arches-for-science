@@ -5,12 +5,13 @@ define([
     'views/components/workflows/stepUtils',
     'knockout',
     'knockout-mapping',
+    'geojson-extent',
     'utils/resource',
     'models/graph',
     'viewmodels/card',
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
-], function(_, $, arches, StepUtils, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -167,7 +168,7 @@ define([
 
             let subscription = self.sampleLocationInstances.subscribe(function(){
                 if (self.sampleLocationInstances().length > 0) {
-                    self.showSampleList(true);
+                    self.sampleListShowing(true);
                 }
                 subscription.dispose();
             });
@@ -215,6 +216,16 @@ define([
                                     
                                     if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid === feature.feature.properties.tileId) {
                                         feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                                        if (feature.feature.geometry.type === 'Point') {
+                                            var coords = feature.feature.geometry.coordinates;
+                                            self.map().panTo([coords[1], coords[0]]);
+                                        } else {
+                                            var extent = geojsonExtent(feature.feature);
+                                            self.map().fitBounds([
+                                                [extent[1], extent[0]],
+                                                [extent[3], extent[2]]
+                                            ]);
+                                        }
                                     } else {
                                         feature.setStyle({color: defaultColor, fillColor: defaultColor});
                                     }
@@ -314,8 +325,6 @@ define([
             self.motivationForSamplingWidgetValue(null);
             self.previouslySavedMotivationForSamplingWidgetValue(null);
 
-            self.sampleListShowing(false);
-
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
@@ -403,6 +412,11 @@ define([
                     });
                 }
             }
+        };
+
+        this.editSampleLocationInstance = function(sampleLocationInstance){
+            self.selectSampleLocationInstance(sampleLocationInstance);
+            self.sampleListShowing(false);
         };
 
         this.resetDescriptions = function(){
@@ -864,7 +878,7 @@ define([
                                                                                     updateAnnotations().then(function(_physicalThingAnnotationNode) {
                                                                                         self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
                                                                                         self.updateSampleLocationInstances();
-                                                                                        self.showSampleList(true);
+                                                                                        self.sampleListShowing(true);
                                                                                         self.savingTile(false);
                                                                                         self.savingMessage('');
                                                                                         params.dirty(true);
@@ -904,6 +918,7 @@ define([
         this.loadNewSampleLocationTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
             self.selectSampleLocationInstance(newTile);
+            self.sampleListShowing(false);
         };
 
         this.saveWorkflowStep = function() {
