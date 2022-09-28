@@ -381,6 +381,10 @@ define([
         });
 
         this.initialize();
+
+        this.stripTags = (original) => {
+            return original.replace(/(<([^>]+)>)/gi, "");
+        };
     }
 
     ko.components.register('add-things-step', {

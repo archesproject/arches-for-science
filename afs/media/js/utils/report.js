@@ -213,7 +213,7 @@ define([
         stripTags (original) {
             return original.replace(/(<([^>]+)>)/gi, "");
         },
-        
+
         // see if there's any node with a valid displayable value.  If yes, return true.
         // potentially useful for deeply nested resources
         nestedDataExists: checkNestedData

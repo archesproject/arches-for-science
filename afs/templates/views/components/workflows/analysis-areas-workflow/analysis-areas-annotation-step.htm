@@ -38,7 +38,44 @@
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
             <div class="card">
-                <div style="padding: 10px 0;">
+
+                <div style="display: flex; gap: 10px">
+                    <button type="button" class="btn" style="
+                            background: #9490EE;
+                            color: #eee;
+                        " data-bind="
+                            click: $data.loadNewAnalysisAreaTile,
+                            attr: {
+                                class: ( $data.selectedAnalysisAreaInstance() && !$data.selectedAnalysisAreaInstance().tileid ) ? 'btn disabled' : 'btn'
+                            }
+                        ">
+                        <i class="fa fa-folder"></i>
+                        <span>
+                            {% trans 'Add New Analysis Area' %}
+                        </span>
+                    </button>
+                
+                    <!-- ko if: analysisAreaInstances().length > 0 -->
+                    <button type="button" class="btn" style="
+                            background: #9490EE;
+                            color: #eee;
+                        " data-bind="click: showSampleList">
+                        <i class="fa fa-folder"></i>
+                        <span>
+                            <!-- ko ifnot: sampleListShowing -->
+                            {% trans 'Show List of Samples' %}
+                            <!-- /ko -->
+                
+                            <!-- ko if: sampleListShowing -->
+                            {% trans 'Hide List of Samples' %}
+                            <!-- /ko -->
+                        </span>
+                    </button>
+                    <!-- /ko -->
+                </div>
+
+                <div style="overflow: hidden; height: 0px; transition: height .3s;"
+                    data-bind="style: {height: sampleListShowing() ? '185px': '0px'}">
                     <h5>{% trans 'Region locations' %}</h5>
             
                     <div style="margin-left: 5px; margin-right: 15px;">
@@ -76,11 +113,8 @@
                                     "
                                 >
                                     <!-- ko foreach: $data.filteredAnalysisAreaInstances -->
-                                        <tr
-                                            style="cursor: pointer;"
-                                            data-bind="
+                                        <tr data-bind="
                                                 scrollTo: $parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid,
-                                                click: function() { $parent.selectAnalysisAreaInstance($data); },
                                                 style: {
                                                     background: (function() {
                                                         if ($parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid) {
@@ -90,6 +124,13 @@
                                                 },
                                             "
                                         >
+                                            <td style="cursor: pointer;" class="map-card-feature-tool">
+                                                <a href="javascript:void(0);"
+                                                    data-bind="click: function() { $parent.selectAnalysisAreaInstance($data); }, clickBubble: false">
+                                                    <i class="fa fa-pencil map-card-feature-edit"></i>
+                                                    {% trans "Edit" %}
+                                                </a>
+                                            </td>
                                             <td class="afs-workflow-table-contents"
                                                 data-bind="text: (function(){
                                                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
@@ -101,35 +142,11 @@
                                 </tbody>
                             </table>
                         </div>
-        
-                        <button
-                            type="button"
-                            style="
-                                margin-top: 6px;
-                                background: #9490EE;
-                                color: #eee;
-                                width: 100%;
-                            "
-                            data-bind="{
-                                click: $data.loadNewAnalysisAreaTile,
-                                attr: {
-                                    class: ( $data.selectedAnalysisAreaInstance() && !$data.selectedAnalysisAreaInstance().tileid ) ? 'btn disabled' : 'btn'
-                                }
-                            }"
-                        >
-                            <i class="fa fa-folder"></i>
-                            <span>
-                                {% trans 'Add New Analysis Area' %}
-                            </span>
-                        </button>
-
-
                     </div>
                 </div>
 
-                <!-- ko if: $data.selectedAnalysisAreaInstance() -->
                 {% block form_widgets %}
-                    <form class="widgets" style="margin-bottom: 20px;">
+                    <form class="widgets afs-sample-location-form-widgets" data-bind="style: {opacity: $data.selectedAnalysisAreaInstance() && !sampleListShowing() ? '1' : '0'}">
 
                         <div data-bind="foreach: {
                             data:card.widgets, as: 'widget'
@@ -393,7 +410,7 @@
                         <!-- /ko -->
                     </form>
                 {% endblock form_widgets %}
-                <!-- /ko -->
+
             </div>
         </div>
     </div>
