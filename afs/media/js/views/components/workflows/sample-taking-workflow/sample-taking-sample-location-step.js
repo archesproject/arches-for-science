@@ -517,6 +517,7 @@ define([
             };
 
             self.savingTile(true);
+            self.savingMessage("Saving Sample Areas, Samples & Descriptions");
             $.ajax({
                 url: arches.urls.root + 'savesamplearea',
                 type: 'POST',
@@ -524,6 +525,8 @@ define([
                 dataType: 'json',
             })
             .then(function(data){
+                self.savingMessage("Updating Annotations");
+
                 const tile = data.result.parentPhysicalThing.physicalPartOfObjectTile;
 
                 self.builtTile = new TileViewModel({
@@ -553,9 +556,9 @@ define([
                     
                     self.updateSampleLocationInstances();
                     self.showSampleList(true);
-
+                    self.savingMessage("");
                     self.savingTile(false);
-                    params.dirty(true);
+                    params.dirty(false);
                     params.form.complete(true);
                     let mappedInstances = self.sampleLocationInstances().map((instance) => { return { "data": instance.data }});
                     params.form.savedData(mappedInstances);
