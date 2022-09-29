@@ -320,15 +320,6 @@ class SaveSampleAreaView(SaveAnnotationView):
         sample_name = "{} [Sample of {}]".format(base_name, parent_physical_thing_name)
         sample_area_name = "{} [Sample Area of {}]".format(base_name, parent_physical_thing_name)
 
-        print("parent_physical_thing_resourceid", parent_physical_thing_resourceid)
-        print("collection_resourceid", collection_resourceid)
-        print("transaction_id", transaction_id)
-        print("part_identifier_assignment_tile_data", part_identifier_assignment_tile_data)
-        print("part_identifier_assignment_tile_id", part_identifier_assignment_tile_id)
-        print("physical_part_of_object_nodeid", physical_part_of_object_nodeid)
-        print("sample_area_physical_thing_resourceid", sample_area_physical_thing_resourceid)
-        print("base_name", base_name)
-
         try:
             with transaction.atomic():
                 # saving the sample area resource and tiles
