@@ -9,8 +9,8 @@ define([
 
         var self = this;
         const nameNodeGroupId = '0b926359-ca85-11e9-ac9c-a4d18cec433a';
-        const typeNodeGroupId = '0b92b8c0-ca85-11e9-adef-a4d18cec433a';
-
+        const typeNodeGroupId = '0b924423-ca85-11e9-865a-a4d18cec433a';
+        
         const getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key]) {
                 return prop ? params.value()[key][prop] : params.value()[key];
@@ -18,13 +18,14 @@ define([
                 return null;
             } 
         };
-
+        
         let typeTileId = getProp('type', 'tileid');
         let nameTileId = getProp('name', 'tileid');
-
+        
         this.projectResourceId = ko.observable(getProp('projectResourceId'));
         this.typeValue = ko.observable(getProp('type', 'value'));
         this.nameValue = ko.observable(getProp('name', 'value'));
+        this.projectEventTypeRdmCollection = ko.observable('26d7ce44-20e5-44fb-a3c1-dfbe6bdd521b');
 
         const snapshot = {
             typeValue: self.typeValue(),
@@ -102,7 +103,7 @@ define([
             };
 
             const typeTileData = {
-                "0b92b8c0-ca85-11e9-adef-a4d18cec433a": self.typeValue()
+                "0b924423-ca85-11e9-865a-a4d18cec433a": self.typeValue()
             };
 
             return self.saveTile(nameTileData, nameNodeGroupId, self.projectResourceId(), nameTileId)
