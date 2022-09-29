@@ -77,10 +77,7 @@
             <div class="afs-report-page" data-bind="if: activeSection() === 'objects'">
                 <div class="afs-report-section">
                     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedObjects)}, css: {'fa-angle-double-right': visible.relatedObjects(), 'fa-angle-double-up': !visible.relatedObjects()}" class="fa toggle"></i> {% trans "Related Objects" %}</h2>
-                    <span data-bind="if: relatedObjectsCards && (!collectionOfRelatedObjects().length || relatedObjectsCards.cardinality == 'n')">
-                        <a class="afs-report-a" data-bind="click: function(){addNewTile(relatedObjectsCards)}"><i class="fa fa-mail-reply"></i> {% trans "Add Related Object" %}</a>
-                    </span>
-                    
+                      
                     <!-- Collapsible content -->
                     <div data-bind="visible: visible.relatedObjects" class="afs-report-collapsible-container pad-lft">
 

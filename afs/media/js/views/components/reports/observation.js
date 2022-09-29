@@ -42,7 +42,6 @@ define([
             self.descriptionCards = {};
             self.documentationCards = {};
             self.substanceCards = {};
-            self.relatedObjectsCards = {};
             self.summary = params.summary;
 
             self.relatedObjectsTableConfig = {
@@ -89,8 +88,6 @@ define([
                 self.documentationCards = {
                     digitalReference: self.cards?.['digital reference to observation'],
                 };
-
-                self.relatedObjectsCards = self.cards?.['object observed during observation'];
 
                 self.substanceCards = {
                     timespan: self.cards?.['timespan of observation'],
