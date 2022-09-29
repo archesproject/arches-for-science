@@ -33,7 +33,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                 label: ko.observable(true)
             }
             self.subjectOfDisplay = ko.observable(true);
-            self.digitalReferenceDisplay = ko.observable(true)
+            self.digitalReferenceDisplay = ko.observable(true);
             Object.assign(self.dataConfig, params.dataConfig || {});
 
             if(!self.dataConfig.digitalReference){

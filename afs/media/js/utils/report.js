@@ -40,12 +40,13 @@ define([
             return $.ajax({
                 type: "DELETE",
                 url: arches.urls.tile,
-                data: JSON.stringify(tile.getData())
-            }).success(() => {
-                const tiles = card.tiles();
-                const tileIndex = tiles.indexOf(tile);
-                tiles.splice(tileIndex, 1);
-                card.tiles(tiles);
+                data: JSON.stringify(tile.getData()),
+                success: () => {
+                    const tiles = card.tiles();
+                    const tileIndex = tiles.indexOf(tile);
+                    tiles.splice(tileIndex, 1);
+                    card.tiles(tiles);
+                }
             });
         }
         throw Error("Couldn't delete; tile was not found.")
@@ -118,6 +119,11 @@ define([
                 orderable: false,
                 targets: -1
             }],
+        },
+
+        getRelatedResources: async(resourceid) => {
+            return (window.fetch(arches.urls.related_resources + resourceid + "?paginate=false")
+                .then(response => response.json()))
         },
 
         removedTiles: removedTiles,
@@ -203,6 +209,10 @@ define([
         getNodeValue: (resource, ...args) => {
             const rawValue = getRawNodeValue(resource, ...args);
             return processRawNodeValue(rawValue);
+        },
+
+        stripTags (original) {
+            return original.replace(/(<([^>]+)>)/gi, "");
         },
 
         // see if there's any node with a valid displayable value.  If yes, return true.

@@ -34,6 +34,7 @@ define([
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
         this.isFeatureBeingEdited = ko.observable(false);
+        this.sampleListShowing = ko.observable(false);
 
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
@@ -145,6 +146,12 @@ define([
         })
 
         this.initialize = function() {
+            let subscription = self.analysisAreaInstances.subscribe(function(){
+                if (self.analysisAreaInstances().length > 0) {
+                    self.showSampleList(true);
+                }
+                subscription.dispose();
+            });
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
@@ -280,6 +287,7 @@ define([
 
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
             var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
+            self.sampleListShowing(false);
             
             if (previouslySelectedAnalysisAreaInstance && previouslySelectedAnalysisAreaInstance.tileid !== analysisAreaInstance.tileid) {
                 /* resets any changes not explicity saved to the tile */ 
@@ -295,6 +303,10 @@ define([
             
             self.selectedAnalysisAreaInstance(analysisAreaInstance);
 
+        };
+
+        this.showSampleList = function() {
+            self.sampleListShowing(!self.sampleListShowing());
         };
 
         this.resetAnalysisAreasTile = function() {
@@ -403,7 +415,7 @@ define([
                 updateAnnotations().then(function(_physicalThingAnnotationNode) {
                     self.updateAnalysisAreaInstances();
                 
-                    self.selectAnalysisAreaInstance(self.selectedAnalysisAreaInstance());
+                    self.sampleListShowing(false);
                     self.savingTile(false);
                     params.pageVm.alert("");
                     self.drawFeatures([]);

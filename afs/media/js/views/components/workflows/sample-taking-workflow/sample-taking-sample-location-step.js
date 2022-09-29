@@ -37,6 +37,7 @@ define([
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
         this.isFeatureBeingEdited = ko.observable(false);
+        this.sampleListShowing = ko.observable(false);
 
         this.physicalThingPartIdentifierAssignmentCard = ko.observable();
         this.physicalThingPartIdentifierAssignmentTile = ko.observable();
@@ -165,11 +166,19 @@ define([
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
 
+            let subscription = self.sampleLocationInstances.subscribe(function(){
+                if (self.sampleLocationInstances().length > 0) {
+                    self.showSampleList(true);
+                }
+                subscription.dispose();
+            });
+
             $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                 self.loadExternalCardData(data);
             });
 
-            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId).then(function(samplingActivitySamplingUnitCard) {
+            self.fetchCardFromResourceId(self.samplingActivityResourceId, samplingUnitNodegroupId)
+            .then(function(samplingActivitySamplingUnitCard) {
                 self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
             });
 
@@ -327,6 +336,8 @@ define([
             
             self.motivationForSamplingWidgetValue(null);
             self.previouslySavedMotivationForSamplingWidgetValue(null);
+
+            self.sampleListShowing(false);
 
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
@@ -541,7 +552,7 @@ define([
                     self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
                     
                     self.updateSampleLocationInstances();
-                    self.selectSampleLocationInstance(self.selectedSampleLocationInstance());
+                    self.showSampleList(true);
 
                     self.savingTile(false);
                     params.dirty(true);
@@ -557,6 +568,10 @@ define([
                 console.log(error);
                 self.savingTile(false);                
             })
+        };
+
+        this.showSampleList = function() {
+            self.sampleListShowing(!self.sampleListShowing());
         };
 
         this.loadNewSampleLocationTile = function() {
