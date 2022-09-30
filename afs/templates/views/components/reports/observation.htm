@@ -46,6 +46,12 @@
                         cards: descriptionCards,
                     }
                 }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: descriptionData,
+                    }
+                }"></div>
             </div>
             <!-- Documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
@@ -58,16 +64,7 @@
                     }
                 }"></div>
             </div>            
-            <!-- Location Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/default',
-                    params: {
-                        data: locationData,
-                    }
-                }"></div>
-            </div>
-            <!-- Parthood Tab -->
+            <!-- Parent Project Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
@@ -76,7 +73,52 @@
                     }
                 }"></div>
             </div>
-            <!-- Substance Tab -->
+            <!-- Related Objects Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'objects'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedObjects)}, css: {'fa-angle-double-right': visible.relatedObjects(), 'fa-angle-double-up': !visible.relatedObjects()}" class="fa toggle"></i> {% trans "Related Physical Things" %}</h2>
+                      
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.relatedObjects" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfRelatedObjects().length -->
+                        <div class="afs-nodata-note">No objects related to this observation</div>
+                        <!-- /ko -->
+
+                        <!-- ko if: collectionOfRelatedObjects().length -->
+                        <div class="afs-report-subsection" >
+                            <div class="firstchild-container">
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Object" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfRelatedObjects, dataTableOptions: relatedObjectsTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <!-- Dates Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/substance',
@@ -87,12 +129,12 @@
                     }
                 }"></div>
             </div>
-            <!-- Parameters & Outcomes Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'parameters'">
+            <!-- Data Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'data'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
-                        data: parameterData,
+                        data: dataData,
                     }
                 }"></div>
             </div>  
