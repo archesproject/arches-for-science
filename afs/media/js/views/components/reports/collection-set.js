@@ -23,7 +23,8 @@ define([
                 {id: 'json', title: 'JSON'},
             ];
             self.visible = {
-                textualReference: ko.observable(true)
+                textualReference: ko.observable(true),
+                relatedProject: ko.observable(true),
             };
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
@@ -86,6 +87,11 @@ define([
                 columns: Array(3).fill(null)
             }
 
+            self.relatedProjectTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(2).fill(null)
+            };
+
             self.textualReference = ko.observableArray();
             const textualReferenceNode = self.getRawNodeValue(self.resource(), 'textual reference');
             if(Array.isArray(textualReferenceNode)){
@@ -95,6 +101,19 @@ define([
                     const textualReferenceType = self.getNodeValue(node, 'textual reference type');
                     const tileid = self.getTileId(node);
                     return {textualSource, textualSourceLink, textualReferenceType, tileid};
+                }));
+            }
+
+            self.relatedProject = ko.observableArray();
+            const relatedProjectNode = self.getRawNodeValue(self.resource(), 'used in');
+            console.log()
+            if(relatedProjectNode) {
+                self.relatedProjectTileid = self.getTileId(relatedProjectNode);
+                self.relatedProject(self.getRawNodeValue(relatedProjectNode, 'instance_details').map(detail => {
+                    console.log(detail)
+                    const displayname = self.getNodeValue(detail);
+                    const link = self.getResourceLink(self.getRawNodeValue(detail));
+                    return {displayname, link};
                 }));
             }
 
@@ -141,21 +160,6 @@ define([
                     },
                 };
             }
-
-            self.usedInData = ko.observable({
-                sections: 
-                    [
-                        {
-                            title: 'Related Project', 
-                            data: [{
-                                key: 'Related Project', 
-                                value: self.getRawNodeValue(self.resource(), 'used in'), 
-                                card: self.cards?.['related project of collection'],
-                                type: 'resource'
-                            }]
-                        }
-                    ]
-            });
         },
         template: { require: 'text!templates/views/components/reports/collection-set.htm' }
     });

@@ -71,13 +71,52 @@
                 }"></div>
             </div>
             <!-- Project Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'projects'">                
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/default',
-                    params: {
-                        data: usedInData,
-                    }
-                }"></div>
+            <div class="afs-report-page" data-bind="if: activeSection() === 'projects'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedProject)}, css: {'fa-angle-double-right': visible.relatedProject(), 'fa-angle-double-up': !visible.relatedProject()}" class="fa toggle"></i> {% trans "Related Projects" %}</h2>
+                    <div class="afs-card-control" data-bind="if: cards['related project of collection'] && relatedProject().length > 0">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply"></i> {% trans "Edit Related Project" %}</a>
+                    </div>
+                    <div class="afs-card-control" data-bind="if: cards['related project of collection'] && relatedProject().length == 0">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply"></i> {% trans "Add Related Project" %}</a>
+                    </div>
+
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.relatedProject" class="afs-report-collapsible-container pad-lft">
+                
+                        <!-- ko ifnot: relatedProject().length -->
+                        <div class="afs-nodata-note">No related project for this resource</div>
+                        <!-- /ko -->
+                        <!-- ko if: relatedProject().length -->
+                        <div class="afs-report-subsection" >
+                            <div class="firstchild-container">
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cells pacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Project" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: relatedProject, dataTableOptions: relatedProjectTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
             </div>
             <!-- Publication Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'publications'">
