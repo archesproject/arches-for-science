@@ -54,6 +54,21 @@ define([
                 relatedObjects: ko.observable(true),
             };
 
+            self.annotationTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(6).fill(null)
+            };
+
+            self.annotationTableHeader = 
+                `<tr class="afs-table-header">
+                    <th>Area Name</th>
+                    <th>Part of Object</th>
+                    <th class="min-tabletl">Annotator</th>
+                    <th class="none">Assigned Property Type</th>
+                    <th class="none">Geometric Annotation Identifier</th>
+                    <th class="afs-table-control all"></th>
+                </tr>`
+
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
             const loadRelatedResources = async() => {
                 const result = await reportUtils.getRelatedResources(resourceId);
@@ -66,6 +81,48 @@ define([
                     element.displaydescription = reportUtils.stripTags(element.displaydescription)
                     return element
                 }));
+
+                const areaConceptIds = ['31d97bdd-f10f-4a26-958c-69cb5ab69af1', '7375a6fb-0bfb-4bcf-81a3-6180cdd26123'] // analysis area, sample area
+                const typeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'
+                const partOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'
+                // assuming only one area (physical thing) can be observed for a certain observation
+                const areaPhysicalThing = relatedPhysicalThings.find(thing => 
+                    (!!thing.tiles.find(tile => (
+                        tile.data[typeNodeId] && 
+                        tile.data[typeNodeId].filter(x => areaConceptIds.includes(x)).length > 0)
+                    ))
+                );
+                const areaPhysicalThingResourceId = areaPhysicalThing?.resourceinstanceid;
+                const partentPhysicalThingResourceId = areaPhysicalThing?.tiles.find(
+                    tile => tile.data[partOfNodeId]).data[partOfNodeId][0].resourceId;
+
+                let parts;
+                if (partentPhysicalThingResourceId) {
+                    let parentResource;
+                    await window.fetch(arches.urls.api_resources(partentPhysicalThingResourceId) + '?format=json&compact=false&v=beta')
+                        .then(response => response.json())
+                        .then(data => { parentResource = data.resource; })
+
+                    parts = self.getRawNodeValue(parentResource, 'part identifier assignment').filter(
+                        x => self.getRawNodeValue(x, 'part identifier assignment_physical part of object', 'resourceId') == areaPhysicalThingResourceId
+                    )
+                }
+                self.selectedAnnotationTileId = ko.observable();
+                self.annotation = parts ? {
+                        info: parts.map((x => {
+                            const column1 = self.getNodeValue(x, 'part identifier assignment_label'); // label/name
+                            const column2 = self.getRawNodeValue(x, 'part identifier assignment_physical part of object'); // object part
+                            const column3 = self.getRawNodeValue(x, 'part identifier assignment_annotator'); //annotator
+                            const column4 = self.getNodeValue(x, 'part identifier assignment_assigned property type');
+                            const column5 = self.getNodeValue(x, 'part identifier assignment_polygon identifier', 'part identifier assignment_polygon identifier_classification');
+                            const tileId = self.getTileId(x);
+                            const featureCollection = self.getNodeValue(x, 'part identifier assignment_polygon identifier');
+                            for (feature of featureCollection.features){
+                                feature.properties.tileId = tileId;
+                            }
+                            return {column1, column2, column3, column4, column5, tileId, featureCollection}
+                        })),
+                    }: {};
             };
 
             loadRelatedResources();
