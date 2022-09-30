@@ -93,21 +93,6 @@ define([
                     timespan: self.cards?.['timespan of observation'],
                 };
             };
-                        
-            self.locationData = ko.observable({
-                sections: 
-                    [
-                        {
-                            title: 'Location of Observation', 
-                            data: [{
-                                key: 'location of observation', 
-                                value: self.getRawNodeValue(self.resource(), 'took place at'), 
-                                card: self.cards?.['location of observation'],
-                                type: 'resource'
-                            }]
-                        }
-                    ]
-            });
 
             self.parthoodData = ko.observable({
                 sections: 
@@ -150,14 +135,14 @@ define([
                                 card: self.cards?.['technique of observation'],
                                 type: 'resource'
                             },{
+                                key: 'location of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'took place at'), 
+                                card: self.cards?.['location of observation'],
+                                type: 'resource'
+                            },{
                                 key: 'procedure / method used during observation', 
                                 value: self.getRawNodeValue(self.resource(), 'used process'), 
                                 card: self.cards?.['parent event of observation'],
-                                type: 'resource'
-                            },{
-                                key: 'object observed during observation', 
-                                value: self.getRawNodeValue(self.resource(), 'observed'), 
-                                card: self.cards?.['object observed during observation'],
                                 type: 'resource'
                             },{
                                 key: 'person carrying out observation', 
