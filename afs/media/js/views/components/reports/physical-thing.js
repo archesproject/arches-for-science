@@ -24,24 +24,6 @@ define([
                 {id: 'json', title: 'JSON'},
             ];
 
-            // statement type in physical thing
-
-            self.physicalThingGeneralDescriptionTypes = [
-                "condition", 
-                "copyright/licensing statement", 
-                "creation place description", 
-                "credit line",
-                "culture (concept)",
-                "description",
-                "inscriptions", 
-                "marks (identifying markings)", 
-                "object/work type (category)", 
-                "place found", 
-                "producer description", 
-                "rights statement", 
-                "sample description", 
-                "sampling motivation"
-            ]
             self.physicalThingProvenanceDescriptionTypes = [
                 "provenance statement"
             ]
