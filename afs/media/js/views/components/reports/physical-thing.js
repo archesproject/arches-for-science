@@ -292,7 +292,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Content and Iconography”', 
+                            title: 'Content and Iconography', 
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
