@@ -310,7 +310,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Aboutness', 
+                            title: 'Content and Iconography”', 
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
@@ -340,7 +340,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Components', 
                             data: [{
                                 key: 'parent object', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -374,7 +374,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Actor Relations', 
+                            title: 'Provenance', 
                             data: [{
                                 key: 'current owner of object', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
@@ -391,7 +391,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Sethood', 
+                            title: 'Related Collection and Sets',
                             data: [{
                                 key: 'Collection Object is Part Of', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
