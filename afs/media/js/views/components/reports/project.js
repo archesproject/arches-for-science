@@ -64,8 +64,8 @@ define([
                 self.collectionOfChildProjects(relatedResources.filter(relatedResource => 
                     relatedProjects.includes(relatedResource.resourceinstanceid)));
 
-                self.collectionOfChildProjects().map(child => child.link = reportUtils.getResourceLink({resourceId: child.resourceinstanceid}));
-                self.collectionOfChildProjects().map(child => { 
+                self.collectionOfChildProjects().map(child => {
+                    child.link = reportUtils.getResourceLink({resourceId: child.resourceinstanceid}),
                     child.displaydescription = reportUtils.stripTags(child.displaydescription)
                     return child
                 });
@@ -157,6 +157,64 @@ define([
                     }
                 ]
             });
+
+            // Search Details section
+            self.nameSearchData = ko.observable();
+            self.datesSearchData = ko.observable();
+            self.activityTypeSearchData = ko.observable();
+            self.parentSearchData = ko.observable();
+            self.teamSearchData = ko.observable();
+            self.statementsSearchData = ko.observable();
+            self.identiferSearchData = ko.observable();
+
+            
+            const nameData = self.resource()?.Name;
+            if (nameData) {
+                self.nameSearchData(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'Name_type');
+                    const content = self.getNodeValue(x, 'Name_content');
+                    const language = self.getNodeValue(x, 'Name_language');
+                    const tileid = self.getTileId(x);
+                    return { type, content, language, tileid }
+                }));
+            };
+
+            const datesData = self.resource()?.TimeSpan;
+            if (datesData) {
+                self.datesSearchData(datesData.map(x => {
+                    const begin_of_begin = self.getNodeValue(x, 'TimeSpan_begin of the begin');
+                    const begin_of_end = self.getNodeValue(x, 'TimeSpan_begin of the end');
+                    const end_of_begin = self.getNodeValue(x, 'TimeSpan_end of the begin');
+                    const end_of_end = self.getNodeValue(x, 'TimeSpan_end of the end');
+                    const tileid = self.getTileId(x);
+                    return { begin_of_begin, begin_of_end, end_of_begin, end_of_end, tileid }
+                }));
+            };
+
+            self.activityTypeSearchData(self.getRawNodeValue(self.resource(), 'technique'));
+
+            // Put parent project and team members here
+
+            const statmentData = self.resource()?.Statement;
+            if (statmentData) {
+                self.statementsSearchData(statmentData.map(x => {
+                    const type = self.getNodeValue(x, 'Statement_type');
+                    const content = self.getNodeValue(x, 'Statement_content');
+                    const language = self.getNodeValue(x, 'Statement_language');
+                    const tileid = self.getTileId(x);
+                    return { type, content, language, tileid }
+                }));
+            };
+
+            const identiferData = self.resource()?.Identifier;
+            if (identiferData) {
+                self.identiferSearchData(identiferData.map(x => {
+                    const type = self.getNodeValue(x, 'Identifier_type');
+                    const content = self.getNodeValue(x, 'Identifier_content');
+                    const tileid = self.getTileId(x);
+                    return { type, content, tileid }
+                }));
+            };
         },
         template: { require: 'text!templates/views/components/reports/project.htm' }
     });

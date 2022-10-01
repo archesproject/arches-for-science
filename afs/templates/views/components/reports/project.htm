@@ -64,7 +64,7 @@
                     }
                 }"></div>
             </div>
-            <!-- Parthood Tab -->
+            <!-- Parent Project Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
@@ -149,28 +149,21 @@
 {% endblock report %}
 
 {% block summary %}
+
 <div class="afs-summary-report-header">
     <h1 class="afs-summary-report-title"><span data-bind="text: displayname" class="afs-report-instance-name"></span><span class="afs-report-name pad-lft-sm">{% trans "(Project)" %}</span></h1>
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
         <!-- Names -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/name',
-            params: {
-                data: resource,
-                cards: nameCards,
-                dataConfig: nameDataConfig
-            }
-        }"></div>
+        <!-- <span data-bind="text: console.log($parent)"></span> -->
+        <!-- Dates -->
+        <!-- Activity Type -->
+        <!-- Parent Project -->
+        <!-- Project Team -->
+        <!-- Statements -->
+        <!-- Identifier / Type -->
         <!-- Description -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/description',
-            params: {
-                data: resource,
-                cards: descriptionCards,
-            }
-        }"></div>
     </div>
 </div>
 
