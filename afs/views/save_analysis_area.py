@@ -100,10 +100,26 @@ class SaveAnnotationView(View):
 
         return tile
 
-    def save_physical_thing_name(self, resourceid, transactionid, name):
+    def save_physical_thing_name(self, resourceid, transactionid, name, tileid=None):
         physical_thing_name_nodegroupid = "b9c1ced7-b497-11e9-a4da-a4d18cec433a"
         physical_thing_name_nodeid = "b9c1d8a6-b497-11e9-876b-a4d18cec433a"
-        tile = self.save_node(resourceid, physical_thing_name_nodegroupid, physical_thing_name_nodeid, transactionid, name)
+        physical_thing_name_type_nodeid = "b9c1d7ab-b497-11e9-9ab7-a4d18cec433a" 
+        physical_thing_name_language_nodeid = "b9c1d400-b497-11e9-90ea-a4d18cec433a"
+        preferred_terms_conceptid = "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+        english_conceptid = "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+
+        if tileid is not None:
+            tile = Tile.objects.get(pk=tileid)
+        else:
+            try:
+                tile = Tile.objects.get(resourceinstance=resourceid, nodegroup=physical_thing_name_nodegroupid)
+            except ObjectDoesNotExist as e:
+                tile = Tile.get_blank_tile(nodeid=physical_thing_name_nodeid, resourceid=resourceid)
+        tile.data[physical_thing_name_nodeid] = name
+        tile.data[physical_thing_name_type_nodeid] =  [preferred_terms_conceptid]
+        tile.data[physical_thing_name_language_nodeid] =  [english_conceptid]
+        tile.save(transaction_id=transactionid)
+
         return tile
 
     def save_physical_thing_type(self, resourceid, transactionid, type):
@@ -251,6 +267,8 @@ class SaveSampleAreaView(SaveAnnotationView):
         statement_nodegroupid = "1952bb0a-b498-11e9-a679-a4d18cec433a"
         statement_type_nodeid = "1952e470-b498-11e9-b261-a4d18cec433a"
         statement_content_nodeid = "1953016e-b498-11e9-9445-a4d18cec433a"
+        statement_language_nodeid = "1952d7de-b498-11e9-a8a8-a4d18cec433a"
+        english_conceptid = "bc35776b-996f-4fc1-bd25-9f6432c1f349"
 
         statement_types = {
             "motivation": "7060892c-4d91-4ab3-b3de-a95e19931a61",
@@ -274,6 +292,7 @@ class SaveSampleAreaView(SaveAnnotationView):
 
         tile.data[statement_content_nodeid] = statement
         tile.data[statement_type_nodeid] = [statement_types[type]]
+        tile.data[statement_language_nodeid] = [english_conceptid]
         tile.save()
 
         return tile
