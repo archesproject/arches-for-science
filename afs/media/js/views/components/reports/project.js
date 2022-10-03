@@ -186,37 +186,8 @@ define([
                 }));
             };
 
-            const timeSpanData = self.resource()?.TimeSpan;
-            if(timeSpanData) {
-                const beginningStart = self.getNodeValue(timeSpanData, 'TimeSpan_begin of the begin');
-                const beginningComplete = self.getNodeValue(timeSpanData, 'TimeSpan_begin of the end');
-                const endingStart = self.getNodeValue(timeSpanData, 'TimeSpan_end of the begin');
-                const endingComplete = self.getNodeValue(timeSpanData, 'TimeSpan_end of the end');
-                
-                let name;
-                if (timeSpanData['TimeSpan_name']) {
-                    name = self.getNodeValue(timeSpanData['TimeSpan_name'][0], 'TimeSpan_name_content');
-                } 
-
-                // if(timeSpanData['TimeSpan_duration'])
-            
-                self.timeSpanSearchData({
-                    sections: [{
-                    title: 'TimeSpan',
-                    data: [{
-                        key: 'Timespan',
-                        value: {
-                            beginningComplete, 
-                            beginningStart, 
-                            endingComplete, 
-                            endingStart,
-                            name, 
-                        },
-                        cards: {},
-                        type: 'timespan'
-                    }]
-                }]});
-            }
+            self.timeSpanSearchData(self.resource()?.TimeSpan);
+        
 
 
             self.activityTypeSearchData(self.getRawNodeValue(self.resource(), 'technique'));
