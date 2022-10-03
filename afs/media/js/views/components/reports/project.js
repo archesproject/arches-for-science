@@ -41,14 +41,22 @@ define([
             self.documentationCards = {};
             self.summary = params.summary;
 
-            self.childProjectTableConfig = {
+            self.threeWideTableConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(3).fill(null)
+            };
+
+            self.fourWideTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(4).fill(null)
             };
 
             self.collectionOfChildProjects = ko.observableArray();
             self.visible = {
                 childProjects: ko.observable(true),
+                names: ko.observable(true),
+                identifiers: ko.observable(true),
+                classifications: ko.observable(true)
             };
 
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
@@ -158,19 +166,18 @@ define([
                 ]
             });
 
-            // Search Details section
-            self.nameSearchData = ko.observable();
-            self.datesSearchData = ko.observable();
+            ////// Search Details section //////
+            self.namesSearchData = ko.observable();
+            self.timeSpanSearchData = ko.observable();
             self.activityTypeSearchData = ko.observable();
             self.parentSearchData = ko.observable();
             self.teamSearchData = ko.observable();
             self.statementsSearchData = ko.observable();
             self.identiferSearchData = ko.observable();
 
-            
             const nameData = self.resource()?.Name;
             if (nameData) {
-                self.nameSearchData(nameData.map(x => {
+                self.namesSearchData(nameData.map(x => {
                     const type = self.getNodeValue(x, 'Name_type');
                     const content = self.getNodeValue(x, 'Name_content');
                     const language = self.getNodeValue(x, 'Name_language');
@@ -179,21 +186,44 @@ define([
                 }));
             };
 
-            const datesData = self.resource()?.TimeSpan;
-            if (datesData) {
-                self.datesSearchData(datesData.map(x => {
-                    const begin_of_begin = self.getNodeValue(x, 'TimeSpan_begin of the begin');
-                    const begin_of_end = self.getNodeValue(x, 'TimeSpan_begin of the end');
-                    const end_of_begin = self.getNodeValue(x, 'TimeSpan_end of the begin');
-                    const end_of_end = self.getNodeValue(x, 'TimeSpan_end of the end');
-                    const tileid = self.getTileId(x);
-                    return { begin_of_begin, begin_of_end, end_of_begin, end_of_end, tileid }
-                }));
-            };
+            const timeSpanData = self.resource()?.TimeSpan;
+            if(timeSpanData) {
+                const beginningStart = self.getNodeValue(timeSpanData, 'TimeSpan_begin of the begin');
+                const beginningComplete = self.getNodeValue(timeSpanData, 'TimeSpan_begin of the end');
+                const endingStart = self.getNodeValue(timeSpanData, 'TimeSpan_end of the begin');
+                const endingComplete = self.getNodeValue(timeSpanData, 'TimeSpan_end of the end');
+                
+                let name;
+                if (timeSpanData['TimeSpan_name']) {
+                    name = self.getNodeValue(timeSpanData['TimeSpan_name'][0], 'TimeSpan_name_content');
+                } 
+
+                // if(timeSpanData['TimeSpan_duration'])
+            
+                self.timeSpanSearchData({
+                    sections: [{
+                    title: 'TimeSpan',
+                    data: [{
+                        key: 'Timespan',
+                        value: {
+                            beginningComplete, 
+                            beginningStart, 
+                            endingComplete, 
+                            endingStart,
+                            name, 
+                        },
+                        cards: {},
+                        type: 'timespan'
+                    }]
+                }]});
+            }
+
 
             self.activityTypeSearchData(self.getRawNodeValue(self.resource(), 'technique'));
 
-            // Put parent project and team members here
+            self.parentSearchData(self.getRawNodeValue(self.resource(), 'part of'));
+
+            self.teamSearchData(self.getRawNodeValue(self.resource(), 'carried out by'));
 
             const statmentData = self.resource()?.Statement;
             if (statmentData) {

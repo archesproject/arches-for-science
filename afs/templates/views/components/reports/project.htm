@@ -96,7 +96,7 @@
                                                 <th class="afs-table-control all"></th>
                                             </tr>
                                         </thead>
-                                        <tbody data-bind="dataTablesForEach: { data: collectionOfChildProjects, dataTableOptions: childProjectTableConfig }">
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfChildProjects, dataTableOptions: threeWideTableConfig }">
                                             <tr>
                                                 <td data-bind="text: displayname"></td>
                                                 <td data-bind="text: displaydescription" class="display-description"></td>
@@ -155,9 +155,52 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
+
         <!-- Names -->
-        <!-- <span data-bind="text: console.log($parent)"></span> -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.names)}, css: {'fa-angle-double-right': visible.names(), 'fa-angle-double-up': !visible.names()}" class="fa toggle"></i> {% trans "Names" %}</h2>
+        
+            <!-- Collapsible content -->
+            <div data-bind="visible: visible.names" class="afs-report-collapsible-container pad-lft">
+        
+                <!-- ko ifnot: namesSearchData().length -->
+                <div class="afs-nodata-note">No names for this resource</div>
+                <!-- /ko -->
+                
+                <!-- ko if: namesSearchData().length -->
+                <div class="afs-report-subsection" >
+                    <div>
+                        <div class="afs-table pad-btm">
+                            <table class="table table-striped" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr class="afs-table-header">
+                                        <th>{% trans "Name" %}</th>
+                                        <th class="min-tabletl">{% trans "Type" %}</th>
+                                        <th class="none">{% trans "Language" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="dataTablesForEach: { data: namesSearchData, dataTableOptions: threeWideTableConfig }">
+                                    <tr>
+                                        <td data-bind="text: content"></td>
+                                        <td data-bind="text: type"></td>
+                                        <td data-bind="text: language"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+
         <!-- Dates -->
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/default',
+            params: {
+                data: timeSpanSearchData,
+            }
+        }"></div>
         <!-- Activity Type -->
         <!-- Parent Project -->
         <!-- Project Team -->
