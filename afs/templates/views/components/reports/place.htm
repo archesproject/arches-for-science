@@ -99,23 +99,37 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
-        <!-- Names -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/name',
-            params: {
-                data: resource,
-                cards: nameCards,
-                dataConfig: nameDataConfig
-            }
-        }"></div>
-        <!-- Description -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/description',
-            params: {
-                data: resource,
-                cards: descriptionCards,
-            }
-        }"></div>
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- Names -->
+                <!-- ko if: nameSummary() && nameSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: nameSummaryTableConfig }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/location',
+                    params: {
+                        geojson: geojson,
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
+                        cards: locationCards,
+                    }
+                }"></div>    
+            </div>
+        </div>
     </div>
 </div>
 

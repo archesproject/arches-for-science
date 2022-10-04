@@ -36,7 +36,21 @@ define([
             self.documentationCards = {};
             self.locationCards = {};
             self.summary = params.summary;
-            
+
+            self.nameSummaryTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(2).fill(null),
+                columnDefs: [],    
+            };
+
+            // Summary Report
+            self.nameSummary = ko.observable();
+            self.nameSummary(self.resource()['Name']?.map(x => {
+                const content = self.getNodeValue(x, 'content');
+                const type = self.getNodeValue(x, 'type');
+                return {content, type}
+            }));
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
