@@ -166,21 +166,48 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
-        <!-- Names -->
+        <!-- Name -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.names)}, css: {'fa-angle-double-right': visible.names(), 'fa-angle-double-up': !visible.names()}" class="fa toggle"></i> {% trans "Names" %}</h2>
+
+            <!-- Collapsible content -->
+            <div data-bind="visible: visible.names" class="afs-report-collapsible-container pad-lft">
+
+                <!-- ko ifnot: namesSearchData().length -->
+                <div class="afs-nodata-note">No names for this resource</div>
+                <!-- /ko -->
+
+                <!-- ko if: namesSearchData().length -->
+                <div class="afs-report-subsection" >
+                    <div>
+                        <div class="afs-table pad-btm">
+                            <table class="table table-striped" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr class="afs-table-header">
+                                        <th>{% trans "Name" %}</th>
+                                        <th class="min-tabletl">{% trans "Type" %}</th>
+                                        <th class="none">{% trans "Language" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="dataTablesForEach: { data: namesSearchData, dataTableOptions: nameTableConfig }">
+                                    <tr>
+                                        <td data-bind="text: content"></td>
+                                        <td data-bind="text: type"></td>
+                                        <td data-bind="text: language"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Type of Instrument -->
         <div data-bind="component: {
-            name: 'views/components/reports/scenes/name',
+            name: 'views/components/reports/scenes/default',
             params: {
-                data: resource,
-                cards: nameCards,
-                dataConfig: nameDataConfig
-            }
-        }"></div>
-        <!-- Description -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/description',
-            params: {
-                data: resource,
-                cards: descriptionCards,
+                data: typeSearchData,
             }
         }"></div>
     </div>

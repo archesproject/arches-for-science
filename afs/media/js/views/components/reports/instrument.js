@@ -48,8 +48,15 @@ define([
                 columns: Array(3).fill(null)
             };
 
+            self.nameTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+
+
             self.visible = {
                 textualReference: ko.observable(true),
+                names: ko.observable(true)
             }
             
             self.textualReference = ko.observableArray();
@@ -148,6 +155,34 @@ define([
                             }]
                         }
                     ]
+            });
+
+            self.namesSearchData = ko.observable();
+            self.typeSearchData = ko.observable();
+            const nameData = self.resource()?.Name;
+
+            if (nameData) {
+                self.namesSearchData(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'Name_type');
+                    const content = self.getNodeValue(x, 'Name_content');
+                    const language = self.getNodeValue(x, 'Name_language');
+                    const tileid = self.getTileId(x);
+                    return { type, content, language, tileid }
+                }));
+            };
+
+            self.typeSearchData = ko.observable({
+                sections: [
+                    {
+                        title: 'Classification',
+                        data: [{
+                            key: 'type',
+                            value: self.resource()?.type,
+                            card: undefined,
+                            type: 'resource'
+                        }]
+                    }
+                ]
             });
         },
         template: { require: 'text!templates/views/components/reports/instrument.htm' }
