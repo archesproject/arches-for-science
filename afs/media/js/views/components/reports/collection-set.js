@@ -76,6 +76,37 @@ define([
             self.eventCards = {};
             self.summary = params.summary;
 
+            //Summary Report
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
+            self.nameSummary = ko.observable();
+            self.typeSummary = ko.observable();
+            self.relatedProjectSummary = ko.observable();
+            self.statementSummary = ko.observable();
+
+            self.nameSummary(self.resource()['Name']?.map(x => {
+                const content = self.getNodeValue(x, 'name_content');
+                const type = self.getNodeValue(x, 'name_type');
+                return {content, type}
+            }));
+
+            self.relatedProjectSummary(self.getResourceListNodeValue(self.resource(), 'used in'));
+
+            self.typeSummary([{
+                type: self.getNodeValue(self.resource(), 'type')
+            }]);
+
+            self.statementSummary([{
+                content: self.getNodeValue(self.resource(), 'statement', 'statement_content'),
+                type: self.getNodeValue(self.resource(), 'statement', 'statement_type')
+            }]);
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
