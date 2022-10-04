@@ -58,7 +58,7 @@ define([
                 };
 
                 self.locationCards = {
-                    location: self.cards?.['geospatial definition of place'],
+                    locationGeometry: self.cards?.['geospatial definition of place'],
                 };
             }
 

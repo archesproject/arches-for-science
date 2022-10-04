@@ -17,7 +17,7 @@ define([
             Object.assign(self, reportUtils);
             self.map = ko.observable();
             self.selectedAnnotationTileId = ko.observable();
-            self.cards = {};
+            self.cards = Object.assign({}, params.cards);
             self.selectedGeometry = params.selectedGeometry || ko.observable();
             self.visible = {
                 geometry: ko.observable(true),
@@ -194,7 +194,10 @@ define([
                 self.map = ko.observable();
             };
 
-            self.geojson = Array.isArray(params.geojson) ? params.geojson : [params.geojson];
+            self.geojson = Array.isArray(params.geojson) ? params.geojson :
+                            params.geojson && params.geojson != '--' ? [params.geojson] :
+                            undefined;
+
             self.prepareMap('app-area-map-data', self.geojson?.[0]);
 
         },
