@@ -94,6 +94,16 @@ define([
         }
     };
 
+    const getResourceLink = (node) => {
+        if(node) {
+            const resourceId = node.resourceId;
+            if(resourceId){
+                return `${arches.urls.resource}\\${resourceId}`;
+            }
+        }
+    };
+
+
     return {
         // default table configuration - used for display
         defaultTableConfig: {
@@ -191,14 +201,7 @@ define([
 
         processRawValue: processRawNodeValue,
 
-        getResourceLink: (node) => {
-            if(node) {
-                const resourceId = node.resourceId;
-                if(resourceId){
-                    return `${arches.urls.resource}\\${resourceId}`;
-                }
-            }
-        },   
+        getResourceLink: getResourceLink,   
         
         getTileId: (node) => {
             if(node){
@@ -209,6 +212,19 @@ define([
         getNodeValue: (resource, ...args) => {
             const rawValue = getRawNodeValue(resource, ...args);
             return processRawNodeValue(rawValue);
+        },
+
+        getResourceListNodeValue: (resource, ...args) => {
+            const rawValue = getRawNodeValue(resource, ...args);
+            const resourceListValue = Array.isArray(rawValue) ? 
+                rawValue.reduce((acc, val) => acc.concat(getRawNodeValue(val, 'instance_details')), []) :
+                getRawNodeValue(rawValue, 'instance_details');
+            const resourceList = resourceListValue?.map(val => {
+                displayValue = processRawNodeValue(val);
+                link = getResourceLink(val);
+                return {displayValue, link}
+            });
+            return (resourceList);
         },
 
         stripTags (original) {
