@@ -106,6 +106,34 @@ define([
             self.communicationCards = {};
             self.summary = params.summary;
 
+            //Summary Report
+            self.nameSummary = ko.observable();
+            self.parentGroupSummary = ko.observable();
+            self.locationSummary = ko.observable();
+            self.activitySummary = ko.observable();
+            self.identifierSummary = ko.observable();
+
+            self.nameSummary(self.resource()['name']?.map(x => {
+                const content = self.getNodeValue(x, 'name_content');
+                const type = self.getNodeValue(x, 'name_type');
+                return {content, type}
+            }));
+
+            self.parentGroupSummary(self.getResourceListNodeValue(self.resource(), 'member of'));
+
+            self.locationSummary(self.getResourceListNodeValue(self.resource(), 'residence'));
+
+            self.activitySummary(self.resource()['professional activity']?.map(x => {
+                const type = self.getNodeValue(x, 'professional activity_type');
+                return {type}
+            }));
+
+            self.identifierSummary(self.resource()['identifier']?.map(x => {
+                const content = self.getNodeValue(x, 'identifier_content');
+                const type = self.getNodeValue(x, 'identifier_type');
+                return {content, type}
+            }));
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
@@ -198,6 +226,14 @@ define([
             self.groupMemberTableConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(4).fill(null)
+            };
+
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
             };
 
             self.collectionOfGroupMembers = ko.observableArray();
