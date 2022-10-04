@@ -163,9 +163,9 @@ define([
 
             if (nameData) {
                 self.namesSearchData(nameData.map(x => {
-                    const type = self.getNodeValue(x, 'Name_type');
-                    const content = self.getNodeValue(x, 'Name_content');
-                    const language = self.getNodeValue(x, 'Name_language');
+                    const type = self.getNodeValue(x, 'name_type');
+                    const content = self.getNodeValue(x, 'name_content');
+                    const language = self.getNodeValue(x, 'name_language');
                     const tileid = self.getTileId(x);
                     return { type, content, language, tileid }
                 }));
