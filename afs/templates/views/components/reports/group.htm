@@ -39,26 +39,6 @@
             </div>
             <!-- Description Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
-                <div class="afs-report-subsection" >
-                <!-- Parent Group Tab --> 
-                <!-- ko if: parentGroupSummary() && parentGroupSummary().length -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Parent Group" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: parentGroupSummary, dataTableOptions: getTableConfig(1) }">
-                            <tr>
-                                <td><a class="afs-table-link" data-bind="attr: {href: link}, text: displayValue"></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /ko -->
-                </div>
-
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/description',
                     params: {
