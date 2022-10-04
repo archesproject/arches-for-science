@@ -155,7 +155,7 @@ define([
                 .then(function(data){
                     self.digitalResources.push(data);
                     var obj = params.value();
-                    data.resource.File.forEach(function(datafile){
+                    data.resource?.File?.forEach(function(datafile){
                         var fileTileid = datafile['@tile_id'];
                         if (!(fileTileid in obj)){
                             obj[fileTileid] = {
@@ -200,8 +200,8 @@ define([
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
         this.selectedDigitalResource.subscribe(function(selectedDigitalResource){
-            this.files(selectedDigitalResource.resource.File);
-            this.selectedFile(this.files()[0]);
+            this.files(selectedDigitalResource.resource.File ?? []);
+            this.selectedFile(this.files()?.[0]);
         }, this);
         this.filteredDigitalResources = ko.pureComputed(function(){
             return this.digitalResources().filter(function(dr){

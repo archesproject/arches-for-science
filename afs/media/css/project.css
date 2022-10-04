@@ -501,6 +501,7 @@
 
 .upload-dataset-select-dataset-files #parts-panel {
     padding: 0px 0px;
+    border: 1px solid #ddd
 }
 .upload-dataset-select-dataset-files #parts-panel a .file-workbench-file {
     width: 100%;
@@ -508,9 +509,17 @@
 
 .upload-dataset-select-dataset-files #parts-panel .panel {
     margin-bottom:0px; 
-    border-right: 1px solid #ddd; 
-    border-left: 1px solid #ddd; 
     border-bottom: 1px solid #ddd;
+}
+
+.upload-dataset-select-dataset-files .file-workbench-file{
+    border:none;
+
+}
+
+.upload-dataset-select-dataset-files #parts-panel .panel:last-child {
+    margin-bottom:0px; 
+    border: none;
 }
 
 .upload-dataset-select-dataset-files #parts-panel .panel-collapse {

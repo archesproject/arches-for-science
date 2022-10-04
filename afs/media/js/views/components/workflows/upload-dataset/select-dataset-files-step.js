@@ -4,12 +4,13 @@ define([
     'uuid',
     'arches',
     'utils/resource',
+    'utils/report',
     'utils/physical-thing',
     'viewmodels/alert-json',
     'views/components/iiif-viewer',
     'js-cookie',
     'bindings/dropzone'
-], function(ko, koMapping, uuid, arches, resourceUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies) {
+], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
             IIIFViewerViewmodel.apply(this, [params]);
@@ -23,6 +24,7 @@ define([
             const datasetNameNodeId = "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a";
             const datasetFileNodeGroupId = "7c486328-d380-11e9-b88e-a4d18cec433a";
             const datasetFileNodeId = "7c486328-d380-11e9-b88e-a4d18cec433a";
+            const observationGraphId = "615b11ee-c457-11e9-910c-a4d18cec433a";
 
             this.showDatasetDetails = ko.observable(false);
 
@@ -137,6 +139,17 @@ define([
                 }
             }
 
+            const getPartObservationId = async (part) => {
+                if(part.datasetId()) {
+                    const selectedDatasetCrossReferences = await (await window.fetch(`${arches.urls.related_resources}${part.datasetId()}`)).json();
+                    const relatedObservation = selectedDatasetCrossReferences?.related_resources?.related_resources?.filter(x => x?.graph_id == observationGraphId);
+                    part.observationResourceId = relatedObservation?.[0]?.resourceinstanceid;
+                    if(part.datasetId() == self.selectedPart()?.datasetId()){
+                        self.selectedPart.valueHasMutated()
+                    }
+                }
+            };
+
             this.createObservationCrossReferences = async () => {
                 const recordedValueNodeId = "dd596aae-c457-11e9-956b-a4d18cec433a";
                 const tileid = self.observationReferenceTileId() || "";
@@ -151,16 +164,6 @@ define([
                     "transaction_id": params.form.workflowId
                 };
 
-                const getPartObservationId = async (part) => {
-                    if(part.datasetId()) {
-                        const selectedDatasetCrossReferences = await (await window.fetch(`${arches.urls.related_resources}${part.datasetId()}`)).json();
-                        const relatedObservation = selectedDatasetCrossReferences?.related_resources?.related_resources?.filter(x => x?.graph_id == observationGraphId);
-                        part.observationResourceId = relatedObservation?.[0]?.resourceinstanceid;
-                        if(part.datasetId() == self.selectedPart().datasetId()){
-                            self.selectedPart.valueHasMutated()
-                        }
-                    }
-                };
 
                 await Promise.all(self.parts().map(getPartObservationId));
                 
@@ -191,31 +194,6 @@ define([
                     return json;
                 }
             };
-
-            // this.removeDatasetFiles = async (part) => {
-            //     const savedDatasetFiles = self.snapshot?.parts.find(p => p.datasetId === part.datasetId()).datasetFiles
-            //     if (savedDatasetFiles) {
-            //         const currentTileIds = part.datasetFiles().map(val => ko.unwrap(val.tileId)) 
-            //         const savedTileIds = savedDatasetFiles.map(val => val.tileId) 
-            //         const tilesToDelete = savedTileIds.filter(tileid => !currentTileIds.includes(tileid));
-            //         tilesToDelete.forEach(async (tileid) => {
-            //             const tile = await window.fetch(arches.urls.api_tiles(tileid), {
-            //                 method: 'DELETE',
-            //                 credentials: 'include',
-            //                 body: JSON.stringify({'tileid': tileid})
-            //             });
-               
-            //             if (tile.ok) {
-            //                 json = await tile.json();
-            //                 console.log(json);
-            //             }
-            //         });
-            //     }
-            // }
-            // The above would need this corresponding fix in api.py
-            // def delete(self, request, tileid):
-            //     tileview = TileView()
-            //     return tileview.delete(request)
 
             this.saveDatasetFile = (part, formData, file) => {
                 //Tile structure for the Digital Resource 'File' nodegroup
@@ -249,6 +227,62 @@ define([
                 }
             };
 
+            const saveWorkflowState = () => {
+                params.form.savedData({ 
+                observationReferenceTileId: self.observationReferenceTileId(),
+                    parts: self.parts().map(x =>
+                        {
+                            fileObjects = x.datasetFiles().map(file => { 
+                                delete file.dataURL;
+                                return file;
+                            } );
+                            return {
+                                datasetFiles: fileObjects.map(x => { return {...x, tileId: ko.unwrap(x.tileId)} }),
+                                datasetId: x.datasetId(),
+                                nameTileId: x.nameTileId(),
+                                datasetName: x.datasetName() || '',
+                                resourceReferenceId: x.resourceReferenceId(),
+                                tileid: x.tileid
+                            };
+                        }
+                    )
+                });
+            }
+
+            this.deleteFile = async(file) => {
+                const fileTile = ko.unwrap(file.tileId);
+                if(fileTile){
+                    self.savingFile(true);
+                    try {
+                        self.savingMessage(`Deleting ${ko.unwrap(file.name)}...`)
+                        const formData = new window.FormData();
+                        formData.append("tileid", fileTile)
+
+                        const resp = await window.fetch(arches.urls.tile, {
+                            method: 'DELETE', 
+                            credentials: 'include',
+                            body: JSON.stringify(Object.fromEntries(formData.entries())),
+                            headers: {
+                                "X-CSRFToken": Cookies.get('csrftoken')
+                            }
+                        });
+
+                        const body = await resp.json();
+
+                        if(resp.status == 200 || (resp.status == 500 && body?.message?.includes("likely already deleted"))){
+                            const datasetFiles = this.selectedPart().datasetFiles();
+                            this.selectedPart().datasetFiles(datasetFiles.filter(datasetFile => 
+                                ko.unwrap(datasetFile.tileId) != fileTile
+                            ));
+
+                            saveWorkflowState();
+                        }
+                    } finally {
+                        self.savingFile(false)
+                    }
+                }
+            }
+
             this.saveFiles = async(files) => {
                 file = files[0]
                 params.form.lockExternalStep("select-instrument-and-files", true);
@@ -270,27 +304,8 @@ define([
                         "partResourceId": ko.unwrap(part.resourceid)
                     }));
 
-                    // part.datasetId(dataset.resourceId);
-                    // part.nameTileId(dataset.tileId);
-
                     // Then save a file tile to the digital resource for each associated file
                     self.saveDatasetFile(part, formData, file);
-                    // await self.removeDatasetFiles(part);
-                
-                    // Then save a relationship tile on the part that points to the digital resource
-                    // await self.saveDigitalResourceToChildPhysThing(part);
-
-                    // const tile = await window.fetch(arches.urls.api_tiles(tileId), {
-                    //     method: 'POST',
-                    //     credentials: 'include',
-                    //     body: formData
-                    // })
-
-                    // if (tile.ok) {
-                    //     json = await tile.json();
-                    //     file.tileId(json.tileid);
-                    // }
-
 
                     const resp = await window.fetch(arches.urls.upload_dataset_select_dataset_files_step, {
                         method: 'POST',
@@ -305,7 +320,13 @@ define([
                     const datasetInfo = await resp.json()
                     self.observationReferenceTileId(datasetInfo.observationReferenceTileId);
                     part.datasetId(datasetInfo.datasetResourceId);
-                    part.datasetFiles([...part.datasetFiles(), ...datasetInfo.files]);
+                    const newDatasetFiles = part.datasetFiles().filter(
+                        x => datasetInfo.removedFiles.find(
+                            y => {
+                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid)
+                            }) == undefined
+                    )
+                    part.datasetFiles([...newDatasetFiles, ...datasetInfo.files]);
                     part.nameTileId(datasetInfo.datasetNameTileId);
                 } catch(err) {
                     // eslint-disable-next-line no-console
@@ -313,31 +334,7 @@ define([
                     params.form.loading(false);
                 }
 
-                // try {
-                //     await self.createObservationCrossReferences();
-                // } catch(err) {
-                //     console.log('Couldn\'t create observation cross references.');
-                // }
-
-                params.form.savedData({ 
-                    observationReferenceTileId: self.observationReferenceTileId(),
-                    parts: self.parts().map(x =>
-                        {
-                            fileObjects = x.datasetFiles().map(file => { 
-                                delete file.dataURL;
-                                return file;
-                            } );
-                            return {
-                                datasetFiles: fileObjects.map(x => { return {...x, tileId: ko.unwrap(x.tileId)} }),
-                                datasetId: x.datasetId(),
-                                nameTileId: x.nameTileId(),
-                                datasetName: x.datasetName() || '',
-                                resourceReferenceId: x.resourceReferenceId(),
-                                tileid: x.tileid
-                            };
-                        }
-                    )
-                });
+                saveWorkflowState();
 
                 // self.snapshot = params.form.savedData();
                 params.form.complete(true);
@@ -407,10 +404,6 @@ define([
                     let timeoutId = 0;
 
                     part.calcDatasetName = ko.computed(function() {
-                        //clearTimeout(timeoutId);
-                        // timeoutId = setTimeout(() => {
-                        //     self.saveFiles([])
-                        // }, 500);
                         const basename = part.datasetName() || 'Dataset';
 
                         return `${basename} (${childPhysThingName})`
@@ -432,6 +425,7 @@ define([
                             return file;
                         });
                         part.datasetId(dataset._id);
+                        await getPartObservationId(part)
                         part.datasetName(datasetName);
                         part.datasetFiles(datasetFiles);
                         part.nameTileId(nameTileId);
@@ -470,7 +464,6 @@ define([
                     }
                 };
                 self.parts(parts);
-                //self.save();
                 self.selectedPart(self.parts()[0]);
             }
      
