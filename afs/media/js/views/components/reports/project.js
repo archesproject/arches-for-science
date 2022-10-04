@@ -46,9 +46,9 @@ define([
                 columns: Array(3).fill(null)
             };
 
-            self.fourWideTableConfig = {
+            self.identifierTableConfig = {
                 ...self.defaultTableConfig,
-                columns: Array(4).fill(null)
+                columns: Array(2).fill(null)
             };
 
             self.collectionOfChildProjects = ko.observableArray();
@@ -56,7 +56,8 @@ define([
                 childProjects: ko.observable(true),
                 names: ko.observable(true),
                 identifiers: ko.observable(true),
-                classifications: ko.observable(true)
+                classifications: ko.observable(true),
+                statements: ko.observable(true)
             };
 
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
@@ -168,12 +169,11 @@ define([
 
             ////// Search Details section //////
             self.namesSearchData = ko.observable();
-            self.timeSpanSearchData = ko.observable();
             self.activityTypeSearchData = ko.observable();
-            self.parentSearchData = ko.observable();
             self.teamSearchData = ko.observable();
             self.statementsSearchData = ko.observable();
             self.identiferSearchData = ko.observable();
+            self.typeSearchData = ko.observable();
 
             const nameData = self.resource()?.Name;
             if (nameData) {
@@ -185,16 +185,34 @@ define([
                     return { type, content, language, tileid }
                 }));
             };
-
-            self.timeSpanSearchData(self.resource()?.TimeSpan);
         
+            self.activityTypeSearchData = ko.observable({
+                sections: [
+                    {
+                        title: 'Activity Type of Project', 
+                        data: [{
+                            key: 'activity type of project', 
+                            value: self.getRawNodeValue(self.resource(), 'technique'), 
+                            card: undefined,
+                            type: 'resource'
+                        }]
+                    }
+                ]
+            });
 
-
-            self.activityTypeSearchData(self.getRawNodeValue(self.resource(), 'technique'));
-
-            self.parentSearchData(self.getRawNodeValue(self.resource(), 'part of'));
-
-            self.teamSearchData(self.getRawNodeValue(self.resource(), 'carried out by'));
+            self.teamSearchData = ko.observable({
+                sections: [
+                    {
+                        title: 'Project Team', 
+                        data: [{
+                            key: 'project team', 
+                            value: self.getRawNodeValue(self.resource(), 'carried out by'), 
+                            card: undefined,
+                            type: 'resource'
+                        }]
+                    }
+                ]
+            });
 
             const statmentData = self.resource()?.Statement;
             if (statmentData) {
@@ -216,6 +234,20 @@ define([
                     return { type, content, tileid }
                 }));
             };
+
+            self.typeSearchData = ko.observable({
+                sections: [
+                    {
+                        title: 'Classification',
+                        data: [{
+                            key: 'type',
+                            value: self.resource()?.type,
+                            card: undefined,
+                            type: 'resource'
+                        }]
+                    }
+                ]
+            });
         },
         template: { require: 'text!templates/views/components/reports/project.htm' }
     });

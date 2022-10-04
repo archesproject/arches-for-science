@@ -148,6 +148,7 @@
     {% endblock body %}
 {% endblock report %}
 
+
 {% block summary %}
 
 <div class="afs-summary-report-header">
@@ -193,7 +194,6 @@
                 <!-- /ko -->
             </div>
         </div>
-
         <!-- Dates -->
         <div data-bind="component: {
             name: 'views/components/reports/scenes/substance',
@@ -202,14 +202,107 @@
                 dataConfig: substanceDataConfig
             }
         }"></div>
-
         <!-- Activity Type -->
-        
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/default',
+            params: {
+                data: activityTypeSearchData,
+            }
+        }"></div>
         <!-- Parent Project -->
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/default',
+            params: {
+                data: parthoodData,
+            }
+        }"></div>
         <!-- Project Team -->
+        <div data-bind="component: {
+            name: 'views/components/reports/scenes/default',
+            params: {
+                data: teamSearchData,
+            }
+        }"></div>
         <!-- Statements -->
-        <!-- Identifier / Type -->
-        <!-- Description -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.statements)}, css: {'fa-angle-double-right': visible.statements(), 'fa-angle-double-up': !visible.statements()}" class="fa toggle"></i> {% trans "Statements" %}</h2>
+        
+            <!-- Collapsible content -->
+            <div data-bind="visible: visible.statements" class="afs-report-collapsible-container pad-lft">
+        
+                <!-- ko ifnot: statementsSearchData().length -->
+                <div class="afs-nodata-note">No statements for this resource</div>
+                <!-- /ko -->
+                
+                <!-- ko if: statementsSearchData().length -->
+                <div class="afs-report-subsection" >
+                    <div class="firstchild-container">
+                        <div class="afs-table pad-btm">
+                            <table class="table table-striped" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr class="afs-table-header">
+                                        <th>{% trans "Content" %}</th>
+                                        <th class="none">{% trans "Type" %}</th>
+                                        <th class="none">{% trans "Language" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="dataTablesForEach: { data: statementsSearchData, dataTableOptions: threeWideTableConfig }">
+                                    <tr>
+                                        <td data-bind="text: content"></td>
+                                        <td data-bind="text: type"></td>
+                                        <td data-bind="text: language"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Identifier -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.identifiers)}, css: {'fa-angle-double-right': visible.identifiers(), 'fa-angle-double-up': !visible.identifiers()}" class="fa toggle"></i> {% trans "Identifiers" %}</h2>
+        
+            <!-- Collapsible content -->
+            <div data-bind="visible: visible.identifiers" class="afs-report-collapsible-container pad-lft">
+        
+                <!-- ko ifnot: identiferSearchData() -->
+                <div class="afs-nodata-note">No identifiers for this resource</div>
+                <!-- /ko -->
+        
+                <!-- ko if: identiferSearchData() -->
+                
+                <div class="afs-report-subsection" >
+                    <div>
+                        <div class="afs-table">
+                            <table class="table table-striped" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr class="afs-table-header">
+                                        <th>{% trans "Name" %}</th>
+                                        <th class="min-tabletl">{% trans "Type" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="dataTablesForEach: { data: identiferSearchData, dataTableOptions: identifierTableConfig }">
+                                    <tr>
+                                        <td data-bind="text: content"></td>
+                                        <td data-bind="text: type"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+         <!-- Type -->
+         <div data-bind="component: {
+            name: 'views/components/reports/scenes/default',
+            params: {
+                data: typeSearchData,
+            }
+        }"></div>
     </div>
 </div>
 
