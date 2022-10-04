@@ -17,6 +17,7 @@ define([
             Object.assign(self, reportUtils);
             self.map = ko.observable();
             self.selectedAnnotationTileId = ko.observable();
+            self.mapOnly = params.mapOnly || false;
             self.cards = Object.assign({}, params.cards);
             self.selectedGeometry = params.selectedGeometry || ko.observable();
             self.visible = {
