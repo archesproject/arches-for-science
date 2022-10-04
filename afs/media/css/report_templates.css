@@ -598,6 +598,12 @@ i.toggle:hover {
     background-color: #f6f8fa90 !important;
 }
 
+#project-search-statement-content {
+    max-width: 50vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .line-clamp-1 {
     overflow: hidden;
     text-overflow: ellipsis;
