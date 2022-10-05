@@ -284,7 +284,7 @@ define([
             }
 
             this.saveFiles = async(files) => {
-                file = files[0]
+                file = files?.[0]
                 params.form.lockExternalStep("select-instrument-and-files", true);
                 const part = self.selectedPart();
                 try {
@@ -304,8 +304,12 @@ define([
                         "partResourceId": ko.unwrap(part.resourceid)
                     }));
 
-                    // Then save a file tile to the digital resource for each associated file
-                    self.saveDatasetFile(part, formData, file);
+                    self.savingFile(true);
+                    self.savingMessage(`Saving dataset ${part.calcDatasetName()}`);
+                    if (file) {
+                        // Then save a file tile to the digital resource for each associated file
+                        self.saveDatasetFile(part, formData, file);
+                    }
 
                     const resp = await window.fetch(arches.urls.upload_dataset_select_dataset_files_step, {
                         method: 'POST',
@@ -335,7 +339,7 @@ define([
                 }
 
                 saveWorkflowState();
-
+                self.showEditDatasetName(false);
                 // self.snapshot = params.form.savedData();
                 params.form.complete(true);
             };

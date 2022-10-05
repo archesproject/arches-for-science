@@ -74,7 +74,10 @@
                         </div>
                         <div class="dataset-name">
                             <label class="control-label">{% trans "Dataset Name*" %}</label>
-                            <input type="text" class="form-control" placeholder="Dataset name" data-bind="visible: showEditDatasetName(), enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
+                            <div style="display: flex">
+                                <input style="flex: 1;" type="text" class="form-control" placeholder="Dataset name" data-bind="visible: showEditDatasetName, enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
+                                <button style="margin: 0px 5px" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && self.showEditDatasetName()), click: function(){$parent.saveFiles(); }" style="">Save</button>
+                            </div>
                             <div data-bind="click: function(){selectedPartHasCurrentObservation()?showEditDatasetName(true):showEditDatasetName(false)}">
                                 <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;" data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
                             </div>
