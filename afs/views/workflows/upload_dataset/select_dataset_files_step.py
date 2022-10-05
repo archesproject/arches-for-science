@@ -71,7 +71,7 @@ class SelectDatasetFilesStep(View):
                 digital_reference_tile.save(user=request.user, transaction_id=transaction_id)
 
             # create observation cross references
-            if observation_ref_tile != None:
+            if observation_ref_tile is not None:
                 observation_reference_tile = Tile.objects.get(tileid=observation_ref_tile)
                 relationships = observation_reference_tile.data[recorded_value_node_id]
                 part_relationships = [item for item in relationships if item["partResource"] == part_resource_id]
@@ -162,7 +162,7 @@ class SelectDatasetFilesStep(View):
                         file_data["renderer"] = renderer_lookup["image"]
                     elif "pdf" in split_file_mime:
                         file_data["renderer"] = renderer_lookup["pdf"]
-                    elif instrument != None:  # instrument was given by zip file name
+                    elif instrument is not None:  # instrument was given by zip file name
                         file_data["renderer"] = renderer_lookup[instrument]
 
                     # file has not been uploaded
