@@ -98,14 +98,20 @@ define([
 
             self.relatedProjectSummary(self.getResourceListNodeValue(self.resource(), 'used in'));
 
-            self.typeSummary([{
-                type: self.getNodeValue(self.resource(), 'type')
-            }]);
+            const type = self.getNodeValue(self.resource(), 'type');
+            if (type && type != '--') {
+                self.typeSummary([{
+                    type: self.getNodeValue(self.resource(), 'type')
+                }]);
+            } 
 
-            self.statementSummary([{
-                content: self.getNodeValue(self.resource(), 'statement', 'statement_content'),
-                type: self.getNodeValue(self.resource(), 'statement', 'statement_type')
-            }]);
+            const statement = self.getNodeValue(self.resource(), 'statement', 'statement_content');
+            if (statement && statement != '--') {
+                self.statementSummary([{
+                    content: statement,
+                    type: self.getNodeValue(self.resource(), 'statement', 'statement_type')
+                }]);
+            } 
 
             if(params.report.cards){
                 const cards = params.report.cards;
