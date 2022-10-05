@@ -14,12 +14,12 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'substance', title: 'Substance'},
-                {id: 'location', title: 'Location'},
-                {id: 'parameters', title: 'Parameters & Outcomes'},
-                {id: 'parthood', title: 'Parthood'},
+                {id: 'name', title: 'Names, Identifiers, Classification'},
                 {id: 'description', title: 'Description'},
+                {id: 'substance', title: 'Dates'},
+                {id: 'data', title: 'Data'},
+                {id: 'parthood', title: 'Parent Project'},
+                {id: 'objects', title: 'Related Objects'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
@@ -44,6 +44,32 @@ define([
             self.substanceCards = {};
             self.summary = params.summary;
 
+            self.relatedObjectsTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            };
+
+            self.collectionOfRelatedObjects = ko.observableArray();
+            self.visible = {
+                relatedObjects: ko.observable(true),
+            };
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const loadRelatedResources = async() => {
+                const result = await reportUtils.getRelatedResources(resourceId);
+                const physicalThingGraphID = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+                const relatedPhysicalThings = result?.related_resources.filter(resource => 
+                    resource?.graph_id === physicalThingGraphID);
+                
+                self.collectionOfRelatedObjects(relatedPhysicalThings.map(element => {
+                    element.link = reportUtils.getResourceLink({resourceId: element.resourceinstanceid}),
+                    element.displaydescription = reportUtils.stripTags(element.displaydescription)
+                    return element
+                }));
+            };
+
+            loadRelatedResources();
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
@@ -62,31 +88,17 @@ define([
                 self.documentationCards = {
                     digitalReference: self.cards?.['digital reference to observation'],
                 };
+
                 self.substanceCards = {
                     timespan: self.cards?.['timespan of observation'],
                 };
             };
-                        
-            self.locationData = ko.observable({
-                sections: 
-                    [
-                        {
-                            title: 'Location of Observation', 
-                            data: [{
-                                key: 'location of observation', 
-                                value: self.getRawNodeValue(self.resource(), 'took place at'), 
-                                card: self.cards?.['location of observation'],
-                                type: 'resource'
-                            }]
-                        }
-                    ]
-            });
 
             self.parthoodData = ko.observable({
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Parent Event',
                             data: [{
                                 key: 'parent event of observation', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -97,22 +109,22 @@ define([
                     ]
             });
 
-            self.parthoodData = ko.observable({
+            self.dataData = ko.observable({
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Recorded Value',
                             data: [{
-                                key: 'parent event of observation', 
-                                value: self.getRawNodeValue(self.resource(), 'part of'), 
-                                card: self.cards?.['parent event of observation'],
+                                key: 'recorded value of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'recorded value'), 
+                                card: self.cards?.['recorded value of observation'],
                                 type: 'resource'
                             }]
                         }
                     ]
             });
 
-            self.parameterData = ko.observable({
+            self.descriptionData = ko.observable({
                 sections: 
                     [
                         {
@@ -123,19 +135,14 @@ define([
                                 card: self.cards?.['technique of observation'],
                                 type: 'resource'
                             },{
+                                key: 'location of observation', 
+                                value: self.getRawNodeValue(self.resource(), 'took place at'), 
+                                card: self.cards?.['location of observation'],
+                                type: 'resource'
+                            },{
                                 key: 'procedure / method used during observation', 
                                 value: self.getRawNodeValue(self.resource(), 'used process'), 
                                 card: self.cards?.['parent event of observation'],
-                                type: 'resource'
-                            },{
-                                key: 'object observed during observation', 
-                                value: self.getRawNodeValue(self.resource(), 'observed'), 
-                                card: self.cards?.['object observed during observation'],
-                                type: 'resource'
-                            },{
-                                key: 'recorded value of observation', 
-                                value: self.getRawNodeValue(self.resource(), 'recorded value'), 
-                                card: self.cards?.['recorded value of observation'],
                                 type: 'resource'
                             },{
                                 key: 'person carrying out observation', 
