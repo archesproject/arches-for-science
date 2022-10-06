@@ -29,5 +29,5 @@ urlpatterns = [
     url(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),
     url(r"^saveanalysisarea", SaveAnalysisAreaView.as_view(), name="saveanalysisarea"),
     url(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),
-    url(r"^", include("arches.urls"))
+    url(r"^", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
