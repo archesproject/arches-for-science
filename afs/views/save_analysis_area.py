@@ -1,11 +1,13 @@
 import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.generic import View
-from arches.app.models.tile import Tile
+from django.views.decorators.csrf import csrf_exempt
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
+from arches.app.models.models import ResourceXResource
 from arches.app.utils.betterJSONSerializer import JSONDeserializer
 from arches.app.utils.response import JSONResponse
 
@@ -437,3 +439,72 @@ class SaveSampleAreaView(SaveAnnotationView):
         }
 
         return JSONResponse({"result": res})
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class DeleteSampleAreaView(View):
+
+    def post(self, request):
+        # need to delete:
+        # the "sample"
+        # the "sample area"
+        # the tile from the parent physical thing that references the "sample area"
+        # the tile from the sampling activity that references the "sample area"
+
+        data = JSONDeserializer().deserialize(request.body)
+
+        physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
+        part_identifier_assignment_label_nodeid = "3e541cc6-859b-11ea-97eb-acde48001122"
+        part_identifier_assignment_polygon_identifier_nodeid = "97c30c42-8594-11ea-97eb-acde48001122"
+        sampling_area_nodeid = "b3e171ac-1d9d-11eb-a29f-024e0d439fdb"
+        sampling_area_sample_created_nodeid = "b3e171ab-1d9d-11eb-a29f-024e0d439fdb"
+        sampling_unit_nodegroupid = "b3e171a7-1d9d-11eb-a29f-024e0d439fdb"
+
+        parent_physical_thing_resourceid = data.get("parentPhysicalThingResourceid")
+        parent_physical_thing_name = data.get("parentPhysicalThingName")
+        sampling_activity_resourceid = data.get("samplingActivityResourceId")
+        collection_resourceid = data.get("collectionResourceid")
+        sample_motivation = data.get("sampleMotivation")
+        sample_description = data.get("sampleDescription")
+        transaction_id = data.get("transactionId")
+        
+        part_identifier_assignment_tile_data = JSONDeserializer().deserialize(data.get("partIdentifierAssignmentTileData"))
+        part_identifier_assignment_tile_id = data.get("partIdentifierAssignmentTileId", None)
+
+        
+        sample_area_physical_thing_resourceid = None
+        if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
+            sample_area_physical_thing_resourceid = part_identifier_assignment_tile_data[
+                physical_part_of_object_nodeid][0]["resourceId"]
+
+        try:
+            sample_physical_thing_resourceid = None
+            sampling_unit_tiles = Tile.objects.filter(
+                resourceinstance_id=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
+            if len(sampling_unit_tiles) > 0:
+                for sampling_unit_tile in sampling_unit_tiles:
+                    if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
+                        sample_physical_thing_resourceid = sampling_unit_tile.data[
+                            sampling_area_sample_created_nodeid][0]["resourceId"]
+
+            parentPhysicalThingSampleTile = ResourceXResource.objects.get(
+                nodeid=physical_part_of_object_nodeid, 
+                resourceinstanceidfrom_id=parent_physical_thing_resourceid, 
+                resourceinstanceidto_id=sample_area_physical_thing_resourceid)
+            
+            samplingActivitySampleTile = ResourceXResource.objects.get(
+                nodeid=sampling_area_nodeid,
+                resourceinstanceidfrom_id=sampling_activity_resourceid,
+                resourceinstanceidto_id=sample_area_physical_thing_resourceid)
+
+            with transaction.atomic():
+                Resource.objects.get(resourceinstanceid=sample_area_physical_thing_resourceid).delete(transaction_id=transaction_id)
+                Resource.objects.get(resourceinstanceid=sample_physical_thing_resourceid).delete(transaction_id=transaction_id)
+                Tile.objects.get(tileid=parentPhysicalThingSampleTile.tileid_id).delete(transaction_id=transaction_id)
+                Tile.objects.get(tileid=samplingActivitySampleTile.tileid_id).delete(transaction_id=transaction_id)
+            return JSONResponse(status=200)
+        except:
+            response = {"message": _("Unable to delete"), "title": _("Delete Failed")}
+            return JSONResponse(response, status=500)
+
+            

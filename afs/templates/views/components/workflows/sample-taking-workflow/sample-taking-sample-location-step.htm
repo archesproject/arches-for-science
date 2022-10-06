@@ -103,11 +103,16 @@
                                             })()
                                         },
                                     ">
-                                        <td style="cursor: pointer;" class="map-card-feature-tool">
+                                        <td style="cursor: pointer; width: 30px;">
                                             <a href="javascript:void(0);"
                                                 data-bind="click: function() { $parent.selectSampleLocationInstance($data); }, clickBubble: false">
                                                 <i class="fa fa-pencil map-card-feature-edit"></i>
-                                                {% trans "Edit" %}
+                                            </a>
+                                        </td>
+                                        <td style="cursor: pointer; width: 30px;">
+                                            <a href="javascript:void(0);"
+                                                data-bind="click: function() { $parent.deleteSampleLocation($data); }, clickBubble: false">
+                                                <i class="fa fa-trash map-card-feature-edit"></i>
                                             </a>
                                         </td>
                                         <td class="afs-workflow-table-contents" data-bind="text: (function(){
@@ -126,7 +131,7 @@
                 </div>
 
                 {% block form_widgets %}
-                    <form class="widgets afs-sample-location-form-widgets" data-bind="style: {opacity: $data.selectedSampleLocationInstance() && !sampleListShowing() ? '1' : '0'}">
+                    <form class="widgets afs-sample-location-form-widgets" data-bind="style: {opacity: $data.selectedSampleLocationInstance() !== undefined && !sampleListShowing() ? '1' : '0'}">
                         <!-- BEGIN geometry table -->
                         <div data-bind="foreach: {
                             data:card.widgets, as: 'widget'

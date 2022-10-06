@@ -328,6 +328,12 @@ define([
                 const relatedSamplingActivity = currentResourceRelatedResources?.related_resources?.related_resources?.filter(x => x?.graph_id == samplingActivityGraphId);
                 instance.samplingActivityResourceId(relatedSamplingActivity?.[0]?.resourceinstanceid);
             }
+            if(instances.length > 0){
+                params.form.complete(true);
+            }else{
+                params.form.complete(false);
+            }
+
         });
 
         this.selectSampleLocationInstance = async function(sampleLocationInstance) {
@@ -342,7 +348,7 @@ define([
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
-            if (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid) {
+            if (sampleLocationInstance === undefined || (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid)) {
                 previouslySelectedSampleLocationInstance.reset();
 
                 self.drawFeatures([]);
@@ -456,6 +462,60 @@ define([
             self.updateSampleLocationInstances();
         };
 
+        this.deleteSampleLocation = function(selectedSampleLocationInstance){
+            self.selectedSampleLocationInstance(selectedSampleLocationInstance);
+            const data = {
+                parentPhysicalThingResourceid: self.physicalThingResourceId,
+                parentPhysicalThingName: params.physicalThingName,
+                samplingActivityResourceId: self.samplingActivityResourceId,
+                collectionResourceid: params.projectSet,
+                partIdentifierAssignmentTileData: koMapping.toJSON(selectedSampleLocationInstance.data),
+                partIdentifierAssignmentTileId: selectedSampleLocationInstance.tileid,
+                partIdentifierAssignmentResourceId: selectedSampleLocationInstance.resourceinstance_id,
+                sampleMotivation: self.motivationForSamplingWidgetValue(),
+                sampleDescription: self.sampleDescriptionWidgetValue(),
+                transactionId: params.form.workflowId,
+            };
+
+            self.savingTile(true);
+            self.savingMessage("Deleting Sample Areas, Samples & Descriptions");
+
+            window.fetch(arches.urls.root + 'deletesamplearea', {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(function(response){
+                self.savingTile(false);
+                if(response.ok){
+                    return;
+                }
+                
+                throw response;
+            })
+            .then(function(data){
+                selectedSampleLocationInstance.data[physicalThingPartAnnotationNodeId].features().forEach(function(feature){
+                    self.deleteFeature(feature);
+                });
+                self.sampleLocationInstances.remove(selectedSampleLocationInstance);
+                self.card.tiles.remove(selectedSampleLocationInstance);
+                self.selectSampleLocationInstance(undefined);
+                self.resetSampleLocationTile();
+            })
+            .catch((response) => {
+                response.json().then(function(error){
+                    params.pageVm.alert(new params.form.AlertViewModel(
+                        "ep-alert-red",
+                        error.title,
+                        error.message,
+                    )); 
+                });
+            });
+        }
+
         this.saveSampleLocationTile = function() {
             // don't save if tile isn't dirty.
             if(!self.tileDirty()){ return; }
@@ -559,7 +619,6 @@ define([
                     self.savingMessage("");
                     self.savingTile(false);
                     params.dirty(false);
-                    params.form.complete(true);
                     let mappedInstances = self.sampleLocationInstances().map((instance) => { return { "data": instance.data }});
                     params.form.savedData(mappedInstances);
                     params.form.value(params.form.savedData());
