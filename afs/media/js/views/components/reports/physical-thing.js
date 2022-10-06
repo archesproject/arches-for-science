@@ -29,6 +29,14 @@ define([
                 columns: Array(6).fill(null)
             };
 
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
             self.annotationTableHeader = 
                 `<tr class="afs-table-header">
                     <th>Region Name</th>
@@ -43,7 +51,13 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
-            self.visible = {parts: ko.observable(true)};
+            self.visible = {
+                parts: ko.observable(true),
+                names: ko.observable(true),
+                statements: ko.observable(true),
+                identifiers: ko.observable(true),
+                creation: ko.observable(true)
+            };
             self.selectedAnnotationTileId = ko.observable(null);
             self.nameCards = {};
             self.descriptionCards = {};
@@ -371,6 +385,86 @@ define([
                         }
                     ]
             });
+
+            ////// Search Details section //////
+            self.nameSummary = ko.observable();
+            self.statementsSummary = ko.observable();
+            self.identifierSummary = ko.observable();
+            self.typeSummary = ko.observable();
+            self.creationSummary = ko.observable();
+            self.externalURISummary = ko.observable();
+
+            const nameData = self.resource()?.Name;
+            if (nameData) {
+                self.nameSummary(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'Name_type');
+                    const content = self.getNodeValue(x, 'Name_content ');
+                    const language = self.getNodeValue(x, 'Name_language ');
+                    const tileid = self.getTileId(x);
+                    return { type, content, language, tileid }
+                }));
+            };
+
+            const statmentData = self.resource()?.Statement;
+            if (statmentData) {
+                self.statementsSummary(statmentData.map(x => {
+                    const type = self.getNodeValue(x, 'Statement_type');
+                    const content = self.getNodeValue(x, 'Statement_content');
+                    const language = self.getNodeValue(x, 'Statement_language');
+                    const tileid = self.getTileId(x);
+                    return { type, content, language, tileid }
+                }));
+            };
+
+            self.typeSummary = ko.observable({
+                sections: [
+                    {
+                        title: 'Classification',
+                        data: [{
+                            key: 'type',
+                            value: self.resource()?.type,
+                            card: undefined,
+                            type: 'resource'
+                        }]
+                    }
+                ]
+            });
+
+            const identiferData = self.resource()?.Identifier;
+            if (identiferData) {
+                self.identifierSummary(identiferData.map(x => {
+                    const type = self.getNodeValue(x, 'Identifier_type');
+                    const content = self.getNodeValue(x, 'Identifier_content');
+                    const tileid = self.getTileId(x);
+                    return { type, content, tileid }
+                }));
+            };
+
+            const creationData = self.resource()?.production;
+            if (creationData) { 
+                self.creationSummary(Array({
+                    creator: self.getNodeValue(creationData, 'production_carried out by'),
+                    date: self.getRawNodeValue(creationData, 'production_time'),
+                    type: self.getNodeValue(creationData, 'production_type'),
+                    technique: self.getRawNodeValue(creationData, 'production_technique'),
+                    location: self.getRawNodeValue(creationData, 'production_location'),
+                }));
+            };
+
+            self.externalURISummary = ko.observable({
+                sections: [
+                    {
+                        title: 'External URI',
+                        data: [{
+                            key: 'type',
+                            value: self.resource()?.ExactMatch,
+                            card: undefined,
+                            type: 'resource'
+                        }]
+                    }
+                ]
+            });
+
         },
         template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
     });
