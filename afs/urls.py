@@ -26,7 +26,7 @@ urlpatterns = [
         name="upload_dataset_select_dataset_files_step",
     ),
     url(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
-    url(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save")
+    url(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),
     url(r"^saveanalysisarea", SaveAnalysisAreaView.as_view(), name="saveanalysisarea"),
     url(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),
     url(r"^", include("arches.urls"))
