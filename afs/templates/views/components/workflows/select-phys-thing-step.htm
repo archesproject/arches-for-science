@@ -16,7 +16,14 @@
     </div>
     <!--ko if: termFilter() -->
     <div style="padding: 5px; margin-top: 15px;">
-        <div class="widget-input-label">Analyzed Object or Sample</div>
+        <div class="widget-input-label">
+            <span data-bind="if: datasetRoute == 'non-destructive'">
+                Choose an Object that has an Area of interest
+            </span>
+            <span data-bind="if: datasetRoute == 'destructive'">
+                Select a Sample of interest
+            </span>
+        </div>
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
@@ -35,7 +42,12 @@
     <!-- /ko -->
     <!-- ko if: validateThing && isPhysicalThingValid() === false -->
     <div class="tabbed-workflow-step-information-box widget-input-label" style="text-align: center; margin-top: 16px; height:fit-content; background-color: #fde9ad;">
-        The selected physical thing is invalid.  Complete the Analysis Area or Sample Taking workflow before proceeding.
+        <span data-bind="if: datasetRoute == 'non-destructive'">
+            You have to select an object with the analysis areas. Complete the Analysis Area workflow before proceeding.
+        </span>
+        <span data-bind="if: datasetRoute == 'destructive'">
+            You have to select a Sample. Complete the Sample Taking workflow before proceeding.
+        </span>
     </div>
     <!-- /ko -->
 </div>

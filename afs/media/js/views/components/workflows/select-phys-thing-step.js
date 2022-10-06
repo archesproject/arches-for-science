@@ -22,6 +22,7 @@ define([
         this.save = params.form.save;
         this.physicalThingGraphId = componentParams.graphids[0];
         this.projectGraphId = componentParams.graphids[1];
+        this.datasetRoute = params.datasetRoute;
         this.validateThing = componentParams.validateThing;
         this.projectValue = ko.observable();
         this.projectNameValue = ko.observable();
