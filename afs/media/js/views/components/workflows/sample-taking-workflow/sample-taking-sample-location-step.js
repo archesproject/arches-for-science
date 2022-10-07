@@ -82,12 +82,15 @@ define([
             self.highlightAnnotation();
 
             if (selectedSampleLocationInstance) {
+                self.sampleListShowing(false);
                 self.tile = selectedSampleLocationInstance;
                 params.tile = selectedSampleLocationInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedSampleLocationInstance);
                 if (ko.unwrap(ko.unwrap(selectedSampleLocationInstance.data[physicalThingPartAnnotationNodeId])?.features)) {
                     self.switchCanvas(selectedSampleLocationInstance)
                 }
+            }else{
+                self.sampleListShowing(!!self.sampleLocationInstances().length);
             }
         });
 
@@ -168,7 +171,7 @@ define([
 
             let subscription = self.sampleLocationInstances.subscribe(function(){
                 if (self.sampleLocationInstances().length > 0) {
-                    self.showSampleList(true);
+                    self.sampleListShowing(true);
                 }
                 subscription.dispose();
             });
@@ -343,8 +346,6 @@ define([
             self.motivationForSamplingWidgetValue(null);
             self.previouslySavedMotivationForSamplingWidgetValue(null);
 
-            self.sampleListShowing(false);
-
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
@@ -466,14 +467,8 @@ define([
             self.selectedSampleLocationInstance(selectedSampleLocationInstance);
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,
-                parentPhysicalThingName: params.physicalThingName,
                 samplingActivityResourceId: self.samplingActivityResourceId,
-                collectionResourceid: params.projectSet,
                 partIdentifierAssignmentTileData: koMapping.toJSON(selectedSampleLocationInstance.data),
-                partIdentifierAssignmentTileId: selectedSampleLocationInstance.tileid,
-                partIdentifierAssignmentResourceId: selectedSampleLocationInstance.resourceinstance_id,
-                sampleMotivation: self.motivationForSamplingWidgetValue(),
-                sampleDescription: self.sampleDescriptionWidgetValue(),
                 transactionId: params.form.workflowId,
             };
 
@@ -615,7 +610,7 @@ define([
                     self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
                     
                     self.updateSampleLocationInstances();
-                    self.showSampleList(true);
+                    self.sampleListShowing(true);
                     self.savingMessage("");
                     self.savingTile(false);
                     params.dirty(false);
