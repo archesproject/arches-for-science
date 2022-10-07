@@ -103,6 +103,14 @@
                                             })()
                                         },
                                     ">
+                                        <!-- ko if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId() -->
+                                        <td style="width: 30px;">
+                                            <a href="javascript:void(0);" style="cursor: unset;">
+                                                <i class="fa fa-lock"></i>
+                                            </a>
+                                        </td>
+                                        <!-- /ko -->
+                                        <!-- ko if: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
                                         <td style="cursor: pointer; width: 30px;">
                                             <a href="javascript:void(0);"
                                                 data-bind="click: function() { $parent.selectSampleLocationInstance($data); }, clickBubble: false">
@@ -115,12 +123,11 @@
                                                 <i class="fa fa-trash map-card-feature-edit"></i>
                                             </a>
                                         </td>
+                                        <!-- /ko -->
                                         <td class="afs-workflow-table-contents" data-bind="text: (function(){
                                             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                                             return $data.data[partIdentifierAssignmentLabelNodeId]() + ' [Sample of ' + $parent.physicalThingName + ']';
                                         })()" style="width: 100%"></td>
-                                        <td data-bind="if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId()"><i
-                                                class="fa fa-lock"></i></td>
                                     </tr>
                                     <!-- /ko -->
                                 </tbody>
