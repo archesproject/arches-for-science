@@ -396,6 +396,17 @@ define([
             self.creationSummary = ko.observable();
             self.externalURISummary = ko.observable();
 
+            const nameData = self.resource()?.name;
+            if (nameData) {
+                self.nameSummary(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'name_type');
+                    const content = self.getNodeValue(x, 'name_content');
+                    const language = self.getNodeValue(x, 'name_language');
+                    const tileid = self.getTileId(x);
+                    return { type, content, language, tileid }
+                }));
+            };
+
             self.getThumbnail = async(digitalResourceData) => {
                 const digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
                 const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
@@ -430,23 +441,12 @@ define([
 
             loadRelatedResources();
 
-            const nameData = self.resource()?.Name;
-            if (nameData) {
-                self.nameSummary(nameData.map(x => {
-                    const type = self.getNodeValue(x, 'Name_type');
-                    const content = self.getNodeValue(x, 'Name_content ');
-                    const language = self.getNodeValue(x, 'Name_language ');
-                    const tileid = self.getTileId(x);
-                    return { type, content, language, tileid }
-                }));
-            };
-
-            const statmentData = self.resource()?.Statement;
+            const statmentData = self.resource()?.statement;
             if (statmentData) {
                 self.statementsSummary(statmentData.map(x => {
-                    const type = self.getNodeValue(x, 'Statement_type');
-                    const content = self.getNodeValue(x, 'Statement_content');
-                    const language = self.getNodeValue(x, 'Statement_language');
+                    const type = self.getNodeValue(x, 'statement_type');
+                    const content = self.getNodeValue(x, 'statement_content');
+                    const language = self.getNodeValue(x, 'statement_language');
                     const tileid = self.getTileId(x);
                     return { type, content, language, tileid }
                 }));
@@ -457,7 +457,7 @@ define([
                     {
                         title: 'Classification',
                         data: [{
-                            key: 'type',
+                            key: 'Type of Object',
                             value: self.resource()?.type,
                             card: undefined,
                             type: 'resource'
@@ -466,11 +466,11 @@ define([
                 ]
             });
 
-            const identiferData = self.resource()?.Identifier;
+            const identiferData = self.resource()?.identifier;
             if (identiferData) {
                 self.identifierSummary(identiferData.map(x => {
-                    const type = self.getNodeValue(x, 'Identifier_type');
-                    const content = self.getNodeValue(x, 'Identifier_content');
+                    const type = self.getNodeValue(x, 'identifier_type');
+                    const content = self.getNodeValue(x, 'identifier_content');
                     const tileid = self.getTileId(x);
                     return { type, content, tileid }
                 }));
@@ -492,7 +492,7 @@ define([
                     {
                         title: 'External URI',
                         data: [{
-                            key: 'type',
+                            key: 'External URI',
                             value: self.resource()?.ExactMatch,
                             card: undefined,
                             type: 'resource'
