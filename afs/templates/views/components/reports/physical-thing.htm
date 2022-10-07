@@ -370,13 +370,14 @@
                                 <tbody data-bind="dataTablesForEach: { data: creationSummary, dataTableOptions: getTableConfig(5) }">
                                     <tr>
                                         <td data-bind="text: creator"></td>
-                                        <td data-bind="text: date['Production_time_begin of the begin']"></td>
+                                        <td data-bind="text: creationDate"></td>
                                         <td data-bind="text: type"></td>
                                         <td data-bind="text: technique"></td>
-                                        <td data-bind="text: location['@display_value']"></td>
+                                        <td><a class="afs-table-link" data-bind="click: function() {window.open(locationLink);}, text: location" href="javascript:void(0)"></a></td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <span data-bind="text: console.log($data)"></span>
                         </div>
                     </div>
                 </div>

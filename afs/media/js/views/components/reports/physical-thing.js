@@ -480,10 +480,11 @@ define([
             if (creationData) { 
                 self.creationSummary(Array({
                     creator: self.getNodeValue(creationData, 'production_carried out by'),
-                    date: self.getRawNodeValue(creationData, 'production_time'),
+                    creationDate: self.getNodeValue(creationData?.production_time, 'production_time_begin of the begin'),
                     type: self.getNodeValue(creationData, 'production_type'),
-                    technique: self.getRawNodeValue(creationData, 'production_technique'),
-                    location: self.getRawNodeValue(creationData, 'production_location'),
+                    technique: self.getNodeValue(creationData?.production_technique, '@display_value'),
+                    location: self.getNodeValue(creationData?.production_location, '@display_value'),
+                    locationLink: reportUtils.getResourceLink({resourceId: creationData?.production_location?.instance_details[0].resourceId})
                 }));
             };
 
