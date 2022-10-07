@@ -54,6 +54,7 @@ define([
             self.visible = {
                 parts: ko.observable(true),
                 names: ko.observable(true),
+                thumbnail: ko.observable(true),
                 statements: ko.observable(true),
                 identifiers: ko.observable(true),
                 creation: ko.observable(true)
@@ -388,11 +389,46 @@ define([
 
             ////// Search Details section //////
             self.nameSummary = ko.observable();
+            self.imageSummary = ko.observable();
             self.statementsSummary = ko.observable();
             self.identifierSummary = ko.observable();
             self.typeSummary = ko.observable();
             self.creationSummary = ko.observable();
             self.externalURISummary = ko.observable();
+
+            self.getThumbnail = async(digitalResourceData) => {
+                const digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
+                const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+                const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
+                    return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+                });
+                return window.fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId])
+                    .then(function(response){
+                        if(response.ok) {
+                            return response.json();
+                        }
+                    });
+            };
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const loadRelatedResources = async() => {
+                const digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
+                const result = await reportUtils.getRelatedResources(resourceId);
+                const relatedResources = result?.related_resources;
+                
+                const relatedDigitalResources = relatedResources.filter(resource => resource.graph_id === digitalResourceGraphId);
+                if (relatedDigitalResources) {
+                    const imageResource = await self.getThumbnail(relatedDigitalResources[0]);
+                    if (imageResource) {
+                        self.imageSummary(Array({
+                            displayname: imageResource.label,
+                            thumbnail: imageResource.sequences[0].canvases[0].thumbnail['@id']
+                        }));
+                    }
+                }
+            };
+
+            loadRelatedResources();
 
             const nameData = self.resource()?.Name;
             if (nameData) {
