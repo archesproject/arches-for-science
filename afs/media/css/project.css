@@ -904,6 +904,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
 
 .afs-sample-location-form-widgets {
     transition: opacity 1s;
@@ -911,4 +912,10 @@
     margin-top: 10px;
     margin-left: 5px;
     opacity: 0;
+}
+
+@media (min-width: 768px) {
+    #navbar .brand-title {
+        padding: 0 0.5em 0 1em;
+    }
 }
