@@ -446,8 +446,8 @@ class DeleteSampleAreaView(View):
 
     def post(self, request):
         # need to delete:
-        # the "sample"
-        # the "sample area"
+        # the "sample" physical thing
+        # the "sample area" physical thing
         # the tile from the parent physical thing that references the "sample area"
         # the tile from the sampling activity that references the "sample area"
 
@@ -507,4 +507,40 @@ class DeleteSampleAreaView(View):
             response = {"message": _("Unable to delete"), "title": _("Delete Failed")}
             return JSONResponse(response, status=500)
 
-            
+
+@method_decorator(csrf_exempt, name="dispatch")
+class DeleteAnalysisAreaView(View):
+
+    def post(self, request):
+        # need to delete:
+        # the "analysis" physical thing
+        # the tile from the parent physical thing that references the "sample area"
+        
+        data = JSONDeserializer().deserialize(request.body)
+
+        parent_physical_thing_resourceid = data.get("parentPhysicalThingResourceId")
+        part_identifier_assignment_tile_data = JSONDeserializer().deserialize(data.get("parentPhysicalThingTileData"))
+        transaction_id = data.get("transactionId")
+
+        physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
+        analysis_area_physical_thing_resourceid = None
+        
+        if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
+            analysis_area_physical_thing_resourceid = part_identifier_assignment_tile_data[
+                physical_part_of_object_nodeid][0]["resourceId"]
+
+        try:
+            parentPhysicalThingAnalysisTile = ResourceXResource.objects.get(
+                nodeid=physical_part_of_object_nodeid,
+                resourceinstanceidfrom_id=parent_physical_thing_resourceid,
+                resourceinstanceidto_id=analysis_area_physical_thing_resourceid)
+
+            with transaction.atomic():
+                Resource.objects.get(resourceinstanceid=analysis_area_physical_thing_resourceid).delete(
+                    transaction_id=transaction_id)
+                Tile.objects.get(tileid=parentPhysicalThingAnalysisTile.tileid_id).delete(
+                    transaction_id=transaction_id)
+            return JSONResponse(status=200)
+        except:
+            response = {"message": _("Unable to delete"), "title": _("Delete Failed")}
+            return JSONResponse(response, status=500)
