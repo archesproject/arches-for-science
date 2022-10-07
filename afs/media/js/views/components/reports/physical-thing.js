@@ -428,7 +428,7 @@ define([
                 const relatedResources = result?.related_resources;
                 
                 const relatedDigitalResources = relatedResources.filter(resource => resource.graph_id === digitalResourceGraphId);
-                if (relatedDigitalResources) {
+                if (relatedDigitalResources.length) {
                     const imageResource = await self.getThumbnail(relatedDigitalResources[0]);
                     if (imageResource) {
                         self.imageSummary(Array({
