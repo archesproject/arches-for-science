@@ -215,6 +215,14 @@ define([
             return original.replace(/(<([^>]+)>)/gi, "");
         },
 
+        getTableConfig (numberOfColumn) {
+            return {
+                ...self.defaultTableConfig,
+                columns: Array(numberOfColumn).fill(null),
+                columnDefs: []
+            }
+        },
+
         // see if there's any node with a valid displayable value.  If yes, return true.
         // potentially useful for deeply nested resources
         nestedDataExists: checkNestedData
