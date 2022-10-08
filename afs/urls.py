@@ -5,7 +5,7 @@ from arches.app.views.plugin import PluginView
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
 from afs.views.update_resource_list import UpdateResourceListView
-from afs.views.analysis_area_and_sample_taking import SaveAnalysisAreaView, SaveSampleAreaView, DeleteSampleAreaView, DeleteAnalysisAreaView
+from afs.views.analysis_area_and_sample_taking import SaveAnalysisAreaView, SaveSampleAreaView, DeleteSampleAreaView, DeleteAnalysisAreaView, GetLockedStatus
 from afs.views.digital_resources_by_object_parts import DigitalResourcesByObjectParts
 from afs.views.instrument_info_step import InstrumentInfoStepFormSaveView
 
@@ -26,4 +26,5 @@ urlpatterns = [
     url(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),
     url(r"^deletesamplearea", DeleteSampleAreaView.as_view(), name="deletesamplearea"),
     url(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
+    url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
