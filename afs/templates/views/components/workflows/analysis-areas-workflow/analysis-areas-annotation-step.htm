@@ -124,6 +124,14 @@
                                                 },
                                             "
                                         >
+                                            <!-- ko if: $data.isLocked() -->
+                                            <td style="width: 30px;">
+                                                <a href="javascript:void(0);" style="cursor: unset;">
+                                                    <i class="fa fa-lock"></i>
+                                                </a>
+                                            </td>
+                                            <!-- /ko -->
+                                            <!-- ko ifnot: $data.isLocked() -->
                                             <td style="cursor: pointer; width: 30px;">
                                                 <a href="javascript:void(0);"
                                                     data-bind="click: function() { $parent.selectAnalysisAreaInstance($data); }, clickBubble: false">
@@ -136,6 +144,7 @@
                                                     <i class="fa fa-trash map-card-feature-edit"></i>
                                                 </a>
                                             </td>
+                                            <!-- /ko -->
                                             <td class="afs-workflow-table-contents"
                                                 data-bind="text: (function(){
                                                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';

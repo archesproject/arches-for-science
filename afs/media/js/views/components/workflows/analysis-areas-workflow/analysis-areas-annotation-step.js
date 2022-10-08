@@ -293,6 +293,25 @@ define([
                     canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
                     )
                 );
+            // get locked status
+            tilesBelongingToManifest.forEach(function(analysisAreaTile){
+                analysisAreaTile.isLocked = ko.observable();
+                const physicalPartObjectNodeId = "b240c366-8594-11ea-97eb-acde48001122";
+                let analysisAreaResourceId = null;
+                
+                if(analysisAreaTile.data[physicalPartObjectNodeId]()){
+                    analysisAreaResourceId = analysisAreaTile.data[physicalPartObjectNodeId]()[0]["resourceId"]();
+                }
+                window.fetch(arches.urls.root + 'analysisarealocked' + '?resourceId=' + analysisAreaResourceId)
+                .then(function(response) {
+                    if(response.ok){
+                        return response.json();
+                    }
+                })
+                .then(function(data){
+                    analysisAreaTile.isLocked(data.isRelatedToDigitalResource);
+                });
+            })
             self.analysisAreaInstances(tilesBelongingToManifest);
         };
 

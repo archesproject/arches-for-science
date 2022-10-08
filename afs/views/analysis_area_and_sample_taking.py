@@ -544,3 +544,14 @@ class DeleteAnalysisAreaView(View):
         except:
             response = {"message": _("Unable to delete"), "title": _("Delete Failed")}
             return JSONResponse(response, status=500)
+
+class GetLockedStatus(View):
+    def get(self, request):
+        digitalResourceGraphId = "707cbd78-ca7a-11e9-990b-a4d18cec433a"
+        resourceId = request.GET.get("resourceId")
+        ret = ResourceXResource.objects.filter(
+            nodeid="a298ee52-8d59-11eb-a9c4-faffc265b501",
+            resourceinstanceidfrom_id=resourceId,
+            resourceinstanceto_graphid_id=digitalResourceGraphId).exists()
+        
+        return JSONResponse({"isRelatedToDigitalResource": ret})
