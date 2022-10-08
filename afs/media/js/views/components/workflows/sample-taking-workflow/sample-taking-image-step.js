@@ -13,7 +13,7 @@ define([
         params.pageVm.loading(true);
 
         this.isManifestManagerHidden = ko.observable(true);
-        this.shouldShowEditService = ko.observable(false);
+        this.shouldShowEditService = ko.observable(true);
 
         this.selectedPhysicalThingImageServiceName = ko.observable();
         this.selectedPhysicalThingImageServiceName.subscribe(function(imageServiceName) {
