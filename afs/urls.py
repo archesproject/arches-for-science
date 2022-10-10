@@ -5,7 +5,13 @@ from arches.app.views.plugin import PluginView
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
 from afs.views.update_resource_list import UpdateResourceListView
-from afs.views.analysis_area_and_sample_taking import SaveAnalysisAreaView, SaveSampleAreaView, DeleteSampleAreaView, DeleteAnalysisAreaView, GetLockedStatus
+from afs.views.analysis_area_and_sample_taking import (
+    SaveAnalysisAreaView,
+    SaveSampleAreaView,
+    DeleteSampleAreaView,
+    DeleteAnalysisAreaView,
+    GetLockedStatus,
+)
 from afs.views.digital_resources_by_object_parts import DigitalResourcesByObjectParts
 from afs.views.instrument_info_step import InstrumentInfoStepFormSaveView
 
