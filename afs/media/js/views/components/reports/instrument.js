@@ -48,15 +48,16 @@ define([
                 columns: Array(3).fill(null)
             };
 
-            self.nameTableConfig = {
-                ...self.defaultTableConfig,
-                columns: Array(3).fill(null)
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
             };
-
 
             self.visible = {
                 textualReference: ko.observable(true),
-                names: ko.observable(true)
             }
             
             self.textualReference = ko.observableArray();
@@ -157,12 +158,14 @@ define([
                     ]
             });
 
-            self.namesSearchData = ko.observable();
-            self.typeSearchData = ko.observable();
+            // Summary details
+            self.nameSummary = ko.observable();
+            self.typeSummary = ko.observable();
             const nameData = self.resource()?.Name;
+            const typeData = self.resource()?.type;
 
             if (nameData) {
-                self.namesSearchData(nameData.map(x => {
+                self.nameSummary(nameData.map(x => {
                     const type = self.getNodeValue(x, 'name_type');
                     const content = self.getNodeValue(x, 'name_content');
                     const language = self.getNodeValue(x, 'name_language');
@@ -171,19 +174,11 @@ define([
                 }));
             };
 
-            self.typeSearchData = ko.observable({
-                sections: [
-                    {
-                        title: 'Classification',
-                        data: [{
-                            key: 'type',
-                            value: self.resource()?.type,
-                            card: undefined,
-                            type: 'resource'
-                        }]
-                    }
-                ]
-            });
+            if (typeData) {
+                self.typeSummary(Array({
+                    type: self.getNodeValue(typeData, '@display_value')
+                }))
+            };
         },
         template: { require: 'text!templates/views/components/reports/instrument.htm' }
     });
