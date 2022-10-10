@@ -1,10 +1,10 @@
 define([
     'underscore',
     'jquery',
-    'js-cookie',
     'arches',
     'knockout',
     'knockout-mapping',
+    'geojson-extent',
     'views/components/workflows/stepUtils',
     'utils/resource',
     'models/graph',
@@ -13,7 +13,7 @@ define([
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
     'views/components/resource-instance-nodevalue',
-], function(_, $, Cookies, arches, ko, koMapping, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+], function(_, $, arches, ko, koMapping, geojsonExtent, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -195,6 +195,16 @@ define([
 
                                     if (self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid === feature.feature.properties.tileId) {
                                         feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                                        if (feature.feature.geometry.type === 'Point') {
+                                            var coords = feature.feature.geometry.coordinates;
+                                            self.map().panTo([coords[1], coords[0]]);
+                                        } else {
+                                            var extent = geojsonExtent(feature.feature);
+                                            self.map().fitBounds([
+                                                [extent[1], extent[0]],
+                                                [extent[3], extent[2]]
+                                            ]);
+                                        }
                                     } else {
                                         feature.setStyle({color: defaultColor, fillColor: defaultColor});
                                     }
@@ -451,6 +461,7 @@ define([
 
             self.savingTile(true);
             params.form.lockExternalStep('image-step', true);
+            self.savingMessage(`Saving Analysis Area ...`);
 
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,

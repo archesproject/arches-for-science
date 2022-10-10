@@ -94,12 +94,15 @@
                                                         flex-direction: column;
                                                     ">
                                     <!-- ko foreach: $data.filteredSampleLocationInstances -->
-                                    <tr data-bind="scrollTo: $parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid,
-                                        style: {
-                                            background: (function() {
-                                                if ($parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid) {
-                                                    return '#afd7f7';
-                                                }
+                                    <tr style="cursor: pointer;"
+                                        data-bind="
+                                            click: function() { $parent.selectSampleLocationInstance($data); },
+                                            scrollTo: $parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid,
+                                            style: {
+                                                background: (function() {
+                                                    if ($parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid) {
+                                                        return '#afd7f7';
+                                                    }
                                             })()
                                         },
                                     ">

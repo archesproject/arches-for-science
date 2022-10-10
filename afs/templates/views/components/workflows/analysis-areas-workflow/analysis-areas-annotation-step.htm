@@ -113,7 +113,9 @@
                                     "
                                 >
                                     <!-- ko foreach: $data.filteredAnalysisAreaInstances -->
-                                        <tr data-bind="
+                                        <tr style="cursor: pointer;" 
+                                            data-bind="
+                                                click: function() { $parent.selectAnalysisAreaInstance($data); }
                                                 scrollTo: $parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid,
                                                 style: {
                                                     background: (function() {
