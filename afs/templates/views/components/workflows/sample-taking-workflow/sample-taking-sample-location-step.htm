@@ -94,28 +94,35 @@
                                                         flex-direction: column;
                                                     ">
                                     <!-- ko foreach: $data.filteredSampleLocationInstances -->
-                                    <tr data-bind="scrollTo: $parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid,
-                                        style: {
-                                            background: (function() {
-                                                if ($parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid) {
-                                                    return '#afd7f7';
-                                                }
+                                    <tr style="cursor: pointer;"
+                                        data-bind="
+                                            click: function() { $parent.selectSampleLocationInstance($data); },
+                                            scrollTo: $parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid,
+                                            style: {
+                                                background: (function() {
+                                                    if ($parent.selectedSampleLocationInstance() && $parent.selectedSampleLocationInstance().tileid === $data.tileid) {
+                                                        return '#afd7f7';
+                                                    }
                                             })()
                                         },
                                     ">
                                         <td style="cursor: pointer;" class="map-card-feature-tool">
+                                            <!-- ko if: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
                                             <a href="javascript:void(0);"
-                                                data-bind="click: function() { $parent.selectSampleLocationInstance($data); }, clickBubble: false">
+                                                data-bind="click: function() { $parent.editSampleLocationInstance($data); }, clickBubble: false">
                                                 <i class="fa fa-pencil map-card-feature-edit"></i>
                                                 {% trans "Edit" %}
                                             </a>
+                                            <!-- /ko -->
+                                            <!-- ko ifnot: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
+                                            <i class="fa fa-lock map-card-feature-edit"></i>
+                                            <!-- /ko -->
                                         </td>
+                                        <td data-bind="if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId()"></td>
                                         <td class="afs-workflow-table-contents" data-bind="text: (function(){
                                             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                                             return $data.data[partIdentifierAssignmentLabelNodeId]() + ' [Sample of ' + $parent.physicalThingName + ']';
                                         })()" style="width: 100%"></td>
-                                        <td data-bind="if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId()"><i
-                                                class="fa fa-lock"></i></td>
                                     </tr>
                                     <!-- /ko -->
                                 </tbody>
