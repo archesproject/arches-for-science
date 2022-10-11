@@ -65,7 +65,6 @@ define([
             self.highlightAnnotation();
 
             if (selectedAnalysisAreaInstance) {
-                self.sampleListShowing(false);
                 self.tile = selectedAnalysisAreaInstance;
                 params.tile = selectedAnalysisAreaInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedAnalysisAreaInstance);
@@ -344,6 +343,11 @@ define([
 
         };
 
+        this.editAnalysisAreaInstance = function(analysisAreaInstance){
+            self.selectAnalysisAreaInstance(analysisAreaInstance);
+            self.sampleListShowing(false);
+        };
+
         this.showSampleList = function() {
             self.sampleListShowing(!self.sampleListShowing());
         };
@@ -525,7 +529,7 @@ define([
         this.loadNewAnalysisAreaTile = function() {
             if (!self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid) {
                 var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-                self.selectAnalysisAreaInstance(newTile);
+                self.editAnalysisAreaInstance(newTile);
             }
         };
 

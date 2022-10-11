@@ -83,7 +83,6 @@ define([
             self.highlightAnnotation();
 
             if (selectedSampleLocationInstance) {
-                self.sampleListShowing(false);
                 self.tile = selectedSampleLocationInstance;
                 params.tile = selectedSampleLocationInstance;
                 self.physicalThingPartIdentifierAssignmentTile(selectedSampleLocationInstance);
@@ -446,6 +445,11 @@ define([
             }
         };
 
+        this.editSampleLocationInstance = function(sampleLocationInstance){
+            self.selectSampleLocationInstance(sampleLocationInstance);
+            self.sampleListShowing(false);
+        };
+
         this.resetDescriptions = function(){
             const previouslySavedSampleDescriptionWidgetValue = ko.unwrap(self.previouslySavedSampleDescriptionWidgetValue);
             const previouslySavedMotivationForSamplingWidgetValue = ko.unwrap(self.previouslySavedMotivationForSamplingWidgetValue);
@@ -644,7 +648,7 @@ define([
 
         this.loadNewSampleLocationTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-            self.selectSampleLocationInstance(newTile);
+            self.editSampleLocationInstance(newTile);
         };
 
         this.saveWorkflowStep = function() {
