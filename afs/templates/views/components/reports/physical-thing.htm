@@ -185,211 +185,239 @@
     <div class="afs-report-page">
         <!-- Names -->
         <div class="afs-report-section">
-            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.names)}, css: {'fa-angle-double-right': visible.names(), 'fa-angle-double-up': !visible.names()}" class="fa toggle"></i> {% trans "Names" %}</h2>
-
-            <!-- Collapsible content -->
-            <div data-bind="visible: visible.names" class="afs-report-collapsible-container pad-lft">
-
+            <div class="afs-report-subsection">
                 <!-- ko ifnot: nameSummary() && nameSummary().length -->
                 <div class="afs-nodata-note">No names for this resource</div>
                 <!-- /ko -->
 
                 <!-- ko if: nameSummary() && nameSummary().length -->
-                <div class="afs-report-subsection" >
-                    <div>
-                        <div class="afs-table pad-btm">
-                            <table class="table table-striped" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr class="afs-table-header">
-                                        <th>{% trans "Name" %}</th>
-                                        <th class="min-tabletl">{% trans "Type" %}</th>
-                                        <th class="none">{% trans "Language" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: getTableConfig(3) }">
-                                    <tr>
-                                        <td data-bind="text: content"></td>
-                                        <td data-bind="text: type"></td>
-                                        <td data-bind="text: language"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /ko -->
             </div>
         </div>
         <!-- Image -->
         <div class="afs-report-section">
-            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.thumbnail)}, css: {'fa-angle-double-right': visible.thumbnail(), 'fa-angle-double-up': !visible.thumbnail()}" class="fa toggle"></i> {% trans "Image of Physical Thing" %}</h2>
-
-            <!-- Collapsible content -->
-            <div data-bind="visible: visible.thumbnail" class="afs-report-collapsible-container pad-lft">
-                
+            <div class="afs-report-subsection">
                 <!-- ko ifnot: imageSummary() -->
                 <div class="afs-nodata-note">No images for this resource</div>
                 <!-- /ko -->
 
                 <!-- ko if: imageSummary() -->
                 <div class="afs-image-service-list-item" data-bind="foreach: imageSummary">
-                    <label 
-                        data-bind="
-                            text: displayname,
-                        "
-                    ></label>
+                    <label data-bind = "text: displayname"></label>
                     <span class="iiif-gallery-canvas-thumbnail">
                         <img data-bind="attr: { src: thumbnail }">
                     </span>
-                    <span data-bind="text: console.log(thumbnail)"></span>
                 </div>
                 <!-- /ko -->
-
-                
             </div>
         </div>
         <!-- Statements -->
         <div class="afs-report-section">
-            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.statements)}, css: {'fa-angle-double-right': visible.statements(), 'fa-angle-double-up': !visible.statements()}" class="fa toggle"></i> {% trans "Statements" %}</h2>
-
-            <!-- Collapsible content -->
-            <div data-bind="visible: visible.statements" class="afs-report-collapsible-container pad-lft">
-
+            <div class="afs-report-subsection">
                 <!-- ko ifnot: statementsSummary() && statementsSummary().length -->
                 <div class="afs-nodata-note">No statements for this resource</div>
                 <!-- /ko -->
 
                 <!-- ko if: statementsSummary() && statementsSummary().length -->
-                <div class="afs-report-subsection" >
-                    <div class="firstchild-container">
-                        <div class="afs-table pad-btm">
-                            <table class="table table-striped" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr class="afs-table-header">
-                                        <th>{% trans "Content" %}</th>
-                                        <th class="none">{% trans "Type" %}</th>
-                                        <th class="none">{% trans "Language" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="dataTablesForEach: { data: statementsSummary, dataTableOptions: getTableConfig(3) }">
-                                    <tr>
-                                        <td id="project-search-statement-content" data-bind="text: content"></td>
-                                        <td data-bind="text: type"></td>
-                                        <td data-bind="text: language"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Statements" %}</th>
+                                <th>{% trans "Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: statementsSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td id="project-search-statement-content" data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /ko -->
             </div>
         </div>
         <!-- Type of Physical Thing -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/default',
-            params: {
-                data: typeSummary,
-            }
-        }"></div>
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko ifnot: typeSummary() && typeSummary().length -->
+                <div class="afs-nodata-note">No type for this resource</div>
+                <!-- /ko -->
+
+                <!-- ko if: typeSummary() && typeSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Physical Thing Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: typeSummary, dataTableOptions: $data.getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
         <!-- Identifier -->
         <div class="afs-report-section">
-            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.identifiers)}, css: {'fa-angle-double-right': visible.identifiers(), 'fa-angle-double-up': !visible.identifiers()}" class="fa toggle"></i> {% trans "Identifiers" %}</h2>
-
-            <!-- Collapsible content -->
-            <div data-bind="visible: visible.identifiers" class="afs-report-collapsible-container pad-lft">
-
+            <div class="afs-report-subsection">
                 <!-- ko ifnot: identifierSummary() && identifierSummary().length -->
                 <div class="afs-nodata-note">No identifiers for this resource</div>
                 <!-- /ko -->
 
                 <!-- ko if: identifierSummary() && identifierSummary().length -->
-                <div class="afs-report-subsection" >
-                    <div>
-                        <div class="afs-table">
-                            <table class="table table-striped" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr class="afs-table-header">
-                                        <th>{% trans "Name" %}</th>
-                                        <th class="min-tabletl">{% trans "Type" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="dataTablesForEach: { data: identifierSummary, dataTableOptions: getTableConfig(2) }">
-                                    <tr>
-                                        <td data-bind="text: content"></td>
-                                        <td data-bind="text: type"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="afs-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Identifier" %}</th>
+                                <th>{% trans "Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: identifierSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /ko -->
             </div>
         </div>
         <!-- Current Owner -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/default',
-            params: {
-                data: actorData,
-            }
-        }"></div>
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko ifnot: ownerSummary() && ownerSummary().length -->
+                <div class="afs-nodata-note">No owner for this resource</div>
+                <!-- /ko -->
+
+                <!-- ko if: ownerSummary() && ownerSummary().length -->
+                <div class="afs-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Current Owner" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: ownerSummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
         <!-- Dimensions -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/substance',
-            params: {
-                data: resource,
-                cards: substanceCards
-            }
-        }"></div>
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko ifnot: dimensionsSummary() && dimensionsSummary().length -->
+                <div class="afs-nodata-note">No dimension information for this resource</div>
+                <!-- /ko -->
+
+                <!-- ko if: dimensionsSummary() && dimensionsSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr lass="afs-table-header">
+                                <th>{% trans "Dimension Type" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Unit" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: dimensionsSummary, dataTableOptions: getTableConfig(3) }">
+                            <tr>
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: value"></td>
+                                <td data-bind="text: unit"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
         <!-- Creation Info -->
         <div class="afs-report-section">
-            <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.creation)}, css: {'fa-angle-double-right': visible.creation(), 'fa-angle-double-up': !visible.creation()}" class="fa toggle"></i> {% trans "Creation" %}</h2>
-
-            <!-- Collapsible content -->
-            <div data-bind="visible: visible.creation" class="afs-report-collapsible-container pad-lft">
-
-                <!-- ko ifnot: creationSummary() -->
+            <div class="afs-report-subsection">
+                <!-- ko ifnot: creationSummary() && creationSummary().length -->
                 <div class="afs-nodata-note">No creation information for this resource</div>
                 <!-- /ko -->
 
-                <!-- ko if: creationSummary() -->
-                <div class="afs-report-subsection" >
-                    <div>
-                        <div class="afs-table pad-btm">
-                            <table class="table table-striped" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr lass="afs-table-header">
-                                        <th>{% trans "Creator" %}</th>
-                                        <th class="min-tabletl">{% trans "Creation Date" %}</th>
-                                        <th class="min-tabletl">{% trans "Type" %}</th>
-                                        <th class="min-tabletl">{% trans "Technique" %}</th>
-                                        <th class="min-tabletl">{% trans "Location" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="dataTablesForEach: { data: creationSummary, dataTableOptions: getTableConfig(5) }">
-                                    <tr>
-                                        <td data-bind="text: creator"></td>
-                                        <td data-bind="text: creationDate"></td>
-                                        <td data-bind="text: type"></td>
-                                        <td data-bind="text: technique"></td>
-                                        <td><a class="afs-table-link" data-bind="click: function() {window.open(locationLink);}, text: location" href="javascript:void(0)"></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <!-- ko if: creationSummary() && creationSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr lass="afs-table-header">
+                                <th>{% trans "Creator" %}</th>
+                                <th>{% trans "Creation Date" %}</th>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Technique" %}</th>
+                                <th>{% trans "Location" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: creationSummary, dataTableOptions: getTableConfig(5) }">
+                            <tr>
+                                <td data-bind="text: creator"></td>
+                                <td data-bind="text: creationDate"></td>
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: technique"></td>
+                                <td><a class="afs-table-link" data-bind="click: function() {window.open(locationLink);}, text: location" href="javascript:void(0)"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /ko -->
             </div>
         </div>
         <!-- External URI -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/default',
-            params: {
-                data: externalURISummary,
-            }
-        }"></div>
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko ifnot: externalURISummary() && externalURISummary().length -->
+                <div class="afs-nodata-note">No External URI for this resource</div>
+                <!-- /ko -->
+
+                <!-- ko if: externalURISummary() && externalURISummary().length -->
+                <div class="afs-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "External URI" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: externalURISummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: displayValue"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
     </div>
 </div>
 

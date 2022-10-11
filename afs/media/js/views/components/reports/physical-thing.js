@@ -391,8 +391,10 @@ define([
             self.nameSummary = ko.observable();
             self.imageSummary = ko.observable();
             self.statementsSummary = ko.observable();
-            self.identifierSummary = ko.observable();
             self.typeSummary = ko.observable();
+            self.identifierSummary = ko.observable();
+            self.ownerSummary = ko.observable();
+            self.dimensionsSummary = ko.observable();
             self.creationSummary = ko.observable();
             self.externalURISummary = ko.observable();
 
@@ -452,19 +454,12 @@ define([
                 }));
             };
 
-            self.typeSummary = ko.observable({
-                sections: [
-                    {
-                        title: 'Classification',
-                        data: [{
-                            key: 'Type of Object',
-                            value: self.resource()?.type,
-                            card: undefined,
-                            type: 'resource'
-                        }]
-                    }
-                ]
-            });
+            const typeData = self.resource()?.type;
+            if (typeData) {
+                self.typeSummary(Array({
+                    type: self.getNodeValue(typeData, '@display_value')
+                }));
+            };
 
             const identiferData = self.resource()?.identifier;
             if (identiferData) {
@@ -473,6 +468,25 @@ define([
                     const content = self.getNodeValue(x, 'identifier_content');
                     const tileid = self.getTileId(x);
                     return { type, content, tileid }
+                }));
+            };
+
+            const ownerData = self.resource()?.['current owner'];
+            if (ownerData) {
+                self.ownerSummary(ownerData['instance_details'].map(x => {
+                    const displayValue = self.getNodeValue(x, 'display_value');
+                    const link = self.getResourceLink({resourceId: self.getNodeValue(x, 'resourceId')});
+                    return { displayValue, link }
+                }));
+            };
+
+            const dimensionData = self.resource()?.dimension;
+            if (dimensionData) {
+                self.dimensionsSummary(dimensionData.map(x => {
+                    const value = self.getNodeValue(x, 'Dimension_value ');
+                    const unit = self.getNodeValue(x?.dimension_unit, '@display_value');
+                    const type = self.getNodeValue(x?.dimension_type, '@display_value');
+                    return { type, value, unit }
                 }));
             };
 
@@ -488,20 +502,12 @@ define([
                 }));
             };
 
-            self.externalURISummary = ko.observable({
-                sections: [
-                    {
-                        title: 'External URI',
-                        data: [{
-                            key: 'External URI',
-                            value: self.resource()?.ExactMatch,
-                            card: undefined,
-                            type: 'resource'
-                        }]
-                    }
-                ]
-            });
-
+            const uriData = self.resource()?.exactmatch
+            if (uriData) {
+                self.externalURISummary(Array({
+                    displayValue: self.getNodeValue(uriData, '@display_value')
+                }));
+            };
         },
         template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
     });
