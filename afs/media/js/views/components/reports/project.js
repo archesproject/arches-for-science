@@ -41,9 +41,12 @@ define([
             self.documentationCards = {};
             self.summary = params.summary;
 
-            self.threeWideTableConfig = {
-                ...self.defaultTableConfig,
-                columns: Array(3).fill(null)
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
             };
 
             self.identifierTableConfig = {
@@ -168,86 +171,84 @@ define([
             });
 
             ////// Search Details section //////
-            self.namesSearchData = ko.observable();
-            self.activityTypeSearchData = ko.observable();
-            self.teamSearchData = ko.observable();
-            self.statementsSearchData = ko.observable();
-            self.identiferSearchData = ko.observable();
-            self.typeSearchData = ko.observable();
+            self.nameSummary = ko.observable();
+            self.datesSummary = ko.observable();
+            self.activityTypeSummary = ko.observable();
+            self.parentProjectSummary = ko.observable();
+            self.teamSummary = ko.observable();
+            self.statementsSummary = ko.observable();
+            self.identifierSummary = ko.observable();
+            self.typeSummary = ko.observable();
 
             const nameData = self.resource()?.Name;
             if (nameData) {
-                self.namesSearchData(nameData.map(x => {
+                self.nameSummary(nameData.map(x => {
                     const type = self.getNodeValue(x, 'Name_type');
                     const content = self.getNodeValue(x, 'Name_content');
                     const language = self.getNodeValue(x, 'Name_language');
-                    const tileid = self.getTileId(x);
-                    return { type, content, language, tileid }
+                    return { type, content, language }
                 }));
             };
         
-            self.activityTypeSearchData = ko.observable({
-                sections: [
-                    {
-                        title: 'Activity Type of Project', 
-                        data: [{
-                            key: 'activity type of project', 
-                            value: self.getRawNodeValue(self.resource(), 'technique'), 
-                            card: undefined,
-                            type: 'resource'
-                        }]
-                    }
-                ]
-            });
+            const datesData = self.resource()?.timespan;
+            if (datesData) {
+                self.datesSummary(Array({
+                    beginning_of_beginning: self.getNodeValue(datesData, 'TimeSpan_begin of the begin'),
+                    end_of_beginning: self.getNodeValue(datesData, 'TimeSpan_end of the begin'),
+                    beginning_of_end: self.getNodeValue(datesData, 'TimeSpan_begin of the end'),
+                    end_of_end: self.getNodeValue(datesData, 'TimeSpan_end of the end'),
+                }));
+            };
 
-            self.teamSearchData = ko.observable({
-                sections: [
-                    {
-                        title: 'Project Team', 
-                        data: [{
-                            key: 'project team', 
-                            value: self.getRawNodeValue(self.resource(), 'carried out by'), 
-                            card: undefined,
-                            type: 'resource'
-                        }]
-                    }
-                ]
-            });
+            const activityTypeData = self.resource()?.technique;
+            if (activityTypeData) {
+                self.activityTypeSummary(Array({
+                    displayValue: self.getNodeValue(activityTypeData, '@display_value')
+                }));
+            };
+
+            const parentProjectData = self.resource()?.['part of'];
+            if (parentProjectData) {
+                self.parentProjectSummary(Array({
+                    displayValue: self.getNodeValue(parentProjectData, '@display_value'),
+                    link: self.getResourceLink({resourceId: self.getNodeValue(parentProjectData, 'resourceId')})
+                }));
+            }
+
+            const teamData = self.resource()?.['carried out by'];
+            if (teamData) {
+                self.teamSummary(teamData['instance_details'].map(x => {
+                    const displayValue = self.getNodeValue(x, 'display_value');
+                    const link = self.getResourceLink({resourceId: self.getNodeValue(x, 'resourceId')});
+                    return { displayValue, link }
+                }));
+            };
 
             const statmentData = self.resource()?.Statement;
             if (statmentData) {
-                self.statementsSearchData(statmentData.map(x => {
+                self.statementsSummary(statmentData.map(x => {
                     const type = self.getNodeValue(x, 'Statement_type');
                     const content = self.getNodeValue(x, 'Statement_content');
                     const language = self.getNodeValue(x, 'Statement_language');
-                    const tileid = self.getTileId(x);
-                    return { type, content, language, tileid }
+                    return { type, content, language }
                 }));
             };
 
             const identiferData = self.resource()?.Identifier;
             if (identiferData) {
-                self.identiferSearchData(identiferData.map(x => {
+                self.identifierSummary(identiferData.map(x => {
                     const type = self.getNodeValue(x, 'Identifier_type');
                     const content = self.getNodeValue(x, 'Identifier_content');
-                    const tileid = self.getTileId(x);
-                    return { type, content, tileid }
+                    return { type, content }
                 }));
             };
 
-            self.typeSearchData = ko.observable({
-                sections: [
-                    {
-                        title: 'Classification',
-                        data: [{
-                            key: 'type',
-                            value: self.resource()?.type,
-                            card: undefined,
-                            type: 'resource'
-                        }]
-                    }
-                ]
-            });
+            const typeData = self.resource()?.type;
+            if (typeData) {
+                self.typeSummary(Array({
+                    type: self.getNodeValue(typeData, '@display_value')
+                }));
+            };
         },
         template: { require: 'text!templates/views/components/reports/project.htm' }
     });
