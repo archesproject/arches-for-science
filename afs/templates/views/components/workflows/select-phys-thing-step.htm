@@ -43,10 +43,10 @@
     <!-- ko if: validateThing && isPhysicalThingValid() === false -->
     <div class="tabbed-workflow-step-information-box widget-input-label" style="text-align: center; margin-top: 16px; height:fit-content; background-color: #fde9ad;">
         <span data-bind="if: datasetRoute == 'non-destructive'">
-            You have to select an object with the analysis areas. Complete the Analysis Area workflow before proceeding.
+            You have to select an object with the analysis areas. Please complete the analysis area workflow or start the workflow over and select the sample dataset type.
         </span>
         <span data-bind="if: datasetRoute == 'destructive'">
-            You have to select a Sample. Complete the Sample Taking workflow before proceeding.
+            You have to select a sample. Please complete the sample taking workflow or start the workflow over and select the area dataset type.
         </span>
     </div>
     <!-- /ko -->
