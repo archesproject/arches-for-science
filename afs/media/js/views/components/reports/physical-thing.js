@@ -426,18 +426,27 @@ define([
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
             const loadRelatedResources = async() => {
                 const digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
+                const IIIFManifestConceptId = '0c682c76-a6a4-48f0-9c5b-1203a6dc33da';
+
                 const result = await reportUtils.getRelatedResources(resourceId);
                 const relatedResources = result?.related_resources;
                 
                 const relatedDigitalResources = relatedResources.filter(resource => resource.graph_id === digitalResourceGraphId);
                 if (relatedDigitalResources.length) {
-                    const imageResource = await self.getThumbnail(relatedDigitalResources[0]);
-                    if (imageResource) {
-                        self.imageSummary(Array({
-                            displayname: imageResource.label,
-                            thumbnail: imageResource.sequences[0].canvases[0].thumbnail['@id']
-                        }));
-                    }
+                    relatedDigitalResources.forEach(async resource => {
+                        const resourceDomainConceptIds = resource.domains.map(x => x.conceptid)
+                    
+                        // If there is an IIIF manifest in the related resources, load the thumbnail from that manifest
+                        if (resourceDomainConceptIds.includes(IIIFManifestConceptId)) {
+                            const imageResource = await self.getThumbnail(resource);
+                            if (imageResource) {
+                                self.imageSummary(Array({
+                                    displayname: imageResource.label,
+                                    thumbnail: imageResource.sequences[0].canvases[0].thumbnail['@id']
+                                }));
+                            }
+                        }
+                    });
                 }
             };
 
