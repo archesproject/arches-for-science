@@ -531,7 +531,13 @@ define([
             };
 
             self.savingTile(true);
-            self.savingMessage("Saving Sample Areas, Samples & Descriptions");
+            setTimeout(() => { self.savingMessage(`This step is saving ...`); }, "0")
+            setTimeout(() => { self.savingMessage(`Sample Name, Classification and Statements`); }, "2000")
+            setTimeout(() => { self.savingMessage(`Sample Area Name and Classification`); }, "4000")
+            setTimeout(() => { self.savingMessage(`Relationship between Sample, Sample Area, and Parent Object (${params.physicalThingName})`); }, "6000")
+            setTimeout(() => { self.savingMessage(`It may take a while, so do not move away from this step.`); }, "10000")
+            setTimeout(() => { self.savingMessage(`It takes longer than usual. Thank you for your patience.`); }, "20000")
+
             $.ajax({
                 url: arches.urls.root + 'savesamplearea',
                 type: 'POST',
@@ -539,7 +545,7 @@ define([
                 dataType: 'json',
             })
             .then(function(data){
-                self.savingMessage("Updating Annotations");
+                self.savingMessage("Saved.");
 
                 const tile = data.result.parentPhysicalThing.physicalPartOfObjectTile;
 

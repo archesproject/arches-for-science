@@ -386,7 +386,12 @@ define([
 
             self.savingTile(true);
             params.form.lockExternalStep('image-step', true);
-            self.savingMessage(`Saving Analysis Area ...`);
+
+            setTimeout(() => { self.savingMessage(`This step is saving ...`); }, "2000")
+            setTimeout(() => { self.savingMessage(`Analysis Area Name and Classification`); }, "4000")
+            setTimeout(() => { self.savingMessage(`Relationship between Analysis Area, Project and Parent Object (${self.physicalThingName()})`); }, "6000")
+            setTimeout(() => { self.savingMessage(`It may take a while, so do not move away from this step.`); }, "8000")
+            setTimeout(() => { self.savingMessage(`It takes longer usual. Thank you for your patience.`); }, "12000")
 
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,
@@ -405,6 +410,7 @@ define([
                 dataType: 'json',
             })
             .then(function(data){
+                self.savingMessage("Saved.");
                 const tile = data.result.physicalPartOfObjectTile;
 
                 self.builtTile = new TileViewModel({
@@ -433,6 +439,7 @@ define([
                     self.sampleListShowing(false);
                     self.savingTile(false);
                     params.pageVm.alert("");
+                    self.savingMessage("");
                     self.drawFeatures([]);
                     let mappedInstances = self.analysisAreaInstances().map((instance) => { return { "data": instance.data }});
                     params.form.savedData({
