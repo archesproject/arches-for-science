@@ -31,7 +31,20 @@
         <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Sample Details'"></h4>
     </div>
     <div class="workbench-card-sidepanel-border"></div>
-<div class="workbench-card-sidepanel-body">
+    <div class="workbench-card-sidepanel-body">
+
+    <div class="afs-modal" data-bind="visible: showingSampleLocationDeleteModal">
+        <div class="afs-modal-content">
+            <h1>{% trans "Delete Sample" %}</h1>
+            <p>{% trans "Are you sure you want to delete the sample?" %}</p>
+
+            <div class="afs-modal-clearfix">
+                <button type="button" data-bind="click: showSampleLocationDeleteModal(false)" class="btn btn-success">{% trans "Cancel" %}</button>
+                <button type="button" data-bind="click: deleteSampleLocation" class="btn btn-danger">{% trans "Delete" %}</button>
+            </div>
+        </div>
+    </div>
+
 
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
@@ -122,7 +135,7 @@
                                         </td>
                                         <td style="cursor: pointer; width: 30px;">
                                             <a href="javascript:void(0);"
-                                                data-bind="click: function() { $parent.deleteSampleLocation($data); }, clickBubble: false">
+                                                data-bind="click: function() { $parent.showSampleLocationDeleteModal($data); }, clickBubble: false">
                                                 <i class="fa fa-trash map-card-feature-edit"></i>
                                             </a>
                                         </td>

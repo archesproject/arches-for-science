@@ -478,7 +478,20 @@ define([
             self.updateSampleLocationInstances();
         };
 
-        this.deleteSampleLocation = function(selectedSampleLocationInstance){
+        this.confirmSampleLocationDelete = function(selectedSampleLocationInstance){
+            self.deleteSampleLocation(selectedSampleLocationInstance);
+        };
+
+        this.showingSampleLocationDeleteModal = ko.observable(false);
+        this.sampleToDelete = ko.observable();
+
+        this.showSampleLocationDeleteModal = function(sample){
+            self.showingSampleLocationDeleteModal(!!sample);
+            self.sampleToDelete(sample);
+        }
+
+        this.deleteSampleLocation = function(){
+            let selectedSampleLocationInstance = self.sampleToDelete();
             self.selectedSampleLocationInstance(selectedSampleLocationInstance);
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,
