@@ -531,12 +531,24 @@ define([
             };
 
             self.savingTile(true);
-            setTimeout(() => { self.savingMessage(`This step is saving ...`); }, "0")
-            setTimeout(() => { self.savingMessage(`Sample Name, Classification and Statements`); }, "2000")
-            setTimeout(() => { self.savingMessage(`Sample Area Name and Classification`); }, "4000")
-            setTimeout(() => { self.savingMessage(`Relationship between Sample, Sample Area, and Parent Object (${params.physicalThingName})`); }, "6000")
-            setTimeout(() => { self.savingMessage(`It may take a while, so do not move away from this step.`); }, "10000")
-            setTimeout(() => { self.savingMessage(`It takes longer than usual. Thank you for your patience.`); }, "20000")
+
+            self.savingMessage(`This step is saving ...`);
+            const savingMessages = [
+                `Sample Name, Classification and Statements`,
+                `Sample Area Name and Classification`,
+                `Relationship between Sample, Sample Area, and Parent Object (${params.physicalThingName})`,
+                `It may take a while, so do not move away from this step.`
+            ]
+            let i = 0;
+            const showMessage = setInterval(() => {
+                if (i < savingMessages.length) {
+                    self.savingMessage(savingMessages[i++]);
+                }},'2000'
+            );
+
+            const showExtraMessage = setTimeout(() => {
+                self.savingMessage(`It takes longer than usual. Thank you for your patience.`);
+            }, "20000");
 
             $.ajax({
                 url: arches.urls.root + 'savesamplearea',
@@ -546,6 +558,8 @@ define([
             })
             .then(function(data){
                 self.savingMessage("Saved.");
+                clearInterval(showMessage);
+                clearInterval(showExtraMessage);
 
                 const tile = data.result.parentPhysicalThing.physicalPartOfObjectTile;
 

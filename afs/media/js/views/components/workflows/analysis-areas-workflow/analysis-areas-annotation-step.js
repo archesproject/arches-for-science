@@ -387,11 +387,22 @@ define([
             self.savingTile(true);
             params.form.lockExternalStep('image-step', true);
 
-            setTimeout(() => { self.savingMessage(`This step is saving ...`); }, "2000")
-            setTimeout(() => { self.savingMessage(`Analysis Area Name and Classification`); }, "4000")
-            setTimeout(() => { self.savingMessage(`Relationship between Analysis Area, Project and Parent Object (${self.physicalThingName()})`); }, "6000")
-            setTimeout(() => { self.savingMessage(`It may take a while, so do not move away from this step.`); }, "8000")
-            setTimeout(() => { self.savingMessage(`It takes longer usual. Thank you for your patience.`); }, "12000")
+            self.savingMessage(`This step is saving ...`);
+            const savingMessages = [
+                `Analysis Area Name and Classification`,
+                `Relationship between Analysis Area, Project and Parent Object (${self.physicalThingName()})`,
+                `It may take a while, so do not move away from this step.`
+            ]
+            let i = 0;
+            const showMessage = setInterval(() => {
+                if (i < savingMessages.length) {
+                    self.savingMessage(savingMessages[i++]);
+                }},'2000'
+            );
+
+            const showExtraMessage = setTimeout(() => {
+                self.savingMessage(`It takes longer than usual. Thank you for your patience.`);
+            }, "12000");
 
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,
@@ -411,6 +422,9 @@ define([
             })
             .then(function(data){
                 self.savingMessage("Saved.");
+                clearInterval(showMessage);
+                clearInterval(showExtraMessage);
+
                 const tile = data.result.physicalPartOfObjectTile;
 
                 self.builtTile = new TileViewModel({
