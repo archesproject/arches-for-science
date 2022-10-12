@@ -333,6 +333,7 @@
                                                 <td>
                                                     <span class="map-card-feature-name" data-bind="text: feature.geometry.type"></span>
                                                 </td>
+                                                <!-- ko ifnot: self.selectedAnalysisAreaInstance()?.isLocked -->
                                                 <td class="map-card-feature-tool">
                                                     <a href="javascript:void(0);" data-bind="click: function() { self.editFeature(feature); }, clickBubble: false">
                                                         <i class="fa fa-pencil map-card-feature-edit"></i>
@@ -345,6 +346,7 @@
                                                         {% trans "Delete" %}
                                                     </a>
                                                 </td>
+                                                <!-- /ko -->
                                             </tr>
                                             <!-- /ko -->
                                         </tbody>
@@ -373,7 +375,7 @@
                                             expanded: self.expanded,
                                             graph: self.form.graph,
                                             type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
+                                            disabled: $parent.selectedAnalysisAreaInstance()?.isLocked,
                                         }
                                     }, 
                                     css:{
@@ -420,7 +422,7 @@
                                             expanded: self.expanded,
                                             graph: self.form.graph,
                                             type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
+                                            disabled: $parent.selectedAnalysisAreaInstance()?.isLocked,
                                             relatedResourceId: projectResourceId,
                                             relatedNodeId: "dbaa2022-9ae7-11ea-ab62-dca90488358a",
                                         }
