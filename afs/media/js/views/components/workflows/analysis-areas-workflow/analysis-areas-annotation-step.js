@@ -392,7 +392,7 @@ define([
                 `Analysis Area Name and Classification`,
                 `Relationship between Analysis Area, Project and Parent Object (${self.physicalThingName()})`,
                 `It may take a while, so do not move away from this step.`
-            ]
+            ];
             let i = 0;
             const showMessage = setInterval(() => {
                 if (i < savingMessages.length) {
@@ -423,7 +423,7 @@ define([
             .then(function(data){
                 self.savingMessage("Saved.");
                 clearInterval(showMessage);
-                clearInterval(showExtraMessage);
+                clearTimeout(showExtraMessage);
 
                 const tile = data.result.physicalPartOfObjectTile;
 
