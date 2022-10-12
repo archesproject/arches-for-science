@@ -543,6 +543,8 @@ define([
             const showMessage = setInterval(() => {
                 if (i < savingMessages.length) {
                     self.savingMessage(savingMessages[i++]);
+                } else {
+                    clearInterval(showMessage);
                 }},'2000'
             );
 

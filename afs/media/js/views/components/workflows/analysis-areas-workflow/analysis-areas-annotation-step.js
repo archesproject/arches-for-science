@@ -397,12 +397,14 @@ define([
             const showMessage = setInterval(() => {
                 if (i < savingMessages.length) {
                     self.savingMessage(savingMessages[i++]);
-                }},'2000'
+                } else {
+                    clearInterval(showMessage);
+                }}, '2000'
             );
 
             const showExtraMessage = setTimeout(() => {
                 self.savingMessage(`It takes longer than usual. Thank you for your patience.`);
-            }, "12000");
+            }, "10000");
 
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,
