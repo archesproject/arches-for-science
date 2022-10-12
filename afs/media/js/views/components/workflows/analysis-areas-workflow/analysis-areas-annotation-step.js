@@ -537,10 +537,8 @@ define([
         };
 
         this.loadNewAnalysisAreaTile = function() {
-            if (!self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid) {
-                var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-                self.viewAnalysisAreaInstance(newTile);
-            }
+            var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
+            self.viewAnalysisAreaInstance(newTile);
         };
 
         this.identifySampleLocations = function(card) {

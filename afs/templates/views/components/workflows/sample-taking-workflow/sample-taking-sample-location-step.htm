@@ -55,10 +55,7 @@
                             background: #9490EE;
                             color: #eee;
                         " data-bind="
-                            click: $data.loadNewSampleLocationTile,
-                            attr: {
-                                class: ( $data.selectedSampleLocationInstance() && !$data.selectedSampleLocationInstance().tileid ) ? 'btn disabled' : 'btn'
-                            }
+                            click: $data.loadNewSampleLocationTile
                         ">
                         <i class="fa fa-folder"></i>
                         <span>
@@ -66,21 +63,13 @@
                         </span>
                     </button>
 
-                    <!-- ko if: sampleLocationInstances().length > 0 -->
+                    <!-- ko if: sampleLocationInstances().length > 0 && !sampleListShowing()-->
                     <button type="button" class="btn" style="
                             background: #9490EE;
                             color: #eee;
                         " data-bind="click: showSampleList">
                         <i class="fa fa-folder"></i>
-                        <span>
-                            <!-- ko ifnot: sampleListShowing -->
-                            {% trans 'Show List of Samples' %}
-                            <!-- /ko -->
-
-                            <!-- ko if: sampleListShowing -->
-                            {% trans 'Hide List of Samples' %}
-                            <!-- /ko -->
-                        </span>
+                        <span>{% trans 'Return to Samples List' %}</span>
                     </button>
                     <!-- /ko -->
                 </div>

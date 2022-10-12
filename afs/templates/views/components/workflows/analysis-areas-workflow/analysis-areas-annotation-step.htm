@@ -59,10 +59,7 @@
                             background: #9490EE;
                             color: #eee;
                         " data-bind="
-                            click: $data.loadNewAnalysisAreaTile,
-                            attr: {
-                                class: ( $data.selectedAnalysisAreaInstance() && !$data.selectedAnalysisAreaInstance().tileid ) ? 'btn disabled' : 'btn'
-                            }
+                            click: $data.loadNewAnalysisAreaTile
                         ">
                         <i class="fa fa-folder"></i>
                         <span>
@@ -70,21 +67,13 @@
                         </span>
                     </button>
                 
-                    <!-- ko if: analysisAreaInstances().length > 0 -->
+                    <!-- ko if: analysisAreaInstances().length > 0 && !sampleListShowing() -->
                     <button type="button" class="btn" style="
                             background: #9490EE;
                             color: #eee;
                         " data-bind="click: showSampleList">
                         <i class="fa fa-folder"></i>
-                        <span>
-                            <!-- ko ifnot: sampleListShowing -->
-                            {% trans 'Show List of Samples' %}
-                            <!-- /ko -->
-                
-                            <!-- ko if: sampleListShowing -->
-                            {% trans 'Hide List of Samples' %}
-                            <!-- /ko -->
-                        </span>
+                        <span>{% trans 'Return to Analysis Areas List' %}</span>
                     </button>
                     <!-- /ko -->
                 </div>
