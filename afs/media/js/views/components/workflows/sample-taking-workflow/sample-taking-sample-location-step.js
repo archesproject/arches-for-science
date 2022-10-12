@@ -445,7 +445,7 @@ define([
             }
         };
 
-        this.editSampleLocationInstance = function(sampleLocationInstance){
+        this.viewSampleLocationInstance = function(sampleLocationInstance){
             self.selectSampleLocationInstance(sampleLocationInstance);
             self.sampleListShowing(false);
         };
@@ -501,6 +501,7 @@ define([
             };
 
             self.savingTile(true);
+            self.showingSampleLocationDeleteModal(false);
             self.savingMessage("Deleting Sample Areas, Samples & Descriptions");
 
             window.fetch(arches.urls.root + 'deletesamplearea', {
@@ -661,7 +662,7 @@ define([
 
         this.loadNewSampleLocationTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-            self.editSampleLocationInstance(newTile);
+            self.viewSampleLocationInstance(newTile);
         };
 
         this.saveWorkflowStep = function() {

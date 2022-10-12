@@ -33,6 +33,7 @@
     <div class="workbench-card-sidepanel-border"></div>
     <div class="workbench-card-sidepanel-body">
 
+    <!-- Popup modal for deleting a sample location -->
     <div class="afs-modal" data-bind="visible: showingSampleLocationDeleteModal">
         <div class="afs-modal-content">
             <h1>{% trans "Delete Sample" %}</h1>
@@ -120,6 +121,12 @@
                                         },
                                     ">
                                         <!-- ko if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId() -->
+                                        <td style="cursor: pointer; width: 30px;">
+                                            <a href="javascript:void(0);"
+                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
+                                                <i class="fa fa-eye map-card-feature-edit"></i>
+                                            </a>
+                                        </td>
                                         <td style="width: 30px;">
                                             <a href="javascript:void(0);" style="cursor: unset;">
                                                 <i class="fa fa-lock"></i>
@@ -129,7 +136,7 @@
                                         <!-- ko if: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
                                         <td style="cursor: pointer; width: 30px;">
                                             <a href="javascript:void(0);"
-                                                data-bind="click: function() { $parent.editSampleLocationInstance($data); }, clickBubble: false">
+                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
                                                 <i class="fa fa-pencil map-card-feature-edit"></i>
                                             </a>
                                         </td>

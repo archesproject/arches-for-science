@@ -343,7 +343,7 @@ define([
 
         };
 
-        this.editAnalysisAreaInstance = function(analysisAreaInstance){
+        this.viewAnalysisAreaInstance = function(analysisAreaInstance){
             self.selectAnalysisAreaInstance(analysisAreaInstance);
             self.sampleListShowing(false);
         };
@@ -370,7 +370,16 @@ define([
             self.updateAnalysisAreaInstances();
         };
 
-        this.deleteAnalysisAreaInstance = function(parentPhysicalThing){
+        this.showingAnalysisAreaDeleteModal = ko.observable(false);
+        this.sampleToDelete = ko.observable();
+
+        this.showAnalysisAreaDeleteModal = function(sample){
+            self.showingAnalysisAreaDeleteModal(!!sample);
+            self.sampleToDelete(sample);
+        }
+
+        this.deleteAnalysisAreaInstance = function(){
+            let parentPhysicalThing = self.sampleToDelete();
             self.selectedAnalysisAreaInstance(parentPhysicalThing);
             const data = {
                 parentPhysicalThingResourceId: parentPhysicalThing.resourceinstance_id,
@@ -382,6 +391,7 @@ define([
             };
 
             self.savingTile(true);
+            self.showingAnalysisAreaDeleteModal(false);
             self.savingMessage("Deleting Analysis Area");
 
             window.fetch(arches.urls.root + 'deleteanalysisarea', {
@@ -529,7 +539,7 @@ define([
         this.loadNewAnalysisAreaTile = function() {
             if (!self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid) {
                 var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-                self.editAnalysisAreaInstance(newTile);
+                self.viewAnalysisAreaInstance(newTile);
             }
         };
 
