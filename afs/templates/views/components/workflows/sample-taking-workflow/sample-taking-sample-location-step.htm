@@ -31,7 +31,21 @@
         <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Sample Details'"></h4>
     </div>
     <div class="workbench-card-sidepanel-border"></div>
-<div class="workbench-card-sidepanel-body">
+    <div class="workbench-card-sidepanel-body">
+
+    <!-- Popup modal for deleting a sample location -->
+    <div class="afs-modal" data-bind="visible: showingSampleLocationDeleteModal">
+        <div class="afs-modal-content">
+            <h1>{% trans "Delete Sample" %}</h1>
+            <p>{% trans "Are you sure you want to delete the sample?" %}</p>
+
+            <div class="afs-modal-clearfix">
+                <button type="button" data-bind="click: showSampleLocationDeleteModal(false)" class="btn btn-success">{% trans "Cancel" %}</button>
+                <button type="button" data-bind="click: deleteSampleLocation" class="btn btn-danger">{% trans "Delete" %}</button>
+            </div>
+        </div>
+    </div>
+
 
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
@@ -41,10 +55,7 @@
                             background: #9490EE;
                             color: #eee;
                         " data-bind="
-                            click: $data.loadNewSampleLocationTile,
-                            attr: {
-                                class: ( $data.selectedSampleLocationInstance() && !$data.selectedSampleLocationInstance().tileid ) ? 'btn disabled' : 'btn'
-                            }
+                            click: $data.loadNewSampleLocationTile
                         ">
                         <i class="fa fa-folder"></i>
                         <span>
@@ -52,21 +63,13 @@
                         </span>
                     </button>
 
-                    <!-- ko if: sampleLocationInstances().length > 0 -->
+                    <!-- ko if: sampleLocationInstances().length > 0 && !sampleListShowing()-->
                     <button type="button" class="btn" style="
                             background: #9490EE;
                             color: #eee;
                         " data-bind="click: showSampleList">
                         <i class="fa fa-folder"></i>
-                        <span>
-                            <!-- ko ifnot: sampleListShowing -->
-                            {% trans 'Show List of Samples' %}
-                            <!-- /ko -->
-
-                            <!-- ko if: sampleListShowing -->
-                            {% trans 'Hide List of Samples' %}
-                            <!-- /ko -->
-                        </span>
+                        <span>{% trans 'Return to Samples List' %}</span>
                     </button>
                     <!-- /ko -->
                 </div>
@@ -106,19 +109,33 @@
                                             })()
                                         },
                                     ">
-                                        <td style="cursor: pointer;" class="map-card-feature-tool">
-                                            <!-- ko if: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
+                                        <!-- ko if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId() -->
+                                        <td style="cursor: pointer; width: 30px;">
                                             <a href="javascript:void(0);"
-                                                data-bind="click: function() { $parent.editSampleLocationInstance($data); }, clickBubble: false">
-                                                <i class="fa fa-pencil map-card-feature-edit"></i>
-                                                {% trans "Edit" %}
+                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
+                                                <i class="fa fa-eye map-card-feature-edit"></i>
                                             </a>
-                                            <!-- /ko -->
-                                            <!-- ko ifnot: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
-                                            <i class="fa fa-lock map-card-feature-edit"></i>
-                                            <!-- /ko -->
                                         </td>
-                                        <td data-bind="if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId()"></td>
+                                        <td style="width: 30px;">
+                                            <a href="javascript:void(0);" style="cursor: unset;">
+                                                <i class="fa fa-lock"></i>
+                                            </a>
+                                        </td>
+                                        <!-- /ko -->
+                                        <!-- ko if: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
+                                        <td style="cursor: pointer; width: 30px;">
+                                            <a href="javascript:void(0);"
+                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
+                                                <i class="fa fa-pencil map-card-feature-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td style="cursor: pointer; width: 30px;">
+                                            <a href="javascript:void(0);"
+                                                data-bind="click: function() { $parent.showSampleLocationDeleteModal($data); }, clickBubble: false">
+                                                <i class="fa fa-trash map-card-feature-edit"></i>
+                                            </a>
+                                        </td>
+                                        <!-- /ko -->
                                         <td class="afs-workflow-table-contents" data-bind="text: (function(){
                                             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                                             return $data.data[partIdentifierAssignmentLabelNodeId]() + ' [Sample of ' + $parent.physicalThingName + ']';
@@ -133,7 +150,7 @@
                 </div>
 
                 {% block form_widgets %}
-                    <form class="widgets afs-sample-location-form-widgets" data-bind="style: {opacity: $data.selectedSampleLocationInstance() && !sampleListShowing() ? '1' : '0'}">
+                    <form class="widgets afs-sample-location-form-widgets" data-bind="style: {opacity: $data.selectedSampleLocationInstance() !== undefined && !sampleListShowing() ? '1' : '0'}">
                         <!-- BEGIN geometry table -->
                         <div data-bind="foreach: {
                             data:card.widgets, as: 'widget'
