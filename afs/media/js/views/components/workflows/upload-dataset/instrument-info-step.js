@@ -211,7 +211,9 @@ define([
             params.form.lockExternalStep("project-info", true);
             
 
-            let tiles = {};
+            let tiles = {
+                "transaction_id": params.form.workflowId
+            };
             let observedThingData = {};
             observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
             tiles['observedThingTile'] = self.buildTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid);
