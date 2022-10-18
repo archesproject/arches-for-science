@@ -256,6 +256,7 @@ define([
                     });
     
                     // get the sample information from sample resource instance (physical thing) and add to the final object
+                    let annotationCounter = 0;
                     sampleAnnotationCollection[canvas].forEach(function(annotation){
                         var sampleResourceId = annotation.sampleResourceId;
     
@@ -266,7 +267,6 @@ define([
                         }
     
                         self.currentLocation = ko.observable();
-                        let annotationCounter = 0;
                         const numberOfAnnotations = sampleAnnotationCollection[canvas].length;
 
                         self.getResourceData(sampleResourceId, self.currentLocation);
