@@ -1,10 +1,10 @@
 define([
     'underscore',
     'jquery',
-    'js-cookie',
     'arches',
     'knockout',
     'knockout-mapping',
+    'geojson-extent',
     'views/components/workflows/stepUtils',
     'utils/resource',
     'models/graph',
@@ -13,7 +13,7 @@ define([
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
     'views/components/resource-instance-nodevalue',
-], function(_, $, Cookies, arches, ko, koMapping, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+], function(_, $, arches, ko, koMapping, geojsonExtent, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -71,6 +71,8 @@ define([
                 if (ko.unwrap(selectedAnalysisAreaInstance.data[physicalThingPartAnnotationNodeId])?.features) {
                     self.switchCanvas(selectedAnalysisAreaInstance)
                 }
+            }else{
+                self.sampleListShowing(!!self.analysisAreaInstances().length);
             }
         });
 
@@ -148,7 +150,7 @@ define([
         this.initialize = function() {
             let subscription = self.analysisAreaInstances.subscribe(function(){
                 if (self.analysisAreaInstances().length > 0) {
-                    self.showSampleList(true);
+                    self.sampleListShowing(true);
                 }
                 subscription.dispose();
             });
@@ -156,6 +158,14 @@ define([
                 self.loadExternalCardData(data);
             });
         };
+
+        self.analysisAreaInstances.subscribe(function(instances){
+            if(instances.length > 0){
+                params.form.complete(true);
+            }else{
+                params.form.complete(false);
+            }
+        });
 
         this.getAnalysisAreaTileFromFeatureId = function(featureId) {
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122";  // Part Identifier Assignment_Polygon Identifier (E42)
@@ -184,6 +194,16 @@ define([
 
                                     if (self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid === feature.feature.properties.tileId) {
                                         feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                                        if (feature.feature.geometry.type === 'Point') {
+                                            var coords = feature.feature.geometry.coordinates;
+                                            self.map().panTo([coords[1], coords[0]]);
+                                        } else {
+                                            var extent = geojsonExtent(feature.feature);
+                                            self.map().fitBounds([
+                                                [extent[1], extent[0]],
+                                                [extent[3], extent[2]]
+                                            ]);
+                                        }
                                     } else {
                                         feature.setStyle({color: defaultColor, fillColor: defaultColor});
                                     }
@@ -282,14 +302,32 @@ define([
                     canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
                     )
                 );
+            // get locked status
+            tilesBelongingToManifest.forEach(function(analysisAreaTile){
+                analysisAreaTile.isLocked = ko.observable();
+                const physicalPartObjectNodeId = "b240c366-8594-11ea-97eb-acde48001122";
+                let analysisAreaResourceId = null;
+                
+                if(analysisAreaTile.data[physicalPartObjectNodeId]()){
+                    analysisAreaResourceId = analysisAreaTile.data[physicalPartObjectNodeId]()[0]["resourceId"]();
+                }
+                window.fetch(arches.urls.root + 'analysisarealocked' + '?resourceId=' + analysisAreaResourceId)
+                .then(function(response) {
+                    if(response.ok){
+                        return response.json();
+                    }
+                })
+                .then(function(data){
+                    analysisAreaTile.isLocked(data.isRelatedToDigitalResource);
+                });
+            })
             self.analysisAreaInstances(tilesBelongingToManifest);
         };
 
         this.selectAnalysisAreaInstance = function(analysisAreaInstance) {
             var previouslySelectedAnalysisAreaInstance = self.selectedAnalysisAreaInstance();
-            self.sampleListShowing(false);
             
-            if (previouslySelectedAnalysisAreaInstance && previouslySelectedAnalysisAreaInstance.tileid !== analysisAreaInstance.tileid) {
+            if (analysisAreaInstance === undefined || (previouslySelectedAnalysisAreaInstance && previouslySelectedAnalysisAreaInstance.tileid !== analysisAreaInstance.tileid)) {
                 /* resets any changes not explicity saved to the tile */ 
                 previouslySelectedAnalysisAreaInstance.reset();
 
@@ -303,6 +341,11 @@ define([
             
             self.selectedAnalysisAreaInstance(analysisAreaInstance);
 
+        };
+
+        this.viewAnalysisAreaInstance = function(analysisAreaInstance){
+            self.selectAnalysisAreaInstance(analysisAreaInstance);
+            self.sampleListShowing(false);
         };
 
         this.showSampleList = function() {
@@ -326,6 +369,66 @@ define([
             physicalThingAnnotationNode.active(true); 
             self.updateAnalysisAreaInstances();
         };
+
+        this.showingAnalysisAreaDeleteModal = ko.observable(false);
+        this.sampleToDelete = ko.observable();
+
+        this.showAnalysisAreaDeleteModal = function(sample){
+            self.showingAnalysisAreaDeleteModal(!!sample);
+            self.sampleToDelete(sample);
+        }
+
+        this.deleteAnalysisAreaInstance = function(){
+            let parentPhysicalThing = self.sampleToDelete();
+            self.selectedAnalysisAreaInstance(parentPhysicalThing);
+            const data = {
+                parentPhysicalThingResourceId: parentPhysicalThing.resourceinstance_id,
+                collectionResourceid: params.projectSet,
+                parentPhysicalThingTileData: koMapping.toJSON(parentPhysicalThing.data),
+                parentPhysicalThingTileId: parentPhysicalThing.tileid,
+                transactionId: params.form.workflowId,
+                analysisAreaName: self.areaName(),
+            };
+
+            self.savingTile(true);
+            self.showingAnalysisAreaDeleteModal(false);
+            self.savingMessage("Deleting Analysis Area");
+
+            window.fetch(arches.urls.root + 'deleteanalysisarea', {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(function(response){
+                self.savingTile(false);
+                if(response.ok){
+                    return;
+                }
+                
+                throw response;
+            })
+            .then(function(data){
+                parentPhysicalThing.data[physicalThingPartAnnotationNodeId].features().forEach(function(feature){
+                    self.deleteFeature(feature);
+                });
+                self.analysisAreaInstances.remove(parentPhysicalThing);
+                self.card.tiles.remove(parentPhysicalThing);
+                self.selectAnalysisAreaInstance(undefined);
+                self.resetAnalysisAreasTile();
+            })
+            .catch((response) => {
+                response.json().then(function(error){
+                    params.pageVm.alert(new params.form.AlertViewModel(
+                        "ep-alert-red",
+                        error.title,
+                        error.message,
+                    )); 
+                });
+            });
+        }
 
         this.saveAnalysisAreaTile = function() {
             annotation_label_nodeid = "3e541cc6-859b-11ea-97eb-acde48001122" 
@@ -372,6 +475,7 @@ define([
 
             self.savingTile(true);
             params.form.lockExternalStep('image-step', true);
+            self.savingMessage(`Saving Analysis Area ...`);
 
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,
@@ -414,8 +518,7 @@ define([
 
                 updateAnnotations().then(function(_physicalThingAnnotationNode) {
                     self.updateAnalysisAreaInstances();
-                
-                    self.sampleListShowing(false);
+                    self.sampleListShowing(true);
                     self.savingTile(false);
                     params.pageVm.alert("");
                     self.drawFeatures([]);
@@ -425,7 +528,6 @@ define([
                         currentAnalysisAreas: self.analysisAreasOnlySnapshot,
                     });
                     params.form.value(params.form.savedData());
-                    params.form.complete(true);
                 });
             })
             .fail(function(error){
@@ -435,10 +537,8 @@ define([
         };
 
         this.loadNewAnalysisAreaTile = function() {
-            if (!self.selectedAnalysisAreaInstance() || self.selectedAnalysisAreaInstance().tileid) {
-                var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-                self.selectAnalysisAreaInstance(newTile);
-            }
+            var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
+            self.viewAnalysisAreaInstance(newTile);
         };
 
         this.identifySampleLocations = function(card) {

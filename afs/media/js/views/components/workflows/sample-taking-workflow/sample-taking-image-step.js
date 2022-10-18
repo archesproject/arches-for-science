@@ -13,7 +13,7 @@ define([
         params.pageVm.loading(true);
 
         this.isManifestManagerHidden = ko.observable(true);
-        this.shouldShowEditService = ko.observable(false);
+        this.shouldShowEditService = ko.observable(true);
 
         this.selectedPhysicalThingImageServiceName = ko.observable();
         this.selectedPhysicalThingImageServiceName.subscribe(function(imageServiceName) {
@@ -85,7 +85,8 @@ define([
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
-                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
+                const manifestDescription = Array.isArray(manifestData.description) ? manifestData.description[0] : manifestData.description;
+                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescription);
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](manifestData['@id']);
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
                 self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](manifestData['@context']);

@@ -8,7 +8,13 @@ from afs.views.workflows.upload_dataset.select_dataset_files_step import SelectD
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
 from afs.views.update_resource_list import UpdateResourceListView
-from afs.views.save_analysis_area import SaveAnalysisAreaView, SaveSampleAreaView
+from afs.views.analysis_area_and_sample_taking import (
+    SaveAnalysisAreaView,
+    SaveSampleAreaView,
+    DeleteSampleAreaView,
+    DeleteAnalysisAreaView,
+    GetLockedStatus,
+)
 from afs.views.digital_resources_by_object_parts import DigitalResourcesByObjectParts
 from afs.views.instrument_info_step import InstrumentInfoStepFormSaveView
 
@@ -41,5 +47,8 @@ urlpatterns = [
     url(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),
     url(r"^saveanalysisarea", SaveAnalysisAreaView.as_view(), name="saveanalysisarea"),
     url(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),
-    url(r"^", include("arches.urls")),
+    url(r"^deletesamplearea", DeleteSampleAreaView.as_view(), name="deletesamplearea"),
+    url(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
+    url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
+    url(r"^", include("arches.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

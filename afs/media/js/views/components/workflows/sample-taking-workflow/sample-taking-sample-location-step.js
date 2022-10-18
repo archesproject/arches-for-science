@@ -5,13 +5,14 @@ define([
     'views/components/workflows/stepUtils',
     'knockout',
     'knockout-mapping',
+    'geojson-extent',
     'utils/resource',
     'models/graph',
     'viewmodels/card',
     'viewmodels/tile',
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
-], function(_, $, arches, StepUtils, ko, koMapping, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -88,6 +89,8 @@ define([
                 if (ko.unwrap(ko.unwrap(selectedSampleLocationInstance.data[physicalThingPartAnnotationNodeId])?.features)) {
                     self.switchCanvas(selectedSampleLocationInstance)
                 }
+            }else{
+                self.sampleListShowing(!!self.sampleLocationInstances().length);
             }
         });
 
@@ -168,7 +171,7 @@ define([
 
             let subscription = self.sampleLocationInstances.subscribe(function(){
                 if (self.sampleLocationInstances().length > 0) {
-                    self.showSampleList(true);
+                    self.sampleListShowing(true);
                 }
                 subscription.dispose();
             });
@@ -216,6 +219,16 @@ define([
                                     
                                     if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid === feature.feature.properties.tileId) {
                                         feature.setStyle({color: '#BCFE2B', fillColor: '#BCFE2B'});
+                                        if (feature.feature.geometry.type === 'Point') {
+                                            var coords = feature.feature.geometry.coordinates;
+                                            self.map().panTo([coords[1], coords[0]]);
+                                        } else {
+                                            var extent = geojsonExtent(feature.feature);
+                                            self.map().fitBounds([
+                                                [extent[1], extent[0]],
+                                                [extent[3], extent[2]]
+                                            ]);
+                                        }
                                     } else {
                                         feature.setStyle({color: defaultColor, fillColor: defaultColor});
                                     }
@@ -328,6 +341,12 @@ define([
                 const relatedSamplingActivity = currentResourceRelatedResources?.related_resources?.related_resources?.filter(x => x?.graph_id == samplingActivityGraphId);
                 instance.samplingActivityResourceId(relatedSamplingActivity?.[0]?.resourceinstanceid);
             }
+            if(instances.length > 0){
+                params.form.complete(true);
+            }else{
+                params.form.complete(false);
+            }
+
         });
 
         this.selectSampleLocationInstance = async function(sampleLocationInstance) {
@@ -337,12 +356,10 @@ define([
             self.motivationForSamplingWidgetValue(null);
             self.previouslySavedMotivationForSamplingWidgetValue(null);
 
-            self.sampleListShowing(false);
-
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
-            if (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid) {
+            if (sampleLocationInstance === undefined || (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid)) {
                 previouslySelectedSampleLocationInstance.reset();
 
                 self.drawFeatures([]);
@@ -428,6 +445,11 @@ define([
             }
         };
 
+        this.viewSampleLocationInstance = function(sampleLocationInstance){
+            self.selectSampleLocationInstance(sampleLocationInstance);
+            self.sampleListShowing(false);
+        };
+
         this.resetDescriptions = function(){
             const previouslySavedSampleDescriptionWidgetValue = ko.unwrap(self.previouslySavedSampleDescriptionWidgetValue);
             const previouslySavedMotivationForSamplingWidgetValue = ko.unwrap(self.previouslySavedMotivationForSamplingWidgetValue);
@@ -455,6 +477,68 @@ define([
             physicalThingAnnotationNode.active(true); 
             self.updateSampleLocationInstances();
         };
+
+        this.confirmSampleLocationDelete = function(selectedSampleLocationInstance){
+            self.deleteSampleLocation(selectedSampleLocationInstance);
+        };
+
+        this.showingSampleLocationDeleteModal = ko.observable(false);
+        this.sampleToDelete = ko.observable();
+
+        this.showSampleLocationDeleteModal = function(sample){
+            self.showingSampleLocationDeleteModal(!!sample);
+            self.sampleToDelete(sample);
+        }
+
+        this.deleteSampleLocation = function(){
+            let selectedSampleLocationInstance = self.sampleToDelete();
+            self.selectedSampleLocationInstance(selectedSampleLocationInstance);
+            const data = {
+                parentPhysicalThingResourceid: self.physicalThingResourceId,
+                samplingActivityResourceId: self.samplingActivityResourceId,
+                partIdentifierAssignmentTileData: koMapping.toJSON(selectedSampleLocationInstance.data),
+                transactionId: params.form.workflowId,
+            };
+
+            self.savingTile(true);
+            self.showingSampleLocationDeleteModal(false);
+            self.savingMessage("Deleting Sample Areas, Samples & Descriptions");
+
+            window.fetch(arches.urls.root + 'deletesamplearea', {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(function(response){
+                self.savingTile(false);
+                if(response.ok){
+                    return;
+                }
+                
+                throw response;
+            })
+            .then(function(data){
+                selectedSampleLocationInstance.data[physicalThingPartAnnotationNodeId].features().forEach(function(feature){
+                    self.deleteFeature(feature);
+                });
+                self.sampleLocationInstances.remove(selectedSampleLocationInstance);
+                self.card.tiles.remove(selectedSampleLocationInstance);
+                self.selectSampleLocationInstance(undefined);
+                self.resetSampleLocationTile();
+            })
+            .catch((response) => {
+                response.json().then(function(error){
+                    params.pageVm.alert(new params.form.AlertViewModel(
+                        "ep-alert-red",
+                        error.title,
+                        error.message,
+                    )); 
+                });
+            });
+        }
 
         this.saveSampleLocationTile = function() {
             // don't save if tile isn't dirty.
@@ -555,11 +639,10 @@ define([
                     self.samplingActivitySamplingUnitCard(samplingActivitySamplingUnitCard);
                     
                     self.updateSampleLocationInstances();
-                    self.showSampleList(true);
+                    self.sampleListShowing(true);
                     self.savingMessage("");
                     self.savingTile(false);
                     params.dirty(false);
-                    params.form.complete(true);
                     let mappedInstances = self.sampleLocationInstances().map((instance) => { return { "data": instance.data }});
                     params.form.savedData(mappedInstances);
                     params.form.value(params.form.savedData());
@@ -579,7 +662,7 @@ define([
 
         this.loadNewSampleLocationTile = function() {
             var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
-            self.selectSampleLocationInstance(newTile);
+            self.viewSampleLocationInstance(newTile);
         };
 
         this.saveWorkflowStep = function() {

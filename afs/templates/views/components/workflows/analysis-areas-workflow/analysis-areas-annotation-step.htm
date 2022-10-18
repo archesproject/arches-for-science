@@ -35,6 +35,21 @@
 <div class="workbench-card-sidepanel-border"></div>
 <div class="workbench-card-sidepanel-body">
 
+    <!-- Popup modal for deleting a sample location -->
+    <div class="afs-modal" data-bind="visible: showingAnalysisAreaDeleteModal">
+        <div class="afs-modal-content">
+            <h1>{% trans "Delete Analysis Area" %}</h1>
+            <p>{% trans "Are you sure you want to delete the analysis area?" %}</p>
+    
+            <div class="afs-modal-clearfix">
+                <button type="button" data-bind="click: showAnalysisAreaDeleteModal(false)" class="btn btn-success">
+                    {% trans "Cancel" %}</button>
+                <button type="button" data-bind="click: deleteAnalysisAreaInstance" class="btn btn-danger">
+                    {% trans "Delete" %}</button>
+            </div>
+        </div>
+    </div>
+
     <div data-bind="css: card.model.cssclass">
         <div class="new-provisional-edit-card-container">
             <div class="card">
@@ -44,10 +59,7 @@
                             background: #9490EE;
                             color: #eee;
                         " data-bind="
-                            click: $data.loadNewAnalysisAreaTile,
-                            attr: {
-                                class: ( $data.selectedAnalysisAreaInstance() && !$data.selectedAnalysisAreaInstance().tileid ) ? 'btn disabled' : 'btn'
-                            }
+                            click: $data.loadNewAnalysisAreaTile
                         ">
                         <i class="fa fa-folder"></i>
                         <span>
@@ -55,21 +67,13 @@
                         </span>
                     </button>
                 
-                    <!-- ko if: analysisAreaInstances().length > 0 -->
+                    <!-- ko if: analysisAreaInstances().length > 0 && !sampleListShowing() -->
                     <button type="button" class="btn" style="
                             background: #9490EE;
                             color: #eee;
                         " data-bind="click: showSampleList">
                         <i class="fa fa-folder"></i>
-                        <span>
-                            <!-- ko ifnot: sampleListShowing -->
-                            {% trans 'Show List of Samples' %}
-                            <!-- /ko -->
-                
-                            <!-- ko if: sampleListShowing -->
-                            {% trans 'Hide List of Samples' %}
-                            <!-- /ko -->
-                        </span>
+                        <span>{% trans 'Return to Analysis Areas List' %}</span>
                     </button>
                     <!-- /ko -->
                 </div>
@@ -113,7 +117,9 @@
                                     "
                                 >
                                     <!-- ko foreach: $data.filteredAnalysisAreaInstances -->
-                                        <tr data-bind="
+                                        <tr style="cursor: pointer;" 
+                                            data-bind="
+                                                click: function() { $parent.selectAnalysisAreaInstance($data); }
                                                 scrollTo: $parent.selectedAnalysisAreaInstance() && $parent.selectedAnalysisAreaInstance().tileid === $data.tileid,
                                                 style: {
                                                     background: (function() {
@@ -124,13 +130,33 @@
                                                 },
                                             "
                                         >
-                                            <td style="cursor: pointer;" class="map-card-feature-tool">
+                                            <!-- ko if: $data.isLocked() -->
+                                            <td style="cursor: pointer; width: 30px;">
                                                 <a href="javascript:void(0);"
-                                                    data-bind="click: function() { $parent.selectAnalysisAreaInstance($data); }, clickBubble: false">
-                                                    <i class="fa fa-pencil map-card-feature-edit"></i>
-                                                    {% trans "Edit" %}
+                                                    data-bind="click: function() { $parent.viewAnalysisAreaInstance($data); }, clickBubble: false">
+                                                    <i class="fa fa-eye map-card-feature-edit"></i>
                                                 </a>
                                             </td>
+                                            <td style="width: 30px;">
+                                                <a href="javascript:void(0);" style="cursor: unset;">
+                                                    <i class="fa fa-lock"></i>
+                                                </a>
+                                            </td>
+                                            <!-- /ko -->
+                                            <!-- ko ifnot: $data.isLocked() -->
+                                            <td style="cursor: pointer; width: 30px;">
+                                                <a href="javascript:void(0);"
+                                                    data-bind="click: function() { $parent.viewAnalysisAreaInstance($data); }, clickBubble: false">
+                                                    <i class="fa fa-pencil map-card-feature-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td style="cursor: pointer; width: 30px;">
+                                                <a href="javascript:void(0);"
+                                                    data-bind="click: function() { $parent.showAnalysisAreaDeleteModal($data); }, clickBubble: false">
+                                                    <i class="fa fa-trash map-card-feature-edit"></i>
+                                                </a>
+                                            </td>
+                                            <!-- /ko -->
                                             <td class="afs-workflow-table-contents"
                                                 data-bind="text: (function(){
                                                     var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
@@ -296,6 +322,7 @@
                                                 <td>
                                                     <span class="map-card-feature-name" data-bind="text: feature.geometry.type"></span>
                                                 </td>
+                                                <!-- ko ifnot: self.selectedAnalysisAreaInstance()?.isLocked -->
                                                 <td class="map-card-feature-tool">
                                                     <a href="javascript:void(0);" data-bind="click: function() { self.editFeature(feature); }, clickBubble: false">
                                                         <i class="fa fa-pencil map-card-feature-edit"></i>
@@ -308,6 +335,7 @@
                                                         {% trans "Delete" %}
                                                     </a>
                                                 </td>
+                                                <!-- /ko -->
                                             </tr>
                                             <!-- /ko -->
                                         </tbody>
@@ -336,7 +364,7 @@
                                             expanded: self.expanded,
                                             graph: self.form.graph,
                                             type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
+                                            disabled: $parent.selectedAnalysisAreaInstance()?.isLocked,
                                         }
                                     }, 
                                     css:{
@@ -383,7 +411,7 @@
                                             expanded: self.expanded,
                                             graph: self.form.graph,
                                             type: "resource-editor",
-                                            disabled: !self.card.isWritable && !self.preview,
+                                            disabled: $parent.selectedAnalysisAreaInstance()?.isLocked,
                                             relatedResourceId: projectResourceId,
                                             relatedNodeId: "dbaa2022-9ae7-11ea-ab62-dca90488358a",
                                         }

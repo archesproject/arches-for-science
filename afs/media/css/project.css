@@ -925,6 +925,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
 
 .afs-sample-location-form-widgets {
     transition: opacity 1s;
@@ -932,4 +933,34 @@
     margin-top: 10px;
     margin-left: 5px;
     opacity: 0;
+}
+
+/* The Modal (background) */
+.afs-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #555555;
+    padding-top: 50px;
+    opacity: .9;
+}
+/* Modal Content/Box */
+.afs-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 400px;
+    padding: 0px 20px 20px 20px;
+}
+
+
+@media (min-width: 768px) {
+    #navbar .brand-title {
+        padding: 0 0.5em 0 1em;
+    }
 }
