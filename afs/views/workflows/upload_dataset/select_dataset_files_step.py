@@ -34,16 +34,16 @@ class SelectDatasetFilesStep(View):
         }
 
         format_mappings = {
-                "bm6": "xrf",
-                "b5g": "xrf",
-                "bt45": "xrf",
-                "bt3": "xrf",
-                "b5i": "xrf",
-                "bart": "xrf",
-                "r785": "raman",
-                "r633": "raman",
-                "asd": "fors"
-            }
+            "bm6": "xrf",
+            "b5g": "xrf",
+            "bt45": "xrf",
+            "bt3": "xrf",
+            "b5i": "xrf",
+            "bart": "xrf",
+            "r785": "raman",
+            "r633": "raman",
+            "asd": "fors",
+        }
         transaction_id = request.POST.get("transaction_id")
         observation_id = request.POST.get("observation_id")
         posted_dataset = request.POST.get("dataset")
@@ -117,21 +117,21 @@ class SelectDatasetFilesStep(View):
             new_files = []
             for file in dataset_files:
                 file_data = next((fd for fd in file_data_list if fd.get("name") == file.name), None)
-                #split_file_name = os.path.splitext(file.name)
-                #if split_file_name[1] in [".zip"]:
+                # split_file_name = os.path.splitext(file.name)
+                # if split_file_name[1] in [".zip"]:
                 #    with zipfile.ZipFile(file, "r") as myzip:
                 #       files = myzip.infolist()
                 #       for zip_file in files:
                 #           if not zip_file.filename.startswith("__MACOSX") and not zip_file.is_dir():
-                #file_data_copy = file_data#.copy()
-                #new_file_bytes = io.BytesIO(myzip.read(zip_file.filename))
-                #f = open("file_from_zip", "wb")
-                #f.write(new_file_bytes.read())
-                #f.close()
-                #type_tuple = MimeTypes().guess_type(file.name)
-                #new_file_type = type_tuple[0] if type_tuple is not None else None
-                #file_data_copy["name"] = zip_file.filename
-                #file_data["type"] = new_file_type
+                # file_data_copy = file_data#.copy()
+                # new_file_bytes = io.BytesIO(myzip.read(zip_file.filename))
+                # f = open("file_from_zip", "wb")
+                # f.write(new_file_bytes.read())
+                # f.close()
+                # type_tuple = MimeTypes().guess_type(file.name)
+                # new_file_type = type_tuple[0] if type_tuple is not None else None
+                # file_data_copy["name"] = zip_file.filename
+                # file_data["type"] = new_file_type
                 new_files.append(
                     (
                         file_data,
@@ -170,7 +170,7 @@ class SelectDatasetFilesStep(View):
                         file_data["renderer"] = renderer_lookup["pdf"]
                     elif dataset_default_format is not None:  # instrument was given by zip file name
                         file_data["renderer"] = renderer_lookup[format_mappings[dataset_default_format]]
-                    
+
                     file_data["format"] = dataset_default_format
 
                     # file has not been uploaded
@@ -198,7 +198,9 @@ class SelectDatasetFilesStep(View):
                     else:
                         file_data["tileid"] = response["tileid"]
 
-            file_response = [{"name": f[0]["name"], "renderer": f[0]["renderer"],"format": f[0]["format"], "tileId": f[0]["tileid"]} for f in new_files]
+            file_response = [
+                {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0]["format"], "tileId": f[0]["tileid"]} for f in new_files
+            ]
 
         return JSONResponse(
             {

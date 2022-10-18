@@ -16,32 +16,27 @@ from django.http import HttpRequest
 import zipfile
 
 
-
-class FormatRenderMap(View):   
+class FormatRenderMap(View):
     def get(self, request, format):
 
         renderer_lookup = {
             "fors": "88dccb59-14e3-4445-8f1b-07f0470b38bb",
             "raman": "94fa1720-6773-4f99-b49b-4ea0926b3933",
-            "xrf": "31be40ae-dbe6-4f41-9c13-1964d7d17042"
+            "xrf": "31be40ae-dbe6-4f41-9c13-1964d7d17042",
         }
 
         format_mappings = {
-                "bm6": "xrf",
-                "b5g": "xrf",
-                "bt45": "xrf",
-                "bt3": "xrf",
-                "b5i": "xrf",
-                "bart": "xrf",
-                "r785": "raman",
-                "r633": "raman",
-                "asd": "fors"
-            }
-        if(format in format_mappings):
-            return JSONResponse(
-                {
-                    "renderer": renderer_lookup[format_mappings[format]]
-                }
-            )
+            "bm6": "xrf",
+            "b5g": "xrf",
+            "bt45": "xrf",
+            "bt3": "xrf",
+            "b5i": "xrf",
+            "bart": "xrf",
+            "r785": "raman",
+            "r633": "raman",
+            "asd": "fors",
+        }
+        if format in format_mappings:
+            return JSONResponse({"renderer": renderer_lookup[format_mappings[format]]})
         else:
             return None
