@@ -59,6 +59,45 @@ define([
             self.visible = {parts: ko.observable(true)};
             self.summary = params.summary;
 
+            //Summary Report
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
+            self.parentProjectSummary = ko.observable();
+            self.nameSummary = ko.observable();
+            self.statementSummary = ko.observable();
+            self.typeSummary = ko.observable();
+
+            const parentProject = self.getRawNodeValue(self.resource(), 'part of');
+            if (parentProject) {
+                displayValue = self.getNodeValue(self.resource(), 'part of');
+                link = self.getResourceLink(self.resource(), 'part of');
+                self.parentProjectSummary([{displayValue, link}]);
+            }
+
+            self.nameSummary(self.resource()['Name']?.map(x => {
+                const content = self.getNodeValue(x, 'name_content');
+                const type = self.getNodeValue(x, 'name_type');
+                return {content, type}
+            }));
+
+            self.statementSummary(self.resource()['Statement']?.map(x => {
+                const content = self.getNodeValue(x, 'statement_content');
+                const type = self.getNodeValue(x, 'statement_type');
+                return {content, type}
+            }));
+
+            const type = self.getRawNodeValue(self.resource(), 'type');
+            if (type) {
+                displayValue = self.getNodeValue(self.resource(), 'type');
+                self.typeSummary([{displayValue}]);
+            }
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
