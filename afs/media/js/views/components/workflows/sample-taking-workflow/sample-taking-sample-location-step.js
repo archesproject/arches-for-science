@@ -537,7 +537,7 @@ define([
                 `Sample Name, Classification and Statements`,
                 `Sample Area Name and Classification`,
                 `Relationship between Sample, Sample Area, and Parent Object (${params.physicalThingName})`,
-                `It may take a while, so do not move away from this step.`
+                `This may take a while, please do not move away from this step.`
             ];
             let i = 0;
             const showMessage = setInterval(() => {
@@ -549,7 +549,7 @@ define([
             );
 
             const showExtraMessage = setTimeout(() => {
-                self.savingMessage(`It takes longer than usual. Thank you for your patience.`);
+                self.savingMessage(`This is taking longer than usual. Thank you for your patience.`);
             }, "20000");
 
             $.ajax({

@@ -391,7 +391,7 @@ define([
             const savingMessages = [
                 `Analysis Area Name and Classification`,
                 `Relationship between Analysis Area, Project and Parent Object (${self.physicalThingName()})`,
-                `It may take a while, so do not move away from this step.`
+                `This may take a while, please do not move away from this step.`
             ];
             let i = 0;
             const showMessage = setInterval(() => {
@@ -403,7 +403,7 @@ define([
             );
 
             const showExtraMessage = setTimeout(() => {
-                self.savingMessage(`It takes longer than usual. Thank you for your patience.`);
+                self.savingMessage(`This is taking longer than usual. Thank you for your patience.`);
             }, "10000");
 
             const data = {
