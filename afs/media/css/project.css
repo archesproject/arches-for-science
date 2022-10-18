@@ -507,6 +507,18 @@
     width: 100%;
 }
 
+.format-select .select2-container {
+    margin-top: 10px !important; /* I hate to do this, but I must because arches.scss line 2774  */
+}
+
+.select2-results {
+    margin-top: 0px;
+}
+
+.select-dataset-pull-up {
+    top: 517px;
+}
+
 .upload-dataset-select-dataset-files #parts-panel .panel {
     margin-bottom:0px; 
     border-bottom: 1px solid #ddd;

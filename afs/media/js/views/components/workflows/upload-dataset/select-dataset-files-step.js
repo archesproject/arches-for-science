@@ -25,7 +25,11 @@ define([
             const datasetFileNodeGroupId = "7c486328-d380-11e9-b88e-a4d18cec433a";
             const datasetFileNodeId = "7c486328-d380-11e9-b88e-a4d18cec433a";
             const observationGraphId = "615b11ee-c457-11e9-910c-a4d18cec433a";
-
+            const childPhysicalThingsValueIds = {
+                '77d8cf19-ce9c-4e0a-bde1-9148d870e11c': 'Sample',
+                '7375a6fb-0bfb-4bcf-81a3-6180cdd26123': 'Sample Location',
+                '31d97bdd-f10f-4a26-958c-69cb5ab69af1': 'Analysis Area',
+            };
             this.showDatasetDetails = ko.observable(false);
 
             const projectInfo = params.projectInfo;
@@ -39,6 +43,7 @@ define([
             this.partFilter = ko.observable("");
             this.annotations = ko.observableArray([]);
             this.selectedPartObservationId = ko.observable();
+            this.selectedPartDefaultFormat = ko.observable();
             this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
             this.observationReferenceTileId = ko.observable();
@@ -49,10 +54,23 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(false);
             this.files = ko.observableArray([]);
+
+            this.formats = ko.observableArray([
+                {text: "Bruker M6 (point)", id: "bm6"},
+                {text: "Bruker 5g", id: "b5g"},
+                {text: "Bruker Tracer IV-V", id: "bt45"},
+                {text: "Bruker Tracer III", id: "bt3"},
+                {text: "Bruker 5i", id: "b5i"},
+                {text: "Bruker Artax", id: "bart"},
+                {text: "Renishaw InVia - 785", id: "r785"},
+                {text: "Ranishsaw inVia - 633/514", id: "r633"},
+                {text: "ASD FieldSpec IV hi res", id: "asd"}
+            ]);
+            
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
-            this.savingMessage = ko.observable();
-            this.savingFile = ko.observable(false);
+            this.loadingMessage = ko.observable();
+            this.loading = ko.observable(false);
 
             this.selectedPartHasCurrentObservation = ko.computed(() => {
                 if(!self.selectedPart()?.observationResourceId){
@@ -95,10 +113,13 @@ define([
             this.getAnnotationProperty = function(tile, property){
                 return tile.data[physicalThingPartAnnotationNodeId].features[0].properties[property];
             };
+            self.selectedPartDefaultFormat.subscribe((defaultFormat) => {
+                self.selectedPart().defaultFormat(defaultFormat);
+            });
 
             this.selectedPart.subscribe(async (data) => {
                 self.selectedPartObservationId(self.selectedPart().observationResourceId);
-
+                self.selectedPartDefaultFormat(ko.unwrap(self.selectedPart()?.defaultFormat));
                 self.annotations([data]);
                 if (self.annotations().length) {
                     self.selectedAnnotationTile(self.annotations()[0]);
@@ -150,57 +171,12 @@ define([
                 }
             };
 
-            this.createObservationCrossReferences = async () => {
-                const recordedValueNodeId = "dd596aae-c457-11e9-956b-a4d18cec433a";
-                const tileid = self.observationReferenceTileId() || "";
-                const digitalReferenceTile = {
-                    "tileid": self.observationReferenceTileId() || "",
-                    "data": {},
-                    "nodegroup_id": recordedValueNodeId,
-                    "parenttile_id": null,
-                    "resourceinstance_id": observationResourceId,
-                    "sortorder": 1,
-                    "tiles": {},
-                    "transaction_id": params.form.workflowId
-                };
-
-
-                await Promise.all(self.parts().map(getPartObservationId));
-                
-                digitalReferenceTile.data[recordedValueNodeId] = 
-                    self.parts().filter((part) => {
-                        return ((part.datasetId() && (!part.observationResourceId || part.observationResourceId === observationResourceId)) ? true : false); // observation reference already exists
-                    }).map(part => { 
-                        return {
-                            "resourceId": part.datasetId(),
-                            "ontologyProperty": "",
-                            "inverseOntologyProperty": "",
-                            "partResource": part.resourceId()
-                        };
-                    });
-
-                const result = await window.fetch(arches.urls.api_tiles(tileid), {
-                    method: 'POST',
-                    credentials: 'include',
-                    body: JSON.stringify(digitalReferenceTile),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                });
-
-                if(result.ok){
-                    const json = await result.json();
-                    self.observationReferenceTileId(json?.tileid);
-                    return json;
-                }
-            };
-
-            this.saveDatasetFile = (part, formData, file) => {
+            this.saveDatasetFile = (formData, file) => {
                 //Tile structure for the Digital Resource 'File' nodegroup
-                self.savingFile(true);
+                self.loading(true);
 
                 if(file) {
-                    self.savingMessage(`Uploading ${file.name}`);
+                    self.loadingMessage(`Uploading files (may take a few minutes)...`);
                     let fileInfo;
                     
                     if (!ko.unwrap(file.tileId)) {
@@ -229,7 +205,8 @@ define([
 
             const saveWorkflowState = () => {
                 params.form.savedData({ 
-                observationReferenceTileId: self.observationReferenceTileId(),
+                    observationReferenceTileId: self.observationReferenceTileId(),
+                    
                     parts: self.parts().map(x =>
                         {
                             fileObjects = x.datasetFiles().map(file => { 
@@ -242,7 +219,9 @@ define([
                                 nameTileId: x.nameTileId(),
                                 datasetName: x.datasetName() || '',
                                 resourceReferenceId: x.resourceReferenceId(),
-                                tileid: x.tileid
+                                defaultFormat: x.defaultFormat(),
+                                tileid: x.tileid,
+                                partResourceId: self.selectedPart().resourceid
                             };
                         }
                     )
@@ -252,9 +231,9 @@ define([
             this.deleteFile = async(file) => {
                 const fileTile = ko.unwrap(file.tileId);
                 if(fileTile){
-                    self.savingFile(true);
+                    self.loading(true);
                     try {
-                        self.savingMessage(`Deleting ${ko.unwrap(file.name)}...`)
+                        self.loadingMessage(`Deleting ${ko.unwrap(file.name)}...`)
                         const formData = new window.FormData();
                         formData.append("tileid", fileTile)
 
@@ -278,7 +257,7 @@ define([
                             saveWorkflowState();
                         }
                     } finally {
-                        self.savingFile(false)
+                        self.loading(false)
                     }
                 }
             }
@@ -301,15 +280,16 @@ define([
                         "name": part.calcDatasetName(),
                         "tileId": part.nameTileId(),
                         "resourceInstanceId": ko.unwrap(part.datasetId),
-                        "partResourceId": ko.unwrap(part.resourceid)
+                        "partResourceId": ko.unwrap(part.resourceid),
+                        "defaultFormat": ko.unwrap(part.defaultFormat)
                     }));
 
-                    self.savingFile(true);
-                    self.savingMessage(`Saving dataset ${part.calcDatasetName()}`);
-                    if (file) {
+                    self.loading(true);
+                    self.loadingMessage(`Saving dataset ${part.calcDatasetName()}`);
+                    Array.from(files).forEach(file => {
                         // Then save a file tile to the digital resource for each associated file
-                        self.saveDatasetFile(part, formData, file);
-                    }
+                        self.saveDatasetFile(formData, file);
+                    });
 
                     const resp = await window.fetch(arches.urls.upload_dataset_select_dataset_files_step, {
                         method: 'POST',
@@ -320,7 +300,7 @@ define([
                         }
                     });
 
-                    self.savingFile(false);
+                    self.loading(false);
                     const datasetInfo = await resp.json()
                     self.observationReferenceTileId(datasetInfo.observationReferenceTileId);
                     part.datasetId(datasetInfo.datasetResourceId);
@@ -348,9 +328,8 @@ define([
                 url: "arches.urls.root",
                 dictDefaultMessage: '',
                 autoProcessQueue: false,
-                uploadMultiple: false,
+                uploadMultiple: true,
                 autoQueue: false,
-                acceptedFiles: ".zip",
                 clickable: ".upload-dataset-files." + this.uniqueidClass(),
                 previewsContainer: '#hidden-dz-previews',
                 init: function() {
@@ -370,6 +349,9 @@ define([
             });
 
             this.init = async() => {
+                self.loading(true);
+                self.loadingMessage(`Loading samples and analysis areas...`);
+                self.activeTab('dataset');
                 this.selectedAnnotationTile.subscribe(this.highlightAnnotation);
                 self.annotationNodes.subscribe(function(val){
                     var overlay = val.find(n => n.name.includes('Physical Thing'));
@@ -387,14 +369,18 @@ define([
                 const thingResource = await resourceUtils.lookupResourceInstanceData(this.physicalThing);
                 const parts = thingResource?._source.tiles.filter((tile) => tile.nodegroup_id === physicalThingPartNodeGroupId);
 
-                self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);               
+                self.observationReferenceTileId(params.form.savedData()?.observationReferenceTileId);
+
                 for (const part of parts) {
                     part.resourceid = part.data[physicalThingPartNodeId][0].resourceId; 
                     const related = await resourceUtils.lookupResourceInstanceData(part.resourceid);
                     const digitalReferenceNodeGroupId = "8a4ad932-8d59-11eb-a9c4-faffc265b501"; 
                     const digitalReferenceNodeId = "a298ee52-8d59-11eb-a9c4-faffc265b501";
                     const digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501';
+                    const typeNodeGroupId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
                     const datasetTile = related?._source.tiles.find((tile) => tile.nodegroup_id === digitalReferenceNodeGroupId);
+                    const partTypeId = related?._source.tiles.filter((tile) => tile.nodegroup_id === typeNodeGroupId)?.[0]?.data[typeNodeGroupId]?.[0];
+                    part.type = childPhysicalThingsValueIds[partTypeId];
                     const manifestValueIds = [
                         '1497d15a-1c3b-4ee9-a259-846bbab012ed', // Preferred Manifest
                         '305c62f0-7e3d-4d52-a210-b451491e6100', // IIIF Manifest
@@ -403,6 +389,7 @@ define([
                     part.datasetFiles = part.datasetFiles || ko.observableArray([]);
                     part.stagedFiles = part.stagedFiles || ko.observableArray([]);
                     part.datasetName = part.datasetName || ko.observable();
+                    part.defaultFormat = ko.observable(params.form.savedData()?.parts.find(savedPart => part.resourceid == savedPart?.partResourceId)?.defaultFormat);
 
                     const childPhysThingName = related._source.displayname;
                     let timeoutId = 0;
@@ -450,6 +437,7 @@ define([
                         part.datasetId(savedValue.datasetId);
                         part.nameTileId(savedValue.nameTileId);
                         part.resourceReferenceId(savedValue.resourceReferenceId);
+                        
                         if(self.activeTab() != 'dataset') {
                             self.mainMenu(false);
                             self.activeTab('dataset');
@@ -469,6 +457,8 @@ define([
                 };
                 self.parts(parts);
                 self.selectedPart(self.parts()[0]);
+
+                self.loading(false);
             }
      
             this.init();

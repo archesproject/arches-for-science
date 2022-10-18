@@ -2,6 +2,8 @@ from django.conf.urls import include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from arches.app.views.plugin import PluginView
+from afs.views.workflows.upload_dataset.format_render_map import FormatRenderMap
+from afs.views.workflows.upload_dataset.update_file_format import UpdateFileFormat
 from afs.views.workflows.upload_dataset.select_dataset_files_step import SelectDatasetFilesStep
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
@@ -24,6 +26,16 @@ urlpatterns = [
         r"^workflows/upload-dataset-workflow/select-dataset-files-step",
         SelectDatasetFilesStep.as_view(),
         name="upload_dataset_select_dataset_files_step",
+    ),
+    url(
+        r"^workflows/upload-dataset-workflow/file-renderer/(?P<tileid>%s)$" % uuid_regex,
+        UpdateFileFormat.as_view(),
+        name="upload_dataset_file_renderer",
+    ),
+    url(
+        r"^workflows/upload-dataset-workflow/get-format-renderer/(?P<format>[0-9a-zA-Z_\-./]*)$",
+        FormatRenderMap.as_view(),
+        name="format_render_map",
     ),
     url(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
     url(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),

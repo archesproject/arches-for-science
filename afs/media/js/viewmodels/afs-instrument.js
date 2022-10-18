@@ -233,6 +233,7 @@ define(['jquery',
                 url : this.displayContent.url,
                 dataType: "text"})
                 .done(function(data) {
+                    self.displayContent.validRenderer(true);
                     try {
                         self.parse(data, series);
                         // clear the data before you add new data, this fixes a bug in the 
@@ -243,12 +244,16 @@ define(['jquery',
                         if(self.fileViewer){
                             self.loadSeriesDataFromLocalStorage();
                         } else {
+                            if (series.count == 0) {
+                                self.displayContent.validRenderer(false);
+                            }
                             self.seriesData.push({data: series, name: self.displayContent.name});
                         }
                     } catch(e) {
                         self.displayContent.validRenderer(false);
                     }
                     self.loading(false);
+                    self.displayContent.validRenderer.valueHasMutated();
                 }, this);
         };        
 

@@ -26,12 +26,24 @@ class SelectDatasetFilesStep(View):
         dataset_file_node_group_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
         dataset_file_node_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
         renderer_lookup = {
-            "artax": "88dccb59-14e3-4445-8f1b-07f0470b38bb",
+            "fors": "88dccb59-14e3-4445-8f1b-07f0470b38bb",
             "raman": "94fa1720-6773-4f99-b49b-4ea0926b3933",
             "xrf": "31be40ae-dbe6-4f41-9c13-1964d7d17042",
             "image": "5e05aa2e-5db0-4922-8938-b4d2b7919733",
             "pdf": "09dec059-1ee8-4fbd-85dd-c0ab0428aa94",
         }
+
+        format_mappings = {
+                "bm6": "xrf",
+                "b5g": "xrf",
+                "bt45": "xrf",
+                "bt3": "xrf",
+                "b5i": "xrf",
+                "bart": "xrf",
+                "r785": "raman",
+                "r633": "raman",
+                "asd": "fors"
+            }
         transaction_id = request.POST.get("transaction_id")
         observation_id = request.POST.get("observation_id")
         posted_dataset = request.POST.get("dataset")
@@ -42,6 +54,7 @@ class SelectDatasetFilesStep(View):
             tile_id = dataset.get("tileId", None)
             part_resource_id = dataset.get("partResourceId", None)
             dataset_resource_id = dataset.get("resourceInstanceId", None)
+            dataset_default_format = dataset.get("defaultFormat", None)
 
             # create a dataset (digital resource) and a name tile for it.
             if not dataset_resource_id:
@@ -67,7 +80,6 @@ class SelectDatasetFilesStep(View):
                 digital_reference_tile.data[digital_reference_node_id] = [
                     {"resourceId": str(dataset_resource.resourceinstanceid), "ontologyProperty": "", "inverseOntologyProperty": ""}
                 ]
-
                 digital_reference_tile.save(user=request.user, transaction_id=transaction_id)
 
             # create observation cross references
@@ -84,7 +96,6 @@ class SelectDatasetFilesStep(View):
                             "partResource": part_resource_id,
                         }
                     )
-
             else:
                 observation_reference_tile = Tile().get_blank_tile_from_nodegroup_id(recorded_value_node_id)
                 observation_reference_tile.resourceinstance_id = observation_id
@@ -106,48 +117,43 @@ class SelectDatasetFilesStep(View):
             new_files = []
             for file in dataset_files:
                 file_data = next((fd for fd in file_data_list if fd.get("name") == file.name), None)
-                split_file_name = os.path.splitext(file.name)
-                if split_file_name[1] in [".zip"]:
-                    try:
-                        instrument = os.path.splitext(split_file_name[0])[1].replace(".", "")
-                    except:
-                        instrument = None
-                    with zipfile.ZipFile(file, "r") as myzip:
-                        files = myzip.infolist()
-                        for zip_file in files:
-                            if not zip_file.filename.startswith("__MACOSX") and not zip_file.is_dir():
-                                file_data_copy = file_data.copy()
-                                new_file_bytes = io.BytesIO(myzip.read(zip_file.filename))
-                                f = open("file_from_zip", "wb")
-                                f.write(new_file_bytes.read())
-                                f.close()
-                                type_tuple = MimeTypes().guess_type(zip_file.filename)
-                                new_file_type = type_tuple[0] if type_tuple is not None else None
-                                file_data_copy["name"] = zip_file.filename
-                                file_data_copy["type"] = new_file_type  # TODO
-                                new_files.append(
-                                    (
-                                        file_data_copy,
-                                        instrument,
-                                        InMemoryUploadedFile(
-                                            new_file_bytes,
-                                            "file-list_{}".format(dataset_file_node_id),
-                                            zip_file.filename,
-                                            new_file_type,
-                                            zip_file.file_size,
-                                            None,
-                                        ),
-                                    )
-                                )
+                #split_file_name = os.path.splitext(file.name)
+                #if split_file_name[1] in [".zip"]:
+                #    with zipfile.ZipFile(file, "r") as myzip:
+                #       files = myzip.infolist()
+                #       for zip_file in files:
+                #           if not zip_file.filename.startswith("__MACOSX") and not zip_file.is_dir():
+                #file_data_copy = file_data#.copy()
+                #new_file_bytes = io.BytesIO(myzip.read(zip_file.filename))
+                #f = open("file_from_zip", "wb")
+                #f.write(new_file_bytes.read())
+                #f.close()
+                #type_tuple = MimeTypes().guess_type(file.name)
+                #new_file_type = type_tuple[0] if type_tuple is not None else None
+                #file_data_copy["name"] = zip_file.filename
+                #file_data["type"] = new_file_type
+                new_files.append(
+                    (
+                        file_data,
+                        file
+                        # InMemoryUploadedFile(
+                        #     new_file_bytes,
+                        #     "file-list_{}".format(dataset_file_node_id),
+                        #     zip_file.filename,
+                        #     new_file_type,
+                        #     zip_file.file_size,
+                        #     None,
+                        # ),
+                    )
+                )
 
-                else:
-                    new_files.append(file_data, None, file)
+                # else:
+                #     new_files.append(file_data, None, file)
             removed_files = []
             for file in new_files:
                 if file[0] is not None:
                     file_data = file[0]
-                    instrument = file[1]
-                    file_content = file[2]
+                    file_content = file[1]
 
                     tiles = (tile for tile in dataset_resource.tiles if str(tile.nodegroup_id) == dataset_file_node_group_id)
                     # delete/replace tiles for files that share the same name
@@ -162,8 +168,10 @@ class SelectDatasetFilesStep(View):
                         file_data["renderer"] = renderer_lookup["image"]
                     elif "pdf" in split_file_mime:
                         file_data["renderer"] = renderer_lookup["pdf"]
-                    elif instrument is not None:  # instrument was given by zip file name
-                        file_data["renderer"] = renderer_lookup[instrument]
+                    elif dataset_default_format is not None:  # instrument was given by zip file name
+                        file_data["renderer"] = renderer_lookup[format_mappings[dataset_default_format]]
+                    
+                    file_data["format"] = dataset_default_format
 
                     # file has not been uploaded
                     dataset_file_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_file_node_group_id)
@@ -190,7 +198,7 @@ class SelectDatasetFilesStep(View):
                     else:
                         file_data["tileid"] = response["tileid"]
 
-        file_response = [{"name": f[0]["name"], "tileId": f[0]["tileid"]} for f in new_files]
+            file_response = [{"name": f[0]["name"], "renderer": f[0]["renderer"],"format": f[0]["format"], "tileId": f[0]["tileid"]} for f in new_files]
 
         return JSONResponse(
             {
