@@ -21,16 +21,18 @@ define([
             testPaths = [args];
         }
 
+        let node = rootNode;
+
         for(path of testPaths){
-            let node = rootNode;
             for(let i = 0; i < path.length; ++i){
                 standardizeNode(node);
                 const pathComponent = path[i];
                 node = node?.[pathComponent];
-            }
-            if(node){
-                return node;
-            }
+            }    
+        }
+        
+        if(node){
+            return node;
         }
     };
 
