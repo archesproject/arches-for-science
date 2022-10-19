@@ -192,35 +192,35 @@ define([
         
             const datesData = self.resource()?.timespan;
             if (datesData) {
-                self.datesSummary(Array({
+                self.datesSummary([{
                     beginning_of_beginning: self.getNodeValue(datesData, 'TimeSpan_begin of the begin'),
                     end_of_beginning: self.getNodeValue(datesData, 'TimeSpan_end of the begin'),
                     beginning_of_end: self.getNodeValue(datesData, 'TimeSpan_begin of the end'),
                     end_of_end: self.getNodeValue(datesData, 'TimeSpan_end of the end'),
-                }));
+                }]);
             };
 
             const activityTypeData = self.resource()?.technique;
             if (activityTypeData) {
-                self.activityTypeSummary(Array({
-                    displayValue: self.getNodeValue(activityTypeData, '@display_value')
-                }));
+                self.activityTypeSummary([{
+                    content: self.getNodeValue(activityTypeData)
+                }]);
             };
 
             const parentProjectData = self.resource()?.['part of'];
             if (parentProjectData) {
-                self.parentProjectSummary(Array({
-                    displayValue: self.getNodeValue(parentProjectData, '@display_value'),
+                self.parentProjectSummary([{
+                    content: self.getNodeValue(parentProjectData),
                     link: self.getResourceLink({resourceId: self.getNodeValue(parentProjectData, 'resourceId')})
-                }));
+                }]);
             }
 
             const teamData = self.resource()?.['carried out by'];
             if (teamData) {
                 self.teamSummary(teamData['instance_details'].map(x => {
-                    const displayValue = self.getNodeValue(x, 'display_value');
+                    const content = self.getNodeValue(x);
                     const link = self.getResourceLink({resourceId: self.getNodeValue(x, 'resourceId')});
-                    return { displayValue, link }
+                    return { content, link }
                 }));
             };
 
@@ -245,9 +245,9 @@ define([
 
             const typeData = self.resource()?.type;
             if (typeData) {
-                self.typeSummary(Array({
-                    type: self.getNodeValue(typeData, '@display_value')
-                }));
+                self.typeSummary([{
+                    type: self.getNodeValue(typeData)
+                }]);
             };
         },
         template: { require: 'text!templates/views/components/reports/project.htm' }

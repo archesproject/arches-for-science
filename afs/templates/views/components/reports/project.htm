@@ -160,10 +160,6 @@
         <!-- Names -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: nameSummary() && nameSummary().length -->
-                <div class="afs-nodata-note">No names for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: nameSummary() && nameSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -187,10 +183,6 @@
         <!-- Dates -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: datesSummary() && datesSummary().length -->
-                <div class="afs-nodata-note">No timespan for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: datesSummary() && datesSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -218,10 +210,6 @@
         <!-- Activity Type -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: activityTypeSummary() && activityTypeSummary().length -->
-                <div class="afs-nodata-note">No activity type for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: activityTypeSummary() && activityTypeSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -232,7 +220,7 @@
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: activityTypeSummary, dataTableOptions: $data.getTableConfig(1) }">
                             <tr>
-                                <td data-bind="text: displayValue"></td>
+                                <td data-bind="text: content"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -243,10 +231,6 @@
         <!-- Parent Project -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: parentProjectSummary() && parentProjectSummary().length -->
-                <div class="afs-nodata-note">No parent project for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: parentProjectSummary() && parentProjectSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -257,7 +241,7 @@
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: parentProjectSummary, dataTableOptions: $data.getTableConfig(1) }">
                             <tr>
-                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
+                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: content" href="javascript:void(0)"></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -268,10 +252,6 @@
         <!-- Project Team -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: teamSummary() && teamSummary().length -->
-                <div class="afs-nodata-note">No project team for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: teamSummary() && teamSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -282,7 +262,7 @@
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: teamSummary, dataTableOptions: $data.getTableConfig(1) }">
                             <tr>
-                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
+                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: content" href="javascript:void(0)"></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -293,10 +273,6 @@
         <!-- Statements -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: statementsSummary() && statementsSummary().length -->
-                <div class="afs-nodata-note">No statements for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: statementsSummary() && statementsSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -320,10 +296,6 @@
         <!-- Identifier -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: identifierSummary() && identifierSummary().length -->
-                <div class="afs-nodata-note">No identifiers for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: identifierSummary() && identifierSummary().length -->
                 <div class="afs-table">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -347,10 +319,6 @@
         <!-- Type -->
         <div class="afs-report-section">
             <div class="afs-report-subsection">
-                <!-- ko ifnot: typeSummary() && typeSummary().length -->
-                <div class="afs-nodata-note">No type for this resource</div>
-                <!-- /ko -->
-
                 <!-- ko if: typeSummary() && typeSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
