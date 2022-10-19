@@ -466,7 +466,7 @@ define([
             const typeData = self.resource()?.type;
             if (typeData) {
                 self.typeSummary(Array({
-                    type: self.getNodeValue(typeData, '@display_value')
+                    type: self.getNodeValue(typeData)
                 }));
             };
 
@@ -483,7 +483,7 @@ define([
             const ownerData = self.resource()?.['current owner'];
             if (ownerData) {
                 self.ownerSummary(ownerData['instance_details'].map(x => {
-                    const displayValue = self.getNodeValue(x, 'display_value');
+                    const displayValue = self.getNodeValue(x);
                     const link = self.getResourceLink({resourceId: self.getNodeValue(x, 'resourceId')});
                     return { displayValue, link }
                 }));
@@ -493,8 +493,8 @@ define([
             if (dimensionData) {
                 self.dimensionsSummary(dimensionData.map(x => {
                     const value = self.getNodeValue(x, 'Dimension_value ');
-                    const unit = self.getNodeValue(x?.dimension_unit, '@display_value');
-                    const type = self.getNodeValue(x?.dimension_type, '@display_value');
+                    const unit = self.getNodeValue(x , 'dimension_unit');
+                    const type = self.getNodeValue(x, 'dimension_type');
                     return { type, value, unit }
                 }));
             };
@@ -505,8 +505,8 @@ define([
                     creator: self.getNodeValue(creationData, 'production_carried out by'),
                     creationDate: self.getNodeValue(creationData?.production_time, 'production_time_begin of the begin'),
                     type: self.getNodeValue(creationData, 'production_type'),
-                    technique: self.getNodeValue(creationData?.production_technique, '@display_value'),
-                    location: self.getNodeValue(creationData?.production_location, '@display_value'),
+                    technique: self.getNodeValue(creationData, 'production_technique'),
+                    location: self.getNodeValue(creationData, 'production_location'),
                     locationLink: reportUtils.getResourceLink({resourceId: creationData?.production_location?.instance_details[0].resourceId})
                 }));
             };
@@ -514,7 +514,7 @@ define([
             const uriData = self.resource()?.exactmatch
             if (uriData) {
                 self.externalURISummary(Array({
-                    displayValue: self.getNodeValue(uriData, '@display_value')
+                    displayValue: self.getNodeValue(uriData)
                 }));
             };
         },
