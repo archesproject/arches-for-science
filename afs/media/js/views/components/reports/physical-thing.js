@@ -440,10 +440,10 @@ define([
                         if (resourceDomainConceptIds.includes(IIIFManifestConceptId)) {
                             const imageResource = await self.getThumbnail(resource);
                             if (imageResource) {
-                                self.imageSummary(Array({
+                                self.imageSummary([{
                                     displayname: imageResource.label,
                                     thumbnail: imageResource.sequences[0].canvases[0].thumbnail['@id']
-                                }));
+                                }]);
                             }
                         }
                     });
@@ -465,9 +465,9 @@ define([
 
             const typeData = self.resource()?.type;
             if (typeData) {
-                self.typeSummary(Array({
+                self.typeSummary([{
                     type: self.getNodeValue(typeData)
-                }));
+                }]);
             };
 
             const identiferData = self.resource()?.identifier;
@@ -501,21 +501,21 @@ define([
 
             const creationData = self.resource()?.production;
             if (creationData) { 
-                self.creationSummary(Array({
+                self.creationSummary([{
                     creator: self.getNodeValue(creationData, 'production_carried out by'),
                     creationDate: self.getNodeValue(creationData?.production_time, 'production_time_begin of the begin'),
                     type: self.getNodeValue(creationData, 'production_type'),
                     technique: self.getNodeValue(creationData, 'production_technique'),
                     location: self.getNodeValue(creationData, 'production_location'),
                     locationLink: reportUtils.getResourceLink({resourceId: creationData?.production_location?.instance_details[0].resourceId})
-                }));
+                }]);
             };
 
             const uriData = self.resource()?.exactmatch
             if (uriData) {
-                self.externalURISummary(Array({
+                self.externalURISummary([{
                     displayValue: self.getNodeValue(uriData)
-                }));
+                }]);
             };
         },
         template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
