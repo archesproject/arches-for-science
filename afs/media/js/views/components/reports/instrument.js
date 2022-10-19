@@ -161,23 +161,22 @@ define([
             // Summary details
             self.nameSummary = ko.observable();
             self.typeSummary = ko.observable();
-            const nameData = self.resource()?.Name;
-            const typeData = self.resource()?.type;
 
+            const nameData = self.resource()?.Name;
             if (nameData) {
                 self.nameSummary(nameData.map(x => {
                     const type = self.getNodeValue(x, 'name_type');
                     const content = self.getNodeValue(x, 'name_content');
                     const language = self.getNodeValue(x, 'name_language');
-                    const tileid = self.getTileId(x);
-                    return { type, content, language, tileid }
+                    return { type, content, language }
                 }));
             };
 
+            const typeData = self.resource()?.type;
             if (typeData) {
-                self.typeSummary(Array({
-                    type: self.getNodeValue(typeData, '@display_value')
-                }))
+                self.typeSummary([{
+                    type: self.getNodeValue(typeData)
+                }])
             };
         },
         template: { require: 'text!templates/views/components/reports/instrument.htm' }
