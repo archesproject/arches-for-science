@@ -51,14 +51,7 @@ define([
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('name');
-            self.visible = {
-                parts: ko.observable(true),
-                names: ko.observable(true),
-                thumbnail: ko.observable(true),
-                statements: ko.observable(true),
-                identifiers: ko.observable(true),
-                creation: ko.observable(true)
-            };
+            self.visible = {parts: ko.observable(true)};
             self.selectedAnnotationTileId = ko.observable(null);
             self.nameCards = {};
             self.descriptionCards = {};
@@ -404,8 +397,7 @@ define([
                     const type = self.getNodeValue(x, 'name_type');
                     const content = self.getNodeValue(x, 'name_content');
                     const language = self.getNodeValue(x, 'name_language');
-                    const tileid = self.getTileId(x);
-                    return { type, content, language, tileid }
+                    return { type, content, language }
                 }));
             };
 
@@ -458,8 +450,7 @@ define([
                     const type = self.getNodeValue(x, 'statement_type');
                     const content = self.getNodeValue(x, 'statement_content');
                     const language = self.getNodeValue(x, 'statement_language');
-                    const tileid = self.getTileId(x);
-                    return { type, content, language, tileid }
+                    return { type, content, language }
                 }));
             };
 
@@ -475,8 +466,7 @@ define([
                 self.identifierSummary(identiferData.map(x => {
                     const type = self.getNodeValue(x, 'identifier_type');
                     const content = self.getNodeValue(x, 'identifier_content');
-                    const tileid = self.getTileId(x);
-                    return { type, content, tileid }
+                    return { type, content }
                 }));
             };
 
