@@ -43,11 +43,11 @@
                     params: {
                         data: resource,
                         cards: descriptionCards,
-
+                        excludedTypes: physicalThingExcludedDescriptionTypes
                     }
                 }"></div>
             </div>            
-            <!-- Description Tab -->
+            <!-- Documentation Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/documentation',
@@ -79,17 +79,35 @@
                         cards: substanceCards
                     }
                 }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
+                        requestedTypes: physicalThingPhysicalDescriptionTypes
+                    }
+                }"></div>
             </div>
-           <!-- Actor Tab -->
-           <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
+            
+            <!-- Actor Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
                         data: actorData,
                     }
                 }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
+                        requestedTypes: physicalThingProvenanceDescriptionTypes
+                    }
+                }"></div>
             </div>
-             <!-- Aboutness Tab -->
+
+            <!-- Aboutness Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'aboutness'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',

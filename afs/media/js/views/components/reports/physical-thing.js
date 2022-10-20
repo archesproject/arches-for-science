@@ -11,18 +11,30 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'}, 
-                {id: 'existence', title: 'Existence'},
-                {id: 'substance', title: 'Substance'},
-                {id: 'actor-relations', title: 'Actor Relations'},
-                {id: 'location', title: 'Location'},
-                {id: 'parthood', title: 'Parthood'},
-                {id: 'sethood', title: 'Sethood'},
-                {id: 'aboutness', title: 'Aboutness'},
+                {id: 'name', title: 'Names, Identifiers, Classification'}, 
                 {id: 'description', title: 'Description'},
+                {id: 'existence', title: 'Key Events'},
+                {id: 'substance', title: 'Physical Description'},
+                {id: 'actor-relations', title: 'Provenance'},
+                {id: 'location', title: 'Location'},
+                {id: 'parthood', title: 'Components'},
+                {id: 'sethood', title: 'Related Collection and Sets'},
+                {id: 'aboutness', title: 'Content and Iconography'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
+
+            self.physicalThingProvenanceDescriptionTypes = [
+                "provenance statement"
+            ]
+            self.physicalThingPhysicalDescriptionTypes = [
+                "dimensions description",
+                "materials/technique description"
+            ]
+
+            self.physicalThingExcludedDescriptionTypes = _.union(
+                self.physicalThingProvenanceDescriptionTypes, self.physicalThingPhysicalDescriptionTypes
+            )
 
             self.annotationTableConfig = {
                 ...self.defaultTableConfig,
@@ -211,7 +223,7 @@ define([
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards?.['statement about object']
+                    statement: self.cards?.['statement or interpretation about object']
                 };
 
                 self.documentationCards = {
@@ -288,7 +300,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Aboutness', 
+                            title: 'Content and Iconography', 
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
@@ -318,7 +330,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Components', 
                             data: [{
                                 key: 'parent object', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -352,7 +364,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Actor Relations', 
+                            title: 'Provenance', 
                             data: [{
                                 key: 'current owner of object', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
@@ -369,7 +381,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Sethood', 
+                            title: 'Related Collection and Sets',
                             data: [{
                                 key: 'Collection Object is Part Of', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
