@@ -147,11 +147,17 @@ class SelectDatasetFilesStep(View):
 
                     split_file_mime = file_data["type"].split("/")
                     if "image" in split_file_mime:
-                        file_data["renderer"] = next((renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "imagereader"), None)
+                        file_data["renderer"] = next(
+                            (renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "imagereader"), None
+                        )
                     elif "pdf" in split_file_mime:
-                        file_data["renderer"] = next((renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "pdfreader"), None)
+                        file_data["renderer"] = next(
+                            (renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "pdfreader"), None
+                        )
                     elif dataset_default_format is not None:  # instrument was given by zip file name
-                        file_data["renderer"] = next((format["renderer"] for format in settings.FORMATS if format["name"] == "dataset_default_format"), None)
+                        file_data["renderer"] = next(
+                            (format["renderer"] for format in settings.FORMATS if format["name"] == "dataset_default_format"), None
+                        )
 
                     file_data["format"] = dataset_default_format
 

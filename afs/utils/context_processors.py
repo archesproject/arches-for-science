@@ -18,9 +18,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from arches.app.models.system_settings import settings
 
+
 def project_settings(request):
-    return {
-        "project_settings": {
-            "FORMATS": settings.FORMATS
-        }
-    }
+    return {"project_settings": {"FORMATS": settings.FORMATS}}
