@@ -36,8 +36,8 @@
     <div class="iiif-image-tools upload-dataset-select-dataset-files">
         <!--ko if: annotations().length > 0-->
         <div style="width:100%; display: flex; justify-content: center;">
-            <button class="btn btn-md btn-mint" data-bind="visible: !self.showDatasetDetails(), click: function(){self.showDatasetDetails(true)}">{% trans "Show Selected Area Dataset Details" %}</button>
-            <button class="btn btn-md btn-mint" data-bind="visible: self.showDatasetDetails, click: function(){self.showDatasetDetails(false)}">{% trans "Show Sampled Area List" %}</button>
+            <button class="btn" style="background: #9490EE;color: #eee;" data-bind="visible: self.showDatasetDetails, click: function(){self.showDatasetDetails(false)}">
+                <i class="fa fa-list" style="color: #eee"></i> {% trans "Show Sampled Area List" %}</button>
         </div>
 
         <div style="margin-top:10px" data-bind="visible: !self.showDatasetDetails()">
@@ -63,7 +63,7 @@
 
                 <div data-bind="visible: self.showDatasetDetails">
 
-                    <div class="format-select" data-bind="visible: selectedPartDefaultFormat() == undefined">
+                    <div class="format-select" data-bind="visible: selectedPartHasCurrentObservation() && selectedPartDefaultFormat() == undefined">
                         <input style="display:inline-block; margin-top: 70px;"
                         data-bind="select2Query: {
                             select2Config: {
@@ -75,10 +75,22 @@
                                 multiple: false,
                                 placeholder: {% trans "'Available Formats'" %}}}" >
                     </div>
-                    <div style="margin: 0 10px" data-bind="visible: selectedPartDefaultFormat() != undefined">
+                    <div style="margin-bottom: 10px" data-bind="visible: selectedPartDefaultFormat() != undefined">
                         <span>{% trans "Default Format" %}:</span>
                         <span style="font-weight: bold" data-bind="text: formats().find((x) => x.id == ko.unwrap(selectedPartDefaultFormat))?.text"></span>
-                    
+                    </div>
+                    <div data-bind="visible: selectedPartDefaultFormat() != undefined || !selectedPartHasCurrentObservation()">
+                        <div class="dataset-name">
+                            <label class="control-label">{% trans "Dataset Name*" %}</label>
+                            <div style="display: flex">
+                                <input style="flex: 1;" type="text" class="form-control" placeholder="Dataset name" data-bind="visible: showEditDatasetName, enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
+                                <button style="margin: 0px 5px" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && self.showEditDatasetName()), click: function(){$parent.saveFiles(); }" style="">Save</button>
+                            </div>
+                            <div style="display: flex; " data-bind="click: function(){selectedPartHasCurrentObservation()?showEditDatasetName(true):showEditDatasetName(false)}">
+                                <i class="fa fa-edit"></i>
+                                <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;flex: 1;border-right: none;border-left:none; " data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
+                            </div>
+                        </div>
                         <div class="dropzone-photo-upload" style="height: 80px;" data-bind="visible: selectedPartHasCurrentObservation(), dropzone: dropzoneOptions">
                             <div class="file-workbench-links">
                                 <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
@@ -90,8 +102,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-collapse collapse" data-bind="attr: { id: selectedPart().tileid }, css: { in: $index() == 0}">
-                        <label class="control-label" style="padding-top: 5px;">{% trans "Files in Dataset" %}</label>
+                    <div class="panel-collapse collapse" data-bind="visible: ko.unwrap(selectedPart().datasetFiles).length; attr: { id: selectedPart().tileid }, css: { in: $index() == 0}">
+                        <label class="control-label" style="padding-top: 5px; ">{% trans "Files in Dataset" %}</label>
                         <div class="file-workbench-files" data-bind="foreach: {data: selectedPart().datasetFiles, as: 'file'}">
                             <div class='file-workbench-file' style="display: flex;" data-bind="css: {staged: false}">
                                 <div style="flex: 1">
@@ -101,16 +113,6 @@
                                 <div data-bind="visible: !self.selectedPartHasCurrentObservation()">
                                     <i class="fa fa-lock" style="color: black"></i>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="dataset-name">
-                            <label class="control-label">{% trans "Dataset Name*" %}</label>
-                            <div style="display: flex">
-                                <input style="flex: 1;" type="text" class="form-control" placeholder="Dataset name" data-bind="visible: showEditDatasetName, enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
-                                <button style="margin: 0px 5px" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && self.showEditDatasetName()), click: function(){$parent.saveFiles(); }" style="">Save</button>
-                            </div>
-                            <div data-bind="click: function(){selectedPartHasCurrentObservation()?showEditDatasetName(true):showEditDatasetName(false)}">
-                                <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;" data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
                             </div>
                         </div>
                     </div>

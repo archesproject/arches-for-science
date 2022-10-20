@@ -13,7 +13,7 @@ from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializ
 import json
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import HttpRequest
-import zipfile
+from django.conf import settings
 
 
 class SelectDatasetFilesStep(View):
@@ -25,25 +25,7 @@ class SelectDatasetFilesStep(View):
         dataset_name_node_id = "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"
         dataset_file_node_group_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
         dataset_file_node_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
-        renderer_lookup = {
-            "fors": "88dccb59-14e3-4445-8f1b-07f0470b38bb",
-            "raman": "94fa1720-6773-4f99-b49b-4ea0926b3933",
-            "xrf": "31be40ae-dbe6-4f41-9c13-1964d7d17042",
-            "image": "5e05aa2e-5db0-4922-8938-b4d2b7919733",
-            "pdf": "09dec059-1ee8-4fbd-85dd-c0ab0428aa94",
-        }
 
-        format_mappings = {
-            "bm6": "xrf",
-            "b5g": "xrf",
-            "bt45": "xrf",
-            "bt3": "xrf",
-            "b5i": "xrf",
-            "bart": "xrf",
-            "r785": "raman",
-            "r633": "raman",
-            "asd": "fors",
-        }
         transaction_id = request.POST.get("transaction_id")
         observation_id = request.POST.get("observation_id")
         posted_dataset = request.POST.get("dataset")
@@ -165,11 +147,11 @@ class SelectDatasetFilesStep(View):
 
                     split_file_mime = file_data["type"].split("/")
                     if "image" in split_file_mime:
-                        file_data["renderer"] = renderer_lookup["image"]
+                        file_data["renderer"] = next((renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "imagereader"), None)
                     elif "pdf" in split_file_mime:
-                        file_data["renderer"] = renderer_lookup["pdf"]
+                        file_data["renderer"] = next((renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "pdfreader"), None)
                     elif dataset_default_format is not None:  # instrument was given by zip file name
-                        file_data["renderer"] = renderer_lookup[format_mappings[dataset_default_format]]
+                        file_data["renderer"] = next((format["renderer"] for format in settings.FORMATS if format["name"] == "dataset_default_format"), None)
 
                     file_data["format"] = dataset_default_format
 

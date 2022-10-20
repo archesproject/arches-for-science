@@ -38,5 +38,13 @@
 define('register-three', ['three'], function (THREE) {
     window.THREE = THREE;
     });
+define('afs-formats', function(){ 
+    return [{% autoescape off %}{% for format in project_settings.FORMATS %}
+                {'name': '{{ format.name }}',
+                'id': '{{ format.id }}',
+                'renderer': '{{ format.renderer }}',
+                },
+                {% endfor %}{% endautoescape %}];
+});
 </script>
 {% endblock project_modules %}

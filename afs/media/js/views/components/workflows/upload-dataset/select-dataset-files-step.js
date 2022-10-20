@@ -9,8 +9,9 @@ define([
     'viewmodels/alert-json',
     'views/components/iiif-viewer',
     'js-cookie',
+    'afs-formats',
     'bindings/dropzone'
-], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies) {
+], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies, formats) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
             IIIFViewerViewmodel.apply(this, [params]);
@@ -55,17 +56,7 @@ define([
             this.mainMenu = ko.observable(false);
             this.files = ko.observableArray([]);
 
-            this.formats = ko.observableArray([
-                {text: "Bruker M6 (point)", id: "bm6"},
-                {text: "Bruker 5g", id: "b5g"},
-                {text: "Bruker Tracer IV-V", id: "bt45"},
-                {text: "Bruker Tracer III", id: "bt3"},
-                {text: "Bruker 5i", id: "b5i"},
-                {text: "Bruker Artax", id: "bart"},
-                {text: "Renishaw InVia - 785", id: "r785"},
-                {text: "Ranishsaw inVia - 633/514", id: "r633"},
-                {text: "ASD FieldSpec IV hi res", id: "asd"}
-            ]);
+            self.formats = ko.observableArray(formats.map(format => {return {"text": format.name, "id": format.id}}));
             
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;

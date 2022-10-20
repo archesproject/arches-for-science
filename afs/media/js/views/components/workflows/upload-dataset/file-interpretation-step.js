@@ -8,8 +8,9 @@ define([
     'views/components/workbench',
     'file-renderers',
     'js-cookie',
-    'models/tile'
-], function($, ko, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel) {
+    'models/tile',
+    'afs-formats'
+], function($, ko, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel, formats) {
    
     function viewModel(params) {
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
@@ -23,17 +24,7 @@ define([
         self.loading = ko.observable(false);
         self.loadingMessage = ko.observable();
 
-        this.formats = ko.observableArray([
-            {text: "Bruker M6 (point)", id: "bm6"},
-            {text: "Bruker 5g", id: "b5g"},
-            {text: "Bruker Tracer IV-V", id: "bt45"},
-            {text: "Bruker Tracer III", id: "bt3"},
-            {text: "Bruker 5i", id: "b5i"},
-            {text: "Bruker Artax", id: "bart"},
-            {text: "Renishaw InVia - 785", id: "r785"},
-            {text: "Ranishsaw inVia - 633/514", id: "r633"},
-            {text: "ASD FieldSpec IV hi res", id: "asd"}
-        ]);
+        self.formats = ko.observableArray(formats.map(format => {return {"text": format.name, "id": format.id}}));
 
         this.selectedFileFormat = ko.observable().extend({deferred: true, notify: 'always'});
 
@@ -254,15 +245,16 @@ define([
         this.selectedFile = ko.observable();
 
         self.selectedFileFormat.subscribe(async(format) => {
-            const resp = await window.fetch(arches.urls.format_render_map(format), {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    "X-CSRFToken": Cookies.get('csrftoken')
-                }
-            });
-            const response = await resp.json();
-            const renderer = self.getFileFormatRenderer(response["renderer"])
+            
+            // const resp = await window.fetch(arches.urls.format_render_map(format), {
+            //     method: 'GET',
+            //     credentials: 'include',
+            //     headers: {
+            //         "X-CSRFToken": Cookies.get('csrftoken')
+            //     }
+            // });
+            // const response = await resp.json();
+            const renderer = self.getFileFormatRenderer(formats.find(x => x.name == format)?.[0]?.renderer)
             require([renderer.component], () => {
                 self.selectedRenderer(renderer);
                 self.selectedRenderer.valueHasMutated();
