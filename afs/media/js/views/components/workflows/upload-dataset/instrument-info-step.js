@@ -79,6 +79,7 @@ define([
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
 
         this.instrumentValue.subscribe(function(val){
+            params.form.dirty(Boolean(val) && !self.locked());
             if (val && !relatedGraphIds.includes(val)) {
                 let instrumentData = resourceUtils.lookupResourceInstanceData(val);
                 self.instrumentInstance(self.createRelatedInstance(val));
@@ -155,10 +156,6 @@ define([
             params.form.hasUnsavedData(false);
         };
 
-        self.instrumentValue.subscribe(function(val){
-            params.form.dirty(Boolean(val));
-        });
-
         this.saveTextualWorkType = function(){
             const textualWorkTypeNodegroupId= "dc946b1e-c070-11e9-a005-a4d18cec433a";
             const procedureValueId = "60d1e09c-0f14-4348-ae14-57fdb9ef87c4";
@@ -211,7 +208,9 @@ define([
             params.form.lockExternalStep("project-info", true);
             
 
-            let tiles = {};
+            let tiles = {
+                "transaction_id": params.form.workflowId
+            };
             let observedThingData = {};
             observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
             tiles['observedThingTile'] = self.buildTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid);

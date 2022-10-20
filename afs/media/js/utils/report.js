@@ -21,16 +21,18 @@ define([
             testPaths = [args];
         }
 
+        let node = rootNode;
+
         for(path of testPaths){
-            let node = rootNode;
             for(let i = 0; i < path.length; ++i){
                 standardizeNode(node);
                 const pathComponent = path[i];
                 node = node?.[pathComponent];
-            }
-            if(node){
-                return node;
-            }
+            }    
+        }
+        
+        if(node){
+            return node;
         }
     };
 
@@ -93,6 +95,16 @@ define([
             return '--';
         }
     };
+
+    const getResourceLink = (node) => {
+        if(node) {
+            const resourceId = node.resourceId;
+            if(resourceId){
+                return `${arches.urls.resource}\\${resourceId}`;
+            }
+        }
+    };
+
 
     return {
         // default table configuration - used for display
@@ -191,14 +203,7 @@ define([
 
         processRawValue: processRawNodeValue,
 
-        getResourceLink: (node) => {
-            if(node) {
-                const resourceId = node.resourceId;
-                if(resourceId){
-                    return `${arches.urls.resource}\\${resourceId}`;
-                }
-            }
-        },   
+        getResourceLink: getResourceLink,   
         
         getTileId: (node) => {
             if(node){
@@ -209,6 +214,19 @@ define([
         getNodeValue: (resource, ...args) => {
             const rawValue = getRawNodeValue(resource, ...args);
             return processRawNodeValue(rawValue);
+        },
+
+        getResourceListNodeValue: (resource, ...args) => {
+            const rawValue = getRawNodeValue(resource, ...args);
+            const resourceListValue = Array.isArray(rawValue) ? 
+                rawValue.reduce((acc, val) => acc.concat(getRawNodeValue(val, 'instance_details')), []) :
+                getRawNodeValue(rawValue, 'instance_details');
+            const resourceList = resourceListValue?.map(val => {
+                displayValue = processRawNodeValue(val);
+                link = getResourceLink(val);
+                return {displayValue, link}
+            });
+            return (resourceList);
         },
 
         stripTags (original) {
