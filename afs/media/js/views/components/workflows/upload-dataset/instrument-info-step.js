@@ -79,6 +79,7 @@ define([
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
 
         this.instrumentValue.subscribe(function(val){
+            params.form.dirty(Boolean(val) && !self.locked());
             if (val && !relatedGraphIds.includes(val)) {
                 let instrumentData = resourceUtils.lookupResourceInstanceData(val);
                 self.instrumentInstance(self.createRelatedInstance(val));
@@ -154,10 +155,6 @@ define([
             self.parameterValue(snapshot.parameterValue);
             params.form.hasUnsavedData(false);
         };
-
-        self.instrumentValue.subscribe(function(val){
-            params.form.dirty(Boolean(val));
-        });
 
         this.saveTextualWorkType = function(){
             const textualWorkTypeNodegroupId= "dc946b1e-c070-11e9-a005-a4d18cec433a";
