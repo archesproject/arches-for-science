@@ -254,7 +254,7 @@ define([
             //     }
             // });
             // const response = await resp.json();
-            const renderer = self.getFileFormatRenderer(formats.find(x => x.name == format)?.[0]?.renderer)
+            const renderer = self.getFileFormatRenderer(formats.find(x => x.id == format)?.renderer)
             require([renderer.component], () => {
                 self.selectedRenderer(renderer);
                 self.selectedRenderer.valueHasMutated();

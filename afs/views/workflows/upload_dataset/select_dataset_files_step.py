@@ -156,7 +156,7 @@ class SelectDatasetFilesStep(View):
                         )
                     elif dataset_default_format is not None:  # instrument was given by zip file name
                         file_data["renderer"] = next(
-                            (format["renderer"] for format in settings.FORMATS if format["name"] == "dataset_default_format"), None
+                            (format["renderer"] for format in settings.FORMATS if format["id"] == dataset_default_format), None
                         )
 
                     file_data["format"] = dataset_default_format

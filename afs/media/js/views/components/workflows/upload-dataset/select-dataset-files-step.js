@@ -36,7 +36,6 @@ define([
             const projectInfo = params.projectInfo;
             const observationInfo = params.observationInfo;
             const observationResourceId = params.observationInfo.observationInstanceId;
-            this.showEditDatasetName = ko.observable(false);
             this.annotationNodeId = "b3e171ae-1d9d-11eb-a29f-024e0d439fdb";
             this.samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
             this.selectedAnnotationTile = ko.observable();
@@ -110,7 +109,8 @@ define([
 
             this.selectedPart.subscribe(async (data) => {
                 self.selectedPartObservationId(self.selectedPart().observationResourceId);
-                self.selectedPartDefaultFormat(ko.unwrap(self.selectedPart()?.defaultFormat));
+                const savedDefaultFormat = ko.unwrap(params.form.savedData()?.parts.find(part => part.partResourceId == data.resourceid)?.defaultFormat)
+                self.selectedPartDefaultFormat(ko.unwrap(self.selectedPart()?.defaultFormat) || savedDefaultFormat);
                 self.annotations([data]);
                 if (self.annotations().length) {
                     self.selectedAnnotationTile(self.annotations()[0]);
@@ -198,21 +198,21 @@ define([
                 params.form.savedData({ 
                     observationReferenceTileId: self.observationReferenceTileId(),
                     
-                    parts: self.parts().map(x =>
+                    parts: self.parts().map(part =>
                         {
-                            fileObjects = x.datasetFiles().map(file => { 
+                            fileObjects = part.datasetFiles().map(file => { 
                                 delete file.dataURL;
                                 return file;
                             } );
                             return {
                                 datasetFiles: fileObjects.map(x => { return {...x, tileId: ko.unwrap(x.tileId)} }),
-                                datasetId: x.datasetId(),
-                                nameTileId: x.nameTileId(),
-                                datasetName: x.datasetName() || '',
-                                resourceReferenceId: x.resourceReferenceId(),
-                                defaultFormat: x.defaultFormat(),
-                                tileid: x.tileid,
-                                partResourceId: self.selectedPart().resourceid
+                                datasetId: part.datasetId(),
+                                nameTileId: part.nameTileId(),
+                                datasetName: part.datasetName() || '',
+                                resourceReferenceId: part.resourceReferenceId(),
+                                defaultFormat: part.defaultFormat(),
+                                tileid: part.tileid,
+                                partResourceId: part.resourceid
                             };
                         }
                     )
@@ -310,8 +310,7 @@ define([
                 }
 
                 saveWorkflowState();
-                self.showEditDatasetName(false);
-                // self.snapshot = params.form.savedData();
+                self.snapshot = params.form.savedData();
                 params.form.complete(true);
             };
 
@@ -343,6 +342,7 @@ define([
                 self.loading(true);
                 self.loadingMessage(`Loading samples and analysis areas...`);
                 self.activeTab('dataset');
+                self.snapshot = params.form.savedData();
                 this.selectedAnnotationTile.subscribe(this.highlightAnnotation);
                 self.annotationNodes.subscribe(function(val){
                     var overlay = val.find(n => n.name.includes('Physical Thing'));
@@ -372,6 +372,7 @@ define([
                     const datasetTile = related?._source.tiles.find((tile) => tile.nodegroup_id === digitalReferenceNodeGroupId);
                     const partTypeId = related?._source.tiles.filter((tile) => tile.nodegroup_id === typeNodeGroupId)?.[0]?.data[typeNodeGroupId]?.[0];
                     part.type = childPhysicalThingsValueIds[partTypeId];
+
                     const manifestValueIds = [
                         '1497d15a-1c3b-4ee9-a259-846bbab012ed', // Preferred Manifest
                         '305c62f0-7e3d-4d52-a210-b451491e6100', // IIIF Manifest
@@ -437,14 +438,22 @@ define([
                     }
                     if(part.datasetName.getSubscriptionsCount()){
                         part.datasetName.subscribe((newValue) => {
-                            const datasetSnapshot = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId());
-                            if(newValue != datasetSnapshot?.datasetName) {
+                            const datasetName = self.snapshot?.parts?.find(x => x.datasetId == part.datasetId())?.datasetName || "";
+                            if(newValue != datasetName) {
                                 part.nameDirty(true);
                             } else {
                                 part.nameDirty(false);
                             }
                         });
                     }
+       
+                    part.hasCurrentObservation = ko.computed(() => {
+                        if(!part?.observationResourceId){
+                            return true;
+                        } else {
+                            return part.observationResourceId == observationResourceId;
+                        }
+                    });
                 };
                 self.parts(parts);
                 self.selectedPart(self.parts()[0]);

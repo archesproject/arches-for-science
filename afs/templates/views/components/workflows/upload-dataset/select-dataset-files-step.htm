@@ -50,10 +50,17 @@
                     <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
                         <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
                         <div class="panel">
-                            <a role="button" data-parent="#parts-panel" aria-expanded="false" data-bind="click: function(){ $parent.showDatasetDetails(true); $parent.selectedPart(part); $parent.showEditDatasetName(false); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
-                                <div style="height: 35px; padding: 10px;" class="file-workbench-file">
-                                    <span class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname + ' (' + part.type + ')'"></span>
+                            <a role="button" data-parent="#parts-panel"  aria-expanded="false" data-bind="click: function(){ $parent.showDatasetDetails(true); $parent.selectedPart(part); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
+                                <div style="height: 35px; padding: 10px;display: flex; align-items:center;" class="file-workbench-file">
+                                    <span style="flex: 1" class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname + ' (' + part.type + ')'"></span>
+                                    <div data-bind="visible: !part.hasCurrentObservation()">
+                                        <i class="fa fa-lock" style="color: black"></i>
+                                    </div>
+                                    <div data-bind="visible: part.hasCurrentObservation() && part.datasetId()">
+                                        ({% trans "New" %})
+                                    </div>
                                 </div>
+  
                             </a>
                             
                         </div>
@@ -83,12 +90,11 @@
                         <div class="dataset-name">
                             <label class="control-label">{% trans "Dataset Name*" %}</label>
                             <div style="display: flex">
-                                <input style="flex: 1;" type="text" class="form-control" placeholder="Dataset name" data-bind="visible: showEditDatasetName, enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
-                                <button style="margin: 0px 5px" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && self.showEditDatasetName()), click: function(){$parent.saveFiles(); }" style="">Save</button>
+                                <input style="flex: 1;" type="text" class="form-control" placeholder="Dataset name" data-bind="enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
+                                <button style="margin: 0px 5px" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && selectedPart()?.nameDirty()), click: function(){$parent.saveFiles(); }" style="">Save</button>
                             </div>
-                            <div style="display: flex; " data-bind="click: function(){selectedPartHasCurrentObservation()?showEditDatasetName(true):showEditDatasetName(false)}">
-                                <i class="fa fa-edit"></i>
-                                <input class="afs-calculated-datasetname" disabled type="text" style="width: 100%;flex: 1;border-right: none;border-left:none; " data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
+                            <div style="display: flex;" >
+                                <input class="afs-calculated-datasetname" style="flex: 1" disabled type="text" data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
                             </div>
                         </div>
                         <div class="dropzone-photo-upload" style="height: 80px;" data-bind="visible: selectedPartHasCurrentObservation(), dropzone: dropzoneOptions">
