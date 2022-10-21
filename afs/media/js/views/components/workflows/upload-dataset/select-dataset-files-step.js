@@ -132,7 +132,6 @@ define([
                 }
             });
 
-            // depends on one and only one zip file being uploaded for a given part
             this.addFileToPart = (files) => {
                 if(self.selectedPart() && self.selectedPartHasCurrentObservation()) {
                     file = files[0]
