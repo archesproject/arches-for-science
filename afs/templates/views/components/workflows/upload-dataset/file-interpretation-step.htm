@@ -71,7 +71,7 @@
             <span class="clear-node-search" data-bind="visible: digitalResourceFilter().length > 0, click: function() { digitalResourceFilter(''); }"><i
                     class="fa fa-times-circle"></i></span>
         </div>
-        <div class='file-workbench-files'>
+        <div class='file-workbench-files' style="max-height: 300px;height: auto;overflow-y:auto;">
             <!-- ko foreach: { data: filteredDigitalResources, as:'digitalResource'} -->
             <div class='file-workbench-file' style="display: inline-flex;"
                 data-bind="click: function(ri){
@@ -88,7 +88,7 @@
     <div data-bind="visible: showFileList">
         <button class="btn" style="background: #9490EE;color: #eee;" data-bind=" click: function(){showDatasetList(true); showFileList(false)}">
             <i class="fa fa-list" style="color: #eee"></i> {% trans "Show Dataset List" %}</button>
-        <div class="file-workbench-filter">
+        <div class="file-workbench-filter" style="max-height: 300px;height: auto;overflow-y:auto;">
             <h2 class="file-workbench-filter-header">{% trans 'Data Files' %}</h2>
             <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
                 data-bind="textInput: fileFilter"></input>
@@ -96,7 +96,7 @@
                 data-bind="visible: fileFilter().length > 0, click: function() { fileFilter(''); }"><i
                     class="fa fa-times-circle"></i></span>
         </div>
-        <div class='file-workbench-files'>
+        <div class='file-workbench-files' style="max-height: 300px;height: auto; overflow-y:auto;">
             <!-- ko foreach: { data: filteredFiles, as:'file'} -->
             <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: function(f){
                     $parent.selectedFile(f);
