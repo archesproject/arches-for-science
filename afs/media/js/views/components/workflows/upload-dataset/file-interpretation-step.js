@@ -18,11 +18,12 @@ define([
         const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
         const briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
         const datasetInfo = params.datasetInfo;
-        let oldFileTileId = undefined;
-        let oldDigitalResourceId = undefined;
         self.currentRendererValid = ko.observable(true);
         self.loading = ko.observable(false);
         self.loadingMessage = ko.observable();
+        self.showDatasetList = ko.observable(true);
+        self.showFileList = ko.observable(false);
+        self.showFileInfo = ko.observable(false);
 
         self.formats = ko.observableArray(formats.map(format => {return {"text": format.name, "id": format.id}}));
 
@@ -59,7 +60,7 @@ define([
         params.value({});
         this.dirty = ko.computed(function(){
             for (var value of Object.values(params.value())) {
-                if(value.fileStatementParameter.dirty() || value.fileStatementInterpretation.dirty() || (self.selectedFile()?.file_details?.[0]?.renderer != self.selectedRenderer()?.id)){
+                if(value.fileStatementParameter.dirty() || value.fileStatementInterpretation.dirty() || (self.selectedFile()?.file_details?.[0]?.format != self.selectedFileFormat())){
                     return true;
                 }
             }
@@ -68,15 +69,36 @@ define([
         this.save = async() => {
             self.loading(true);
             self.loadingMessage('Saving interpretation data...')
-            for (var value of Object.values(params.value())) {
+            for (const tileid in params.value()) {
+                const value = params.value()[tileid];
                 if(value.fileStatementParameter.dirty()){
                     value.fileStatementParameter.save();
                 }
                 if(value.fileStatementInterpretation.dirty()){
                     value.fileStatementInterpretation.save();
                 }
+                if(value.format){
+                    await this.updateRenderer(tileid, value.format)
+                    delete value.format;
+                }
             }
-            await this.updateRenderer()
+
+            //reload digital resources
+            const oldDigitalResourceId = self.selectedDigitalResource().resourceinstanceid;
+            const oldFileTileId = self.selectedFile()["@tile_id"];
+            self.digitalResources([]);
+
+            self.loading(true);
+            self.loadingMessage('Reloading datasets...')
+            await loadDigitalResources(false);
+            if(oldDigitalResourceId){
+                self.selectedDigitalResource(self.digitalResources().find(digitalResource => digitalResource.resourceinstanceid == oldDigitalResourceId));
+            } 
+
+            if(oldFileTileId){
+                self.selectedFile(self.files().find(file => file["@tile_id"] == oldFileTileId));
+            } 
+            //await this.updateRenderer()
             params.form.complete(true);
             self.loading(false);
         };
@@ -85,6 +107,9 @@ define([
             for (var value of Object.values(params.value())) {
                 value.fileStatementParameter.reset();
                 value.fileStatementInterpretation.reset();
+                if(value.format){
+                    delete value.format;
+                }
             }
             var file = params.value()[self.selectedFile()['@tile_id']];
             self.fileStatementParameter(file.fileStatementParameter.fileStatement());
@@ -100,6 +125,7 @@ define([
                 params.value.valueHasMutated();
             }
         }, this);
+
         this.fileStatementInterpretation.subscribe(function(fp) {
             if(!!this.selectedFile()){
                 var obj = params.value();
@@ -160,77 +186,66 @@ define([
         };
 
         this.digitalResources = ko.observableArray();
-        this.getDigitalResource = function(resourceid) {
-            window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
-                .then(function(response){
-                    if(response.ok){
-                        return response.json();
+        this.getDigitalResource = async(resourceid, newStatements) => {
+            const response = await window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
+            if(!response.ok) {return;}
+            const data = await response.json()
+
+            self.digitalResources.push(data);
+            var obj = params.value();
+            data.resource?.File?.forEach(function(datafile){
+                var fileTileid = datafile['@tile_id'];
+                if (!(fileTileid in obj)){
+                    obj[fileTileid] = {
+                        'fileStatementParameter': '',
+                        'fileStatementInterpretation': ''
+                    };
+                }
+
+                var getStatement = function(valueid){
+                    var fileStatement;
+                    try {
+                        fileStatement = datafile.FIle_Statement.find(function(statement){
+                            return statement.FIle_Statement_type['concept_details'][0].valueid === valueid;
+                        });
+                    } catch(err) {}
+
+                    if(fileStatement){
+                        return new FileStatement(
+                            fileStatement['@tile_id'], fileTileid, resourceid, fileStatement.FIle_Statement_content['@display_value'], valueid
+                        );
+                    } else {
+                        return new FileStatement(
+                            '', fileTileid, resourceid, '', valueid
+                        );          
                     }
-                })
-                .then(function(data){
-                    self.digitalResources.push(data);
-                    var obj = params.value();
-                    data.resource?.File?.forEach(function(datafile){
-                        var fileTileid = datafile['@tile_id'];
-                        if (!(fileTileid in obj)){
-                            obj[fileTileid] = {
-                                'fileStatementParameter': '',
-                                'fileStatementInterpretation': ''
-                            };
-                        }
-
-                        var getStatement = function(valueid){
-                            var fileStatement;
-                            try {
-                                fileStatement = datafile.FIle_Statement.find(function(statement){
-                                    return statement.FIle_Statement_type['concept_details'][0].valueid === valueid;
-                                });
-                            } catch(err) {}
-
-                            if(fileStatement){
-                                return new FileStatement(
-                                    fileStatement['@tile_id'], fileTileid, resourceid, fileStatement.FIle_Statement_content['@display_value'], valueid
-                                );
-                            } else {
-                                return new FileStatement(
-                                    '', fileTileid, resourceid, '', valueid
-                                );          
-                            }
-                        };
-                        
-                        if(!oldDigitalResourceId){
-                            obj[fileTileid].fileStatementParameter = getStatement(briefTextValueid);
-                            obj[fileTileid].fileStatementInterpretation = getStatement(interpretationValueid);
-                            params.value(obj);   
-                        }
-                    });
-                    if(self.digitalResources().length === 1){
-                        if(oldDigitalResourceId){
-                            self.selectedDigitalResource(self.digitalResources().find(digitalResource => digitalResource.resourceinstanceid == oldDigitalResourceId));
-                            oldDigitalResourceId = undefined;
-                        } else {
-                            self.selectedDigitalResource(self.digitalResources()[0]);
-                        }
-
-                        if(oldFileTileId){
-                            self.selectedFile(self.files().find(file => file["@tile_id"] == oldFileTileId));
-                            oldFileTileId = undefined;
-                        } else {
-                            self.selectedFile(self.files()[0]);
-                        }
-
-                    }
-                });
+                };
+                
+                if(newStatements){
+                    obj[fileTileid].fileStatementParameter = getStatement(briefTextValueid);
+                    obj[fileTileid].fileStatementInterpretation = getStatement(interpretationValueid);
+                    params.value(obj);   
+                }
+            });
         };
-        datasetIds.forEach(function(datasetId){
-            self.getDigitalResource(datasetId);
-        })
+        
+        const loadDigitalResources = async (newStatements=true) => {
+            return Promise.all(datasetIds.map(async (datasetId) => {
+                return self.getDigitalResource(datasetId, newStatements);
+            }));
+        };
+
+        (async () => {
+            self.loading(true);
+            self.loadingMessage('Loading datasets...')
+            await loadDigitalResources();
+            self.loading(false);
+        })();
 
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
         this.selectedDigitalResource.subscribe(function(selectedDigitalResource){
             this.files(selectedDigitalResource?.resource?.File ?? []);
-            this.selectedFile(this.files()?.[0]);
         }, this);
         this.filteredDigitalResources = ko.pureComputed(function(){
             return this.digitalResources().filter(function(dr){
@@ -254,6 +269,14 @@ define([
             //     }
             // });
             // const response = await resp.json();
+
+            if(!!this.selectedFile()){
+                var obj = params.value();
+                var tileid = this.selectedFile()['@tile_id'];
+                obj[tileid].format = format;
+                params.value.valueHasMutated();
+            }
+
             const renderer = self.getFileFormatRenderer(formats.find(x => x.id == format)?.renderer)
             require([renderer.component], () => {
                 self.selectedRenderer(renderer);
@@ -266,10 +289,10 @@ define([
                 self.selected(true);
                 self.displayContent = self.getDisplayContent(selectedFile.file_details[0]);
 
-                self.selectedFileFormat(selectedFile.file_details[0].format);
-                self.selectedFileFormat.valueHasMutated();
                 // self.selectedFile(selectedFile);
                 var file = params.value()[selectedFile['@tile_id']];
+                self.selectedFileFormat(file.format || selectedFile.file_details[0].format);
+                self.selectedFileFormat.valueHasMutated();
                 self.fileStatementParameter(file.fileStatementParameter.fileStatement());
                 self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
             } else {
@@ -280,27 +303,18 @@ define([
         });
 
 
-        this.updateRenderer = async() => {
-            const renderer = this.selectedRenderer()
-            const file = this.selectedFile()
-            const resp = await window.fetch(arches.urls.upload_dataset_file_renderer(file['@tile_id']), {
+        this.updateRenderer = async(tileid, format) => {
+            await window.fetch(arches.urls.upload_dataset_file_renderer(tileid), {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify({
-                    format: this.selectedFileFormat()
+                    format: format
                 }),
                 headers: {
                     "X-CSRFToken": Cookies.get('csrftoken'),
                     'Content-Type': 'application/json'
                 }
             });
-            oldDigitalResourceId = self.selectedDigitalResource().resourceinstanceid
-            oldFileTileId = self.selectedFile()["@tile_id"]
-            self.digitalResources([]);
-            datasetIds.forEach(function(datasetId){
-                self.getDigitalResource(datasetId);
-            });
-            
         }
 
         this.filteredFiles = ko.pureComputed(function(){
