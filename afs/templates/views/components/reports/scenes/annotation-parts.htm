@@ -16,12 +16,16 @@
                 <!-- ko ifnot: getResourceLink(part.column1) -->
                 <td data-bind="text: part.column1"></td>
                 <!-- /ko -->
+                <!-- ko if: part.column2 -->
                 <td>
                     <a class="afs-block-value-url" data-bind="text: getNodeValue(part.column2), attr: {href: getResourceLink(part.column2)}"></a>
                 </td>
+                <!-- /ko -->
+                <!-- ko if: part.column3 -->
                 <td>
                     <a class="afs-block-value-url" data-bind="text: getNodeValue(part.column3), attr: {href: getResourceLink(part.column3)}"></a>
                 </td>
+                <!-- /ko -->
                 <!-- ko if: part.column4 -->
                 <td data-bind="text: part.column4"></td>
                 <!-- /ko -->

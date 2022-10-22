@@ -115,15 +115,15 @@
                             </div>
                         </div>
                         <!-- /ko -->
-                        <!-- ko if: Array.isArray(annotation.info) -->
-                        <div data-bind="with: annotation, as: 'annotation', noChildContext: true">
+                        <!-- ko if: annotations.length > 0 -->
+                        <div data-bind="foreach: annotations">
                             <div data-bind="component: {
                                 name: 'views/components/reports/scenes/annotation-parts',
                                 params: {
-                                    annotation: annotation,
-                                    selectedAnnotationTileId: selectedAnnotationTileId,
-                                    annotationTableHeader: annotationTableHeader,
-                                    annotationTableConfig: annotationTableConfig,
+                                    annotation: $data.annotation,
+                                    selectedAnnotationTileId: $data.selectedAnnotationTileId,
+                                    annotationTableHeader: $data.annotationTableHeader,
+                                    annotationTableConfig: $data.annotationTableConfig,
                                 }}"></div>
                         </div>
                         <!-- /ko -->
