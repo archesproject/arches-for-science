@@ -4,6 +4,7 @@
     <div style="border: solid 1px #ddd; height: 300px; width: 100%; margin: 10px">
         <div class="iiif-leaflet" data-bind="leaflet: annotation.leafletConfig"></div>
     </div>
+    <!-- ko if: annotationTableConfig -->
     <table class="table table-striped" cellspacing="0" width="100%">
         <thead data-bind="html: annotationTableHeader"></thead>
         <tbody data-bind="dataTablesForEach: { data: annotation.info, as: 'part', noChildContext: true, dataTableOptions: $parent.annotationTableConfig }">
@@ -56,4 +57,5 @@
             <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info().length'></div>
         </div>
     </div>
+    <!-- /ko -->
 <div>

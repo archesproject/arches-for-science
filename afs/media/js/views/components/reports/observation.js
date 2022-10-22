@@ -111,7 +111,7 @@ define([
                                 })),
                             }: {};
 
-                            const annotationTableConfig = {
+                        const annotationTableConfig = {
                             ...self.defaultTableConfig,
                             columns: Array(4).fill(null)
                         };
@@ -162,18 +162,9 @@ define([
                         })),
                     }: {};
 
-                    const annotationTableConfig = {
-                        ...self.defaultTableConfig,
-                        columns: Array(2).fill(null)
-                    };
-
-                    const annotationTableHeader =
-                        `<tr class="afs-table-header">
-                            <th>Sample Name</th>
-                            <th class="afs-table-control all"></th>
-                        </tr>`
-
                     const selectedAnnotationTileId = ko.observable();
+                    const annotationTableConfig = undefined;
+                    const annotationTableHeader = undefined;
 
                     self.annotations.push({annotation, annotationTableConfig, selectedAnnotationTileId, annotationTableHeader})
                 }
