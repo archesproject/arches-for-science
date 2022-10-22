@@ -76,6 +76,8 @@ define([
 
                 self.annotations = []
 
+                /* If the observation is for a areas
+                There can be more than one geometry */
                 relatedDigitalResources.map(async (resource) => {
                     const digitalRessourceRelResources = await reportUtils.getRelatedResources(resource.resourceinstanceid);
                     const areaPhysicalThing = digitalRessourceRelResources?.related_resources.find((rr) => rr.graph_id == physicalThingGraphId);
@@ -130,6 +132,8 @@ define([
                     }
                 });
 
+                /* If the observation is from a sample
+                There should be one geometry and table isn't necessary */
                 const samplePhysicalThing = relatedPhysicalThings.find(thing => 
                     (!!thing.tiles.find(tile => (
                         tile.data[typeNodeId] && 
