@@ -32,7 +32,7 @@ class DigitalResourcesByObjectParts(View):
         }
         digital_resources = Resource.objects.filter(pk__in=related_datasets - manifest_datasets)
         results = {
-            "resources": [{"resourceid": str(resource.pk), "displayname": resource.displayname} for resource in digital_resources],
+            "resources": [{"resourceid": str(resource.pk), "displayname": resource.displayname()} for resource in digital_resources],
             "selected_resource": resourceid,
         }
         for resource in results["resources"]:

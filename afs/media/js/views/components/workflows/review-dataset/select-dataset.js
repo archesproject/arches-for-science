@@ -12,6 +12,7 @@ define([
         this.dataLoaded = ko.observable(false);
 
         const getDigitalResources = async function(resourceid) {
+            if(!resourceid){ return; }
             const url = `${arches.urls.root}digital-resources-by-object-parts/${resourceid}`;
             const result = await fetch(url, {
                 method: 'GET',
