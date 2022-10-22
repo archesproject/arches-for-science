@@ -56,9 +56,13 @@ define([
 
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
             const loadRelatedResources = async() => {
-                const result = await reportUtils.getRelatedResources(resourceId);
                 const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
                 const digitalResourceGraphId = "707cbd78-ca7a-11e9-990b-a4d18cec433a";
+                const typeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'
+                const partOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'
+                const smapleConceptIds = ['77d8cf19-ce9c-4e0a-bde1-9148d870e11c'] // sample
+
+                const result = await reportUtils.getRelatedResources(resourceId);
                 const relatedPhysicalThings = result?.related_resources.filter(resource => 
                     resource?.graph_id === physicalThingGraphId);
                 const relatedDigitalResources = result?.related_resources.filter(resource => 
@@ -70,63 +74,7 @@ define([
                     return element
                 }));
 
-                const typeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'
-                const partOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'
-                const smapleConceptIds = ['77d8cf19-ce9c-4e0a-bde1-9148d870e11c'] // sample
-                const areaConceptIds = ['31d97bdd-f10f-4a26-958c-69cb5ab69af1', '7375a6fb-0bfb-4bcf-81a3-6180cdd26123'] // analysis area, sample area
-
-                const samplePhysicalThing = relatedPhysicalThings.find(thing => 
-                    (!!thing.tiles.find(tile => (
-                        tile.data[typeNodeId] && 
-                        tile.data[typeNodeId].filter(x => smapleConceptIds.includes(x)).length > 0)
-                    ))
-                );
-                
-                const samplePhysicalThingResourceId = samplePhysicalThing?.resourceinstanceid;
-                const sampleingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
-
                 self.annotations = []
-
-                if (samplePhysicalThingResourceId) {
-                    const sampleRelatedResources = await reportUtils.getRelatedResources(samplePhysicalThingResourceId);
-                    const sampleingActivityResource = sampleRelatedResources?.related_resources.find(resource => 
-                        resource?.graph_id === sampleingActivityGraphId
-                    );
-                    const samplingUnitTiles = sampleingActivityResource?.tiles.filter((tile) => {
-                        return tile.nodegroup_id == 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb' && 
-                        tile.data['b3e171ab-1d9d-11eb-a29f-024e0d439fdb'][0]['resourceId'] == samplePhysicalThingResourceId
-                    });
-
-                    const annotation = samplingUnitTiles ? {
-                        info: samplingUnitTiles.map((tile => {
-                            const column1 = samplePhysicalThing.displayname;
-                            const tileId = tile.tileid;
-                            const featureCollection = tile.data['b3e171ae-1d9d-11eb-a29f-024e0d439fdb'];
-                            for (feature of featureCollection.features){
-                                feature.properties.tileId = tileId;
-                            }
-                            return {column1, tileId, featureCollection}
-                        })),
-                    }: {};
-
-                    const annotationTableConfig = {
-                        ...self.defaultTableConfig,
-                        columns: Array(2).fill(null)
-                    };
-
-                    const annotationTableHeader =
-                        `<tr class="afs-table-header">
-                            <th>Sample Name</th>
-                            <th class="afs-table-control all"></th>
-                        </tr>`
-
-                    const selectedAnnotationTileId = ko.observable();
-
-                    self.annotations.push({annotation, annotationTableConfig, selectedAnnotationTileId, annotationTableHeader})
-                }
-
-                console.log(self.resource())
-                console.log(relatedDigitalResources)
 
                 relatedDigitalResources.map(async (resource) => {
                     const digitalRessourceRelResources = await reportUtils.getRelatedResources(resource.resourceinstanceid);
@@ -180,7 +128,55 @@ define([
 
                         self.annotations.push({annotation, annotationTableConfig, selectedAnnotationTileId, annotationTableHeader})
                     }
-                })
+                });
+
+                const samplePhysicalThing = relatedPhysicalThings.find(thing => 
+                    (!!thing.tiles.find(tile => (
+                        tile.data[typeNodeId] && 
+                        tile.data[typeNodeId].filter(x => smapleConceptIds.includes(x)).length > 0)
+                    ))
+                );
+                
+                const samplePhysicalThingResourceId = samplePhysicalThing?.resourceinstanceid;
+                const sampleingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
+
+                if (samplePhysicalThingResourceId) {
+                    const sampleRelatedResources = await reportUtils.getRelatedResources(samplePhysicalThingResourceId);
+                    const sampleingActivityResource = sampleRelatedResources?.related_resources.find(resource => 
+                        resource?.graph_id === sampleingActivityGraphId
+                    );
+                    const samplingUnitTiles = sampleingActivityResource?.tiles.filter((tile) => {
+                        return tile.nodegroup_id == 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb' && 
+                        tile.data['b3e171ab-1d9d-11eb-a29f-024e0d439fdb'][0]['resourceId'] == samplePhysicalThingResourceId
+                    });
+
+                    const annotation = samplingUnitTiles ? {
+                        info: samplingUnitTiles.map((tile => {
+                            const column1 = samplePhysicalThing.displayname;
+                            const tileId = tile.tileid;
+                            const featureCollection = tile.data['b3e171ae-1d9d-11eb-a29f-024e0d439fdb'];
+                            for (feature of featureCollection.features){
+                                feature.properties.tileId = tileId;
+                            }
+                            return {column1, tileId, featureCollection}
+                        })),
+                    }: {};
+
+                    const annotationTableConfig = {
+                        ...self.defaultTableConfig,
+                        columns: Array(2).fill(null)
+                    };
+
+                    const annotationTableHeader =
+                        `<tr class="afs-table-header">
+                            <th>Sample Name</th>
+                            <th class="afs-table-control all"></th>
+                        </tr>`
+
+                    const selectedAnnotationTileId = ko.observable();
+
+                    self.annotations.push({annotation, annotationTableConfig, selectedAnnotationTileId, annotationTableHeader})
+                }
             };
 
             loadRelatedResources();
