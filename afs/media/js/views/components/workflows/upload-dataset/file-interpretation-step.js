@@ -277,7 +277,7 @@ define([
                 params.value.valueHasMutated();
             }
 
-            const renderer = self.getFileFormatRenderer(formats.find(x => x.id == format)?.renderer)
+            const renderer = self.getFileFormatRenderer(format ? formats.find(x => x.id == format)?.renderer : self.selectedFile()?.file_details?.[0]?.renderer)
             require([renderer.component], () => {
                 self.selectedRenderer(renderer);
                 self.selectedRenderer.valueHasMutated();

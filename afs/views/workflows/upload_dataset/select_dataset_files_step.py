@@ -158,8 +158,8 @@ class SelectDatasetFilesStep(View):
                         file_data["renderer"] = next(
                             (format["renderer"] for format in settings.FORMATS if format["id"] == dataset_default_format), None
                         )
+                        file_data["format"] = dataset_default_format
 
-                    file_data["format"] = dataset_default_format
 
                     # file has not been uploaded
                     dataset_file_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_file_node_group_id)
@@ -187,7 +187,7 @@ class SelectDatasetFilesStep(View):
                         file_data["tileid"] = response["tileid"]
 
             file_response = [
-                {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0]["format"], "tileId": f[0]["tileid"]} for f in new_files
+                {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]} for f in new_files
             ]
 
         return JSONResponse(

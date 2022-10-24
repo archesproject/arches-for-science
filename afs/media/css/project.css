@@ -529,6 +529,12 @@
 
 }
 
+#parts-panel .panel:nth-child(even) a .file-workbench-file{
+    background: #fff;
+}
+#parts-panel .panel .file-workbench-file:not(.staged):hover{
+    background: #cae2f5;
+}
 .upload-dataset-select-dataset-files #parts-panel .panel:last-child {
     margin-bottom:0px; 
     border: none;

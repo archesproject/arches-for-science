@@ -10,7 +10,9 @@
 {% block main_menu %}
 
 
-<div class="file-workbench-filter" style="padding-left: 46px;  padding-right: 46px; display:flex; align-items: flex-end;">
+<div class='loading-mask' data-bind="visible: loading"></div>
+<div class="afs-saving-message" data-bind="visible: loading, text: loadingMessage()"></div>
+<div class="file-workbench-filter" style="padding-left: 46px;  padding-right: 46px; display:flex; flex-direction: column">
     <div class="dataset-name" style="flex-grow: 1;">
         <label class="control-label">{% trans "Dataset Name" %}</label>
         <input type="text" class="form-control" style="width: 50%; height:initial"
@@ -23,12 +25,32 @@
     <div style="padding-left: 20px;">
         <!-- ko if: dirty -->
         <button class="btn btn-shim btn-danger btn-labeled btn-sm fa fa-times" data-bind="click: reset">{% trans 'Cancel'%}</button>
-        <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: save">{% trans 'Save'%}</button>
+        <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: saveFiles">{% trans 'Save'%}</button>
         <!-- /ko -->
+    </div>
+
+    <div class="format-select" style="width: 50%" data-bind="visible: defaultFormat() == undefined">
+        <input style="display:inline-block;"
+        data-bind="select2Query: {
+            select2Config: {
+                clickBubble: true,
+                disabled: false,
+                data: formats(),
+                value: defaultFormat,
+                allowClear: true,
+                multiple: false,
+                placeholder: {% trans "'Available Formats'" %}}}" >
+    </div>
+    <div style="margin-bottom: 10px" data-bind="visible: defaultFormat() != undefined">
+        <span>{% trans "Default Text File Format" %}:</span>
+        <span style="font-weight: bold" data-bind="text: formats().find((x) => x.id == ko.unwrap(defaultFormat))?.text"></span>
+    </div>
+    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 5px; background-color: #f9f9f9; width: 50%" data-bind="visible: defaultFormat() != undefined">
+        <span>{% trans "Supported image files and PDF files are automatically detected and displayed." %}</span>
     </div>
 </div>
 
-<div class="file-chart-upload-panel">
+<div class="file-chart-upload-panel" data-bind="visible: defaultFormat() != undefined">
     <!-- ko if: files().length === 0 -->
     <div class="gallery-controls new-tile">
         <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
@@ -51,7 +73,7 @@
 
                 </div>
                 <div class="file-upload-footer">
-                    <span data-bind="text: ('The following file formats may be uploaded: csv')"></span>
+                    <span></span>
                 </div>
             </div>
 
@@ -79,25 +101,10 @@
             <!-- ko foreach: {data: files, as: 'file'} -->
                 <div class="file-workbench-file">
                     <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
-                        <span><i class="fa fa-file fa-lg"></i></span>
-                        <span class="text-main mar-no text-overflow" style="flex-grow: 1;" data-bind="text: file.fileInfo.name"></span>
-                        <!-- ko if: file.fileInfo.error -->
-                        <span class="dz-error text-danger text-sm"  data-bind="text: '{% trans " error" %}'"></span>
-                        <!-- /ko -->
-                        <div class="file-size-label">
-                            <span class="text-sm" data-bind="html: $parent.formatSize(file.fileInfo)"></span>
+                        <div style="flex: 1">
+                            <i data-bind="click: function(){$parent.deleteFile(file)}" class="fa fa-trash" style="color: black"></i>
+                            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
                         </div>
-                        <!-- ko if: file.fileInfo.uploaded -->
-                        <div class="media-right">
-                            <button class="btn btn-xs btn-danger btn-file-cancel"><i class="ion ion-cloud"></i></button>
-                        </div>
-                        <!-- /ko -->
-                        <!-- ko ifnot: file.fileInfo.uploaded -->
-                        <div class="media-right" data-bind="click: $parent.removeFile">
-                            <button class="btn btn-xs btn-danger btn-file-cancel"><i
-                                    class="ion ion-close"></i></button>
-                        </div>
-                        <!-- /ko -->
                     </div>
                 </div>
             <!-- /ko -->
