@@ -94,7 +94,7 @@
                     </div>
                     <div data-bind="visible: selectedPartDefaultFormat() != undefined || !selectedPartHasCurrentObservation()">
                         <div class="dataset-name">
-                            <label class="control-label">{% trans "Dataset Name*" %}</label>
+                            <label class="control-label">{% trans "Dataset Name" %}</label>
                             <div style="display: flex">
                                 <input style="flex: 1;" type="text" class="form-control" placeholder="Dataset name" data-bind="enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
                                 <button style="margin: 0px 5px" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && selectedPart()?.nameDirty()), click: function(){$parent.saveFiles(); }" style="">Save</button>
@@ -127,6 +127,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div><span data-bind="text: ko.unwrap(selectedPart().datasetFiles).length"></span> {% trans "files loaded" %}</div>
                     </div>
                     
                 </div>

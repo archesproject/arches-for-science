@@ -30,6 +30,16 @@
             </label>
         </div>
         <!-- /ko -->
+
+        <!-- ko if: !relatedDigitalResources().length != 0 && physicalThingResourceId() != undefined -->
+        <div class="pad-hor rows option-input">
+            <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 5px 15px; background-color: #fde9ad;color: #666;">
+                <span>
+                    {% trans "This physical thing has no digital resources.  Select another or run through the upload dataset workflow."%}
+                </span>
+            </div>
+        </div>
+        <!-- /ko -->
     </div>
 
 </div>

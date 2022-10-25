@@ -60,7 +60,10 @@ define([
         params.value({});
         this.dirty = ko.computed(function(){
             for (var value of Object.values(params.value())) {
-                if(value.fileStatementParameter.dirty() || value.fileStatementInterpretation.dirty() || (self.selectedFile()?.file_details?.[0]?.format != self.selectedFileFormat())){
+                if(value.fileStatementParameter.dirty() || 
+                   value.fileStatementInterpretation.dirty() || 
+                   (self.selectedFile()?.file_details?.[0]?.format != self.selectedFileFormat() &&
+                    self.selectedFileFormat != undefined)){
                     return true;
                 }
             }
@@ -111,9 +114,11 @@ define([
                     delete value.format;
                 }
             }
-            var file = params.value()[self.selectedFile()['@tile_id']];
-            self.fileStatementParameter(file.fileStatementParameter.fileStatement());
-            self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
+            const file = params.value()?.[self.selectedFile()?.['@tile_id']];
+            if(file){
+                self.fileStatementParameter(file.fileStatementParameter.fileStatement());
+                self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
+            }
         };
         this.reset = params.form.reset;
         
@@ -278,10 +283,12 @@ define([
             }
 
             const renderer = self.getFileFormatRenderer(format ? formats.find(x => x.id == format)?.renderer : self.selectedFile()?.file_details?.[0]?.renderer)
-            require([renderer.component], () => {
-                self.selectedRenderer(renderer);
-                self.selectedRenderer.valueHasMutated();
-            });
+            if(renderer){
+                require([renderer.component], () => {
+                    self.selectedRenderer(renderer);
+                    self.selectedRenderer.valueHasMutated();
+                });
+            }
         });
 
         self.selectedFile.subscribe(function(selectedFile){

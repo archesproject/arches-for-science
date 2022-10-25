@@ -48,8 +48,12 @@ define([
         });
 
         this.selectedDigtalResources.subscribe(function(val) {
-            const data = {digitalResources: val, resourceid: self.physicalThingResourceId()};
-            params.value(data);
+            if(val && val.length > 0){
+                const data = {digitalResources: val, resourceid: self.physicalThingResourceId()};
+                params.value(data);
+            } else {
+                params.value(undefined);
+            }
         });
 
         this.physicalThingResourceId.subscribe(getDigitalResources);
