@@ -160,7 +160,6 @@ class SelectDatasetFilesStep(View):
                         )
                         file_data["format"] = dataset_default_format
 
-
                     # file has not been uploaded
                     dataset_file_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_file_node_group_id)
                     dataset_file_tile.resourceinstance_id = str(dataset_resource.resourceinstanceid)
@@ -187,7 +186,8 @@ class SelectDatasetFilesStep(View):
                         file_data["tileid"] = response["tileid"]
 
             file_response = [
-                {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]} for f in new_files
+                {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
+                for f in new_files
             ]
 
         return JSONResponse(
