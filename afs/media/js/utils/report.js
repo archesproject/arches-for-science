@@ -31,7 +31,7 @@ define([
             if(node){
                 return node;
             }
-        }        
+        }
     };
 
     const deleteTile = async (tileid, card) => {

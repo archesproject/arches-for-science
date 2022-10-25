@@ -14,7 +14,7 @@
 }
 
 .afs-table table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before {
-    top: 7px;
+    /* top: 7px; */
 }
 
 .afs-part-expanded
@@ -379,7 +379,7 @@ i.toggle:hover {
 }
 
 .afs-table-control i {
-    padding: 7px 4px;
+    padding: 4px;
     color: steelblue;
     font-size: 12px;
 }
@@ -569,17 +569,8 @@ i.toggle:hover {
     margin-bottom: -10px;
 }
 
-.afs-report-subsection-container .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    padding: 7px;
-}
-
 .afs-report-subsection-container table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
     bottom: 6px;
-}
-
-.firstchild-container .afs-table table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
-    top: 7px;
-    line-height: 14px;
 }
 
 .breadcrumb>li+li:before{
