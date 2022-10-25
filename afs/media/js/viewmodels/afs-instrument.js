@@ -271,7 +271,7 @@ define(['jquery',
             },
             zoom: {
                 enabled: true
-            }
+            },
         };
 
         if (this.displayContent) {

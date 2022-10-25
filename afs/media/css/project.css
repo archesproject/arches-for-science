@@ -970,3 +970,23 @@
         padding: 0 0.5em 0 1em;
     }
 }
+
+.loading-mask-string{
+    background-color: #fafafa;
+    color: #666;
+}
+
+
+/* For what follows, I blame plotly and the lack of customization options for the modebar. All styles are inline and cannot easily be overriden .*/ 
+.plotly .modebar-container{
+    left: 0;
+    bottom: 0;
+    right: auto !important;
+    top: auto !important;
+}
+.plotly .modebar-container .modebar {
+    bottom: 0;
+    left: 50px;
+    right: auto !important;
+    top: auto !important;
+}

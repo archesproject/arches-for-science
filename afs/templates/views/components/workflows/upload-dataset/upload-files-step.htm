@@ -85,19 +85,21 @@
     <!-- /ko -->
       
     <!-- ko if: files().length > 0 -->
+    
     <div style="background-color: white; padding: 45px;">
-        <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 485px; border: solid 1px lightgrey; padding: 20px;">
-            <div class="dropzone-photo-upload" style="background: #fafafa; border: dashed 1px purple; padding: 40px; text-align: center;" data-bind="dropzone: dropzoneOptions">
-                <div class="file-workbench-links">
-                    <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
-                        <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span>
-                        <span>{% trans "to upload more files" %}</span>
-                    </a>
-                </div>
-                <div style="min-height: 100%;">
-                    <div id="hidden-dz-previews" style="display:none"></div>
-                </div>
+        <div class="dropzone-photo-upload" style="background: #fafafa; border: dashed 1px purple; padding: 40px; text-align: center;" data-bind="dropzone: dropzoneOptions">
+            <div class="file-workbench-links">
+                <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                    <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span>
+                    <span>{% trans "to upload more files" %}</span>
+                </a>
             </div>
+            <div style="min-height: 100%;">
+                <div id="hidden-dz-previews" style="display:none"></div>
+            </div>
+        </div>
+        <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 485px; border: solid 1px lightgrey; padding: 20px;">
+            
             <!-- ko foreach: {data: files, as: 'file'} -->
                 <div class="file-workbench-file">
                     <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
