@@ -42,7 +42,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Dimension of Object",
                     "nodegroup_id": "0b7f8d0a-b498-11e9-a189-a4d18cec433a",
                     "sortorder": 4,
@@ -87,7 +87,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Statement or Interpretation about Object",
                     "nodegroup_id": "1952bb0a-b498-11e9-a679-a4d18cec433a",
                     "sortorder": 1,
@@ -113,7 +113,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Identifier of Object",
                     "nodegroup_id": "22c150ca-b498-11e9-9adc-a4d18cec433a",
                     "sortorder": 3,
@@ -394,7 +394,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Collection Object is Part of ",
                     "nodegroup_id": "63e49254-c444-11e9-afbe-a4d18cec433a",
                     "sortorder": 8,
@@ -528,7 +528,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Type of Object",
                     "nodegroup_id": "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a",
                     "sortorder": 2,
@@ -554,7 +554,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Current Location of Object",
                     "nodegroup_id": "a030e34f-b31d-11e9-8c0b-a4d18cec433a",
                     "sortorder": 13,
@@ -758,7 +758,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Current Owner of Object",
                     "nodegroup_id": "b008dacc-b31d-11e9-84af-a4d18cec433a",
                     "sortorder": 12,
@@ -1007,7 +1007,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Name of Object",
                     "nodegroup_id": "b9c1ced7-b497-11e9-a4da-a4d18cec433a",
                     "sortorder": 0,
@@ -1332,7 +1332,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": null,
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Parent Object",
                     "nodegroup_id": "f8d5fe4c-b31d-11e9-9625-a4d18cec433a",
                     "sortorder": 6,
@@ -1544,7 +1544,7 @@
                     "helptext": null,
                     "helptitle": null,
                     "instructions": "Describe the workflow a bit here!",
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": "Parts of Object",
                     "nodegroup_id": "fec59582-8593-11ea-97eb-acde48001122",
                     "sortorder": 7,
@@ -1625,6 +1625,51 @@
                     "sortorder": 9,
                     "visible": false,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "cc1568c5-b497-11e9-a58c-a4d18cec433a",
+                    "config": {
+                        "basemap": "streets",
+                        "bearing": 0,
+                        "centerX": -118.47459785445733,
+                        "centerY": 34.077025114933726,
+                        "defaultValue": "",
+                        "defaultValueType": "",
+                        "featureColor": "#FF0000",
+                        "featureLineWidth": 1,
+                        "featurePointSize": 3,
+                        "geocodePlaceholder": "Search",
+                        "geocodeProvider": "10000000-0000-0000-0000-010000000000",
+                        "geocoderVisible": true,
+                        "geometryTypes": [
+                            {
+                                "id": "Point",
+                                "text": "Point"
+                            },
+                            {
+                                "id": "Line",
+                                "text": "Line"
+                            },
+                            {
+                                "id": "Polygon",
+                                "text": "Polygon"
+                            }
+                        ],
+                        "label": "Production_location_geo",
+                        "maxZoom": 20,
+                        "minZoom": 0,
+                        "overlayConfigs": [],
+                        "overlayOpacity": 0,
+                        "pitch": 0,
+                        "rerender": true,
+                        "zoom": 16
+                    },
+                    "id": "06e6bdf9-ff44-453c-99d5-614831340329",
+                    "label": "Production_location_geo",
+                    "node_id": "d80e5eaa-32ea-11ec-a2aa-024e0d439fdb",
+                    "sortorder": null,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000007"
                 },
                 {
                     "card_id": "cc1561a6-b497-11e9-8cba-a4d18cec433a",
@@ -11584,12 +11629,12 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
-                    "id": "fa045e26-117d-4f97-8ae9-9b829ba3af28"
+                    "id": "844b4a62-69ef-448e-b158-973e07b99baf"
                 }
             ],
             "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
             "iconclass": "fa fa-asterisk",
-            "is_editable": true,
+            "is_editable": false,
             "isactive": true,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
@@ -11932,7 +11977,7 @@
                     "parentnodegroup_id": "cc15718f-b497-11e9-a9e8-a4d18cec433a"
                 },
                 {
-                    "cardinality": "1",
+                    "cardinality": "n",
                     "legacygroupid": null,
                     "nodegroupid": "cc15650c-b497-11e9-a64d-a4d18cec433a",
                     "parentnodegroup_id": null
@@ -22115,5 +22160,11 @@
             "template_id": "b3056c21-33c4-4055-b064-ea9296c1c13a",
             "version": ""
         }
-    ]
+    ],
+    "metadata": {
+        "db": "PostgreSQL 12.12 (Ubuntu 12.12-0ubuntu0.20.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit",
+        "git hash": "fatal: detected dubious ownership in repository at '/home/ubuntu/arches'",
+        "os": "Linux",
+        "os version": "5.11.0-1028-aws"
+    }
 }
