@@ -59,8 +59,8 @@
                                     <div data-bind="visible: !part.hasCurrentObservation()">
                                         <i class="fa fa-lock" style="color: black"></i>
                                     </div>
-                                    <div data-bind="visible: part.hasCurrentObservation() && part.datasetId()"><span data-bind="text: console.log()"></span>
-                                        ({% trans "New" %}<span data-bind="text: ko.unwrap(part?.datasetFiles)?.length ? ' - ' + ko.unwrap(part?.datasetFiles)?.length : ''"></span>)
+                                    <div data-bind="visible: part.hasCurrentObservation() && part.datasetId()">
+                                        (<span data-bind="text: ko.unwrap(part?.datasetFiles)?.length"></span> <span data-bind="visible: ko.unwrap(part?.datasetFiles)?.length === 1">{% trans "new file" %}</span><span data-bind="visible: ko.unwrap(part?.datasetFiles)?.length !== 1">{% trans "new files" %}</span>)
                                     </div>
                                 </div>
   

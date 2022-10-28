@@ -276,10 +276,12 @@ define([
 
                     self.loading(true);
                     self.loadingMessage(`Saving dataset ${part.calcDatasetName()}`);
-                    Array.from(files).forEach(file => {
-                        // Then save a file tile to the digital resource for each associated file
-                        self.saveDatasetFile(formData, file);
-                    });
+                    if(files) {
+                            Array.from(files).forEach(file => {
+                            // Then save a file tile to the digital resource for each associated file
+                            self.saveDatasetFile(formData, file);
+                        });
+                    }
 
                     const resp = await window.fetch(arches.urls.upload_dataset_select_dataset_files_step, {
                         method: 'POST',
