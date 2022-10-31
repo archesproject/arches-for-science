@@ -218,23 +218,99 @@
 
 <div class="model-summary-report">
     <div class="afs-report-page">
-        <!-- Names -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/name',
-            params: {
-                data: resource,
-                cards: nameCards,
-                dataConfig: nameDataConfig
-            }
-        }"></div>
-        <!-- Description -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/description',
-            params: {
-                data: resource,
-                cards: descriptionCards,
-            }
-        }"></div>
+        <div class="afs-report-section">
+            <div class="afs-report-subsection" >
+                <!-- Names -->
+                <!-- ko if: nameSummary() && nameSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+                <!-- Parent Group Tab --> 
+                <!-- ko if: parentGroupSummary() && parentGroupSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Parent Group" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: parentGroupSummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+                <!-- Location Tab -->
+                <!-- ko if: locationSummary() && locationSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Residence or associated location" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: locationSummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->        
+                <!-- professional activity -->
+                <!-- ko if: activitySummary() && activitySummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Professional Activity Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: activitySummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->        
+                <!-- Identifier -->
+                <!-- ko if: identifierSummary() && identifierSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Identifier" %}</th>
+                                <th>{% trans "Identifier Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: identifierSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
     </div>
 </div>
 
