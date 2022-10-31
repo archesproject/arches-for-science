@@ -70,6 +70,60 @@ define([
 
             loadRelatedResources();
 
+            //Summary Report
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
+            self.timespanTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(4).fill(null),
+                columnDefs: [],
+                ordering: false,
+            }
+
+            self.nameSummary = ko.observable();
+            self.statementSummary = ko.observable();
+            self.objectObservedSummary = ko.observable();
+            self.procedureSummary = ko.observable();
+            self.personSummary = ko.observable();
+            self.timeSpanSummary = ko.observable();
+
+            self.nameSummary(self.resource()['Name']?.map(x => {
+                const content = self.getNodeValue(x, 'name_content');
+                const type = self.getNodeValue(x, 'name_type');
+                return {content, type}
+            }));
+
+            self.statementSummary(self.resource()['Statement']?.map(x => {
+                const content = self.getNodeValue(x, 'statement_content');
+                const type = self.getNodeValue(x, 'statement_type');
+                return {content, type}
+            }));
+
+            self.objectObservedSummary(self.getResourceListNodeValue(self.resource(), 'observed'));
+            self.personSummary(self.getResourceListNodeValue(self.resource(), 'carried out by'));
+
+            const procedure = self.getRawNodeValue(self.resource(), 'used process');
+            if (procedure) {
+                displayValue = self.getNodeValue(self.resource(), 'used process');
+                link = self.getResourceLink(self.resource(), 'used process');
+                self.procedureSummary([{displayValue, link}]);
+            }
+
+            const timespan = self.getRawNodeValue(self.resource(), 'timespan');
+            if (timespan) {
+                const earliestBegin = self.getNodeValue(timespan, 'TimeSpan_begin of the begin');
+                const lastestBegin = self.getNodeValue(timespan, 'TimeSpan_begin of the end');
+                const earliestEnd = self.getNodeValue(timespan, 'TimeSpan_end of the begin');
+                const lastestEnd = self.getNodeValue(timespan, 'TimeSpan_end of the end');
+                self.timeSpanSummary({earliestBegin, lastestBegin, earliestEnd, lastestEnd})
+            }
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
