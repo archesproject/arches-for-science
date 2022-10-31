@@ -12,6 +12,7 @@ define([
         this.dataLoaded = ko.observable(false);
 
         const getDigitalResources = async function(resourceid) {
+            if(!resourceid){ return; }
             const url = `${arches.urls.root}digital-resources-by-object-parts/${resourceid}`;
             const result = await fetch(url, {
                 method: 'GET',
@@ -47,8 +48,12 @@ define([
         });
 
         this.selectedDigtalResources.subscribe(function(val) {
-            const data = {digitalResources: val, resourceid: self.physicalThingResourceId()};
-            params.value(data);
+            if(val && val.length > 0){
+                const data = {digitalResources: val, resourceid: self.physicalThingResourceId()};
+                params.value(data);
+            } else {
+                params.value(undefined);
+            }
         });
 
         this.physicalThingResourceId.subscribe(getDigitalResources);

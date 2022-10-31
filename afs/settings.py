@@ -23,7 +23,7 @@ SEARCH_COMPONENT_LOCATIONS.append("afs.search_components")
 TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "functions", "templates"))
 TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "widgets", "templates"))
 TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
-
+TEMPLATES[0]["OPTIONS"]["context_processors"].append("afs.utils.context_processors.project_settings")
 APP_PATHNAME = ""
 
 BYPASS_CARDINALITY_TILE_VALIDATION = False
@@ -185,7 +185,6 @@ CELERY_BROKER_URL = "amqp://guest:guest@localhost"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_RESULT_BACKEND = "django-db"  # Use 'django-cache' if you want to use your cache as your backend
 CELERY_TASK_SERIALIZER = "json"
-
 ONTOLOGY_NAMESPACES = {
     "http://purl.org/dc/terms/": "dcterms",
     "http://purl.org/dc/elements/1.1/": "dc",
@@ -268,6 +267,18 @@ RENDERERS += [
     #     "type": "",
     #    "exclude": [],
     # },
+]
+
+FORMATS = [
+    {"name": "Bruker M6 (point)", "id": "bm6", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker 5g", "id": "b5g", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker Tracer IV-V", "id": "bt45", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker Tracer III", "id": "bt3", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker 5i", "id": "b5i", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker Artax", "id": "bart", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Renishaw InVia - 785", "id": "r785", "renderer": "94fa1720-6773-4f99-b49b-4ea0926b3933"},
+    {"name": "Ranishsaw inVia - 633/514", "id": "r633", "renderer": "94fa1720-6773-4f99-b49b-4ea0926b3933"},
+    {"name": "ASD FieldSpec IV hi res", "id": "asd", "renderer": "88dccb59-14e3-4445-8f1b-07f0470b38bb"},
 ]
 
 DOCKER = False

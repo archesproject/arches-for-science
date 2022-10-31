@@ -501,16 +501,43 @@
 
 .upload-dataset-select-dataset-files #parts-panel {
     padding: 0px 0px;
+    border: 1px solid #ddd
 }
 .upload-dataset-select-dataset-files #parts-panel a .file-workbench-file {
     width: 100%;
 }
 
+.format-select .select2-container {
+    margin-top: 10px !important; /* I hate to do this, but I must because arches.scss line 2774  */
+}
+
+.select2-results {
+    margin-top: 0px;
+}
+
+.select-dataset-pull-up {
+    top: 517px;
+}
+
 .upload-dataset-select-dataset-files #parts-panel .panel {
     margin-bottom:0px; 
-    border-right: 1px solid #ddd; 
-    border-left: 1px solid #ddd; 
     border-bottom: 1px solid #ddd;
+}
+
+.upload-dataset-select-dataset-files .file-workbench-file{
+    border:none;
+
+}
+
+#parts-panel .panel:nth-child(even) a .file-workbench-file{
+    background: #fff;
+}
+#parts-panel .panel .file-workbench-file:not(.staged):hover{
+    background: #cae2f5;
+}
+.upload-dataset-select-dataset-files #parts-panel .panel:last-child {
+    margin-bottom:0px; 
+    border: none;
 }
 
 .upload-dataset-select-dataset-files #parts-panel .panel-collapse {
@@ -942,4 +969,24 @@
     #navbar .brand-title {
         padding: 0 0.5em 0 1em;
     }
+}
+
+.loading-mask-string{
+    background-color: #fafafa;
+    color: #666;
+}
+
+
+/* For what follows, I blame plotly and the lack of customization options for the modebar. All styles are inline and cannot easily be overriden .*/ 
+.plotly .modebar-container{
+    left: 0;
+    bottom: 0;
+    right: auto !important;
+    top: auto !important;
+}
+.plotly .modebar-container .modebar {
+    bottom: 0;
+    left: 50px;
+    right: auto !important;
+    top: auto !important;
 }
