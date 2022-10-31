@@ -48,6 +48,14 @@ define([
                 columns: Array(3).fill(null)
             };
 
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
             self.visible = {
                 textualReference: ko.observable(true),
             }
@@ -149,6 +157,27 @@ define([
                         }
                     ]
             });
+
+            // Summary details
+            self.nameSummary = ko.observable();
+            self.typeSummary = ko.observable();
+
+            const nameData = self.resource()?.Name;
+            if (nameData) {
+                self.nameSummary(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'name_type');
+                    const content = self.getNodeValue(x, 'name_content');
+                    const language = self.getNodeValue(x, 'name_language');
+                    return { type, content, language }
+                }));
+            };
+
+            const typeData = self.resource()?.type;
+            if (typeData) {
+                self.typeSummary([{
+                    type: self.getNodeValue(typeData)
+                }])
+            };
         },
         template: { require: 'text!templates/views/components/reports/instrument.htm' }
     });

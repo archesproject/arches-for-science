@@ -166,23 +166,50 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
-        <!-- Names -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/name',
-            params: {
-                data: resource,
-                cards: nameCards,
-                dataConfig: nameDataConfig
-            }
-        }"></div>
-        <!-- Description -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/description',
-            params: {
-                data: resource,
-                cards: descriptionCards,
-            }
-        }"></div>
+        <!-- Name -->
+        <div class="afs-report-section">
+            <!-- ko if: nameSummary() && nameSummary().length -->
+            <div class="afs-report-subsection">
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: $data.getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- Type of Instrument -->
+        <div class="afs-report-section">
+            <!-- ko if: typeSummary() && typeSummary().length -->
+            <div class="afs-report-subsection">
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Instrument Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: typeSummary, dataTableOptions: $data.getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
     </div>
 </div>
 
