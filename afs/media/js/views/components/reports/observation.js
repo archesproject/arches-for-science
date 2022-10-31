@@ -56,16 +56,122 @@ define([
 
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
             const loadRelatedResources = async() => {
+                const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
+                const digitalResourceGraphId = "707cbd78-ca7a-11e9-990b-a4d18cec433a";
+                const typeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a'
+                const partOfNodeId = 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'
+                const smapleConceptIds = ['77d8cf19-ce9c-4e0a-bde1-9148d870e11c'] // sample
+
                 const result = await reportUtils.getRelatedResources(resourceId);
-                const physicalThingGraphID = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
                 const relatedPhysicalThings = result?.related_resources.filter(resource => 
-                    resource?.graph_id === physicalThingGraphID);
-                
+                    resource?.graph_id === physicalThingGraphId);
+                const relatedDigitalResources = result?.related_resources.filter(resource => 
+                    resource?.graph_id === digitalResourceGraphId);
+    
                 self.collectionOfRelatedObjects(relatedPhysicalThings.map(element => {
                     element.link = reportUtils.getResourceLink({resourceId: element.resourceinstanceid}),
                     element.displaydescription = reportUtils.stripTags(element.displaydescription)
                     return element
                 }));
+
+                self.annotations = []
+
+                /* If the observation is for a areas
+                There can be more than one geometry */
+                relatedDigitalResources.map(async (resource) => {
+                    const digitalRessourceRelResources = await reportUtils.getRelatedResources(resource.resourceinstanceid);
+                    const areaPhysicalThing = digitalRessourceRelResources?.related_resources.find((rr) => rr.graph_id == physicalThingGraphId);
+                    const areaPhysicalThingResourceId = areaPhysicalThing?.resourceinstanceid;
+
+                    if (areaPhysicalThing) {
+                        const partentPhysicalThingResourceId = areaPhysicalThing?.tiles.find(
+                            tile => tile.data[partOfNodeId]).data[partOfNodeId][0].resourceId;
+
+                        let parts;
+                        if (partentPhysicalThingResourceId) {
+                            let parentResource;
+                            await window.fetch(arches.urls.api_resources(partentPhysicalThingResourceId) + '?format=json&compact=false&v=beta')
+                                .then(response => response.json())
+                                .then(data => { parentResource = data.resource; })
+
+                            parts = self.getRawNodeValue(parentResource, 'part identifier assignment').filter(
+                                x => self.getRawNodeValue(x, 'part identifier assignment_physical part of object', 'resourceId') == areaPhysicalThingResourceId
+                            )
+                        }
+                        
+                        const annotation = parts ? {
+                                info: parts.map((x => {
+                                    const column1 = self.getNodeValue(x, 'part identifier assignment_label'); // label/name
+                                    const column2 = self.getRawNodeValue(x, 'part identifier assignment_physical part of object'); // object part
+                                    const column3 = self.getRawNodeValue(x, 'part identifier assignment_annotator'); //annotator
+                                    const tileId = self.getTileId(x);
+                                    const featureCollection = self.getNodeValue(x, 'part identifier assignment_polygon identifier');
+                                    for (feature of featureCollection.features){
+                                        feature.properties.tileId = tileId;
+                                    }
+                                    return {column1, column2, column3, tileId, featureCollection}
+                                })),
+                            }: {};
+
+                        const annotationTableConfig = {
+                            ...self.defaultTableConfig,
+                            columns: Array(4).fill(null)
+                        };
+            
+                        const annotationTableHeader =
+                            `<tr class="afs-table-header">
+                                <th>Area Name</th>
+                                <th>Part of Object</th>
+                                <th class="min-tabletl">Annotator</th>
+                                <th class="afs-table-control all"></th>
+                            </tr>`
+
+                        const selectedAnnotationTileId = ko.observable();
+
+                        self.annotations.push({annotation, annotationTableConfig, selectedAnnotationTileId, annotationTableHeader})
+                    }
+                });
+
+                /* If the observation is from a sample
+                There should be one geometry and table isn't necessary */
+                const samplePhysicalThing = relatedPhysicalThings.find(thing => 
+                    (!!thing.tiles.find(tile => (
+                        tile.data[typeNodeId] && 
+                        tile.data[typeNodeId].filter(x => smapleConceptIds.includes(x)).length > 0)
+                    ))
+                );
+                
+                const samplePhysicalThingResourceId = samplePhysicalThing?.resourceinstanceid;
+                const sampleingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
+
+                if (samplePhysicalThingResourceId) {
+                    const sampleRelatedResources = await reportUtils.getRelatedResources(samplePhysicalThingResourceId);
+                    const sampleingActivityResource = sampleRelatedResources?.related_resources.find(resource => 
+                        resource?.graph_id === sampleingActivityGraphId
+                    );
+                    const samplingUnitTiles = sampleingActivityResource?.tiles.filter((tile) => {
+                        return tile.nodegroup_id == 'b3e171a7-1d9d-11eb-a29f-024e0d439fdb' && 
+                        tile.data['b3e171ab-1d9d-11eb-a29f-024e0d439fdb'][0]['resourceId'] == samplePhysicalThingResourceId
+                    });
+
+                    const annotation = samplingUnitTiles ? {
+                        info: samplingUnitTiles.map((tile => {
+                            const column1 = samplePhysicalThing.displayname;
+                            const tileId = tile.tileid;
+                            const featureCollection = tile.data['b3e171ae-1d9d-11eb-a29f-024e0d439fdb'];
+                            for (feature of featureCollection.features){
+                                feature.properties.tileId = tileId;
+                            }
+                            return {column1, tileId, featureCollection}
+                        })),
+                    }: {};
+
+                    const selectedAnnotationTileId = ko.observable();
+                    const annotationTableConfig = undefined;
+                    const annotationTableHeader = undefined;
+
+                    self.annotations.push({annotation, annotationTableConfig, selectedAnnotationTileId, annotationTableHeader})
+                }
             };
 
             loadRelatedResources();

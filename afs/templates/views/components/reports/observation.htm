@@ -115,6 +115,18 @@
                             </div>
                         </div>
                         <!-- /ko -->
+                        <!-- ko if: annotations.length > 0 -->
+                        <div data-bind="foreach: annotations">
+                            <div data-bind="component: {
+                                name: 'views/components/reports/scenes/annotation-parts',
+                                params: {
+                                    annotation: $data.annotation,
+                                    selectedAnnotationTileId: $data.selectedAnnotationTileId,
+                                    annotationTableHeader: $data.annotationTableHeader,
+                                    annotationTableConfig: $data.annotationTableConfig,
+                                }}"></div>
+                        </div>
+                        <!-- /ko -->
                     </div>
                 </div>
             </div>
