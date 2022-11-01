@@ -228,6 +228,15 @@ i.toggle:hover {
     display: inline-block;
 }
 
+.model-summary-report .afs-report-section-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 5px 0px -5px 10px; 
+    color: #25476A;
+    border-bottom: 1px solid #ddd;
+    display: inline-block;
+}
+
 .afs-report-section-subtitle {
     font-size: 16px;
     font-weight: 400;
@@ -421,6 +430,14 @@ i.toggle:hover {
     display: inline-block;
 }
 
+.afs-report-subsection h3.afs-report-nodata-message  {
+    font-size: 14px;
+    font-weight: 300;
+    margin: 5px 0px 20px 10px;
+    color: #575757;
+    display: inline-block;
+}
+
 .afs-report-subsection h3 span {
     font-weight: 600;
     color: #555;
@@ -586,7 +603,7 @@ i.toggle:hover {
 }
 
 .afs-table .table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: #f6f8fa90 !important;
+    background-color: #f6f8fa05 !important;
 }
 
 #project-search-statement-content {
@@ -835,4 +852,13 @@ a.afs-block-value-url {
     margin-top: 20px;
     border-bottom: 1px solid #ddd;
     display: inline-block;
+}
+
+.iiif-gallery-canvas-thumbnail {
+    display: inline-grid;
+    margin: 5px 10px 10px 0px;
+}
+
+.iiif-gallery-canvas-thumbnail img{
+    height: 200px;
 }

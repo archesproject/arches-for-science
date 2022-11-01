@@ -203,7 +203,12 @@
     <div class="afs-report-page">
         <!-- Names -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Object Names" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: nameSummary() && nameSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -226,36 +231,30 @@
         </div>
         <!-- Image -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Images" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: imageSummary() -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no images associated with this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: imageSummary() -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Image Manifests" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: imageSummary, dataTableOptions: getTableConfig(1) }">
-                            <tr>
-                                <td>
-                                    <div class="afs-image-service-list-item">
-                                        <label data-bind = "text: displayname"></label>
-                                        <span class="iiif-gallery-canvas-thumbnail">
-                                            <img data-bind="attr: { src: thumbnail }">
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="" data-bind="dataTablesForEach: { data: imageSummary, dataTableOptions: getTableConfig(1) }">
+                    <div class="iiif-gallery-canvas-thumbnail">
+                        <img data-bind="attr: { src: thumbnail }">
+                        <label data-bind = "text: displayname"></label>
+                    </div>
                 </div>
-                
                 <!-- /ko -->
             </div>
         </div>
         <!-- Statements -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Statements" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: statementsSummary() && statementsSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no statements for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: statementsSummary() && statementsSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -278,7 +277,12 @@
         </div>
         <!-- Type of Physical Thing -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Object Type" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: typeSummary() && typeSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There's no object information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: typeSummary() && typeSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -299,7 +303,12 @@
         </div>
         <!-- Identifier -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Object Identifiers" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: identifierSummary() && identifierSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There's no object identifier information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: identifierSummary() && identifierSummary().length -->
                 <div class="afs-table">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -322,7 +331,12 @@
         </div>
         <!-- Current Owner -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Ownership" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: ownerSummary() && ownerSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There's no object ownership information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: ownerSummary() && ownerSummary().length -->
                 <div class="afs-table">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -343,7 +357,12 @@
         </div>
         <!-- Dimensions -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Object Dimensions" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: dimensionsSummary() && dimensionsSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There's no object dimension information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: dimensionsSummary() && dimensionsSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -368,7 +387,12 @@
         </div>
         <!-- Creation Info -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Object Creation" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: creationSummary() && creationSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There's no object creation information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: creationSummary() && creationSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -397,7 +421,12 @@
         </div>
         <!-- External URI -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Links" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: externalURISummary() && externalURISummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There's no object link information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: externalURISummary() && externalURISummary().length -->
                 <div class="afs-table">
                     <table class="table table-striped" cellspacing="0" width="100%">
