@@ -284,19 +284,8 @@
                 <!-- /ko -->
 
                 <!-- ko if: typeSummary() && typeSummary().length -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Physical Thing Type" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: typeSummary, dataTableOptions: $data.getTableConfig(1) }">
-                            <tr>
-                                <td data-bind="text: type"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="afs-report-data-block" data-bind="dataTablesForEach: { data: typeSummary, dataTableOptions: $data.getTableConfig(1) }">
+                    <h3 class="" data-bind="text: type"></h3>
                 </div>
                 <!-- /ko -->
             </div>
@@ -338,19 +327,8 @@
                 <!-- /ko -->
 
                 <!-- ko if: ownerSummary() && ownerSummary().length -->
-                <div class="afs-table">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Current Owner" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: ownerSummary, dataTableOptions: getTableConfig(1) }">
-                            <tr>
-                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="afs-report-data-block" data-bind="dataTablesForEach: { data: ownerSummary, dataTableOptions: getTableConfig(1) }">
+                    <a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a>
                 </div>
                 <!-- /ko -->
             </div>
