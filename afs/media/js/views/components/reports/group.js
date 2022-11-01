@@ -106,6 +106,34 @@ define([
             self.communicationCards = {};
             self.summary = params.summary;
 
+            //Summary Report
+            self.nameSummary = ko.observable();
+            self.parentGroupSummary = ko.observable();
+            self.locationSummary = ko.observable();
+            self.activitySummary = ko.observable();
+            self.identifierSummary = ko.observable();
+
+            self.nameSummary(self.resource()['name']?.map(x => {
+                const content = self.getNodeValue(x, 'name_content');
+                const type = self.getNodeValue(x, 'name_type');
+                return {content, type}
+            }));
+
+            self.parentGroupSummary(self.getResourceListNodeValue(self.resource(), 'member of'));
+
+            self.locationSummary(self.getResourceListNodeValue(self.resource(), 'residence'));
+
+            self.activitySummary(self.resource()['professional activity']?.map(x => {
+                const type = self.getNodeValue(x, 'professional activity_type');
+                return {type}
+            }));
+
+            self.identifierSummary(self.resource()['identifier']?.map(x => {
+                const content = self.getNodeValue(x, 'identifier_content');
+                const type = self.getNodeValue(x, 'identifier_type');
+                return {content, type}
+            }));
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
@@ -194,6 +222,51 @@ define([
                         }
                     ]
             });
+
+            self.groupMemberTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(4).fill(null)
+            };
+
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
+            self.collectionOfGroupMembers = ko.observableArray();
+            self.collectionOfLargerEntities = ko.observableArray();
+            self.visible = {
+                groupMembers: ko.observable(true),
+                largerEntities: ko.observable(true),
+            };
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const loadRelatedResources = async() => {
+                const result = await reportUtils.getRelatedResources(resourceId);
+                const relatedResources = result?.related_resources;
+                const parents = result?.resource_relationships.map(relationship => relationship.resourceinstanceidto);
+                const children = result?.resource_relationships.map(relationship => relationship.resourceinstanceidfrom);
+                const groupGraphID = '07883c9e-b25c-11e9-975a-a4d18cec433a';
+                const personGraphID = 'f71f7b9c-b25b-11e9-901e-a4d18cec433a';
+
+                let relatedPeopleandGroups = relatedResources.filter(resource => resource?.graph_id === personGraphID || resource?.graph_id === groupGraphID);
+                relatedPeopleandGroups.map(element => {
+                    element.link = reportUtils.getResourceLink({resourceId: element.resourceinstanceid}),
+                    element.resourceType = result?.node_config_lookup[element.graph_id].name,
+                    element.displaydescription = reportUtils.stripTags(element.displaydescription)
+                    return element
+                });
+
+                self.collectionOfGroupMembers(relatedPeopleandGroups.filter(relatedPersonGroup => 
+                    children.includes(relatedPersonGroup.resourceinstanceid)));
+                self.collectionOfLargerEntities(relatedPeopleandGroups.filter(relatedPersonGroup => 
+                    parents.includes(relatedPersonGroup.resourceinstanceid)));
+            };
+
+            loadRelatedResources();
         },
         template: { require: 'text!templates/views/components/reports/group.htm' }
     });

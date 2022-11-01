@@ -40,12 +40,13 @@ define([
             return $.ajax({
                 type: "DELETE",
                 url: arches.urls.tile,
-                data: JSON.stringify(tile.getData())
-            }).success(() => {
-                const tiles = card.tiles();
-                const tileIndex = tiles.indexOf(tile);
-                tiles.splice(tileIndex, 1);
-                card.tiles(tiles);
+                data: JSON.stringify(tile.getData()),
+                success: () => {
+                    const tiles = card.tiles();
+                    const tileIndex = tiles.indexOf(tile);
+                    tiles.splice(tileIndex, 1);
+                    card.tiles(tiles);
+                }
             });
         }
         throw Error("Couldn't delete; tile was not found.")
@@ -93,6 +94,16 @@ define([
         }
     };
 
+    const getResourceLink = (node) => {
+        if(node) {
+            const resourceId = node.resourceId;
+            if(resourceId){
+                return `${arches.urls.resource}\\${resourceId}`;
+            }
+        }
+    };
+
+
     return {
         // default table configuration - used for display
         defaultTableConfig: {
@@ -118,6 +129,11 @@ define([
                 orderable: false,
                 targets: -1
             }],
+        },
+
+        getRelatedResources: async(resourceid) => {
+            return (window.fetch(arches.urls.related_resources + resourceid + "?paginate=false")
+                .then(response => response.json()))
         },
 
         removedTiles: removedTiles,
@@ -185,14 +201,7 @@ define([
 
         processRawValue: processRawNodeValue,
 
-        getResourceLink: (node) => {
-            if(node) {
-                const resourceId = node.resourceId;
-                if(resourceId){
-                    return `${arches.urls.resource}\\${resourceId}`;
-                }
-            }
-        },   
+        getResourceLink: getResourceLink,   
         
         getTileId: (node) => {
             if(node){
@@ -203,6 +212,23 @@ define([
         getNodeValue: (resource, ...args) => {
             const rawValue = getRawNodeValue(resource, ...args);
             return processRawNodeValue(rawValue);
+        },
+
+        getResourceListNodeValue: (resource, ...args) => {
+            const rawValue = getRawNodeValue(resource, ...args);
+            const resourceListValue = Array.isArray(rawValue) ? 
+                rawValue.reduce((acc, val) => acc.concat(getRawNodeValue(val, 'instance_details')), []) :
+                getRawNodeValue(rawValue, 'instance_details');
+            const resourceList = resourceListValue?.map(val => {
+                displayValue = processRawNodeValue(val);
+                link = getResourceLink(val);
+                return {displayValue, link}
+            });
+            return (resourceList);
+        },
+
+        stripTags (original) {
+            return original.replace(/(<([^>]+)>)/gi, "");
         },
 
         // see if there's any node with a valid displayable value.  If yes, return true.

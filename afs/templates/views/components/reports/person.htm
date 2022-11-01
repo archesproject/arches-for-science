@@ -122,21 +122,168 @@
 <div class="model-summary-report">
     <div class="afs-report-page">
         <!-- Names -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/name',
-            params: {
-                data: resource,
-                cards: nameCards
-            }
-        }"></div>
-        <!-- Description -->>
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/description',
-            params: {
-                data: resource,
-                cards: descriptionCards,
-            }
-        }"></div>
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko if: nameSummary() && nameSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Group -->
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko if: groupSummary() && groupSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Member of" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: groupSummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: group"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Contact Info -->
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko if: contactSummary() && contactSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Contact Information" %}</th>
+                                <th>{% trans "Contact Information Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: contactSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- External URI -->
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko if: externalURISummary() && externalURISummary().length -->
+                <div class="afs-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "External URI" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: externalURISummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Core Attributes: Nationality -->
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko if: nationalitySummary() && nationalitySummary().length -->
+                <div class="afs-table">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Nationality" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nationalitySummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Birth date -->
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko if: birthSummary() && birthSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr lass="afs-table-header">
+                                <th>{% trans "Birth beginning of the beginning" %}</th>
+                                <th>{% trans "Birth end of the beginning" %}</th>
+                                <th>{% trans "Birth beginning of the end" %}</th>
+                                <th>{% trans "Birth end of the end" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: birthSummary, dataTableOptions: getTableConfig(4) }">
+                            <tr>
+                                <td data-bind="text: beginning_of_beginning"></td>
+                                <td data-bind="text: end_of_beginning"></td>
+                                <td data-bind="text: beginning_of_end"></td>
+                                <td data-bind="text: end_of_end"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Death date -->
+        <div class="afs-report-section">
+            <div class="afs-report-subsection">
+                <!-- ko if: deathSummary() && deathSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr lass="afs-table-header">
+                                <th>{% trans "Death beginning of the beginning" %}</th>
+                                <th>{% trans "Death end of the beginning" %}</th>
+                                <th>{% trans "Death beginning of the end" %}</th>
+                                <th>{% trans "Death end of the end" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: deathSummary, dataTableOptions: getTableConfig(4) }">
+                            <tr>
+                                <td data-bind="text: beginning_of_beginning"></td>
+                                <td data-bind="text: end_of_beginning"></td>
+                                <td data-bind="text: beginning_of_end"></td>
+                                <td data-bind="text: end_of_end"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
     </div>
 </div>
 

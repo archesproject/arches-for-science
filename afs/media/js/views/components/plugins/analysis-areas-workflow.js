@@ -3,12 +3,13 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
+    'viewmodels/alert',
     'viewmodels/workflow-step',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-image-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
-], function(ko, $, arches, Workflow) {
+], function(ko, $, arches, Workflow, AlertViewModel) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
             this.componentName = 'analysis-areas-workflow';
@@ -124,6 +125,33 @@ define([
             ];
 
             Workflow.apply(this, [params]);
+
+            this.reverseWorkflowTransactions = function() {
+                const quitUrl = this.quitUrl;
+                return $.ajax({
+                    type: "POST",
+                    url: arches.urls.transaction_reverse(this.id())
+                }).then(function() {
+                    params.loading(false);
+                    window.location.href = quitUrl;
+                });
+            };
+
+            this.quitWorkflow = function(){
+                this.alert(
+                    new AlertViewModel(
+                        'ep-alert-red',
+                        'Are you sure you would like to delete this workflow?',
+                        'All data created during the course of this workflow will be deleted.',
+                        function(){}, //does nothing when canceled
+                        () => {
+                            params.loading('Cleaning up...')
+                            this.reverseWorkflowTransactions()
+                        },
+                    )
+                );
+            };
+            
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
         template: { require: 'text!templates/views/components/plugins/analysis-areas-workflow.htm' }

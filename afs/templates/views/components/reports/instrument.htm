@@ -55,31 +55,57 @@
                         data: resource,
                         cards: documentationCards,
                         dataConfig: documentationDataConfig
-
                     }
                 }"></div>
-            </div>
-            <!-- Existence Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/existence',
-                    params: {
-                        data: resource,
-                        cards: existenceCards,
-                        dataConfig: existenceDataConfig
-                    }
-                }"></div>
-            </div>
-            <!-- Substance Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
-                <div data-bind="component: {
-                    name: 'views/components/reports/scenes/substance',
-                    params: {
-                        data: resource,
-                        cards: substanceCards
-
-                    }
-                }"></div>
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.textualReference)}, css: {'fa-angle-double-right': visible.textualReference(), 'fa-angle-double-up': !visible.textualReference()}" class="fa toggle"></i> {% trans "Textual Reference" %}</h2>
+                    <span data-bind="if: textualReferenceCards && (!textualReference().length || textualReferenceCards.cardinality == 'n')">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(textualReferenceCards)}"><i class="fa fa-mail-reply"></i> {% trans "Add Textual Reference" %}</a>
+                    </span>
+                
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.textualReference" class="afs-report-collapsible-container pad-lft">
+                
+                        <!-- ko ifnot: textualReference().length -->
+                        <div class="afs-nodata-note">No textual references for this resource</div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: textualReference().length -->
+                        <div class="afs-report-subsection" >
+                            <div class="firstchild-container">
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cells pacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                                <th>{% trans "Source" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: textualReference, dataTableOptions: textualReferenceTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: type"></td>
+                                                <td><a class="afs-block-value-url" data-bind="text: source, attr: {href: link}"></a></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: $parent.cards && $parent.textualReferenceCards">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.textualReferenceCards)}">
+                                                            <i class="fa fa-mail-reply"></i>
+                                                        </a>
+                                                        <a data-bind="click: $parent.deleteTile.bind($data, tileid, $parent.textualReferenceCards)">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                
             </div>
            <!-- Actor Tab -->
            <div class="afs-report-page" data-bind="if: activeSection() === 'actor-relations'">
@@ -99,8 +125,8 @@
                     }
                 }"></div>
             </div>
-            <!-- Parthood Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+            <!-- Parent Instrument Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'component'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
@@ -108,8 +134,8 @@
                     }
                 }"></div>
             </div>
-            <!-- Sethood Tab -->
-            <div class="afs-report-page" data-bind="if: activeSection() === 'sethood'">
+            <!-- Instrument Configuration Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'instrument'">
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/default',
                     params: {
@@ -140,23 +166,50 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
-        <!-- Names -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/name',
-            params: {
-                data: resource,
-                cards: nameCards,
-                dataConfig: nameDataConfig
-            }
-        }"></div>
-        <!-- Description -->
-        <div data-bind="component: {
-            name: 'views/components/reports/scenes/description',
-            params: {
-                data: resource,
-                cards: descriptionCards,
-            }
-        }"></div>
+        <!-- Name -->
+        <div class="afs-report-section">
+            <!-- ko if: nameSummary() && nameSummary().length -->
+            <div class="afs-report-subsection">
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: $data.getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- Type of Instrument -->
+        <div class="afs-report-section">
+            <!-- ko if: typeSummary() && typeSummary().length -->
+            <div class="afs-report-subsection">
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Instrument Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: typeSummary, dataTableOptions: $data.getTableConfig(1) }">
+                            <tr>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
     </div>
 </div>
 

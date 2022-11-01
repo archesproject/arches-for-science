@@ -18,7 +18,7 @@
                                 <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
                                     <div class="summary-report-title" data-bind="text: $data._source.displayname"></div>
                                 </div>
-                                <div class="summary-report-description" data-bind="html: $data._source.displaydescription || 'No description'"></div>
+                                <div class="summary-report-description" data-bind="html: $parent.stripTags($data._source.displaydescription) || 'No description'"></div>
                             </div>
                         </div>
                     </div>
@@ -51,10 +51,10 @@
                     <div class="wf-multi-tile-card-info">
                         <!-- <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span></div> -->
                         <div class="wf-multi-tile-card-info-details">
-                        <dt data-bind="text: $data.displayname"></dt>
-                        <dd>
-                            <a data-bind="html: $data.displaydescription || 'No description'"></a>
-                        </dd>
+                            <dt data-bind="text: $data.displayname"></dt>
+                            <dd>
+                                <a data-bind="html: $parent.stripTags($data.displaydescription) || 'No description'"></a>
+                            </dd>
                         </div>
                     </div>
                     <div class="wf-multi-tile-step-card-controls">

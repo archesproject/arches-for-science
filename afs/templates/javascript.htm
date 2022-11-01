@@ -26,6 +26,11 @@
 {% block urls %}
     physical_thing_search_results: "{% url 'physical-thing-search-results' %}",
     physical_things_set: "{% url 'physical_things_set' %}",
+    upload_dataset_select_dataset_files_step: "{% url 'upload_dataset_select_dataset_files_step' %}",
+    upload_dataset_file_renderer: function (tileid) {
+        return "{% url 'upload_dataset_file_renderer' 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' %}".replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', tileid)
+    },
+    format_render_map: function(format){return "{% url 'format_render_map' 'aaaaaaaa' %}".replace('aaaaaaaa', format)},
 {% endblock urls %}
 
 {% block project_modules %}
@@ -33,5 +38,13 @@
 define('register-three', ['three'], function (THREE) {
     window.THREE = THREE;
     });
+define('afs-formats', function(){ 
+    return [{% autoescape off %}{% for format in project_settings.FORMATS %}
+                {'name': '{{ format.name }}',
+                'id': '{{ format.id }}',
+                'renderer': '{{ format.renderer }}',
+                },
+                {% endfor %}{% endautoescape %}];
+});
 </script>
 {% endblock project_modules %}
