@@ -217,8 +217,8 @@ define([
             const procedure = self.getRawNodeValue(self.resource(), 'used process');
             if (procedure) {
                 displayValue = self.getNodeValue(self.resource(), 'used process');
-                link = self.getResourceLink(self.resource(), 'used process');
-                self.procedureSummary([{displayValue, link}]);
+                link = self.getResourceLink(self.getRawNodeValue(self.resource(), 'used process'));
+                self.procedureSummary({displayValue, link});
             }
 
             const timespan = self.getRawNodeValue(self.resource(), 'timespan');
