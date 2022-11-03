@@ -218,9 +218,13 @@
 
 <div class="model-summary-report">
     <div class="afs-report-page">
+        <!-- Names -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Group Names" %}</h2>
             <div class="afs-report-subsection" >
-                <!-- Names -->
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
                 <!-- ko if: nameSummary() && nameSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -239,30 +243,38 @@
                     </table>
                 </div>
                 <!-- /ko -->
-                <!-- Parent Group Tab --> 
+            </div>
+        </div>
+        <!-- Parent Group Tab -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Parent Groups" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: parentGroupSummary() && parentGroupSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no parent groups for this resource" %}</h3>
+                <!-- /ko -->
                 <!-- ko if: parentGroupSummary() && parentGroupSummary().length -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Parent Group" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: parentGroupSummary, dataTableOptions: getTableConfig(1) }">
-                            <tr>
-                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="afs-report-data-block" data-bind="foreach: parentGroupSummary ">
+                    <div class="afs-block-value">
+                        <a data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a>
+                        <!-- ko if: $index() < $parent.parentGroupSummary().length - 1  -->, <!-- /ko -->
+                    </div>
                 </div>
                 <!-- /ko -->
-                <!-- Location Tab -->
+            </div>
+        </div>
+        <!-- Location Tab -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Residence or Associated Locations" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: locationSummary() && locationSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no residence / associated locations for this resource" %}</h3>
+                <!-- /ko -->
                 <!-- ko if: locationSummary() && locationSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
                         <thead>
                             <tr class="afs-table-header">
-                                <th>{% trans "Residence or associated location" %}</th>
+                                <th>{% trans "locations" %}</th>
                             </tr>
                         </thead>
                         <tbody data-bind="dataTablesForEach: { data: locationSummary, dataTableOptions: getTableConfig(1) }">
@@ -272,25 +284,55 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /ko -->        
-                <!-- professional activity -->
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- professional activity -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Professional Activities" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: activitySummary() && activitySummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no professional activities for this resource" %}</h3>
+                <!-- /ko -->
                 <!-- ko if: activitySummary() && activitySummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
                         <thead>
                             <tr class="afs-table-header">
-                                <th>{% trans "Professional Activity Type" %}</th>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Technique" %}</th>
+                                <th>{% trans "Location" %}</th>
+                                <th>{% trans "Source Reference Work" %}</th>
                             </tr>
                         </thead>
-                        <tbody data-bind="dataTablesForEach: { data: activitySummary, dataTableOptions: getTableConfig(1) }">
+                        <tbody data-bind="dataTablesForEach: { data: activitySummary, dataTableOptions: getTableConfig(4) }">
                             <tr>
                                 <td data-bind="text: type"></td>
+                                <td data-bind="text: technique"></td>
+                                <td>
+                                    <div data-bind="foreach: locations ">
+                                        <a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a><!-- ko if: $index() < $parent.locations.length - 1  -->, <!-- /ko -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div data-bind="foreach: sources ">
+                                        <a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a><!-- ko if: $index() < $parent.sources.length - 1  -->, <!-- /ko -->
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <!-- /ko -->        
-                <!-- Identifier -->
+                <!-- /ko -->
+            </div>
+        </div> 
+        <!-- Identifier -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Identifiers" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: identifierSummary() && identifierSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no identifiers for this resource" %}</h3>
+                <!-- /ko -->
                 <!-- ko if: identifierSummary() && identifierSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
