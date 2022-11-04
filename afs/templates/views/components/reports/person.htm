@@ -123,7 +123,12 @@
     <div class="afs-report-page">
         <!-- Names -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Name of Person" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: nameSummary() && nameSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -146,28 +151,27 @@
         </div>
         <!-- Group -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Group Person is a Member of" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: groupSummary() && groupSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "This resource is not a member of any groups" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: groupSummary() && groupSummary().length -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Member of" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: groupSummary, dataTableOptions: getTableConfig(1) }">
-                            <tr>
-                                <td data-bind="text: group"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="afs-report-data-block" data-bind="foreach: groupSummary ">
+                    <div class="afs-block-value" data-bind="text: group"></div>
                 </div>
                 <!-- /ko -->
             </div>
         </div>
         <!-- Contact Info -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Contact Information for Person" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: contactSummary() && contactSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no contact information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: contactSummary() && contactSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -190,7 +194,12 @@
         </div>
         <!-- External URI -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "External URI for Person" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: externalURISummary() && externalURISummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no External URI associated with this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: externalURISummary() && externalURISummary().length -->
                 <div class="afs-table">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -211,7 +220,12 @@
         </div>
         <!-- Core Attributes: Nationality -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Core Attributes: Nationality of Person" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: nationalitySummary() && nationalitySummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no nationality information for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: nationalitySummary() && nationalitySummary().length -->
                 <div class="afs-table">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -232,7 +246,12 @@
         </div>
         <!-- Birth date -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Birth Event of Person" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: birthSummary() && birthSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no birth event for this resource" %}</h3>
+                <!-- /ko -->
+
                 <!-- ko if: birthSummary() && birthSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -259,7 +278,12 @@
         </div>
         <!-- Death date -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Death Event of Person" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: deathSummary() && deathSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no death event for this resource" %}</h3>
+                <!-- /ko -->
+                
                 <!-- ko if: deathSummary() && deathSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
