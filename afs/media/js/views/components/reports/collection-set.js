@@ -13,13 +13,19 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'existence', title: 'Existence'},
-                {id: 'events', title: 'Events'},
+                {id: 'name', title: 'Names, Identifiers, Classification'},
                 {id: 'description', title: 'Description'},
+                {id: 'existence', title: 'Timeline'},
+                {id: 'events', title: 'Events'},
+                {id: 'projects', title: 'Related Projects'},
+                {id: 'publications', title: 'Publications'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
+            self.visible = {
+                textualReference: ko.observable(true),
+                relatedProject: ko.observable(true),
+            };
             self.reportMetadata = ko.observable(params.report?.report_json);
             self.resource = ko.observable(self.reportMetadata()?.resource);
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
@@ -76,6 +82,40 @@ define([
             self.eventCards = {};
             self.summary = params.summary;
 
+            self.textualReferenceTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(3).fill(null)
+            }
+
+            self.relatedProjectTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(2).fill(null)
+            };
+
+            self.textualReference = ko.observableArray();
+            const textualReferenceNode = self.getRawNodeValue(self.resource(), 'textual reference');
+            if(Array.isArray(textualReferenceNode)){
+                self.textualReference(textualReferenceNode.map(node => {
+                    const textualSource = self.getNodeValue(node, 'textual source');
+                    const textualSourceLink = self.getResourceLink(self.getRawNodeValue(node, 'textual source'));
+                    const textualReferenceType = self.getNodeValue(node, 'textual reference type');
+                    const tileid = self.getTileId(node);
+                    return {textualSource, textualSourceLink, textualReferenceType, tileid};
+                }));
+            }
+
+            self.relatedProject = ko.observableArray();
+            const relatedProjectNode = self.getRawNodeValue(self.resource(), 'used in');
+            console.log()
+            if(relatedProjectNode) {
+                self.relatedProjectTileid = self.getTileId(relatedProjectNode);
+                self.relatedProject(self.getRawNodeValue(relatedProjectNode, 'instance_details').map(detail => {
+                    console.log(detail)
+                    const displayname = self.getNodeValue(detail);
+                    const link = self.getResourceLink(self.getRawNodeValue(detail));
+                    return {displayname, link};
+                }));
+            }
             //Summary Report
             self.getTableConfig = (numberOfColumn) => {
                 return {
@@ -156,21 +196,6 @@ define([
                     },
                 };
             }
-
-            self.usedInData = ko.observable({
-                sections: 
-                    [
-                        {
-                            title: 'Used In', 
-                            data: [{
-                                key: 'Related Projects', 
-                                value: self.getRawNodeValue(self.resource(), 'used in'), 
-                                card: self.cards?.['related project of collection'],
-                                type: 'resource'
-                            }]
-                        }
-                    ]
-            });
         },
         template: { require: 'text!templates/views/components/reports/collection-set.htm' }
     });
