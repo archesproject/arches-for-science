@@ -125,7 +125,10 @@ define([
 
             self.activitySummary(self.resource()['professional activity']?.map(x => {
                 const type = self.getNodeValue(x, 'professional activity_type');
-                return {type}
+                const technique = self.getNodeValue(x, 'professional activity_technique');
+                const locations = self.getResourceListNodeValue(x, 'professional activity_location');
+                const sources = self.getResourceListNodeValue(x, 'professional activity_source');
+                return {type, technique, locations, sources}
             }));
 
             self.identifierSummary(self.resource()['identifier']?.map(x => {

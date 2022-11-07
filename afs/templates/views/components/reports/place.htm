@@ -99,9 +99,13 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
+        <!-- Names -->
         <div class="afs-report-section">
-            <div class="afs-report-subsection">
-                <!-- Names -->
+            <h2 class="afs-report-section-title">{% trans "Place Names" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
                 <!-- ko if: nameSummary() && nameSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -120,6 +124,16 @@
                     </table>
                 </div>
                 <!-- /ko -->
+            </div>
+        </div>
+        <!-- Geospatial Definition -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Geospatial Definitions" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko if: geojson == '--' -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no geospatial definition for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: geojson != '--' -->
                 <div data-bind="component: {
                     name: 'views/components/reports/scenes/location',
                     params: {
@@ -128,6 +142,7 @@
                         mapOnly: true,
                     }
                 }"></div>    
+                <!-- /ko -->
             </div>
         </div>
     </div>
