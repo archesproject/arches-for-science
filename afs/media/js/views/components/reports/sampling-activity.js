@@ -77,7 +77,7 @@ define([
             if (parentProject) {
                 displayValue = self.getNodeValue(self.resource(), 'part of');
                 link = self.getResourceLink(self.resource(), 'part of');
-                self.parentProjectSummary([{displayValue, link}]);
+                self.parentProjectSummary({displayValue, link});
             }
 
             self.nameSummary(self.resource()['Name']?.map(x => {
@@ -95,7 +95,7 @@ define([
             const type = self.getRawNodeValue(self.resource(), 'type');
             if (type) {
                 displayValue = self.getNodeValue(self.resource(), 'type');
-                self.typeSummary([{displayValue}]);
+                self.typeSummary({displayValue});
             }
 
             if(params.report.cards){
