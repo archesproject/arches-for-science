@@ -106,11 +106,9 @@ define([
 
             self.relatedProject = ko.observableArray();
             const relatedProjectNode = self.getRawNodeValue(self.resource(), 'used in');
-            console.log()
             if(relatedProjectNode) {
                 self.relatedProjectTileid = self.getTileId(relatedProjectNode);
                 self.relatedProject(self.getRawNodeValue(relatedProjectNode, 'instance_details').map(detail => {
-                    console.log(detail)
                     const displayname = self.getNodeValue(detail);
                     const link = self.getResourceLink(self.getRawNodeValue(detail));
                     return {displayname, link};
@@ -140,17 +138,17 @@ define([
 
             const type = self.getNodeValue(self.resource(), 'type');
             if (type && type != '--') {
-                self.typeSummary([{
+                self.typeSummary({
                     type: self.getNodeValue(self.resource(), 'type')
-                }]);
+                });
             } 
 
             const statement = self.getNodeValue(self.resource(), 'statement', 'statement_content');
             if (statement && statement != '--') {
-                self.statementSummary([{
+                self.statementSummary({
                     content: statement,
                     type: self.getNodeValue(self.resource(), 'statement', 'statement_type')
-                }]);
+                });
             } 
 
             if(params.report.cards){

@@ -199,9 +199,13 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
+        <!-- Names -->
         <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Collection/Set Names" %}</h2>
             <div class="afs-report-subsection" >
-                <!-- Names -->
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
                 <!-- ko if: nameSummary() && nameSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
@@ -220,58 +224,59 @@
                     </table>
                 </div>
                 <!-- /ko -->
-                <!-- Type Tab --> 
-                <!-- ko if: typeSummary() && typeSummary().length -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Type" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: typeSummary, dataTableOptions: getTableConfig(1) }">
-                            <tr>
-                                <td data-bind="text: type"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+        </div>
+        <!-- Type --> 
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Collection/Set Type" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: typeSummary() -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no type for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: typeSummary() -->
+                <div class="afs-report-data-block">
+                    <div class="afs-block-value" data-bind="text: typeSummary().type"></div>
                 </div>
                 <!-- /ko -->
-                <!-- Related Project Tab -->
+            </div>
+        </div>
+        <!-- Related Project Tab -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Related Projects" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: relatedProjectSummary() && relatedProjectSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no related resources for this resource" %}</h3>
+                <!-- /ko -->    
                 <!-- ko if: relatedProjectSummary() && relatedProjectSummary().length -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Related Project" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: relatedProjectSummary, dataTableOptions: getTableConfig(1) }">
-                            <tr>
-                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="afs-report-data-block" data-bind="foreach: relatedProjectSummary ">
+                    <div class="afs-block-value">
+                        <a data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a>
+                        <!-- ko if: $index() < $parent.relatedProjectSummary().length - 1  -->, <!-- /ko -->
+                    </div>
                 </div>
                 <!-- /ko -->        
-                <!-- Statement -->
-                <!-- ko if: statementSummary() && statementSummary().length -->
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Statement" %}</th>
-                                <th>{% trans "Type" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: statementSummary, dataTableOptions: getTableConfig(2) }">
-                            <tr>
-                                <td data-bind="text: content"></td>
-                                <td data-bind="text: type"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+        </div>
+        <!-- Statement -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Statement" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: statementSummary() -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no statement for this resource" %}</h3>
+                <!-- /ko -->    
+                <!-- ko if: statementSummary() -->
+                <!-- ko if: typeSummary() -->
+                <div class="afs-report-data-block">
+                    <div class="afs-block-attributes">
+                        <div class="afs-block-key">{% trans "Statement: " %}</div>
+                        <div class="afs-block-value" data-bind="text: statementSummary().content"></div>
+                    </div>
+                    <div class="afs-block-attributes pad-btm">
+                        <div class="afs-block-key">{% trans "Type: " %}</div>
+                        <div class="afs-block-value" data-bind="text: statementSummary().type"></div>
+                    </div>
                 </div>
+                <!-- /ko -->
                 <!-- /ko -->
             </div>
         </div>
