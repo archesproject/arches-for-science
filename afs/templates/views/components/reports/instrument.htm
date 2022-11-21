@@ -168,8 +168,13 @@
     <div class="afs-report-page">
         <!-- Name -->
         <div class="afs-report-section">
-            <!-- ko if: nameSummary() && nameSummary().length -->
+            <h2 class="afs-report-section-title">{% trans "Name of Instrument" %}</h2>
             <div class="afs-report-subsection">
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
+
+                <!-- ko if: nameSummary() && nameSummary().length -->
                 <div class="afs-table pad-btm">
                     <table class="table table-striped" cellspacing="0" width="100%">
                         <thead>
@@ -186,29 +191,23 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- /ko -->
             </div>
-            <!-- /ko -->
         </div>
         <!-- Type of Instrument -->
         <div class="afs-report-section">
-            <!-- ko if: typeSummary() && typeSummary().length -->
+            <h2 class="afs-report-section-title">{% trans "Type of Instrument" %}</h2>
             <div class="afs-report-subsection">
-                <div class="afs-table pad-btm">
-                    <table class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr class="afs-table-header">
-                                <th>{% trans "Instrument Type" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="dataTablesForEach: { data: typeSummary, dataTableOptions: $data.getTableConfig(1) }">
-                            <tr>
-                                <td data-bind="text: type"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- ko ifnot: typeSummary() && typeSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no instrument type this resource" %}</h3>
+                <!-- /ko -->
+
+                <!-- ko if: typeSummary() && typeSummary().length -->
+                <div class="afs-report-data-block" data-bind="foreach: typeSummary()">
+                    <div class="afs-block-value" data-bind="text: type"></div>
                 </div>
+                <!-- /ko -->
             </div>
-            <!-- /ko -->
         </div>
     </div>
 </div>

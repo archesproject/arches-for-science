@@ -40,6 +40,14 @@ define([
             self.substanceCards = {};
             self.summary = params.summary;
 
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
             if(params.report.cards) {
                 const cards = params.report.cards;
                 
@@ -147,6 +155,29 @@ define([
                         }
                     ]
             });*/
+
+
+            // Summary report
+            self.nameSummary = ko.observable();
+            self.statementsSummary = ko.observable();
+
+            const nameData = self.getRawNodeValue(self.resource()?.name);
+            if (nameData) {
+                self.nameSummary(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'type');
+                    const content = self.getNodeValue(x, 'content');
+                    return { type, content }
+                }));
+            };
+
+            const statementData = self.getRawNodeValue(self.resource()?.statement);
+            if (statementData) {
+                self.statementsSummary(statementData.map(x => {
+                    const type = self.getNodeValue(x, 'type');
+                    const content = self.getNodeValue(x, 'content');
+                    return { type, content }
+                }));
+            };
         },
         template: { require: 'text!templates/views/components/reports/modification.htm' }
     });

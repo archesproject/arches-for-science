@@ -242,13 +242,6 @@ define([
                     return { type, content }
                 }));
             };
-
-            const typeData = self.resource()?.type;
-            if (typeData) {
-                self.typeSummary([{
-                    type: self.getNodeValue(typeData)
-                }]);
-            };
         },
         template: { require: 'text!templates/views/components/reports/project.htm' }
     });
