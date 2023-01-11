@@ -1,0 +1,51 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js
+
+PATH: 
+  /Users/cyrus/Documents/projects/GCI/arches4/env73/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/cyrus/Documents/browser_drivers:/Applications/VMware Fusion.app/Contents/Public:/Library/Apple/usr/bin:/Users/cyrus/Library/Android/sdk/platform-tools/:/Users/cyrus/Library/Android/sdk/tools:/Users/cyrus/Library/Android/sdk/cmdline-tools/latest/bin/:/Users/cyrus/Library/Android/sdk/emulator/:/Users/cyrus/DevTools/flutter/bin:/Users/cyrus/DevTools/Gradle/gradle-6.5/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  16.15.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/cyrus/Documents/projects/GCI/arches4/projects/afs/afs/package.json: Unexpected token } in JSON at position 1146
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  {
+      "name": "arches",
+      "repository": {
+          "url": "git@github.com:archesproject/arches.git",
+          "type": "git"
+      },
+      "dependencies": {
+          "arches": "archesproject/arches#stable/7.2.1",
+          "plotly.js-dist": "^1.52.2",
+          "three": "^0.113.2"
+      },
+      "devDependencies": {
+          "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.2.1"
+      },
+      "scripts": {
+          "build_production": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 NODE_ENV=production ./media/node_modules/.bin/webpack --config webpack/webpack.config.prod.js",
+          "build_development": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js",
+          "build_test": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js --env test=true",
+          "start": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack serve --config webpack/webpack.config.dev.js"
+      },
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
