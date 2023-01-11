@@ -37,13 +37,18 @@
 define('register-three', ['three'], function (THREE) {
     window.THREE = THREE;
     });
-define('afs-formats', function(){ 
-    return [{% autoescape off %}{% for format in project_settings.FORMATS %}
-                {'name': '{{ format.name }}',
-                'id': '{{ format.id }}',
-                'renderer': '{{ format.renderer }}',
-                },
-                {% endfor %}{% endautoescape %}];
-});
 </script>
+
+<!-- consumed by media/js/afs-formats.js -->
+<div 
+    id="afsFormatData"
+    style="display: none;"
+    afsFormats='{{% for format in project_settings.FORMATS  %}
+        "{{ format.id }}": {
+            "name": "{{ format.name }}",
+            "id": "{{ format.id }}",
+            "renderer": "{{ format.renderer }}"
+        },
+    {% endfor %}}'
+></div>
 {% endblock project_modules %}
