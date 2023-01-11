@@ -45,7 +45,7 @@ RUN set -ex \
     && npm install -g yarn
 
 # Install Yarn components
-RUN mkdir -p ${APP_ROOT}/afs/app/media/packages
+RUN mkdir -p ${APP_ROOT}/afs/app/media/node_modules
 WORKDIR ${APP_ROOT}/afs
 RUN yarn install
 

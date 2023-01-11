@@ -5,8 +5,17 @@
         "type": "git"
     },
     "dependencies": {
-        "arches": "archesproject/arches#dev/6.2.x",
+        "arches": "archesproject/arches#stable/7.2.1",
         "plotly.js-dist": "^1.52.2",
         "three": "^0.113.2"
+    },
+    "devDependencies": {
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.2.1"
+    },
+    "scripts": {
+        "build_production": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 NODE_ENV=production ./media/node_modules/.bin/webpack --config webpack/webpack.config.prod.js",
+        "build_development": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js",
+        "build_test": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js --env test=true",
+        "start": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack serve --config webpack/webpack.config.dev.js"
     }
 }
