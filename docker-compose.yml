@@ -1,7 +1,8 @@
 version: '3.8'
+name: afs7-2
 services:
     afs:
-      container_name: afs6-2
+      container_name: afs7-2
       image: fargeo/afs
       build:
         context: ..
@@ -10,7 +11,7 @@ services:
       volumes:
         - ../arches/:/web_root/arches
         - ./:/web_root/afs
-        - cantaloupe-data-afs6-2:/web_root/afs/afs/uploadedfiles
+        - cantaloupe-data-afs7-2:/web_root/afs/afs/uploadedfiles
       env_file:
         - ./docker/env_file.env
       ports:
@@ -19,21 +20,38 @@ services:
       tty: true
 
     cantaloupe_afs:
-      container_name: cantaloupe-afs6-2
+      container_name: cantaloupe-afs7-2
       image: uclalibrary/cantaloupe:5.0.3-0
       volumes:
-        - cantaloupe-data-afs6-2:/imageroot
+        - cantaloupe-data-afs7-2:/imageroot
       ports:
         - 8183:8182
       env_file:
         - ./docker/env_file.env
 
+    afs-webpack:
+      container_name: afs-webpack-7-0
+      image: fargeo/afs-webpack-7-0
+      build:
+        context: ..
+        dockerfile: afs/docker/webpack/Dockerfile
+      command: run_webpack
+      volumes:
+        - ../arches/:/web_root/arches
+        - ./:/web_root/afs
+      env_file:
+        - ./docker/webpack/env_file.env
+      ports:
+        - 8022:8021
+      stdin_open: true
+      tty: true
+
 networks:
   default:
     external: true
-    name: arches6-2-dev
+    name: arches7-0-dev
 
 volumes:
-    arches-log-afs6-2:
-    arches-static-afs6-2:
-    cantaloupe-data-afs6-2:
+    arches-log-afs7-2:
+    arches-static-afs7-2:
+    cantaloupe-data-afs7-2:
