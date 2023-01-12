@@ -19,9 +19,9 @@ ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
 WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
 
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-STATICFILES_DIRS =  (
-    os.path.join(APP_ROOT, 'media', 'build'),
-    os.path.join(APP_ROOT, 'media'),
+STATICFILES_DIRS = (
+    os.path.join(APP_ROOT, "media", "build"),
+    os.path.join(APP_ROOT, "media"),
 ) + STATICFILES_DIRS
 WEBPACK_LOADER = {
     "DEFAULT": {
@@ -301,7 +301,7 @@ DOCKER = False
 try:
     from .package_settings import *
 except ImportError:
-    try: 
+    try:
         from package_settings import *
     except ImportError as e:
         pass
@@ -309,7 +309,7 @@ except ImportError:
 try:
     from .settings_local import *
 except ImportError as e:
-    try: 
+    try:
         from settings_local import *
     except ImportError as e:
         pass
@@ -323,12 +323,14 @@ if DOCKER:
 
 if __name__ == "__main__":
     print(
-        json.dumps({
-            'ARCHES_NAMESPACE_FOR_DATA_EXPORT': ARCHES_NAMESPACE_FOR_DATA_EXPORT,
-            'STATIC_URL': STATIC_URL,
-            'ROOT_DIR': ROOT_DIR,
-            'APP_ROOT': APP_ROOT,
-            'WEBPACK_DEVELOPMENT_SERVER_PORT': WEBPACK_DEVELOPMENT_SERVER_PORT,
-        })
+        json.dumps(
+            {
+                "ARCHES_NAMESPACE_FOR_DATA_EXPORT": ARCHES_NAMESPACE_FOR_DATA_EXPORT,
+                "STATIC_URL": STATIC_URL,
+                "ROOT_DIR": ROOT_DIR,
+                "APP_ROOT": APP_ROOT,
+                "WEBPACK_DEVELOPMENT_SERVER_PORT": WEBPACK_DEVELOPMENT_SERVER_PORT,
+            }
+        )
     )
     sys.stdout.flush()
