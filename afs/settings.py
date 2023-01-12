@@ -2,9 +2,11 @@
 Django settings for afs project.
 """
 
-import os
 import arches
 import inspect
+import json
+import os
+import sys
 from django.utils.translation import gettext_lazy as _
 
 try:
@@ -12,9 +14,22 @@ try:
 except ImportError:
     pass
 
+APP_NAME = "afs"
+ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
+WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
+
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-STATICFILES_DIRS = (os.path.join(APP_ROOT, "media"),) + STATICFILES_DIRS
-STATIC_ROOT = ""
+STATICFILES_DIRS = (
+    os.path.join(APP_ROOT, "media", "build"),
+    os.path.join(APP_ROOT, "media"),
+) + STATICFILES_DIRS
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "STATS_FILE": os.path.join(APP_ROOT, "webpack/webpack-stats.json"),
+    },
+}
+STATIC_ROOT = os.path.join(ROOT_DIR, "staticfiles")
+STATIC_URL = "/static/"
 
 DATATYPE_LOCATIONS.append("afs.datatypes")
 FUNCTION_LOCATIONS.append("afs.functions")
@@ -77,6 +92,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    "webpack_loader",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -174,8 +190,7 @@ GRAPH_MODEL_CACHE_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 USER_GRAPH_PERMITTED_CARDS_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 USER_GRAPH_CARDWIDGETS_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 
-MOBILE_OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
-MOBILE_DEFAULT_ONLINE_BASEMAP = {"default": "mapbox://styles/mapbox/streets-v9"}
+OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
 APP_TITLE = "Arches for Science"
 COPYRIGHT_TEXT = "All Rights Reserved."
@@ -286,15 +301,36 @@ DOCKER = False
 try:
     from .package_settings import *
 except ImportError:
-    pass
+    try:
+        from package_settings import *
+    except ImportError as e:
+        pass
 
 try:
     from .settings_local import *
-except ImportError:
-    pass
+except ImportError as e:
+    try:
+        from settings_local import *
+    except ImportError as e:
+        pass
 
 if DOCKER:
     try:
         from .settings_docker import *
     except ImportError:
         pass
+
+
+if __name__ == "__main__":
+    print(
+        json.dumps(
+            {
+                "ARCHES_NAMESPACE_FOR_DATA_EXPORT": ARCHES_NAMESPACE_FOR_DATA_EXPORT,
+                "STATIC_URL": STATIC_URL,
+                "ROOT_DIR": ROOT_DIR,
+                "APP_ROOT": APP_ROOT,
+                "WEBPACK_DEVELOPMENT_SERVER_PORT": WEBPACK_DEVELOPMENT_SERVER_PORT,
+            }
+        )
+    )
+    sys.stdout.flush()

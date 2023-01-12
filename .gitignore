@@ -1,5 +1,6 @@
 *.pyc
-afs/media/packages
+afs/media/node_modules
+afs/media/build
 afs/logs/*.log
 afs/uploadedfiles
 afs/cantaloupe/*
@@ -15,3 +16,6 @@ Procfile
 afs/settings_docker.py
 CACHE
 afs/export_deliverables/
+afs/staticfiles
+afs/webpack/webpack-stats.json
+node_modules

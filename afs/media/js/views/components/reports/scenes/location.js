@@ -1,15 +1,14 @@
 define([
-    'knockout', 
+    'knockout',
     'geojson-extent',
     'leaflet',
     'utils/report',
     'views/components/map',
-    'geojson-extent',
     'views/components/cards/select-feature-layers',
     'viewmodels/widget',
     'bindings/leaflet',
     'bindings/datatable'
-], function(ko, geojsonExtent, L, reportUtils, MapComponentViewModel, geojsonExtent, selectFeatureLayersFactory) {
+], function(ko, geojsonExtent, L, reportUtils, MapComponentViewModel, selectFeatureLayersFactory) {
     return ko.components.register('views/components/reports/scenes/location', {
         viewModel: function(params) {
             var self = this;
