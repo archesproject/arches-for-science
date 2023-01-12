@@ -4,13 +4,6 @@
 {% load l10n %}
 {% load i18n %}
 
-{% block shim %}
-    'CSS2DRenderer': {deps: ['register-three']},
-    'TrackballControls': {deps: ['register-three']},
-    'PDBLoader': {deps: ['register-three']},
-    'PCDLoader': {deps: ['register-three']},
-{% endblock shim %}
-
 
 {% block arches_urls %}
 {{ block.super }}
@@ -24,11 +17,6 @@
 {% endblock arches_urls %}
 
 {% block project_modules %}
-<script>
-define('register-three', ['three'], function (THREE) {
-    window.THREE = THREE;
-    });
-</script>
 
 <!-- consumed by media/js/afs-formats.js -->
 <div 
