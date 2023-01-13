@@ -29,7 +29,7 @@ services:
       env_file:
         - ./docker/env_file.env
 
-    afs-webpack:
+    afs-webpack-7-0:
       container_name: afs-webpack-7-0
       image: fargeo/afs-webpack-7-0
       build:

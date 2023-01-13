@@ -1,6 +1,7 @@
 FROM ubuntu:20.04 as base 
 USER root
 ENV WEB_ROOT=/web_root
+ENV ARCHES_ROOT=${WEB_ROOT}/arches
 ENV APP_ROOT=${WEB_ROOT}/afs
 RUN mkdir -p ${APP_ROOT}/afs/webpack
 
@@ -28,7 +29,10 @@ COPY ./arches ${ARCHES_ROOT}
 RUN apt-get update && apt-get -y install curl \
   && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install nodejs && npm install -g yarn && apt install wait-for-it
-RUN pip install -e . --user --no-use-pep517 && pip install -r arches/install/requirements.txt && pip install -r arches/install/requirements_dev.txt
+WORKDIR ${ARCHES_ROOT}
+RUN pip install -e . --user --no-use-pep517  
+RUN pip install -r arches/install/requirements.txt 
+RUN pip install -r arches/install/requirements_dev.txt
 COPY /afs/docker/webpack/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
 RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh
 WORKDIR ${WEB_ROOT}
