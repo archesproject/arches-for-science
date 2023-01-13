@@ -2,6 +2,7 @@ define([
     'jquery', 
     'underscore', 
     'knockout', 
+    'templates/views/components/reports/instrument.htm',
     'arches', 
     'viewmodels/tabbed-report', 
     'utils/resource', 
@@ -12,7 +13,7 @@ define([
     'views/components/reports/scenes/json', 
     'views/components/reports/scenes/default' 
 ], 
-    function($, _, ko, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
+    function($, _, ko, instrumentReportTemplate, arches, TabbedReportViewModel, resourceUtils, reportUtils) {
     return ko.components.register('instrument-report', {
         viewModel: function(params) {
             var self = this;
@@ -179,6 +180,6 @@ define([
                 }])
             };
         },
-        template: { require: 'text!templates/views/components/reports/instrument.htm' }
+        template: instrumentReportTemplate
     });
 });

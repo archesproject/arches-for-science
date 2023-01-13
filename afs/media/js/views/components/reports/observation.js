@@ -2,12 +2,13 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/observation.htm',
     'arches',
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/json' 
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, observationReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('observation-report', {
         viewModel: function(params) {
             var self = this;
@@ -325,6 +326,6 @@ define([
             });
         },
         
-        template: { require: 'text!templates/views/components/reports/observation.htm' }
+        template: observationReportTemplate
     });
 });

@@ -1,6 +1,7 @@
 define([
     'jquery',
     'knockout',
+    'templates/views/components/workflows/upload-dataset/file-interpretation-step.htm',
     'arches',
     'uuid',
     'viewmodels/card-component',
@@ -10,7 +11,7 @@ define([
     'js-cookie',
     'models/tile',
     'afs-formats'
-], function($, ko, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel, formats) {
+], function($, ko, fileInterpretationStepTemplate, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel, formats) {
    
     function viewModel(params) {
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
@@ -597,7 +598,7 @@ define([
     ko.components.register('file-interpretation-step', {
         viewModel: viewModel,
         template: {
-            require: 'text!templates/views/components/workflows/upload-dataset/file-interpretation-step.htm'
+            require: fileInterpretationStepTemplate
         }
     });
 

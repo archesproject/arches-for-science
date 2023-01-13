@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/project.htm',
     'arches',
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, projectReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('project-report', {
         viewModel: function(params) {
             var self = this;
@@ -243,6 +244,6 @@ define([
                 }));
             };
         },
-        template: { require: 'text!templates/views/components/reports/project.htm' }
+        template: projectReportTemplate
     });
 });

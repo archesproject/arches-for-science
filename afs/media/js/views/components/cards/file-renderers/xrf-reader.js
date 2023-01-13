@@ -1,9 +1,10 @@
 define(['jquery',
     'knockout',
+    'templates/views/components/cards/file-renderers/afs-reader.htm',
     'viewmodels/afs-instrument',
     'bindings/plotly',
     'bindings/select2-query',
-], function($, ko, AfsInstrumentViewModel) {
+], function($, ko, xrfReaderTemplate, AfsInstrumentViewModel) {
     return ko.components.register('xrf-reader', {
         viewModel: function(params) {
             AfsInstrumentViewModel.apply(this, [params]);
@@ -26,6 +27,6 @@ define(['jquery',
             this.xAxisLabel("keV");
             this.yAxisLabel("Count");
         },
-        template: { require: 'text!templates/views/components/cards/file-renderers/afs-reader.htm' }
+        template: xrfReaderTemplate
     });
 });

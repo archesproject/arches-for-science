@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/textual-work.htm',
     'arches',
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, textualWorkReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('textual-work-report', {
         viewModel: function(params) {
             var self = this;
@@ -221,6 +222,6 @@ define([
                 });
             }
         },
-        template: { require: 'text!templates/views/components/reports/textual-work.htm' }
+        template: textualWorkReportTemplate
     });
 });

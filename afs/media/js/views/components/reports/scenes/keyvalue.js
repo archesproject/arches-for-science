@@ -1,4 +1,9 @@
-define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable'], function(_, ko, arches, reportUtils) {
+define(['underscore',
+    'knockout',
+    'templates/views/components/reports/scenes/json.htm',
+    'arches',
+    'utils/report','bindings/datatable'
+], function(_, ko, keyValueSceneTemplate, arches, reportUtils) {
     return ko.components.register('views/components/reports/scenes/keyvalue', {
         // IMPORTANT:  this scene *requires* you to compile your own data.  Aboutness is too disparate across all models.
         viewModel: function(params) {
@@ -14,6 +19,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             self.inline = params.inline || false;
             self.small = params.small || false;
         },
-        template: { require: 'text!templates/views/components/reports/scenes/keyvalue.htm' }
+        template: keyValueSceneTemplate
     });
 });

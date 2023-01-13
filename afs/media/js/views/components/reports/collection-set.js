@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/collection-set.htm',
     'arches',
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, collectionSetSceneTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('collection-set-report', {
         viewModel: function(params) {
             var self = this;
@@ -195,6 +196,6 @@ define([
                 };
             }
         },
-        template: { require: 'text!templates/views/components/reports/collection-set.htm' }
+        template: collectionSetSceneTemplate
     });
 });
