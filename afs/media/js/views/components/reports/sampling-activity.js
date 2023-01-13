@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/sampling-activity.htm',
     'arches',
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, samplingActivityReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('sampling-activity-report', {
         viewModel: function(params) {
             var self = this;
@@ -206,6 +207,6 @@ define([
                 card: self.cards?.['Sampling Unit for Sampling Activity'],
             }: {};
         },
-        template: { require: 'text!templates/views/components/reports/sampling-activity.htm' }
+        template: samplingActivityReportTemplate
     });
 });

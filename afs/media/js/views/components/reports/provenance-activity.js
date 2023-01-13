@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/provenance-activity.htm',
     'arches',
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, provenanceActivityReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('provenance-activity-report', {
         viewModel: function(params) {
             var self = this;
@@ -54,6 +55,6 @@ define([
                 };
             }
         },
-        template: { require: 'text!templates/views/components/reports/provenance-activity.htm' }
+        template: provenanceActivityReportTemplate
     });
 });

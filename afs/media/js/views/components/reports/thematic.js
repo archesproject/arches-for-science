@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/report-templates/thematic.htm',
     'knockout-mapping',
     'arches',
     'viewmodels/report',
     'bindings/chosen'
-], function($, _, ko, koMapping, arches, ReportViewModel) {
+], function($, _, ko, thematicReportTemplate, koMapping, arches, ReportViewModel) {
     NODE_ID = "@node_id";
     TILE_ID = "@tile_id";
     VALUE = "@value";
@@ -185,6 +186,6 @@ define([
 
     ko.components.register('thematic-report', {
         viewModel: viewModel,
-        template: { require: 'text!report-templates/thematic' }
+        template: thematicReportTemplate
     });
 });

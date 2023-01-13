@@ -1,10 +1,11 @@
 define(['jquery',
     'knockout',
+    'templates/views/components/cards/file-renderers/pcdreader.htm',
     'three',
     'PCDLoader',
     'TrackballControls',
     'bindings/threePCD'
-], function($, ko, THREE) {
+], function($, ko, pcdReaderTemplate, THREE) {
     return ko.components.register('pcdreader', {
         viewModel: function(params) {
             this.params = params;
@@ -39,6 +40,6 @@ define(['jquery',
                 self.renderers.push(renderer);
             }
         },
-        template: { require: 'text!templates/views/components/cards/file-renderers/pcdreader.htm' }
+        template: pcdReaderTemplate
     });
 });

@@ -1,5 +1,6 @@
 define([
     'knockout',
+    'templates/views/components/reports/scenes/location.htm',
     'geojson-extent',
     'leaflet',
     'utils/report',
@@ -8,7 +9,7 @@ define([
     'viewmodels/widget',
     'bindings/leaflet',
     'bindings/datatable'
-], function(ko, geojsonExtent, L, reportUtils, MapComponentViewModel, selectFeatureLayersFactory) {
+], function(ko, locationSceneTemplate, geojsonExtent, L, reportUtils, MapComponentViewModel, selectFeatureLayersFactory) {
     return ko.components.register('views/components/reports/scenes/location', {
         viewModel: function(params) {
             var self = this;
@@ -201,8 +202,6 @@ define([
             self.prepareMap('app-area-map-data', self.geojson?.[0]);
 
         },
-        template: {
-            require: 'text!templates/views/components/reports/scenes/location.htm'
-        }
+        template: locationSceneTemplate
     });
 });

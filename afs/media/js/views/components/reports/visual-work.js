@@ -1,4 +1,11 @@
-define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report', 'utils/resource'], function($, _, ko, arches, TabbedReportViewModel, resourceUtils) {
+define(['jquery',
+    'underscore',
+    'knockout',
+    'templates/views/components/reports/visual-work.htm',
+    'arches',
+    'viewmodels/tabbed-report',
+    'utils/resource'
+], function($, _, ko, visualWorkReportTemplate, arches, TabbedReportViewModel, resourceUtils) {
     return ko.components.register('visual-work-report', {
         viewModel: function(params) {
             var self = this;
@@ -74,6 +81,6 @@ define(['jquery', 'underscore', 'knockout', 'arches', 'viewmodels/tabbed-report'
                 }
             }
         },
-        template: { require: 'text!templates/views/components/reports/visual-work.htm' }
+        template: visualWorkReportTemplate
     });
 });

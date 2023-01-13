@@ -6,7 +6,7 @@ define(['jquery',
     'CSS2DRenderer',
     'TrackballControls',
     'bindings/threePDB'
-], function($, ko, pdbreader, THREE) {
+], function($, ko, pdbReaderTemplate, THREE) {
     return ko.components.register('pdbreader', {
         viewModel: function(params) {
             this.params = params;
@@ -52,6 +52,6 @@ define(['jquery',
             }
 
         },
-        template: pdbreader
+        template: pdbReaderTemplate
     });
 });

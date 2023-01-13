@@ -1,4 +1,10 @@
-define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable'], function(_, ko, arches, reportUtils) {
+define(['underscore',
+    'knockout',
+    'templates/views/components/reports/scenes/documentation.htm',
+    'arches',
+    'utils/report',
+    'bindings/datatable'
+], function(_, ko, documentationSceneTemplate, arches, reportUtils) {
     return ko.components.register('views/components/reports/scenes/documentation', {
         viewModel: function(params) {
             var self = this;
@@ -89,7 +95,7 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
                         self.subjectOf(subjectOf?.instance_details.map(x => {
                             const display = x?.display_value;
                             const link = self.getResourceLink(x);
-                            return { display, link, tileid }
+                            return { display, link, tileid };
                         }));
                     }
                 }
@@ -97,6 +103,6 @@ define(['underscore', 'knockout', 'arches', 'utils/report','bindings/datatable']
             } 
 
         },
-        template: { require: 'text!templates/views/components/reports/scenes/documentation.htm' }
+        template: documentationSceneTemplate
     });
 });

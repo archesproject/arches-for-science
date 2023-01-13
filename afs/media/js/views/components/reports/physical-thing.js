@@ -1,10 +1,11 @@
 define([
     'underscore', 
     'knockout', 
+    'templates/views/components/reports/physical-thing.htm',
     'utils/report',
     'bindings/datatable', 
     'views/components/reports/scenes/annotation-parts'
-], function(_, ko, reportUtils) {
+], function(_, ko, physicalThingReportTemplate, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -519,8 +520,8 @@ define([
                 self.externalURISummary([{
                     displayValue: self.getNodeValue(uriData)
                 }]);
-            };
+            }
         },
-        template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
+        template: physicalThingReportTemplate
     });
 });

@@ -2,6 +2,7 @@ define([
     'jquery',
     'underscore', 
     'knockout', 
+    'templates/views/components/reports/digital-resource.htm',
     'arches', 
     'utils/resource', 
     'utils/report', 
@@ -11,8 +12,8 @@ define([
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance',
     'views/components/reports/scenes/json',  
-    'views/components/reports/scenes/default'], 
-    function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/default'
+], function($, _, ko, digitalResourceReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('digital-resource-report', {
         viewModel: function(params) {
             var self = this;
@@ -234,6 +235,6 @@ define([
                 }));
             };
         },
-        template: { require: 'text!templates/views/components/reports/digital-resource.htm' }
+        template: digitalResourceReportTemplate
     });
 });

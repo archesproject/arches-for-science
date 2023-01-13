@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/place.htm',
     'arches',
     'utils/report',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/location'
-], function($, _, ko, arches, reportUtils) {
+], function($, _, ko, placeReportTemplate, arches, reportUtils) {
     return ko.components.register('place-report', {
         viewModel: function(params) {
             var self = this;
@@ -91,8 +92,8 @@ define([
                     ]
             });
 
-            self.geojson = self.getNodeValue(self.resource(), 'defined by')
+            self.geojson = self.getNodeValue(self.resource(), 'defined by');
         },
-        template: { require: 'text!templates/views/components/reports/place.htm' }
+        template: placeReportTemplate
     });
 });
