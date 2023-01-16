@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as base 
+FROM ubuntu:22.10 as base 
 USER root
 
 ## Setting default environment variables
@@ -22,26 +22,27 @@ RUN mkdir ${WEB_ROOT}
 RUN set -ex \
   && RUN_DEPS=" \
   build-essential \
-  python3.8-dev \
+  python3.10-dev \
   mime-support \
   libgdal-dev \
   python3-venv \
   postgresql-client-12 \
-  python3.8 \
-  python3.8-distutils \
-  python3.8-venv \
+  python3.10 \
+  python3.10-distutils \
+  python3.10-venv \
   dos2unix \
   git \
   " \
   && apt-get install -y --no-install-recommends curl \
-  && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+  && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && curl -sL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" \
   && apt-get update -y \
-  && apt-get install -y --no-install-recommends $RUN_DEPS \
-  && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-  && python3.8 get-pip.py \
-  && apt-get install -y nodejs \
+  && apt-get install -y --no-install-recommends $RUN_DEPS
+
+RUN apt install python3-pip -y \
+  && apt-get install -y nodejs npm \
+  && node -v \
   && npm install -g yarn
 
 # Install Yarn components
