@@ -1,7 +1,8 @@
 define([
     'knockout',
     'views/components/workflows/summary-step',
-], function(ko, SummaryStep) {
+    'templates/views/components/workflows/project-collection-workflow/project-collection-final-step.htm'
+], function(ko, SummaryStep, projectCollectionFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -52,7 +53,7 @@ define([
 
     ko.components.register('project-collection-final-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/project-collection-workflow/project-collection-final-step.htm' }
+        template: projectCollectionFinalStepTemplate
     });
     return viewModel;
 });

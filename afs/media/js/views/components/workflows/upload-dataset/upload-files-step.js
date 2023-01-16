@@ -6,10 +6,13 @@ define([
     'models/tile',
     'afs-formats',
     'js-cookie',
+    'templates/views/components/workflows/upload-dataset/upload-files-step.htm',
     'bindings/dropzone'
-], function(_, ko, uuid, arches, TileModel, formats, Cookies) {
+], function(_, ko, uuid, arches, TileModel, formats, Cookies, uploadFilesStepTemplate) {
     return ko.components.register('upload-files-step', {
         viewModel: function(params) {
+            // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
+
             var self = this;
             const physicalThingId = params.projectinfo["select-phys-thing-step"].savedData().physicalThing;
             const observationInfo = params.observationinfo['instrument-info'].savedData();
@@ -444,6 +447,6 @@ define([
 
 
         },
-        template: { require: 'text!templates/views/components/workflows/upload-dataset/upload-files-step.htm' }
+        template: uploadFilesStepTemplate
     });
 });

@@ -2,8 +2,9 @@ define([
     'arches',
     'uuid',
     'knockout',
+    'templates/views/components/workflows/create-project-workflow/project-name-step.htm',
     'viewmodels/card',
-], function(arches, uuid, ko) {
+], function(arches, uuid, ko, projectNameStepTemplate) {
    
     function viewModel(params) {
 
@@ -124,9 +125,7 @@ define([
 
     ko.components.register('project-name-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/create-project-workflow/project-name-step.htm'
-        }
+        template: projectNameStepTemplate
     });
 
     return viewModel;
