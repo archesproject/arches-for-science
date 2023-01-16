@@ -1,7 +1,8 @@
 define([
     'knockout',
     'views/components/workflows/summary-step',
-], function(ko, SummaryStep) {
+    'templates/views/components/workflows/create-project-workflow/create-project-final-step.htm'
+], function(ko, SummaryStep, createProjectFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -71,7 +72,7 @@ define([
 
     ko.components.register('create-project-final-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/create-project-workflow/create-project-final-step.htm' }
+        template: createProjectFinalStepTemplate
     });
     return viewModel;
 });

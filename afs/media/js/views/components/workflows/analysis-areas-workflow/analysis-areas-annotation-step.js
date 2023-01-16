@@ -12,8 +12,9 @@ define([
     'viewmodels/tile',
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
+    'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step.htm',
     'views/components/resource-instance-nodevalue',
-], function(_, $, arches, ko, koMapping, geojsonExtent, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+], function(_, $, arches, ko, koMapping, geojsonExtent, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup, analysisAreasAnnotationStepTemplate) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -982,7 +983,7 @@ define([
 
     ko.components.register('analysis-areas-annotation-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step.htm' }
+        template: analysisAreasAnnotationStepTemplate
     });
     return viewModel;
 });

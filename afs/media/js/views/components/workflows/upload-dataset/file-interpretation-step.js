@@ -12,7 +12,6 @@ define([
     'models/tile',
     'afs-formats'
 ], function($, ko, fileInterpretationStepTemplate, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel, formats) {
-   
     function viewModel(params) {
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
         var self = this;
@@ -597,9 +596,7 @@ define([
 
     ko.components.register('file-interpretation-step', {
         viewModel: viewModel,
-        template: {
-            require: fileInterpretationStepTemplate
-        }
+        template: fileInterpretationStepTemplate
     });
 
     return viewModel;

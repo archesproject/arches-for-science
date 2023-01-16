@@ -4,12 +4,13 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/alert',
+    'templates/views/components/plugins/analysis-areas-workflow.htm',
     'viewmodels/workflow-step',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-image-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step',
     'views/components/workflows/analysis-areas-workflow/analysis-areas-final-step',
-], function(ko, $, arches, Workflow, AlertViewModel) {
+], function(ko, $, arches, Workflow, AlertViewModel, analysisAreasWorkflowTemplate) {
     return ko.components.register('analysis-areas-workflow', {
         viewModel: function(params) {
             this.componentName = 'analysis-areas-workflow';
@@ -154,6 +155,6 @@ define([
             
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/analysis-areas-workflow.htm' }
+        template: analysisAreasWorkflowTemplate
     });
 });

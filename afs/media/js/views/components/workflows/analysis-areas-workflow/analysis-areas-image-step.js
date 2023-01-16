@@ -6,8 +6,9 @@ define([
     'knockout-mapping',
     'models/graph',
     'viewmodels/card',
+    'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-image-step.htm',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, analysisAreasImageStepTemplate) {
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
@@ -339,7 +340,7 @@ define([
 
     ko.components.register('analysis-areas-image-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-image-step.htm' }
+        template: analysisAreasImageStepTemplate
     });
     return viewModel;
 });

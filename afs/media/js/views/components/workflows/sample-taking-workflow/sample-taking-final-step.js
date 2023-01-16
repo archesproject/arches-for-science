@@ -6,7 +6,8 @@ define([
     'arches',
     'views/components/workflows/summary-step',
     'text!templates/views/components/iiif-popup.htm',
-], function(geojsonExtent, ko, L, uuid, arches, SummaryStep, iiifPopup) {
+    'templates/views/components/workflows/sample-taking-workflow/sample-taking-final-step.htm'
+], function(geojsonExtent, ko, L, uuid, arches, SummaryStep, iiifPopup, sampleTakingFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -315,7 +316,7 @@ define([
 
     ko.components.register('sample-taking-final-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/sample-taking-workflow/sample-taking-final-step.htm' }
+        template: sampleTakingFinalStepTemplate
     });
     return viewModel;
 });

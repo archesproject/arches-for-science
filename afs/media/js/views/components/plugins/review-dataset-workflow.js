@@ -4,11 +4,12 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/alert',
+    'templates/views/components/plugins/review-dataset-workflow.htm',
     'viewmodels/workflow-step',
     'views/components/workflows/review-dataset/select-dataset',
     'views/components/workflows/review-dataset/review-dataset-final-step',
     'views/components/workflows/upload-dataset/file-interpretation-step',
-], function(ko, $, arches, Workflow, AlertViewModel) {
+], function(ko, $, arches, Workflow, AlertViewModel, reviewDatasetWorkflowTemplate) {
     return ko.components.register('review-dataset-workflow', {
         viewModel: function(params) {
             this.componentName = 'review-dataset-workflow';
@@ -110,6 +111,6 @@ define([
             };
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/review-dataset-workflow.htm' }
+        template: reviewDatasetWorkflowTemplate
     });
 });

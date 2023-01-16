@@ -4,13 +4,14 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/alert',
+    'templates/views/components/plugins/sample-taking-workflow.htm',
     'viewmodels/workflow-step',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/sample-taking-workflow/sampling-info-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-image-step',
     'views/components/workflows/sample-taking-workflow/sample-taking-final-step'
-], function(ko, $, arches, Workflow, AlertViewModel) {
+], function(ko, $, arches, Workflow, AlertViewModel, sampleTakingWorkflowTemplate) {
     return ko.components.register('sample-taking-workflow', {
         viewModel: function(params) {
             this.componentName = 'sample-taking-workflow';
@@ -172,6 +173,6 @@ define([
             
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/sample-taking-workflow.htm' }
+        template: sampleTakingWorkflowTemplate
     });
 });
