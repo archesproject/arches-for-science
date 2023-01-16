@@ -3,7 +3,8 @@ define([
     'underscore',
     'knockout',
     'views/components/workflows/summary-step',
-], function($, _, ko, SummaryStep) {
+    'templates/views/components/workflows/review-dataset/review-dataset-final-step.htm',
+], function($, _, ko, SummaryStep, reviewDatasetFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -125,9 +126,7 @@ define([
 
     ko.components.register('review-dataset-final-step', {
         viewModel: viewModel,
-        template: { 
-            require: 'text!templates/views/components/workflows/review-dataset/review-dataset-final-step.htm' 
-        }
+        template: reviewDatasetFinalStepTemplate
     });
     return viewModel;
 });

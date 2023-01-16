@@ -4,11 +4,12 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/alert',
+    'templates/views/components/plugins/project-collection-workflow.htm',
     'viewmodels/workflow-step',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/create-project-workflow/add-things-step',
     'views/components/workflows/project-collection-workflow/project-collection-final-step'
-], function(ko, $, arches, Workflow, AlertViewModel) {
+], function(ko, $, arches, Workflow, AlertViewModel, projectCollectionWorkflowTemplate) {
     return ko.components.register('project-collection-workflow', {
         viewModel: function(params) {
             this.componentName = 'project-collection-workflow';
@@ -120,6 +121,6 @@ define([
 
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/project-collection-workflow.htm' }
+        template: projectCollectionWorkflowTemplate
     });
 });

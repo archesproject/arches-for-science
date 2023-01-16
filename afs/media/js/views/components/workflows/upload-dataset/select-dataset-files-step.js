@@ -10,10 +10,13 @@ define([
     'views/components/iiif-viewer',
     'js-cookie',
     'afs-formats',
+    'templates/views/components/workflows/upload-dataset/select-dataset-files-step.htm',
     'bindings/dropzone'
-], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies, formats) {
+], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies, formats, selectDatasetFilesStepTemplate) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
+            // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
+
             IIIFViewerViewmodel.apply(this, [params]);
             var defaultColor;
             var self = this;            
@@ -464,6 +467,6 @@ define([
      
             this.init();
         },
-        template: { require: 'text!templates/views/components/workflows/upload-dataset/select-dataset-files-step.htm' }
+        template: selectDatasetFilesStepTemplate
     });
 });

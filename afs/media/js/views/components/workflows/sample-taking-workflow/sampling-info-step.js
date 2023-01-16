@@ -4,8 +4,9 @@ define([
     'arches',
     'knockout',
     'uuid',
+    'templates/views/components/workflows/sample-taking-workflow/sampling-info-step.htm',
     'views/components/resource-instance-nodevalue',
-], function(_, $, arches, ko, uuid) {
+], function(_, $, arches, ko, uuid, samplingInfoStepTemplate) {
     function viewModel(params) {
         var self = this;
 
@@ -314,7 +315,7 @@ define([
 
     ko.components.register('sampling-info-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/sample-taking-workflow/sampling-info-step.htm' }
+        template: samplingInfoStepTemplate
     });
     return viewModel;
 });

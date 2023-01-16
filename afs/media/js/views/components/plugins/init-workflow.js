@@ -1,7 +1,8 @@
 define([
     'knockout',
-    'arches'
-], function(ko, arches) {
+    'arches',
+    'templates/views/components/plugins/init-workflow.htm'
+], function(ko, arches, initWorkflowTemplate) {
 
     var InitWorkflow = function(params) {
         this.workflows = params.workflows.map(function(wf){
@@ -12,6 +13,6 @@ define([
 
     return ko.components.register('init-workflow', {
         viewModel: InitWorkflow,
-        template: { require: 'text!templates/views/components/plugins/init-workflow.htm' }
+        template: initWorkflowTemplate
     });
 });

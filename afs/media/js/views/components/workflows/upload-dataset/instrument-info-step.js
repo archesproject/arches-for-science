@@ -3,8 +3,9 @@ define([
     'uuid',
     'knockout',
     'utils/resource',
+    'templates/views/components/workflows/upload-dataset/instrument-info-step.htm',
     'viewmodels/card',
-], function(arches, uuid, ko, resourceUtils) {
+], function(arches, uuid, ko, resourceUtils, instrumentInfoStepTemplate) {
    
     function viewModel(params) {
 
@@ -278,9 +279,7 @@ define([
 
     ko.components.register('instrument-info-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/upload-dataset/instrument-info-step.htm'
-        }
+        template: instrumentInfoStepTemplate
     });
 
     return viewModel;

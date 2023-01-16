@@ -5,9 +5,10 @@ define([
     'knockout-mapping',
     'uuid',
     'arches',
+    'templates/views/components/workflows/create-project-workflow/add-things-step.htm',
     'bindings/select2-query',
     'views/components/search/paging-filter',
-], function($, _, ko, koMapping, uuid, arches) {
+], function($, _, ko, koMapping, uuid, arches, addThingsStepTemplate) {
     var collectionNameNodegroupId = '52aa1673-c450-11e9-8640-a4d18cec433a'; // Name (E33) in Collection resource
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
     var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
@@ -389,9 +390,7 @@ define([
 
     ko.components.register('add-things-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/create-project-workflow/add-things-step.htm'
-        }
+        template: addThingsStepTemplate
     });
 
     return viewModel;

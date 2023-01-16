@@ -4,8 +4,9 @@ define([
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
+    'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-final-step.htm',
     'views/components/annotation-summary',
-], function(ko, _, uuid, arches, SummaryStep) {
+], function(ko, _, uuid, arches, SummaryStep, analysisAreasFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -122,7 +123,7 @@ define([
 
     ko.components.register('analysis-areas-final-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-final-step.htm' }
+        template: analysisAreasFinalStepTemplate
     });
     return viewModel;
 });

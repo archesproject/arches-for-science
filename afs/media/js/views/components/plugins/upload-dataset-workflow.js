@@ -4,6 +4,7 @@ define([
     'arches',
     'viewmodels/workflow',
     'viewmodels/alert',
+    'templates/views/components/plugins/upload-dataset-workflow.htm',
     'viewmodels/workflow-step',
     'views/components/file-upload',
     'views/components/workflows/select-phys-thing-step',
@@ -13,7 +14,7 @@ define([
     'views/components/workflows/upload-dataset/file-interpretation-step',
     'views/components/workflows/upload-dataset/select-dataset-files-step',
     'views/components/workflows/upload-dataset/upload-files-step',
-], function(ko, $, arches, Workflow, AlertViewModel) {
+], function(ko, $, arches, Workflow, AlertViewModel, uploadDatasetWorkflowTemplate) {
     return ko.components.register('upload-dataset-workflow', {
         viewModel: function(params) {
             this.componentName = 'upload-dataset-workflow';
@@ -239,6 +240,6 @@ define([
             
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/upload-dataset-workflow.htm' }
+        template: uploadDatasetWorkflowTemplate
     });
 });

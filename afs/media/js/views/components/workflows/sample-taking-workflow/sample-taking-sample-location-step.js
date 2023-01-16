@@ -12,7 +12,8 @@ define([
     'viewmodels/tile',
     'views/components/iiif-annotation',
     'text!templates/views/components/iiif-popup.htm',
-], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup) {
+    'templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step.htm'
+], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup, sampleTakingSampleLocationStepTemplate) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -1120,7 +1121,7 @@ define([
 
     ko.components.register('sample-taking-sample-location-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step.htm' }
+        template: sampleTakingSampleLocationStepTemplate
     });
     return viewModel;
 });

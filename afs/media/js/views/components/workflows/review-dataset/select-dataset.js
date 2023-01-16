@@ -2,7 +2,8 @@ define([
     'jquery',
     'knockout',
     'arches',
-], function($, ko, arches) {
+    'templates/views/components/workflows/review-dataset/select-dataset.htm'
+], function($, ko, arches,selectDatasetStepTemplate) {
     function viewModel(params) {
         var self = this;
         this.digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
@@ -66,7 +67,7 @@ define([
 
     ko.components.register('select-dataset', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/review-dataset/select-dataset.htm' }
+        template: selectDatasetStepTemplate
     });
     return viewModel;
 });
