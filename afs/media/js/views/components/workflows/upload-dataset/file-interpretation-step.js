@@ -13,6 +13,8 @@ define([
     'afs-formats'
 ], function($, ko, fileInterpretationStepTemplate, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel, formats) {
     function viewModel(params) {
+        // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
+
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
         var self = this;
         const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';

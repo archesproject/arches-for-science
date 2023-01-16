@@ -15,6 +15,8 @@ define([
 ], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies, formats, selectDatasetFilesStepTemplate) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
+            // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
+
             IIIFViewerViewmodel.apply(this, [params]);
             var defaultColor;
             var self = this;            
