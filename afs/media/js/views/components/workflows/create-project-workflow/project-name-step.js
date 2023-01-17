@@ -18,7 +18,11 @@ define([
             } else {
                 if (isString) {
                     const emptyStrObject = {};
-                    arches.languages.map(lang => emptyStrObject[lang.code] = {"value":'', "direction": lang.default_direction});
+                    emptyStrObject[arches.activeLanguage] = {
+                        "value":'',
+                        "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+                    };
+                    console.log(emptyStrObject);
                     return emptyStrObject;
                 } else {
                     return null;
