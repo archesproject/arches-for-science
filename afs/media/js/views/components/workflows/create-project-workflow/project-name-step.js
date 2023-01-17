@@ -22,7 +22,6 @@ define([
                         "value":'',
                         "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
                     };
-                    console.log(emptyStrObject);
                     return emptyStrObject;
                 } else {
                     return null;
@@ -90,7 +89,6 @@ define([
         params.form.reset = function(){
             self.typeValue(snapshot.typeValue);
             self.nameValue(snapshot.nameValue);
-            // params.form.hasUnsavedData(false);
         };
 
         params.form.save = function() {
