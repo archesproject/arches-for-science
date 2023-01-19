@@ -19,6 +19,17 @@ define([
         var self = this;
         _.extend(this, params);
 
+        this.getStrValue = strObject => {
+            return strObject[arches.activeLanguage]['value'];
+        };
+
+        this.buildStrObject = str => {
+            return {[arches.activeLanguage]: {
+                "value": str,
+                "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+            }};
+        };
+
         this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
@@ -26,7 +37,7 @@ define([
         const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
         this.allFeatureIds = [];
         this.sampleLocationResourceIds = [];
-        this.manifestUrl = ko.observable(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]);
+        this.manifestUrl = ko.observable(this.getStrValue(params.imageStepData[digitalResourceServiceIdentifierContentNodeId]));
 
         this.savingTile = ko.observable();
         this.savingMessage = ko.observable();
@@ -143,10 +154,10 @@ define([
         this.areaName = ko.computed(function(){
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedAnalysisAreaInstance()){
-                const baseName = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId]) || "";
+                const baseName = self.getStrValue(ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId])) || "";
                 return `${baseName} [Region of ${self.physicalThingName()}]`;
             }
-        })
+        });
 
         this.initialize = function() {
             let subscription = self.analysisAreaInstances.subscribe(function(){
@@ -239,7 +250,7 @@ define([
             self.annotationNodes(annotationNodes);
 
             self.highlightAnnotation();
-        }
+        };
 
         this.resetCanvasFeatures = function() {
             var annotationNodes = self.annotationNodes();
@@ -292,17 +303,17 @@ define([
                                     Object.keys(tile.data[key]).map(childkey => {
                                         tile.data[key][childkey](self.selectedAnalysisAreaInstance().data[key][childkey]());
                                     });
-                                };
+                                }
                             });
-                        };
+                        }
                     });
                 }
-            };
+            }
             const tilesBelongingToManifest = self.card.tiles().filter(
                 tile => canvasids.find(
                     canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
-                    )
-                );
+                )
+            );
             // get locked status
             tilesBelongingToManifest.forEach(function(analysisAreaTile){
                 analysisAreaTile.isLocked = ko.observable();
@@ -377,7 +388,7 @@ define([
         this.showAnalysisAreaDeleteModal = function(sample){
             self.showingAnalysisAreaDeleteModal(!!sample);
             self.sampleToDelete(sample);
-        }
+        };
 
         this.deleteAnalysisAreaInstance = function(){
             let parentPhysicalThing = self.sampleToDelete();
@@ -388,7 +399,7 @@ define([
                 parentPhysicalThingTileData: koMapping.toJSON(parentPhysicalThing.data),
                 parentPhysicalThingTileId: parentPhysicalThing.tileid,
                 transactionId: params.form.workflowId,
-                analysisAreaName: self.areaName(),
+                analysisAreaName: self.buildStrObject(self.areaName()),
             };
 
             self.savingTile(true);
@@ -432,14 +443,14 @@ define([
         }
 
         this.saveAnalysisAreaTile = function() {
-            annotation_label_nodeid = "3e541cc6-859b-11ea-97eb-acde48001122" 
-            annotation_polygon_identifier_nodeid = "97c30c42-8594-11ea-97eb-acde48001122" 
+            const annotationLabelNodeid = "3e541cc6-859b-11ea-97eb-acde48001122";
+            const annotationPolygonIdentifierNodeid = "97c30c42-8594-11ea-97eb-acde48001122";
             
-            if (!ko.unwrap(self.selectedAnalysisAreaInstance().data[annotation_label_nodeid])) {
+            if (!ko.unwrap(self.selectedAnalysisAreaInstance().data[annotationLabelNodeid])) {
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Name required", "Providing a name is required"));
                 return;
             }
-            if (!ko.unwrap(self.selectedAnalysisAreaInstance().data[annotation_polygon_identifier_nodeid])) {
+            if (!ko.unwrap(self.selectedAnalysisAreaInstance().data[annotationPolygonIdentifierNodeid])) {
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Geometry required", "Providing a geometric annotation is required"));
                 return;
             }
@@ -503,7 +514,7 @@ define([
                 partIdentifierAssignmentTileId: self.selectedAnalysisAreaInstance().tileid,
                 partIdentifierAssignmentResourceId: self.selectedAnalysisAreaInstance().resourceinstance_id,
                 transactionId: params.form.workflowId,
-                analysisAreaName: self.areaName(),
+                analysisAreaName: JSON.stringify(self.buildStrObject(self.areaName())),
             };
 
             $.ajax({
@@ -511,8 +522,7 @@ define([
                 type: 'POST',
                 data: data,
                 dataType: 'json',
-            })
-            .then(function(data){
+            }).then(function(data){
                 self.savingMessage("Saved.");
                 clearInterval(showMessage);
                 clearTimeout(showExtraMessage);
@@ -969,7 +979,7 @@ define([
         };
 
         ko.bindingHandlers.scrollTo = {
-            update: function (element, valueAccessor) {
+            update: function(element, valueAccessor) {
                 var _value = valueAccessor();
                 var _valueUnwrapped = ko.unwrap(_value);
                 if (_valueUnwrapped) {
