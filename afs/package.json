@@ -10,9 +10,11 @@
         "three": "^0.148.0"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.2.1"
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.2.1",
+        "cypress": "^12.3.0"
     },
     "scripts": {
+        "test": "./media/node_modules/cypress/bin/cypress open",
         "build_production": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 NODE_ENV=production ./media/node_modules/.bin/webpack --config webpack/webpack.config.prod.js",
         "build_development": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js",
         "build_test": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max_old_space_size=8192 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js --env test=true",
