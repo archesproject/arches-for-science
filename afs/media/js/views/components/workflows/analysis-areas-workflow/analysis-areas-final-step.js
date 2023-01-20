@@ -13,7 +13,7 @@ define([
 
         params.form.resourceId(params.sampleObjectResourceId);
         const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId];
+        const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]['value'];
         const digitalReferenceResourceId = params.digitalReferenceResourceId;
 
         this.regionInstances = params.regionsStepData.data.map(function(data){
