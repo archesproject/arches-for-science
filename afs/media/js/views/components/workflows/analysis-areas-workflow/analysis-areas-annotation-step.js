@@ -538,6 +538,7 @@ define([
                 clearTimeout(showExtraMessage);
 
                 const tile = data.result.physicalPartOfObjectTile;
+                tile.noDefaults = true;
 
                 self.builtTile = new TileViewModel({
                     tile: tile,
