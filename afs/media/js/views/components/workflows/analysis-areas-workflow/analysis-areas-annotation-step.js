@@ -21,7 +21,13 @@ define([
         _.extend(this, params);
 
         this.getStrValue = strObject => {
-            return strObject[arches.activeLanguage]['value'];
+            let strValue;
+            if (typeof strObject == 'object') {
+                strValue = ko.toJS(strObject)[arches.activeLanguage]['value'];
+            } else {
+                strValue = ko.unwrap(strObject)[arches.activeLanguage]['value'];
+            }
+            return strValue;
         };
 
         this.buildStrObject = str => {
@@ -155,7 +161,8 @@ define([
         this.areaName = ko.computed(function(){
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedAnalysisAreaInstance()){
-                const baseName = self.getStrValue(ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId])) || "";
+                const nameValue = self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId];
+                const baseName = self.getStrValue(nameValue) || "";
                 return `${baseName} [Region of ${self.physicalThingName()}]`;
             }
         });
@@ -302,7 +309,12 @@ define([
                                     tile.data[key](self.selectedAnalysisAreaInstance().data[key]());
                                 } else if (key !== '__ko_mapping__') {
                                     Object.keys(tile.data[key]).map(childkey => {
-                                        tile.data[key][childkey](self.selectedAnalysisAreaInstance().data[key][childkey]());
+                                        if (ko.isObservable(tile.data[key][childkey])){
+                                            tile.data[key][childkey](self.selectedAnalysisAreaInstance().data[key][childkey]());
+                                        } else {
+                                            tile.data[key][childkey]['value'](self.selectedAnalysisAreaInstance().data[key][childkey]['value']());
+                                            tile.data[key][childkey]['direction'](self.selectedAnalysisAreaInstance().data[key][childkey]['direction']());
+                                        }
                                     });
                                 }
                             });
