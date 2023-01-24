@@ -174,9 +174,6 @@ class SaveAnalysisAreaView(SaveAnnotationView):
         part_identifier_assignment_tile_data = JSONDeserializer().deserialize(request.POST.get("partIdentifierAssignmentTileData"))
         part_identifier_assignment_tile_id = request.POST.get("partIdentifierAssignmentTileId") or None
         name = request.POST.get("analysisAreaName")
-        print("++++++++++++++++++++++")
-        print(name)
-        print("++++++++++++++++++++++")
         if name:
             name_object = json.loads(name)
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
