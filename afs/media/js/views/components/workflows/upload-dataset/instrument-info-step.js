@@ -53,7 +53,7 @@ define([
         this.instrumentValue = ko.observable(getProp('instrument', 'value'));
         this.procedureValue = ko.observable(getProp('procedure', 'value'));
         this.parameterValue = ko.observable(getProp('parameter', 'value'));
-        this.nameValue = ko.observable(getProp('name', 'value'));
+        // this.nameValue = ko.observable(getProp('name', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.dateValue = ko.observable(getProp('date', 'value'));
         this.showName = ko.observable(false);
@@ -79,6 +79,13 @@ define([
         this.instrumentInstance = ko.observable(this.instrumentValue() ? this.createRelatedInstance(this.instrumentValue()) : null);
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
 
+        const createObservationNameObj = (instrument, date) => {
+            return {[arches.activeLanguage]: {
+                "value": `Observation of ${physThingName} with ${instrument} ${date}`,
+                "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+            }};
+        };
+
         this.instrumentValue.subscribe(function(val){
             params.form.dirty(Boolean(val) && !self.locked());
             if (val && !relatedGraphIds.includes(val)) {
@@ -86,14 +93,14 @@ define([
                 self.instrumentInstance(self.createRelatedInstance(val));
                 instrumentData.then(function(data){
                     self.instrumentName(data._source.displayname);
-                    self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
+                    self.nameValue = ko.fromJS(createObservationNameObj(data._source.displayname, self.dateValue()));
                 });
             }
         });
 
         this.dateValue.subscribe(function(val){
             if (self.instrumentName()) {
-                self.nameValue(`Observation of ${physThingName} with ${self.instrumentName()} ${val}`);
+                self.nameValue = ko.fromJS(createObservationNameObj(self.instrumentName(), val));
             }
         });
 
@@ -268,10 +275,10 @@ define([
                 params.pageVm.alert("");
             }).catch(function(error){
                 // alert the workflow that something happend
-                  params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Error", "There was an issue saving the workflow step."));
-                  params.form.complete(false);
-                  params.form.dirty(true);
-                  params.form.loading(false);
+                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Error", "There was an issue saving the workflow step."));
+                params.form.complete(false);
+                params.form.dirty(true);
+                params.form.loading(false);
             });
 
         };
