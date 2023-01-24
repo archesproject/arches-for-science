@@ -1,8 +1,9 @@
 define(['underscore',
     'knockout',
-    'templates/views/components/reports/scenes/json.htm',
+    'templates/views/components/reports/scenes/keyvalue.htm',
     'arches',
-    'utils/report','bindings/datatable'
+    'utils/report',
+    'bindings/datatable'
 ], function(_, ko, keyValueSceneTemplate, arches, reportUtils) {
     return ko.components.register('views/components/reports/scenes/keyvalue', {
         // IMPORTANT:  this scene *requires* you to compile your own data.  Aboutness is too disparate across all models.
