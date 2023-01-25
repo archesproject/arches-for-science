@@ -146,8 +146,8 @@ define([
                         'All data created during the course of this workflow will be deleted.',
                         function(){}, //does nothing when canceled
                         () => {
-                            params.loading('Cleaning up...')
-                            this.reverseWorkflowTransactions()
+                            params.loading('Cleaning up...');
+                            this.reverseWorkflowTransactions();
                         },
                     )
                 );
