@@ -53,13 +53,13 @@ define([
         this.instrumentValue = ko.observable(getProp('instrument', 'value'));
         this.procedureValue = ko.observable(getProp('procedure', 'value'));
         this.parameterValue = ko.observable(getProp('parameter', 'value'));
-        // this.nameValue = ko.observable(getProp('name', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
         this.dateValue = ko.observable(getProp('date', 'value'));
         this.showName = ko.observable(false);
         this.locked = params.form.locked;
         this.procedureSearchString = location.origin + '/search?advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22dc946b1e-c070-11e9-a005-a4d18cec433a%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%2260d1e09c-0f14-4348-ae14-57fdb9ef87c4%22%7D%7D%5D';
         this.instrumentName = ko.observable();
+        this.nameValue = ko.observable(getProp('name', 'value'));
 
         const snapshot = {
             dateValue: self.dateValue(),
@@ -79,9 +79,9 @@ define([
         this.instrumentInstance = ko.observable(this.instrumentValue() ? this.createRelatedInstance(this.instrumentValue()) : null);
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
 
-        const createObservationNameObj = (instrument, date) => {
+        const createStrObject = str => {
             return {[arches.activeLanguage]: {
-                "value": `Observation of ${physThingName} with ${instrument} ${date}`,
+                "value": str,
                 "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
             }};
         };
@@ -93,14 +93,14 @@ define([
                 self.instrumentInstance(self.createRelatedInstance(val));
                 instrumentData.then(function(data){
                     self.instrumentName(data._source.displayname);
-                    self.nameValue = ko.fromJS(createObservationNameObj(data._source.displayname, self.dateValue()));
+                    self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
                 });
             }
         });
 
         this.dateValue.subscribe(function(val){
             if (self.instrumentName()) {
-                self.nameValue = ko.fromJS(createObservationNameObj(self.instrumentName(), val));
+                self.nameValue(`Observation of ${physThingName} with ${self.instrumentName()} ${val}`);
             }
         });
 
@@ -228,7 +228,7 @@ define([
             tiles['partOfProjectTile'] = self.buildTile(partOfProjectData, projectNodeId, self.observationInstanceId(), projectTileId);
 
             let nameData = {};
-            nameData[nameNodeId] = self.nameValue();
+            nameData[nameNodeId] = createStrObject(self.nameValue());
             nameData[nameTypeNodeId] = nameTypeConceptValue;
             nameData[nameLanguageNodeId] = languageConceptValue;
             tiles['nameTile'] = self.buildTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId);
