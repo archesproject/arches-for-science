@@ -326,11 +326,6 @@ define([
 
 
         this.updateRenderer = async(tileid, format) => {
-            console.log(arches.urls.graph_designer);
-            console.log(arches.urls.format_render_map)
-            console.log(arches.urls.physical_thing_search_results)
-            console.log(arches.urls.upload_dataset_file_renderer);
-            console.log(arches.urls.upload_dataset_file_renderer());
             await window.fetch(arches.urls.upload_dataset_file_renderer(tileid), {
                 method: 'POST',
                 credentials: 'include',
