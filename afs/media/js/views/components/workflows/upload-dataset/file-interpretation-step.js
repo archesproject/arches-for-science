@@ -10,7 +10,7 @@ define([
     'file-renderers',
     'js-cookie',
     'models/tile',
-    'afs-formats'
+    'afs-formats',
 ], function($, ko, fileInterpretationStepTemplate, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel, formats) {
     function viewModel(params) {
         // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
@@ -27,7 +27,7 @@ define([
         self.showFileList = ko.observable(false);
         self.showFileInfo = ko.observable(false);
 
-        self.formats = ko.observableArray(formats.map(format => {return {"text": format.name, "id": format.id}}));
+        self.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id}}));
 
         this.selectedFileFormat = ko.observable().extend({deferred: true, notify: 'always'});
 
@@ -55,7 +55,7 @@ define([
             var datasetIds = [params.datasetInfoFromUploadFilesStep['upload-files-step'].savedData().datasetId]
         }
 
-        this.fileFormatRenderers = fileRenderers;
+        this.fileFormatRenderers = Object.values(fileRenderers);
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
         this.selected = ko.observable();
@@ -284,12 +284,10 @@ define([
                 params.value.valueHasMutated();
             }
 
-            const renderer = self.getFileFormatRenderer(format ? formats.find(x => x.id == format)?.renderer : self.selectedFile()?.file_details?.[0]?.renderer)
+            const renderer = self.getFileFormatRenderer(format ? Object.values(formats).find(x => x.id == format)?.renderer : self.selectedFile()?.file_details?.[0]?.renderer)
             if(renderer){
-                require([renderer.component], () => {
-                    self.selectedRenderer(renderer);
-                    self.selectedRenderer.valueHasMutated();
-                });
+                self.selectedRenderer(renderer);
+                self.selectedRenderer.valueHasMutated();
             }
         });
 
