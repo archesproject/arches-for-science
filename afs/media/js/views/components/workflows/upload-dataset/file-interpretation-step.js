@@ -31,13 +31,6 @@ define([
 
         this.selectedFileFormat = ko.observable().extend({deferred: true, notify: 'always'});
 
-        this.buildStrObject = str => {
-            return {[arches.activeLanguage]: {
-                "value": str,
-                "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
-            }};
-        };
-
         if (datasetInfo["select-dataset-files-step"]){
             var datasetIds = datasetInfo["select-dataset-files-step"].savedData()?.parts.reduce(
                 (acc, part) => {
@@ -157,13 +150,20 @@ define([
         var FileStatement = function(tileid, parenttileid, resourceInstanceId, fileStatement, statementTypeId){
             var self = this;
 
+            const buildStrObject = str => {
+                return {[arches.activeLanguage]: {
+                    "value": str,
+                    "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+                }};
+            };
+
             if(!tileid){
                 tileid = '';
             }
             var tileObj = {
                 "tileid": tileid,
                 "data": {
-                    "ca227726-78ed-11ea-a33b-acde48001122": buildStrObject(fileStatement),
+                    "ca227726-78ed-11ea-a33b-acde48001122": fileStatement,
                     "ca2272c6-78ed-11ea-a33b-acde48001122": [
                         statementTypeId
                     ],
@@ -181,7 +181,7 @@ define([
             this.fileStatement = ko.observable(fileStatement);
             this._fs = ko.observable(fileStatement);
             this.updateStatement = function(newStatement){
-                self.tile.get('data')['ca227726-78ed-11ea-a33b-acde48001122'] = newStatement;
+                self.tile.get('data')['ca227726-78ed-11ea-a33b-acde48001122'] = buildStrObject(newStatement);
                 self.fileStatement(newStatement);
             };
             this.save = function(){
