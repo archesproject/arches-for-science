@@ -19,6 +19,10 @@
         <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
                 <div style="display: inline-flex;">
+                    <div class="summary-label" data-bind="text: reportVals.objectName.name + ':'"></div>
+                    <div class="summary-value" data-bind="text: reportVals.objectName.value"></div>
+                </div>
+                <div style="display: inline-flex;">
                     <div class="summary-label" data-bind="text: reportVals.sampledObjectName.name + ':'"></div>
                     <div class="summary-value" data-bind="text: reportVals.sampledObjectName.value"></div>
                 </div>
