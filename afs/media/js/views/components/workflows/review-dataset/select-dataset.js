@@ -33,7 +33,8 @@ define([
                         });
                     }
                 });
-                self.relatedDigitalResources(resources);
+                const resourcesBelongToParent = resources.filter(resource => !resource.isdirect);
+                self.relatedDigitalResources(resourcesBelongToParent);
                 self.dataLoaded(true);
             }
         };

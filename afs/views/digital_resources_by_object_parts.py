@@ -37,5 +37,5 @@ class DigitalResourcesByObjectParts(View):
         }
         for resource in results["resources"]:
             resource["partresourceid"] = part_lookup[resource["resourceid"]]
-            resource["isparent"] = part_lookup[resource["resourceid"]] == resourceid
+            resource["isdirect"] = part_lookup[resource["resourceid"]] == resourceid
         return JSONResponse(results)
