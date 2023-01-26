@@ -45,8 +45,6 @@ define([
                 sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content', '@display_value'])},
             };
 
-            var parentPhysThingData = ko.observable();
-            self.getResourceData(val.resourceinstanceid, parentPhysThingData);
             let parentPhysThingParts;
             if (val.resource["Part Identifier Assignment"].length > 0){
                 parentPhysThingParts = val.resource["Part Identifier Assignment"].map(function(part){
