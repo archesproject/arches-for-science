@@ -9,6 +9,18 @@
         {{ block.super }}
     <!-- /ko -->
 <!-- /ko -->
+<!-- Popup modal for deleting a sample location -->
+<div class="afs-modal" data-bind="visible: showingSampleLocationDeleteModal">
+    <div class="afs-modal-content">
+        <h1>{% trans "Delete Sample" %}</h1>
+        <p>{% trans "Are you sure you want to delete the sample?" %}</p>
+
+        <div class="afs-modal-clearfix">
+            <button type="button" data-bind="click: showSampleLocationDeleteModal(false)" class="btn btn-success">{% trans "Cancel" %}</button>
+            <button type="button" data-bind="click: deleteSampleLocation" class="btn btn-danger">{% trans "Delete" %}</button>
+        </div>
+    </div>
+</div>
 {% endblock workbench %}
 
 {% block tabs %}
@@ -33,18 +45,7 @@
     <div class="workbench-card-sidepanel-border"></div>
     <div class="workbench-card-sidepanel-body">
 
-    <!-- Popup modal for deleting a sample location -->
-    <div class="afs-modal" data-bind="visible: showingSampleLocationDeleteModal">
-        <div class="afs-modal-content">
-            <h1>{% trans "Delete Sample" %}</h1>
-            <p>{% trans "Are you sure you want to delete the sample?" %}</p>
 
-            <div class="afs-modal-clearfix">
-                <button type="button" data-bind="click: showSampleLocationDeleteModal(false)" class="btn btn-success">{% trans "Cancel" %}</button>
-                <button type="button" data-bind="click: deleteSampleLocation" class="btn btn-danger">{% trans "Delete" %}</button>
-            </div>
-        </div>
-    </div>
 
 
     <div data-bind="css: card.model.cssclass">
@@ -136,9 +137,10 @@
                                             </a>
                                         </td>
                                         <!-- /ko -->
+
                                         <td class="afs-workflow-table-contents" data-bind="text: (function(){
                                             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                                            return $data.data[partIdentifierAssignmentLabelNodeId]() + ' [Sample of ' + $parent.physicalThingName + ']';
+                                            return ko.unwrap($data.data[partIdentifierAssignmentLabelNodeId][$parent.activeLanguage()]['value']) + ' [Sample of ' + $parent.physicalThingName + ']';
                                         })()" style="width: 100%"></td>
                                     </tr>
                                     <!-- /ko -->
@@ -372,7 +374,7 @@
 
                         <!-- BEGIN sample description -->
                             <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Sample Description' %}</h5>
-
+                            <span data-bind="text: console.log(ko.unwrap($data.sampleDescriptionWidgetValue))"></span>
                             <div class="afs-workflow-sample-desc" style="margin-left: -21px; margin-top: -18px;"
                                 data-bind='
                                     component: {
@@ -389,6 +391,7 @@
                         <!-- END sample description -->
 
                         <!-- BEGIN motivation for sampling -->
+                            <span data-bind="text:console.log($data.motivationForSamplingWidgetValue)"></span>
                             <h5 class="analysis-areas-annotation-step-widget-title">{% trans 'Motivation for taking this sample' %}</h5>
                             <div class="afs-workflow-sample-desc" style="margin-left: -21px; margin-top: -18px;"
                                 data-bind='

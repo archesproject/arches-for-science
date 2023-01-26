@@ -85,12 +85,20 @@ define([
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
-                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
+                const digitalResourceName = {};
+                digitalResourceName[arches.activeLanguage] = {"value": manifestData.label, "direction": arches.activeLanguageDir};
+                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](digitalResourceName);                
                 const manifestDescription = Array.isArray(manifestData.description) ? manifestData.description[0] : manifestData.description;
-                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescription);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](manifestData['@id']);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
-                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](manifestData['@context']);
+                const manifestDescriptionTileValue = {};
+                manifestDescriptionTileValue[arches.activeLanguage] = {"value": manifestDescription || "", "direction": arches.activeLanguageDir};
+                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescriptionTileValue);                
+                const manifestContentIdValue = {};
+                manifestContentIdValue[arches.activeLanguage] = {"value": manifestData['@id'], "direction": arches.activeLanguageDir};
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](manifestContentIdValue);
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id               
+                const conformanceNodeValue = {};
+                conformanceNodeValue[arches.activeLanguage] = {"value": manifestData['@context'], "direction": arches.activeLanguageDir};
+                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](conformanceNodeValue);
             }
             else {
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](null);
@@ -317,7 +325,7 @@ define([
             const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
                 return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
             });
-            return window.fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId])
+            return fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]["value"])
                 .then(function(response){
                     if(response.ok) {
                         return response.json();
