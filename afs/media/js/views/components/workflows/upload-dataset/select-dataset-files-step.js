@@ -17,6 +17,13 @@ define([
         viewModel: function(params) {
             // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
 
+            this.buildStrObject = str => {
+                return {[arches.activeLanguage]: {
+                    "value": str,
+                    "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+                }};
+            };
+
             IIIFViewerViewmodel.apply(this, [params]);
             var defaultColor;
             var self = this;            
@@ -58,8 +65,7 @@ define([
             this.mainMenu = ko.observable(false);
             this.files = ko.observableArray([]);
 
-            self.formats = ko.observableArray(formats.map(format => {return {"text": format.name, "id": format.id}}));
-            
+            self.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id};}));
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
             this.loadingMessage = ko.observable();
@@ -270,7 +276,7 @@ define([
 
                     // For each part of parent phys thing, create a digital resource with a Name tile
                     formData.append('dataset', JSON.stringify({
-                        "name": part.calcDatasetName(),
+                        "name": self.buildStrObject(part.calcDatasetName()),
                         "tileId": part.nameTileId(),
                         "resourceInstanceId": ko.unwrap(part.datasetId),
                         "partResourceId": ko.unwrap(part.resourceid),
@@ -400,7 +406,7 @@ define([
                     part.nameTileId = part.nameTileId || ko.observable();
                     part.resourceReferenceId = part.resourceReferenceId || ko.observable();
                     part.nameDirty = part.nameDirty || ko.observable(false);
-                    part.displayname = part.data[physicalThingPartNameNodeId];
+                    part.displayname = part.data[physicalThingPartNameNodeId][arches.activeLanguage]['value'];
                     if (datasetTile && !manifestValueIds.includes(datasetTile.data[digitalReferenceTypeNodeId])) {
                         const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
                         const datasetName =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).data[datasetNameNodeId];
@@ -458,7 +464,7 @@ define([
                             return part.observationResourceId == observationResourceId;
                         }
                     });
-                };
+                }
                 self.parts(parts);
                 self.selectedPart(self.parts()[0]);
 
