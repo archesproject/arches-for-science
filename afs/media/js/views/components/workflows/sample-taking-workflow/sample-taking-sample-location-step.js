@@ -675,6 +675,9 @@ define([
                     params.pageVm.alert("");
                     self.drawFeatures([]);
                 });
+                $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
+                    self.loadExternalCardData(data);
+                });
             })
             .fail(function(error){
                 console.log(error);

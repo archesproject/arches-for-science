@@ -152,9 +152,7 @@ define([
 
         this.saveSamplingName = function() {
             const languageValueId = ['bc35776b-996f-4fc1-bd25-9f6432c1f349']; //English
-            const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"]; //[primary title, preferred terms]
-            const samplingName = {};
-            samplingName[arches.activeLanguage] = {"value": self.samplingName(), "direction": arches.activeLanguageDir};
+            const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"]; //[primary title, preferred terms];
             const samplingNameTileData = {
                 "tileid": ko.unwrap(self.samplingNameTile) || "",
                 "nodegroup_id": samplingNameNodegroup,
@@ -167,7 +165,7 @@ define([
                     "03357898-1d9d-11eb-a29f-024e0d439fdb": languageValueId,
                     "033578a4-1d9d-11eb-a29f-024e0d439fdb": null,
                     "033578b5-1d9d-11eb-a29f-024e0d439fdb": prefLabelIds,
-                    "033578c0-1d9d-11eb-a29f-024e0d439fdb": samplingName
+                    "033578c0-1d9d-11eb-a29f-024e0d439fdb": self.samplingName()
                 },
                 'transaction_id': params.form.workflowId
             };
@@ -238,11 +236,11 @@ define([
         };
 
         this.saveSamplingTechnique = function() {
-            const samplingTechnique = {};
-            samplingTechnique[arches.activeLanguage] = {
-                value: self.samplingTechnique(),
-                direction: arches.activeLanguageDir
-            };
+            // const samplingTechnique = {};
+            // samplingTechnique[arches.activeLanguage] = {
+            //     value: self.samplingTechnique(),
+            //     direction: arches.activeLanguageDir
+            // };
             var samplingTechniqueTileData = {
                 "tileid": ko.unwrap(self.samplingTechniqueTile) || "",
                 "nodegroup_id": sampleStatementNodegroup,
@@ -254,7 +252,7 @@ define([
                     '0335789a-1d9d-11eb-a29f-024e0d439fdb': ['bc35776b-996f-4fc1-bd25-9f6432c1f349'],
                     '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['df8e4cf6-9b0b-472f-8986-83d5b2ca28a0','72202a9f-1551-4cbc-9c7a-73c02321f3ea'],
-                    '033578c1-1d9d-11eb-a29f-024e0d439fdb': samplingTechnique
+                    '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingTechnique()
                 },
                 'transaction_id': params.form.workflowId        
             };
@@ -263,11 +261,11 @@ define([
         };
 
         this.saveSamplingMotivation = function() {
-            const samplingMotivation = {};
-            samplingMotivation[arches.activeLanguage] = {
-                value: self.samplingMotivation(),
-                direction: arches.activeLanguageDir
-            };
+            // const samplingMotivation = {};
+            // samplingMotivation[arches.activeLanguage] = {
+            //     value: self.samplingMotivation(),
+            //     direction: arches.activeLanguageDir
+            // };
             var samplingMotivationTileData = {
                 "tileid": ko.unwrap(self.samplingMotivationTile) || "",
                 "nodegroup_id": sampleStatementNodegroup,
@@ -279,7 +277,7 @@ define([
                     '0335789a-1d9d-11eb-a29f-024e0d439fdb': ['bc35776b-996f-4fc1-bd25-9f6432c1f349'],
                     '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['7060892c-4d91-4ab3-b3de-a95e19931a61'],
-                    '033578c1-1d9d-11eb-a29f-024e0d439fdb': samplingMotivation
+                    '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingMotivation()
                 },
                 'transaction_id': params.form.workflowId        
             };
