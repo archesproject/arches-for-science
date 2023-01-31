@@ -28,13 +28,14 @@ define([
         const samplingActivityGraphId = "03357848-1d9d-11eb-a29f-024e0d439fdb";
         const physicalThingPartAnnotationNodeId = "97c30c42-8594-11ea-97eb-acde48001122";
         this.analysisAreaResourceIds = [];
-        this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId]);
+        this.manifestUrl = ko.observable(params.imageServiceInstanceData[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]["value"]);
 
         this.samplingActivitySamplingUnitCard = ko.observable();
         this.samplingActivityStatementCard = ko.observable();
         this.physThingSearchResultsLookup = {};
         this.savingTile = ko.observable();
         this.savingMessage = ko.observable();
+        this.activeLanguage = ko.observable(arches.activeLanguage);
 
         this.selectedFeature = ko.observable();
         this.featureLayers = ko.observableArray();
@@ -162,10 +163,10 @@ define([
         this.sampleName = ko.computed(function() {
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedSampleLocationInstance()){
-                const baseName = self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]() || "";
+                const baseName = ko.unwrap(ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])?.[arches.activeLanguage]?.["value"]) || "";
                 return `${baseName} [Sample of ${params.physicalThingName}]`;
             }
-        })
+        });
 
         this.initialize = function() {
             params.form.save = self.saveWorkflowStep;
@@ -315,9 +316,11 @@ define([
                                 if (ko.isObservable(tile.data[key])) {
                                     tile.data[key](self.selectedSampleLocationInstance().data[key]());
                                 } else if (key !== '__ko_mapping__') {
-                                    Object.keys(tile.data[key]).map(childkey => {
-                                        tile.data[key][childkey](self.selectedSampleLocationInstance().data[key][childkey]());
-                                    });
+                                    if (tile.data[key]?.[arches.activeLanguage]){
+                                        Object.keys(tile.data[key][arches.activeLanguage]).map(childkey => {
+                                            tile.data[key][arches.activeLanguage][childkey](self.selectedSampleLocationInstance().data[key][arches.activeLanguage][childkey]());
+                                        });
+                                    }
                                 };
                             });
                         };
@@ -429,14 +432,14 @@ define([
                         });
 
                         if (sampleDescriptionTile) {
-                            var sampleDescriptionContent = ko.unwrap(sampleDescriptionTile.data[physicalThingStatementContentNodeId]);
+                            var sampleDescriptionContent = ko.unwrap(sampleDescriptionTile.data[physicalThingStatementContentNodeId]?.[arches.activeLanguage]?.value);
 
                             self.sampleDescriptionWidgetValue(sampleDescriptionContent);
                             self.previouslySavedSampleDescriptionWidgetValue(sampleDescriptionContent);
                         }
 
                         if (samplingMotivationTile) {
-                            var sampleMotivationContent = ko.unwrap(samplingMotivationTile.data[physicalThingStatementContentNodeId]);
+                            var sampleMotivationContent = ko.unwrap(samplingMotivationTile.data[physicalThingStatementContentNodeId]?.[arches.activeLanguage]?.value);
             
                             self.motivationForSamplingWidgetValue(sampleMotivationContent);
                             self.previouslySavedMotivationForSamplingWidgetValue(sampleMotivationContent);
@@ -549,14 +552,14 @@ define([
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
             const featureCollection = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])
             if (!ko.unwrap(featureCollection?.features)?.length ||
-                !self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId]()) { //Sample Name Node
-                    params.pageVm.alert(new params.form.AlertViewModel(
-                        "ep-alert-red",
-                        "Missing Values",
-                        "Sample Location and Sample Name are Required",
-                    ));
-                    return;    
-                }
+                (!ko.unwrap(ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])?.[arches.activeLanguage]?.value) && !ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])) ) { //Sample Name Node
+                params.pageVm.alert(new params.form.AlertViewModel(
+                    "ep-alert-red",
+                    "Missing Values",
+                    "Sample Location and Sample Name are Required",
+                ));
+                return;    
+            }
 
             var updateAnnotations = function() {
                 return new Promise(function(resolve, _reject) {
@@ -596,8 +599,8 @@ define([
                 partIdentifierAssignmentTileData: koMapping.toJSON(self.selectedSampleLocationInstance().data),
                 partIdentifierAssignmentTileId: self.selectedSampleLocationInstance().tileid,
                 partIdentifierAssignmentResourceId: self.selectedSampleLocationInstance().resourceinstance_id,
-                sampleMotivation: self.motivationForSamplingWidgetValue(),
-                sampleDescription: self.sampleDescriptionWidgetValue(),
+                sampleMotivation: ko.unwrap(self.motivationForSamplingWidgetValue()?.[arches.activeLanguage]?.value) || ko.unwrap(self.motivationForSamplingWidgetValue),
+                sampleDescription: ko.unwrap(self.sampleDescriptionWidgetValue()?.[arches.activeLanguage]?.value) || ko.unwrap(self.sampleDescriptionWidgetValue),
                 transactionId: params.form.workflowId,
             };
 
@@ -671,6 +674,9 @@ define([
                     params.form.value(params.form.savedData());
                     params.pageVm.alert("");
                     self.drawFeatures([]);
+                });
+                $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
+                    self.loadExternalCardData(data);
                 });
             })
             .fail(function(error){
