@@ -46,7 +46,7 @@ define([
             };
 
             let parentPhysThingParts;
-            if (val.resource["Part Identifier Assignment"].length > 0){
+            if (val.resource["Part Identifier Assignment"]?.length > 0){
                 parentPhysThingParts = val.resource["Part Identifier Assignment"].map(function(part){
                     return {
                         name: self.getResourceValue(part, ['Part Identifier Assignment_Physical Part of Object','@display_value']),
@@ -100,7 +100,7 @@ define([
                     });
 
                     let leafletConfig;
-                    parentPhysThingParts.forEach(function(part){
+                    parentPhysThingParts?.forEach(function(part){
                         if (dataset.partresourceid === part.resourceid) {
                             const annotation = part.annotation;
                             const annotationJson = JSON.parse(annotation.replaceAll("'",'"'));
