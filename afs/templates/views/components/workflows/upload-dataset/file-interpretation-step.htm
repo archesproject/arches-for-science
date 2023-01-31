@@ -105,6 +105,10 @@
     <div data-bind="visible: showFileList">
         <button class="btn" style="background: #9490EE;color: #eee;" data-bind=" click: function(){showDatasetList(true); showFileList(false)}">
             <i class="fa fa-list" style="color: #eee"></i> {% trans "Show Dataset List" %}</button>
+        <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
+            <span>{% trans "Dataset" %}:</span>
+            <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource().displayname"></span>
+        </div>
         <div class="file-workbench-filter" style="max-height: 300px;height: auto;overflow-y:auto;">
             <h2 class="file-workbench-filter-header">{% trans 'Data Files' %}</h2>
             <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
@@ -136,6 +140,10 @@
         }">
             <i class="fa fa-list" style="color: #eee"></i> {% trans "Show File List" %}</button>
         
+        <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
+            <span>{% trans "Dataset" %}:</span>
+            <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource()?.displayname"></span>
+        </div>
         <div style="margin-top: 10px">
             <span>{% trans "File" %}:</span>
             <span style="font-weight: bold" data-bind="text: selectedFile()?.file_details[0].name"></span>

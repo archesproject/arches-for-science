@@ -33,7 +33,11 @@ define([
                         });
                     }
                 });
-                self.relatedDigitalResources(resources);
+                const digitalResourcesBelongToParentOrSample = resources.filter(resource => {
+                    return (!resource.isdirect && results.type !== 'sample') ||
+                        (resource.isdirect && results.type === 'sample');
+                });
+                self.relatedDigitalResources(digitalResourcesBelongToParentOrSample);
                 self.dataLoaded(true);
             }
         };
