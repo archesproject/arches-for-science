@@ -4,6 +4,7 @@ from django.views.generic import View
 from django.db import transaction
 import os
 import io
+from arches.app.datatypes.datatypes import StringDataType
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
 from arches.app.models.tile import Tile
@@ -51,7 +52,8 @@ class SelectDatasetFilesStep(View):
                 dataset_resource = Resource.objects.get(pk=dataset_resource_id)
                 dataset_name_tile = Tile.objects.get(pk=tile_id)
 
-            dataset_name_tile.data[dataset_name_node_id] = dataset.get("name")
+            string_data_type = StringDataType()
+            dataset_name_tile.data[dataset_name_node_id] = string_data_type.transform_value_for_tile(dataset.get("name"))
             dataset_name_tile.save(transaction_id=transaction_id)
             dataset_resource.load_tiles(user=request.user)
 
