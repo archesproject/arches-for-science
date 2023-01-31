@@ -35,7 +35,7 @@ class DigitalResourcesByObjectParts(View):
         results = {
             "resources": [{"resourceid": str(resource.pk), "displayname": resource.displayname()} for resource in digital_resources],
             "selected_resource": resourceid,
-            "type": object_type
+            "type": object_type,
         }
         for resource in results["resources"]:
             resource["partresourceid"] = part_lookup[resource["resourceid"]]
@@ -44,20 +44,20 @@ class DigitalResourcesByObjectParts(View):
 
     def get_type(self, resourceid):
         type_nodegroup_id = "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"
-        sample_area_value_id = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123'
-        sample_value_id = '77d8cf19-ce9c-4e0a-bde1-9148d870e11c'
-        analysis_area_value_id = '31d97bdd-f10f-4a26-958c-69cb5ab69af1'
+        sample_area_value_id = "7375a6fb-0bfb-4bcf-81a3-6180cdd26123"
+        sample_value_id = "77d8cf19-ce9c-4e0a-bde1-9148d870e11c"
+        analysis_area_value_id = "31d97bdd-f10f-4a26-958c-69cb5ab69af1"
 
         try:
             object_type_tile = TileModel.objects.filter(resourceinstance_id=resourceid).get(nodegroup_id=type_nodegroup_id)
             object_types = object_type_tile.data[type_nodegroup_id]
             if sample_area_value_id in object_types:
-                return 'sample area'
+                return "sample area"
             elif sample_value_id in object_types:
-                return 'sample'
+                return "sample"
             elif analysis_area_value_id in object_types:
-                return 'analysis area'
+                return "analysis area"
             else:
-                return ''
+                return ""
         except (ObjectDoesNotExist, KeyError) as e:
-            return ''
+            return ""
