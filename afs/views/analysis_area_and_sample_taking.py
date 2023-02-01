@@ -177,7 +177,7 @@ class SaveAnalysisAreaView(SaveAnnotationView):
         part_identifier_assignment_tile_id = request.POST.get("partIdentifierAssignmentTileId") or None
         name = request.POST.get("analysisAreaName")
         if name:
-            name_object = json.loads(name)
+            name_object = name
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         analysis_area_physical_thing_resourceid = None
         if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
