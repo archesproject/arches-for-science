@@ -30,13 +30,6 @@ define([
             return strValue;
         };
 
-        this.buildStrObject = str => {
-            return {[arches.activeLanguage]: {
-                "value": str,
-                "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
-            }};
-        };
-
         this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
         
         var digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
@@ -412,7 +405,7 @@ define([
                 parentPhysicalThingTileData: koMapping.toJSON(parentPhysicalThing.data),
                 parentPhysicalThingTileId: parentPhysicalThing.tileid,
                 transactionId: params.form.workflowId,
-                analysisAreaName: self.buildStrObject(self.areaName()),
+                analysisAreaName: self.areaName()
             };
 
             self.savingTile(true);
@@ -524,7 +517,7 @@ define([
                 partIdentifierAssignmentTileId: self.selectedAnalysisAreaInstance().tileid,
                 partIdentifierAssignmentResourceId: self.selectedAnalysisAreaInstance().resourceinstance_id,
                 transactionId: params.form.workflowId,
-                analysisAreaName: JSON.stringify(self.buildStrObject(self.areaName())),
+                analysisAreaName: self.areaName(),
             };
 
             $.ajax({
