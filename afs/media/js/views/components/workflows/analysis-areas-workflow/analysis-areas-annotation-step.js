@@ -412,7 +412,7 @@ define([
                 parentPhysicalThingTileData: koMapping.toJSON(parentPhysicalThing.data),
                 parentPhysicalThingTileId: parentPhysicalThing.tileid,
                 transactionId: params.form.workflowId,
-                analysisAreaName: self.buildStrObject(self.areaName()),
+                analysisAreaName: self.areaName(),
             };
 
             self.savingTile(true);
@@ -524,7 +524,7 @@ define([
                 partIdentifierAssignmentTileId: self.selectedAnalysisAreaInstance().tileid,
                 partIdentifierAssignmentResourceId: self.selectedAnalysisAreaInstance().resourceinstance_id,
                 transactionId: params.form.workflowId,
-                analysisAreaName: JSON.stringify(self.buildStrObject(self.areaName())),
+                analysisAreaName: self.areaName(),
             };
 
             $.ajax({
@@ -580,8 +580,44 @@ define([
             });
         };
 
+        const getNewTile = function(card) {
+            return new TileViewModel({
+                tile: {
+                    tileid: '',
+                    noDefaults: true,
+                    resourceinstance_id: ko.observable(self.physicalThingResourceId),
+                    nodegroup_id: card.nodegroupid,
+                    data: _.reduce(card.widgets(), function(data, widget) {
+                        if (widget.datatype.datatype === 'string') {
+                            data[widget.node_id()] = {[arches.activeLanguage]: {
+                                "value": "",
+                                "direction": arches.activeLanguageDir
+                            }};               
+                        } else {
+                            data[widget.node_id()] = null;
+                        }
+                        return data;
+                    }, {})
+                },
+                card: card,
+                graphModel: card.params.graphModel,
+                resourceId: card.resourceinstance_id,
+                displayname: card.params.displayname,
+                handlers: card.params.handlers,
+                userisreviewer: card.params.userisreviewer,
+                cards: card.params.cards,
+                tiles: card.params.tiles,
+                selection: card.params.selection,
+                scrollTo: card.params.scrollTo,
+                filter: card.params.filter,
+                provisionalTileViewModel: card.params.provisionalTileViewModel,
+                loading: card.params.loading,
+                cardwidgets: card.params.cardwidgets,
+            }); 
+        };
+
         this.loadNewAnalysisAreaTile = function() {
-            var newTile = self.card.getNewTile(true);  /* true flag forces new tile generation */
+            var newTile = getNewTile(self.card);  /* true flag forces new tile generation */
             self.viewAnalysisAreaInstance(newTile);
         };
 
@@ -645,7 +681,7 @@ define([
             });
 
             var card = partIdentifierAssignmentCard;
-            var tile = partIdentifierAssignmentCard.getNewTile();
+            var tile = getNewTile(partIdentifierAssignmentCard);
 
             self.card = card;
             self.tile = tile;
