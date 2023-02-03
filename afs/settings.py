@@ -2,26 +2,43 @@
 Django settings for afs project.
 """
 
-import os
 import arches
 import inspect
+import json
+import os
+import sys
+from django.utils.translation import gettext_lazy as _
 
 try:
     from arches.settings import *
 except ImportError:
     pass
 
+APP_NAME = "afs"
+ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
+WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
+
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-STATICFILES_DIRS = (os.path.join(APP_ROOT, "media"),) + STATICFILES_DIRS
-STATIC_ROOT = ""
+STATICFILES_DIRS = (
+    os.path.join(APP_ROOT, "media", "build"),
+    os.path.join(APP_ROOT, "media"),
+) + STATICFILES_DIRS
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "STATS_FILE": os.path.join(APP_ROOT, "webpack/webpack-stats.json"),
+    },
+}
+STATIC_ROOT = os.path.join(ROOT_DIR, "staticfiles")
+STATIC_URL = "/static/"
 
 DATATYPE_LOCATIONS.append("afs.datatypes")
 FUNCTION_LOCATIONS.append("afs.functions")
+ETL_MODULE_LOCATIONS.append("afs.etl_modules")
 SEARCH_COMPONENT_LOCATIONS.append("afs.search_components")
 TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "functions", "templates"))
 TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "widgets", "templates"))
 TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
-
+TEMPLATES[0]["OPTIONS"]["context_processors"].append("afs.utils.context_processors.project_settings")
 APP_PATHNAME = ""
 
 BYPASS_CARDINALITY_TILE_VALIDATION = False
@@ -48,6 +65,14 @@ ELASTICSEARCH_CUSTOM_INDEXES = []
 #     'name': 'my_new_custom_index' <-- follow ES index naming rules
 # }]
 
+LANGUAGES = [
+    # ("de", _("German")),
+    ("en", _("English")),
+    # ("en-gb", _("British English")),
+    # ("es", _("Spanish")),
+    # ("ar", _("Arabic")),
+]
+
 DATABASES = {
     "default": {
         "ATOMIC_REQUESTS": False,
@@ -67,6 +92,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    "webpack_loader",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -164,8 +190,7 @@ GRAPH_MODEL_CACHE_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 USER_GRAPH_PERMITTED_CARDS_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 USER_GRAPH_CARDWIDGETS_TIMEOUT = 3600 * 24 * 30  # seconds * hours * days = ~1mo
 
-MOBILE_OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
-MOBILE_DEFAULT_ONLINE_BASEMAP = {"default": "mapbox://styles/mapbox/streets-v9"}
+OAUTH_CLIENT_ID = ""  #'9JCibwrWQ4hwuGn5fu2u1oRZSs9V6gK8Vu8hpRC4'
 
 APP_TITLE = "Arches for Science"
 COPYRIGHT_TEXT = "All Rights Reserved."
@@ -175,7 +200,6 @@ CELERY_BROKER_URL = "amqp://guest:guest@localhost"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_RESULT_BACKEND = "django-db"  # Use 'django-cache' if you want to use your cache as your backend
 CELERY_TASK_SERIALIZER = "json"
-
 ONTOLOGY_NAMESPACES = {
     "http://purl.org/dc/terms/": "dcterms",
     "http://purl.org/dc/elements/1.1/": "dc",
@@ -260,20 +284,53 @@ RENDERERS += [
     # },
 ]
 
+FORMATS = [
+    {"name": "Bruker M6 (point)", "id": "bm6", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker 5g", "id": "b5g", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker Tracer IV-V", "id": "bt45", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker Tracer III", "id": "bt3", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker 5i", "id": "b5i", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Bruker Artax", "id": "bart", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
+    {"name": "Renishaw InVia - 785", "id": "r785", "renderer": "94fa1720-6773-4f99-b49b-4ea0926b3933"},
+    {"name": "Ranishsaw inVia - 633/514", "id": "r633", "renderer": "94fa1720-6773-4f99-b49b-4ea0926b3933"},
+    {"name": "ASD FieldSpec IV hi res", "id": "asd", "renderer": "88dccb59-14e3-4445-8f1b-07f0470b38bb"},
+]
+
 DOCKER = False
 
 try:
     from .package_settings import *
 except ImportError:
-    pass
+    try:
+        from package_settings import *
+    except ImportError as e:
+        pass
 
 try:
     from .settings_local import *
-except ImportError:
-    pass
+except ImportError as e:
+    try:
+        from settings_local import *
+    except ImportError as e:
+        pass
 
 if DOCKER:
     try:
         from .settings_docker import *
     except ImportError:
         pass
+
+
+if __name__ == "__main__":
+    print(
+        json.dumps(
+            {
+                "ARCHES_NAMESPACE_FOR_DATA_EXPORT": ARCHES_NAMESPACE_FOR_DATA_EXPORT,
+                "STATIC_URL": STATIC_URL,
+                "ROOT_DIR": ROOT_DIR,
+                "APP_ROOT": APP_ROOT,
+                "WEBPACK_DEVELOPMENT_SERVER_PORT": WEBPACK_DEVELOPMENT_SERVER_PORT,
+            }
+        )
+    )
+    sys.stdout.flush()

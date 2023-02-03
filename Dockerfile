@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as base 
+FROM ubuntu:22.10 as base 
 USER root
 
 ## Setting default environment variables
@@ -20,28 +20,30 @@ RUN mkdir ${WEB_ROOT}
 # support, directly and indirectly pulling in mysql-common, odbc, jp2, perl! ... )
 # a minimised build of GDAL could remove several hundred MB from the container layer.
 RUN set -ex \
-    && RUN_DEPS=" \
-        build-essential \
-        python3.8-dev \
-        mime-support \
-        libgdal-dev \
-        python3-venv \
-        postgresql-client-12 \
-        python3.8 \
-        python3.8-distutils \
-        python3.8-venv \
-        dos2unix \
-    " \
-    && apt-get install -y --no-install-recommends curl \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-    && curl -sL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-    && add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" \
-    && apt-get update -y \
-    && apt-get install -y --no-install-recommends $RUN_DEPS \
-    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python3.8 get-pip.py \
-    && apt-get install -y nodejs \
-    && npm install -g yarn
+  && RUN_DEPS=" \
+  build-essential \
+  python3.10-dev \
+  mime-support \
+  libgdal-dev \
+  python3-venv \
+  postgresql-client-12 \
+  python3.10 \
+  python3.10-distutils \
+  python3.10-venv \
+  dos2unix \
+  git \
+  " \
+  && apt-get install -y --no-install-recommends curl \
+  && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+  && curl -sL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+  && add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" \
+  && apt-get update -y \
+  && apt-get install -y --no-install-recommends $RUN_DEPS
+
+RUN apt install python3-pip -y \
+  && apt-get install -y nodejs npm \
+  && node -v \
+  && npm install -g yarn
 
 # Install Yarn components
 RUN mkdir -p ${APP_ROOT}/afs/app/media/packages
@@ -59,7 +61,7 @@ COPY ./arches ${ARCHES_ROOT}
 # From here, run commands from ARCHES_ROOT
 WORKDIR ${ARCHES_ROOT}
 
-RUN pip install -e . --user --no-use-pep517 && pip install -r arches/install/requirements_dev.txt
+RUN pip install -e . --user --no-use-pep517 && pip install -r arches/install/requirements.txt && pip install -r arches/install/requirements_dev.txt
 
 COPY /afs/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
 RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh &&\

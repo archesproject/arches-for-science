@@ -1,5 +1,6 @@
 define([
-    'knockout', 
+    'knockout',
+    'templates/views/components/reports/scenes/annotation-parts.htm', 
     'geojson-extent',
     'leaflet',
     'utils/report',
@@ -7,7 +8,7 @@ define([
     'views/components/iiif-viewer',
     'bindings/leaflet',
     'bindings/datatable'
-], function(ko, geojsonExtent, L, reportUtils) {
+], function(ko, annotationPartsSceneTemplate, geojsonExtent, L, reportUtils) {
     return ko.components.register('views/components/reports/scenes/annotation-parts', {
         viewModel: function(params) {
             var self = this;
@@ -106,8 +107,6 @@ define([
                 }
             });
         },
-        template: {
-            require: 'text!templates/views/components/reports/scenes/annotation-parts.htm'
-        }
+        template: annotationPartsSceneTemplate
     });
 });

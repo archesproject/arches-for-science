@@ -1,21 +1,35 @@
 define([
     'jquery',
     'knockout',
+    'templates/views/components/workflows/upload-dataset/file-interpretation-step.htm',
     'arches',
     'uuid',
     'viewmodels/card-component',
     'viewmodels/card-multi-select',
     'views/components/workbench',
     'file-renderers',
-    'models/tile'
-], function($, ko, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, TileModel) {
-   
+    'js-cookie',
+    'models/tile',
+    'afs-formats',
+], function($, ko, fileInterpretationStepTemplate, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel, formats) {
     function viewModel(params) {
+        // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
+
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
         var self = this;
         const interpretationValueid = '2eef4771-830c-494d-9283-3348a383dfd6';
         const briefTextValueid = '72202a9f-1551-4cbc-9c7a-73c02321f3ea';
         const datasetInfo = params.datasetInfo;
+        self.currentRendererValid = ko.observable(true);
+        self.loading = ko.observable(false);
+        self.loadingMessage = ko.observable();
+        self.showDatasetList = ko.observable(true);
+        self.showFileList = ko.observable(false);
+        self.showFileInfo = ko.observable(false);
+
+        self.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id}}));
+
+        this.selectedFileFormat = ko.observable().extend({deferred: true, notify: 'always'});
 
         if (datasetInfo["select-dataset-files-step"]){
             var datasetIds = datasetInfo["select-dataset-files-step"].savedData()?.parts.reduce(
@@ -41,39 +55,72 @@ define([
             var datasetIds = [params.datasetInfoFromUploadFilesStep['upload-files-step'].savedData().datasetId]
         }
 
-        this.fileFormatRenderers = fileRenderers;
+        this.fileFormatRenderers = Object.values(fileRenderers);
         this.fileStatementParameter = ko.observable();
         this.fileStatementInterpretation = ko.observable();
         this.selected = ko.observable();
         params.value({});
         this.dirty = ko.computed(function(){
             for (var value of Object.values(params.value())) {
-                if(value.fileStatementParameter.dirty() || value.fileStatementInterpretation.dirty()){
+                if(value.fileStatementParameter.dirty() || 
+                   value.fileStatementInterpretation.dirty() || 
+                   (self.selectedFile()?.file_details?.[0]?.format != self.selectedFileFormat() &&
+                    self.selectedFileFormat != undefined)){
                     return true;
                 }
             }
             return false;
         });
-        this.save = function(){
-            for (var value of Object.values(params.value())) {
+        this.save = async() => {
+            self.loading(true);
+            self.loadingMessage('Saving interpretation data...')
+            for (const tileid in params.value()) {
+                const value = params.value()[tileid];
                 if(value.fileStatementParameter.dirty()){
                     value.fileStatementParameter.save();
                 }
                 if(value.fileStatementInterpretation.dirty()){
                     value.fileStatementInterpretation.save();
                 }
+                if(value.format){
+                    await this.updateRenderer(tileid, value.format)
+                    delete value.format;
+                }
             }
+
+            //reload digital resources
+            const oldDigitalResourceId = self.selectedDigitalResource().resourceinstanceid;
+            const oldFileTileId = self.selectedFile()["@tile_id"];
+            self.digitalResources([]);
+
+            self.loading(true);
+            self.loadingMessage('Reloading datasets...')
+            await loadDigitalResources(false);
+            if(oldDigitalResourceId){
+                self.selectedDigitalResource(self.digitalResources().find(digitalResource => digitalResource.resourceinstanceid == oldDigitalResourceId));
+            } 
+
+            if(oldFileTileId){
+                self.selectedFile(self.files().find(file => file["@tile_id"] == oldFileTileId));
+            } 
+            //await this.updateRenderer()
             params.form.complete(true);
+            self.loading(false);
         };
 
         params.form.reset = function(){
             for (var value of Object.values(params.value())) {
                 value.fileStatementParameter.reset();
                 value.fileStatementInterpretation.reset();
+                if(value.format){
+                    delete value.format;
+                }
             }
-            var file = params.value()[self.selectedFile()['@tile_id']];
-            self.fileStatementParameter(file.fileStatementParameter.fileStatement());
-            self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
+            const file = params.value()?.[self.selectedFile()?.['@tile_id']];
+            if(file){
+                self.fileStatementParameter(file.fileStatementParameter.fileStatement());
+                self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
+            }
         };
         this.reset = params.form.reset;
         
@@ -85,6 +132,7 @@ define([
                 params.value.valueHasMutated();
             }
         }, this);
+
         this.fileStatementInterpretation.subscribe(function(fp) {
             if(!!this.selectedFile()){
                 var obj = params.value();
@@ -101,6 +149,14 @@ define([
 
         var FileStatement = function(tileid, parenttileid, resourceInstanceId, fileStatement, statementTypeId){
             var self = this;
+
+            const buildStrObject = str => {
+                return {[arches.activeLanguage]: {
+                    "value": str,
+                    "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+                }};
+            };
+
             if(!tileid){
                 tileid = '';
             }
@@ -125,7 +181,7 @@ define([
             this.fileStatement = ko.observable(fileStatement);
             this._fs = ko.observable(fileStatement);
             this.updateStatement = function(newStatement){
-                self.tile.get('data')['ca227726-78ed-11ea-a33b-acde48001122'] = newStatement;
+                self.tile.get('data')['ca227726-78ed-11ea-a33b-acde48001122'] = buildStrObject(newStatement);
                 self.fileStatement(newStatement);
             };
             this.save = function(){
@@ -145,63 +201,66 @@ define([
         };
 
         this.digitalResources = ko.observableArray();
-        this.getDigitalResource = function(resourceid) {
-            window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
-                .then(function(response){
-                    if(response.ok){
-                        return response.json();
+        this.getDigitalResource = async(resourceid, newStatements) => {
+            const response = await window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
+            if(!response.ok) {return;}
+            const data = await response.json()
+
+            self.digitalResources.push(data);
+            var obj = params.value();
+            data.resource?.File?.forEach(function(datafile){
+                var fileTileid = datafile['@tile_id'];
+                if (!(fileTileid in obj)){
+                    obj[fileTileid] = {
+                        'fileStatementParameter': '',
+                        'fileStatementInterpretation': ''
+                    };
+                }
+
+                var getStatement = function(valueid){
+                    var fileStatement;
+                    try {
+                        fileStatement = datafile.FIle_Statement.find(function(statement){
+                            return statement.FIle_Statement_type['concept_details'][0].valueid === valueid;
+                        });
+                    } catch(err) {}
+
+                    if(fileStatement){
+                        return new FileStatement(
+                            fileStatement['@tile_id'], fileTileid, resourceid, fileStatement.FIle_Statement_content['@display_value'], valueid
+                        );
+                    } else {
+                        return new FileStatement(
+                            '', fileTileid, resourceid, '', valueid
+                        );          
                     }
-                })
-                .then(function(data){
-                    self.digitalResources.push(data);
-                    var obj = params.value();
-                    data.resource.File.forEach(function(datafile){
-                        var fileTileid = datafile['@tile_id'];
-                        if (!(fileTileid in obj)){
-                            obj[fileTileid] = {
-                                'fileStatementParameter': '',
-                                'fileStatementInterpretation': ''
-                            };
-                        }
-
-                        var getStatement = function(valueid){
-                            var fileStatement;
-                            try {
-                                fileStatement = datafile.FIle_Statement.find(function(statement){
-                                    return statement.FIle_Statement_type['concept_details'][0].valueid === valueid;
-                                });
-                            } catch(err) {}
-
-                            if(fileStatement){
-                                return new FileStatement(
-                                    fileStatement['@tile_id'], fileTileid, resourceid, fileStatement.FIle_Statement_content['@display_value'], valueid
-                                );
-                            } else {
-                                return new FileStatement(
-                                    '', fileTileid, resourceid, '', valueid
-                                );          
-                            }
-                        };
-
-                        obj[fileTileid].fileStatementParameter = getStatement(briefTextValueid);
-                        obj[fileTileid].fileStatementInterpretation = getStatement(interpretationValueid);
-                        params.value(obj);    
-                    });
-                    if(self.digitalResources().length === 1){
-                        self.selectedDigitalResource(self.digitalResources()[0]);
-                        self.selectedFile(self.files()[0]);
-                    }
-                });
+                };
+                
+                if(newStatements){
+                    obj[fileTileid].fileStatementParameter = getStatement(briefTextValueid);
+                    obj[fileTileid].fileStatementInterpretation = getStatement(interpretationValueid);
+                    params.value(obj);   
+                }
+            });
         };
-        datasetIds.forEach(function(datasetId){
-            self.getDigitalResource(datasetId);
-        })
+        
+        const loadDigitalResources = async (newStatements=true) => {
+            return Promise.all(datasetIds.map(async (datasetId) => {
+                return self.getDigitalResource(datasetId, newStatements);
+            }));
+        };
+
+        (async () => {
+            self.loading(true);
+            self.loadingMessage('Loading datasets...')
+            await loadDigitalResources();
+            self.loading(false);
+        })();
 
         this.digitalResourceFilter = ko.observable('');
         this.selectedDigitalResource = ko.observable();
         this.selectedDigitalResource.subscribe(function(selectedDigitalResource){
-            this.files(selectedDigitalResource.resource.File);
-            this.selectedFile(this.files()[0]);
+            this.files(selectedDigitalResource?.resource?.File ?? []);
         }, this);
         this.filteredDigitalResources = ko.pureComputed(function(){
             return this.digitalResources().filter(function(dr){
@@ -214,18 +273,41 @@ define([
         this.fileFilter = ko.observable('');
         this.selectedRenderer = ko.observable();
         this.selectedFile = ko.observable();
-        // this.selectFile = function(selectedFile){
-        // };
-        this.selectedFile.subscribe(function(selectedFile){
+
+        self.selectedFileFormat.subscribe(async(format) => {
+            
+            // const resp = await window.fetch(arches.urls.format_render_map(format), {
+            //     method: 'GET',
+            //     credentials: 'include',
+            //     headers: {
+            //         "X-CSRFToken": Cookies.get('csrftoken')
+            //     }
+            // });
+            // const response = await resp.json();
+
+            if(!!this.selectedFile()){
+                var obj = params.value();
+                var tileid = this.selectedFile()['@tile_id'];
+                obj[tileid].format = format;
+                params.value.valueHasMutated();
+            }
+
+            const renderer = self.getFileFormatRenderer(format ? Object.values(formats).find(x => x.id == format)?.renderer : self.selectedFile()?.file_details?.[0]?.renderer)
+            if(renderer){
+                self.selectedRenderer(renderer);
+                self.selectedRenderer.valueHasMutated();
+            }
+        });
+
+        self.selectedFile.subscribe(function(selectedFile){
             if(!!selectedFile){
                 self.selected(true);
                 self.displayContent = self.getDisplayContent(selectedFile.file_details[0]);
-                const renderer = self.getFileFormatRenderer(selectedFile.file_details[0].renderer);
-                require([renderer.component], () => {
-                    self.selectedRenderer(renderer);
-                });
+
                 // self.selectedFile(selectedFile);
                 var file = params.value()[selectedFile['@tile_id']];
+                self.selectedFileFormat(file.format || selectedFile.file_details[0].format);
+                self.selectedFileFormat.valueHasMutated();
                 self.fileStatementParameter(file.fileStatementParameter.fileStatement());
                 self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
             } else {
@@ -234,6 +316,22 @@ define([
                 self.fileStatementInterpretation(undefined);
             }
         });
+
+
+        this.updateRenderer = async(tileid, format) => {
+            await window.fetch(arches.urls.upload_dataset_file_renderer(tileid), {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({
+                    format: format
+                }),
+                headers: {
+                    "X-CSRFToken": Cookies.get('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+
         this.filteredFiles = ko.pureComputed(function(){
             return this.files().filter(function(file){
                 return file.file_details[0].name.toLowerCase().includes(this.fileFilter().toLowerCase());
@@ -266,61 +364,24 @@ define([
             };
             ret.availableRenderers = self.getDefaultRenderers(type, ret);
 
+            ret.validRenderer.subscribe(validity => {
+                self.currentRendererValid(validity)
+            })
+            
             return ret;
         };
 
 
         this.applyToAll = ko.observable(false);
 
-        // CardComponentViewModel.apply(this, [params]);
-
-        // if (!this.card.staging) {
-        //     CardMultiSelectViewModel.apply(this, [params]);
-        // } else {
-        //     this.card.staging.valueHasMutated();
-        // }
-        
-        // if ('filter' in this.card === false) {
-        //     this.card.filter = ko.observable('');
-        // }
-        // if ('renderer' in this.card === false) {
-        //     this.card.renderer = ko.observable();
-        // }
-
         this.fileRenderer = ko.observable();
         this.managerRenderer = ko.observable();
 
-        // var getfileListNode = function(){
-        //     var fileListNodeId;
-        //     var fileListNodes = params.card.model.nodes().filter(
-        //         function(val){
-        //             if (val.datatype() === 'file-list' && self.card.nodegroupid == val.nodeGroupId())
-        //                 return val;
-        //         });
-        //     if (fileListNodes.length) {
-        //         fileListNodeId = fileListNodes[0].nodeid;
-        //     }
-        //     return fileListNodeId;
-        // };
-
-        // this.fileListNodeId = getfileListNode();
         this.acceptedFiles = ko.observable(null);
 
-        // this.displayWidgetIndex = self.card.widgets().indexOf(self.card.widgets().find(function(widget) {
-        //     return widget.datatype.datatype === 'file-list';
-        // }));
 
         WorkbenchComponentViewModel.apply(this, [params]);
         this.workbenchWrapperClass = ko.observable('autoheight');
-
-        // if (this.card && this.card.activeTab) {
-        //     self.activeTab(this.card.activeTab);
-        // } else {
-        // }
-
-        // this.activeTab.subscribe(function(val){
-        //     self.card.activeTab = val;
-        // });
 
         this.fileRenderer.subscribe(function(){
             if (['add', 'edit', 'manage'].indexOf(self.activeTab()) < 0) {
@@ -328,48 +389,11 @@ define([
             }
         });
 
-        // self.card.tiles.subscribe(function(val){
-        //     if (val.length === 0) {
-        //         self.activeTab(null);
-        //     }
-        // });
-
         this.getFileFormatRenderer = function(rendererid) {
             return self.fileFormatRenderers.find(function(item) {
                 return item.id === rendererid;
             });
         };
-        
-        // if (!this.card.checkrenderers) {
-        //     this.card.checkrenderers = this.card.staging.subscribe(function(){
-        //         var compatible = [];
-        //         var compatibleIds = [];
-        //         var allCompatible = true;
-        //         var staging = self.card ? self.card.staging() : [];
-        //         var staged = self.card.tiles().filter(function(tile){
-        //             return staging.indexOf(tile.tileid) >= 0;  
-        //         });
-        //         staged.forEach(function(tile){
-        //             var file = tile.data[self.fileListNodeId]()[0];
-        //             var defaultRenderers = self.getDefaultRenderers(ko.unwrap(file.type), ko.unwrap(file.name));
-        //             if (compatible.length === 0) {
-        //                 compatible = defaultRenderers;
-        //                 compatibleIds = compatible.map(function(x){return x.id;});
-        //             } else {
-        //                 allCompatible = defaultRenderers.every(function(renderer){
-        //                     return compatibleIds.indexOf(renderer.id) > -1;
-        //                 }); 
-        //             }
-        //         });
-        //         self.fileFormatRenderers.forEach(function(r){
-        //             if (compatibleIds.indexOf(r.id) === -1 || allCompatible === false) {
-        //                 r.disabled = true;
-        //             } else {
-        //                 r.disabled = false;
-        //             }
-        //         });
-        //     });
-        // }
 
         this.getDefaultRenderers = function(type, file){
             var defaultRenderers = [];
@@ -437,9 +461,6 @@ define([
         }, this);
 
         this.uniqueId = uuid.generate();
-        // this.uniqueidClass = ko.computed(function() {
-        //     return "unique_id_" + self.uniqueId;
-        // });
 
         this.selectDefault = function(){
             var self = this;
@@ -497,36 +518,6 @@ define([
             }	
         };
 
-        // this.displayContent = ko.computed(function(){
-        //     var file;
-        //     // var selected = this.card.tiles().find(
-        //     //     function(tile){
-        //     //         return tile.selected() === true;
-        //     //     });
-        //     // if (selected) {
-        //     //     if (!this.selected() || (this.selected() && this.selected().tileid !== selected.tileid)) {
-        //     //         this.selected(selected);
-        //     //     }
-        //     //     file = this.getUrl(selected);
-        //     //     this.fileRenderer(file.renderer ? file.renderer.id : undefined);
-        //     // }
-        //     // else {
-        //     //     this.selected(undefined);
-        //     //     if (['add', 'edit', 'manage'].indexOf(self.activeTab()) < 0) {
-        //     //         self.activeTab(undefined);
-        //     //     }
-        //     // }
-        //     // if (file) {
-        //     //     file.availableRenderers = self.getDefaultRenderers(file.type, file);
-        //     //     file.validRenderer = ko.observable(true);
-        //     // }
-        //     // return file;
-        // }, this).extend({deferred: true});
-
-        // if (this.displayContent() === undefined) {
-        //     this.activeTab(undefined);
-        // }
-
         this.selectItem = function(val){
             if (val && val.selected) {
                 if (ko.unwrap(val) !== true && ko.unwrap(val.selected) !== true) {
@@ -557,24 +548,9 @@ define([
             });
         };
 
-        // this.stageFiltered = function() {
-        //     self.card.staging([]);
-        //     this.filteredTiles().forEach(function(tile){
-        //         if (self.card.staging().indexOf(tile.tileid) < 0) {
-        //             self.card.staging.push(tile.tileid);
-        //         }
-        //     });
-        // };
-
         this.clearStaging = function() {
             self.card.staging([]);
         };
-
-        // if (this.form && ko.unwrap(this.form.resourceId)) {
-        //     this.card.resourceinstanceid = ko.unwrap(this.form.resourceId);
-        // } else if (this.card.resourceinstanceid === undefined && this.card.tiles().length === 0) {
-        //     this.card.resourceinstanceid = uuid.generate();
-        // }
 
         function sleep(milliseconds) {
             var start = new Date().getTime();
@@ -624,44 +600,11 @@ define([
             self.card.newTile = undefined;
         };
 
-        this.getAcceptedFiles = function(){
-            // self.card.widgets().forEach(function(w) {
-            //     if (w.node_id() === self.fileListNodeId) {
-            //         if (ko.unwrap(w.attributes.config.acceptedFiles)) {
-            //             self.acceptedFiles(ko.unwrap(w.attributes.config.acceptedFiles));
-            //         }
-            //     }
-            // });
-        };
-        this.getAcceptedFiles();
-
-        // this.dropzoneOptions = {
-        //     url: "arches.urls.root",
-        //     dictDefaultMessage: '',
-        //     autoProcessQueue: false,
-        //     uploadMultiple: true,
-        //     autoQueue: false,
-        //     acceptedFiles: self.acceptedFiles(),
-        //     clickable: ".fileinput-button." + this.uniqueidClass(),
-        //     previewsContainer: '#hidden-dz-previews',
-        //     init: function() {
-        //         self.dropzone = this;
-        //         this.on("addedfiles", function() {
-        //             self.card.staging([]);
-        //         });
-        //         this.on("addedfile", self.addTile, self);
-        //         this.on("error", function(file, error) {
-        //             file.error = error;
-        //         });
-        //     }
-        // };
     }
 
     ko.components.register('file-interpretation-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/upload-dataset/file-interpretation-step.htm'
-        }
+        template: fileInterpretationStepTemplate
     });
 
     return viewModel;

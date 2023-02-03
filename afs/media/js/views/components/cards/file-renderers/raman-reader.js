@@ -1,9 +1,10 @@
 define(['jquery',
     'knockout',
+    'templates/views/components/cards/file-renderers/afs-reader.htm',
     'viewmodels/afs-instrument',
     'bindings/plotly',
     'bindings/select2-query',
-], function($, ko, AfsInstrumentViewModel) {
+], function($, ko, ramanReaderTemplate, AfsInstrumentViewModel) {
     return ko.components.register('raman-reader', {
         viewModel: function(params) {
             AfsInstrumentViewModel.apply(this, [params]);
@@ -21,6 +22,6 @@ define(['jquery',
                 this.yAxisLabel("Intensity");
             };
         },
-        template: { require: 'text!templates/views/components/cards/file-renderers/afs-reader.htm' }
+        template: ramanReaderTemplate
     });
 });

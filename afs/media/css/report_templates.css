@@ -13,10 +13,6 @@
     display: inline;
 }
 
-.afs-table table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before {
-    top: 7px;
-}
-
 .afs-part-expanded
 {
     display: inline;
@@ -155,6 +151,10 @@ li, .afs-report-a.active:hover {
     color: #25476a !important;
 }
 
+.afs-summary-report-image-grid {
+    display: inline-block;
+}
+
 .afs-tabbed-report{
     width: calc(100% - 1px);
     overflow: auto;
@@ -229,6 +229,15 @@ i.toggle:hover {
     font-size: 17px;
     font-weight: 500;
     margin: 5px 0px;
+    display: inline-block;
+}
+
+.model-summary-report .afs-report-section-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 5px 0px -5px 10px; 
+    color: #25476A;
+    border-bottom: 1px solid #ddd;
     display: inline-block;
 }
 
@@ -379,7 +388,7 @@ i.toggle:hover {
 }
 
 .afs-table-control i {
-    padding: 7px 4px;
+    padding: 0px 4px;
     color: steelblue;
     font-size: 12px;
 }
@@ -422,6 +431,14 @@ i.toggle:hover {
     font-size: 15px;
     font-weight: 500;
     margin: 5px 0px;
+    display: inline-block;
+}
+
+.afs-report-subsection h3.afs-report-nodata-message  {
+    font-size: 14px;
+    font-weight: 300;
+    margin: 5px 0px 20px 10px;
+    color: #575757;
     display: inline-block;
 }
 
@@ -577,11 +594,6 @@ i.toggle:hover {
     bottom: 6px;
 }
 
-.firstchild-container .afs-table table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child:before, table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
-    top: 7px;
-    line-height: 14px;
-}
-
 .breadcrumb>li+li:before{
     content: "|"
 }
@@ -595,7 +607,13 @@ i.toggle:hover {
 }
 
 .afs-table .table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: #f6f8fa90 !important;
+    background-color: #f6f8fa05 !important;
+}
+
+#project-search-statement-content {
+    max-width: 50vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .line-clamp-1 {
@@ -838,4 +856,25 @@ a.afs-block-value-url {
     margin-top: 20px;
     border-bottom: 1px solid #ddd;
     display: inline-block;
+}
+
+.iiif-gallery-canvas-thumbnail {
+    display: inline-grid;
+    margin: 5px 10px 10px 0px;
+}
+
+.afs-report-section .iiif-gallery-canvas-thumbnail img{
+    height: 350px;
+    border: 1px solid #343434;
+}
+
+.afs-report-data-block {
+    font-size: 14px;
+    color:  #777;
+    margin:  0px 0px 30px 15px;
+}
+
+.afs-report-data-block a {
+    font-size: 14px;
+    color:  steelblue;
 }

@@ -1,8 +1,9 @@
 define([
     'knockout', 
+    'templates/views/components/reports/scenes/communication.htm',
     'utils/report',
     'bindings/datatable'
-], function(ko, reportUtils) {
+], function(ko, communicationSceneTemplate, reportUtils) {
     return ko.components.register('views/components/reports/scenes/communication', {
         viewModel: function(params) {
             var self = this;
@@ -41,8 +42,6 @@ define([
             }
 
         },
-        template: {
-            require: 'text!templates/views/components/reports/scenes/communication.htm'
-        }
+        template: communicationSceneTemplate
     });
 });

@@ -3,8 +3,9 @@ define([
     'arches',
     'utils/resource',
     'viewmodels/resource-instance-select',
+    'templates/views/components/widgets/resource-instance-select.htm',
     'bindings/select2-query'
-], function(ko, arches, ResourceUtils, ResourceInstanceSelectViewModel) {
+], function(ko, arches, ResourceUtils, ResourceInstanceSelectViewModel, resourceInstanceSelectTemplate) {
     return ko.components.register('views/components/resource-instance-nodevalue', {
         viewModel: function(params) {
             const self = this;
@@ -104,8 +105,6 @@ define([
                 }
             };
         },
-        template: {
-            require: 'text!widget-templates/resource-instance-select'
-        }
+        template: resourceInstanceSelectTemplate
     });
 });

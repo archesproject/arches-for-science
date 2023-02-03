@@ -2,6 +2,7 @@ define([
     'jquery',
     'underscore', 
     'knockout', 
+    'templates/views/components/reports/digital-resource.htm',
     'arches', 
     'utils/resource', 
     'utils/report', 
@@ -11,8 +12,8 @@ define([
     'views/components/reports/scenes/existence', 
     'views/components/reports/scenes/substance',
     'views/components/reports/scenes/json',  
-    'views/components/reports/scenes/default'], 
-    function($, _, ko, arches, resourceUtils, reportUtils) {
+    'views/components/reports/scenes/default'
+], function($, _, ko, digitalResourceReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('digital-resource-report', {
         viewModel: function(params) {
             var self = this;
@@ -36,6 +37,15 @@ define([
                 ...self.defaultTableConfig,
                 columns: Array(3).fill(null)
             };
+
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
 
             self.visible = { files: ko.observable(true) }
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -202,7 +212,29 @@ define([
                 card: self.cards?.['standards conformed to by digital resource'],
                 type: 'href'
             }]);
+
+            // Summary report
+            self.nameSummary = ko.observable();
+            self.statementsSummary = ko.observable();
+
+            const nameData = [self.getRawNodeValue(self.resource()?.name)];
+            if (nameData) {
+                self.nameSummary(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'name_type');
+                    const content = self.getNodeValue(x, 'name_content');
+                    return { type, content }
+                }));
+            };
+
+            const statementData = self.getRawNodeValue(self.resource()?.statement);
+            if (statementData) {
+                self.statementsSummary(statementData.map(x => {
+                    const type = self.getNodeValue(x, 'Statement_type');
+                    const content = self.getNodeValue(x, 'Statement_content');
+                    return { type, content }
+                }));
+            };
         },
-        template: { require: 'text!templates/views/components/reports/digital-resource.htm' }
+        template: digitalResourceReportTemplate
     });
 });

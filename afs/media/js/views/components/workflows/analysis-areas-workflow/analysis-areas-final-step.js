@@ -4,24 +4,25 @@ define([
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
+    'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-final-step.htm',
     'views/components/annotation-summary',
-], function(ko, _, uuid, arches, SummaryStep) {
+], function(ko, _, uuid, arches, SummaryStep, analysisAreasFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
 
         params.form.resourceId(params.sampleObjectResourceId);
         const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId];
+        const manifestUrl = params.imageStepData[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]['value'];
         const digitalReferenceResourceId = params.digitalReferenceResourceId;
 
-        this.regionInstances = params.regionsStepData.data.map(function(data){
+        this.regionInstances = params.regionsStepData?.data.map(function(data){
             return {
                 regionName: data.data["3e541cc6-859b-11ea-97eb-acde48001122"],
                 regionResource: data.data["b240c366-8594-11ea-97eb-acde48001122"][0]["resourceId"],
             };
         });
-        const currentAnalysisAreas = params.regionsStepData.currentAnalysisAreas;
+        const currentAnalysisAreas = params.regionsStepData?.currentAnalysisAreas;
 
         SummaryStep.apply(this, [params]);
 
@@ -37,7 +38,7 @@ define([
                 digitalReference: {'name': 'Image Service', 'value': digitalReference['Digital Source']["@display_value"]},
             };
             var annotationCollection = {};
-            self.regionResourceIds = self.regionInstances.map(x => x.regionResource);
+            self.regionResourceIds = self.regionInstances?.map(x => x.regionResource);
             val.resource['Part Identifier Assignment'].forEach(function(annotation){
                 const annotationResourceId = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','resourceId']);
                 const annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
@@ -89,7 +90,7 @@ define([
                     } else {
                         annotationCombined = annotation.annotationJson;
                     }
-                    if (currentAnalysisAreas.includes(annotation.tileId)) {
+                    if (currentAnalysisAreas?.includes(annotation.tileId)) {
                         info.push({
                             tileId: annotation.tileId,
                             name: annotation.annotationName,
@@ -122,7 +123,7 @@ define([
 
     ko.components.register('analysis-areas-final-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/analysis-areas-workflow/analysis-areas-final-step.htm' }
+        template: analysisAreasFinalStepTemplate
     });
     return viewModel;
 });

@@ -1,15 +1,15 @@
 define([
-    'knockout', 
+    'knockout',
+    'templates/views/components/reports/scenes/location.htm',
     'geojson-extent',
     'leaflet',
     'utils/report',
     'views/components/map',
-    'geojson-extent',
     'views/components/cards/select-feature-layers',
     'viewmodels/widget',
     'bindings/leaflet',
     'bindings/datatable'
-], function(ko, geojsonExtent, L, reportUtils, MapComponentViewModel, geojsonExtent, selectFeatureLayersFactory) {
+], function(ko, locationSceneTemplate, geojsonExtent, L, reportUtils, MapComponentViewModel, selectFeatureLayersFactory) {
     return ko.components.register('views/components/reports/scenes/location', {
         viewModel: function(params) {
             var self = this;
@@ -17,7 +17,8 @@ define([
             Object.assign(self, reportUtils);
             self.map = ko.observable();
             self.selectedAnnotationTileId = ko.observable();
-            self.cards = {};
+            self.mapOnly = params.mapOnly || false;
+            self.cards = Object.assign({}, params.cards);
             self.selectedGeometry = params.selectedGeometry || ko.observable();
             self.visible = {
                 geometry: ko.observable(true),
@@ -194,12 +195,13 @@ define([
                 self.map = ko.observable();
             };
 
-            self.geojson = Array.isArray(params.geojson) ? params.geojson : [params.geojson];
+            self.geojson = Array.isArray(params.geojson) ? params.geojson :
+                            params.geojson && params.geojson != '--' ? [params.geojson] :
+                            undefined;
+
             self.prepareMap('app-area-map-data', self.geojson?.[0]);
 
         },
-        template: {
-            require: 'text!templates/views/components/reports/scenes/location.htm'
-        }
+        template: locationSceneTemplate
     });
 });

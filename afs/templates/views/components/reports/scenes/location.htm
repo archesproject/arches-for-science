@@ -4,6 +4,7 @@
 
 {% block body %}
 <!-- Geometry/Map -->
+<!-- ko ifnot: mapOnly -->
 <div class="afs-report-section">
     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.geometry)}" class="fa fa-angle-double-right toggle"></i> {% trans "Geospatial Coordinates" %}</h2>
     <a class="afs-report-a" data-bind="{if: cards && cards.locationGeometry && !geojson, click: function(){addNewTile(cards.locationGeometry)}}">
@@ -159,5 +160,24 @@
         </div>
     </div>
 </div>
+<!-- /ko -->
+
+<!-- ko if: mapOnly && geojson -->
+<div class="afs-report-subsection-container no-flex">
+    <div class="firstchild-container">
+        <div class="afs-report-map">
+            <div class="map-container" style="height:475px">
+                <div class="map" style="height:475px" data-bind="component: {
+                    name: 'arches-map',
+                    params: $data
+                }">
+                </div>
+            </div>
+        </div>
+
+    </div>   
+</div>
+<!-- /ko -->
+
 {% endblock body %}
 {% endblock report %}

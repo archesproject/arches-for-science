@@ -3,11 +3,13 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
+    'viewmodels/alert',
+    'templates/views/components/plugins/create-project-workflow.htm',
     'viewmodels/workflow-step',
     'views/components/workflows/create-project-workflow/project-name-step',
     'views/components/workflows/create-project-workflow/add-things-step',
     'views/components/workflows/create-project-workflow/create-project-final-step'
-], function(ko, $, arches, Workflow) {
+], function(ko, $, arches, Workflow, AlertViewModel, createProjectWorkflowTemplate) {
     return ko.components.register('create-project-workflow', {
         viewModel: function(params) {
             this.componentName = 'create-project-workflow';
@@ -161,8 +163,33 @@ define([
             ];
 
             Workflow.apply(this, [params]);
+            this.reverseWorkflowTransactions = function() {
+                const quitUrl = this.quitUrl;
+                return $.ajax({
+                    type: "POST",
+                    url: arches.urls.transaction_reverse(this.id())
+                }).then(function() {
+                    params.loading(false);
+                    window.location.href = quitUrl;
+                });
+            };
+
+            this.quitWorkflow = function(){
+                this.alert(
+                    new AlertViewModel(
+                        'ep-alert-red',
+                        'Are you sure you would like to delete this workflow?',
+                        'All data created during the course of this workflow will be deleted.',
+                        function(){}, //does nothing when canceled
+                        () => {
+                            params.loading('Cleaning up...');
+                            this.reverseWorkflowTransactions();
+                        },
+                    )
+                );
+            };
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/create-project-workflow.htm' }
+        template: createProjectWorkflowTemplate
     });
 });

@@ -11,7 +11,7 @@ linters:
     config: './.eslintrc.js'
 files:
   ignore:
-    - 'arches/app/media/packages/*'
+    - 'arches/app/media/node_modules/*'
     - 'node_modules/*'
 review:
   fail_on_comments: true
