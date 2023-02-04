@@ -873,7 +873,8 @@ define([
                                     'description': ko.observable(''),
                                     'graphName': feature.properties.graphName,
                                     'resourceinstanceid': analysisArea.resourceid,
-                                    'reportURL': arches.urls.resource_report
+                                    'reportURL': arches.urls.resource_report,
+                                    'translations': arches.translations,
                                 };
                                 window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
                                     .then(function(response) {
