@@ -57,14 +57,9 @@
         <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())}, text: showName() ? '{% trans "Hide experiment name" %}' : '{% trans "Show experiment name" %}'"></div>
         <div data-bind="visible: showName">
             <div class="widget-input-label">{% trans "Observation Name" %}</div>
-            <div style="margin: -10px -5px;" data-bind="component: {
-                name: 'text-widget',
-                params: {
-                    renderContext: 'workflow', 
-                    value: nameValue,
-                    disabled: locked
-                }
-            }"></div>
+            <div>
+                <input type="text" style="padding-left: 15px; width: 90%; height: 36px;" data-bind="textInput: nameValue, attr: {disabled: locked}"></input>
+            </div>
         </div>
     </div>
 </div>

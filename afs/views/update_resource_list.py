@@ -7,6 +7,7 @@ from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.utils.betterJSONSerializer import JSONDeserializer
 from arches.app.utils.response import JSONResponse
+from arches.app.datatypes.datatypes import StringDataType
 
 logger = logging.getLogger(__name__)
 related_resource_template = {
@@ -50,7 +51,8 @@ class UpdateResourceListView(View):
         resource.index()
 
         tile = Tile.get_blank_tile(nodeid=name_node_id, resourceid=collection_resourceinstance_id)
-        tile.data[name_node_id] = "Collection for " + project_name
+        stringDataType = StringDataType()
+        tile.data[name_node_id] = stringDataType.transform_value_for_tile("Collection for {0}".format(project_name))
         tile.save(transaction_id=transaction_id)
 
         return collection_resourceinstance_id, tile.tileid

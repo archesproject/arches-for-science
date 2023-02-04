@@ -42,7 +42,7 @@ define([
 
             this.loadingMessage = ko.observable();
             this.loading = ko.observable(false);
-            this.formats = ko.observableArray(formats.map(format => {return {"text": format.name, "id": format.id}}));
+            this.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id}}));
 
             // var FileTile = function(){
             //     var self = this;

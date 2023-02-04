@@ -1,3 +1,4 @@
+import json
 import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -5,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.translation import get_language, get_language_bidi
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.models import ResourceXResource
@@ -117,7 +119,8 @@ class SaveAnnotationView(View):
                 tile = Tile.objects.get(resourceinstance=resourceid, nodegroup=physical_thing_name_nodegroupid)
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile(nodeid=physical_thing_name_nodeid, resourceid=resourceid)
-        tile.data[physical_thing_name_nodeid] = name
+        tile.data[physical_thing_name_nodeid] = {}
+        tile.data[physical_thing_name_nodeid][get_language()] = {"value": name, "direction": "rtl" if get_language_bidi() else "ltr"}
         tile.data[physical_thing_name_type_nodeid] = [preferred_terms_conceptid]
         tile.data[physical_thing_name_language_nodeid] = [english_conceptid]
         tile.save(transaction_id=transactionid)
@@ -173,6 +176,8 @@ class SaveAnalysisAreaView(SaveAnnotationView):
         part_identifier_assignment_tile_data = JSONDeserializer().deserialize(request.POST.get("partIdentifierAssignmentTileData"))
         part_identifier_assignment_tile_id = request.POST.get("partIdentifierAssignmentTileId") or None
         name = request.POST.get("analysisAreaName")
+        if name:
+            name_object = name
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         analysis_area_physical_thing_resourceid = None
         if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
@@ -183,7 +188,7 @@ class SaveAnalysisAreaView(SaveAnnotationView):
                 if analysis_area_physical_thing_resourceid is None:
                     analysis_area_physical_thing_resourceid = self.create_physical_thing_resource(transaction_id)
 
-                name_tile = self.save_physical_thing_name(analysis_area_physical_thing_resourceid, transaction_id, name)
+                name_tile = self.save_physical_thing_name(analysis_area_physical_thing_resourceid, transaction_id, name_object)
                 type_tile = self.save_physical_thing_type(analysis_area_physical_thing_resourceid, transaction_id, "analysis_area")
                 member_of_tile = self.save_physical_thing_related_collection(
                     analysis_area_physical_thing_resourceid, transaction_id, collection_resourceid
@@ -292,7 +297,8 @@ class SaveSampleAreaView(SaveAnnotationView):
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=statement_nodegroupid, resourceid=resourceid)
 
-        tile.data[statement_content_nodeid] = statement
+        tile.data[statement_content_nodeid] = {}
+        tile.data[statement_content_nodeid][get_language()] = {"value": statement, "direction": "rtl" if get_language_bidi() else "ltr"}
         tile.data[statement_type_nodeid] = [statement_types[type]]
         tile.data[statement_language_nodeid] = [english_conceptid]
         tile.save()
@@ -337,7 +343,7 @@ class SaveSampleAreaView(SaveAnnotationView):
                 if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                     sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
-        base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid]
+        base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid][get_language()]["value"]
         sample_name = "{} [Sample of {}]".format(base_name, parent_physical_thing_name)
         sample_area_name = "{} [Sample Area of {}]".format(base_name, parent_physical_thing_name)
 

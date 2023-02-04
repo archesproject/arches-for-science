@@ -386,6 +386,10 @@ define([
         this.stripTags = (original) => {
             return original.replace(/(<([^>]+)>)/gi, "");
         };
+
+        this.getStringValue = (value) => {
+            return value.find(str => str.language == arches.activeLanguage).value;
+        };
     }
 
     ko.components.register('add-things-step', {

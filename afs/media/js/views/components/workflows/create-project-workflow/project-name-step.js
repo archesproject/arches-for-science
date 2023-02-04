@@ -12,20 +12,29 @@ define([
         const nameNodeGroupId = '0b926359-ca85-11e9-ac9c-a4d18cec433a';
         const typeNodeGroupId = '0b924423-ca85-11e9-865a-a4d18cec433a';
         
-        const getProp = function(key, prop) {
+        const getProp = function(key, prop, isString=false) {
             if (ko.unwrap(params.value) && params.value()[key]) {
                 return prop ? params.value()[key][prop] : params.value()[key];
             } else {
-                return null;
+                if (isString) {
+                    const emptyStrObject = {};
+                    emptyStrObject[arches.activeLanguage] = {
+                        "value":'',
+                        "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+                    };
+                    return emptyStrObject;
+                } else {
+                    return null;
+                }
             } 
         };
-        
-        let typeTileId = getProp('type', 'tileid');
-        let nameTileId = getProp('name', 'tileid');
+
+        let typeTileId = ko.observable(getProp('type', 'tileid'));
+        let nameTileId = ko.observable(getProp('name', 'tileid'));
         
         this.projectResourceId = ko.observable(getProp('projectResourceId'));
         this.typeValue = ko.observable(getProp('type', 'value'));
-        this.nameValue = ko.observable(getProp('name', 'value'));
+        this.nameValue = ko.observable(getProp('name', 'value', true));
         this.projectEventTypeRdmCollection = ko.observable('26d7ce44-20e5-44fb-a3c1-dfbe6bdd521b');
 
         const snapshot = {
@@ -36,8 +45,8 @@ define([
         this.updatedValue = ko.pureComputed(function(){
             return {
                 projectResourceId: self.projectResourceId(),
-                name: {value: self.nameValue(), tileid: nameTileId},
-                type: {value: self.typeValue(), tileid: typeTileId},
+                name: {value: self.nameValue(), tileid: nameTileId()},
+                type: {value: self.typeValue(), tileid: typeTileId()},
             };
         });
 
@@ -80,7 +89,6 @@ define([
         params.form.reset = function(){
             self.typeValue(snapshot.typeValue);
             self.nameValue(snapshot.nameValue);
-            // params.form.hasUnsavedData(false);
         };
 
         params.form.save = function() {
@@ -107,14 +115,14 @@ define([
                 "0b924423-ca85-11e9-865a-a4d18cec433a": self.typeValue()
             };
 
-            return self.saveTile(nameTileData, nameNodeGroupId, self.projectResourceId(), nameTileId)
+            return self.saveTile(nameTileData, nameNodeGroupId, self.projectResourceId(), nameTileId())
                 .then(function(data) {
-                    nameTileId = data.tileid;
+                    nameTileId(data.tileid);
                     self.projectResourceId(data.resourceinstance_id);
-                    return self.saveTile(typeTileData, typeNodeGroupId, data.resourceinstance_id, typeTileId);
+                    return self.saveTile(typeTileData, typeNodeGroupId, data.resourceinstance_id, typeTileId());
                 })
                 .then(function(data) {
-                    typeTileId = data.tileid;
+                    typeTileId(data.tileid);
                     params.form.savedData(params.form.value());
                     params.form.complete(true);
                     params.form.dirty(false);

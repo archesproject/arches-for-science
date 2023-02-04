@@ -717,12 +717,13 @@
     padding: 3px 8px;
 }
 
-.afs-sample-name .form-group .widget-input-label {
-    display: none;
+.afs-sample-name {
+    position: relative;
+    top: -25px;
 }
 
-.afs-sample-name .form-group i {
-    display: none;
+.afs-sample-name .form-group .widget-input-label {
+    visibility: hidden;
 }
 
 .afs-sample-name input {
@@ -800,10 +801,6 @@
 
 .afs-experiment-name-block .widget-input-label {
     display: none;
-}
-
-.afs-experiment-name-block input {
-    margin-left: -20px;
 }
 
 .afs-workflow-manifest-manager-container .iiif-image-tools div.row:first-child {

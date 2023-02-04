@@ -1,6 +1,6 @@
 define([
     'knockout', 
-    'text!templates/views/components/reports/scenes/json.htm',
+    'templates/views/components/reports/scenes/json.htm',
     'utils/report',
     'arches',
     'viewmodels/widget',
