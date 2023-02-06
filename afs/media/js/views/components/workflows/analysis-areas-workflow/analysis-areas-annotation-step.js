@@ -12,7 +12,7 @@ define([
     'viewmodels/card',
     'viewmodels/tile',
     'views/components/iiif-annotation',
-    'text!templates/views/components/iiif-popup.htm',
+    'templates/views/components/iiif-popup.htm',
     'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step.htm',
     'views/components/resource-instance-nodevalue',
 ], function(_, $, arches, ko, koMapping, geojsonExtent, L, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup, analysisAreasAnnotationStepTemplate) {
@@ -750,7 +750,8 @@ define([
                                     'description': ko.observable(''),
                                     'graphName': feature.properties.graphName,
                                     'resourceinstanceid': sampleLocation.resourceid,
-                                    'reportURL': arches.urls.resource_report
+                                    'reportURL': arches.urls.resource_report,
+                                    'translations': arches.translations,
                                 };
                                 window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
                                     .then(function(response) {

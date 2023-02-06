@@ -11,7 +11,7 @@ define([
     'viewmodels/card',
     'viewmodels/tile',
     'views/components/iiif-annotation',
-    'text!templates/views/components/iiif-popup.htm',
+    'templates/views/components/iiif-popup.htm',
     'templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step.htm'
 ], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup, sampleTakingSampleLocationStepTemplate) {
     function viewModel(params) {
@@ -873,7 +873,8 @@ define([
                                     'description': ko.observable(''),
                                     'graphName': feature.properties.graphName,
                                     'resourceinstanceid': analysisArea.resourceid,
-                                    'reportURL': arches.urls.resource_report
+                                    'reportURL': arches.urls.resource_report,
+                                    'translations': arches.translations,
                                 };
                                 window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
                                     .then(function(response) {

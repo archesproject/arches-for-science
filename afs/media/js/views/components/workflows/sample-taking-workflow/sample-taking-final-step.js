@@ -5,7 +5,7 @@ define([
     'uuid',
     'arches',
     'views/components/workflows/summary-step',
-    'text!templates/views/components/iiif-popup.htm',
+    'templates/views/components/iiif-popup.htm',
     'templates/views/components/workflows/sample-taking-workflow/sample-taking-final-step.htm'
 ], function(geojsonExtent, ko, L, uuid, arches, SummaryStep, iiifPopup, sampleTakingFinalStepTemplate) {
 
