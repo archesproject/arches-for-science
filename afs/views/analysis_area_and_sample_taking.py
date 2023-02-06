@@ -44,7 +44,7 @@ class SaveAnnotationView(View):
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
         tile.data[nodeid] = nodevalue
-        tile.save(transaction_id=transactionid)
+        tile.save(transaction_id=transactionid, index=False)
 
         return tile
 
@@ -54,7 +54,7 @@ class SaveAnnotationView(View):
         else:
             tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=nodegroupid, resourceid=resourceinstanceid)
         tile.data = tiledata
-        tile.save(transaction_id=transactionid)
+        tile.save(transaction_id=transactionid, index=False)
 
         return tile
 
@@ -69,7 +69,7 @@ class SaveAnnotationView(View):
                 tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
             related_resource_template = get_related_resource_template(related_resourceid)
             tile.data[nodeid] = [related_resource_template]
-        tile.save(transaction_id=transactionid)
+        tile.save(transaction_id=transactionid, index=False)
 
         return tile
 
@@ -82,7 +82,7 @@ class SaveAnnotationView(View):
             tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
             related_resource_template = get_related_resource_template(related_resourceid)
             tile.data[nodeid] = [related_resource_template]
-        tile.save(transaction_id=transactionid)
+        tile.save(transaction_id=transactionid, index=False)
 
         return tile
 
@@ -100,7 +100,7 @@ class SaveAnnotationView(View):
         if related_resourceid not in list_of_rr_resources:
             related_resource_template = get_related_resource_template(related_resourceid)
             tile.data[nodeid].append(related_resource_template)
-            tile.save(transaction_id=transactionid)
+            tile.save(transaction_id=transactionid, index=False)
 
         return tile
 
@@ -123,7 +123,7 @@ class SaveAnnotationView(View):
         tile.data[physical_thing_name_nodeid][get_language()] = {"value": name, "direction": "rtl" if get_language_bidi() else "ltr"}
         tile.data[physical_thing_name_type_nodeid] = [preferred_terms_conceptid]
         tile.data[physical_thing_name_language_nodeid] = [english_conceptid]
-        tile.save(transaction_id=transactionid)
+        tile.save(transaction_id=transactionid, index=False)
 
         return tile
 
@@ -266,7 +266,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         tile.data[sampling_area_sample_created_nodeid] = [get_related_resource_template(sample_physical_thing_resourceid)]
         tile.data[sampling_area_visualization_nodeid] = sample_area_visualization
 
-        tile.save(transaction_id=transactionid)
+        tile.save(transaction_id=transactionid, index=False)
 
         return tile
 
@@ -301,7 +301,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         tile.data[statement_content_nodeid][get_language()] = {"value": statement, "direction": "rtl" if get_language_bidi() else "ltr"}
         tile.data[statement_type_nodeid] = [statement_types[type]]
         tile.data[statement_language_nodeid] = [english_conceptid]
-        tile.save()
+        tile.save(index=False)
 
         return tile
 
@@ -312,7 +312,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         tile = self.save_node(
             sample_resourceid, removal_from_object_nodegroupid, removed_from_nodeid, transactionid, removed_from_related_list
         )
-        tile.save(transaction_id=transactionid)
+        tile.save(transaction_id=transactionid, index=False)
 
     def post(self, request):
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
