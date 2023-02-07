@@ -510,8 +510,9 @@ define([
                     const type = self.getNodeValue(x, 'Production_type');
                     const technique = self.getNodeValue(x, 'Production_technique');
                     const location = self.getNodeValue(x, 'Production_location');
-                    const locationLink = reportUtils.getResourceLink({resourceId: x?.production_location?.instance_details[0].resourceId});
-                    return { creator, creationDate, type, technique, location, locationLink}
+                    const productionLocationResource = x?.production_location?.instance_details ? x?.production_location?.instance_details[0] : null;
+                    const locationLink = reportUtils.getResourceLink({resourceId: productionLocationResource?.resourceId});
+                    return { creator, creationDate, type, technique, location, locationLink};
                 }));
             };
 
