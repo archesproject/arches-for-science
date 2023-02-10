@@ -1,0 +1,1 @@
+(self.webpackChunkarches=self.webpackChunkarches||[]).push([[3094,8939],{83094:function(e,r){var t;void 0===(t=function(){var e=document.querySelector("#resourceEditHistoryData").getAttribute("resourceEditHistoryData");return JSON.parse(e.replace(/,\s*}*$/,"}"))}.apply(r,[]))||(e.exports=t)}}]);
