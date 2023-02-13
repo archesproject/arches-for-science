@@ -384,11 +384,11 @@ define([
         this.initialize();
 
         this.stripTags = (original) => {
-            return original.replace(/(<([^>]+)>)/gi, "");
+            return original?.replace(/(<([^>]+)>)/gi, "");
         };
 
         this.getStringValue = (value) => {
-            return value.find(str => str.language == arches.activeLanguage).value;
+            return value.find(str => str.language == arches.activeLanguage)?.value;
         };
     }
 
