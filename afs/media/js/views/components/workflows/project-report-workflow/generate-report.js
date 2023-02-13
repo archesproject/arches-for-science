@@ -3,8 +3,9 @@ define([
     'arches',
     'knockout',
     'knockout-mapping',
-    'js-cookie'
-], function(_, arches, ko, koMapping, cookies) {
+    'js-cookie',
+    'templates/views/components/workflows/project-report-workflow/generate-report.htm'
+], function(_, arches, ko, koMapping, cookies, generateReportTemplate) {
     function viewModel(params) {
         const self = this;
         const project = params.projectId;
@@ -41,9 +42,7 @@ define([
 
     ko.components.register('generate-report', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/project-report-workflow/generate-report.htm'
-        }
+        template: generateReportTemplate
     });
 
     return viewModel;

@@ -2,10 +2,11 @@ define([
     'knockout',
     'arches',
     'viewmodels/workflow',
+    'templates/views/components/plugins/project-report-workflow.htm',
     'views/components/workflows/project-report-workflow/project-report-select',
     'views/components/workflows/project-report-workflow/generate-report'
-], function(ko, arches, Workflow) {
-    return ko.components.register('project-report-workflow', {
+], function(ko, arches, Workflow, projectReportWorkflow) {
+    return ko.components.register('project-report-workflow', { 
         viewModel: function(params) {
             this.componentName = 'project-report-workflow';
 
@@ -62,6 +63,6 @@ define([
             Workflow.apply(this, [params]);
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/project-report-workflow.htm' }
+        template: projectReportWorkflow 
     });
 });
