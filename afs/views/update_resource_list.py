@@ -48,24 +48,27 @@ class UpdateResourceListView(View):
         resource.graph_id = collection_graphid
         resource.save(transaction_id=transaction_id)
         collection_resourceinstance_id = str(resource.pk)
-        resource.index()
 
         tile = Tile.get_blank_tile(nodeid=name_node_id, resourceid=collection_resourceinstance_id)
         stringDataType = StringDataType()
         tile.data[name_node_id] = stringDataType.transform_value_for_tile("Collection for {0}".format(project_name))
-        tile.save(transaction_id=transaction_id)
+        tile.save(transaction_id=transaction_id, index=False)
 
-        return collection_resourceinstance_id, tile.tileid
+        return resource, tile.tileid
 
     def add_collection_to_project(self, resourceinstaneid, r_resourceinstaneid, transaction_id):
         used_set_node_id = "cc5d6df3-d477-11e9-9f59-a4d18cec433a"  # Project nodegroup (hidden nodegroup)
         related_resource_template["resourceId"] = r_resourceinstaneid
         tile = Tile.get_blank_tile(nodeid=used_set_node_id, resourceid=resourceinstaneid)
         tile.data[used_set_node_id] = [related_resource_template]
-        tile.save(transaction_id=transaction_id)
+        tile.save(transaction_id=transaction_id, index=False)
 
-        return tile.tileid
+        return (tile.tileid, Resource.objects.get(pk=tile.resourceinstance_id))
 
+    from silk.profiling.profiler import silk_profile
+
+
+    @silk_profile(name='update_resource_list')
     def post(self, request):
         member_of_set_node_id = "63e49254-c444-11e9-afbe-a4d18cec433a"  # Physical Thing nodegroup
         project_resourceid = request.POST.get("projectresourceid", None)
@@ -74,10 +77,15 @@ class UpdateResourceListView(View):
         transaction_id = request.POST.get("transactionid", None)
         project_name = Resource.objects.get(pk=project_resourceid).name
         ret = {}
+        resources = []
         with transaction.atomic():
+
             if collection_resourceid is None:
-                collection_resourceid, collection_name_tile_id = self.create_new_collection(transaction_id, project_name)
-                project_used_set_tile_id = self.add_collection_to_project(project_resourceid, collection_resourceid, transaction_id)
+                collection_resource, collection_name_tile_id = self.create_new_collection(transaction_id, project_name)
+                collection_resourceid = str(collection_resource.resourceinstanceid)
+                resources.append(collection_resource)
+                (project_used_set_tile_id, resource) = self.add_collection_to_project(project_resourceid, collection_resourceid, transaction_id)
+                resources.append(resource)
                 ret = {
                     "collectionResourceid": collection_resourceid,
                     "collectionNameTileId": collection_name_tile_id,
@@ -104,11 +112,14 @@ class UpdateResourceListView(View):
                     if collection_resourceid not in list_of_rr_resources and action == "add":
                         related_resource_template["resourceId"] = collection_resourceid
                         tile.data[member_of_set_node_id].append(related_resource_template)
-                        tile.save(transaction_id=transaction_id)
+                        resources.append(Resource.objects.get(pk=tile.resourceinstance_id))
+                        tile.save(transaction_id=transaction_id, index=False)
                     elif collection_resourceid in list_of_rr_resources and action == "remove":
                         rr_data = tile.data[member_of_set_node_id]
                         tile.data[member_of_set_node_id] = [rr for rr in rr_data if rr["resourceId"] != collection_resourceid]
-                        tile.save(transaction_id=transaction_id)
+                        resources.append(Resource.objects.get(pk=tile.resourceinstance_id))
+                        tile.save(transaction_id=transaction_id, index=False)
+                Resource.bulk_update(resources, transaction_id=transaction_id)
 
                 return JSONResponse({"result": ret})
 
