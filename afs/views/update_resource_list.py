@@ -67,8 +67,7 @@ class UpdateResourceListView(View):
 
     from silk.profiling.profiler import silk_profile
 
-
-    @silk_profile(name='update_resource_list')
+    @silk_profile(name="update_resource_list")
     def post(self, request):
         member_of_set_node_id = "63e49254-c444-11e9-afbe-a4d18cec433a"  # Physical Thing nodegroup
         project_resourceid = request.POST.get("projectresourceid", None)
@@ -84,7 +83,9 @@ class UpdateResourceListView(View):
                 collection_resource, collection_name_tile_id = self.create_new_collection(transaction_id, project_name)
                 collection_resourceid = str(collection_resource.resourceinstanceid)
                 resources.append(collection_resource)
-                (project_used_set_tile_id, resource) = self.add_collection_to_project(project_resourceid, collection_resourceid, transaction_id)
+                (project_used_set_tile_id, resource) = self.add_collection_to_project(
+                    project_resourceid, collection_resourceid, transaction_id
+                )
                 resources.append(resource)
                 ret = {
                     "collectionResourceid": collection_resourceid,
