@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/textual-work.htm',
     'arches',
     'utils/resource',
     'utils/report',
     'views/components/reports/scenes/name'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, textualWorkReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('textual-work-report', {
         viewModel: function(params) {
             var self = this;
@@ -100,6 +101,32 @@ define([
             self.substanceCards = {};
 
             self.summary = params.summary;
+
+            //Summary Report
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
+            };
+
+            self.nameSummary = ko.observable();
+            self.statementSummary = ko.observable();
+
+            const name = self.getNodeValue(self.resource(), 'name (top)', 'name (top)_content');
+            if (name && name != '--') {
+                self.nameSummary({
+                    content: name,
+                    type: self.getNodeValue(self.resource(), 'name (top)', 'name (top)_type')
+                });
+            } 
+
+            self.statementSummary(self.resource()['statement (top)']?.map(x => {
+                const content = self.getNodeValue(x, 'statement (top)_content');
+                const type = self.getNodeValue(x, 'statement (top)_type');
+                return {content, type}
+            }));
 
             if(params.report.cards){
                 const cards = params.report.cards;
@@ -195,6 +222,6 @@ define([
                 });
             }
         },
-        template: { require: 'text!templates/views/components/reports/textual-work.htm' }
+        template: textualWorkReportTemplate
     });
 });

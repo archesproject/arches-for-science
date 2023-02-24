@@ -1,9 +1,10 @@
 define([
     'knockout',
+    'templates/views/components/cards/iiif-card.htm',
     'underscore',
     'views/components/cards/iiif-card',
     'utils/physical-thing'
-], function(ko, _, IIIFCardComponentViewModel, physicalThingUtils) {
+], function(ko, physicalThingIiifCardTemplate, _, IIIFCardComponentViewModel, physicalThingUtils) {
     return ko.components.register('physical-thing-iiif-card', {
         viewModel: function(params) {
             var self = this;
@@ -30,6 +31,6 @@ define([
                 });
             }
         },
-        template: { require: 'text!templates/views/components/cards/iiif-card.htm' }
+        template: physicalThingIiifCardTemplate
     });
 });

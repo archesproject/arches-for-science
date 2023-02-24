@@ -1,6 +1,7 @@
 define([
     'knockout',
-], function(ko) {
+    'templates/views/components/workflows/upload-dataset/dataset-step.htm',
+], function(ko, datasetStepTemplate) {
     function viewModel(params) {
         this.value = params.value;
         this.locked = params.form.locked;
@@ -8,8 +9,6 @@ define([
 
     ko.components.register('dataset-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/upload-dataset/dataset-step.htm'
-        }
+        template: datasetStepTemplate
     });
 });

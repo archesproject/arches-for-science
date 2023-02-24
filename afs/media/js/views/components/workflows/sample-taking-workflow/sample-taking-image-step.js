@@ -6,14 +6,15 @@ define([
     'knockout-mapping',
     'models/graph',
     'viewmodels/card',
+    'templates/views/components/workflows/sample-taking-workflow/sample-taking-image-step.htm',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, sampleTakingImageStepTemplate) {
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
 
         this.isManifestManagerHidden = ko.observable(true);
-        this.shouldShowEditService = ko.observable(false);
+        this.shouldShowEditService = ko.observable(true);
 
         this.selectedPhysicalThingImageServiceName = ko.observable();
         this.selectedPhysicalThingImageServiceName.subscribe(function(imageServiceName) {
@@ -84,11 +85,20 @@ define([
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
-                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](manifestData.label);
-                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestData.description);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](manifestData['@id']);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
-                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](manifestData['@context']);
+                const digitalResourceName = {};
+                digitalResourceName[arches.activeLanguage] = {"value": manifestData.label, "direction": arches.activeLanguageDir};
+                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](digitalResourceName);                
+                const manifestDescription = Array.isArray(manifestData.description) ? manifestData.description[0] : manifestData.description;
+                const manifestDescriptionTileValue = {};
+                manifestDescriptionTileValue[arches.activeLanguage] = {"value": manifestDescription || "", "direction": arches.activeLanguageDir};
+                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescriptionTileValue);                
+                const manifestContentIdValue = {};
+                manifestContentIdValue[arches.activeLanguage] = {"value": manifestData['@id'], "direction": arches.activeLanguageDir};
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](manifestContentIdValue);
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id               
+                const conformanceNodeValue = {};
+                conformanceNodeValue[arches.activeLanguage] = {"value": manifestData['@context'], "direction": arches.activeLanguageDir};
+                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](conformanceNodeValue);
             }
             else {
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](null);
@@ -265,7 +275,8 @@ define([
                 && !self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.manifestData()['label']; })
             ) {
                 self.physicalThingDigitalReferencePreferredManifestResourceData.push({
-                    'displayname': self.manifestData()['label']
+                    'displayname': self.manifestData()['label'],
+                    'thumbnail': self.manifestData().sequences[0].canvases[0].thumbnail
                 });
 
                 self.selectedPhysicalThingImageServiceName(self.manifestData()['label']);
@@ -310,6 +321,18 @@ define([
             });
         };
 
+        this.getThumnail = function(digitalResourceData) {
+            const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
+                return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+            });
+            return fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]["value"])
+                .then(function(response){
+                    if(response.ok) {
+                        return response.json();
+                    }
+                });
+        };
+
         /* function used for getting the names of digital resources already related to physical thing */ 
         this.getPhysicalThingRelatedDigitalReferenceData = function(card) {
             var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
@@ -337,20 +360,23 @@ define([
                     
                     $.getJSON( arches.urls.api_card + physicalThingManifestResourceId )
                         .then(function(data) {
-                            if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
-                                self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
-                            }
-                            else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
-                                self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
-                            }
-                            
-                            var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
-                            if (resourceData) {
-                                self.selectedPhysicalThingImageServiceName(resourceData.displayname);
-                            }
-                            else if (!self.selectedPhysicalThingImageServiceName()) {
-                                self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
-                            }
+                            self.getThumnail(data)
+                                .then(function(json) {
+                                    data.thumbnail = json.sequences[0].canvases[0].thumbnail['@id'];
+                                    if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
+                                        self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
+                                    } else if (digitalReferenceTypeValue === alternateManifestConceptValueId) {
+                                        self.physicalThingDigitalReferenceAlternateManifestResourceData.push(data);
+                                    }
+
+                                    var resourceData = self.getResourceDataAssociatedWithPreviouslyPersistedTile(data.displayname);
+                                    if (resourceData) {
+                                        self.selectedPhysicalThingImageServiceName(resourceData.displayname);
+                                    }
+                                    else if (!self.selectedPhysicalThingImageServiceName()) {
+                                        self.selectedPhysicalThingImageServiceName(self.physicalThingDigitalReferencePreferredManifestResourceData()[0].displayname);
+                                    }        
+                                });
                         })
                         .always(function() {
                             params.pageVm.loading(false);
@@ -365,7 +391,7 @@ define([
 
     ko.components.register('sample-taking-image-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/sample-taking-workflow/sample-taking-image-step.htm' }
+        template: sampleTakingImageStepTemplate
     });
     return viewModel;
 });

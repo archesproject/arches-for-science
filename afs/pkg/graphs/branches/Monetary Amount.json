@@ -10,14 +10,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Monetary Amount",
+                    "name": {
+                        "en": "Monetary Amount"
+                    },
                     "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
                     "sortorder": null,
                     "visible": true
@@ -28,8 +38,28 @@
             "config": {},
             "deploymentdate": null,
             "deploymentfile": null,
-            "description": "",
+            "description": {
+                "en": ""
+            },
             "edges": [
+                {
+                    "description": null,
+                    "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
+                    "edgeid": "82ee2a8f-b251-11e9-998f-a4d18cec433a",
+                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
+                    "rangenode_id": "82ee230f-b251-11e9-88f2-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
+                    "edgeid": "8c96e968-b251-11e9-8152-a4d18cec433a",
+                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P181_has_amount",
+                    "rangenode_id": "8c96e419-b251-11e9-be6e-a4d18cec433a"
+                },
                 {
                     "description": null,
                     "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
@@ -60,48 +90,31 @@
                 {
                     "description": null,
                     "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "edgeid": "c783be35-b251-11e9-a398-a4d18cec433a",
-                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit",
-                    "rangenode_id": "c783ba87-b251-11e9-b733-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "edgeid": "82ee2a8f-b251-11e9-998f-a4d18cec433a",
-                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "rangenode_id": "82ee230f-b251-11e9-88f2-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "edgeid": "8c96e968-b251-11e9-8152-a4d18cec433a",
-                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
-                    "name": null,
-                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P181_has_amount",
-                    "rangenode_id": "8c96e419-b251-11e9-be6e-a4d18cec433a"
-                },
-                {
-                    "description": null,
-                    "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
                     "edgeid": "c17e6cee-b31b-11e9-9f7f-a4d18cec433a",
                     "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
                     "name": null,
                     "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
                     "rangenode_id": "c17e6907-b31b-11e9-a932-a4d18cec433a"
+                },
+                {
+                    "description": null,
+                    "domainnode_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
+                    "edgeid": "c783be35-b251-11e9-a398-a4d18cec433a",
+                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "name": null,
+                    "ontologyproperty": "http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit",
+                    "rangenode_id": "c783ba87-b251-11e9-b733-a4d18cec433a"
                 }
             ],
             "functions_x_graphs": [],
             "graphid": "74fa1707-b251-11e9-b46d-a4d18cec433a",
             "iconclass": "",
             "is_editable": true,
-            "isactive": true,
             "isresource": false,
             "jsonldcontext": null,
-            "name": "Monetary Amount",
+            "name": {
+                "en": "Monetary Amount"
+            },
             "nodegroups": [
                 {
                     "cardinality": "1",
@@ -112,66 +125,14 @@
             ],
             "nodes": [
                 {
-                    "config": null,
-                    "datatype": "number",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "value",
-                    "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "nodeid": "8c96e419-b251-11e9-be6e-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P181_has_amount",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "number",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "highest possible value",
-                    "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "nodeid": "c783ba87-b251-11e9-b733-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
-                    "datatype": "string",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
-                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
-                    "is_collector": false,
-                    "isrequired": false,
-                    "issearchable": true,
-                    "istopnode": false,
-                    "name": "_label",
-                    "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "nodeid": "82ee230f-b251-11e9-88f2-a4d18cec433a",
-                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
-                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
-                    "sortorder": 0
-                },
-                {
-                    "config": null,
+                    "alias": "monetary_amount",
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
                     "is_collector": true,
                     "isrequired": false,
                     "issearchable": true,
@@ -184,47 +145,69 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "graphid": [
-                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
-                        ],
-                        "graphs": []
-                    },
-                    "datatype": "resource-instance-list",
+                    "alias": "_label",
+                    "config": {},
+                    "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "source",
+                    "name": "_label",
                     "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "nodeid": "c17e6907-b31b-11e9-a932-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "nodeid": "82ee230f-b251-11e9-88f2-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2001/XMLSchema#string",
+                    "parentproperty": "http://www.w3.org/2000/01/rdf-schema#label",
                     "sortorder": 0
                 },
                 {
-                    "config": null,
+                    "alias": "value",
+                    "config": {},
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "lowest possible value",
+                    "name": "value",
                     "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "nodeid": "bbdde6f3-b251-11e9-93ab-a4d18cec433a",
+                    "nodeid": "8c96e419-b251-11e9-be6e-a4d18cec433a",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90a_has_lower_value_limit",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P181_has_amount",
                     "sortorder": 0
                 },
                 {
+                    "alias": "currency",
+                    "config": {
+                        "rdmCollection": "9fe65e48-540c-4401-836d-947eb1878677"
+                    },
+                    "datatype": "concept",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "currency",
+                    "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
+                    "nodeid": "9e117a97-b251-11e9-bdad-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E98_Currency",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P180_has_currency",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "type",
                     "config": {
                         "rdmCollection": "696fd77f-0181-4d00-9372-b395b2fde9b3"
                     },
@@ -233,6 +216,7 @@
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
@@ -245,36 +229,92 @@
                     "sortorder": 0
                 },
                 {
-                    "config": {
-                        "rdmCollection": "9fe65e48-540c-4401-836d-947eb1878677"
-                    },
-                    "datatype": "concept",
+                    "alias": "lowest_possible_value",
+                    "config": {},
+                    "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
                     "is_collector": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "currency",
+                    "name": "lowest possible value",
                     "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
-                    "nodeid": "9e117a97-b251-11e9-bdad-a4d18cec433a",
-                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E98_Currency",
-                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P180_has_currency",
+                    "nodeid": "bbdde6f3-b251-11e9-93ab-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90a_has_lower_value_limit",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "source",
+                    "config": {
+                        "graphid": [
+                            "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a"
+                        ],
+                        "graphs": [],
+                        "searchDsl": "",
+                        "searchString": ""
+                    },
+                    "datatype": "resource-instance-list",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "source",
+                    "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
+                    "nodeid": "c17e6907-b31b-11e9-a932-a4d18cec433a",
+                    "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "sortorder": 0
+                },
+                {
+                    "alias": "highest_possible_value",
+                    "config": {},
+                    "datatype": "number",
+                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "exportable": false,
+                    "fieldname": null,
+                    "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                    "hascustomalias": false,
+                    "is_collector": false,
+                    "isrequired": false,
+                    "issearchable": true,
+                    "istopnode": false,
+                    "name": "highest possible value",
+                    "nodegroup_id": "74fa032e-b251-11e9-be5d-a4d18cec433a",
+                    "nodeid": "c783ba87-b251-11e9-b733-a4d18cec433a",
+                    "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
+                    "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P90b_has_upper_value_limit",
                     "sortorder": 0
                 }
             ],
             "ontology_id": "0b1f5462-faa7-11e9-8f09-3af9d3b32b71",
+            "publication": {
+                "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                "notes": null,
+                "publicationid": "ec4651c8-95b5-11ed-a5e5-a683e74f6c3a",
+                "published_time": "2023-01-16T09:53:30.400",
+                "user_id": 1
+            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
-                "config": null,
+                "alias": "monetary_amount",
+                "config": {},
                 "datatype": "semantic",
                 "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                 "exportable": false,
                 "fieldname": null,
                 "graph_id": "74fa1707-b251-11e9-b46d-a4d18cec433a",
+                "hascustomalias": false,
                 "is_collector": true,
                 "isrequired": false,
                 "issearchable": true,
@@ -286,7 +326,9 @@
                 "sortorder": 0
             },
             "slug": null,
-            "subtitle": "",
+            "subtitle": {
+                "en": ""
+            },
             "template_id": "50000000-0000-0000-0000-000000000001",
             "version": ""
         }

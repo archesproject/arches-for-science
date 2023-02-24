@@ -135,16 +135,18 @@ define([
                         var style = config.seriesStyles().find(function(el){
                             return el["tileid"] === series.value.tileid;
                         });
-                        Plotly.addTraces(element, {
-                            x: series.value.data.value,
-                            y: series.value.data.count,
-                            opacity: 0.9,
-                            marker: {
-                                color: style.color,
-                            },
-                            name: series.value.name,
-                            tileid: series.value.tileid,
-                        }, element.data.length);
+                        if(style){
+                            Plotly.addTraces(element, {
+                                x: series.value.data.value,
+                                y: series.value.data.count,
+                                opacity: 0.9,
+                                marker: {
+                                    color: style.color,
+                                },
+                                name: series.value.name,
+                                tileid: series.value.tileid,
+                            }, element.data.length);
+                        }
                     } else {
                         element.data.forEach(function(trace, i){
                             if (trace.name === series.value.name) {

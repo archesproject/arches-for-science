@@ -2,10 +2,11 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/person.htm',
     'arches',
     'utils/resource',
     'utils/report'
-], function($, _, ko, arches, resourceUtils, reportUtils) {
+], function($, _, ko, personReportTemplate, arches, resourceUtils, reportUtils) {
     return ko.components.register('person-report', {
         viewModel: function(params) {
             var self = this;
@@ -28,6 +29,13 @@ define([
             self.contactPointsTable = {
                 ...self.defaultTableConfig,
                 columns: Array(3).fill(null)
+            };
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
             };
             self.visible = {
                 contactPoints: ko.observable(true)
@@ -246,7 +254,76 @@ define([
                         }
                     ]
             });
+            
+            ////// Search Details section //////
+            self.nameSummary = ko.observable();
+            self.groupSummary = ko.observable();
+            self.contactSummary = ko.observable();
+            self.externalURISummary = ko.observable();
+            self.nationalitySummary = ko.observable();
+            self.birthSummary = ko.observable();
+            self.deathSummary = ko.observable();
+
+            const nameData = self.resource()?.name;
+            if (nameData) {
+                self.nameSummary(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'name_type');
+                    const content = self.getNodeValue(x, 'name_content');
+                    return { type, content }
+                }));
+            };
+
+            const groupData = self.resource()?.['member of'];
+            if (groupData) {
+                self.groupSummary([{
+                    group: self.getNodeValue(groupData)
+                }]);
+            }
+
+            const contactData = self.resource()?.['contact point'];
+            if (contactData) {
+                self.contactSummary(contactData.map(x => {
+                    const type = self.getNodeValue(x, 'contact point_type');
+                    const content = self.getNodeValue(x, 'contact point_content');
+                    return { type, content }
+                }));
+            }
+
+            const uriData = self.resource()?.exactmatch
+            if (uriData) {
+                self.externalURISummary(uriData.map(x => {
+                    const content = self.getNodeValue(x)
+                    return { content }
+                }));
+            };
+
+            const nationalityData = self.resource()?.nationality;
+            if (nationalityData) {
+                self.nationalitySummary([{
+                    content: self.getNodeValue(nationalityData)
+                }]);
+            }
+
+            const birthData = self.resource()?.birth?.Birth_time;
+            if (birthData) {
+                self.birthSummary([{
+                    beginning_of_beginning: self.getNodeValue(birthData, 'Birth_time_begin of the begin'),
+                    end_of_beginning: self.getNodeValue(birthData, 'Birth_time_end of the begin'),
+                    beginning_of_end: self.getNodeValue(birthData, 'Birth_time_begin of the end'),
+                    end_of_end: self.getNodeValue(birthData, 'Birth_time_end of the end'),
+                }]);
+            }
+
+            const deathData = self.resource()?.death?.Death_time;
+            if (deathData) {
+                self.deathSummary([{
+                    beginning_of_beginning: self.getNodeValue(deathData, 'Death_time_begin of the begin'),
+                    end_of_beginning: self.getNodeValue(deathData, 'Death_time_end of the begin'),
+                    beginning_of_end: self.getNodeValue(deathData, 'Death_time_begin of the end'),
+                    end_of_end: self.getNodeValue(deathData, 'Death_time_end of the end'),
+                }]);
+            }
         },
-        template: { require: 'text!templates/views/components/reports/person.htm' }
+        template: personReportTemplate
     });
 });

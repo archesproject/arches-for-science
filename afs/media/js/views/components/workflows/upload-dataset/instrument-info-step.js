@@ -3,8 +3,9 @@ define([
     'uuid',
     'knockout',
     'utils/resource',
+    'templates/views/components/workflows/upload-dataset/instrument-info-step.htm',
     'viewmodels/card',
-], function(arches, uuid, ko, resourceUtils) {
+], function(arches, uuid, ko, resourceUtils, instrumentInfoStepTemplate) {
    
     function viewModel(params) {
 
@@ -15,6 +16,8 @@ define([
         const parameterNodeGroupId = '8ec30d3a-c457-11e9-81dc-a4d18cec433a'; // parameter are 'Statement' cards
         const nameNodeGroupId = '87e3d6a1-c457-11e9-9ec9-a4d18cec433a';
         const nameNodeId = '87e40cc5-c457-11e9-8933-a4d18cec433a';
+        const dateNodeGroupId = '89f06cba-c457-11e9-916e-a4d18cec433a';
+        const dateNodeId = '89f08768-c457-11e9-94db-a4d18cec433a';
         const projectInfo = params.projectInfoData;
         const physThingName = projectInfo.physThingName;
         const observedThingNodeId = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
@@ -44,18 +47,22 @@ define([
         let procedureTileId = getProp('procedure', 'tileid');
         let projectTileId = getProp('project', 'tileid');
         let observedThingTileid = getProp('observedThing', 'tileid');
+        let dateTileId = getProp('date', 'tileid');
         let nameTileId = getProp('name', 'tileid');
 
         this.instrumentValue = ko.observable(getProp('instrument', 'value'));
         this.procedureValue = ko.observable(getProp('procedure', 'value'));
         this.parameterValue = ko.observable(getProp('parameter', 'value'));
-        this.nameValue = ko.observable(getProp('name', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
+        this.dateValue = ko.observable(getProp('date', 'value'));
         this.showName = ko.observable(false);
         this.locked = params.form.locked;
         this.procedureSearchString = location.origin + '/search?advanced-search=%5B%7B%22op%22%3A%22and%22%2C%22dc946b1e-c070-11e9-a005-a4d18cec433a%22%3A%7B%22op%22%3A%22%22%2C%22val%22%3A%2260d1e09c-0f14-4348-ae14-57fdb9ef87c4%22%7D%7D%5D';
+        this.instrumentName = ko.observable();
+        this.nameValue = ko.observable(getProp('name', 'value'));
 
         const snapshot = {
+            dateValue: self.dateValue(),
             instrumentValue: self.instrumentValue(),
             procedureValue: self.procedureValue(),
             parameterValue: self.parameterValue()
@@ -72,13 +79,28 @@ define([
         this.instrumentInstance = ko.observable(this.instrumentValue() ? this.createRelatedInstance(this.instrumentValue()) : null);
         this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
 
+        const createStrObject = str => {
+            return {[arches.activeLanguage]: {
+                "value": str,
+                "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
+            }};
+        };
+
         this.instrumentValue.subscribe(function(val){
+            params.form.dirty(Boolean(val) && !self.locked());
             if (val && !relatedGraphIds.includes(val)) {
                 let instrumentData = resourceUtils.lookupResourceInstanceData(val);
                 self.instrumentInstance(self.createRelatedInstance(val));
                 instrumentData.then(function(data){
-                    self.nameValue("Observation of " + physThingName + " with " + data._source.displayname);
+                    self.instrumentName(data._source.displayname);
+                    self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
                 });
+            }
+        });
+
+        this.dateValue.subscribe(function(val){
+            if (self.instrumentName()) {
+                self.nameValue(`Observation of ${physThingName} with ${self.instrumentName()} ${val}`);
             }
         });
 
@@ -92,6 +114,7 @@ define([
                 procedure: {value: self.procedureValue(), tileid: procedureTileId},
                 parameter: {value: self.parameterValue(), tileid: parameterTileId},
                 name: {value: self.nameValue(), tileid: nameTileId},
+                date: {value: self.dateValue(), tileid: dateTileId},
                 observedThing: {tileid: observedThingTileid},
                 project: {tileid: projectTileId},
                 observationInstanceId: self.observationInstanceId()
@@ -140,10 +163,6 @@ define([
             self.parameterValue(snapshot.parameterValue);
             params.form.hasUnsavedData(false);
         };
-
-        self.instrumentValue.subscribe(function(val){
-            params.form.dirty(Boolean(val));
-        });
 
         this.saveTextualWorkType = function(){
             const textualWorkTypeNodegroupId= "dc946b1e-c070-11e9-a005-a4d18cec433a";
@@ -194,60 +213,80 @@ define([
                 self.saveTextualWorkType();
             }
 
+            params.form.lockExternalStep("project-info", true);
+            
+
+            let tiles = {
+                "transaction_id": params.form.workflowId
+            };
             let observedThingData = {};
             observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
-            params.form.lockExternalStep("project-info", true);
-            return self.saveTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid)
-                .then(function(data) {
-                    let partOfProjectData = {};
-                    observedThingTileid = data.tileid;
-                    partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId);
-                    return self.saveTile(partOfProjectData, projectNodeId, data.resourceinstance_id, projectTileId);
-                })
-                .then(function(data) {
-                    let nameData = {};
-                    nameData[nameNodeId] = self.nameValue();
-                    nameData[nameTypeNodeId] = nameTypeConceptValue;
-                    nameData[nameLanguageNodeId] = languageConceptValue;
-                    projectTileId = data.tileid;
-                    return self.saveTile(nameData, nameNodeGroupId, data.resourceinstance_id, nameTileId);
-                })
-                .then(function(data) {
-                    let instrumentData = {};
-                    instrumentData[instrumentNodeId] = self.instrumentInstance();
-                    nameTileId = data.tileid;
-                    return self.saveTile(instrumentData, instrumentNodeId, data.resourceinstance_id, instrumentTileId);
-                })
-                .then(function(data) {
-                    let procedureData = {};
-                    procedureData[procedureNodeId] = self.procedureInstance();
-                    instrumentTileId = data.tileid;
-                    return self.saveTile(procedureData, procedureNodeId, data.resourceinstance_id, procedureTileId);
-                })
-                .then(function(data) {
-                    let parameterData = {};
-                    parameterData[parameterNodeId] = self.parameterValue();
-                    parameterData[statementTypeNodeId] = statementTypeConceptValue;
-                    parameterData[statementLanguageNodeId] = languageConceptValue;
-                    procedureTileId = data.tileid;
-                    return self.saveTile(parameterData, parameterNodeGroupId, data.resourceinstance_id, parameterTileId);
-                })
-                .then(function(data) {
-                    parameterTileId = data.tileid;
-                    self.observationInstanceId(data.resourceinstance_id); // mutates updateValue to refresh value before saving.
-                    params.form.savedData(params.form.value());
-                    params.form.complete(true);
-                    params.form.dirty(false);
-                    params.pageVm.alert("");
-                });
+            tiles['observedThingTile'] = self.buildTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid);
+
+            let partOfProjectData = {};
+            partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId);
+            tiles['partOfProjectTile'] = self.buildTile(partOfProjectData, projectNodeId, self.observationInstanceId(), projectTileId);
+
+            let nameData = {};
+            nameData[nameNodeId] = createStrObject(self.nameValue());
+            nameData[nameTypeNodeId] = nameTypeConceptValue;
+            nameData[nameLanguageNodeId] = languageConceptValue;
+            tiles['nameTile'] = self.buildTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId);
+
+            let dateData = {};
+            dateData[dateNodeId] = self.dateValue();
+            tiles['dateTile'] = self.buildTile(dateData, dateNodeGroupId, self.observationInstanceId(), dateTileId);
+
+            let instrumentData = {};
+            instrumentData[instrumentNodeId] = self.instrumentInstance();
+            tiles['instrumentTile'] = self.buildTile(instrumentData, instrumentNodeId, self.observationInstanceId(), instrumentTileId);
+
+            let procedureData = {};
+            procedureData[procedureNodeId] = self.procedureInstance();
+            tiles['procedureTile'] = self.buildTile(procedureData, procedureNodeId, self.observationInstanceId(), procedureTileId);
+
+            let parameterData = {};
+            parameterData[parameterNodeId] = self.parameterValue();
+            parameterData[statementTypeNodeId] = statementTypeConceptValue;
+            parameterData[statementLanguageNodeId] = languageConceptValue;
+            tiles['parameterTile'] = self.buildTile(parameterData, parameterNodeGroupId, self.observationInstanceId(), parameterTileId);
+
+            return window.fetch(arches.urls.root + 'instrument-info-form-save', {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(tiles),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(function(response) {
+                return response.json();
+            }).then(function(json){
+                observedThingTileid = json.observedThingTile.tileid;
+                projectTileId = json.partOfProjectTile.tileid;
+                nameTileId = json.nameTile.tileid;
+                dateTileId = json.dateTile.tileid;
+                instrumentTileId = json.instrumentTile.tileid;
+                procedureTileId = json.procedureTile.tileid;
+                parameterTileId = json.parameterTile.tileid;
+                self.observationInstanceId(json.observedThingTile.resourceinstance_id); // mutates updateValue to refresh value before saving.
+                params.form.savedData(params.form.value());
+                params.form.complete(true);
+                params.form.dirty(false);
+                params.pageVm.alert("");
+            }).catch(function(error){
+                // alert the workflow that something happend
+                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Error", "There was an issue saving the workflow step."));
+                params.form.complete(false);
+                params.form.dirty(true);
+                params.form.loading(false);
+            });
+
         };
     }
 
     ko.components.register('instrument-info-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/upload-dataset/instrument-info-step.htm'
-        }
+        template: instrumentInfoStepTemplate
     });
 
     return viewModel;

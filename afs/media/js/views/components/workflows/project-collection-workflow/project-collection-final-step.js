@@ -1,7 +1,8 @@
 define([
     'knockout',
     'views/components/workflows/summary-step',
-], function(ko, SummaryStep) {
+    'templates/views/components/workflows/project-collection-workflow/project-collection-final-step.htm'
+], function(ko, SummaryStep, projectCollectionFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -13,6 +14,7 @@ define([
         this.collectionOfChildPhysThings = ko.observableArray();
 
         this.relatedResources.subscribe(function(val){
+            const physicalThingNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
             const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
             const childPhysicalThingsValueIds = [
                 '77d8cf19-ce9c-4e0a-bde1-9148d870e11c', //sample
@@ -31,16 +33,16 @@ define([
 
             self.collectionOfParentPhysThings(collectionOfPhysThings.filter(rr =>
                 !rr.tiles.find(tile =>
-                    tile.nodegroup_id === "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a" &&
-                    tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
+                    tile.nodegroup_id === physicalThingNodeId &&
+                    tile.data[physicalThingNodeId].find(value =>
                         childPhysicalThingsValueIds.includes(value))
                 )
             ).map(rr => {return {'name': rr.displayname, resourceid: rr.resourceinstanceid};}));
 
             self.collectionOfChildPhysThings(collectionOfPhysThings.filter(rr =>
                 rr.tiles.find(tile =>
-                    tile.nodegroup_id === "8ddfe3ab-b31d-11e9-aff0-a4d18cec433a" &&
-                    tile.data["8ddfe3ab-b31d-11e9-aff0-a4d18cec433a"].find(value =>
+                    tile.nodegroup_id === physicalThingNodeId &&
+                    tile.data[physicalThingNodeId].find(value =>
                         childPhysicalThingsValueIds.includes(value))
                 )
             ).map(rr => {return {'name': rr.displayname, resourceid: rr.resourceinstanceid};}));
@@ -51,7 +53,7 @@ define([
 
     ko.components.register('project-collection-final-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/project-collection-workflow/project-collection-final-step.htm' }
+        template: projectCollectionFinalStepTemplate
     });
     return viewModel;
 });

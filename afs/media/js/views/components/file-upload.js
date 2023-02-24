@@ -1,8 +1,9 @@
 define([
     'knockout',
     'uuid',
+    'templates/views/components/file-upload.htm',
     'bindings/dropzone'
-], function(ko, uuid) {
+], function(ko, uuid, fileUploadTemplate) {
     /**
     * knockout components namespace used in arches
     * @external "ko.components"
@@ -43,8 +44,6 @@ define([
                 }
             };
         },
-        template: {
-            require: 'text!templates/views/components/file-upload.htm'
-        }
+        template: fileUploadTemplate
     });
 });
