@@ -3,11 +3,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.utils.translation import ugettext as _
 from django.views.generic import View
+from arches.app.datatypes.datatypes import StringDataType, DataTypeFactory
 from arches.app.models.tile import Tile
+from arches.app.models.models import TileModel, Node
 from arches.app.models.resource import Resource
+from arches.app.search.search_engine_factory import SearchEngineInstance as se
+from arches.app.search.mappings import TERMS_INDEX, RESOURCES_INDEX
 from arches.app.utils.betterJSONSerializer import JSONDeserializer
 from arches.app.utils.response import JSONResponse
-from arches.app.datatypes.datatypes import StringDataType
 
 logger = logging.getLogger(__name__)
 related_resource_template = {
@@ -65,10 +68,47 @@ class UpdateResourceListView(View):
 
         return (tile.tileid, Resource.objects.get(pk=tile.resourceinstance_id))
 
-    from silk.profiling.profiler import silk_profile
-
-    @silk_profile(name="update_resource_list")
     def post(self, request):
+
+        def bulk_update(resources):
+            """
+            Saves and indexes a list of resources
+
+            Arguments:
+            resources -- a list of resource models
+
+            Keyword Arguments:
+            transaction_id -- a uuid identifing the save of these instances as belonging to a collective load or process
+
+            """
+
+            datatype_factory = DataTypeFactory()
+            node_datatypes = {str(nodeid): datatype for nodeid, datatype in Node.objects.values_list("nodeid", "datatype")}
+            tiles = []
+            documents = []
+            term_list = []
+
+            for resource in resources:
+                resource.tiles = resource.get_flattened_tiles()
+                tiles.extend(resource.tiles)
+
+            # need to save the models first before getting the documents for index
+            for tile in tiles:
+                TileModel.objects.update_or_create(tile)
+
+            for resource in resources:
+                document, terms = resource.get_documents_to_index(
+                    fetchTiles=True, datatype_factory=datatype_factory, node_datatypes=node_datatypes
+                )
+
+                documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
+
+                for term in terms:
+                    term_list.append(se.create_bulk_item(index=TERMS_INDEX, id=term["_id"], data=term["_source"]))
+
+            se.bulk_index(documents)
+            se.bulk_index(term_list)
+
         member_of_set_node_id = "63e49254-c444-11e9-afbe-a4d18cec433a"  # Physical Thing nodegroup
         project_resourceid = request.POST.get("projectresourceid", None)
         collection_resourceid = request.POST.get("collectionresourceid", None)
@@ -120,7 +160,7 @@ class UpdateResourceListView(View):
                         tile.data[member_of_set_node_id] = [rr for rr in rr_data if rr["resourceId"] != collection_resourceid]
                         resources.append(Resource.objects.get(pk=tile.resourceinstance_id))
                         tile.save(transaction_id=transaction_id, index=False)
-                Resource.bulk_update(resources, transaction_id=transaction_id)
+                bulk_update(resources)
 
                 return JSONResponse({"result": ret})
 
