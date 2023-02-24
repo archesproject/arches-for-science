@@ -69,7 +69,6 @@ class UpdateResourceListView(View):
         return (tile.tileid, Resource.objects.get(pk=tile.resourceinstance_id))
 
     def post(self, request):
-
         def bulk_update(resources):
             """
             Saves and indexes a list of resources
