@@ -1,18 +1,15 @@
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
-name: Add new issues to pipeline project
+name: Add new issues project
 on:
   issues:
     types:
       - opened
+
 jobs:
-  move-assigned-card:
+  add-to-project:
+    name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-      - uses: alex-page/github-project-automation-plus@7ffb872c64bd809d23563a130a0a97d01dfa8f43
+      - uses: actions/add-to-project@4756e6330fe1e0a736690d3cfd9f11c9399c2ed4
         with:
-          project: afs-v1.0-iterations
-          column: New
-          repo-token: ${{ secrets.CH_PROJECT_TOKEN }}
+          project-url: https://github.com/orgs/archesproject/projects/1
+          github-token: ${{ secrets.CH_PROJECT_TOKEN }}
