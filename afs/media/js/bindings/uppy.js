@@ -2,34 +2,54 @@ define([
     'jquery',
     'underscore',
     'knockout',
-    'js-cookie'
-], function($, _, ko, Cookies) {
+    'js-cookie', 
+    '@uppy/core',
+    '@uppy/dashboard',
+    '@uppy/drag-drop',
+    '@uppy/aws-s3-multipart',
+    '@uppy/progress-bar'
+], function($, _, ko, Cookies, uppy, Dashboard, DragDrop, AwsS3Multipart, ProgressBar) {
     /**
      * @constructor
      * @name dropzone
      */
     ko.bindingHandlers.uppy = {
         init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-            var innerBindingContext = bindingContext.extend(valueAccessor);
+            const innerBindingContext = bindingContext.extend(valueAccessor);
             ko.applyBindingsToDescendants(innerBindingContext, element);
-            var options = valueAccessor() || {};
-            const UppyContainer = window.Uppy;
-            const uppy = new UppyContainer.Core({debug: true, autoProceed: true}).use(UppyContainer.Dashboard, {
+            const options = valueAccessor() || {};
+
+            const uppyObj = new uppy({
+                debug: true, 
+                autoProceed: true,
+                onBeforeFileAdded: (currentFile) => {
+                    const name = currentFile.name.trim().replaceAll(' ', '_').replace(/(?=u)[^-\w.]/g, '');
+                    const modifiedFile = {
+                        ...currentFile,
+                        meta: {
+                            ...currentFile.meta,
+                            name
+                        },
+                        name
+                    };
+                    return modifiedFile;
+                },
+            }).use(DragDrop, {
                 inline: options.inline,
                 target: element,
                 autoProceed: true,
-                logger: UppyContainer.Core.debugLogger,
-            }).use(UppyContainer.AwsS3Multipart, {
+                logger: uppy.debugLogger,
+            }).use(AwsS3Multipart, {
                 companionUrl: "/",
                 companionHeaders: {
                     'X-CSRFToken': Cookies.get('csrftoken')
                 }
-            }).use(UppyContainer.ProgressBar, {
+            }).use(ProgressBar, {
                 target: ".uppy-progress"
             });
             
             if(options.filesAdded) {
-                uppy.on('complete', options.filesAdded);
+                uppyObj.on('complete', options.filesAdded);
             }
 
             return { controlsDescendantBindings: true };

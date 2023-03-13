@@ -7,13 +7,14 @@ define([
     'viewmodels/card-multi-select',
     'views/components/workbench',
     'file-renderers',
+    'templates/views/components/card_components/aws-file-viewer.htm',
     'bindings/slide',
     'bindings/fadeVisible',
     'bindings/scroll-to-file',
     'dropzone',
     'bindings/dropzone',
     'bindings/uppy'
-], function($, ko, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers) {
+], function($, ko, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, awsFileViewer) {
     return ko.components.register('aws-file-viewer-card', {
         viewModel: function(params) {
             params.configKeys = ['acceptedFiles', 'maxFilesize'];
@@ -386,11 +387,7 @@ define([
                     renderer: defaultRenderers.length === 1 ? defaultRenderers[0].id : undefined,
                 };
                 newtile.data[self.fileListNodeId]([tilevalue]);
-                try{
-                    newtile.formData.append('file-list_' + self.fileListNodeId + "_preloaded", new Blob(), file.name);
-                } catch(x){
-                    console.log(x);
-                }
+                newtile.formData.append('file-list_' + self.fileListNodeId + "_preloaded", new Blob(), file.name);
                 newtile.resourceinstance_id = self.card.resourceinstanceid;
                 if (self.card.tiles().length === 0) {
                     sleep(100);
@@ -421,8 +418,6 @@ define([
                 }
             };
         },
-        template: {
-            require: 'text!templates/views/components/card_components/aws-file-viewer.htm'
-        }
+        template: awsFileViewer
     });
 });

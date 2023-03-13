@@ -95,44 +95,20 @@ class SelectDatasetFilesStep(View):
             observation_reference_tile.save(user=request.user, transaction_id=transaction_id)
 
             # save files associated with digital resource
-            dataset_files = request.FILES.getlist("file-list_{}".format(dataset_file_node_id), None)
+            dataset_files =  request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), []) + request.FILES.getlist("file-list_{}".format(dataset_file_node_id), [])
             file_data_list = request.POST.getlist("file-list_{}_data".format(dataset_file_node_id), None)
             file_data_list = [JSONDeserializer().deserialize(fd) for fd in file_data_list]
             new_files = []
             for file in dataset_files:
                 file_data = next((fd for fd in file_data_list if fd.get("name") == file.name), None)
-                # split_file_name = os.path.splitext(file.name)
-                # if split_file_name[1] in [".zip"]:
-                #    with zipfile.ZipFile(file, "r") as myzip:
-                #       files = myzip.infolist()
-                #       for zip_file in files:
-                #           if not zip_file.filename.startswith("__MACOSX") and not zip_file.is_dir():
-                # file_data_copy = file_data#.copy()
-                # new_file_bytes = io.BytesIO(myzip.read(zip_file.filename))
-                # f = open("file_from_zip", "wb")
-                # f.write(new_file_bytes.read())
-                # f.close()
-                # type_tuple = MimeTypes().guess_type(file.name)
-                # new_file_type = type_tuple[0] if type_tuple is not None else None
-                # file_data_copy["name"] = zip_file.filename
-                # file_data["type"] = new_file_type
+
                 new_files.append(
                     (
                         file_data,
                         file
-                        # InMemoryUploadedFile(
-                        #     new_file_bytes,
-                        #     "file-list_{}".format(dataset_file_node_id),
-                        #     zip_file.filename,
-                        #     new_file_type,
-                        #     zip_file.file_size,
-                        #     None,
-                        # ),
                     )
                 )
 
-                # else:
-                #     new_files.append(file_data, None, file)
             removed_files = []
             for file in new_files:
                 if file[0] is not None:
@@ -173,8 +149,10 @@ class SelectDatasetFilesStep(View):
                     new_req.user = request.user
                     new_req.POST["data"] = json.dumps(dataset_file_tile.serialize())
                     new_req.POST["transaction_id"] = transaction_id
-
-                    new_req.FILES["file-list_{}".format(dataset_file_node_id)] = file_content
+                    if len(request.FILES.getlist("file-list_{}".format(dataset_file_node_id), [])) > 0:
+                        new_req.FILES["file-list_{}".format(dataset_file_node_id)] = file_content
+                    elif len(request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), [])) > 0:
+                        new_req.FILES["file-list_{}_preloaded".format(dataset_file_node_id)] = file_content
                     new_tile = TileData()
                     new_tile.action = "update_tile"
 
@@ -186,11 +164,17 @@ class SelectDatasetFilesStep(View):
                         raise
                     else:
                         file_data["tileid"] = response["tileid"]
-
-            file_response = [
-                {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
-                for f in new_files
-            ]
+            try:
+                file_response = [
+                    {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
+                    for f in new_files
+                ]
+            except KeyError:
+                # XRF files do not have a renderer (yet) and use this same endpoint.
+                file_response = [
+                    {"name": f[0]["name"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
+                    for f in new_files
+                ]
 
         return JSONResponse(
             {

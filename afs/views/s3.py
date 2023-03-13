@@ -1,26 +1,28 @@
 import json
 from django.conf import settings
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
 from django.utils.decorators import method_decorator
-from asgiref.sync import async_to_sync, sync_to_async
-import asyncio
 from arches.app.views.base import BaseManagerView
 from arches.app.utils.decorators import can_edit_resource_instance
 import boto3
 
 KEY_BASE = "uploadedfiles/"
 
-
 @method_decorator(can_edit_resource_instance, name="dispatch")
 class S3MultipartUploaderView(BaseManagerView):
-    """doom"""
+    """S3 Multipart uploader chunks files to allow for parallel uploads to S3"""
 
     def post(self, request):
+        try:
+            storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
+        except AttributeError:
+            raise Exception("Django storages for AWS not configured")
+
         json_body = json.loads(request.body)
         response_object = {}
         s3 = boto3.client("s3")
         resp = s3.create_multipart_upload(
-            Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+            Bucket=storage_bucket,
             Key=KEY_BASE + json_body["filename"],
             ContentType=json_body["type"],
             Metadata=json_body["metadata"],
@@ -30,11 +32,17 @@ class S3MultipartUploaderView(BaseManagerView):
         return JsonResponse(response_object)
 
 
+
 @method_decorator(can_edit_resource_instance, name="dispatch")
 class S3MultipartUploadManagerView(BaseManagerView):
     """doom"""
 
     def get(self, request, uploadid):
+        try:
+            storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
+        except AttributeError:
+            raise Exception("Django storages for AWS not configured")
+        
         parts = []
         key = request.GET.get("key", "")
 
@@ -57,6 +65,10 @@ class S3MultipartUploadManagerView(BaseManagerView):
 
 def batch_sign(request, uploadid):
     if request.method == "GET":
+        try:
+            storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
+        except AttributeError:
+            raise Exception("Django storages for AWS not configured")
         key = request.GET.get("key", "")
         part_numbers = [int(x) for x in request.GET.get("partNumbers").split(",")]
         s3 = boto3.client("s3")
@@ -68,7 +80,7 @@ def batch_sign(request, uploadid):
                     "upload_part",
                     {
                         "Key": key,
-                        "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
+                        "Bucket": storage_bucket,
                         "PartNumber": int(part),
                         "Body": "",
                         "UploadId": uploadid,
@@ -78,18 +90,22 @@ def batch_sign(request, uploadid):
             )
         return JsonResponse(urls, safe=False)
     else:
-        raise Http404
+        return HttpResponseNotAllowed()
 
 
 def upload_part(request, uploadid, partnumber):
-    if request.method == "GET":
+    if request.method == "GET":        
+        try:
+            storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
+        except AttributeError:
+            raise Exception("Django storages for AWS not configured")
         s3 = boto3.client("s3")
         key = request.GET.get("key", "")
         url = s3.generate_presigned_url(
             "upload_part",
             {
                 "Key": key,
-                "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
+                "Bucket": storage_bucket,
                 "PartNumber": int(partnumber),
                 "UploadId": uploadid,
             },
@@ -97,19 +113,23 @@ def upload_part(request, uploadid, partnumber):
         )
         return JsonResponse(url, safe=False)
     else:
-        raise Http404
+        return HttpResponseNotAllowed()
 
 
 def complete_upload(request, uploadid):
     if request.method == "POST":
+        try:
+            storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
+        except AttributeError:
+            raise Exception("Django storages for AWS not configured")
         key = request.GET.get("key", "")
         s3 = boto3.client("s3")
         response = s3.complete_multipart_upload(
-            Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+            Bucket=storage_bucket,
             Key=key,
             UploadId=uploadid,
             MultipartUpload={"Parts": json.loads(request.body.decode("utf-8"))["parts"]},
         )
         return JsonResponse({"location": response["Location"]})
     else:
-        raise Http404
+        return HttpResponseNotAllowed()

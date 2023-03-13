@@ -1,7 +1,8 @@
 @import url(report_templates.css);
-@import '../packages/@uppy/core/dist/style.min.css';
-@import '../packages/@uppy/dashboard/dist/style.min.css';
-@import '../packages/@uppy/progress-bar/dist/style.min.css';
+@import '../node_modules/@uppy/core/dist/style.min.css';
+@import '../node_modules/@uppy/dashboard/dist/style.min.css';
+@import '../node_modules/@uppy/drag-drop/dist/style.min.css';
+@import '../node_modules/@uppy/progress-bar/dist/style.min.css';
 
 .nav>li>a:focus {
     text-decoration: none;
@@ -993,4 +994,27 @@
     left: 50px;
     right: auto !important;
     top: auto !important;
+}
+
+.workflow-component .uppy-Root {
+    padding: 0 45px;
+}
+
+/* "!important" note: done because uppy dashboard does not accept anything other than a pixel value for width and height,
+ and we intend to control the width from the width of the external containers.  */
+.workflow-component .uppy-Dashboard-inner {
+    width: auto !important;
+    height: 60% !important;
+}
+
+.gallery-controls.new-tile.no-background {
+    background: none;
+}
+
+.workflow-component .uppy-Root {
+    width: 100%;
+    height: 100%;
+}
+.workflow-component .uppy-Dashboard {
+    height: 100%;
 }
