@@ -95,19 +95,16 @@ class SelectDatasetFilesStep(View):
             observation_reference_tile.save(user=request.user, transaction_id=transaction_id)
 
             # save files associated with digital resource
-            dataset_files =  request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), []) + request.FILES.getlist("file-list_{}".format(dataset_file_node_id), [])
+            dataset_files = request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), []) + request.FILES.getlist(
+                "file-list_{}".format(dataset_file_node_id), []
+            )
             file_data_list = request.POST.getlist("file-list_{}_data".format(dataset_file_node_id), None)
             file_data_list = [JSONDeserializer().deserialize(fd) for fd in file_data_list]
             new_files = []
             for file in dataset_files:
                 file_data = next((fd for fd in file_data_list if fd.get("name") == file.name), None)
 
-                new_files.append(
-                    (
-                        file_data,
-                        file
-                    )
-                )
+                new_files.append((file_data, file))
 
             removed_files = []
             for file in new_files:
@@ -171,10 +168,7 @@ class SelectDatasetFilesStep(View):
                 ]
             except KeyError:
                 # XRF files do not have a renderer (yet) and use this same endpoint.
-                file_response = [
-                    {"name": f[0]["name"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
-                    for f in new_files
-                ]
+                file_response = [{"name": f[0]["name"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]} for f in new_files]
 
         return JSONResponse(
             {

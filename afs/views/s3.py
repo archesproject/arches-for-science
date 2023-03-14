@@ -8,6 +8,7 @@ import boto3
 
 KEY_BASE = "uploadedfiles/"
 
+
 @method_decorator(can_edit_resource_instance, name="dispatch")
 class S3MultipartUploaderView(BaseManagerView):
     """S3 Multipart uploader chunks files to allow for parallel uploads to S3"""
@@ -32,7 +33,6 @@ class S3MultipartUploaderView(BaseManagerView):
         return JsonResponse(response_object)
 
 
-
 @method_decorator(can_edit_resource_instance, name="dispatch")
 class S3MultipartUploadManagerView(BaseManagerView):
     """doom"""
@@ -42,7 +42,7 @@ class S3MultipartUploadManagerView(BaseManagerView):
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
             raise Exception("Django storages for AWS not configured")
-        
+
         parts = []
         key = request.GET.get("key", "")
 
@@ -94,7 +94,7 @@ def batch_sign(request, uploadid):
 
 
 def upload_part(request, uploadid, partnumber):
-    if request.method == "GET":        
+    if request.method == "GET":
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
