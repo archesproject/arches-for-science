@@ -57,6 +57,9 @@ class UpdateResourceListView(View):
         tile.data[name_node_id] = stringDataType.transform_value_for_tile("Collection for {0}".format(project_name))
         tile.save(transaction_id=transaction_id, index=False)
 
+        resource.calculate_descriptors()
+        resource.save(index=False)
+
         return resource, tile.tileid
 
     def add_collection_to_project(self, resourceinstaneid, r_resourceinstaneid, transaction_id):
@@ -96,11 +99,9 @@ class UpdateResourceListView(View):
                 TileModel.objects.update_or_create(tile)
 
             for resource in resources:
-                resource.calculate_descriptors()
                 document, terms = resource.get_documents_to_index(
                     fetchTiles=True, datatype_factory=datatype_factory, node_datatypes=node_datatypes
                 )
-                resource.save(index=False)
 
                 documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
 
