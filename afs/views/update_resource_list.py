@@ -96,9 +96,11 @@ class UpdateResourceListView(View):
                 TileModel.objects.update_or_create(tile)
 
             for resource in resources:
+                resource.calculate_descriptors()
                 document, terms = resource.get_documents_to_index(
                     fetchTiles=True, datatype_factory=datatype_factory, node_datatypes=node_datatypes
                 )
+                resource.save(index=False)
 
                 documents.append(se.create_bulk_item(index=RESOURCES_INDEX, id=document["resourceinstanceid"], data=document))
 
