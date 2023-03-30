@@ -660,7 +660,7 @@ define([
                     cardwidgets: self.card.params.cardwidgets,
                 });
 
-                self.selectedSampleLocationInstance(self.builtTile);
+                self.selectSampleLocationInstance(self.builtTile);
                 self.selectedSampleLocationInstance().samplingActivityResourceId = ko.observable(self.samplingActivityResourceId);
 
                 updateAnnotations().then(async function(_physicalThingAnnotationNode) {
