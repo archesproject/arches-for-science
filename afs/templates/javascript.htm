@@ -21,7 +21,14 @@
 define('register-three', ['three'], function (THREE) {
     window.THREE = THREE;
     });
+
 </script>
+
+<!-- consumed by media/js/afs-settings.js -->
+<div id="projectSettings"
+    style="display: none"
+    cloudStorage='{"enabled": {{ project_settings.CLOUD_STORAGE_ENABLED }}}'
+></div>
 
 <!-- consumed by media/js/afs-formats.js -->
 <div 
