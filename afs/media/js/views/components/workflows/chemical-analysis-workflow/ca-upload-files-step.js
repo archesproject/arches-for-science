@@ -183,7 +183,11 @@ define([
                 self.datasetName(params.form.value()?.datasetName);
             };
 
-            this.dirty = params.form.dirty;
+            this.datasetNameBlur = () => {
+                if(self.files().length > 0) {
+                    this.saveFiles([]);
+                }
+            };
 
             this.datasetName.subscribe(function(name) {
                 params.form.dirty(name !== params.form.value()?.datasetName && self.files().length > 0);
