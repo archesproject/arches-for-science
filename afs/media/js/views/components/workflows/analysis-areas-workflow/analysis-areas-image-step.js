@@ -13,6 +13,8 @@ define([
         var self = this;
         params.pageVm.loading(true);
 
+        this.workflowId = params.form.workflowId;
+
         this.isManifestManagerHidden = ko.observable(true);
         this.shouldShowEditService = ko.observable(true);
 
