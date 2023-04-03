@@ -37,10 +37,10 @@ class ReportView(View):
 
         node_dict = {}
 
-        for index, i in enumerate(serialized_graph['nodes']):
-            if serialized_graph['nodes'][index]["alias"]:
-                serialized_graph['nodes'][index]["pk"] = uuid.UUID(serialized_graph['nodes'][index]["nodeid"])
-                node_dict[serialized_graph['nodes'][index]["alias"].lower()] = SimpleNamespace(**serialized_graph['nodes'][index]) 
+        for index, i in enumerate(serialized_graph["nodes"]):
+            if serialized_graph["nodes"][index]["alias"]:
+                serialized_graph["nodes"][index]["pk"] = uuid.UUID(serialized_graph["nodes"][index]["nodeid"])
+                node_dict[serialized_graph["nodes"][index]["alias"].lower()] = SimpleNamespace(**serialized_graph["nodes"][index])
 
         project.load_tiles()
         tiles = project.tiles
@@ -53,11 +53,11 @@ class ReportView(View):
             title = str(project.name)
 
             for p in doc.paragraphs:
-                arches_tag_pattern = re.compile(r'(\<arches\:\s?([A-Za-z_0-9]+)\>)') # should match <arches: node_alias>
+                arches_tag_pattern = re.compile(r"(\<arches\:\s?([A-Za-z_0-9]+)\>)")  # should match <arches: node_alias>
                 for run in p.runs:
                     for (tag, alias) in re.findall(arches_tag_pattern, run.text):
                         tile = next((d for d in project.tiles if str(d.nodegroup_id) == node_dict[alias].nodegroup_id), None)
-                        if(tile is not None):
+                        if tile is not None:
                             node = node_dict[alias]
                             display_value = datatype_factory.get_instance(node.datatype).get_display_value(tile, node)
                             run.text = run.text.replace(tag, display_value)
@@ -88,15 +88,16 @@ class ReportView(View):
         response["Content-Disposition"] = "attachment; filename={}".format(title)
         return response
 
+
 # class ArchesTemplateEngine():
 
 #     def __init__(self, language=None):
 #         if not language:
 #             self.language = get_language()
-#         else: 
+#         else:
 #             self.language = language
 
-#         published_graphs = PublishedGraph.objects.filter(language=get_language()) 
+#         published_graphs = PublishedGraph.objects.filter(language=get_language())
 
 #         self.serialized_graphs = {}
 #         self.patterns = [
@@ -112,8 +113,8 @@ class ReportView(View):
 #             for index, i in enumerate(serialized_graph['nodes']):
 #                 if serialized_graph['nodes'][index]["alias"]:
 #                     serialized_graph['nodes'][index]["pk"] = uuid.UUID(serialized_graph['nodes'][index]["nodeid"])
-#                     serialized_graph['node_namespace'] = SimpleNamespace(**serialized_graph['nodes'][index]) 
-            
+#                     serialized_graph['node_namespace'] = SimpleNamespace(**serialized_graph['nodes'][index])
+
 #             self.serialized_graphs[graph.graphid] = serialized_graph
 
 #     def document_replace(self, document, resources):
