@@ -112,14 +112,8 @@ define([
                 self.datasetName(params.form.value()?.datasetName);
             };
 
-            this.datasetNameBlur = () => {
-                if(self.files().length > 0) {
-                    this.saveFiles([]);
-                }
-            };
-
             this.datasetName.subscribe(function(name) {
-                params.form.dirty(name !== params.form.value()?.datasetName && self.files().length > 0);
+                params.form.dirty(name !== params.form?.savedData()?.datasetName && self.files().length > 0);
             });
             this.files.subscribe(function(){
                 params.form.dirty(false);
@@ -158,6 +152,15 @@ define([
                         formData.append(`file-list_${datasetFileNodeId}_preloaded`, new Blob(), file.name);
                     }
                 }
+            };
+
+            params.form.save = () => {
+                params.form.complete(false);
+                if(self.files().length > 0) {
+                    this.saveFiles([]);
+                }
+                params.form.dirty(false);
+                params.form.complete(true);
             };
 
             this.saveFiles = async(files) => {
@@ -221,6 +224,7 @@ define([
                 params.form.complete(true);
             };
 
+
             const saveWorkflowState = async() => {
                 try {
                     const dataToSave = {
@@ -234,6 +238,7 @@ define([
                     };
 
                     params.form.savedData(dataToSave);
+                    params.form.value(dataToSave);
                     params.form.complete(true);
                     params.form.dirty(false);
                 } catch(err) {
