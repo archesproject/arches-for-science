@@ -1,0 +1,65 @@
+{% load i18n %}
+<div style="height: 100%; padding: 10px 24px;">
+    <div style="padding: 5px; margin-bottom: 15px;">
+        <div class="widget-input-label" style="margin-bottom: 5px;">{% trans "Instrument*" %}</div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                graphids: [
+                    'b6c819b8-99f6-11ea-a9b7-3af9d3b32b71',
+                ],
+                renderContext: 'workflow', 
+                value: instrumentValue,
+                disabled: locked
+            }
+        }"></div>
+    </div>
+    <div style="padding: 5px;">
+        <div class="widget-input-label" style="margin-top: 10px;">{% trans "Observation Date" %}</div>
+        <div style="margin: -20px 0px 0px 0px;" data-bind="component: {
+            name: 'datepicker-widget',
+            params: {
+                node: {'config': {'dateFormat': 'YYYY-MM-DD'}},
+                renderContext: 'workflow', 
+                value: dateValue,
+                disabled: locked
+            }
+        }"></div>
+    </div>
+    <div style="padding: 5px; margin-bottom: 15px;">
+        <div class="widget-input-label" style="margin-bottom: 5px;">{% trans "Procedure Used" %}</div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                searchString: procedureSearchString,
+                graphids: [
+                    'a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a',
+                ],
+                renderContext: 'workflow',
+                allowInstanceCreation: true,
+                value: procedureValue,
+                disabled: locked
+            }
+        }"></div>
+    </div>
+    <div style="padding: 5px;">
+        <div class="widget-input-label">{% trans "Instrument Parameters" %}</div>
+        <div style="margin-top: -20px;" data-bind="component: {
+            name: 'rich-text-widget',
+            params: {
+                renderContext: 'workflow', 
+                value: parameterValue,
+                disabled: locked
+            }
+        }"></div>
+    </div>
+    <div style="padding-bottom: 50px;" class="afs-experiment-name-block">
+        <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())}, text: showName() ? '{% trans "Hide experiment name" %}' : '{% trans "Show experiment name" %}'"></div>
+        <div data-bind="visible: showName">
+            <div class="widget-input-label">{% trans "Observation Name" %}</div>
+            <div>
+                <input type="text" style="padding-left: 15px; width: 90%; height: 36px;" data-bind="textInput: nameValue, attr: {disabled: locked}"></input>
+            </div>
+        </div>
+    </div>
+</div>

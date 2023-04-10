@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleTracker = require('webpack-bundle-tracker');
 
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { spawn } = require("child_process");
 
@@ -103,6 +104,10 @@ module.exports = () => {
                     }),
                     new MiniCssExtractPlugin(),
                     new BundleTracker({ filename: Path.resolve(__dirname, `webpack-stats.json`) }),
+                    new webpack.NormalModuleReplacementPlugin( // remove this as soon as https://github.com/transloadit/uppy/issues/4262 is addressed
+                        /\.\/RequestClient.js/,
+                        '../../../../js/utils/afsRequestClient.js'
+                    )
                 ],
                 resolveLoader: {
                     alias: {

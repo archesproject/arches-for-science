@@ -7,6 +7,7 @@ from afs.views.workflows.upload_dataset.update_file_format import UpdateFileForm
 from afs.views.workflows.upload_dataset.select_dataset_files_step import SelectDatasetFilesStep
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
+from afs.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, batch_sign, complete_upload, upload_part
 from afs.views.update_resource_list import UpdateResourceListView
 from afs.views.analysis_area_and_sample_taking import (
     SaveAnalysisAreaView,
@@ -44,6 +45,11 @@ urlpatterns = [
         name="format_render_map",
     ),
     url(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
+    url(r"^s3/multipart/(?P<uploadid>[^\/]+)/complete$", complete_upload, name="s3_multipart_upload_complete"),
+    url(r"^s3/multipart/(?P<uploadid>[^\/]+)/batch", batch_sign, name="s3_multipart_batch_sign"),
+    url(r"^s3/multipart/(?P<uploadid>[^\/]+)/(?P<partnumber>\d+)$", upload_part, name="s3_multipart_upload_part"),
+    url(r"^s3/multipart/(?P<uploadid>[^\/]+)", S3MultipartUploadManagerView.as_view(), name="s3_multipart_upload"),
+    url(r"^s3/multipart$", S3MultipartUploaderView.as_view(), name="s3_multipart_upload"),
     url(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),
     url(r"^saveanalysisarea", SaveAnalysisAreaView.as_view(), name="saveanalysisarea"),
     url(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),
