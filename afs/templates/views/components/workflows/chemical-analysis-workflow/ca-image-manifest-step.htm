@@ -1,4 +1,5 @@
-<div class="afs-image-service-instructions">
+
+<div class="afs-image-service-instructions" style="padding-bottom: 8px;">
     <p>
         Select an existing image service for your object that you can use to draw the locations of your observations.
         Or upload image(s) to create a new service.
@@ -11,6 +12,7 @@
                 data-bind="{
                     value: $data.displayname,
                     checked: $parent.selectedPhysicalThingImageServiceName,
+                    disable: $parent.locked
                 }"
             />
             <label 
@@ -26,7 +28,7 @@
     <!-- /ko -->
 </div>
 
-<button class="btn btn-success" style="margin-left: 28px;" data-bind="click: openManifestManager">
+<button class="btn btn-success" style="margin-left: 28px;" data-bind="click: openManifestManager, disable: $parent.locked">
     <i class="ion-android-cloud-done"></i>
     <span>
         Create new Image Service
@@ -53,8 +55,7 @@
                 summary: true,
                 shouldShowEditService: $data.shouldShowEditService,
                 manifestData: manifestData,
-                renderContext: 'manifest-workflow',
-                transactionId: workflowId
+                renderContext: 'manifest-workflow'
             }
         }
     "
@@ -64,8 +65,8 @@
     class="btn btn-warning"
     style="
         position: fixed;
-        top: 53px;
-        right: 6px;
+        top: 55px;
+        left: calc(100vw - 261px);
         height: 42px;
         width: 180px;
         transition: all linear .3s;

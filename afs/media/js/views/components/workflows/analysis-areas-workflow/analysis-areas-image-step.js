@@ -13,6 +13,8 @@ define([
         var self = this;
         params.pageVm.loading(true);
 
+        this.workflowId = params.form.workflowId;
+
         this.isManifestManagerHidden = ko.observable(true);
         this.shouldShowEditService = ko.observable(true);
 
@@ -90,7 +92,7 @@ define([
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](self.buildStrObject(manifestData.label));
-                const manifestDescription = Array.isArray(manifestData.description) ? manifestData.description[0] : manifestData.description;
+                const manifestDescription = Array.isArray(manifestData.description) ? self.buildStrObject(manifestData.description[0]) : self.buildStrObject(manifestData.description);
                 self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescription);
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](self.buildStrObject(manifestData['@id']));
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id

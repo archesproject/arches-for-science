@@ -101,12 +101,16 @@ define([
                 return false;
             }
             if (
-                self.sampleDescriptionWidgetValue() && self.sampleDescriptionWidgetValue() !== self.previouslySavedSampleDescriptionWidgetValue()
+                self.sampleDescriptionWidgetValue()
+                && self.sampleDescriptionWidgetValue() !== self.previouslySavedSampleDescriptionWidgetValue()
+                && self.sampleDescriptionWidgetValue()?.[arches.activeLanguage]?.value !== self.previouslySavedSampleDescriptionWidgetValue()
             ) {
                 return true;
             }
             else if (
-                self.motivationForSamplingWidgetValue() && self.motivationForSamplingWidgetValue() !== self.previouslySavedMotivationForSamplingWidgetValue()
+                self.motivationForSamplingWidgetValue()
+                && self.motivationForSamplingWidgetValue() !== self.previouslySavedMotivationForSamplingWidgetValue()
+                && self.motivationForSamplingWidgetValue()?.[arches.activeLanguage]?.value !== self.previouslySavedMotivationForSamplingWidgetValue()
             ) {
                 return true;
             }
@@ -375,7 +379,6 @@ define([
             }
 
             self.selectedSampleLocationInstance(sampleLocationInstance);
-
             if (self.selectedSampleLocationInstance()) {
 
                 var selectedSampleLocationParentPhysicalThingData = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);

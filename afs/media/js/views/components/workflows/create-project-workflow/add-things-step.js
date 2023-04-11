@@ -176,7 +176,7 @@ define([
             }
         };
 
-        const createResouaceListToUpdate = () => {
+        const createResourceListToUpdate = () => {
             let resourcesToUpdate = [];
             self.addedValues(self.value().filter(val => !self.startValue().includes(val)));
             self.removedValues(self.startValue().filter(val => !self.value().includes(val)));
@@ -202,7 +202,7 @@ define([
             self.complete(false);
             self.saving(true);
 
-            const resourcesToUpdate = createResouaceListToUpdate();
+            const resourcesToUpdate = createResourceListToUpdate();
             $.ajax({
                 url: arches.urls.root + 'updateresourcelist',
                 type: 'POST',
@@ -384,11 +384,11 @@ define([
         this.initialize();
 
         this.stripTags = (original) => {
-            return original.replace(/(<([^>]+)>)/gi, "");
+            return original?.replace(/(<([^>]+)>)/gi, "");
         };
 
         this.getStringValue = (value) => {
-            return value.find(str => str.language == arches.activeLanguage).value;
+            return value.find(str => str.language == arches.activeLanguage)?.value;
         };
     }
 
