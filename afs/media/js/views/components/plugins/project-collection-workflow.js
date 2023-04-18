@@ -3,11 +3,13 @@ define([
     'jquery',
     'arches',
     'viewmodels/workflow',
+    'viewmodels/alert',
+    'templates/views/components/plugins/project-collection-workflow.htm',
     'viewmodels/workflow-step',
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/create-project-workflow/add-things-step',
     'views/components/workflows/project-collection-workflow/project-collection-final-step'
-], function(ko, $, arches, Workflow) {
+], function(ko, $, arches, Workflow, AlertViewModel, projectCollectionWorkflowTemplate) {
     return ko.components.register('project-collection-workflow', {
         viewModel: function(params) {
             this.componentName = 'project-collection-workflow';
@@ -41,7 +43,7 @@ define([
                 {
                     title: 'Add Objects to Your Project',
                     name: 'object-search-step',  /* unique to workflow */
-                    required: false,
+                    required: true,
                     workflowstepclass: 'create-project-add-things-step',
                     informationboxdata: {
                         heading: 'Update Objects',
@@ -90,8 +92,35 @@ define([
             ];
 
             Workflow.apply(this, [params]);
+
+            this.reverseWorkflowTransactions = function() {
+                const quitUrl = this.quitUrl;
+                return $.ajax({
+                    type: "POST",
+                    url: arches.urls.transaction_reverse(this.id())
+                }).then(function() {
+                    params.loading(false);
+                    window.location.href = quitUrl;
+                });
+            };
+
+            this.quitWorkflow = function(){
+                this.alert(
+                    new AlertViewModel(
+                        'ep-alert-red',
+                        'Are you sure you would like to delete this workflow?',
+                        'All data created during the course of this workflow will be deleted.',
+                        function(){}, //does nothing when canceled
+                        () => {
+                            params.loading('Cleaning up...')
+                            this.reverseWorkflowTransactions()
+                        },
+                    )
+                );
+            };
+
             this.quitUrl = arches.urls.plugin('init-workflow');
         },
-        template: { require: 'text!templates/views/components/plugins/project-collection-workflow.htm' }
+        template: projectCollectionWorkflowTemplate
     });
 });

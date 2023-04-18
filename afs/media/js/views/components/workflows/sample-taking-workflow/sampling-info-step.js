@@ -4,8 +4,9 @@ define([
     'arches',
     'knockout',
     'uuid',
+    'templates/views/components/workflows/sample-taking-workflow/sampling-info-step.htm',
     'views/components/resource-instance-nodevalue',
-], function(_, $, arches, ko, uuid) {
+], function(_, $, arches, ko, uuid, samplingInfoStepTemplate) {
     function viewModel(params) {
         var self = this;
 
@@ -151,8 +152,7 @@ define([
 
         this.saveSamplingName = function() {
             const languageValueId = ['bc35776b-996f-4fc1-bd25-9f6432c1f349']; //English
-            const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"]; //[primary title, preferred terms]
-
+            const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"]; //[primary title, preferred terms];
             const samplingNameTileData = {
                 "tileid": ko.unwrap(self.samplingNameTile) || "",
                 "nodegroup_id": samplingNameNodegroup,
@@ -236,6 +236,11 @@ define([
         };
 
         this.saveSamplingTechnique = function() {
+            // const samplingTechnique = {};
+            // samplingTechnique[arches.activeLanguage] = {
+            //     value: self.samplingTechnique(),
+            //     direction: arches.activeLanguageDir
+            // };
             var samplingTechniqueTileData = {
                 "tileid": ko.unwrap(self.samplingTechniqueTile) || "",
                 "nodegroup_id": sampleStatementNodegroup,
@@ -256,6 +261,11 @@ define([
         };
 
         this.saveSamplingMotivation = function() {
+            // const samplingMotivation = {};
+            // samplingMotivation[arches.activeLanguage] = {
+            //     value: self.samplingMotivation(),
+            //     direction: arches.activeLanguageDir
+            // };
             var samplingMotivationTileData = {
                 "tileid": ko.unwrap(self.samplingMotivationTile) || "",
                 "nodegroup_id": sampleStatementNodegroup,
@@ -314,7 +324,7 @@ define([
 
     ko.components.register('sampling-info-step', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/sample-taking-workflow/sampling-info-step.htm' }
+        template: samplingInfoStepTemplate
     });
     return viewModel;
 });

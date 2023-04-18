@@ -20,11 +20,19 @@
                     "description": "",
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Textual Reference to Instrument",
+                    "name": {
+                        "en": "Textual Reference to Instrument"
+                    },
                     "nodegroup_id": "1c3dc5bd-9118-11ec-a428-ad03e9261309",
                     "sortorder": 8,
                     "visible": true
@@ -39,11 +47,19 @@
                     "description": "",
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Statement Provenance",
+                    "name": {
+                        "en": "Statement Provenance"
+                    },
                     "nodegroup_id": "45a0fc31-9118-11ec-a428-ad03e9261309",
                     "sortorder": null,
                     "visible": true
@@ -55,14 +71,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Identifier for Production Event",
+                    "name": {
+                        "en": "Identifier for Production Event"
+                    },
                     "nodegroup_id": "b6c81b2a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true
@@ -74,14 +100,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Name for Statement",
+                    "name": {
+                        "en": "Name for Statement"
+                    },
                     "nodegroup_id": "b6c83880-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true
@@ -100,14 +136,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Identifier for Instrument",
+                    "name": {
+                        "en": "Identifier for Instrument"
+                    },
                     "nodegroup_id": "b6c8662a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": true
@@ -126,14 +172,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: la-production\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: la-production\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Production Event of Instrument",
+                    "name": {
+                        "en": "Production Event of Instrument"
+                    },
                     "nodegroup_id": "b6c88e52-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 10,
                     "visible": true
@@ -152,14 +208,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Name of Instrument",
+                    "name": {
+                        "en": "Name of Instrument"
+                    },
                     "nodegroup_id": "b6c89992-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true
@@ -171,14 +237,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Name for Production Event",
+                    "name": {
+                        "en": "Name for Production Event"
+                    },
                     "nodegroup_id": "b6c8b6ca-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true
@@ -197,14 +273,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Parent Instrument",
+                    "name": {
+                        "en": "Parent Instrument"
+                    },
                     "nodegroup_id": "b6c8c160-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 5,
                     "visible": true
@@ -216,14 +302,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "TimeSpan of Production Event",
+                    "name": {
+                        "en": "TimeSpan of Production Event"
+                    },
                     "nodegroup_id": "b6c8caca-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": true
@@ -235,14 +331,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Name for Dimension of TimeSpan of Production Event",
+                    "name": {
+                        "en": "Name for Dimension of TimeSpan of Production Event"
+                    },
                     "nodegroup_id": "b6c8dbd2-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true
@@ -254,14 +360,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Statement about Production Event",
+                    "name": {
+                        "en": "Statement about Production Event"
+                    },
                     "nodegroup_id": "b6c8e424-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true
@@ -280,14 +396,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Current Location of Instrument",
+                    "name": {
+                        "en": "Current Location of Instrument"
+                    },
                     "nodegroup_id": "b6c9a990-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 8,
                     "visible": true
@@ -306,14 +432,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Current Owner of Instrument",
+                    "name": {
+                        "en": "Current Owner of Instrument"
+                    },
                     "nodegroup_id": "b6c9ba34-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 7,
                     "visible": true
@@ -325,14 +461,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Dimension of TimeSpan of Production Event",
+                    "name": {
+                        "en": "Dimension of TimeSpan of Production Event"
+                    },
                     "nodegroup_id": "b6c9d35c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true
@@ -351,14 +497,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Type of Instrument",
+                    "name": {
+                        "en": "Type of Instrument"
+                    },
                     "nodegroup_id": "b6c9f4cc-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true
@@ -377,14 +533,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Internal Label of Instrument",
+                    "name": {
+                        "en": "Internal Label of Instrument"
+                    },
                     "nodegroup_id": "b6ca2690-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 12,
                     "visible": false
@@ -403,14 +569,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Dimension of Instrument",
+                    "name": {
+                        "en": "Dimension of Instrument"
+                    },
                     "nodegroup_id": "b6ca332e-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": true
@@ -422,14 +598,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Name for Dimension",
+                    "name": {
+                        "en": "Name for Dimension"
+                    },
                     "nodegroup_id": "b6ca552a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true
@@ -441,14 +627,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Name for TimeSpan of Production Event",
+                    "name": {
+                        "en": "Name for TimeSpan of Production Event"
+                    },
                     "nodegroup_id": "b6ca666e-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true
@@ -467,14 +663,24 @@
                         }
                     ],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Statement about Instrument",
+                    "name": {
+                        "en": "Statement about Instrument"
+                    },
                     "nodegroup_id": "b6ca8bda-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true
@@ -486,14 +692,24 @@
                     "config": null,
                     "constraints": [],
                     "cssclass": null,
-                    "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n"
+                    },
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Name for Statement",
+                    "name": {
+                        "en": "Name for Statement"
+                    },
                     "nodegroup_id": "b6cabd9e-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true
@@ -521,11 +737,19 @@
                     "description": null,
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Part of Set",
+                    "name": {
+                        "en": "Part of Set"
+                    },
                     "nodegroup_id": "bd3fb784-cdca-11eb-a29f-024e0d439fdb",
                     "sortorder": 6,
                     "visible": true
@@ -547,11 +771,19 @@
                     "description": "",
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "helpenabled": false,
-                    "helptext": null,
-                    "helptitle": null,
-                    "instructions": null,
+                    "helptext": {
+                        "en": null
+                    },
+                    "helptitle": {
+                        "en": null
+                    },
+                    "instructions": {
+                        "en": null
+                    },
                     "is_editable": true,
-                    "name": "Digital Reference to Instrument",
+                    "name": {
+                        "en": "Digital Reference to Instrument"
+                    },
                     "nodegroup_id": "c2a9aa2a-8e2f-11eb-a9c4-faffc265b501",
                     "sortorder": 11,
                     "visible": true
@@ -562,11 +794,18 @@
                     "card_id": "1c3dc5bf-9118-11ec-a428-ad03e9261309",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Textual Source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "1c3dc5c2-9118-11ec-a428-ad03e9261309",
-                    "label": "Textual Source",
+                    "label": {
+                        "en": "Textual Source"
+                    },
                     "node_id": "1c3dc5c0-9118-11ec-a428-ad03e9261309",
                     "sortorder": 0,
                     "visible": true,
@@ -576,12 +815,19 @@
                     "card_id": "1c3dc5bf-9118-11ec-a428-ad03e9261309",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Textual Reference Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "1c3dc5c3-9118-11ec-a428-ad03e9261309",
-                    "label": "Textual Reference Type",
+                    "label": {
+                        "en": "Textual Reference Type"
+                    },
                     "node_id": "1c3dc5c1-9118-11ec-a428-ad03e9261309",
                     "sortorder": 1,
                     "visible": true,
@@ -591,11 +837,18 @@
                     "card_id": "45a0fc33-9118-11ec-a428-ad03e9261309",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Digital Resources Used as Source for Statement",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "45a0fc3e-9118-11ec-a428-ad03e9261309",
-                    "label": "Digital Resources Used as Source for Statement",
+                    "label": {
+                        "en": "Digital Resources Used as Source for Statement"
+                    },
                     "node_id": "45a0fc3a-9118-11ec-a428-ad03e9261309",
                     "sortorder": 2,
                     "visible": true,
@@ -613,7 +866,9 @@
                         "viewMode": "days"
                     },
                     "id": "45a0fc3f-9118-11ec-a428-ad03e9261309",
-                    "label": "Earliest Creation Time",
+                    "label": {
+                        "en": "Earliest Creation Time"
+                    },
                     "node_id": "45a0fc35-9118-11ec-a428-ad03e9261309",
                     "sortorder": 3,
                     "visible": true,
@@ -623,11 +878,18 @@
                     "card_id": "45a0fc33-9118-11ec-a428-ad03e9261309",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Textual Work Used as Source for Statement",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "45a0fc40-9118-11ec-a428-ad03e9261309",
-                    "label": "Textual Work Used as Source for Statement",
+                    "label": {
+                        "en": "Textual Work Used as Source for Statement"
+                    },
                     "node_id": "45a0fc3b-9118-11ec-a428-ad03e9261309",
                     "sortorder": 1,
                     "visible": true,
@@ -645,7 +907,9 @@
                         "viewMode": "days"
                     },
                     "id": "45a0fc41-9118-11ec-a428-ad03e9261309",
-                    "label": "Latest Creation Time",
+                    "label": {
+                        "en": "Latest Creation Time"
+                    },
                     "node_id": "45a0fc37-9118-11ec-a428-ad03e9261309",
                     "sortorder": 4,
                     "visible": true,
@@ -655,12 +919,19 @@
                     "card_id": "45a0fc33-9118-11ec-a428-ad03e9261309",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement_creation_time_type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "45a0fc42-9118-11ec-a428-ad03e9261309",
-                    "label": "Statement_creation_time_type",
+                    "label": {
+                        "en": "Statement_creation_time_type"
+                    },
                     "node_id": "45a0fc38-9118-11ec-a428-ad03e9261309",
                     "sortorder": 5,
                     "visible": false,
@@ -669,15 +940,27 @@
                 {
                     "card_id": "45a0fc33-9118-11ec-a428-ad03e9261309",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement_creation_time_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "45a0fc43-9118-11ec-a428-ad03e9261309",
-                    "label": "Statement_creation_time_label",
+                    "label": {
+                        "en": "Statement_creation_time_label"
+                    },
                     "node_id": "45a0fc39-9118-11ec-a428-ad03e9261309",
                     "sortorder": 6,
                     "visible": false,
@@ -695,7 +978,9 @@
                         "viewMode": "days"
                     },
                     "id": "45a0fc44-9118-11ec-a428-ad03e9261309",
-                    "label": "Statement_creation_time_begin of the end",
+                    "label": {
+                        "en": "Statement_creation_time_begin of the end"
+                    },
                     "node_id": "45a0fc3c-9118-11ec-a428-ad03e9261309",
                     "sortorder": 7,
                     "visible": false,
@@ -713,7 +998,9 @@
                         "viewMode": "days"
                     },
                     "id": "45a0fc45-9118-11ec-a428-ad03e9261309",
-                    "label": "Statement_creation_time_end of the begin",
+                    "label": {
+                        "en": "Statement_creation_time_end of the begin"
+                    },
                     "node_id": "45a0fc3d-9118-11ec-a428-ad03e9261309",
                     "sortorder": 8,
                     "visible": false,
@@ -723,11 +1010,18 @@
                     "card_id": "45a0fc33-9118-11ec-a428-ad03e9261309",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement Author",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "45a0fc46-9118-11ec-a428-ad03e9261309",
-                    "label": "Statement Author",
+                    "label": {
+                        "en": "Statement Author"
+                    },
                     "node_id": "45a0fc34-9118-11ec-a428-ad03e9261309",
                     "sortorder": 0,
                     "visible": true,
@@ -736,15 +1030,27 @@
                 {
                     "card_id": "b6cabf4c-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbaace-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name",
+                    "label": {
+                        "en": "Name"
+                    },
                     "node_id": "b6cb4516-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -756,12 +1062,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Language",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbaaf6-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Language",
+                    "label": {
+                        "en": "Name Language"
+                    },
                     "node_id": "b6cb6ca8-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -771,11 +1084,18 @@
                     "card_id": "b6cabf4c-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source [statement/name]",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbab28-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source [statement/name]",
+                    "label": {
+                        "en": "source [statement/name]"
+                    },
                     "node_id": "b6cb0f24-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -787,12 +1107,19 @@
                         "defaultValue": [
                             "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbab50-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Type",
+                    "label": {
+                        "en": "Name Type"
+                    },
                     "node_id": "b6cb6d34-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -801,15 +1128,27 @@
                 {
                     "card_id": "b6cabf4c-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label [statement/name]",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbab78-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label [statement/name]",
+                    "label": {
+                        "en": "_label [statement/name]"
+                    },
                     "node_id": "b6cacffa-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -819,11 +1158,18 @@
                     "card_id": "b6c89c62-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source [name]",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbb000-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source [name]",
+                    "label": {
+                        "en": "source [name]"
+                    },
                     "node_id": "b6cb9c14-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -835,12 +1181,19 @@
                         "defaultValue": [
                             "8f40c740-3c02-4839-b1a4-f1460823a9fe"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbb028-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Type",
+                    "label": {
+                        "en": "Name Type"
+                    },
                     "node_id": "b6cb5a88-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -849,15 +1202,27 @@
                 {
                     "card_id": "b6c89c62-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label [name]",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbb050-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label [name]",
+                    "label": {
+                        "en": "_label [name]"
+                    },
                     "node_id": "b6caefb2-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -869,12 +1234,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Language",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbb078-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Language",
+                    "label": {
+                        "en": "Name Language"
+                    },
                     "node_id": "b6cad6b2-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -883,15 +1255,27 @@
                 {
                     "card_id": "b6c89c62-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbb0a0-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name",
+                    "label": {
+                        "en": "Name"
+                    },
                     "node_id": "b6cb6212-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -900,15 +1284,27 @@
                 {
                     "card_id": "b6ca28f2-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Internal Label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbb0c8-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Internal Label",
+                    "label": {
+                        "en": "Internal Label"
+                    },
                     "node_id": "b6ca2690-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -917,15 +1313,27 @@
                 {
                     "card_id": "b6c81f62-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbb410-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6cae8f0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -935,12 +1343,19 @@
                     "card_id": "b6c81f62-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Identifier Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbb438-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Identifier Type",
+                    "label": {
+                        "en": "Identifier Type"
+                    },
                     "node_id": "b6cb04c0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -949,15 +1364,27 @@
                 {
                     "card_id": "b6c81f62-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Identifier",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbb460-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Identifier",
+                    "label": {
+                        "en": "Identifier"
+                    },
                     "node_id": "b6cad32e-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -967,11 +1394,18 @@
                     "card_id": "b6c81f62-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbb488-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source",
+                    "label": {
+                        "en": "source"
+                    },
                     "node_id": "b6cb1500-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": false,
@@ -983,12 +1417,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Language",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbb8c0-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Language",
+                    "label": {
+                        "en": "Name Language"
+                    },
                     "node_id": "b6cb0984-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -997,15 +1438,27 @@
                 {
                     "card_id": "b6c8ba3a-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbb8e8-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Label",
+                    "label": {
+                        "en": "Name Label"
+                    },
                     "node_id": "b6cae990-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -1014,15 +1467,27 @@
                 {
                     "card_id": "b6c8ba3a-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbb910-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name",
+                    "label": {
+                        "en": "Name"
+                    },
                     "node_id": "b6cb3774-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1034,12 +1499,19 @@
                         "defaultValue": [
                             "8f40c740-3c02-4839-b1a4-f1460823a9fe"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbb938-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Type",
+                    "label": {
+                        "en": "Name Type"
+                    },
                     "node_id": "b6cb119a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1049,11 +1521,18 @@
                     "card_id": "b6c8ba3a-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Source Reference Work for Name",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbb956-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Source Reference Work for Name",
+                    "label": {
+                        "en": "Source Reference Work for Name"
+                    },
                     "node_id": "b6cb7e32-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1063,11 +1542,18 @@
                     "card_id": "b6c8c5f2-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Instrument",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbbb5e-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Instrument",
+                    "label": {
+                        "en": "Instrument"
+                    },
                     "node_id": "b6c8c160-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1078,19 +1564,32 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
+                        "i18n_properties": [
+                            "placeholder",
+                            "prefix",
+                            "suffix"
+                        ],
                         "label": "Lowest possible value",
                         "max": "",
                         "min": "",
-                        "placeholder": "Enter number",
+                        "placeholder": {
+                            "en": "Enter number"
+                        },
                         "precision": "",
-                        "prefix": "",
+                        "prefix": {
+                            "en": ""
+                        },
                         "step": "",
-                        "suffix": "",
+                        "suffix": {
+                            "en": ""
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbbb86-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Lowest possible value",
+                    "label": {
+                        "en": "Lowest possible value"
+                    },
                     "node_id": "b6cb162c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1100,12 +1599,19 @@
                     "card_id": "b6ca37fc-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Unit",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbbbae-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Unit",
+                    "label": {
+                        "en": "Unit"
+                    },
                     "node_id": "b6cb5b96-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": true,
@@ -1114,15 +1620,27 @@
                 {
                     "card_id": "b6ca37fc-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label [dimension]",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbbbd6-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label [dimension]",
+                    "label": {
+                        "en": "_label [dimension]"
+                    },
                     "node_id": "b6caf598-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 6,
                     "visible": false,
@@ -1132,12 +1650,19 @@
                     "card_id": "b6ca37fc-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Dimension Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbbbfe-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Dimension Type",
+                    "label": {
+                        "en": "Dimension Type"
+                    },
                     "node_id": "b6cb6870-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1148,19 +1673,32 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
+                        "i18n_properties": [
+                            "placeholder",
+                            "prefix",
+                            "suffix"
+                        ],
                         "label": "Value",
                         "max": "",
                         "min": "",
-                        "placeholder": "Enter number",
+                        "placeholder": {
+                            "en": "Enter number"
+                        },
                         "precision": "",
-                        "prefix": "",
+                        "prefix": {
+                            "en": ""
+                        },
                         "step": "",
-                        "suffix": "",
+                        "suffix": {
+                            "en": ""
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbbc26-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Value",
+                    "label": {
+                        "en": "Value"
+                    },
                     "node_id": "b6cb388c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1170,11 +1708,18 @@
                     "card_id": "b6ca37fc-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source [dimension]",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbbc4e-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source [dimension]",
+                    "label": {
+                        "en": "source [dimension]"
+                    },
                     "node_id": "b6cae710-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 5,
                     "visible": false,
@@ -1185,19 +1730,32 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
+                        "i18n_properties": [
+                            "placeholder",
+                            "prefix",
+                            "suffix"
+                        ],
                         "label": "Highest possible value ",
                         "max": "",
                         "min": "",
-                        "placeholder": "Enter number",
+                        "placeholder": {
+                            "en": "Enter number"
+                        },
                         "precision": "",
-                        "prefix": "",
+                        "prefix": {
+                            "en": ""
+                        },
                         "step": "",
-                        "suffix": "",
+                        "suffix": {
+                            "en": ""
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbbc76-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Highest possible value ",
+                    "label": {
+                        "en": "Highest possible value "
+                    },
                     "node_id": "b6cacf50-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": true,
@@ -1207,11 +1765,18 @@
                     "card_id": "b6ca6a56-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbbc9e-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source",
+                    "label": {
+                        "en": "source"
+                    },
                     "node_id": "b6cb0d6c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1220,15 +1785,27 @@
                 {
                     "card_id": "b6ca6a56-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbbcc6-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6cb1dde-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -1237,15 +1814,27 @@
                 {
                     "card_id": "b6ca6a56-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Text of Name",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbbcee-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Text of Name",
+                    "label": {
+                        "en": "Text of Name"
+                    },
                     "node_id": "b6cada9a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1257,12 +1846,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Language of Text",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbbd16-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Language of Text",
+                    "label": {
+                        "en": "Language of Text"
+                    },
                     "node_id": "b6cb49e4-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1274,12 +1870,19 @@
                         "defaultValue": [
                             "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Type of Name",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbbd3e-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Type of Name",
+                    "label": {
+                        "en": "Type of Name"
+                    },
                     "node_id": "b6cba33a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1289,12 +1892,19 @@
                     "card_id": "b6c9f8e6-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbbf00-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Type",
+                    "label": {
+                        "en": "Type"
+                    },
                     "node_id": "b6c9f4cc-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1304,11 +1914,18 @@
                     "card_id": "b6c9ae36-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Place",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbc2e8-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Place",
+                    "label": {
+                        "en": "Place"
+                    },
                     "node_id": "b6c9a990-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true,
@@ -1319,19 +1936,32 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
+                        "i18n_properties": [
+                            "placeholder",
+                            "prefix",
+                            "suffix"
+                        ],
                         "label": "Lowest possible value",
                         "max": "",
                         "min": "",
-                        "placeholder": "Enter number",
+                        "placeholder": {
+                            "en": "Enter number"
+                        },
                         "precision": "",
-                        "prefix": "",
+                        "prefix": {
+                            "en": ""
+                        },
                         "step": "",
-                        "suffix": "",
+                        "suffix": {
+                            "en": ""
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbc572-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Lowest possible value",
+                    "label": {
+                        "en": "Lowest possible value"
+                    },
                     "node_id": "b6cb9dae-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1341,12 +1971,19 @@
                     "card_id": "b6c9d852-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Unit",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbc59a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Unit",
+                    "label": {
+                        "en": "Unit"
+                    },
                     "node_id": "b6cb8cf6-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": true,
@@ -1355,15 +1992,27 @@
                 {
                     "card_id": "b6c9d852-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbc5c2-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6cad4f0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 6,
                     "visible": false,
@@ -1374,19 +2023,32 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
+                        "i18n_properties": [
+                            "placeholder",
+                            "prefix",
+                            "suffix"
+                        ],
                         "label": "Highest possible value",
                         "max": "",
                         "min": "",
-                        "placeholder": "Enter number",
+                        "placeholder": {
+                            "en": "Enter number"
+                        },
                         "precision": "",
-                        "prefix": "",
+                        "prefix": {
+                            "en": ""
+                        },
                         "step": "",
-                        "suffix": "",
+                        "suffix": {
+                            "en": ""
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbc5ea-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Highest possible value",
+                    "label": {
+                        "en": "Highest possible value"
+                    },
                     "node_id": "b6cb7522-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1396,12 +2058,19 @@
                     "card_id": "b6c9d852-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbc612-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "type",
+                    "label": {
+                        "en": "type"
+                    },
                     "node_id": "b6cb41ce-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1411,11 +2080,18 @@
                     "card_id": "b6c9d852-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbc63a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source",
+                    "label": {
+                        "en": "source"
+                    },
                     "node_id": "b6cb8f44-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 5,
                     "visible": false,
@@ -1426,19 +2102,32 @@
                     "config": {
                         "defaultValue": "",
                         "format": "",
+                        "i18n_properties": [
+                            "placeholder",
+                            "prefix",
+                            "suffix"
+                        ],
                         "label": "Value",
                         "max": "",
                         "min": "",
-                        "placeholder": "Enter number",
+                        "placeholder": {
+                            "en": "Enter number"
+                        },
                         "precision": "",
-                        "prefix": "",
+                        "prefix": {
+                            "en": ""
+                        },
                         "step": "",
-                        "suffix": "",
+                        "suffix": {
+                            "en": ""
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbc658-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Value",
+                    "label": {
+                        "en": "Value"
+                    },
                     "node_id": "b6cb6ed8-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1450,12 +2139,19 @@
                         "defaultValue": [
                             "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbcb12-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Type",
+                    "label": {
+                        "en": "Name Type"
+                    },
                     "node_id": "b6cadbd0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1464,15 +2160,27 @@
                 {
                     "card_id": "b6ca5b1a-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbcb30-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name",
+                    "label": {
+                        "en": "Name"
+                    },
                     "node_id": "b6caf0de-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1481,15 +2189,27 @@
                 {
                     "card_id": "b6ca5b1a-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label [dimension/name]",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbcb62-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label [dimension/name]",
+                    "label": {
+                        "en": "_label [dimension/name]"
+                    },
                     "node_id": "b6cb03a8-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -1501,12 +2221,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Language",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbcb8a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Language",
+                    "label": {
+                        "en": "Name Language"
+                    },
                     "node_id": "b6caf91c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1516,11 +2243,18 @@
                     "card_id": "b6ca5b1a-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source [dimension/name]",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbcbbc-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source [dimension/name]",
+                    "label": {
+                        "en": "source [dimension/name]"
+                    },
                     "node_id": "b6cb9e6c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1530,11 +2264,18 @@
                     "card_id": "b6c8e9d8-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbcbda-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source",
+                    "label": {
+                        "en": "source"
+                    },
                     "node_id": "b6cb9ca0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -1544,12 +2285,19 @@
                     "card_id": "b6c8e9d8-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement Language",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbcc02-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Statement Language",
+                    "label": {
+                        "en": "Statement Language"
+                    },
                     "node_id": "b6cb1f78-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1559,12 +2307,19 @@
                     "card_id": "b6c8e9d8-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbcc2a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Statement Type",
+                    "label": {
+                        "en": "Statement Type"
+                    },
                     "node_id": "b6cb00ce-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1573,15 +2328,27 @@
                 {
                     "card_id": "b6c8e9d8-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbcc52-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6caf2b4-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1590,15 +2357,27 @@
                 {
                     "card_id": "b6c8e9d8-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbcc7a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Statement",
+                    "label": {
+                        "en": "Statement"
+                    },
                     "node_id": "b6cad8b0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1611,12 +2390,19 @@
                             "72202a9f-1551-4cbc-9c7a-73c02321f3ea",
                             "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd24c-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Statement Type",
+                    "label": {
+                        "en": "Statement Type"
+                    },
                     "node_id": "b6cb842c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1628,12 +2414,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement Language",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd274-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Statement Language",
+                    "label": {
+                        "en": "Statement Language"
+                    },
                     "node_id": "b6cb6758-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1642,15 +2435,27 @@
                 {
                     "card_id": "b6ca98c8-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd2c4-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6cb5c22-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -1659,14 +2464,26 @@
                 {
                     "card_id": "b6ca98c8-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Statement",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "width": "100%"
                     },
                     "id": "b6cbd2ec-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Statement",
+                    "label": {
+                        "en": "Statement"
+                    },
                     "node_id": "b6cba3ee-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1675,15 +2492,27 @@
                 {
                     "card_id": "b6c8d196-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd30a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6cb6532-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 5,
                     "visible": false,
@@ -1693,12 +2522,19 @@
                     "card_id": "b6c8d196-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd332-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "type",
+                    "label": {
+                        "en": "type"
+                    },
                     "node_id": "b6cb12b2-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1716,7 +2552,9 @@
                         "viewMode": "days"
                     },
                     "id": "b6cbd35a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "End of the beginning",
+                    "label": {
+                        "en": "End of the beginning"
+                    },
                     "node_id": "b6cb4142-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1734,7 +2572,9 @@
                         "viewMode": "days"
                     },
                     "id": "b6cbd382-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Beginning of the beginning",
+                    "label": {
+                        "en": "Beginning of the beginning"
+                    },
                     "node_id": "b6cb60fa-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1752,7 +2592,9 @@
                         "viewMode": "days"
                     },
                     "id": "b6cbd3aa-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Beginning of the end",
+                    "label": {
+                        "en": "Beginning of the end"
+                    },
                     "node_id": "b6cb9b74-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1770,7 +2612,9 @@
                         "viewMode": "days"
                     },
                     "id": "b6cbd3d2-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "End of the end",
+                    "label": {
+                        "en": "End of the end"
+                    },
                     "node_id": "b6cb3800-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": true,
@@ -1782,12 +2626,19 @@
                         "defaultValue": [
                             "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Type of Name",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd404-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Type of Name",
+                    "label": {
+                        "en": "Type of Name"
+                    },
                     "node_id": "b6cb083a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1799,12 +2650,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Language of Text",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd42c-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Language of Text",
+                    "label": {
+                        "en": "Language of Text"
+                    },
                     "node_id": "b6cba11e-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1813,15 +2671,27 @@
                 {
                     "card_id": "b6c8e262-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd454-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6cb054c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1831,11 +2701,18 @@
                     "card_id": "b6c8e262-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbd472-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source",
+                    "label": {
+                        "en": "source"
+                    },
                     "node_id": "b6cb8fd0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -1844,15 +2721,27 @@
                 {
                     "card_id": "b6c8e262-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Text of Name",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd49a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Text of Name",
+                    "label": {
+                        "en": "Text of Name"
+                    },
                     "node_id": "b6cb3e90-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1862,11 +2751,18 @@
                     "card_id": "b6c844ce-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbd4c2-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source",
+                    "label": {
+                        "en": "source"
+                    },
                     "node_id": "b6cb9656-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -1875,15 +2771,27 @@
                 {
                     "card_id": "b6c844ce-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd4e0-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name",
+                    "label": {
+                        "en": "Name"
+                    },
                     "node_id": "b6cb40c0-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1895,12 +2803,19 @@
                         "defaultValue": [
                             "bc35776b-996f-4fc1-bd25-9f6432c1f349"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Language",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd512-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Language",
+                    "label": {
+                        "en": "Name Language"
+                    },
                     "node_id": "b6cb2d2e-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1912,12 +2827,19 @@
                         "defaultValue": [
                             "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
                         ],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Name Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd530-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Name Type",
+                    "label": {
+                        "en": "Name Type"
+                    },
                     "node_id": "b6cb425a-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -1926,15 +2848,27 @@
                 {
                     "card_id": "b6c844ce-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "_label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd562-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "_label",
+                    "label": {
+                        "en": "_label"
+                    },
                     "node_id": "b6cb9ad4-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 4,
                     "visible": false,
@@ -1944,11 +2878,18 @@
                     "card_id": "b6c8974e-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Production Event Period",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbd5b2-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Production Event Period",
+                    "label": {
+                        "en": "Production Event Period"
+                    },
                     "node_id": "b6cb3a26-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 6,
                     "visible": false,
@@ -1958,11 +2899,18 @@
                     "card_id": "b6c8974e-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Production Event Location",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbd62a-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Production Event Location",
+                    "label": {
+                        "en": "Production Event Location"
+                    },
                     "node_id": "b6cb58e4-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": true,
@@ -1972,12 +2920,19 @@
                     "card_id": "b6c8974e-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Production Event Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd648-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Production Event Type",
+                    "label": {
+                        "en": "Production Event Type"
+                    },
                     "node_id": "b6cb8652-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -1986,15 +2941,27 @@
                 {
                     "card_id": "b6c8974e-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Production Event Label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd670-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Production Event Label",
+                    "label": {
+                        "en": "Production Event Label"
+                    },
                     "node_id": "b6cb2676-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 12,
                     "visible": false,
@@ -2004,11 +2971,18 @@
                     "card_id": "b6c8974e-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Source Reference Work for Production Event",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbd698-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Source Reference Work for Production Event",
+                    "label": {
+                        "en": "Source Reference Work for Production Event"
+                    },
                     "node_id": "b6cb07ae-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 13,
                     "visible": false,
@@ -2018,11 +2992,18 @@
                     "card_id": "b6c8974e-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Producer",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbd6e8-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Producer",
+                    "label": {
+                        "en": "Producer"
+                    },
                     "node_id": "b6cb92aa-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -2031,15 +3012,27 @@
                 {
                     "card_id": "b6c86d32-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Identifier",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd710-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Identifier",
+                    "label": {
+                        "en": "Identifier"
+                    },
                     "node_id": "b6cb342c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 1,
                     "visible": true,
@@ -2049,11 +3042,18 @@
                     "card_id": "b6c86d32-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbd738-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "source",
+                    "label": {
+                        "en": "source"
+                    },
                     "node_id": "b6cb35da-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 2,
                     "visible": false,
@@ -2063,12 +3063,19 @@
                     "card_id": "b6c86d32-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Identifier Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "b6cbd756-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Identifier Type",
+                    "label": {
+                        "en": "Identifier Type"
+                    },
                     "node_id": "b6cb354e-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 0,
                     "visible": true,
@@ -2077,15 +3084,27 @@
                 {
                     "card_id": "b6c86d32-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
-                        "defaultValue": "",
+                        "defaultValue": {
+                            "en": {
+                                "direction": "ltr",
+                                "value": ""
+                            }
+                        },
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Internal Label",
                         "maxLength": null,
-                        "placeholder": "Enter text",
+                        "placeholder": {
+                            "en": "Enter text"
+                        },
                         "uneditable": false,
                         "width": "100%"
                     },
                     "id": "b6cbd788-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Internal Label",
+                    "label": {
+                        "en": "Internal Label"
+                    },
                     "node_id": "b6cb806c-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": 3,
                     "visible": false,
@@ -2095,11 +3114,18 @@
                     "card_id": "b6c9c1a0-99f6-11ea-a9b7-3af9d3b32b71",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Person/Group",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "b6cbdbde-99f6-11ea-a9b7-3af9d3b32b71",
-                    "label": "Person/Group",
+                    "label": {
+                        "en": "Person/Group"
+                    },
                     "node_id": "b6c9ba34-99f6-11ea-a9b7-3af9d3b32b71",
                     "sortorder": null,
                     "visible": true,
@@ -2109,11 +3135,18 @@
                     "card_id": "c2a9abf6-8e2f-11eb-a9c4-faffc265b501",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Digital Source",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "c2a9ae26-8e2f-11eb-a9c4-faffc265b501",
-                    "label": "Digital Source",
+                    "label": {
+                        "en": "Digital Source"
+                    },
                     "node_id": "c2a9adc2-8e2f-11eb-a9c4-faffc265b501",
                     "sortorder": 0,
                     "visible": true,
@@ -2123,12 +3156,19 @@
                     "card_id": "c2a9abf6-8e2f-11eb-a9c4-faffc265b501",
                     "config": {
                         "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Digital Reference Type",
                         "options": [],
-                        "placeholder": "Select an option"
+                        "placeholder": {
+                            "en": "Select an option"
+                        }
                     },
                     "id": "c2a9ae58-8e2f-11eb-a9c4-faffc265b501",
-                    "label": "Digital Reference Type",
+                    "label": {
+                        "en": "Digital Reference Type"
+                    },
                     "node_id": "c2a9acf0-8e2f-11eb-a9c4-faffc265b501",
                     "sortorder": 1,
                     "visible": true,
@@ -2138,11 +3178,18 @@
                     "card_id": "bd3fb786-cdca-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Set",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "d73e375c-cdca-11eb-a29f-024e0d439fdb",
-                    "label": "Set",
+                    "label": {
+                        "en": "Set"
+                    },
                     "node_id": "bd3fb784-cdca-11eb-a29f-024e0d439fdb",
                     "sortorder": 0,
                     "visible": true,
@@ -2185,7 +3232,9 @@
             },
             "deploymentdate": null,
             "deploymentfile": null,
-            "description": "A physical object, including works of art, the tools used to create them, and instruments used to measure or conserve them.",
+            "description": {
+                "en": "A physical object, including works of art, the tools used to create them, and instruments used to measure or conserve them."
+            },
             "edges": [
                 {
                     "description": null,
@@ -3253,16 +4302,17 @@
                     },
                     "function_id": "60000000-0000-0000-0000-000000000001",
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
-                    "id": "6affcffb-b595-4c48-ae23-bb940934257e"
+                    "id": "2acfcf9b-61f5-48b8-95ab-d1f86d597766"
                 }
             ],
             "graphid": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
             "iconclass": "fa fa-binoculars",
             "is_editable": true,
-            "isactive": true,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
-            "name": "Instrument",
+            "name": {
+                "en": "Instrument"
+            },
             "nodegroups": [
                 {
                     "cardinality": "n",
@@ -3485,7 +4535,7 @@
                 },
                 {
                     "alias": "statement_creation",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "",
                     "exportable": false,
@@ -3560,7 +4610,7 @@
                 },
                 {
                     "alias": "statement_creation_time",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "",
                     "exportable": false,
@@ -3624,7 +4674,7 @@
                 },
                 {
                     "alias": "statement_creation_time_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -3746,7 +4796,7 @@
                 },
                 {
                     "alias": "production_identifier",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -3766,7 +4816,7 @@
                 },
                 {
                     "alias": "production_statement_name",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -3786,7 +4836,7 @@
                 },
                 {
                     "alias": "identifier",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
                     "exportable": false,
@@ -3806,7 +4856,7 @@
                 },
                 {
                     "alias": "production_",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: la-production\n* FieldId: \n",
                     "exportable": false,
@@ -3826,7 +4876,7 @@
                 },
                 {
                     "alias": "name",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -3846,7 +4896,7 @@
                 },
                 {
                     "alias": "production_name",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -3896,7 +4946,7 @@
                 },
                 {
                     "alias": "production_time",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nTimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points.  For example, a 1 week activity might occur sometime between the first and third quarters of the year. See: https://linked.art/model/base/#time-span-details\n\n# Arches Note:\n\n\n* BranchId: la-timespan\n* FieldId: \n",
                     "exportable": false,
@@ -3916,7 +4966,7 @@
                 },
                 {
                     "alias": "production_time_duration_name",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -3936,7 +4986,7 @@
                 },
                 {
                     "alias": "production_statement",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
                     "exportable": false,
@@ -4021,7 +5071,7 @@
                 },
                 {
                     "alias": "production_time_duration",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
                     "exportable": false,
@@ -4063,7 +5113,7 @@
                 },
                 {
                     "alias": "_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4083,7 +5133,7 @@
                 },
                 {
                     "alias": "dimension",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nDimensions are a combination of a numeric value, a unit for the value, and a classification as to what sort of value it is. They can be measured on the entity by some means, such as counting or using an instrument. The data structure is commonly used for physical things (e.g. height and width), but is also applicable to textual works (e.g. number of words) or even people (e.g. height, weight). If there is a countable feature, then that can be expressed as a dimension using this data structure. See: https://linked.art/api/1.0/shared/dimension/ and https://linked.art/model/object/physical/#dimensions\n\n# Arches Note:\n\n\n* BranchId: la-dimension\n* FieldId: \n",
                     "exportable": false,
@@ -4103,7 +5153,7 @@
                 },
                 {
                     "alias": "dimension_name",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -4123,7 +5173,7 @@
                 },
                 {
                     "alias": "production_time_name",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -4143,7 +5193,7 @@
                 },
                 {
                     "alias": "statement",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
                     "exportable": false,
@@ -4163,7 +5213,7 @@
                 },
                 {
                     "alias": "statement_name",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nIn Statement, this is not exposed to advanced search, as it is just a display label. The value of the statement's content is in Content.\n\n* BranchId: la-name\n* FieldId: \n",
                     "exportable": false,
@@ -4183,7 +5233,7 @@
                 },
                 {
                     "alias": "dimension_highest_possible_value",
-                    "config": null,
+                    "config": {},
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\nThis is the highest possible number that the value of the dimension could be, if there is uncertainty about that value. For example, if a painting is 4-6 inches wide, then the highest value is 6.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -4203,7 +5253,7 @@
                 },
                 {
                     "alias": "statement_name_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4223,7 +5273,7 @@
                 },
                 {
                     "alias": "production_identifier_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -4243,7 +5293,7 @@
                 },
                 {
                     "alias": "production_time_duration_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4285,7 +5335,7 @@
                 },
                 {
                     "alias": "production_statement_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -4305,7 +5355,7 @@
                 },
                 {
                     "alias": "production_time_name_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
@@ -4377,7 +5427,7 @@
                 },
                 {
                     "alias": "production_identifier_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -4397,7 +5447,7 @@
                 },
                 {
                     "alias": "production_name_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4417,7 +5467,7 @@
                 },
                 {
                     "alias": "name_label_",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4437,7 +5487,7 @@
                 },
                 {
                     "alias": "dimension_name_content_",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
@@ -4457,7 +5507,7 @@
                 },
                 {
                     "alias": "production_statement_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4477,7 +5527,7 @@
                 },
                 {
                     "alias": "dimension_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4541,7 +5591,7 @@
                 },
                 {
                     "alias": "dimension_name_label_",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4583,7 +5633,7 @@
                 },
                 {
                     "alias": "production_time_duration_name_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4811,7 +5861,7 @@
                 },
                 {
                     "alias": "dimension_lowest_possible_value",
-                    "config": null,
+                    "config": {},
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\nThis is the lowest possible number that the value of the dimension could be, if there is uncertainty about that value. For example if the painting is 4-6 inches wide, then the lowest value is 4.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -4831,7 +5881,7 @@
                 },
                 {
                     "alias": "production_time_name_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4874,7 +5924,7 @@
                 },
                 {
                     "alias": "production__label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -4916,7 +5966,7 @@
                 },
                 {
                     "alias": "identifier_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the identifier.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -4988,7 +6038,7 @@
                 },
                 {
                     "alias": "production_name_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
@@ -5030,7 +6080,7 @@
                 },
                 {
                     "alias": "dimension_value_",
-                    "config": null,
+                    "config": {},
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\nThis is the numeric value of the dimension, e.g. _6_ (inches long) See: https://linked.art/api/1.0/shared/dimension/\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -5080,7 +6130,7 @@
                 },
                 {
                     "alias": "production_time_duration_name_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
@@ -5100,7 +6150,7 @@
                 },
                 {
                     "alias": "production_statement_name_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
@@ -5186,7 +6236,7 @@
                 },
                 {
                     "alias": "statement_name_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
@@ -5302,7 +6352,7 @@
                 },
                 {
                     "alias": "statement_label_",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -5344,7 +6394,7 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
                     "exportable": false,
@@ -5364,7 +6414,7 @@
                 },
                 {
                     "alias": "production_time_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -5429,7 +6479,7 @@
                 },
                 {
                     "alias": "instrument",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -5493,7 +6543,7 @@
                 },
                 {
                     "alias": "production_time_duration_value",
-                    "config": null,
+                    "config": {},
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\nThis is the numeric value of the dimension, e.g. _6_ (inches long) See: https://linked.art/api/1.0/shared/dimension/\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -5513,7 +6563,7 @@
                 },
                 {
                     "alias": "production_time_duration_highest_possible_value",
-                    "config": null,
+                    "config": {},
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\nThis is the highest possible number that the value of the dimension could be, if there is uncertainty about that value. For example, if a painting is 4-6 inches wide, then the highest value is 6.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -5563,7 +6613,7 @@
                 },
                 {
                     "alias": "identifier_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -5774,7 +6824,7 @@
                 },
                 {
                     "alias": "production_statement_name_label",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nEvery node should have a _label that provides a human-readable summary label for the node. This is intended not for end users, but for developers looking at the data. See:  https://linked.art/model/base/#core-properties\n\n# Arches Note:\n\n\n* BranchId: la-label\n* FieldId: \n",
                     "exportable": false,
@@ -5876,7 +6926,7 @@
                 },
                 {
                     "alias": "production_time_duration_lowest_possible_value",
-                    "config": null,
+                    "config": {},
                     "datatype": "number",
                     "description": "# Specific:\n\n\n# General:\nThis is the lowest possible number that the value of the dimension could be, if there is uncertainty about that value. For example if the painting is 4-6 inches wide, then the lowest value is 4.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -5970,7 +7020,7 @@
                 },
                 {
                     "alias": "content_",
-                    "config": null,
+                    "config": {},
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
@@ -6019,7 +7069,7 @@
                 },
                 {
                     "alias": "digital_reference",
-                    "config": null,
+                    "config": {},
                     "datatype": "semantic",
                     "description": "",
                     "exportable": false,
@@ -6092,11 +7142,18 @@
                 }
             ],
             "ontology_id": "0b1f5462-faa7-11e9-8f09-3af9d3b32b71",
+            "publication": {
+                "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
+                "notes": null,
+                "publicationid": "ed935e22-95b5-11ed-a5e5-a683e74f6c3a",
+                "published_time": "2023-01-16T09:53:32.583",
+                "user_id": 1
+            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "instrument",
-                "config": null,
+                "config": {},
                 "datatype": "semantic",
                 "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                 "exportable": false,
@@ -6114,7 +7171,9 @@
                 "sortorder": 0
             },
             "slug": null,
-            "subtitle": "An instrument used in an experiment",
+            "subtitle": {
+                "en": "An instrument used in an experiment"
+            },
             "template_id": "c2edf720-9db0-4029-a102-48e6762ded79",
             "version": ""
         }

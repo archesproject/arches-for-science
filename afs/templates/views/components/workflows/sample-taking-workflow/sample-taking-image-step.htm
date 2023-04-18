@@ -53,7 +53,8 @@
                 summary: true,
                 shouldShowEditService: $data.shouldShowEditService,
                 manifestData: manifestData,
-                renderContext: 'manifest-workflow'
+                renderContext: 'manifest-workflow',
+                transactionId: workflowId
             }
         }
     "
@@ -63,11 +64,12 @@
     class="btn btn-warning"
     style="
         position: fixed;
-        top: 4px;
-        left: calc(100vw - 450px);
+        top: 53px;
+        right: 6px;
         height: 42px;
         width: 180px;
         transition: all linear .3s;
+        z-index: 1;
     "
     data-bind="
         style: {

@@ -1,9 +1,10 @@
 define(['jquery',
     'knockout',
+    'templates/views/components/cards/file-renderers/afs-reader.htm',
     'viewmodels/afs-instrument',
     'bindings/plotly',
     'bindings/select2-query',
-], function($, ko, AfsInstrumentViewModel) {
+], function($, ko, forsReaderTemplate, AfsInstrumentViewModel) {
     return ko.components.register('fors-reader', {
         viewModel: function(params) {
             const self = this;
@@ -51,6 +52,6 @@ define(['jquery',
                 self.yAxisLabel(metadata.yunits);
             };
         },
-        template: { require: 'text!templates/views/components/cards/file-renderers/afs-reader.htm' }
+        template: forsReaderTemplate
     });
 });

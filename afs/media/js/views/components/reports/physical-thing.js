@@ -1,32 +1,54 @@
 define([
     'underscore', 
     'knockout', 
+    'arches',
+    'templates/views/components/reports/physical-thing.htm',
     'utils/report',
     'bindings/datatable', 
     'views/components/reports/scenes/annotation-parts'
-], function(_, ko, reportUtils) {
+], function(_, ko, arches, physicalThingReportTemplate, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'}, 
-                {id: 'existence', title: 'Existence'},
-                {id: 'substance', title: 'Substance'},
-                {id: 'actor-relations', title: 'Actor Relations'},
-                {id: 'location', title: 'Location'},
-                {id: 'parthood', title: 'Parthood'},
-                {id: 'sethood', title: 'Sethood'},
-                {id: 'aboutness', title: 'Aboutness'},
+                {id: 'name', title: 'Names, Identifiers, Classification'}, 
                 {id: 'description', title: 'Description'},
+                {id: 'existence', title: 'Key Events'},
+                {id: 'substance', title: 'Physical Description'},
+                {id: 'actor-relations', title: 'Provenance'},
+                {id: 'location', title: 'Location'},
+                {id: 'parthood', title: 'Components'},
+                {id: 'sethood', title: 'Related Collection and Sets'},
+                {id: 'aboutness', title: 'Content and Iconography'},
                 {id: 'documentation', title: 'Documentation'},
                 {id: 'json', title: 'JSON'},
             ];
 
+            self.physicalThingProvenanceDescriptionTypes = [
+                "provenance statement"
+            ]
+            self.physicalThingPhysicalDescriptionTypes = [
+                "dimensions description",
+                "materials/technique description"
+            ]
+
+            self.physicalThingExcludedDescriptionTypes = _.union(
+                self.physicalThingProvenanceDescriptionTypes, self.physicalThingPhysicalDescriptionTypes
+            )
+
             self.annotationTableConfig = {
                 ...self.defaultTableConfig,
                 columns: Array(6).fill(null)
+            };
+
+            self.getTableConfig = (numberOfColumn) => {
+                return {
+                    ...self.defaultTableConfig,
+                    columns: Array(numberOfColumn).fill(null),
+                    columnDefs: []
+                }
             };
 
             self.annotationTableHeader = 
@@ -203,7 +225,7 @@ define([
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards?.['statement about object']
+                    statement: self.cards?.['statement or interpretation about object']
                 };
 
                 self.documentationCards = {
@@ -280,7 +302,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Aboutness', 
+                            title: 'Content and Iconography', 
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
@@ -310,7 +332,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: 'Components', 
                             data: [{
                                 key: 'parent object', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -344,7 +366,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Actor Relations', 
+                            title: 'Provenance', 
                             data: [{
                                 key: 'current owner of object', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
@@ -361,7 +383,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Sethood', 
+                            title: 'Related Collection and Sets',
                             data: [{
                                 key: 'Collection Object is Part Of', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
@@ -371,7 +393,138 @@ define([
                         }
                     ]
             });
+
+            ////// Search Details section //////
+            self.nameSummary = ko.observable();
+            self.imageSummary = ko.observable();
+            self.statementsSummary = ko.observable();
+            self.typeSummary = ko.observable();
+            self.identifierSummary = ko.observable();
+            self.ownerSummary = ko.observable();
+            self.dimensionsSummary = ko.observable();
+            self.creationSummary = ko.observable();
+            self.externalURISummary = ko.observable();
+
+            const nameData = self.resource()?.name;
+            if (nameData) {
+                self.nameSummary(nameData.map(x => {
+                    const type = self.getNodeValue(x, 'name_type');
+                    const content = self.getNodeValue(x, 'name_content');
+                    const language = self.getNodeValue(x, 'name_language');
+                    return { type, content, language }
+                }));
+            };
+
+            self.getThumbnail = async(digitalResourceData) => {
+                const digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
+                const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
+                const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
+                    return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+                });
+                return window.fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]['value'])
+                    .then(function(response){
+                        if(response.ok) {
+                            return response.json();
+                        }
+                    });
+            };
+
+            const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;
+            const loadRelatedResources = async() => {
+                const digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
+                const IIIFManifestConceptId = '0c682c76-a6a4-48f0-9c5b-1203a6dc33da';
+
+                const result = await reportUtils.getRelatedResources(resourceId);
+                const relatedResources = result?.related_resources;
+                
+                const relatedDigitalResources = relatedResources.filter(resource => resource.graph_id === digitalResourceGraphId);
+
+                if (relatedDigitalResources.length) {
+                    relatedDigitalResources.forEach(async resource => {
+                        const resourceDomainConceptIds = resource.domains.map(x => x.conceptid)
+                    
+                        // If there is an IIIF manifest in the related resources, load the thumbnail from that manifest
+                        if (resourceDomainConceptIds.includes(IIIFManifestConceptId)) {
+                            const imageResource = await self.getThumbnail(resource);
+                            if (imageResource) {
+                                self.imageSummary([{
+                                    displayname: imageResource.label,
+                                    thumbnail: imageResource.sequences[0].canvases[0].thumbnail['@id']
+                                }]);
+                            }
+                        }
+                    });
+                }
+            };
+
+            loadRelatedResources();
+
+            const statementData = self.resource()?.statement;
+            if (statementData) {
+                self.statementsSummary(statementData.map(x => {
+                    const type = self.getNodeValue(x, 'statement_type');
+                    const content = self.getNodeValue(x, 'statement_content');
+                    const language = self.getNodeValue(x, 'statement_language');
+                    return { type, content, language }
+                }));
+            };
+
+            const typeData = self.resource()?.type;
+            if (typeData) {
+                self.typeSummary([{
+                    type: self.getNodeValue(typeData)
+                }]);
+            };
+
+            const identiferData = self.resource()?.identifier;
+            if (identiferData) {
+                self.identifierSummary(identiferData.map(x => {
+                    const type = self.getNodeValue(x, 'identifier_type');
+                    const content = self.getNodeValue(x, 'identifier_content');
+                    return { type, content }
+                }));
+            };
+
+            const ownerData = self.resource()?.['current owner'];
+            if (ownerData) {
+                self.ownerSummary(ownerData['instance_details'].map(x => {
+                    const displayValue = self.getNodeValue(x);
+                    const link = self.getResourceLink({resourceId: self.getNodeValue(x, 'resourceId')});
+                    return { displayValue, link }
+                }));
+            };
+
+            const dimensionData = self.resource()?.dimension;
+            if (dimensionData) {
+                self.dimensionsSummary(dimensionData.map(x => {
+                    const value = self.getNodeValue(x, 'Dimension_value ');
+                    const unit = self.getNodeValue(x , 'dimension_unit');
+                    const type = self.getNodeValue(x, 'dimension_type');
+                    return { type, value, unit }
+                }));
+            };
+
+            const creationData = self.resource()?.production;
+            if (creationData) { 
+                self.creationSummary(creationData.map(x => {
+                    const creator = self.getNodeValue(x, 'Production_carried out by');
+                    const creationDate = self.getNodeValue(x?.production_time, 'Production_time_begin of the begin');
+                    const type = self.getNodeValue(x, 'Production_type');
+                    const technique = self.getNodeValue(x, 'Production_technique');
+                    const location = self.getNodeValue(x, 'Production_location');
+                    const productionLocationResource = x?.production_location?.instance_details ? x?.production_location?.instance_details[0] : null;
+                    const locationLink = reportUtils.getResourceLink({resourceId: productionLocationResource?.resourceId});
+                    return { creator, creationDate, type, technique, location, locationLink};
+                }));
+            };
+
+            const uriData = self.resource()?.exactmatch
+            if (uriData) {
+                self.externalURISummary([{
+                    displayValue: self.getNodeValue(uriData)
+                }]);
+            }
         },
-        template: { require: 'text!templates/views/components/reports/physical-thing.htm' }
+        template: physicalThingReportTemplate
     });
 });

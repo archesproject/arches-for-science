@@ -2,7 +2,8 @@ define([
     'jquery',
     'knockout',
     'arches',
-], function($, ko, arches) {
+    'templates/views/components/workflows/review-dataset/select-dataset.htm'
+], function($, ko, arches,selectDatasetStepTemplate) {
     function viewModel(params) {
         var self = this;
         this.digitalResourceGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
@@ -12,6 +13,7 @@ define([
         this.dataLoaded = ko.observable(false);
 
         const getDigitalResources = async function(resourceid) {
+            if(!resourceid){ return; }
             const url = `${arches.urls.root}digital-resources-by-object-parts/${resourceid}`;
             const result = await fetch(url, {
                 method: 'GET',
@@ -31,7 +33,11 @@ define([
                         });
                     }
                 });
-                self.relatedDigitalResources(resources);
+                const digitalResourcesBelongToParentOrSample = resources.filter(resource => {
+                    return (!resource.isdirect && results.type !== 'sample') ||
+                        (resource.isdirect && results.type === 'sample');
+                });
+                self.relatedDigitalResources(digitalResourcesBelongToParentOrSample);
                 self.dataLoaded(true);
             }
         };
@@ -47,8 +53,12 @@ define([
         });
 
         this.selectedDigtalResources.subscribe(function(val) {
-            const data = {digitalResources: val, resourceid: self.physicalThingResourceId()};
-            params.value(data);
+            if(val && val.length > 0){
+                const data = {digitalResources: val, resourceid: self.physicalThingResourceId()};
+                params.value(data);
+            } else {
+                params.value(undefined);
+            }
         });
 
         this.physicalThingResourceId.subscribe(getDigitalResources);
@@ -61,7 +71,7 @@ define([
 
     ko.components.register('select-dataset', {
         viewModel: viewModel,
-        template: { require: 'text!templates/views/components/workflows/review-dataset/select-dataset.htm' }
+        template: selectDatasetStepTemplate
     });
     return viewModel;
 });

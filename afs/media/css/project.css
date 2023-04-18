@@ -1,4 +1,9 @@
 @import url(report_templates.css);
+@import '../node_modules/@uppy/core/dist/style.min.css';
+@import '../node_modules/@uppy/dashboard/dist/style.min.css';
+@import '../node_modules/@uppy/drag-drop/dist/style.min.css';
+@import '../node_modules/@uppy/progress-bar/dist/style.min.css';
+
 .nav>li>a:focus {
     text-decoration: none;
     background-color: #000;
@@ -177,11 +182,20 @@
     font-weight: 800;
 }
 
+.wf-multi-tile-card-info-details {
+    max-width: calc(100%);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.wf-multi-tile-card-info-details dd {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
 .model-summary-report {
     background: #fff;
     padding: 0px 30px 30px 30px;
-    cursor: pointer;
 }
 
 .summary-report-title {
@@ -220,6 +234,13 @@
     color: #888;
     margin-bottom: 10px;
     line-height: 1.4;
+}
+
+.object-search-step .summary-report-description {
+    max-width: 75vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .summary-report-manifests {
@@ -484,16 +505,43 @@
 
 .upload-dataset-select-dataset-files #parts-panel {
     padding: 0px 0px;
+    border: 1px solid #ddd
 }
 .upload-dataset-select-dataset-files #parts-panel a .file-workbench-file {
     width: 100%;
 }
 
+.format-select .select2-container {
+    margin-top: 10px !important; /* I hate to do this, but I must because arches.scss line 2774  */
+}
+
+.select2-results {
+    margin-top: 0px;
+}
+
+.select-dataset-pull-up {
+    top: 517px;
+}
+
 .upload-dataset-select-dataset-files #parts-panel .panel {
     margin-bottom:0px; 
-    border-right: 1px solid #ddd; 
-    border-left: 1px solid #ddd; 
     border-bottom: 1px solid #ddd;
+}
+
+.upload-dataset-select-dataset-files .file-workbench-file{
+    border:none;
+
+}
+
+#parts-panel .panel:nth-child(even) a .file-workbench-file{
+    background: #fff;
+}
+#parts-panel .panel .file-workbench-file:not(.staged):hover{
+    background: #cae2f5;
+}
+.upload-dataset-select-dataset-files #parts-panel .panel:last-child {
+    margin-bottom:0px; 
+    border: none;
 }
 
 .upload-dataset-select-dataset-files #parts-panel .panel-collapse {
@@ -691,12 +739,13 @@
     padding: 3px 8px;
 }
 
-.afs-sample-name .form-group .widget-input-label {
-    display: none;
+.afs-sample-name {
+    position: relative;
+    top: -25px;
 }
 
-.afs-sample-name .form-group i {
-    display: none;
+.afs-sample-name .form-group .widget-input-label {
+    visibility: hidden;
 }
 
 .afs-sample-name input {
@@ -774,10 +823,6 @@
 
 .afs-experiment-name-block .widget-input-label {
     display: none;
-}
-
-.afs-experiment-name-block input {
-    margin-left: -20px;
 }
 
 .afs-workflow-manifest-manager-container .iiif-image-tools div.row:first-child {
@@ -899,10 +944,94 @@
     z-index: 100000001;
 }
 
+.uppy-Dashboard-inner{
+    padding: 12px 0;
+}
+
+.afs-report-page .display-description {
+    max-width: 40vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .afs-sample-location-form-widgets {
     transition: opacity 1s;
     margin-bottom: 20px;
     margin-top: 10px;
     margin-left: 5px;
     opacity: 0;
+}
+
+/* The Modal (background) */
+.afs-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #555555;
+    padding-top: 50px;
+    opacity: .9;
+}
+/* Modal Content/Box */
+.afs-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 400px;
+    padding: 0px 20px 20px 20px;
+}
+
+
+@media (min-width: 768px) {
+    #navbar .brand-title {
+        padding: 0 0.5em 0 1em;
+    }
+}
+
+.loading-mask-string{
+    background-color: #fafafa;
+    color: #666;
+}
+
+
+/* For what follows, I blame plotly and the lack of customization options for the modebar. All styles are inline and cannot easily be overriden .*/ 
+.plotly .modebar-container{
+    left: 0;
+    bottom: 0;
+    right: auto !important;
+    top: auto !important;
+}
+.plotly .modebar-container .modebar {
+    bottom: 0;
+    left: 50px;
+    right: auto !important;
+    top: auto !important;
+}
+
+.workflow-component .uppy-Root {
+    padding: 0 45px;
+}
+
+/* "!important" note: done because uppy dashboard does not accept anything other than a pixel value for width and height,
+ and we intend to control the width from the width of the external containers.  */
+.workflow-component .uppy-Dashboard-inner {
+    width: auto !important;
+    height: 60% !important;
+}
+
+.gallery-controls.new-tile.no-background {
+    background: none;
+}
+
+.workflow-component .uppy-Root {
+    width: 100%;
+    height: 100%;
+}
+.workflow-component .uppy-Dashboard {
+    height: 100%;
 }

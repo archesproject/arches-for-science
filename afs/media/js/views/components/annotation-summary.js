@@ -3,11 +3,12 @@ define([
     'geojson-extent',
     'leaflet',
     'arches',
+    'templates/views/components/annotation-summary.htm',
     'viewmodels/widget',
     'views/components/iiif-viewer',
     'bindings/leaflet',
     'bindings/datatable',
-], function(ko, geojsonExtent, L, arches) {
+], function(ko, geojsonExtent, L, arches, annotationSummaryTemplate) {
     return ko.components.register('views/components/annotation-summary', {
         viewModel: function(params) {
             var self = this;
@@ -149,8 +150,6 @@ define([
                 } 
             };
         },
-        template: {
-            require: 'text!templates/views/components/annotation-summary.htm'
-        }
+        template: annotationSummaryTemplate
     });
 });

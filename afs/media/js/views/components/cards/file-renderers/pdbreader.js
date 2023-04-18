@@ -1,11 +1,12 @@
 define(['jquery',
     'knockout',
+    'templates/views/components/cards/file-renderers/pdbreader.htm',
     'three',
     'PDBLoader',
     'CSS2DRenderer',
     'TrackballControls',
     'bindings/threePDB'
-], function($, ko, THREE) {
+], function($, ko, pdbReaderTemplate, THREE) {
     return ko.components.register('pdbreader', {
         viewModel: function(params) {
             this.params = params;
@@ -51,6 +52,6 @@ define(['jquery',
             }
 
         },
-        template: { require: 'text!templates/views/components/cards/file-renderers/pdbreader.htm' }
+        template: pdbReaderTemplate
     });
 });

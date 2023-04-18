@@ -1,8 +1,9 @@
 define([
     'knockout',
     'utils/resource',
+    'templates/views/components/workflows/select-phys-thing-step.htm',
     'viewmodels/card',
-], function(ko, resourceUtils) {
+], function(ko, resourceUtils, selectPhysThingStepTemplate) {
     
     function viewModel(params) {
         var self = this;
@@ -22,6 +23,7 @@ define([
         this.save = params.form.save;
         this.physicalThingGraphId = componentParams.graphids[0];
         this.projectGraphId = componentParams.graphids[1];
+        this.datasetRoute = params.datasetRoute;
         this.validateThing = componentParams.validateThing;
         this.projectValue = ko.observable();
         this.projectNameValue = ko.observable();
@@ -150,9 +152,7 @@ define([
 
     ko.components.register('select-phys-thing-step', {
         viewModel: viewModel,
-        template: {
-            require: 'text!templates/views/components/workflows/select-phys-thing-step.htm'
-        }
+        template: selectPhysThingStepTemplate
     });
 
     return viewModel;

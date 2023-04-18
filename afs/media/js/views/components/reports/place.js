@@ -2,11 +2,12 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'templates/views/components/reports/place.htm',
     'arches',
     'utils/report',
     'views/components/reports/scenes/name',
     'views/components/reports/scenes/location'
-], function($, _, ko, arches, reportUtils) {
+], function($, _, ko, placeReportTemplate, arches, reportUtils) {
     return ko.components.register('place-report', {
         viewModel: function(params) {
             var self = this;
@@ -36,7 +37,21 @@ define([
             self.documentationCards = {};
             self.locationCards = {};
             self.summary = params.summary;
-            
+
+            self.nameSummaryTableConfig = {
+                ...self.defaultTableConfig,
+                columns: Array(2).fill(null),
+                columnDefs: [],    
+            };
+
+            // Summary Report
+            self.nameSummary = ko.observable();
+            self.nameSummary(self.resource()['Name']?.map(x => {
+                const content = self.getNodeValue(x, 'content');
+                const type = self.getNodeValue(x, 'type');
+                return {content, type}
+            }));
+
             if(params.report.cards){
                 const cards = params.report.cards;
                 
@@ -58,7 +73,7 @@ define([
                 };
 
                 self.locationCards = {
-                    location: self.cards?.['geospatial definition of place'],
+                    locationGeometry: self.cards?.['geospatial definition of place'],
                 };
             }
 
@@ -77,8 +92,8 @@ define([
                     ]
             });
 
-            self.geojson = self.getNodeValue(self.resource(), 'defined by')
+            self.geojson = self.getNodeValue(self.resource(), 'defined by');
         },
-        template: { require: 'text!templates/views/components/reports/place.htm' }
+        template: placeReportTemplate
     });
 });
