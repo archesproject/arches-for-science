@@ -438,7 +438,7 @@ define([
                 const relatedResources = result?.related_resources;
                 
                 const relatedDigitalResources = relatedResources.filter(resource => resource.graph_id === digitalResourceGraphId);
-                console.log('!', relatedDigitalResources)
+
                 if (relatedDigitalResources.length) {
                     relatedDigitalResources.forEach(async resource => {
                         const resourceDomainConceptIds = resource.domains.map(x => x.conceptid)
