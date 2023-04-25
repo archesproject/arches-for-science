@@ -11,6 +11,7 @@ services:
       volumes:
         - ../arches/:/web_root/arches
         - ./:/web_root/afs
+        - /Users/ryan/.aws:/root/.aws
         - cantaloupe-data-afs7:/web_root/afs/afs/uploadedfiles
       env_file:
         - ./docker/env_file.env
@@ -22,9 +23,13 @@ services:
 
     cantaloupe_afs:
       container_name: cantaloupe-afs7
-      image: uclalibrary/cantaloupe:5.0.3-0
+      build:
+        context: ..
+        dockerfile: afs/docker/cantaloupe/Dockerfile
       volumes:
         - cantaloupe-data-afs7:/imageroot
+        - /Users/ryan/.aws:/root/.aws
+        - ./docker/cantaloupe/cantaloupe.properties:/etc/cantaloupe.properties
       ports:
         - 8183:8182
       env_file:
@@ -54,3 +59,4 @@ networks:
 
 volumes:
     cantaloupe-data-afs7:
+    aws-creds:
