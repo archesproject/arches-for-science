@@ -43,7 +43,7 @@
         <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Sample Details'"></h4>
     </div>
     <div class="workbench-card-sidepanel-border"></div>
-    <div class="workbench-card-sidepanel-body">
+    <div class="workbench-card-sidepanel-body" style="overflow-y: hidden">
 
 
 
@@ -76,18 +76,19 @@
                 </div>
 
                 <div style="overflow: hidden; height: 0px; transition: height .3s;"
-                    data-bind="style: {height: sampleListShowing() ? '185px': '0px'}">
+                    data-bind="style: {height: sampleListShowing() ? '585px': '0px'}">
                     <h5>{% trans 'Sample locations' %}</h5>
                 
                     <div style="margin-left: 5px; margin-right: 15px;">
                         <input type="text" placeholder="{% trans 'filter...' %}" style="
                             width: 100%;
+                            padding: 0px 5px;
                             height: 36px;
                             border: 1px solid #ddd;
                             margin-bottom: 3px;
                         " data-bind="textInput: $data.sampleLocationFilterTerm">
                 
-                        <div style="height: 100px;border: 1px solid #ddd;overflow-y: scroll;"> 
+                        <div style="height: 320px;border: 1px solid #ddd;overflow-y: scroll;"> 
                             <table style="
                                     display: flex;
                                     flex-direction: column;
@@ -111,29 +112,29 @@
                                         },
                                     ">
                                         <!-- ko if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId() -->
-                                        <td style="cursor: pointer; width: 30px;">
+                                        <td style="cursor: pointer;" class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);"
                                                 data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
-                                                <i class="fa fa-eye map-card-feature-edit"></i>
+                                                <i class="fa fa-eye iiif-card-feature-edit"></i>
                                             </a>
                                         </td>
-                                        <td style="width: 30px;">
+                                        <td class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);" style="cursor: unset;">
                                                 <i class="fa fa-lock"></i>
                                             </a>
                                         </td>
                                         <!-- /ko -->
                                         <!-- ko if: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
-                                        <td style="cursor: pointer; width: 30px;">
+                                        <td style="cursor: pointer;" class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);"
                                                 data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
-                                                <i class="fa fa-pencil map-card-feature-edit"></i>
+                                                <i class="fa fa-pencil iiif-card-feature-edit"></i>
                                             </a>
                                         </td>
-                                        <td style="cursor: pointer; width: 30px;">
+                                        <td style="cursor: pointer;" class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);"
                                                 data-bind="click: function() { $parent.showSampleLocationDeleteModal($data); }, clickBubble: false">
-                                                <i class="fa fa-trash map-card-feature-edit"></i>
+                                                <i class="fa fa-trash iiif-card-feature-edit"></i>
                                             </a>
                                         </td>
                                         <!-- /ko -->
@@ -141,7 +142,7 @@
                                         <td class="afs-workflow-table-contents" data-bind="text: (function(){
                                             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                                             return ko.unwrap($data.data[partIdentifierAssignmentLabelNodeId][$parent.activeLanguage()]['value']) + ' [Sample of ' + $parent.physicalThingName + ']';
-                                        })()" style="width: 100%"></td>
+                                        })()" style="width: 100%; padding: 0px 5px;"></td>
                                     </tr>
                                     <!-- /ko -->
                                 </tbody>
@@ -164,12 +165,12 @@
 
                             <i style="display: none;" data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[widget.node_id()].isrequired}"></i>
 
-                            <div class="col-xs-12" style="width: 342px;">
-                                <div class="style-tools-collapser" data-bind=" click: function() {
+                            <div class="col-xs-12" style="width: 342px; margin-top: -20px;">
+                                <div class="style-tools-collapser" style="display: flex; flex-direction: row-reverse;" data-bind=" click: function() {
                                     self.showStylingTools(!self.showStylingTools());
                                 }">
                                     <span data-bind="text: self.showStylingTools() ? '{% trans "Hide Style Tools" %}' : '{% trans "Show Style Tools" %}'"></span>
-                                    <i class="fa" data-bind="{
+                                    <i style="padding: 0px 3px; margin-top: 4px;" class="fa" data-bind="{
                                         css: {
                                             'fa-caret-down' : !self.showStylingTools(),
                                             'fa-caret-up' : self.showStylingTools(),

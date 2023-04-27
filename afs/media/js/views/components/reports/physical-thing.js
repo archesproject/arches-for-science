@@ -1,11 +1,12 @@
 define([
     'underscore', 
     'knockout', 
+    'arches',
     'templates/views/components/reports/physical-thing.htm',
     'utils/report',
     'bindings/datatable', 
     'views/components/reports/scenes/annotation-parts'
-], function(_, ko, physicalThingReportTemplate, reportUtils) {
+], function(_, ko, arches, physicalThingReportTemplate, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
             var self = this;
@@ -420,7 +421,7 @@ define([
                 const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
                     return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                 });
-                return window.fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId])
+                return window.fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]['value'])
                     .then(function(response){
                         if(response.ok) {
                             return response.json();
@@ -437,6 +438,7 @@ define([
                 const relatedResources = result?.related_resources;
                 
                 const relatedDigitalResources = relatedResources.filter(resource => resource.graph_id === digitalResourceGraphId);
+
                 if (relatedDigitalResources.length) {
                     relatedDigitalResources.forEach(async resource => {
                         const resourceDomainConceptIds = resource.domains.map(x => x.conceptid)

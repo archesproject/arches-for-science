@@ -562,6 +562,22 @@
     width: 100%;
 }
 
+.iiif-card-feature-edit {
+    padding: 5px;
+}
+
+.iiif-card-feature-tool {
+    width:  25px;
+}
+
+.style-tools-panel .form-group {
+    margin-bottom: 5px;
+}
+
+.style-tools-panel .form-group label {
+    padding-right: 5px;
+}
+
 .analysis-areas-workflow-regions-step .iiif-gallery-sequence-label,
 .upload-dataset-step-workflow-component-based-step .iiif-gallery-sequence-label {
     display: none;
@@ -576,10 +592,11 @@
 }
 
 .analysis-areas-workflow-regions-step .dataset-table tr {
-    height: 28px;
+    height: 32px;
     display: flex;
     align-items: center;
     padding-left: 6px;
+    border-bottom: 1px solid #D3E5F4;
 }
 
 .analysis-areas-workflow-regions-step .row.widget-wrapper {
@@ -913,9 +930,9 @@
 }
 
 .afs-saving-message {
-    font-size: 20px;
-    color: #444;
-    text-shadow: 2px 2px 4px #ddd;
+    font-size: 24px;
+    color: #454545;
+    text-shadow: 2px 2px 3px #eee;
     font-weight: 600;
     top: 25%;
     left: 25%;
