@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseServerError
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.utils.translation import get_language
+from afs.utils.docx_template_engine import DocxTemplateEngine
 from arches.app.utils.response import JSONResponse
 from arches.app.models.models import PublishedGraph, Node
 from arches.app.models.resource import Resource
@@ -26,8 +27,8 @@ class ReportView(View):
     def post(self, request):
         json_data = json.loads(request.body)
         title_key = "b5b38bde-b2f2-11e9-aff6-a4d18cec433a"
-        template_id = json_data["templateid"] if "templateid" in json_data else None
-        project_id = json_data["projectid"] if "projectid" in json_data else None
+        template_id = json_data["templateId"] if "templateId" in json_data else None
+        project_id = json_data["projectId"] if "projectId" in json_data else None
         template = settings.AFS_CUSTOM_REPORTS[template_id] if template_id in settings.AFS_CUSTOM_REPORTS else None
         project = Resource.objects.filter(pk=project_id)[0]
         published_graph = PublishedGraph.objects.filter(publication_id=str(project.graph_publication_id), language=get_language()).first()
@@ -48,21 +49,22 @@ class ReportView(View):
         bytestream = BytesIO()
 
         if template.endswith("docx"):
-            doc = Document(template)
+            template_engine = DocxTemplateEngine()
+            (bytestream, mime, title) = template_engine.document_replace(template, json_data)
+            # doc = Document(template)
 
-            title = str(project.name)
+            # title = str(project.name)
 
-            for p in doc.paragraphs:
-                arches_tag_pattern = re.compile(r"(\<arches\:\s?([A-Za-z_0-9]+)\>)")  # should match <arches: node_alias>
-                for run in p.runs:
-                    for (tag, alias) in re.findall(arches_tag_pattern, run.text):
-                        tile = next((d for d in project.tiles if str(d.nodegroup_id) == node_dict[alias].nodegroup_id), None)
-                        if tile is not None:
-                            node = node_dict[alias]
-                            display_value = datatype_factory.get_instance(node.datatype).get_display_value(tile, node)
-                            run.text = run.text.replace(tag, display_value)
+            # for p in doc.paragraphs:
+            #     arches_tag_pattern = re.compile(r"(\<arches\:\s?([A-Za-z_0-9]+)\>)")  # should match <arches: node_alias>
+            #     for run in p.runs:
+            #         for (tag, alias) in re.findall(arches_tag_pattern, run.text):
+            #             tile = next((d for d in project.tiles if str(d.nodegroup_id) == node_dict[alias].nodegroup_id), None)
+            #             if tile is not None:
+            #                 node = node_dict[alias]
+            #                 display_value = datatype_factory.get_instance(node.datatype).get_display_value(tile, node)
+            #                 run.text = run.text.replace(tag, display_value)
 
-            doc.save(bytestream)
             mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
         elif template.endswith("pptx"):

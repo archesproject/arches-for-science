@@ -4,7 +4,8 @@ define([
     'viewmodels/workflow',
     'templates/views/components/plugins/project-report-workflow.htm',
     'views/components/workflows/project-report-workflow/project-report-select',
-    'views/components/workflows/project-report-workflow/generate-report'
+    'views/components/workflows/project-report-workflow/download-report',
+    'views/components/workflows/project-report-workflow/add-annotations'
 ], function(ko, arches, Workflow, projectReportWorkflow) {
     return ko.components.register('project-report-workflow', { 
         viewModel: function(params) {
@@ -35,23 +36,47 @@ define([
                     ],
                 },
                 {
-                    title: 'Generate Report',
-                    name: 'generate-report',
+                    title: 'Add Annotations',
+                    name: 'add-annotations',
+                    informationboxdata: {
+                        heading: 'Add Annotations',
+                        text: 'Add Annotations to the Report',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'views/components/workflows/project-workflow-report/add-annotations',
+                                    uniqueInstanceName: 'add-annotations',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                        projectId: "['select-project']['select-project']['project']"
+                                    }
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Download Report',
+                    name: 'download-report',
                     lockableExternalSteps: ['select-project'],
                     informationboxdata: {
-                        heading: 'Generate Report',
+                        heading: 'Download Report',
                         text: 'A report is being generated',
                     },
                     layoutSections: [
                         {
                             componentConfigs: [
                                 { 
-                                    componentName: 'generate-report',
-                                    uniqueInstanceName: 'generate-report',
+                                    componentName: 'download-report',
+                                    uniqueInstanceName: 'download-report',
                                     tilesManaged: 'none',
                                     parameters: {
                                         templateId: "['select-project']['select-project']['template']",
-                                        projectId: "['select-project']['select-project']['project']"
+                                        projectId: "['select-project']['select-project']['project']",
+                                        physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
+                                        annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
                                     }
                                 },
                             ], 
