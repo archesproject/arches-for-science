@@ -16,37 +16,37 @@ from docx.table import _Cell, Table
 from docx.text.paragraph import Paragraph
 from docx.section import _Header
 
-class DocxTemplateEngine(ArchesTemplateEngine):
 
+class DocxTemplateEngine(ArchesTemplateEngine):
     def extract_regex_matches(self, template) -> List[Tuple]:
         self.doc = docx.Document(template)
         tags = self.iterate_over_container(self.doc)
 
         return tags
-    
+
     def iterate_over_container(self, container, parent=None):
-        parsed_tags:List[Tuple] = []
+        parsed_tags: List[Tuple] = []
         try:
             for section in container.sections:
                 parsed_tags += self.iterate_over_container(section.header)
         except AttributeError:
-            pass # this is ok, there are lots of types that do not have a "sections" attribute - skip them and continue
+            pass  # this is ok, there are lots of types that do not have a "sections" attribute - skip them and continue
 
         for block in self.iter_block_items(container):
             if isinstance(block, Paragraph):
                 arches_tag_pattern = re.compile(self.regex)  # should match <arches: node_alias>
-                #(raw, tag, attributes)
+                # (raw, tag, attributes)
                 for match in re.findall(arches_tag_pattern, block.text):
                     parsed_tags.append((match, {"docxBlock": block, "parent": parent}))
-                    
+
                     # for run in block.runs:
                     #     for (tag, alias) in re.findall(arches_tag_pattern, run.text):
                     #             tags.append((tag, alias))
-                            # tile = next((d for d in project.tiles if str(d.nodegroup_id) == node_dict[alias].nodegroup_id), None)
-                            # if tile is not None:
-                            #     node = node_dict[alias]
-                            #     display_value = datatype_factory.get_instance(node.datatype).get_display_value(tile, node)
-                            #     run.text = run.text.replace(tag, display_value)
+                    # tile = next((d for d in project.tiles if str(d.nodegroup_id) == node_dict[alias].nodegroup_id), None)
+                    # if tile is not None:
+                    #     node = node_dict[alias]
+                    #     display_value = datatype_factory.get_instance(node.datatype).get_display_value(tile, node)
+                    #     run.text = run.text.replace(tag, display_value)
             elif isinstance(block, Table):
                 row_length = len(block.rows)
                 column_length = len(block.columns)
@@ -57,7 +57,7 @@ class DocxTemplateEngine(ArchesTemplateEngine):
                         current_cell = block.cell(current_row, current_column)
                         parsed_tags += self.iterate_over_container(current_cell, block)
                         current_column += 1
-                    current_row +=1
+                    current_row += 1
                 pass
         return parsed_tags
 
@@ -71,7 +71,7 @@ class DocxTemplateEngine(ArchesTemplateEngine):
     #             for (tag, alias) in re.findall(arches_tag_pattern, run.text):
     #                     tags.append((tag, alias))
     #     return tags
-    
+
     def iter_block_items(self, parent):
         """
         Generate a reference to each paragraph and table child within *parent*,
@@ -107,16 +107,15 @@ class DocxTemplateEngine(ArchesTemplateEngine):
         tr = row._tr
         tbl.remove(tr)
 
-    def replace_tags(self, tags:List[TemplateTag]):
+    def replace_tags(self, tags: List[TemplateTag]):
         for tag in tags:
-            block = tag.optional_keys['docxBlock']
+            block = tag.optional_keys["docxBlock"]
             if tag.type == TemplateTagType.CONTEXT:
                 if tag.has_rows:
                     column = 0
                     # this is ugly, but way more efficient than the alternative
                     parent_table = tag.context_children_template[-1].optional_keys["parent"]
                     current_row = parent_table.add_row()
-                    
 
                     for child in tag.children:
                         if child.type == TemplateTagType.ROWEND:
@@ -126,24 +125,27 @@ class DocxTemplateEngine(ArchesTemplateEngine):
                             # grab any borders from the original cell copy them to the new cell.
                             template_block = tag.context_children_template[column].optional_keys["docxBlock"]
                             borders = template_block._parent.get_or_add_tcPr().first_child_found_in("w:tcBorders")
-                        
-                            for edge in ('start', 'top', 'end', 'bottom', 'left', 'right', 'insideH', 'insideV'):
-                                raw_border_tag = 'w:{}'.format(edge)
+
+                            for edge in ("start", "top", "end", "bottom", "left", "right", "insideH", "insideV"):
+                                raw_border_tag = "w:{}".format(edge)
 
                                 # check for tag existnace, if none found, then create one
                                 element = borders.find(qn(raw_border_tag))
                                 cell_borders = current_row.cells[column]._tc.get_or_add_tcPr().first_child_found_in("w:tcBorders")
-                                if  cell_borders is None:
-                                    cell_borders = OxmlElement('w:tcBorders')
+                                if cell_borders is None:
+                                    cell_borders = OxmlElement("w:tcBorders")
                                     current_row.cells[column]._tc.get_or_add_tcPr().append(cell_borders)
                                 if element is not None:
                                     cell_borders.append(copy.deepcopy(element))
                             # every cell gets created with (bad) default styling.
                             DocxTemplateEngine.delete_paragraph(current_row.cells[column].paragraphs[0])
                             # copies paragraph styling from the original template cells
-                            current_row.cells[column].add_paragraph("" if child.value == None else child.value, copy.deepcopy(_Cell(template_block._parent, parent_table).paragraphs[0].style))
+                            current_row.cells[column].add_paragraph(
+                                "" if child.value == None else child.value,
+                                copy.deepcopy(_Cell(template_block._parent, parent_table).paragraphs[0].style),
+                            )
                         column += 1
-    
+
                     if tag.attributes["has_header"] == "true":
                         DocxTemplateEngine.remove_row(parent_table, parent_table.rows[1])
                     else:
@@ -151,17 +153,16 @@ class DocxTemplateEngine(ArchesTemplateEngine):
                 else:
                     self.replace_tags(tag.children)
                 DocxTemplateEngine.delete_paragraph(block)
-                DocxTemplateEngine.delete_paragraph(tag.end_tag.optional_keys['docxBlock'])
+                DocxTemplateEngine.delete_paragraph(tag.end_tag.optional_keys["docxBlock"])
             elif tag.type == TemplateTagType.VALUE:
                 block.text = tag.value
             elif tag.type == TemplateTagType.IMAGE:
                 block.text = ""
                 run = block.add_run()
-                if(tag.value):
-                    run.add_picture(BytesIO(b64decode(re.sub("data:image/jpeg;base64,", '', tag.value))))
-    
+                if tag.value:
+                    run.add_picture(BytesIO(b64decode(re.sub("data:image/jpeg;base64,", "", tag.value))))
 
-    def create_file(self, tags:List[TemplateTag], template):
+    def create_file(self, tags: List[TemplateTag], template):
         bytestream = BytesIO()
         mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         self.replace_tags(tags)

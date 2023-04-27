@@ -10,20 +10,22 @@ from arches.app.datatypes.datatypes import DataTypeFactory
 from docx import Document as _Document
 from pptx import Presentation
 
+
 class TemplateTagType(Enum):
-    VALUE = 1,
+    VALUE = (1,)
     CONTEXT = 2
-    END = 3,
-    ROWEND = 4,
+    END = (3,)
+    ROWEND = (4,)
     IMAGE = 5
+
 
 class TemplateTag(object):
     def __init__(self, raw: str, tag_type: TemplateTagType, attributes: dict = {}, optional_keys: dict = {}):
         self.type = tag_type
-        self.attributes = attributes # context is relative to the r
+        self.attributes = attributes  # context is relative to the r
         self.raw = raw
         self.value = None
-        self.children:List[TemplateTag] = []
+        self.children: List[TemplateTag] = []
         self.end_tag = None
         self.optional_keys = optional_keys
         self.has_rows = False
@@ -31,14 +33,16 @@ class TemplateTag(object):
 
 
 class ArchesTemplateEngine(object):
-    def __init__(self, regex=None, ):
-        self.regex = regex if regex else r'(<arches:(\w+)([\S\s]*)>)'
+    def __init__(
+        self,
+        regex=None,
+    ):
+        self.regex = regex if regex else r"(<arches:(\w+)([\S\s]*)>)"
 
-
-    def extract_tags(self, template) -> List[TemplateTag]: 
+    def extract_tags(self, template) -> List[TemplateTag]:
         tags = []
         tag_matches = self.extract_regex_matches(template)
-        context:List[TemplateTag] = []
+        context: List[TemplateTag] = []
         tag_type = None
 
         for match in tag_matches:
@@ -67,18 +71,18 @@ class ArchesTemplateEngine(object):
                     if len(split_attribute) == 2:
                         attributes[split_attribute[0]] = split_attribute[1].strip("\"'“”")
                 if tag_type == None:
-                    raise("Unsupported Tag - cannot proceed:" + tag_match[0])
-            
-            if(tag_type == TemplateTagType.CONTEXT):
+                    raise ("Unsupported Tag - cannot proceed:" + tag_match[0])
+
+            if tag_type == TemplateTagType.CONTEXT:
                 context_tag = TemplateTag(raw, tag_type, attributes, optional_keys)
                 tags.append(context_tag)
                 context.append(context_tag)
-            elif(tag_type == TemplateTagType.END):
+            elif tag_type == TemplateTagType.END:
                 context[-1].end_tag = TemplateTag(raw, tag_type, attributes, optional_keys)
                 context.pop()
-            elif(len(context) == 0):
+            elif len(context) == 0:
                 tags.append(TemplateTag(raw, tag_type, attributes, optional_keys))
-            else: 
+            else:
                 context[-1].children.append(TemplateTag(raw, tag_type, attributes, optional_keys))
         return tags
 
@@ -101,14 +105,14 @@ class ArchesTemplateEngine(object):
         current_value = dictionary
 
         for part in path_parts:
-            if(isinstance(current_value, dict)):
+            if isinstance(current_value, dict):
                 current_value = self.normalize_dictionary_keys(current_value)
                 current_value = current_value.get(part, None)
-            elif(isinstance(current_value, List) and part.isnumeric()):
+            elif isinstance(current_value, List) and part.isnumeric():
                 try:
                     current_value = current_value[int(part)]
                 except IndexError:
-                    current_value = None # this is ok, allows us to continue writing to the template. 
+                    current_value = None  # this is ok, allows us to continue writing to the template.
         return current_value
 
     def get_tag_values(self, tags, context) -> List[TemplateTag]:
@@ -133,22 +137,20 @@ class ArchesTemplateEngine(object):
                         tag.children = []
                         for item in new_context:
                             tag.children.extend(self.get_tag_values(copy.deepcopy(tag.context_children_template), item))
-                            tag.children.append(TemplateTag('', TemplateTagType.ROWEND))
+                            tag.children.append(TemplateTag("", TemplateTagType.ROWEND))
                     else:
                         self.get_tag_values(tag.children, new_context)
             elif tag.type == TemplateTagType.END:
                 context.pop()
 
         return tags
-        
 
     def create_file(self, tags, template):
         pass
 
-    # Primary entrypoint; pass in a template to be formatted and the root resource with which to do it.  
+    # Primary entrypoint; pass in a template to be formatted and the root resource with which to do it.
     def document_replace(self, template, context):
         tags = self.extract_tags(template)
 
         expanded_tags = self.get_tag_values(tags, context)
         return self.create_file(expanded_tags, template)
-    
