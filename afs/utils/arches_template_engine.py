@@ -1,5 +1,6 @@
 import copy
 from enum import Enum
+import re
 from typing import List, Tuple
 from django.utils.translation import ugettext as _
 from django.utils.translation import get_language
@@ -37,7 +38,7 @@ class ArchesTemplateEngine(object):
         self,
         regex=None,
     ):
-        self.regex = regex if regex else r"(<arches:(\w+)([\S\s]*)>)"
+        self.regex = re.compile(regex if regex else r"(<arches:(\w+)([\S\s]*?)>)")
 
     def extract_tags(self, template) -> List[TemplateTag]:
         tags = []

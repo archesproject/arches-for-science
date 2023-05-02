@@ -10,12 +10,12 @@ from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.utils.translation import get_language
 from afs.utils.docx_template_engine import DocxTemplateEngine
+from afs.utils.pptx_template_engine import PptxTemplateEngine
+from afs.utils.xlsx_template_engine import XlsxTemplateEngine
 from arches.app.utils.response import JSONResponse
 from arches.app.models.models import PublishedGraph, Node
 from arches.app.models.resource import Resource
 from arches.app.datatypes.datatypes import DataTypeFactory
-from docx import Document
-from pptx import Presentation
 
 logger = logging.getLogger(__name__)
 
@@ -51,35 +51,14 @@ class ReportView(View):
         if template.endswith("docx"):
             template_engine = DocxTemplateEngine()
             (bytestream, mime, title) = template_engine.document_replace(template, json_data)
-            # doc = Document(template)
-
-            # title = str(project.name)
-
-            # for p in doc.paragraphs:
-            #     arches_tag_pattern = re.compile(r"(\<arches\:\s?([A-Za-z_0-9]+)\>)")  # should match <arches: node_alias>
-            #     for run in p.runs:
-            #         for (tag, alias) in re.findall(arches_tag_pattern, run.text):
-            #             tile = next((d for d in project.tiles if str(d.nodegroup_id) == node_dict[alias].nodegroup_id), None)
-            #             if tile is not None:
-            #                 node = node_dict[alias]
-            #                 display_value = datatype_factory.get_instance(node.datatype).get_display_value(tile, node)
-            #                 run.text = run.text.replace(tag, display_value)
-
-            mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
         elif template.endswith("pptx"):
-            pptx = Presentation(template)
+            template_engine = PptxTemplateEngine()
+            (bytestream, mime, title) = template_engine.document_replace(template, json_data)
+        elif template.endswith("xlsx"):
+            template_engine = XlsxTemplateEngine()
+            (bytestream, mime, title) = template_engine.document_replace(template, json_data)
 
-            for tile in tiles:
-                for key in tile.data:
-                    if key == title_key:
-                        title = tile.data[key] + ".pptx"
-                    for s in pptx.slides:
-                        for shape in s.shapes:
-                            if key in shape.text:
-                                shape.text = shape.text.replace("<" + key + ">", tile.data[key])
-            pptx.save(bytestream)
-            mime = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
         bytestream.seek(0)
 
         if template is None:

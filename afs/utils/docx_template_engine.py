@@ -34,19 +34,9 @@ class DocxTemplateEngine(ArchesTemplateEngine):
 
         for block in self.iter_block_items(container):
             if isinstance(block, Paragraph):
-                arches_tag_pattern = re.compile(self.regex)  # should match <arches: node_alias>
-                # (raw, tag, attributes)
-                for match in re.findall(arches_tag_pattern, block.text):
+                for match in re.findall(self.regex, block.text):
                     parsed_tags.append((match, {"docxBlock": block, "parent": parent}))
 
-                    # for run in block.runs:
-                    #     for (tag, alias) in re.findall(arches_tag_pattern, run.text):
-                    #             tags.append((tag, alias))
-                    # tile = next((d for d in project.tiles if str(d.nodegroup_id) == node_dict[alias].nodegroup_id), None)
-                    # if tile is not None:
-                    #     node = node_dict[alias]
-                    #     display_value = datatype_factory.get_instance(node.datatype).get_display_value(tile, node)
-                    #     run.text = run.text.replace(tag, display_value)
             elif isinstance(block, Table):
                 row_length = len(block.rows)
                 column_length = len(block.columns)
@@ -61,17 +51,6 @@ class DocxTemplateEngine(ArchesTemplateEngine):
                 pass
         return parsed_tags
 
-    # def process_paragraph(paragraph):
-    #     tags:List[Tuple] = []
-
-    #     arches_tag_pattern = re.compile(regex)  # should match <arches: node_alias>
-    #     for (tag, alias) in re.findall(arches_tag_pattern, block.text):
-    #         tags.append((tag, alias))
-    #         for run in block.runs:
-    #             for (tag, alias) in re.findall(arches_tag_pattern, run.text):
-    #                     tags.append((tag, alias))
-    #     return tags
-
     def iter_block_items(self, parent):
         """
         Generate a reference to each paragraph and table child within *parent*,
@@ -83,7 +62,6 @@ class DocxTemplateEngine(ArchesTemplateEngine):
         if isinstance(parent, _Document):
             parent_elm = parent.element.body
             element_parent = parent._body
-            # print(parent_elm.xml)
         elif isinstance(parent, _Cell):
             element_parent = parent_elm = parent._tc
         elif isinstance(parent, _Header):
