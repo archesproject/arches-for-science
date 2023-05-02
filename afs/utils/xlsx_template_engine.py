@@ -11,10 +11,10 @@ from afs.utils.arches_template_engine import ArchesTemplateEngine, TemplateTag, 
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image
 
-class XlsxTemplateEngine(ArchesTemplateEngine):
 
+class XlsxTemplateEngine(ArchesTemplateEngine):
     def extract_regex_matches(self, template) -> List[Tuple]:
-        self.workbook = load_workbook(filename = template)
+        self.workbook = load_workbook(filename=template)
         parsed_tags: List[Tuple] = []
         for sheet in self.workbook.worksheets:
             parsed_tags += self.iterate_over_sheet(sheet)
@@ -55,14 +55,14 @@ class XlsxTemplateEngine(ArchesTemplateEngine):
 
     def iterate_over_sheet(self, sheet):
         parsed_tags: List[Tuple] = []
-        range_regex = re.compile(r'^([A-Z]+)(\d+):([A-Z]+)(\d+)$')
+        range_regex = re.compile(r"^([A-Z]+)(\d+):([A-Z]+)(\d+)$")
         dimensions = sheet.dimensions
         match = range_regex.match(dimensions)
         if match:
-            start_col = match.group(1) 
-            start_row = int(match.group(2)) 
-            end_col = match.group(3)  
-            end_row = int(match.group(4)) 
+            start_col = match.group(1)
+            start_row = int(match.group(2))
+            end_col = match.group(3)
+            end_row = int(match.group(4))
             current_row = start_row
 
             start_col_offset = XlsxTemplateEngine.offset_from_column(start_col)
@@ -75,21 +75,31 @@ class XlsxTemplateEngine(ArchesTemplateEngine):
                     current_cell = XlsxTemplateEngine.column_from_offset(current_col) + str(current_row)
                     if sheet[current_cell].value:
                         for match in re.findall(self.regex, sheet[current_cell].value):
-                            parsed_tags.append((match, {"cell": sheet[current_cell], "sheet": sheet, "row": current_row,  "column": XlsxTemplateEngine.column_from_offset(current_col)}))
+                            parsed_tags.append(
+                                (
+                                    match,
+                                    {
+                                        "cell": sheet[current_cell],
+                                        "sheet": sheet,
+                                        "row": current_row,
+                                        "column": XlsxTemplateEngine.column_from_offset(current_col),
+                                    },
+                                )
+                            )
                     current_col += 1
-                current_row +=1
+                current_row += 1
         else:
             print("Invalid range format")
         return parsed_tags
 
-    def replace_tags(self, tags:List[TemplateTag]):
+    def replace_tags(self, tags: List[TemplateTag]):
         for tag in tags:
-            cell = tag.optional_keys['cell']
-            sheet = tag.optional_keys['sheet']
-            row = tag.optional_keys['row']
-            column = tag.optional_keys['column']
-            if tag.type == TemplateTagType.CONTEXT:                    
-                
+            cell = tag.optional_keys["cell"]
+            sheet = tag.optional_keys["sheet"]
+            row = tag.optional_keys["row"]
+            column = tag.optional_keys["column"]
+            if tag.type == TemplateTagType.CONTEXT:
+
                 if tag.has_rows:
                     column = 0
                     # this is ugly, but way more efficient than the alternative
@@ -101,8 +111,8 @@ class XlsxTemplateEngine(ArchesTemplateEngine):
                             sheet.insert_rows(current_row)
                         elif child.type == TemplateTagType.VALUE:
                             # grab any borders from the original cell copy them to the new cell.
-                            #template_block = tag.context_children_template[column].optional_keys["container"]
-                            sheet[child.optional_keys['column'] + str(current_row)].value = child.value
+                            # template_block = tag.context_children_template[column].optional_keys["container"]
+                            sheet[child.optional_keys["column"] + str(current_row)].value = child.value
                 else:
                     self.replace_tags(tag.children)
 
@@ -121,9 +131,7 @@ class XlsxTemplateEngine(ArchesTemplateEngine):
                 # block._parent.add_picture(BytesIO(b64decode(re.sub("data:image/jpeg;base64,", '', tag.value))), block.top, block.left, block.width, block.height)
                 # PptxTemplateEngine.delete_element(block)
 
-    
-
-    def create_file(self, tags:List[TemplateTag], template):
+    def create_file(self, tags: List[TemplateTag], template):
         bytestream = BytesIO()
         mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         self.replace_tags(tags)
