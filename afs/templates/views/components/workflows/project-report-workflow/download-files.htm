@@ -1,0 +1,23 @@
+{% load i18n %}
+<div data-bind="let: {self:$data}">
+    <!-- ko foreach: { data: relatedPhysicalThings, as: "thing" } -->
+    <div>
+        <div style="font-size: 15px;" data-bind="text: thing.name"></div>
+        <!-- ko if: thing.relatedFiles.length > 0 -->
+        <!-- ko foreach: { data: thing.relatedFiles, as: "file" } -->
+        <div style="display: flex">
+            <span><input type="checkbox" data-bind="checked: file.download" style="margin-right: 20px;"></span>
+            <a data-bind="attr: { href: file.url }, text: file.name" target="_blank" style="color: steelblue"></a>
+            <span data-bind="html: self.formatSize(file.size)" style="color: steelblue; margin-left: 5px;"></span>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+    <button class="btn btn-danger" data-bind="{ click: downloadFiles }">
+        <span>Download</span>
+    </button>
+    <div>
+        <h4 data-bind="text: message"></h4>
+    </div>
+</div>

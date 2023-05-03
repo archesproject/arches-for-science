@@ -5,6 +5,7 @@ define([
     'templates/views/components/plugins/project-report-workflow.htm',
     'views/components/workflows/project-report-workflow/project-report-select',
     'views/components/workflows/project-report-workflow/download-report',
+    'views/components/workflows/project-report-workflow/download-files',
     'views/components/workflows/project-report-workflow/add-annotations'
 ], function(ko, arches, Workflow, projectReportWorkflow) {
     return ko.components.register('project-report-workflow', { 
@@ -19,7 +20,7 @@ define([
                         heading: 'Select Project',
                         text: 'Select a project and report template to create a report',
                     },
-                    required: true,
+                    required: false,
                     layoutSections: [
                         {
                             sectionTitle: 'Select Project',
@@ -77,6 +78,30 @@ define([
                                         projectId: "['select-project']['select-project']['project']",
                                         physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
                                         annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
+                                    }
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Download Files',
+                    name: 'download-files',
+                    informationboxdata: {
+                        heading: 'Download Files',
+                        text: 'Download from a list of files related to the project',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'download-files',
+                                    uniqueInstanceName: 'download-files',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                        // templateId: "['select-project']['select-project']['template']",
+                                        // projectId: "['select-project']['select-project']['project']",
+                                        // physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
                                     }
                                 },
                             ], 
