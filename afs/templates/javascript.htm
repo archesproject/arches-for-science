@@ -18,6 +18,14 @@
 ></div>
 {% endblock arches_urls %}
 
+{% block arches_translations %}
+{{ block.super }}
+<div class='arches-translations'
+    related-physical-things-and-files='{% trans "The Related Physical Things and Files" as relatedPhysicalThingsAndFiles %}  "{{ relatedPhysicalThingsAndFiles|escapejs }}"'
+    no-related-files='{% trans "No Related Files" as noRelatedFiles %}  "{{ noRelatedFiles|escapejs }}"'
+></div>
+{% endblock arches_translations %}
+
 {% block project_modules %}
 <script>
 define('register-three', ['three'], function (THREE) {

@@ -1,11 +1,19 @@
 {% load i18n %}
-<div data-bind="let: {self:$data}">
-    <!-- ko foreach: { data: relatedPhysicalThings, as: "thing" } -->
+<div data-bind="let: {self:$data}" style="margin: 20px;">
     <div>
-        <div style="font-size: 15px;" data-bind="text: thing.name"></div>
+        <h3 data-bind="text: $root.translations.relatedPhysicalThingsAndFiles"></h3>
+    </div>
+    <!-- ko foreach: { data: relatedPhysicalThings, as: "thing" } -->
+    <div style="padding-bottom: 20px;">
+        <div style="font-size: 15px; padding: 10px 0px;" data-bind="text: thing.name"></div>
+        <!-- ko if: thing.relatedFiles.length == 0 -->
+        <div style="padding-left: 10px;">
+            <span data-bind="text: $root.translations.noRelatedFiles"></span>
+        </div>
+        <!-- /ko -->
         <!-- ko if: thing.relatedFiles.length > 0 -->
         <!-- ko foreach: { data: thing.relatedFiles, as: "file" } -->
-        <div style="display: flex">
+        <div style="display: flex; padding-left: 10px;">
             <span><input type="checkbox" data-bind="checked: file.download" style="margin-right: 20px;"></span>
             <a data-bind="attr: { href: file.url }, text: file.name" target="_blank" style="color: steelblue"></a>
             <span data-bind="html: self.formatSize(file.size)" style="color: steelblue; margin-left: 5px;"></span>
