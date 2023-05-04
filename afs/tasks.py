@@ -11,9 +11,11 @@ try:
 except ImportError:
     pass
 
+
 @shared_task
 def download_related_files(userid, files, project_name):
     from afs.views.download_files import FileDownloader
+
     downloader = FileDownloader()
     user = User.objects.get(pk=userid)
     exportid, files = downloader.create_download_zipfile(user, files, project_name)
