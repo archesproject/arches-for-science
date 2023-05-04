@@ -5,7 +5,7 @@ from arches.app.views.plugin import PluginView
 from afs.views.workflows.upload_dataset.format_render_map import FormatRenderMap
 from afs.views.workflows.upload_dataset.update_file_format import UpdateFileFormat
 from afs.views.workflows.upload_dataset.select_dataset_files_step import SelectDatasetFilesStep
-from afs.views.download_files import FileDownloader
+from afs.views.download_project_files import FileDownloader
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
 from afs.views.report import ReportView
@@ -59,6 +59,6 @@ urlpatterns = [
     url(r"^deletesamplearea", DeleteSampleAreaView.as_view(), name="deletesamplearea"),
     url(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
     url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
-    url(r"^download-files", FileDownloader.as_view(), name="download-files"),
+    url(r"^download_project_files", FileDownloader.as_view(), name="download_project_files"),
     url(r"^", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,7 +3,7 @@ define([
     'js-cookie',
     'knockout',
     'arches',
-    'templates/views/components/workflows/project-report-workflow/download-files.htm',
+    'templates/views/components/workflows/project-report-workflow/download-project-files.htm',
 ], function($, Cookies, ko, arches, downloadFilesTemplate) {
     function viewModel(params) {
         var self = this;
@@ -74,7 +74,7 @@ define([
             const formData = new window.FormData();
 
             formData.append('files', JSON.stringify(files));
-            window.fetch(arches.urls.download_files, {
+            window.fetch(arches.urls.download_project_files, {
                 method: 'POST', 
                 credentials: 'include',
                 body: formData,
@@ -86,7 +86,7 @@ define([
         };
     }
 
-    ko.components.register('download-files', {
+    ko.components.register('download-project-files', {
         viewModel: viewModel,
         template: downloadFilesTemplate
     });
