@@ -31,7 +31,7 @@ class FileDownloader(View):
             ).format(len(files))
             return JSONResponse({"success": True, "message": message})
         else:
-            message = _("The Celery is required to download files")
+            message = _("The Celery is required to download files. Or you can download file one at a time")
             return JSONResponse({"success": False, "message": message})
 
 
