@@ -22,10 +22,12 @@
         <!-- /ko -->
     </div>
     <!-- /ko -->
-    <button class="btn btn-danger" data-bind="{ click: downloadFiles }">
-        <span data-bind="text: $root.translations.download"></span>
-    </button>
-    <div>
-        <h4 data-bind="text: message"></h4>
+    <div style="display: inline-flex; padding-bottom: 20px;">
+        <button class="btn btn-danger" data-bind="{ click: downloadFiles }">
+            <span data-bind="text: $root.translations.download"></span>
+        </button>
+        <span>
+            <h4 data-bind="text: message"></h4>
+        </span>
     </div>
 </div>

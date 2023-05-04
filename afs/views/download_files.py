@@ -27,7 +27,7 @@ class FileDownloader(View):
         if task_management.check_if_celery_available():
             result = tasks.download_related_files.apply_async((userid, files, project_name),)
             message = _(
-                "{} files have been submitted for download. Click the Bell icon to check for a link to download your data"
+                "{} file(s) have been submitted for download. Click the bell icon to check for the link(s) to download your file(s)"
             ).format(len(files))
             return JSONResponse({"success": True, "message": message})
         else:
