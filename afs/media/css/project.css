@@ -1040,3 +1040,15 @@
 .workflow-component .uppy-Dashboard {
     height: 100%;
 }
+
+.uppy-progress {
+    padding: 15px;
+}
+
+.uppy-progress .uppy-Root .uppy .uppy-ProgressBar-inner {
+    background-color: #2275d7;
+    box-shadow: 0 0 10px #2275d7b3;
+    height: 300%;
+    transition: width .4s ease;
+    width: 0;
+}
