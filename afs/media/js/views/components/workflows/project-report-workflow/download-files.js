@@ -8,13 +8,8 @@ define([
     function viewModel(params) {
         var self = this;
 
-        this.projectValue = params.selectedProject;
-        this.samplers = ko.observable();
+        this.projectValue = params.projectId;
 
-        this.projectValue = 'ed883b44-74c3-43e4-b88c-5bb8d920c4b8';
-        this.projectName = 'Mexican';
-        this.physicalThingNameValue = "Burrito";
-        this.physicalThingValue = "79f80542-15e5-4fbe-84b1-c98461e8965a";
         const collectionGraphId = '1b210ef3-b25c-11e9-a037-a4d18cec433a';
         const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
         const digitalResourcegGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
@@ -38,6 +33,7 @@ define([
             await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false")
                 .then(response => response.json())
                 .then(json => {
+                    self.projectName = json.resource_instance.displayname;
                     projectCollection = json.related_resources.find(res => res.graph_id == collectionGraphId);
                 });
             await window.fetch(arches.urls.related_resources + projectCollection.resourceinstanceid  + "?paginate=false")

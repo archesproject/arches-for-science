@@ -99,9 +99,7 @@ define([
                                     uniqueInstanceName: 'download-files',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        // templateId: "['select-project']['select-project']['template']",
-                                        // projectId: "['select-project']['select-project']['project']",
-                                        // physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
+                                        projectId: "['select-project']['select-project']['project']",
                                     }
                                 },
                             ], 
