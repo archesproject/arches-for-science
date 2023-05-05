@@ -46,7 +46,7 @@ class FileDownloader(View):
                     file["file"] = file_object.path
         download_files = []
         skipped_files = []
-        size_limit = 1048576
+        size_limit = 104857600 # 100MByte
         for file in files:
             if file["file"].size >= size_limit:
                 skipped_files.append({"name": file["name"], "fileid": file["fileid"]})

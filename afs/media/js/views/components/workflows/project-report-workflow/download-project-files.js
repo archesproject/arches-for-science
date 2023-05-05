@@ -17,6 +17,12 @@ define([
         this.relatedPhysicalThings = ko.observableArray();
         this.message = ko.observable();
 
+        this.ready = ko.computed(() => {
+            return self.relatedPhysicalThings().find((thing) => {
+                return !!thing.relatedFiles.find(file => file.selected() == true );
+            });
+        });
+
         this.formatSize = function(size) {
             var bytes = size;
             if(bytes == 0) return '0 Byte';
@@ -74,11 +80,15 @@ define([
                         []);
                     });
                 self.relatedPhysicalThings.push({ ...physicalThing, relatedFiles});
+                self.relatedPhysicalThings.sort((a,b) => b.relatedFiles.length - a.relatedFiles.length);
             }
         };
         this.getFilesFromCollection();
         
         this.downloadFiles = () => {
+            if (!self.ready()) {
+                return;
+            }
             const files = self.relatedPhysicalThings().reduce(
                 (acc, thing) => acc.concat(thing.relatedFiles.filter(
                     file => file.selected())), [])
