@@ -13,7 +13,7 @@ except ImportError:
 
 
 @shared_task
-def download_related_files(userid, files, project_name):
+def download_project_files_task(userid, files, project_name):
     from afs.views.download_project_files import FileDownloader
 
     downloader = FileDownloader()

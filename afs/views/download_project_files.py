@@ -26,7 +26,7 @@ class FileDownloader(View):
         userid = request.user.id
 
         if task_management.check_if_celery_available():
-            result = tasks.download_related_files.apply_async(
+            result = tasks.download_project_files_task.apply_async(
                 (userid, files, project_name),
             )
             message = _(
