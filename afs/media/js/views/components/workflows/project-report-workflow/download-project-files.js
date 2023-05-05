@@ -27,6 +27,19 @@ define([
             return '(' + '<strong>' + parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + '</strong>' + sizes[i] + ')';
         };
 
+        this.expandAll = function(bool) {
+            self.relatedPhysicalThings().forEach((thing) => {
+                thing.expanded(bool);
+            });
+        };
+
+        this.selectAll = function(bool) {
+            self.relatedPhysicalThings().forEach((thing) => {
+                thing.relatedFiles.forEach(file => file.selected(bool));
+            });
+            self.expandAll(true);
+        };
+
         this.getFilesFromCollection = async() => {
             let projectCollection, physicalThings, physicalThing, digitalResources, relatedFiles;
             
@@ -46,12 +59,13 @@ define([
                     .then(response => response.json())
                     .then(json => {
                         physicalThing = json.resource_instance;
+                        physicalThing.expanded = ko.observable();
                         digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
                         relatedFiles = digitalResources.reduce((acc1, res) => 
                             acc1.concat(res.tiles.reduce((acc2, tile) => {
                                 if (tile.nodegroup_id == fileNodeId){
                                     acc2 = acc2.concat(tile.data[fileNodeId].map(data => {
-                                        data['download'] = ko.observable();
+                                        data.selected = ko.observable();
                                         return data;
                                     }));
                                 }
@@ -67,7 +81,7 @@ define([
         this.downloadFiles = () => {
             const files = self.relatedPhysicalThings().reduce(
                 (acc, thing) => acc.concat(thing.relatedFiles.filter(
-                    file => file.download())), [])
+                    file => file.selected())), [])
                 .map(file => {
                     return {'name': file.name, 'fileid': file.file_id, 'project': self.projectName};
                 });

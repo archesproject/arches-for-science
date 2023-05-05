@@ -3,18 +3,32 @@
     <div>
         <h3 data-bind="text: $root.translations.relatedPhysicalThingsAndFiles"></h3>
     </div>
+    <div class="tools">
+        <a class="btn" style="font-size: 1.1rem; background-color: #ebeef0; border-radius: 5px; margin: 3px;" data-bind="click: function() { expandAll(true); }"><i class="ion-plus"></i>{% trans ' Expand' %}</a>
+        <a class="btn" style="font-size: 1.1rem; background-color: #ebeef0; border-radius: 5px; margin: 3px;" data-bind="click: function() { expandAll(false); }"><i class="ion-minus"></i>{% trans ' Collapse' %}</a>
+        <a class="btn" style="font-size: 1.1rem; background-color: #ebeef0; border-radius: 5px; margin: 3px;" data-bind="click: function() { selectAll(true); }"><i class="ion-checkmark"></i>{% trans ' Select All' %}</a>
+        <a class="btn" style="font-size: 1.1rem; background-color: #ebeef0; border-radius: 5px; margin: 3px;" data-bind="click: function() { selectAll(false); }"><i class="ion-close"></i>{%  trans ' Clear All' %}</a>
+    </div>
     <!-- ko foreach: { data: relatedPhysicalThings, as: "thing" } -->
-    <div style="padding-bottom: 20px;">
-        <div style="font-size: 15px; padding: 10px 0px;" data-bind="text: thing.name"></div>
-        <!-- ko if: thing.relatedFiles.length == 0 -->
+    <div style="padding-bottom: 10px;">
+        <div style="display:flex;">
+            <span style="font-size: 1.5rem; padding: 10px 10px;">
+                <i class="fa" data-bind="click: thing.expanded(!thing.expanded()), css: {'fa-caret-right': !thing.expanded(), 'fa-caret-down': thing.expanded()}"></i>
+            </span>
+            <span style="font-size: 1.5rem; padding: 10px 0px;" data-bind="text: thing.name"></span>
+            <!-- ko ifnot: thing.expanded() -->
+            <span style="font-size: 1.5rem; padding: 10px 0px;" data-bind="html: `\xa0- <b>${thing.relatedFiles.length}</b> file(s)`"></span>
+            <!-- /ko -->
+        </div>
+        <!-- ko if: thing.expanded() && thing.relatedFiles.length == 0 -->
         <div style="padding-left: 10px;">
             <span data-bind="text: $root.translations.noRelatedFiles"></span>
         </div>
         <!-- /ko -->
-        <!-- ko if: thing.relatedFiles.length > 0 -->
+        <!-- ko if: thing.expanded() && thing.relatedFiles.length > 0 -->
         <!-- ko foreach: { data: thing.relatedFiles, as: "file" } -->
         <div style="display: flex; padding-left: 10px;">
-            <span><input type="checkbox" data-bind="checked: file.download" style="margin-right: 20px;"></span>
+            <span><input type="checkbox" data-bind="checked: file.selected" style="margin-right: 20px;"></span>
             <a data-bind="attr: { href: file.url }, text: file.name" target="_blank" style="color: steelblue"></a>
             <span data-bind="html: self.formatSize(file.size)" style="color: steelblue; margin-left: 5px;"></span>
         </div>
