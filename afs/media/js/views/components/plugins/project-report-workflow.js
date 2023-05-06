@@ -20,7 +20,7 @@ define([
                         heading: 'Select Project',
                         text: 'Select a project and report template to create a report',
                     },
-                    required: false,
+                    required: true,
                     layoutSections: [
                         {
                             sectionTitle: 'Select Project',
