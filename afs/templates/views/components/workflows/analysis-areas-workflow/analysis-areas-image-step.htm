@@ -64,21 +64,33 @@
     "
 ></div>
 
-<button
-    class="btn btn-warning"
-    style="
-        position: fixed;
-        top: 55px;
-        left: calc(100vw - 261px);
-        height: 42px;
-        width: 180px;
-        transition: all linear .3s;
-        z-index: 1;
-    "
+<div style="
+        position: fixed; 
+        height:49px; 
+        width: 100vw; 
+        background-color: white; 
+        top: 0px;
+        right:5px;" 
     data-bind="
-        style: {
-            transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
-        },
-        click: handleExitFromManifestManager
-    "
->Return to Workflow</button>
+    style: {
+        transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
+    }">
+    <button
+        class="btn btn-warning"
+        style="
+            position: relative;
+            left: calc(100vw - 200px);
+            height: 33px;
+            width: 180px;
+            top: 8px;
+            transition: all linear .3s;
+            z-index: 1;
+        "
+        data-bind="
+            style: {
+                transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
+            },
+            click: handleExitFromManifestManager
+        "
+    >Return to Workflow</button>
+</div>
