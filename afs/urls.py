@@ -57,6 +57,6 @@ urlpatterns = [
     url(r"^deletesamplearea", DeleteSampleAreaView.as_view(), name="deletesamplearea"),
     url(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
     url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
-    path("reports/", include('arches_templating.urls')),
+    path("reports/", include("arches_templating.urls")),
     url(r"^", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
