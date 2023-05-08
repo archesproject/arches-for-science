@@ -20,6 +20,9 @@ services:
         - 5678:5678
       stdin_open: true
       tty: true
+      labels:
+        - traefik.http.routers.my-container.rule=Host(`afs.local`)
+        - traefik.frontend.passHostHeader=true
 
     cantaloupe_afs:
       container_name: cantaloupe-afs7
