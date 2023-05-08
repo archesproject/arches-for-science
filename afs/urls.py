@@ -1,5 +1,6 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.conf import settings
+from django.urls import path, include
 from django.conf.urls.static import static
 from arches.app.views.plugin import PluginView
 from afs.views.workflows.upload_dataset.format_render_map import FormatRenderMap
@@ -8,7 +9,6 @@ from afs.views.workflows.upload_dataset.select_dataset_files_step import SelectD
 from afs.views.download_project_files import FileDownloader
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
-from afs.views.report import ReportView
 from afs.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, batch_sign, complete_upload, upload_part
 from afs.views.update_resource_list import UpdateResourceListView
 from afs.views.analysis_area_and_sample_taking import (
@@ -47,7 +47,6 @@ urlpatterns = [
         name="format_render_map",
     ),
     url(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
-    url(r"^report", ReportView.as_view(), name="reportview"),
     url(r"^s3/multipart/(?P<uploadid>[^\/]+)/complete$", complete_upload, name="s3_multipart_upload_complete"),
     url(r"^s3/multipart/(?P<uploadid>[^\/]+)/batch", batch_sign, name="s3_multipart_batch_sign"),
     url(r"^s3/multipart/(?P<uploadid>[^\/]+)/(?P<partnumber>\d+)$", upload_part, name="s3_multipart_upload_part"),
@@ -60,5 +59,6 @@ urlpatterns = [
     url(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
     url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
     url(r"^download_project_files", FileDownloader.as_view(), name="download_project_files"),
+    path("reports/", include('arches_templating.urls')),
     url(r"^", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
