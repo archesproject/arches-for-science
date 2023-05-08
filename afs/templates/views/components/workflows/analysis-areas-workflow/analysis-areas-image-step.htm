@@ -64,28 +64,13 @@
     "
 ></div>
 
-<div style="
-        position: fixed; 
-        height:49px; 
-        width: 100vw; 
-        background-color: white; 
-        top: 0px;
-        right:5px;" 
+<div class="return-to-workflow-bar"
     data-bind="
     style: {
         transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
     }">
     <button
-        class="btn btn-warning"
-        style="
-            position: relative;
-            left: calc(100vw - 200px);
-            height: 33px;
-            width: 180px;
-            top: 8px;
-            transition: all linear .3s;
-            z-index: 1;
-        "
+        class="btn btn-warning return-to-workflow-button"
         data-bind="
             style: {
                 transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'

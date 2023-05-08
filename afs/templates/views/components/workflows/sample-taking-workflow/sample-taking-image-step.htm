@@ -62,21 +62,18 @@
     "
 ></div>
 
-<button
-    class="btn btn-warning"
-    style="
-        position: fixed;
-        top: 53px;
-        right: 6px;
-        height: 42px;
-        width: 180px;
-        transition: all linear .3s;
-        z-index: 1;
-    "
+<div class="return-to-workflow-bar"
     data-bind="
-        style: {
-            transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
-        },
-        click: handleExitFromManifestManager
-    "
->Return to Workflow</button>
+    style: {
+        transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
+    }">
+    <button
+        class="btn btn-warning return-to-workflow-button"
+        data-bind="
+            style: {
+                transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
+            },
+            click: handleExitFromManifestManager
+        "
+    >Return to Workflow</button>
+</div>
