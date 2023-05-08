@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "arches",
     "arches.app.models",
     "arches.management",
+    "arches_templating",
     "guardian",
     "captcha",
     "revproxy",
@@ -132,7 +133,7 @@ MIDDLEWARE = [
     "arches.app.utils.middleware.SetAnonymousUser",
 ]
 
-ALLOWED_HOSTS = ["10.0.2.2", "localhost"]
+ALLOWED_HOSTS = ["afs.local", "10.0.2.2", "localhost"]
 
 SYSTEM_SETTINGS_LOCAL_PATH = os.path.join(APP_ROOT, "system_settings", "System_Settings.json")
 WSGI_APPLICATION = "afs.wsgi.application"

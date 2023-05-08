@@ -42,7 +42,7 @@ define([
                 physicalThingsDetails: [...Object.values(physicalThingsDetails)]
             };
 
-            const result = await fetch(arches.urls.reports, {
+            const result = await fetch(arches.urls.reports(templateId), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -18,15 +18,15 @@ define([
             placeholder: self.placeholder,
             allowClear: true,
             ajax: {
-                url: arches.urls.reports,
+                url: arches.urls.reports_list,
                 dataType: 'json',
                 quietMillis: 250,
                 results: (data) => {
                     return {
-                        results: Object.keys(data).map(key => {
+                        results: data.map(template => {
                             return {
-                                id: key,
-                                text: key
+                                id: template.templateid,
+                                text: template.name
                             };
                         })
                     };
@@ -53,7 +53,7 @@ define([
                 template: this.templateValue()
             });
         });
-    };
+    }
 
     ko.components.register('project-report-select', {
         viewModel: viewModel,
