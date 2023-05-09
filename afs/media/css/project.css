@@ -1041,6 +1041,7 @@
 
 .download-project-files-step .file-list-label {
     font-size: 1.5rem;
+    color: #2b547c;
     margin-bottom: 20px;
 }
 
@@ -1074,13 +1075,18 @@
     color: steelblue;
 }
 
+.download-project-files-step .file-download-list a:hover {
+    color: #2b547c;
+}
+
 .download-project-files-step .file-download-list input {
     margin-right: 10px;
 }
 
 .download-project-files-step .physical-thing-list {
     display: felx;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    color: #777;
     padding: 10px 10px;
     cursor: pointer;
 }
