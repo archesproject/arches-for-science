@@ -1052,3 +1052,22 @@
     transition: width .4s ease;
     width: 0;
 }
+
+.return-to-workflow-bar {
+    position: fixed; 
+    height:49px; 
+    width: 100vw; 
+    background-color: white; 
+    top: 0px;
+    right:5px;
+}
+
+.return-to-workflow-button {
+    position: relative;
+    left: calc(100vw - 200px);
+    height: 33px;
+    width: 180px;
+    top: 8px;
+    transition: all linear .3s;
+    z-index: 1;
+}
