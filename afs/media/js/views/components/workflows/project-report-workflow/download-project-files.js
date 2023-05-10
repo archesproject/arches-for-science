@@ -35,17 +35,7 @@ define([
         };
 
         this.fileTableConfig = {
-            "info": true,
-            "paging": true,
-            "scrollCollapse": true,
-            "searching": true,
-            "ordering": true,
-            "columns": [
-                null,
-                null,
-                null,
-                null,
-            ]
+            columns: Array(4).fill(null)
         };
 
         this.expandAll = function(bool) {
