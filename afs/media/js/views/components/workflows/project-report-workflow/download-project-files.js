@@ -3,8 +3,9 @@ define([
     'js-cookie',
     'knockout',
     'arches',
+    'viewmodels/alert-json',
     'templates/views/components/workflows/project-report-workflow/download-project-files.htm',
-], function($, Cookies, ko, arches, downloadFilesTemplate) {
+], function($, Cookies, ko, arches, JsonErrorAlertViewModel, downloadFilesTemplate) {
     function viewModel(params) {
         var self = this;
 
@@ -107,8 +108,28 @@ define([
                 headers: {
                     "X-CSRFToken": Cookies.get('csrftoken')
                 }
-            }).then((response) => response.json())
-                .then((json) => self.message(json.message));
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                })
+                .then((json) => self.message(json.message))
+                .catch((response) => {
+                    response.json().then(
+                        error => {
+                            params.pageVm.alert(
+                                new JsonErrorAlertViewModel(
+                                    'ep-alert-red',
+                                    error,
+                                    null,
+                                    function(){}
+                                )
+                            );
+                        });
+                });
         };
     }
 

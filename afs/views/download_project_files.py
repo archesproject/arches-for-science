@@ -9,7 +9,7 @@ from django.http import HttpRequest
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from arches.app.models import models
-from arches.app.utils.response import JSONResponse
+from arches.app.utils.response import JSONResponse, JSONErrorResponse
 import arches.app.utils.zip as zip_utils
 import arches.app.utils.task_management as task_management
 import afs.tasks as tasks
@@ -35,7 +35,8 @@ class FileDownloader(View):
             return JSONResponse({"success": True, "message": message})
         else:
             message = _("The Celery is required to download files. Or you can download file one at a time")
-            return JSONResponse({"success": False, "message": message})
+            response = {"title": _("Error"), "message": message}
+            return JSONErrorResponse(content=response)
 
     def create_download_zipfile(self, user, files, project_name):
         file_ids = [file["fileid"] for file in files]
