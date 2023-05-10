@@ -10,18 +10,17 @@ define([
 
         this.projectValue = params.projectId;
 
-        const collectionGraphId = '1b210ef3-b25c-11e9-a037-a4d18cec433a';
         const observationGraphId = '615b11ee-c457-11e9-910c-a4d18cec433a';
-        const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
         const digitalResourcegGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
         const fileNodeId = '7c486328-d380-11e9-b88e-a4d18cec433a';
+        const fileStatementContentNodeId = 'ca227726-78ed-11ea-a33b-acde48001122';
         this.relatedPhysicalThings = ko.observableArray();
         this.relatedObservations = ko.observableArray();
         this.message = ko.observable();
 
         this.ready = ko.computed(() => {
-            return self.relatedObservations().find((thing) => {
-                return !!thing.relatedFiles.find(file => file.selected() == true );
+            return self.relatedObservations().find((observation) => {
+                return !!observation.relatedFiles().find(file => file.selected() == true );
             });
         });
 
@@ -35,6 +34,20 @@ define([
             return '(' + '<strong>' + parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + '</strong>' + sizes[i] + ')';
         };
 
+        this.fileTableConfig = {
+            "info": true,
+            "paging": true,
+            "scrollCollapse": true,
+            "searching": true,
+            "ordering": true,
+            "columns": [
+                null,
+                null,
+                null,
+                null,
+            ]
+        };
+
         this.expandAll = function(bool) {
             self.relatedObservations().forEach((observation) => {
                 observation.expanded(bool);
@@ -43,81 +56,43 @@ define([
 
         this.selectAll = function(bool) {
             self.relatedObservations().forEach((observation) => {
-                observation.relatedFiles.forEach(file => file.selected(bool));
+                observation.relatedFiles().forEach(file => file.selected(bool));
             });
             self.expandAll(true);
         };
 
-        this.getFilesFromCollection = async() => {
-            let projectCollection, physicalThings, physicalThing, digitalResources, relatedFiles;
-            
-            await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false")
-                .then(response => response.json())
-                .then(json => {
-                    self.projectName = json.resource_instance.displayname;
-                    projectCollection = json.related_resources.find(res => res.graph_id == collectionGraphId);
-                });
-            await window.fetch(arches.urls.related_resources + projectCollection.resourceinstanceid  + "?paginate=false")
-                .then(response => response.json())
-                .then(json => {
-                    physicalThings = json.related_resources.filter(res => res.graph_id == physicalThingGraphId);
-                });
-            for (const thing of physicalThings) {
-                await window.fetch(arches.urls.related_resources + thing.resourceinstanceid  + "?paginate=false")
-                    .then(response => response.json())
-                    .then(json => {
-                        physicalThing = json.resource_instance;
-                        physicalThing.expanded = ko.observable();
-                        digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
-                        relatedFiles = digitalResources.reduce((acc1, res) => 
-                            acc1.concat(res.tiles.reduce((acc2, tile) => {
-                                if (tile.nodegroup_id == fileNodeId){
-                                    acc2 = acc2.concat(tile.data[fileNodeId].map(data => {
-                                        data.selected = ko.observable();
-                                        return data;
-                                    }));
-                                }
-                                return acc2;
-                            }, [])),
-                        []);
-                    });
-                self.relatedPhysicalThings.push({ ...physicalThing, relatedFiles});
-                self.relatedPhysicalThings.sort((a,b) => b.relatedFiles.length - a.relatedFiles.length);
-            }
-        };
-
         this.getFilesFromObservation = async() => {
-            let projectObservations, observation, digitalResources, relatedFiles;
-            
+            let projectObservations, observation, digitalResources;
             await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false")
                 .then(response => response.json())
                 .then(json => {
                     self.projectName = json.resource_instance.displayname;
                     projectObservations = json.related_resources.filter(res => res.graph_id == observationGraphId);
                 });
+
             for (const observataion of projectObservations) {
+                const relatedFiles = ko.observableArray();
                 await window.fetch(arches.urls.related_resources + observataion.resourceinstanceid  + "?paginate=false")
                     .then(response => response.json())
                     .then(json => {
-                        console.log(json);
                         observation = json.resource_instance;
                         observation.expanded = ko.observable();
+                        observation.description = observation.descriptors[arches.activeLanguage].description;
                         digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
-                        relatedFiles = digitalResources.reduce((acc1, res) => 
-                            acc1.concat(res.tiles.reduce((acc2, tile) => {
-                                if (tile.nodegroup_id == fileNodeId){
-                                    acc2 = acc2.concat(tile.data[fileNodeId].map(data => {
-                                        data.selected = ko.observable();
-                                        return data;
-                                    }));
+                        digitalResources.forEach((res) => 
+                            res.tiles.forEach((tile) => {
+                                if (tile.nodegroup_id == fileNodeId) {
+                                    const selected = ko.observable();
+                                    const interpretation = res.tiles.find(tile2 => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
+                                    const file = { ...tile.data[fileNodeId][0], interpretation, selected };
+                                    relatedFiles.push(file);
                                 }
-                                return acc2;
-                            }, [])),
-                        []);
+                            })
+                        );
                     });
                 self.relatedObservations.push({ ...observation, relatedFiles});
-                self.relatedObservations.sort((a,b) => b.relatedFiles.length - a.relatedFiles.length);
             }
+            self.relatedObservations.sort((a,b) => b.relatedFiles().length - a.relatedFiles().length);
         };
 
         this.getFilesFromObservation();
@@ -126,8 +101,8 @@ define([
             if (!self.ready()) {
                 return;
             }
-            const files = self.relatedPhysicalThings().reduce(
-                (acc, thing) => acc.concat(thing.relatedFiles.filter(
+            const files = self.relatedObservations().reduce(
+                (acc, observation) => acc.concat(observation.relatedFiles().filter(
                     file => file.selected())), [])
                 .map(file => {
                     return {'name': file.name, 'fileid': file.file_id, 'project': self.projectName};

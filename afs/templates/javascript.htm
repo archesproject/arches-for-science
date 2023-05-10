@@ -22,8 +22,10 @@
 {% block arches_translations %}
 {{ block.super }}
 <div class='arches-translations'
-    related-physical-things-and-files='{% trans "The Related Physical Things and Files" as relatedPhysicalThingsAndFiles %}  "{{ relatedPhysicalThingsAndFiles|escapejs }}"'
+    data-for-download='{% trans "Data for Download" as dataForDownload %}  "{{ dataForDownload|escapejs }}"'
     no-related-files='{% trans "No Related Files" as noRelatedFiles %}  "{{ noRelatedFiles|escapejs }}"'
+    interpretation='{% trans "Interpretation" as interpretation %}  "{{ interpretation|escapejs }}"'
+    parameters='{% trans "Parameters" as parameters %}  "{{ parameters|escapejs }}"'
 ></div>
 {% endblock arches_translations %}
 

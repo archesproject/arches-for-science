@@ -1041,8 +1041,10 @@
 
 .download-project-files-step .file-list-label {
     font-size: 1.5rem;
+    font-weight: bold;
     color: #2b547c;
-    margin-bottom: 20px;
+    padding: 10px 10px;
+    margin-bottom: 0px;
 }
 
 .download-project-files-step .expand-select-button {
@@ -1057,40 +1059,30 @@
     padding-bottom: 10px;
 }
 
+.download-project-files-step .file-list-container .dataTables_wrapper {
+    padding: 0px 20px;
+    margin-bottom: 10px;
+}
+
 .download-project-files-step .file-download-button {
     display: inline-flex;
-    padding-bottom: 20px;
+    padding: 10px;
 }
 
 .download-project-files-step .expand-select-buttons {
-    margin-bottom: 20px;
-}
+    /* margin-bottom: 20px; */
+    padding: 10px;}
 
-.download-project-files-step .file-download-list {
-    display: flex;
-    padding-left: 10px;
-}
-
-.download-project-files-step .file-download-list a {
-    color: steelblue;
-}
-
-.download-project-files-step .file-download-list a:hover {
-    color: #2b547c;
-}
-
-.download-project-files-step .file-download-list input {
-    margin-right: 10px;
-}
-
-.download-project-files-step .physical-thing-list {
+.download-project-files-step .observation-list {
     display: felx;
-    font-size: 1.25rem;
-    color: #777;
+    font-size: 1.4rem;
+    color: #2b547c;
     padding: 10px 10px;
     cursor: pointer;
 }
 
-.download-project-files-step .file-listing-text {
-    padding-left: 20px;
+.download-project-files-step .file-listing-link {
+    vertical-align: middle;
+    color: steelblue;
+    padding-left: 10px;
 }
