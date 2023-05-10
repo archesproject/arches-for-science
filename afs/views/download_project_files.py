@@ -34,10 +34,7 @@ class FileDownloader(View):
             ).format(len(files))
             return JSONResponse({"success": True, "message": message})
         else:
-            response = {
-                "title": _("Error"),
-                "message": _("The Celery is required to download files.")
-            }
+            response = {"title": _("Error"), "message": _("The Celery is required to download files.")}
             return JSONErrorResponse(content=response)
 
     def create_download_zipfile(self, user, files, project_name):
