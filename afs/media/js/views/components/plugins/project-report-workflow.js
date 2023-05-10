@@ -59,6 +59,28 @@ define([
                     ],
                 },
                 {
+                    title: 'Download Files',
+                    name: 'download-project-files',
+                    informationboxdata: {
+                        heading: 'Download Files',
+                        text: 'Download from a list of files related to the project',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'download-project-files',
+                                    uniqueInstanceName: 'download-project-files',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                        projectId: "['select-project']['select-project']['project']",
+                                    }
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
                     title: 'Download Report',
                     name: 'download-report',
                     lockableExternalSteps: ['select-project'],
@@ -78,28 +100,6 @@ define([
                                         projectId: "['select-project']['select-project']['project']",
                                         physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
                                         annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
-                                    }
-                                },
-                            ], 
-                        },
-                    ],
-                },
-                {
-                    title: 'Download Files',
-                    name: 'download-project-files',
-                    informationboxdata: {
-                        heading: 'Download Files',
-                        text: 'Download from a list of files related to the project',
-                    },
-                    layoutSections: [
-                        {
-                            componentConfigs: [
-                                { 
-                                    componentName: 'download-project-files',
-                                    uniqueInstanceName: 'download-project-files',
-                                    tilesManaged: 'none',
-                                    parameters: {
-                                        projectId: "['select-project']['select-project']['project']",
                                     }
                                 },
                             ], 
