@@ -4,6 +4,7 @@ define([
     'viewmodels/workflow',
     'templates/views/components/plugins/project-report-workflow.htm',
     'views/components/workflows/project-report-workflow/project-report-select',
+    'views/components/workflows/project-report-workflow/report-template-select',
     'views/components/workflows/project-report-workflow/download-report',
     'views/components/workflows/project-report-workflow/add-annotations'
 ], function(ko, arches, Workflow, projectReportWorkflow) {
@@ -17,7 +18,7 @@ define([
                     name: 'select-project',
                     informationboxdata: {
                         heading: 'Select Project',
-                        text: 'Select a project and report template to create a report',
+                        text: 'Select a project to create a report',
                     },
                     required: true,
                     layoutSections: [
@@ -29,6 +30,30 @@ define([
                                     uniqueInstanceName: 'select-project', /* unique to step */
                                     parameters: {
                                         projectGraphId: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a' /* Project */
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Select Template',
+                    name: 'select-report-template',
+                    informationboxdata: {
+                        heading: 'Select Template',
+                        text: 'Select a report template to create a report',
+                    },
+                    required: true,
+                    layoutSections: [
+                        {
+                            sectionTitle: 'Select Template',
+                            componentConfigs: [
+                                {
+                                    componentName: 'report-template-select',
+                                    uniqueInstanceName: 'select-template', /* unique to step */
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                        projectId: "['select-project']['select-project']['project']" /* Project */
                                     },
                                 },
                             ], 
@@ -73,7 +98,7 @@ define([
                                     uniqueInstanceName: 'download-report',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        templateId: "['select-project']['select-project']['template']",
+                                        templateId: "['select-report-template']['report-template-select']['template']",
                                         projectId: "['select-project']['select-project']['project']",
                                         physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
                                         annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
