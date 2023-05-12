@@ -9,46 +9,27 @@ define([
         var self = this;
         this.templateValue = ko.observable();
         this.locked = ko.observable(false);
-        this.select2Config = {
-            value: self.value,
-            clickBubble: true,
-            multiple: false,
-            closeOnSlect: false,
-            placeholder: self.placeholder,
-            allowClear: true,
-            ajax: {
-                url: arches.urls.reports_list,
-                dataType: 'json',
-                quietMillis: 250,
-                results: (data) => {
-                    return {
-                        results: data.map(template => {
-                            return {
-                                id: template.templateid,
-                                text: template.name,
-                                description: template.description,
-                                template: template,
-                                preview: template.preview,
-                                thumbnail: template.thumbnail,
-                            };
-                        })
-                    };
-                }
-            },
-        };
 
-        this.saveValues = function(){ //save the savedData and finalize the step
-            params.form.savedData({
-                tileData: koMapping.toJSON(self.tile().data),
-                resourceInstanceId: self.tile().resourceinstance_id,
-                tileId: self.tile().tileid,
-                nodegroupId: self.tile().nodegroup_id,
-                fileTileData: ko.unwrap(self.fileTileData),
-            });
-            self.locked(true);
-            params.form.complete(true);
-            params.form.saving(false);
+        this.templates = ko.observableArray();
+        this.getTemplates = async () => {
+            try {
+                const response = await fetch(arches.urls.reports_list);
+                const data = await response.json();
+                this.templates(data.map(template => {
+                    return {
+                        id: template.templateid,
+                        name: template.name,
+                        description: template.description,
+                        template: template,
+                        preview: `/files/${template.preview}`,
+                        thumbnail: `/files/${template.thumbnail}`,
+                    };
+                }));
+            } catch (error) {
+                console.error('Error: ', error);
+            }
         };
+        this.getTemplates();
 
         this.templateValue.subscribe(() => {
             params.value({

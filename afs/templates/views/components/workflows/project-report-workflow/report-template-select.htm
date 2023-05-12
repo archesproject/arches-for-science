@@ -1,4 +1,4 @@
-<div style="padding: 5px 65px">
+<!-- <div style="padding: 5px 65px">
     <div class="widget-input-label">Select Template</div>
     <div style="padding: 0px 26px;">
         <div>
@@ -13,4 +13,13 @@
             </div>
         </div>
     </div>
+</div> -->
+
+<div data-bind="foreach: templates">
+    <div data-bind="text: id"></div>
+    <div data-bind="text: name"></div>
+    <div data-bind="text: description"></div>
+    <div data-bind="text: template"></div>
+    <div data-bind="text: preview"></div>
+    <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
 </div>
