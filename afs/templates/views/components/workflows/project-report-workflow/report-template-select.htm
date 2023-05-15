@@ -1,25 +1,32 @@
-<!-- <div style="padding: 5px 65px">
-    <div class="widget-input-label">Select Template</div>
-    <div style="padding: 0px 26px;">
-        <div>
-            <div class="col-xs-12 resource-instance-wrapper">
-                <input style="display:inline-block;"
-                    data-bind="
-                        value: templateValue,
-                        select2Query: {
-                            select2Config: select2Config
-                        }
-                    ">
-            </div>
-        </div>
-    </div>
-</div> -->
+<div class="columns option-input" data-bind="foreach: templates" role="radiogroup">
+    <div class="template-option-container">
+        <!-- ko if: thumbnail -->
+        <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}" style="max-height: 400px; max-width: 350px">
+        <!-- /ko -->
+        <label class="form-radio form-normal form-text" role="radio" tabindex="0"
+            data-bind="css: { 
+                    'active': $parent.templateValue() === id 
+                },
+                click: function () {
+                    $parent.templateValue(id);
+                },
+                attr: {
+                    'aria-checked': $parent.templateValue() === id
+                }
+            "
+        >
+            <input type="radio" 
+                data-bind="
+                    checked: $parent.templateValue() === id, 
+                    attr: {
+                        value: id, 
+                        name: name
+                    }
+                "
+            >
+            <span class="template-option-label" data-bind="text: name"></span>
+        </label>
+        <div class="template-option-description" data-bind="text: description"></div>
 
-<div data-bind="foreach: templates">
-    <div data-bind="text: id"></div>
-    <div data-bind="text: name"></div>
-    <div data-bind="text: description"></div>
-    <div data-bind="text: template"></div>
-    <div data-bind="text: preview"></div>
-    <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
+    </div>
 </div>
