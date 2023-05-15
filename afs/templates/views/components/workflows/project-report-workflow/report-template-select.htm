@@ -1,32 +1,36 @@
-<div class="columns option-input" data-bind="foreach: templates" role="radiogroup">
-    <div class="template-option-container">
-        <!-- ko if: thumbnail -->
-        <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}" style="max-height: 400px; max-width: 350px">
-        <!-- /ko -->
-        <label class="form-radio form-normal form-text" role="radio" tabindex="0"
-            data-bind="css: { 
-                    'active': $parent.templateValue() === id 
-                },
-                click: function () {
-                    $parent.templateValue(id);
-                },
-                attr: {
-                    'aria-checked': $parent.templateValue() === id
-                }
-            "
-        >
-            <input type="radio" 
-                data-bind="
-                    checked: $parent.templateValue() === id, 
+<div data-bind="foreach: { data: allTemplateFormats, as: 'templateFormatGroup', noChildContext: true }">
+    <div class="template-format-heading" data-bind="text: templateFormatGroup.heading"></div>
+    <div class="columns option-input" data-bind="foreach: templateFormatGroup.templates" role="radiogroup">
+        <div class="template-option-container">
+            <!-- ko if: thumbnail -->
+            <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
+            <!-- /ko -->
+
+            <label class="form-radio form-normal form-text" role="radio" tabindex="0"
+                data-bind="css: { 
+                        'active': $parent.templateValue() === id 
+                    },
+                    click: function () {
+                        $parent.templateValue(id);
+                    },
                     attr: {
-                        value: id, 
-                        name: name
+                        'aria-checked': $parent.templateValue() === id
                     }
                 "
             >
-            <span class="template-option-label" data-bind="text: name"></span>
-        </label>
-        <div class="template-option-description" data-bind="text: description"></div>
-
+                <input type="radio" 
+                    data-bind="
+                        checked: $parent.templateValue() === id, 
+                        attr: {
+                            value: id, 
+                            name: name
+                        }
+                    "
+                >
+                <span class="template-option-label" data-bind="text: name"></span>
+            </label>
+            <div class="template-option-description" data-bind="text: description"></div>
+        </div>
     </div>
+    <hr style="border-color: #eee;">
 </div>
