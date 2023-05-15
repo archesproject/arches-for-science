@@ -6,33 +6,32 @@ define([
     'templates/views/components/workflows/project-report-workflow/report-template-select.htm'
 ], function(_, arches, ko, koMapping, reportTemplateSelectTemplate) {
     function viewModel(params) {
-        var self = this;
         this.templateValue = ko.observable();
 
-        let arches_templates = [];
+        let archesTemplates = [];
         this.allTemplateFormats = ko.observableArray();
         this.pptTemplates = ko.observableArray();
         this.docxTemplates = ko.observableArray(); 
         // this.xlsxTemplates = ko.observableArray();
 
-        this.getTemplates = async () => {
+        this.getTemplates = async() => {
             try {
                 const response = await fetch(arches.urls.reports_list);
                 const data = await response.json();
-                arches_templates = data.map(template => {
-                        return {
-                            id: template.templateid,
-                            name: template.name,
-                            format: template.template.split('.').pop(),
-                            description: template.description,
-                            template: template,
-                            preview: `/files/${template.preview}`,
-                            thumbnail: `/files/${template.thumbnail}`,
-                        };
+                archesTemplates = data.map(template => {
+                    return {
+                        id: template.templateid,
+                        name: template.name,
+                        format: template.template.split('.').pop(),
+                        description: template.description,
+                        template: template,
+                        preview: `/files/${template.preview}`,
+                        thumbnail: `/files/${template.thumbnail}`,
+                    };
                 });
-                this.pptTemplates(arches_templates.filter(template => template.format === 'pptx'));
-                this.docxTemplates(arches_templates.filter(template => template.format === 'docx'));
-                // this.xlsxTemplates(arches_templates.filter(template => template.format === 'xlsx'));
+                this.pptTemplates(archesTemplates.filter(template => template.format === 'pptx'));
+                this.docxTemplates(archesTemplates.filter(template => template.format === 'docx'));
+                // this.xlsxTemplates(archesTemplates.filter(template => template.format === 'xlsx'));
 
                 this.allTemplateFormats([
                     {
@@ -47,7 +46,7 @@ define([
                     //     heading: 'Excel Templates',
                     //     templates: this.xlsxTemplates()
                     // },
-                ])
+                ]);
             } catch (error) {
                 console.error('Error: ', error);
             }
