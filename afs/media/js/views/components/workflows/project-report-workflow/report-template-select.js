@@ -8,7 +8,6 @@ define([
     function viewModel(params) {
         var self = this;
         this.templateValue = ko.observable();
-        this.locked = ko.observable(false);
 
         this.templates = ko.observableArray();
         this.getTemplates = async () => {
