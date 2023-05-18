@@ -15,8 +15,19 @@
     upload_dataset_select_dataset_files_step = "{% url 'upload_dataset_select_dataset_files_step' %}"
     upload_dataset_file_renderer = '(tileid)=>{return "{% url "upload_dataset_file_renderer" "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" %}".replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", tileid)}',
     format_render_map = '(format)=>{return "{% url "format_render_map" "aaaaaaaa" %}".replace("aaaaaaaa", format)}'
+    download_project_files = "{% url 'download_project_files' %}"
 ></div>
 {% endblock arches_urls %}
+
+{% block arches_translations %}
+{{ block.super }}
+<div class='arches-translations'
+    data-for-download='{% trans "Data for Download" as dataForDownload %}  "{{ dataForDownload|escapejs }}"'
+    no-related-files='{% trans "No Related Files" as noRelatedFiles %}  "{{ noRelatedFiles|escapejs }}"'
+    interpretation='{% trans "Interpretation" as interpretation %}  "{{ interpretation|escapejs }}"'
+    parameters='{% trans "Parameters" as parameters %}  "{{ parameters|escapejs }}"'
+></div>
+{% endblock arches_translations %}
 
 {% block project_modules %}
 <script>

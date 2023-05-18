@@ -5,6 +5,7 @@ define([
     'templates/views/components/plugins/project-report-workflow.htm',
     'views/components/workflows/project-report-workflow/project-report-select',
     'views/components/workflows/project-report-workflow/download-report',
+    'views/components/workflows/project-report-workflow/download-project-files',
     'views/components/workflows/project-report-workflow/add-annotations'
 ], function(ko, arches, Workflow, projectReportWorkflow) {
     return ko.components.register('project-report-workflow', { 
@@ -51,6 +52,28 @@ define([
                                     tilesManaged: 'none',
                                     parameters: {
                                         projectId: "['select-project']['select-project']['project']"
+                                    }
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
+                    title: 'Download Files',
+                    name: 'download-project-files',
+                    informationboxdata: {
+                        heading: 'Download Files',
+                        text: 'Download from a list of files related to the project',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'download-project-files',
+                                    uniqueInstanceName: 'download-project-files',
+                                    tilesManaged: 'none',
+                                    parameters: {
+                                        projectId: "['select-project']['select-project']['project']",
                                     }
                                 },
                             ], 
