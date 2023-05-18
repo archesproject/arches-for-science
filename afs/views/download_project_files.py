@@ -34,7 +34,10 @@ class FileDownloader(View):
             ).format(len(files))
             return JSONResponse({"success": True, "message": message})
         else:
-            response = {"title": _("Error"), "message": _("Celery must be running to download files. Check with your Arches administrator for help.")}
+            response = {
+                "title": _("Error"),
+                "message": _("Celery must be running to download files. Check with your Arches administrator for help."),
+            }
             return JSONErrorResponse(content=response)
 
     def create_download_zipfile(self, user, files, project_name):
