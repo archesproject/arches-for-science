@@ -10,9 +10,9 @@ define([
 
         let archesTemplates = [];
         this.allTemplateFormats = ko.observableArray();
-        this.pptTemplates = ko.observableArray();
-        this.docxTemplates = ko.observableArray(); 
-        // this.xlsxTemplates = ko.observableArray();
+        this.pptTemplates = [];
+        this.docxTemplates = []; 
+        // this.xlsxTemplates = [];
 
         this.getTemplates = async() => {
             try {
@@ -29,22 +29,22 @@ define([
                         thumbnail: `/files/${template.thumbnail}`,
                     };
                 });
-                this.pptTemplates(archesTemplates.filter(template => template.format === 'pptx'));
-                this.docxTemplates(archesTemplates.filter(template => template.format === 'docx'));
-                // this.xlsxTemplates(archesTemplates.filter(template => template.format === 'xlsx'));
+                this.pptTemplates = archesTemplates.filter(template => template.format === 'pptx');
+                this.docxTemplates = archesTemplates.filter(template => template.format === 'docx');
+                // this.xlsxTemplates = archesTemplates.filter(template => template.format === 'xlsx');
 
                 this.allTemplateFormats([
                     {
                         heading: 'Word Templates',
-                        templates: this.pptTemplates()
+                        templates: this.pptTemplates,
                     },
                     {
                         heading: 'Powerpoint Templates',
-                        templates: this.docxTemplates()
+                        templates: this.docxTemplates,
                     },
                     // {
                     //     heading: 'Excel Templates',
-                    //     templates: this.xlsxTemplates()
+                    //     templates: this.xlsxTemplates,
                     // },
                 ]);
             } catch (error) {
