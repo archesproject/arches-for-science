@@ -24,14 +24,24 @@
     </div>
 </div>
 
+<!-- Template Options -->
+<div role="radiogroup">
 <div data-bind="foreach: { data: allTemplateFormats, as: 'templateFormatGroup', noChildContext: true }">
     <div class="template-format-heading" data-bind="text: templateFormatGroup.heading"></div>
-    <div class="columns option-input" data-bind="foreach: templateFormatGroup.templates" role="radiogroup">
+    <div class="columns option-input" data-bind="foreach: templateFormatGroup.templates">
         <div class="template-option-container">
             <!-- ko if: preview -->
-                <div data-bind="click: function() {
-                    $parent.showPDFPreview(preview);
-                }">
+                <div tabindex="0" style="cursor: pointer;" role="button" aria-controls="pdf-preview-modal"
+                    data-toggle="tooltip" data-placement="top" 
+                    data-bind="click: function() {
+                        $parent.showPDFPreview(preview);
+                    }, 
+                    attr: {
+                        'aria-expanded': $parent.previewSelected(),
+                        title: 'Preview ' + name + ' report'
+                    }"
+                >
+                <span data-bind="text: console.log($parent.previewSelected())"></span>
                     <!-- ko if: thumbnail -->
                     <img class="img-responsive" alt="Image" data-bind="attr: {src: '/files/' + thumbnail}">
                     <!-- /ko -->
@@ -76,4 +86,5 @@
         </div>
     </div>
     <hr style="border-color: #eee;">
+</div>
 </div>
