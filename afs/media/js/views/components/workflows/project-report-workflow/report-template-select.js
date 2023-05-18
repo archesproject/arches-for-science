@@ -2,8 +2,9 @@ define([
     'underscore',
     'arches',
     'knockout',
+    'jquery',
     'templates/views/components/workflows/project-report-workflow/report-template-select.htm'
-], function(_, arches, ko, reportTemplateSelectTemplate) {
+], function(_, arches, ko, $, reportTemplateSelectTemplate) {
     function viewModel(params) {
         this.templateValue = ko.observable();
         this.previewSelected = ko.observable(false);
