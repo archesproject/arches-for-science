@@ -23,11 +23,11 @@ def download_project_files_task(userid, files, project_name):
     search_history_obj = SearchExportHistory.objects.get(pk=exportid)
 
     msg = _(
-        "The related files for the project '{}' is ready for download. You have 24 hours to access this file, after which we'll automatically remove it."
+        "The related files for the project '{}' are ready for download. You have 24 hours to download your files before they are automatically removed."
     ).format(project_name)
     notiftype_name = "Search Export Download Ready"
     context = dict(
-        greeting=_("Hello,\nYour request to download the related files is now ready."),
+        greeting=_("Your request to download related project files is complete and your files are ready for download."),
         link=str(exportid),
         files=files,
         button_text=_("Download Now"),

@@ -15,7 +15,6 @@ define([
         const digitalResourcegGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
         const fileNodeId = '7c486328-d380-11e9-b88e-a4d18cec433a';
         const fileStatementContentNodeId = 'ca227726-78ed-11ea-a33b-acde48001122';
-        this.relatedPhysicalThings = ko.observableArray();
         this.relatedObservations = ko.observableArray();
         this.message = ko.observable();
 
@@ -24,16 +23,6 @@ define([
                 return !!observation.relatedFiles().find(file => file.selected() == true );
             });
         });
-
-        this.formatSize = function(size) {
-            var bytes = size;
-            if(bytes == 0) return '0 Byte';
-            var k = 1024;
-            var dm = 2;
-            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-            var i = Math.floor(Math.log(bytes) / Math.log(k));
-            return '(' + '<strong>' + parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + '</strong>' + sizes[i] + ')';
-        };
 
         this.fileTableConfig = {
             columns: Array(4).fill(null)
@@ -63,24 +52,22 @@ define([
 
             for (const observataion of projectObservations) {
                 const relatedFiles = ko.observableArray();
-                await window.fetch(arches.urls.related_resources + observataion.resourceinstanceid  + "?paginate=false")
-                    .then(response => response.json())
-                    .then(json => {
-                        observation = json.resource_instance;
-                        observation.expanded = ko.observable();
-                        observation.description = observation.descriptors[arches.activeLanguage].description;
-                        digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
-                        digitalResources.forEach((res) => 
-                            res.tiles.forEach((tile) => {
-                                if (tile.nodegroup_id == fileNodeId) {
-                                    const selected = ko.observable();
-                                    const interpretation = res.tiles.find(tile2 => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
-                                    const file = { ...tile.data[fileNodeId][0], interpretation, selected };
-                                    relatedFiles.push(file);
-                                }
-                            })
-                        );
-                    });
+                const response = await window.fetch(arches.urls.related_resources + observataion.resourceinstanceid  + "?paginate=false")
+                const json = await response.json();
+                observation = json.resource_instance;
+                observation.expanded = ko.observable();
+                observation.description = observation.descriptors[arches.activeLanguage].description;
+                digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
+                digitalResources.forEach((res) => 
+                    res.tiles.forEach((tile) => {
+                        if (tile.nodegroup_id == fileNodeId) {
+                            const selected = ko.observable();
+                            const interpretation = res.tiles.find(tile2 => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
+                            const file = { ...tile.data[fileNodeId][0], interpretation, selected };
+                            relatedFiles.push(file);
+                        }
+                    })
+                );
                 self.relatedObservations.push({ ...observation, relatedFiles});
             }
             self.relatedObservations.sort((a,b) => b.relatedFiles().length - a.relatedFiles().length);

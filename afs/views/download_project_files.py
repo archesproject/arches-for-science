@@ -19,7 +19,7 @@ class FileDownloader(View):
     def post(self, request):
         files = json.loads(request.POST.get("files"))
         if len(files) == 0:
-            message = _("No files is selected for download.")
+            message = _("No files were selected for download.")
             return JSONResponse({"success": False, "message": message})
 
         project_name = files[0]["project"]
@@ -30,11 +30,11 @@ class FileDownloader(View):
                 (userid, files, project_name),
             )
             message = _(
-                "{} file(s) have been submitted for download. Click the bell icon to check for the link(s) to download your file(s)"
+                "{} file(s) submitted for download. When completed, the bell icon at the top of the page will update with links to download your files."
             ).format(len(files))
             return JSONResponse({"success": True, "message": message})
         else:
-            response = {"title": _("Error"), "message": _("The Celery is required to download files.")}
+            response = {"title": _("Error"), "message": _("Celery must be running to download files. Check with your Arches administrator for help.")}
             return JSONErrorResponse(content=response)
 
     def create_download_zipfile(self, user, files, project_name):
