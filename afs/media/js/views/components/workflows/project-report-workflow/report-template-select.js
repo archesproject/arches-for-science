@@ -28,14 +28,26 @@ define([
             const response = await fetch(arches.urls.reports_list);
             const data = await response.json();
             archesTemplates = data.map(template => {
+                if(!template.thumbnail){
+                    template.thumbnail = {
+                        'name': null,
+                        'url': null
+                    }
+                }
+                if(!template.preview){
+                    template.preview = {
+                        'name': null,
+                        'url': null
+                    }
+                }
                 return {
                     id: template.templateid,
                     name: template.name,
-                    format: template.template.split('.').pop(),
+                    format: template.template.name.split('.').pop(),
                     description: template.description,
-                    template: template,
-                    preview: template.preview,
-                    thumbnail: template.thumbnail,
+                    template: template.template.url,
+                    preview: template.preview.url,
+                    thumbnail: template.thumbnail.url,
                 };
             });
             this.docxTemplates = archesTemplates.filter(template => template.format === 'docx');

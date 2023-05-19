@@ -12,7 +12,7 @@
                     name: 'pdfreader',
                     params: {
                         displayContent: {
-                            url: '/files/' + preview(),
+                            url: preview(),
                             type: 'application/pdf'
                         },
                         context: 'render',
@@ -42,7 +42,7 @@
                     }"
                 >
                     <!-- ko if: thumbnail -->
-                    <img class="img-responsive" alt="Image" data-bind="attr: {src: '/files/' + thumbnail}">
+                    <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
                     <!-- /ko -->
                     <!-- ko ifnot: thumbnail -->
                     <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>
@@ -51,7 +51,7 @@
             <!-- /ko -->
             <!-- ko ifnot: preview -->
                 <!-- ko if: thumbnail -->
-                <img class="img-responsive" alt="Image" data-bind="attr: {src: '/files/' + thumbnail}">
+                <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
                 <!-- /ko -->
                 <!-- ko ifnot: thumbnail -->
                 <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>
