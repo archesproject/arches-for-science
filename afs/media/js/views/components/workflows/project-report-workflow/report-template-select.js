@@ -32,13 +32,13 @@ define([
                     template.thumbnail = {
                         'name': null,
                         'url': null
-                    }
+                    };
                 }
                 if(!template.preview){
                     template.preview = {
                         'name': null,
                         'url': null
-                    }
+                    };
                 }
                 return {
                     id: template.templateid,
