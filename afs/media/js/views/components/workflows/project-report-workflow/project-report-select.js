@@ -8,32 +8,8 @@ define([
     function viewModel(params) {
         var self = this;
         this.projectValue = ko.observable();
-        this.templateValue = ko.observable();
         this.locked = ko.observable(false);
-        this.select2Config = {
-            value: self.value,
-            clickBubble: true,
-            multiple: false,
-            closeOnSlect: false,
-            placeholder: self.placeholder,
-            allowClear: true,
-            ajax: {
-                url: arches.urls.reports_list,
-                dataType: 'json',
-                quietMillis: 250,
-                results: (data) => {
-                    return {
-                        results: data.map(template => {
-                            return {
-                                id: template.templateid,
-                                text: template.name
-                            };
-                        })
-                    };
-                }
-            },
-        };
-
+        
         this.saveValues = function(){ //save the savedData and finalize the step
             params.form.savedData({
                 tileData: koMapping.toJSON(self.tile().data),
@@ -47,11 +23,12 @@ define([
             params.form.saving(false);
         };
 
-        this.templateValue.subscribe(() => {
-            params.value({
-                project: this.projectValue(),
-                template: this.templateValue()
-            });
+        this.projectValue.subscribe(() => {
+            if (this.projectValue()) {
+                params.value({
+                    project: this.projectValue()
+                });
+            }
         });
     }
 

@@ -285,6 +285,8 @@ RENDERERS += [
     # },
 ]
 
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
 FORMATS = [
     {"name": "Bruker M6 (point)", "id": "bm6", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
     {"name": "Bruker 5g", "id": "b5g", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},

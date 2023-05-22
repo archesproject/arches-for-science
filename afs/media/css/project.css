@@ -1091,6 +1091,34 @@
     padding-left: 10px;
 }
 
+.template-format-heading {
+    padding-left: 25px;
+    font-weight: 500;
+    font-size: 1.75em;
+}
+
+.template-option-container {
+    margin: 10px 25px;
+}
+
+.template-option-container > img,
+.template-option-container > div > img {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.template-option-label {
+    font-size: 1.25em;
+    font-weight: 500;
+    color: #004577;
+}
+
+.template-option-description {
+    font-size: 1em;
+    color: #777;
+    max-width: 350px;
+}
+
 .uppy-progress {
     padding: 15px;
 }
