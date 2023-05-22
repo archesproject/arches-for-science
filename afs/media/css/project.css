@@ -726,8 +726,13 @@
 }
 
 .afs-image-service-list-item {
-    display: flex;
-    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding-left: 5px;
+}
+
+.afs-image-service-list-item .pad-lft {
     padding-left: 5px;
 }
 
@@ -1112,4 +1117,35 @@
     font-size: 1em;
     color: #777;
     max-width: 350px;
+}
+
+.uppy-progress {
+    padding: 15px;
+}
+
+.uppy-progress .uppy-Root .uppy .uppy-ProgressBar-inner {
+    background-color: #2275d7;
+    box-shadow: 0 0 10px #2275d7b3;
+    height: 300%;
+    transition: width .4s ease;
+    width: 0;
+}
+
+.return-to-workflow-bar {
+    position: fixed; 
+    height:49px; 
+    width: 100vw; 
+    background-color: white; 
+    top: 0px;
+    right:5px;
+}
+
+.return-to-workflow-button {
+    position: relative;
+    left: calc(100vw - 200px);
+    height: 33px;
+    width: 180px;
+    top: 8px;
+    transition: all linear .3s;
+    z-index: 1;
 }

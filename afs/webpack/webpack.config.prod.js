@@ -17,7 +17,7 @@ module.exports = () => {
                 optimization: {
                     minimizer: [
                         new TerserPlugin({
-                            terserOptions: {
+                            terserOptions:{
                                 mangle: { keep_fnames: true },
                             },
                         }),
