@@ -7,6 +7,7 @@ define([
 ], function(_, arches, ko, $, reportTemplateSelectTemplate) {
     function viewModel(params) {
         this.templateValue = ko.observable();
+        this.templateName = ko.observable();
         this.previewSelected = ko.observable(false);
         this.preview = ko.observable();
 
@@ -74,10 +75,13 @@ define([
         };
         this.getTemplates();
 
-        this.templateValue.subscribe(() => {
-            params.value({
-                template: this.templateValue()
-            });
+        this.templateName.subscribe(() => {
+            if (this.templateName()) {
+                params.value({
+                    template: this.templateValue(),
+                    templateName: this.templateName(),
+                });
+            }       
         });
     }
 

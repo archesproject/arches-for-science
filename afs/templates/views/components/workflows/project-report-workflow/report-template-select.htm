@@ -28,6 +28,13 @@
 <div role="radiogroup">
 <div data-bind="foreach: { data: allTemplateFormats, as: 'templateFormatGroup', noChildContext: true }">
     <div class="template-format-heading" data-bind="text: templateFormatGroup.heading"></div>
+
+    <!-- ko if: templateFormatGroup.templates.length === 0 -->
+    <div class="template-option-container">
+        <span class="h5" style="font-weight: normal;" data-bind="text: 'There are no ' + templateFormatGroup.heading + '.'"></span>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: templateFormatGroup.templates.length >= 1 -->
     <div class="columns option-input" data-bind="foreach: templateFormatGroup.templates">
         <div class="template-option-container">
             <!-- ko if: preview -->
@@ -37,7 +44,7 @@
                         $parent.showPDFPreview(preview);
                     }, 
                     attr: {
-                        'aria-expanded': $parent.previewSelected(),
+                        'aria-expanded': $parent.previewSelected().toString(),
                         title: 'Preview ' + name + ' report'
                     }"
                 >
@@ -62,11 +69,12 @@
                 data-bind="css: { 
                         'active': $parent.templateValue() === id 
                     },
-                    click: function () {
+                    click: function() { 
                         $parent.templateValue(id);
+                        $parent.templateName(name);
                     },
                     attr: {
-                        'aria-checked': $parent.templateValue() === id
+                        'aria-checked': ($parent.templateValue() === id).toString(),
                     }
                 "
             >
@@ -84,6 +92,7 @@
             <div class="template-option-description" data-bind="text: description"></div>
         </div>
     </div>
+    <!-- /ko -->
     <hr style="border-color: #eee;">
 </div>
 </div>

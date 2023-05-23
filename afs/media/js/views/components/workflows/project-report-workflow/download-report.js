@@ -24,6 +24,15 @@ define([
 
         this.downloadLink = ko.observable();
         this.downloadName = ko.observable();
+        this.templateName = ko.observable(params.templateName);
+        this.projectName = ko.observable();
+
+        const getProjectName = async() => {
+            const response = await fetch(`${arches.urls.api_resources(projectId)}?format=json`);
+            const data = await response.json();
+            self.projectName(data.displayname);
+        };
+        getProjectName();
 
         const generateReport = async() => {
             const physicalThingsDetails = await (await window.fetch(physicalThingDetailsUrl)).json();
