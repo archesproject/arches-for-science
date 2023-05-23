@@ -75,19 +75,13 @@ define([
         };
         this.getTemplates();
 
-        this.setTemplateValue = function(templateId) {
-            this.templateValue(templateId);
-            const template = archesTemplates.find(template => template.id === templateId);
-            this.templateName(template.name);
-        };
-
-        this.templateValue.subscribe(() => {
-            if(this.templateValue()){
+        this.templateName.subscribe(() => {
+            if (this.templateName()) {
                 params.value({
                     template: this.templateValue(),
                     templateName: this.templateName(),
                 });
-            }
+            }       
         });
     }
 
