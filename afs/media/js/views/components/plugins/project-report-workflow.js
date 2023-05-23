@@ -24,7 +24,6 @@ define([
                     required: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Select Project',
                             componentConfigs: [
                                 {
                                     componentName: 'project-report-select',
@@ -47,7 +46,6 @@ define([
                     required: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Select Template',
                             componentConfigs: [
                                 {
                                     componentName: 'report-template-select',
