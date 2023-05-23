@@ -121,7 +121,8 @@ define([
                                     uniqueInstanceName: 'download-report',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        templateId: "['select-report-template']['report-template-select']['template']",
+                                        templateId: "['select-report-template']['select-template']['template']",
+                                        templateName: "['select-report-template']['select-template']['templateName']",
                                         projectId: "['select-project']['select-project']['project']",
                                         physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
                                         annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
