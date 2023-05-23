@@ -7,6 +7,7 @@ define([
 ], function(_, arches, ko, $, reportTemplateSelectTemplate) {
     function viewModel(params) {
         this.templateValue = ko.observable();
+        this.templateName = ko.observable();
         this.previewSelected = ko.observable(false);
         this.preview = ko.observable();
 
@@ -74,10 +75,19 @@ define([
         };
         this.getTemplates();
 
+        this.setTemplateValue = function(templateId) {
+            this.templateValue(templateId);
+            const template = archesTemplates.find(template => template.id === templateId);
+            this.templateName(template.name);
+        };
+
         this.templateValue.subscribe(() => {
-            params.value({
-                template: this.templateValue()
-            });
+            if(this.templateValue()){
+                params.value({
+                    template: this.templateValue(),
+                    templateName: this.templateName(),
+                });
+            }
         });
     }
 

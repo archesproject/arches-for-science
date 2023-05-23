@@ -37,7 +37,7 @@
                         $parent.showPDFPreview(preview);
                     }, 
                     attr: {
-                        'aria-expanded': $parent.previewSelected(),
+                        'aria-expanded': $parent.previewSelected().toString(),
                         title: 'Preview ' + name + ' report'
                     }"
                 >
@@ -62,11 +62,9 @@
                 data-bind="css: { 
                         'active': $parent.templateValue() === id 
                     },
-                    click: function () {
-                        $parent.templateValue(id);
-                    },
+                    click: $parent.setTemplateValue(id),
                     attr: {
-                        'aria-checked': $parent.templateValue() === id
+                        'aria-checked': ($parent.templateValue() === id).toString(),
                     }
                 "
             >
