@@ -1,0 +1,18 @@
+<div class="download-project-files-step">
+    <div>
+        <span class="h5 file-list-label" data-bind="text: 'Download ' + templateName() + ' report for ' + projectName()"></span>
+    </div>
+
+    <div class="download-report-container">
+        <!-- ko ifnot: downloadLink() -->
+        <div>A report is being generated. A link will appear when the report is ready to be downloaded.</div>
+        <div class="loading-mask" style="background-color: transparent;"></div>
+        <!-- /ko -->
+
+        <!-- ko if: downloadLink() -->
+        <div class="file-download-button btn btn-success">
+            <a style="color: #fff" data-bind="attr:{ href: downloadLink, download: downloadName }">Download Report <i class="fa fa-download"></i></a>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
