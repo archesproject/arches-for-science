@@ -1,5 +1,6 @@
+{% load i18n %}
 <div style="padding: 5px 65px">
-    <div class="widget-input-label">Select Project</div>
+    <div class="widget-input-label">{% trans "Select Project" %}</div>
     <div data-bind="component: {
         name: 'resource-instance-select-widget',
         params: {
