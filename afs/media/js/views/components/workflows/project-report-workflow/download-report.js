@@ -9,7 +9,7 @@ define([
     function viewModel(params) {
         const self = this;
         const projectId = params.projectId;
-        const templateId = params.templateId;
+        this.templates = ko.observableArray(params.templates);
         const annotationScreenshots = params.annotationScreenshots;
         const physicalThings = params.physicalThings;
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
@@ -22,9 +22,7 @@ define([
         const regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/i;
 
 
-        this.downloadLink = ko.observable();
-        this.downloadName = ko.observable();
-        this.templateName = ko.observable(params.templateName);
+        this.downloadInfo = ko.observableArray();
         this.projectName = ko.observable();
 
         const getProjectName = async() => {
@@ -34,7 +32,7 @@ define([
         };
         getProjectName();
 
-        const generateReport = async() => {
+        const generateReport = async(template) => {
             const physicalThingsDetails = await (await window.fetch(physicalThingDetailsUrl)).json();
 
             const projectDetails = await (await window.fetch(projectDetailsUrl)).json();
@@ -44,14 +42,14 @@ define([
             const reportDate = today.toLocaleDateString('en-US', options);
             const data = {
                 projectId,
-                templateId,
+                templateId: template.id,
                 annotationScreenshots,
                 reportDate,
                 projectDetails: [...Object.values(projectDetails)],
                 physicalThingsDetails: [...Object.values(physicalThingsDetails)]
             };
 
-            const result = await fetch(arches.urls.reports(templateId), {
+            const result = await fetch(arches.urls.reports(), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,15 +59,24 @@ define([
             });
 
             const blobResult = await result.blob();
-            self.downloadLink(URL.createObjectURL(blobResult));
-            result.headers.forEach(header => {
+            const downloadName = result.headers.forEach(header => {
+                let name;
                 if (header.match(regex)) {
-                    self.downloadName(header.match(regex)[1]);
+                    name = header.match(regex)[1];
                 }
+                return name;
+            });
+
+            this.downloadInfo.push({
+                downloadLink: URL.createObjectURL(blobResult),
+                downloadName: downloadName,
+                templateName: template.name,
             });
         };
 
-        generateReport();
+        this.templates().forEach(template => {
+            generateReport(template);
+        });
     }
 
     ko.components.register('download-report', {

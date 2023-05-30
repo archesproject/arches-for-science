@@ -6,18 +6,9 @@ define([
     'templates/views/components/workflows/project-report-workflow/report-template-select.htm'
 ], function(_, arches, ko, $, reportTemplateSelectTemplate) {
     function viewModel(params) {
-        this.templateValue = ko.observable();
-        this.templateName = ko.observable();
+        this.reportTemplates = ko.observableArray();
         this.previewSelected = ko.observable(false);
         this.preview = ko.observable();
-
-        this.showPDFPreview = function(preview) {
-            if(preview !== null){
-                this.preview(preview);
-            }
-            this.previewSelected(!this.previewSelected());
-            $('#pdf-preview-modal').modal('toggle');
-        };
 
         let archesTemplates = [];
         this.allTemplateFormats = ko.observableArray();
@@ -75,11 +66,34 @@ define([
         };
         this.getTemplates();
 
-        this.templateName.subscribe(() => {
-            if (this.templateName()) {
+        this.showPDFPreview = function(preview) {
+                if(preview !== null){
+                    this.preview(preview);
+                }
+                this.previewSelected(!this.previewSelected());
+                $('#pdf-preview-modal').modal('toggle');
+            };
+    
+        this.isTemplateSelected = function(template) {
+            let selected = false;
+            const currentTemplatesIds = this.reportTemplates().map(template => template.id);
+            selected = currentTemplatesIds.indexOf(template.id) >= 0;
+            return selected;
+        };
+
+        this.setTemplateSelection = function(template) {
+            const currentTemplatesIds = this.reportTemplates().map(template => template.id);
+            if (currentTemplatesIds.indexOf(template.id) >= 0) {
+                this.reportTemplates.remove(template);
+            } else {
+                this.reportTemplates.push(template);
+            }
+        };
+
+        this.reportTemplates.subscribe(() => {
+            if (this.reportTemplates()) {
                 params.value({
-                    template: this.templateValue(),
-                    templateName: this.templateName(),
+                    templates: this.reportTemplates(),
                 });
             }       
         });
