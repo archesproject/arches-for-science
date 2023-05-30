@@ -4,8 +4,9 @@ define([
     'knockout',
     'knockout-mapping',
     'js-cookie',
+    'utils/report',
     'templates/views/components/workflows/project-report-workflow/download-report.htm'
-], function(_, arches, ko, koMapping, cookies, downloadReportTemplate) {
+], function(_, arches, ko, koMapping, cookies, reportUtils, downloadReportTemplate) {
     function viewModel(params) {
         const self = this;
         const projectId = params.projectId;
@@ -40,16 +41,18 @@ define([
             const today = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const reportDate = today.toLocaleDateString('en-US', options);
+            const filename = reportUtils.slugify(`${self.projectName()}_${template.name}_${reportDate}`);
             const data = {
                 projectId,
                 templateId: template.id,
+                filename: filename,
                 annotationScreenshots,
                 reportDate,
                 projectDetails: [...Object.values(projectDetails)],
                 physicalThingsDetails: [...Object.values(physicalThingsDetails)]
             };
 
-            const result = await fetch(arches.urls.reports(), {
+            const result = await fetch(arches.urls.reports(template.id), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,12 +62,11 @@ define([
             });
 
             const blobResult = await result.blob();
-            const downloadName = result.headers.forEach(header => {
-                let name;
+            let downloadName;
+            result.headers.forEach(header => {
                 if (header.match(regex)) {
-                    name = header.match(regex)[1];
+                    downloadName = header.match(regex)[1];
                 }
-                return name;
             });
 
             this.downloadInfo.push({

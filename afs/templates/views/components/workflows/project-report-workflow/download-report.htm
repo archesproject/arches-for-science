@@ -22,10 +22,10 @@
         <!-- ko foreach: downloadInfo -->
             <div class="download-report-button-container">
                 <div class="file-download-button btn btn-success" role="link">
-                    <a style="color: #fff; " 
+                    <a style="color: #fff;" target="_blank"
                         data-bind="
                             attr:{ href: downloadLink, download: downloadName },
-                            text: templateName + ' ' + $root.translations.reportDownload"
+                            text:  $root.translations.download + ' ' + templateName"
                     ></a><i class="fa fa-download" style="margin-inline-start: 0.5em; margin-block-start: 0.25em"></i>
                 </div>
             </div>
