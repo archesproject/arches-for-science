@@ -67,12 +67,12 @@ define([
         this.getTemplates();
 
         this.showPDFPreview = function(preview) {
-                if(preview !== null){
-                    this.preview(preview);
-                }
-                this.previewSelected(!this.previewSelected());
-                $('#pdf-preview-modal').modal('toggle');
-            };
+            if(preview !== null){
+                this.preview(preview);
+            }
+            this.previewSelected(!this.previewSelected());
+            $('#pdf-preview-modal').modal('toggle');
+        };
     
         this.isTemplateSelected = function(template) {
             let selected = false;
