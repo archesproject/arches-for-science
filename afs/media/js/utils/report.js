@@ -180,6 +180,10 @@ define([
             return original.replace(/(<([^>]+)>)/gi, "");
         },
 
+        slugify: (text) => {
+            return text.toString().toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+        },
+
         // see if there's any node with a valid displayable value.  If yes, return true.
         // potentially useful for deeply nested resources
         nestedDataExists: checkNestedData

@@ -4,12 +4,13 @@ define([
     'knockout',
     'knockout-mapping',
     'js-cookie',
+    'utils/report',
     'templates/views/components/workflows/project-report-workflow/download-report.htm'
-], function(_, arches, ko, koMapping, cookies, downloadReportTemplate) {
+], function(_, arches, ko, koMapping, cookies, reportUtils, downloadReportTemplate) {
     function viewModel(params) {
         const self = this;
         const projectId = params.projectId;
-        const templateId = params.templateId;
+        this.templates = ko.observableArray(params.templates);
         const annotationScreenshots = params.annotationScreenshots;
         const physicalThings = params.physicalThings;
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
@@ -22,9 +23,7 @@ define([
         const regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/i;
 
 
-        this.downloadLink = ko.observable();
-        this.downloadName = ko.observable();
-        this.templateName = ko.observable(params.templateName);
+        this.downloadInfo = ko.observableArray();
         this.projectName = ko.observable();
 
         const getProjectName = async() => {
@@ -34,7 +33,7 @@ define([
         };
         getProjectName();
 
-        const generateReport = async() => {
+        const generateReport = async(template) => {
             const physicalThingsDetails = await (await window.fetch(physicalThingDetailsUrl)).json();
 
             const projectDetails = await (await window.fetch(projectDetailsUrl)).json();
@@ -42,16 +41,18 @@ define([
             const today = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const reportDate = today.toLocaleDateString('en-US', options);
+            const filename = reportUtils.slugify(`${self.projectName()}_${template.name}_${reportDate}`);
             const data = {
                 projectId,
-                templateId,
+                templateId: template.id,
+                filename: filename,
                 annotationScreenshots,
                 reportDate,
                 projectDetails: [...Object.values(projectDetails)],
                 physicalThingsDetails: [...Object.values(physicalThingsDetails)]
             };
 
-            const result = await fetch(arches.urls.reports(templateId), {
+            const result = await fetch(arches.urls.reports(template.id), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,15 +62,23 @@ define([
             });
 
             const blobResult = await result.blob();
-            self.downloadLink(URL.createObjectURL(blobResult));
+            let downloadName;
             result.headers.forEach(header => {
                 if (header.match(regex)) {
-                    self.downloadName(header.match(regex)[1]);
+                    downloadName = header.match(regex)[1];
                 }
+            });
+
+            this.downloadInfo.push({
+                downloadLink: URL.createObjectURL(blobResult),
+                downloadName: downloadName,
+                templateName: template.name,
             });
         };
 
-        generateReport();
+        this.templates().forEach(template => {
+            generateReport(template);
+        });
     }
 
     ko.components.register('download-report', {

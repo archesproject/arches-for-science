@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- Preview Viewer -->
 <div id="pdf-preview-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document" style="width: 100%;">
@@ -5,7 +6,7 @@
             <div class="modal-header" style="justify-content: end; padding-bottom: 0;">
                 <button class="btn btn-sm btn-danger btn-labeled fa fa-times" 
                     data-bind="click: function(){ showPDFPreview(null); }"
-                ><span>Close Preview</span></button>
+                ><span>{% trans "Close Preview" %}</span></button>
             </div>
             <div class="modal-body">
                 <div data-bind="component: {
@@ -25,7 +26,6 @@
 </div>
 
 <!-- Template Options -->
-<div role="radiogroup">
 <div data-bind="foreach: { data: allTemplateFormats, as: 'templateFormatGroup', noChildContext: true }">
     <div class="template-format-heading" data-bind="text: templateFormatGroup.heading"></div>
 
@@ -65,22 +65,21 @@
                 <!-- /ko -->
             <!-- /ko -->
 
-            <label class="form-radio form-normal form-text" role="radio" tabindex="0"
+            <label class="form-checkbox form-normal form-primary form-text" role="checkbox" tabindex="0"
                 data-bind="css: { 
-                        'active': $parent.templateValue() === id 
+                        'active': $parent.isTemplateSelected($data) 
                     },
                     click: function() { 
-                        $parent.templateValue(id);
-                        $parent.templateName(name);
+                        $parent.setTemplateSelection($data);
                     },
                     attr: {
-                        'aria-checked': ($parent.templateValue() === id).toString(),
+                        'aria-checked': $parent.isTemplateSelected($data),
                     }
                 "
             >
-                <input type="radio" 
+                <input type="checkbox" 
                     data-bind="
-                        checked: $parent.templateValue() === id, 
+                        checked: $parent.isTemplateSelected($data), 
                         attr: {
                             value: id, 
                             name: name
@@ -94,5 +93,4 @@
     </div>
     <!-- /ko -->
     <hr style="border-color: #eee;">
-</div>
 </div>

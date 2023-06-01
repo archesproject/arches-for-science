@@ -51,9 +51,6 @@ define([
                                     componentName: 'report-template-select',
                                     uniqueInstanceName: 'select-template', /* unique to step */
                                     tilesManaged: 'none',
-                                    parameters: {
-                                        projectId: "['select-project']['select-project']['project']" /* Project */
-                                    },
                                 },
                             ], 
                         },
@@ -119,8 +116,7 @@ define([
                                     uniqueInstanceName: 'download-report',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        templateId: "['select-report-template']['select-template']['template']",
-                                        templateName: "['select-report-template']['select-template']['templateName']",
+                                        templates: "['select-report-template']['select-template']['templates']",
                                         projectId: "['select-project']['select-project']['project']",
                                         physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
                                         annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
