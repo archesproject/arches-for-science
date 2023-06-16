@@ -29,6 +29,7 @@ define([
         this.summaryName = ko.observable();
         this.initialData = ko.observableArray();
         this.physicalThings = undefined;
+        this.projectRelatedResources = undefined;
 
         this.screenshots = ko.observableArray();
         
@@ -96,8 +97,8 @@ define([
         };
 
         (async() => {
-            const projectRelatedResources = await getRelatedResources(projectId);
-            const collections = projectRelatedResources.related_resources.filter(rr => rr.graph_id == COLLECTION_GRAPH_ID);
+            self.projectRelatedResources = await getRelatedResources(projectId);
+            const collections = self.projectRelatedResources.related_resources.filter(rr => rr.graph_id == COLLECTION_GRAPH_ID);
             const physicalThings = collections.map(async(collection) => {
                 const collectionRelatedResources = await getRelatedResources(collection.resourceinstanceid);
                 return collectionRelatedResources?.related_resources.filter(rr => rr.graph_id == PHYSICAL_THING_GRAPH_ID);
@@ -254,15 +255,15 @@ define([
         });
 
         params.form.initialize = () => {
-            self.screenshots(params.form.value() || []);
+            self.screenshots(params.form.value()?.screenshots || []);
             self.initialData(params.form.value() || []);
         };
 
         params.form.save = () => {
             params.form.complete(false);
             params.form.saving(true);
-            params.form.value({physicalThings: this.physicalThings, screenshots: this.screenshots()});
-            params.form.savedData({physicalThings: this.physicalThings, screenshots: this.screenshots()});
+            params.form.value({physicalThings: this.physicalThings, screenshots: this.screenshots(), projectRelations: this.projectRelatedResources});
+            params.form.savedData({physicalThings: this.physicalThings, screenshots: this.screenshots(), projectRelations: this.projectRelatedResources});
             params.form.saving(false);
             params.form.complete(true);
         };

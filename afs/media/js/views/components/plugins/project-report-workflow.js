@@ -119,6 +119,7 @@ define([
                                         templates: "['select-report-template']['select-template']['templates']",
                                         projectId: "['select-project']['select-project']['project']",
                                         physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
+                                        projectRelations: "['add-annotations']['add-annotations']['projectRelations']",
                                         annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
                                     }
                                 },
