@@ -16,7 +16,6 @@ define([
         this.resourceLoading = ko.observable(true);
         this.digitalResourceLoading = ko.observable(true);
         this.fileLists = ko.observableArray();
-        this.manifestUrl = ko.observable(params?.imageStepData?.["56f8e9bd-ca7c-11e9-b578-a4d18cec433a"]?.[arches.activeLanguage]?.value);
         this.tableConfig = {
             "info": false,
             "paging": false,
@@ -60,7 +59,7 @@ define([
                         leafletConfig: leafletConfig,
                     });
                 });
-            };
+            }
 
             [ko.unwrap(this.uploadedDatasets?.[0]?.["upload-files-step"]?.savedData)].forEach(function(dataset){
                 var selectedDatasetData = ko.observableArray();
