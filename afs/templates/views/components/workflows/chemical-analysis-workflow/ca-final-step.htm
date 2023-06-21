@@ -52,18 +52,6 @@
         </div>
     </div>
     <div class="afs-final-step-section">
-        <h5 class="summary-value">{% trans 'Selected Manifest' %}</h5>
-        <div class="afs-final-step-block">
-            <div style="display: flex; flex-direction: column;">
-                <a data-bind="attr: { href: manifestUrl }" target="_blank">
-                    <div class="summary-value" 
-                        data-bind = "text: manifestUrl">
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="afs-final-step-section">
         <h5 class="summary-value" style="margin-bottom: -10px;">{% trans 'Uploaded Files' %}</h5>
         <!-- ko foreach: {data: fileLists, as: 'fileList'} -->
         <!-- ko if: fileList().length > 0 -->
