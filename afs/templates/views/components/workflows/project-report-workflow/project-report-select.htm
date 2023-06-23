@@ -1,0 +1,15 @@
+{% load i18n %}
+<div style="padding: 5px 65px">
+    <div class="widget-input-label">{% trans "Select Project" %}</div>
+    <div data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+            graphids: [
+                '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+            ],
+            renderContext: 'workflow',
+            value: projectValue,
+            disabled: locked,
+        }
+    }"></div>
+</div>

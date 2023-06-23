@@ -106,7 +106,9 @@ define([
         });
 
         this.procedureValue.subscribe(function(val){
-            self.procedureInstance(self.createRelatedInstance(val));
+            if (val) {
+                self.procedureInstance(self.createRelatedInstance(val));
+            }
         });
 
         this.updatedValue = ko.pureComputed(function(){
@@ -243,8 +245,10 @@ define([
             tiles['instrumentTile'] = self.buildTile(instrumentData, instrumentNodeId, self.observationInstanceId(), instrumentTileId);
 
             let procedureData = {};
-            procedureData[procedureNodeId] = self.procedureInstance();
-            tiles['procedureTile'] = self.buildTile(procedureData, procedureNodeId, self.observationInstanceId(), procedureTileId);
+            if (self.procedureInstance()) {
+                procedureData[procedureNodeId] = self.procedureInstance();
+                tiles['procedureTile'] = self.buildTile(procedureData, procedureNodeId, self.observationInstanceId(), procedureTileId);
+            }
 
             let parameterData = {};
             parameterData[parameterNodeId] = self.parameterValue();
@@ -267,7 +271,7 @@ define([
                 nameTileId = json.nameTile.tileid;
                 dateTileId = json.dateTile.tileid;
                 instrumentTileId = json.instrumentTile.tileid;
-                procedureTileId = json.procedureTile.tileid;
+                procedureTileId = json.procedureTile ? json.procedureTile.tileid : null;
                 parameterTileId = json.parameterTile.tileid;
                 self.observationInstanceId(json.observedThingTile.resourceinstance_id); // mutates updateValue to refresh value before saving.
                 params.form.savedData(params.form.value());

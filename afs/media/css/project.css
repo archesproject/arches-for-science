@@ -726,8 +726,13 @@
 }
 
 .afs-image-service-list-item {
-    display: flex;
-    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding-left: 5px;
+}
+
+.afs-image-service-list-item .pad-lft {
     padding-left: 5px;
 }
 
@@ -1034,4 +1039,122 @@
 }
 .workflow-component .uppy-Dashboard {
     height: 100%;
+}
+.annotation-table .row{
+    margin: 0;
+}
+
+.download-project-files-step .file-list-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2b547c;
+    padding: 10px 10px;
+    margin-bottom: 0px;
+}
+
+.download-project-files-step .expand-select-button {
+    padding: 0.3rem 1rem;
+    font-size: 1rem;
+    background-color: #ebeef0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.download-project-files-step .file-list-container {
+    padding-bottom: 10px;
+}
+
+.download-project-files-step .file-list-container .dataTables_wrapper {
+    padding: 0px 20px;
+    margin-bottom: 10px;
+}
+
+.download-project-files-step .file-download-button {
+    display: inline-flex;
+    padding: 10px;
+}
+
+.download-project-files-step .expand-select-buttons {
+    padding: 10px;}
+
+.download-project-files-step .observation-list {
+    display: felx;
+    font-size: 1.4rem;
+    color: #2b547c;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+
+.download-project-files-step .file-listing-link {
+    vertical-align: middle;
+    color: steelblue;
+    padding-left: 10px;
+}
+
+.download-report-container {
+    padding: 20px;
+}
+
+.download-report-button-container {
+    margin: 1.5em;
+}
+
+.template-format-heading {
+    padding-left: 25px;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #2b547c;
+}
+
+.template-option-container {
+    margin: 10px 25px;
+}
+
+.template-option-container > img,
+.template-option-container > div > img {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.template-option-label {
+    font-size: 1.25em;
+    font-weight: 500;
+    color: #004577;
+}
+
+.template-option-description {
+    font-size: 1em;
+    color: #777;
+    max-width: 350px;
+}
+
+.uppy-progress {
+    padding: 15px;
+}
+
+.uppy-progress .uppy-Root .uppy .uppy-ProgressBar-inner {
+    background-color: #2275d7;
+    box-shadow: 0 0 10px #2275d7b3;
+    height: 300%;
+    transition: width .4s ease;
+    width: 0;
+}
+
+.return-to-workflow-bar {
+    position: fixed; 
+    height:49px; 
+    width: 100vw; 
+    background-color: white; 
+    top: 0px;
+    right:5px;
+}
+
+.return-to-workflow-button {
+    position: relative;
+    left: calc(100vw - 200px);
+    height: 33px;
+    width: 180px;
+    top: 8px;
+    transition: all linear .3s;
+    z-index: 1;
 }

@@ -1,0 +1,34 @@
+{% load i18n %}
+<div class="download-project-files-step">
+    <div>
+        <span class="h5 file-list-label" data-bind="text: projectName() + $root.translations.reportDownload"></span>
+    </div>
+
+    <!-- ko if: downloadInfo().length !== templates().length -->
+        <div class="download-report-container">
+            <div class="loading-mask" style="background-color: transparent;"></div>
+
+            <!-- ko if: templates().length <= 1 -->
+            <div>{% trans "A report is being generated. A link will appear when the report is ready to be downloaded." %}</div>
+            <!-- /ko -->
+
+            <!-- ko if: templates().length > 1 -->
+            <div>{% trans "The reports are being generated. A link for each report will appear when the report is ready to be downloaded." %}</div>
+            <!-- /ko -->
+        </div>
+    <!-- /ko -->
+
+    <!-- ko if: downloadInfo().length === templates().length -->
+        <!-- ko foreach: downloadInfo -->
+            <div class="download-report-button-container">
+                <div class="file-download-button btn btn-success" role="link">
+                    <a style="color: #fff;" target="_blank"
+                        data-bind="
+                            attr:{ href: downloadLink, download: downloadName },
+                            text:  $root.translations.download + ' ' + templateName"
+                    ></a><i class="fa fa-download" style="margin-inline-start: 0.5em; margin-block-start: 0.25em"></i>
+                </div>
+            </div>
+        <!-- /ko -->
+    <!-- /ko -->
+</div>
