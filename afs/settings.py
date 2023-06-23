@@ -7,6 +7,7 @@ import inspect
 import json
 import os
 import sys
+import semantic_version
 from django.utils.translation import gettext_lazy as _
 
 try:
@@ -300,6 +301,10 @@ FORMATS = [
 ]
 
 DOCKER = False
+
+APP_VERSION = semantic_version.Version(major=1, minor=0, patch=0, prerelease=('a', '0'))
+MIN_ARCHES_VERSION = '7.4.0b0'
+MAX_ARCHES_VERSION = '7.4.1'
 
 try:
     from .package_settings import *
