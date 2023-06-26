@@ -24,6 +24,10 @@ define([
                 }};
             };
 
+            this.geti18nStringValue = i18nObj => {
+                return i18nObj?.[arches.activeLanguage]?.value || (typeof i18nObj === 'object' && i18nObj !== null ? '' : i18nObj);
+            };
+
             IIIFViewerViewmodel.apply(this, [params]);
             var defaultColor;
             var self = this;            
@@ -116,9 +120,9 @@ define([
                 self.selectedPart().defaultFormat(defaultFormat);
             });
 
-            this.selectedPart.subscribe(async (data) => {
+            this.selectedPart.subscribe(async(data) => {
                 self.selectedPartObservationId(self.selectedPart().observationResourceId);
-                const savedDefaultFormat = ko.unwrap(params.form.savedData()?.parts.find(part => part.partResourceId == data.resourceid)?.defaultFormat)
+                const savedDefaultFormat = ko.unwrap(params.form.savedData()?.parts.find(part => part.partResourceId == data.resourceid)?.defaultFormat);
                 self.selectedPartDefaultFormat(ko.unwrap(self.selectedPart()?.defaultFormat) || savedDefaultFormat);
                 self.annotations([data]);
                 if (self.annotations().length) {
@@ -143,29 +147,29 @@ define([
 
             this.addFileToPart = (files) => {
                 if(self.selectedPart() && self.selectedPartHasCurrentObservation()) {
-                    file = files[0]
+                    const file = files[0];
                     file.tileId = ko.observable();
                     self.selectedPart().stagedFiles.push(file);
                     self.parts.valueHasMutated();
                     self.files.remove(file);
                     
                 }
-            }
+            };
 
             this.removeFileFromPart = (file) => {
                 if(self.selectedPart() && self.selectedPartHasCurrentObservation()) {
                     self.selectedPart().datasetFiles.remove(file);
                     self.files.push(file);
                 }
-            }
+            };
 
-            const getPartObservationId = async (part) => {
+            const getPartObservationId = async(part) => {
                 if(part.datasetId()) {
                     const selectedDatasetCrossReferences = await (await window.fetch(`${arches.urls.related_resources}${part.datasetId()}`)).json();
                     const relatedObservation = selectedDatasetCrossReferences?.related_resources?.related_resources?.filter(x => x?.graph_id == observationGraphId);
                     part.observationResourceId = relatedObservation?.[0]?.resourceinstanceid;
                     if(part.datasetId() == self.selectedPart()?.datasetId()){
-                        self.selectedPart.valueHasMutated()
+                        self.selectedPart.valueHasMutated();
                     }
                 }
             };
@@ -207,34 +211,33 @@ define([
                     observationReferenceTileId: self.observationReferenceTileId(),
                     
                     parts: self.parts().map(part =>
-                        {
-                            fileObjects = part.datasetFiles().map(file => { 
-                                delete file.dataURL;
-                                return file;
-                            } );
-                            return {
-                                datasetFiles: fileObjects.map(x => { return {...x, tileId: ko.unwrap(x.tileId)} }),
-                                datasetId: part.datasetId(),
-                                nameTileId: part.nameTileId(),
-                                datasetName: part.datasetName() || '',
-                                resourceReferenceId: part.resourceReferenceId(),
-                                defaultFormat: part.defaultFormat(),
-                                tileid: part.tileid,
-                                partResourceId: part.resourceid
-                            };
-                        }
-                    )
+                    {
+                        const fileObjects = part.datasetFiles().map(file => { 
+                            delete file.dataURL;
+                            return file;
+                        } );
+                        return {
+                            datasetFiles: fileObjects.map(x => { return {...x, tileId: ko.unwrap(x.tileId)};}),
+                            datasetId: part.datasetId(),
+                            nameTileId: part.nameTileId(),
+                            datasetName: part.datasetName() || '',
+                            resourceReferenceId: part.resourceReferenceId(),
+                            defaultFormat: part.defaultFormat(),
+                            tileid: part.tileid,
+                            partResourceId: part.resourceid
+                        };
+                    })
                 });
-            }
+            };
 
             this.deleteFile = async(file) => {
                 const fileTile = ko.unwrap(file.tileId);
                 if(fileTile){
                     self.loading(true);
                     try {
-                        self.loadingMessage(`Deleting ${ko.unwrap(file.name)}...`)
+                        self.loadingMessage(`Deleting ${ko.unwrap(file.name)}...`);
                         const formData = new window.FormData();
-                        formData.append("tileid", fileTile)
+                        formData.append("tileid", fileTile);
 
                         const resp = await window.fetch(arches.urls.tile, {
                             method: 'DELETE', 
@@ -256,22 +259,21 @@ define([
                             saveWorkflowState();
                         }
                     } finally {
-                        self.loading(false)
+                        self.loading(false);
                     }
                 }
-            }
+            };
 
             this.saveFiles = async(files) => {
-                file = files?.[0]
                 params.form.lockExternalStep("select-instrument-and-files", true);
                 const part = self.selectedPart();
                 try {
                     const formData = new window.FormData();
                     formData.append("transaction_id", params.form.workflowId);
-                    formData.append("instrument_id", observationInfo.instrument.value)
-                    formData.append("observation_id", observationResourceId)
+                    formData.append("instrument_id", observationInfo.instrument.value);
+                    formData.append("observation_id", observationResourceId);
                     if(self.observationReferenceTileId()){
-                        formData.append("observation_ref_tile", self.observationReferenceTileId())
+                        formData.append("observation_ref_tile", self.observationReferenceTileId());
                     }
 
                     // For each part of parent phys thing, create a digital resource with a Name tile
@@ -286,7 +288,7 @@ define([
                     self.loading(true);
                     self.loadingMessage(`Saving dataset ${part.calcDatasetName()}`);
                     if(files) {
-                            Array.from(files).forEach(file => {
+                        Array.from(files).forEach(file => {
                             // Then save a file tile to the digital resource for each associated file
                             self.saveDatasetFile(formData, file);
                         });
@@ -302,15 +304,15 @@ define([
                     });
 
                     self.loading(false);
-                    const datasetInfo = await resp.json()
+                    const datasetInfo = await resp.json();
                     self.observationReferenceTileId(datasetInfo.observationReferenceTileId);
                     part.datasetId(datasetInfo.datasetResourceId);
                     const newDatasetFiles = part.datasetFiles().filter(
                         x => datasetInfo.removedFiles.find(
                             y => {
-                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid)
+                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
                             }) == undefined
-                    )
+                    );
                     part.datasetFiles([...newDatasetFiles, ...datasetInfo.files]);
                     part.nameTileId(datasetInfo.datasetNameTileId);
                 } catch(err) {
@@ -399,7 +401,7 @@ define([
                     part.calcDatasetName = ko.computed(function() {
                         const basename = part.datasetName() || 'Dataset';
 
-                        return `${basename} (${childPhysThingName})`
+                        return `${basename} (${childPhysThingName})`;
                     });
     
                     part.datasetId = part.datasetId || ko.observable();
@@ -409,16 +411,16 @@ define([
                     part.displayname = part.data[physicalThingPartNameNodeId][arches.activeLanguage]['value'];
                     if (datasetTile && !manifestValueIds.includes(datasetTile.data[digitalReferenceTypeNodeId])) {
                         const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
-                        const datasetName =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).data[datasetNameNodeId];
+                        const datasetName =  self.geti18nStringValue(dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).data[datasetNameNodeId]);
                         const nameTileId =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).tileid;
-                        const datasetTiles =  dataset._source.tiles.filter((tile) => tile.nodegroup_id === datasetFileNodeGroupId)
+                        const datasetTiles =  dataset._source.tiles.filter((tile) => tile.nodegroup_id === datasetFileNodeGroupId);
                         const datasetFiles = datasetTiles.map((tile) => {
                             let file = tile.data[datasetFileNodeId][0];
                             file.tileId = ko.observable(tile.tileid);
                             return file;
                         });
                         part.datasetId(dataset._id);
-                        await getPartObservationId(part)
+                        await getPartObservationId(part);
                         part.datasetName(datasetName);
                         part.datasetFiles(datasetFiles);
                         part.nameTileId(nameTileId);
@@ -434,7 +436,7 @@ define([
                     const savedValue = params.form.savedData()?.parts?.filter(x => x.tileid == part.tileid)?.[0];
                     if(savedValue) {
                         
-                        part.datasetFiles(savedValue.datasetFiles.map(x => { return {...x, tileId:ko.observable(x.tileId)}}));
+                        part.datasetFiles(savedValue.datasetFiles.map(x => { return {...x, tileId:ko.observable(x.tileId)}; }));
                         part.datasetName(savedValue.datasetName);
                         part.datasetId(savedValue.datasetId);
                         part.nameTileId(savedValue.nameTileId);
@@ -469,7 +471,7 @@ define([
                 self.selectedPart(self.parts()[0]);
 
                 self.loading(false);
-            }
+            };
      
             this.init();
         },
