@@ -10,6 +10,7 @@ define([
         var componentParams = params.form.componentData.parameters;
         this.physThingSetNodegroupId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a';
         this.physThingTypeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
+        this.observationTypeNodeId = '7b97ee23-c457-11e9-8ce3-a4d18cec433a';
         this.physicalThingPartOfSetNodeId = '63e49254-c444-11e9-afbe-a4d18cec433a';
         this.observationPartOfPhysicalThingNodeId = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
         this.partNodeGroupId = 'fec59582-8593-11ea-97eb-acde48001122';
@@ -29,15 +30,18 @@ define([
         this.projectValue = ko.observable();
         this.projectNameValue = ko.observable();
         this.physicalThingValue = ko.observable();
+        this.observationValue = ko.observable();
         this.setsThatBelongToTheProject = ko.observable();
         this.hasSetWithPhysicalThing = ko.observable();
         this.isPhysicalThingValid = ko.observable();
+        this.isObservationValid = ko.observable();
         this.originalValue = params.form.value();
         this.physicalThingsThatBelongToSets = ko.observable();
         this.hasPhsyicalThingWithObservation = ko.observable();
         
         this.updateValues = function(val){
             if (val !== null) {
+                self.observationValue(val.observation);
                 self.physicalThingValue(val.physicalThing);
                 self.setsThatBelongToTheProject(val.physicalThingSet);
                 self.projectValue(val.project);
@@ -54,6 +58,7 @@ define([
         this.projectValue.subscribe(function(val){
             self.isPhysicalThingValid(null);
             self.physicalThingValue(null);
+            self.observationValue(null);
             if (val) {
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
@@ -84,7 +89,6 @@ define([
                                     if (physicalThingResourceIds) {
                                         self.physicalThingsThatBelongToSets(physicalThingResourceIds)
                                     }
-                                    console.log(data)
                                     }
                             )
                         } else {
@@ -118,6 +122,42 @@ define([
             }
         });
 
+
+        this.observationValue.subscribe(async(val) => {
+            // if the physical thing value isn't set correctly, return step value
+            // to original value
+            if (!val) { 
+                params.value(self.originalValue); 
+                return; 
+            }
+
+            const observation = (await resourceUtils.lookupResourceInstanceData(val))?._source;
+            
+            physicalThingObervationTile = observation.tiles.find(function(tile){
+                return tile.nodegroup_id === self.observationPartOfPhysicalThingNodeId;
+            });
+            
+            phsyicalThingResourceId = physicalThingObervationTile.data[self.observationPartOfPhysicalThingNodeId][0].resourceId
+
+            if(!self.validateThing || canNonDestructiveObservation || canDestructiveObservation){
+                params.value({
+                    observationName: observation.displayname,
+                    observation: val,
+                    // projectSet: projectSet,
+                    phsyicalThingResourceId: phsyicalThingResourceId,
+                    physicalThingSet: self.setsThatBelongToTheProject(),
+                    project: self.projectValue(),
+                    projectName: self.projectNameValue(),
+                });
+                self.isObservationValid(true);
+            } else {
+                self.isObservationValid(false);
+            }
+
+
+
+        })
+
         this.physicalThingValue.subscribe(async (val) => {
             // if the physical thing value isn't set correctly, return step value
             // to original value
@@ -140,7 +180,7 @@ define([
             // within the same selected project we cannot know in which collection we should put it's samples/analysis areas.
             // In this case we are defaulting to the first collection in the project's list of collections that contains the physical thing.
             const setsThatBelongToTheSelectedThing = physThing.tiles.find(x => x.nodegroup_id === self.physicalThingPartOfSetNodeId)?.data[self.physicalThingPartOfSetNodeId].map(y => y.resourceId);
-            const projectSet = setsThatBelongToTheSelectedThing.find(setid => self.setsThatBelongToTheProject().includes(setid))
+            // const projectSet = setsThatBelongToTheSelectedThing.find(setid => self.setsThatBelongToTheProject().includes(setid))
 
             const analysisAreaValueId = '31d97bdd-f10f-4a26-958c-69cb5ab69af1';
             const sampleAreaValueId = '7375a6fb-0bfb-4bcf-81a3-6180cdd26123';
@@ -161,7 +201,7 @@ define([
                 params.value({
                     physThingName: physThing.displayname,
                     physicalThing: val,
-                    projectSet: projectSet,
+                    // projectSet: projectSet,
                     physicalThingSet: self.setsThatBelongToTheProject(),
                     project: self.projectValue(),
                     projectName: self.projectNameValue(),

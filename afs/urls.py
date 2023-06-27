@@ -5,6 +5,7 @@ from arches.app.views.plugin import PluginView
 from afs.views.workflows.upload_dataset.format_render_map import FormatRenderMap
 from afs.views.workflows.upload_dataset.update_file_format import UpdateFileFormat
 from afs.views.workflows.upload_dataset.select_dataset_files_step import SelectDatasetFilesStep
+from afs.views.workflows.add_chemical_analysis_images.add_chemical_analysis_images_file_upload import AddChemicalAnalysisImagesFileUpload
 from afs.views.physical_thing_search import PhysicalThingSearchView
 from afs.views.physical_things_in_set import PhysicalThingSetView
 from afs.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, batch_sign, complete_upload, upload_part
@@ -43,6 +44,11 @@ urlpatterns = [
         r"^workflows/upload-dataset-workflow/get-format-renderer/(?P<format>[0-9a-zA-Z_\-./]*)$",
         FormatRenderMap.as_view(),
         name="format_render_map",
+    ),
+    url(
+        r"^workflows/add_chemical_analysis_images/add_chemical_analysis_images_file_upload",
+        AddChemicalAnalysisImagesFileUpload.as_view(),
+        name="add_chemical_analysis_images_file_upload",
     ),
     url(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
     url(r"^s3/multipart/(?P<uploadid>[^\/]+)/complete$", complete_upload, name="s3_multipart_upload_complete"),

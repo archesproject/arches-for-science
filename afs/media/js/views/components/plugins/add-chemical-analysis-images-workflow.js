@@ -66,7 +66,8 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
-                                        physicalThingResourceId: "['select-project']['select-phys-thing']['physicalThing']"
+                                        physicalThingResourceId: "['select-project']['select-observation']['phsyicalThingResourceId']",
+                                        observationResourceId: "['select-project']['select-observation']['observation']"
                                     },
                                 },
                             ], 
@@ -85,10 +86,11 @@ define([
                                     uniqueInstanceName: 'add-chemical-analysis-images-final',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        sampleObjectResourceId: "['select-project']['select-phys-thing']['physicalThing']",
-                                        relatedProjectData: "['select-project']['select-phys-thing']",
+                                        observationResourceId: "['select-project']['select-observation']['observation']",
+                                        relatedProjectData: "['select-project']['select-observation']",
                                         imageStepData: "['image-step']['image-service-instance'][0]['data']",
-                                        digitalReferenceResourceId: "['image-step']['image-service-instance'][0]['resourceinstance_id']"
+                                        digitalResourcesIds: "['image-step']['image-service-instance']['digitalResourcesIds']",
+                                        manifestResourceId: "['image-step']['image-service-instance']['manifestResourceId']",
                                     },
                                 },
                             ], 
