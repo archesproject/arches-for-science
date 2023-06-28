@@ -9,7 +9,6 @@ define([
     'views/components/workflows/select-phys-thing-step',
     'views/components/workflows/chemical-analysis-workflow/ca-instrument-info-step',
     'views/components/workflows/chemical-analysis-workflow/ca-upload-files-step',
-    'views/components/workflows/chemical-analysis-workflow/ca-image-manifest-step',
     'views/components/workflows/chemical-analysis-workflow/ca-final-step'
 ], function(ko, $, arches, Workflow, AlertViewModel, chemicalAnalysisWorkflow) {
     return ko.components.register('chemical-analysis-workflow', {
@@ -99,35 +98,6 @@ define([
                     ],
                 },
                 {
-                    title: 'Image',
-                    name: 'image-step', /* unique to workflow */
-                    required: true,
-                    informationboxdata: {
-                        heading: 'Image Services',
-                        text: `
-                            Image Services provide you with picture(s) of an object, often from multiple vantage points, that can be annotated to indicate the location or region of an observation. 
-                            If you wish, you can upload photographs and automatically create a new image service to document the location of your observations of an object.
-                        `,
-                    },
-                    lockableExternalSteps: ['select-instrument-and-files'],
-                    layoutSections: [
-                        {
-                            sectionTitle: 'Image Service',
-                            componentConfigs: [
-                                { 
-                                    componentName: 'ca-image-manifest-step',
-                                    uniqueInstanceName: 'ca-image-manifest-step', /* unique to step */
-                                    tilesManaged: 'one',
-                                    parameters: {
-                                        graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
-                                        physicalThingResourceId: "['project-info']['select-phys-thing-step']['physicalThing']"
-                                    },
-                                },
-                            ], 
-                        },
-                    ],
-                },
-                {
                     title: 'Summary',
                     name: 'chemical-analysis-complete',  /* unique to workflow */
                     description: 'Summary',
@@ -142,8 +112,6 @@ define([
                                         observationInstanceResourceId: "['select-instrument-and-files']['instrument-info']['observationInstanceId']",
                                         uploadedDatasets: "['select-dataset-files-step']['ca-instrument-info-step'']['parts']",
                                         uploadedDataset: "['upload-files']['ca-upload-files-step']",
-                                        imageStepData: "['image-step']['ca-image-manifest-step'][0]['data']",
-                                        
                                         parentPhysThingResourceId: "['project-info']['select-phys-thing-step']['physicalThing']",
                                     },
                                 },
