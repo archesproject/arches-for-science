@@ -35,7 +35,7 @@ class AddChemicalAnalysisImagesFileUpload(View):
         # posted_dataset = request.POST.get("dataset")
         # observation_ref_tile = request.POST.get("observation_ref_tile", None)
 
-        files = json.loads(request.POST.get("file_data"))
+        files = request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), [])
         removed_files = []
         # Create dataset for each file
         # 'Upload' files
@@ -79,8 +79,10 @@ class AddChemicalAnalysisImagesFileUpload(View):
 
             def save_file(dataset_resource, file):
                 dataset_default_format = None
-                if file is not None:
-                    file_data = file
+
+                if file[0] is not None:
+                    file_data = file[0]
+                    file_content = file[1]
 
                     tiles = (tile for tile in dataset_resource.tiles if str(tile.nodegroup_id) == dataset_file_node_group_id)
                     # delete/replace tiles for files that share the same name
@@ -105,25 +107,28 @@ class AddChemicalAnalysisImagesFileUpload(View):
                         )
                         file_data["format"] = dataset_default_format
 
+
                     # file has not been uploaded
                     dataset_file_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_file_node_group_id)
                     dataset_file_tile.resourceinstance_id = str(dataset_resource.resourceinstanceid)
-                    dataset_file_tile.data[dataset_file_node_id] = [file]
+                    dataset_file_tile.data[dataset_file_node_id] = [file[0]]
                     dataset_file_tile.tileid = ""
                     dataset_file_tile.pk = ""
-
                     new_req = HttpRequest()
                     new_req.method = "POST"
                     new_req.user = request.user
                     new_req.POST["data"] = json.dumps(dataset_file_tile.serialize())
                     new_req.POST["transaction_id"] = transaction_id
-                    new_req.FILES[file["name"]] = io.BytesIO()
-
+                    if len(request.FILES.getlist("file-list_{}".format(dataset_file_node_id), [])) > 0:
+                        new_req.FILES["file-list_{}".format(dataset_file_node_id)] = file_content
+                    elif len(request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), [])) > 0:
+                        new_req.FILES["file-list_{}_preloaded".format(dataset_file_node_id)] = file_content
                     new_tile = TileData()
                     new_tile.action = "update_tile"
 
                     raw_response = new_tile.post(new_req)
                     response = json.loads(raw_response.content)
+
                     
                     digital_resource_instance_ids.append(dataset_file_tile.resourceinstance_id)
 
@@ -141,9 +146,19 @@ class AddChemicalAnalysisImagesFileUpload(View):
             #     # XRF files do not have a renderer (yet) and use this same endpoint.
             #     file_response = [{"name": f[0]["name"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]} for f in new_files]
 
-            for file in files:
-                file = json.loads(file)
-                dataset_resource = create_digital_resource(file)
+            dataset_files = request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), []) + request.FILES.getlist(
+                "file-list_{}".format(dataset_file_node_id), []
+            )
+            file_data_list = request.POST.getlist("file-list_{}_data".format(dataset_file_node_id), None)
+            file_data_list = [JSONDeserializer().deserialize(fd) for fd in file_data_list]
+            new_files = []
+            for file in dataset_files:
+                file_data = next((fd for fd in file_data_list if fd.get("name") == file.name), None)
+
+                new_files.append((file_data, file))
+
+            for file in new_files:
+                dataset_resource = create_digital_resource(file[0])
                 save_file(dataset_resource, file)
                 create_reference_to_observation(dataset_resource)
 

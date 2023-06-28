@@ -13,6 +13,7 @@ define([
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
+        const datasetFileNodeId = "7c486328-d380-11e9-b88e-a4d18cec433a";
 
         this.workflowId = params.form.workflowId;
 
@@ -146,11 +147,16 @@ define([
                         // eslint-disable-next-line camelcase
                         file_id: null,
                         index: 0,
-                        content: null,
+                        content: window.URL.createObjectURL(file),
                         error: file.error,
                     };
 
-                    self.fileData.push(JSON.stringify(fileInfo));
+
+                    formData.append(`file-list_${datasetFileNodeId}_data`, JSON.stringify(fileInfo));
+                    formData.append(`file-list_${datasetFileNodeId}_preloaded`, new Blob([file]), file.name);
+
+
+                    // self.fileData.push(JSON.stringify(fileInfo));
                     // self.fileDataPreloaded.push(new Blob(), file.name)
                     // formData.append(`file-list_${digitalResourceFileNodegroupId}_preloaded`, new Blob(), file.name);
                 }
@@ -168,8 +174,8 @@ define([
                 self.saveDatasetFile(self.formData, file);
             });
             
-            self.formData.append('file_data', JSON.stringify(self.fileData));
-            // self.formData.append('file_data_preloaded', JSON.stringify(self.fileDataPreloaded));
+            // self.formData.append('file_data', JSON.stringify(self.fileData));
+            // // self.formData.append('file_data_preloaded', JSON.stringify(self.fileDataPreloaded));
         });
 
         this.manifestData = ko.observable();
@@ -265,10 +271,7 @@ define([
                                 digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
 
                                 digitalReferenceTile.transactionId = params.form.workflowId;
-                                digitalReferenceTile.save().then(function(data) {
-                                    params.form.complete(true);
-                                    params.form.saving(false);
-                                });
+                                await digitalReferenceTile.save()
 
                                 // Do the save again for observation
                                 if (self.observationDigitalReferenceTile()) {
@@ -286,12 +289,10 @@ define([
                                     digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
     
                                     digitalReferenceTile.transactionId = params.form.workflowId;
-                                    digitalReferenceTile.save().then(function(data) {
-                                        params.form.complete(true);
-                                        params.form.saving(false);
-                                    });
+                                    await digitalReferenceTile.save()
                                 }
 
+                                
                                 self.formData.append("transaction_id", params.form.workflowId);
                                 self.formData.append("observation_id", self.observationResourceInstanceId());
 
@@ -313,6 +314,9 @@ define([
                                 data.ManifestResourceId = data.resourceinstance_id;
                                 params.form.savedData(data);
                                 params.form.value(data);
+
+                                params.form.complete(true);
+                                params.form.saving(false);
                             })
                         });
                     });

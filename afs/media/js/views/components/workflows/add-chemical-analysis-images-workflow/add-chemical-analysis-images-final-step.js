@@ -32,7 +32,7 @@ define([
             const response = await window.fetch(this.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta')
             return await response.json()
         };
-
+        
         (async (val) => {
             self.workflowDigitalResources(await Promise.all(self.digitalResourcesIds.map( async function(resourceid){
                 return await self.getWorkflowResourceData(resourceid);
