@@ -55,7 +55,7 @@ class SelectDatasetFilesStep(View):
             string_data_type = StringDataType()
             dataset_name_tile.data[dataset_name_node_id] = string_data_type.transform_value_for_tile(dataset.get("name"))
             dataset_name_tile.save(transaction_id=transaction_id)
-            dataset_resource.load_tiles(user=request.user)
+            dataset_resource.load_tiles()
 
             if not dataset_resource_id:
                 # save dataset's relationship with part resource ID.
@@ -118,7 +118,7 @@ class SelectDatasetFilesStep(View):
                         if tile.data[dataset_file_node_id][0]["name"] == file_data["name"]:
                             removed_files.append({"name": file_data["name"], "tileid": tile.tileid})
                             Tile.objects.get(pk=tile.tileid).delete(request=request)
-                    dataset_resource.load_tiles(user=request.user)
+                    dataset_resource.load_tiles()
 
                     split_file_mime = file_data["type"].split("/")
                     if "image" in split_file_mime:
