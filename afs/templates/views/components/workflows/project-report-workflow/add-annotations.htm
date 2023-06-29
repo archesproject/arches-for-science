@@ -45,10 +45,10 @@
                 <tbody data-bind="foreach: {data: screenshots, as: 'screenshot'}">
                     <tr style="cursor: pointer">
                         <td><div class="summary-value" data-bind="text: screenshot.imageName"></div></td>
-                        <td><a data-bind="attr: {download: screenshot.imageName, href: screenshot.url}"><img style="max-height: 50px" data-bind="attr: {src: screenshot.url}"></a></td>
+                        <td><a data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"><img style="max-height: 50px" data-bind="attr: {src: (screenshot.url || '/temp_file/' + screenshot.fileId)}"></a></td>
                         <td style="display: flex; flex-direction: row;">
                             <div style="flex: 1"></div>
-                            <i style="padding: 10px 5px;font-size:25px" class="fa fa-download"><a data-bind="attr: {download: screenshot.imageName, href: screenshot.url}"></a></i>
+                            <i style="padding: 10px 5px;font-size:25px" class="fa fa-download"><a data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"></a></i>
                             <i style="padding: 10px 5px; font-size:25px;" class="fa fa-trash" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}"></i>
                         </td>
                     </tr>
