@@ -31,8 +31,10 @@ define([
 
         const getProjectName = async() => {
             const response = await fetch(`${arches.urls.api_resources(projectId)}?format=json`);
-            const data = await response.json();
-            self.projectName(data.displayname);
+            if(response.ok) {
+                const data = await response.json();
+                self.projectName(data.displayname);
+            }
         };
         getProjectName();
 
@@ -44,11 +46,14 @@ define([
                 return accumulator;
             }, []).join(",");
             
-            const observationDetails = await (await window.fetch(`${lbgApiEndpoint}${observationIds}`)).json();
+            const observationDetailsResponse = await window.fetch(`${lbgApiEndpoint}${observationIds}`);
+            const observationDetails = observationDetailsResponse.ok ? await observationDetailsResponse.json(): undefined;
 
-            const physicalThingsDetails = await (await window.fetch(physicalThingDetailsUrl)).json();
+            const physicalThingsDetailsResponse = await window.fetch(physicalThingDetailsUrl);
+            const physicalThingsDetails = physicalThingsDetailsResponse.ok ? await physicalThingsDetailsResponse.json() : undefined;
 
-            const projectDetails = await (await window.fetch(projectDetailsUrl)).json();
+            const projectDetailsResponse = await window.fetch(projectDetailsUrl);
+            const projectDetails = projectDetailsResponse.ok ? await projectDetailsResponse.json() : undefined;
             
             const today = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -81,19 +86,21 @@ define([
                 body: JSON.stringify(data)
             });
 
-            const blobResult = await result.blob();
-            let downloadName;
-            result.headers.forEach(header => {
-                if (header.match(regex)) {
-                    downloadName = header.match(regex)[1];
-                }
-            });
+            if(result.ok) {
+                const blobResult = await result.blob();
+                let downloadName;
+                result.headers.forEach(header => {
+                    if (header.match(regex)) {
+                        downloadName = header.match(regex)[1];
+                    }
+                });
 
-            this.downloadInfo.push({
-                downloadLink: URL.createObjectURL(blobResult),
-                downloadName: downloadName,
-                templateName: template.name,
-            });
+                this.downloadInfo.push({
+                    downloadLink: URL.createObjectURL(blobResult),
+                    downloadName: downloadName,
+                    templateName: template.name,
+                });
+            }
         };
 
         this.templates().forEach(template => {
