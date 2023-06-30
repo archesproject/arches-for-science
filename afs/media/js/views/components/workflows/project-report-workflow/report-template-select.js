@@ -99,7 +99,7 @@ define([
         });
 
         //initialize
-        (async() => {
+        (() => {
             const templates = params.form.value()?.templates;
 
             this.reportTemplates(templates);
