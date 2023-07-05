@@ -97,6 +97,14 @@ define([
                 });
             }       
         });
+
+        //initialize
+        (() => {
+            const templates = params.form.value()?.templates;
+            if(templates){
+                this.reportTemplates(templates);
+            }
+        })();
     }
 
     ko.components.register('report-template-select', {
