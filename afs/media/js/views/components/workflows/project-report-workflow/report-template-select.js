@@ -101,8 +101,9 @@ define([
         //initialize
         (() => {
             const templates = params.form.value()?.templates;
-
-            this.reportTemplates(templates);
+            if(templates){
+                this.reportTemplates(templates);
+            }
         })();
     }
 
