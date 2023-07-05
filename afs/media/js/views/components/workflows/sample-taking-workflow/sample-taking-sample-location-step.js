@@ -357,28 +357,13 @@ define([
 
         });
 
-        this.selectSampleLocationInstance = async function(sampleLocationInstance) {
+        this.refreshSelectedSample = async() => {
             self.sampleDescriptionWidgetValue(null);
             self.previouslySavedSampleDescriptionWidgetValue(null);
             
             self.motivationForSamplingWidgetValue(null);
             self.previouslySavedMotivationForSamplingWidgetValue(null);
 
-            var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
-
-            /* resets any changes not explicity saved to the tile */ 
-            if (sampleLocationInstance === undefined || (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid)) {
-                previouslySelectedSampleLocationInstance.reset();
-
-                self.drawFeatures([]);
-                self.resetCanvasFeatures();
-            }
-
-            if (self.physicalThingPartIdentifierAssignmentTile()) {
-                self.physicalThingPartIdentifierAssignmentTile().reset();
-            }
-
-            self.selectedSampleLocationInstance(sampleLocationInstance);
             if (self.selectedSampleLocationInstance()) {
 
                 var selectedSampleLocationParentPhysicalThingData = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPhysicalPartOfObjectNodeId]);
@@ -450,6 +435,25 @@ define([
                     });
                 }
             }
+        }
+
+        this.selectSampleLocationInstance = async function(sampleLocationInstance) {
+            var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
+
+            /* resets any changes not explicity saved to the tile */ 
+            if (sampleLocationInstance === undefined || (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid)) {
+                previouslySelectedSampleLocationInstance.reset();
+
+                self.drawFeatures([]);
+                self.resetCanvasFeatures();
+            }
+
+            if (self.physicalThingPartIdentifierAssignmentTile()) {
+                self.physicalThingPartIdentifierAssignmentTile().reset();
+            }
+
+            self.selectedSampleLocationInstance(sampleLocationInstance);
+            self.refreshSelectedSample();
         };
 
         this.viewSampleLocationInstance = function(sampleLocationInstance){
@@ -661,6 +665,8 @@ define([
                 });
 
                 self.selectedSampleLocationInstance(self.builtTile);
+                self.refreshSelectedSample();
+
                 self.selectedSampleLocationInstance().samplingActivityResourceId = ko.observable(self.samplingActivityResourceId);
 
                 updateAnnotations().then(async function(_physicalThingAnnotationNode) {
