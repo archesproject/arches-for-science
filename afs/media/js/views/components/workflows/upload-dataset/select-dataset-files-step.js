@@ -313,12 +313,12 @@ define([
                     )
                     part.datasetFiles([...newDatasetFiles, ...datasetInfo.files]);
                     part.nameTileId(datasetInfo.datasetNameTileId);
-                    self.nameDirty(false);
+                    part.nameDirty(false);
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
                     params.form.loading(false);
-                    self.nameDirty(true);
+                    part.nameDirty(true);
                 }
 
                 saveWorkflowState();
