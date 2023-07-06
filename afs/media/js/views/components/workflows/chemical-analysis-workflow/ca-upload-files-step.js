@@ -216,6 +216,8 @@ define([
                         );
                         self.files([...newDatasetFiles, ...datasetInfo.files]);
                         self.datasetNameTileId = datasetInfo.datasetNameTileId;
+                    } else {
+                        throw('Error saving uploaded files', resp); // rethrow with easier to understand message.  
                     }
                 } catch(err) {
                     // eslint-disable-next-line no-console

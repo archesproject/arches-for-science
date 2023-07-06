@@ -44,6 +44,8 @@ define([
                         thumbnail: template.thumbnail.url,
                     };
                 });
+            } else {
+                throw('couldn\'t fetch report templates', response)
             }
             this.docxTemplates = archesTemplates.filter(template => template.format === 'docx');
             this.pptTemplates = archesTemplates.filter(template => template.format === 'pptx');

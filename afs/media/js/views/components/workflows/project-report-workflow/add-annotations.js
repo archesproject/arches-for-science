@@ -88,14 +88,23 @@ define([
 
         const fetchResource = async function(resourceid) {
             const response = await window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta');
-            const resource = response.ok ? await response.json() : undefined;
-            return resource;
+
+            if (response.ok) {
+                return await response.json();
+            } else { 
+                throw('error retrieving resource', response); // throw - this should never happen. 
+            }
         };
 
         const getRelatedResources = async function(resourceid) {
             const response = await window.fetch(arches.urls.related_resources + resourceid + "?paginate=false");
-            const resources = response.ok ? await response.json() : undefined;
-            return resources;
+
+            if (response.ok) {
+                return await response.json();
+            } else { 
+                throw('error retrieving related resources', response); // throw - this should never happen. 
+            }
+
         };
 
         (async() => {
@@ -286,7 +295,7 @@ define([
                             fileId
                         };
                     } else {
-                        throw('error saving temp file!'); // we can't continue - we have to be able to save these files since they'll be in the report.
+                        throw('error saving temp file!', response); // we can't continue - we have to be able to save these files since they'll be in the report.
                     }
                 } else {
                     return screenshot;
