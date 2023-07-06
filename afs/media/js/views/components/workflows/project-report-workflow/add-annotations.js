@@ -164,9 +164,10 @@ define([
 
         this.screenshot = async() => {
             const currentdate = new Date();
-            const url = await domToImage.toJpeg(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
-            const imageName = `${currentdate.getFullYear()}-${currentdate.getMonth() + 1}-${currentdate.getDate()} - ${Date.now()}.jpg`;
-            self.screenshots.push({imageName, url});
+            const url = await domToImage.toPng(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
+            const blob = await domToImage.toBlob(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
+            const imageName = `${currentdate.getFullYear()}-${currentdate.getMonth() + 1}-${currentdate.getDate()} - ${Date.now()}.png`;
+            self.screenshots.push({imageName, url, blob});
         };
 
         this.prepareAnnotation = function(featureCollection) {
@@ -259,11 +260,34 @@ define([
             self.initialData(params.form.value() || []);
         };
 
-        params.form.save = () => {
+        params.form.save = async() => {
             params.form.complete(false);
             params.form.saving(true);
-            params.form.value({physicalThings: this.physicalThings, screenshots: this.screenshots(), projectRelations: this.projectRelatedResources});
-            params.form.savedData({physicalThings: this.physicalThings, screenshots: this.screenshots(), projectRelations: this.projectRelatedResources});
+            const screenshots = await Promise.all(this.screenshots().map(async(screenshot) => {
+                if(screenshot.blob){
+                    const formData = new window.FormData();
+                    formData.append("file", screenshot.blob);
+                    formData.append("fileName", screenshot.imageName);
+                    const response = await window.fetch(arches.urls.temp_file, {
+                        method: 'POST',
+                        credentials: 'include',
+                        body: formData,
+                        headers: {
+                            "X-CSRFToken": cookies.get('csrftoken')
+                        }
+                    });
+                    const responseJson = await response.json();
+                    const fileId = responseJson['file_id'];
+                    return {
+                        imageName: screenshot.imageName, 
+                        fileId
+                    };
+                } else {
+                    return screenshot;
+                }
+            }));
+            params.form.value({physicalThings: this.physicalThings, screenshots: screenshots, projectRelations: this.projectRelatedResources});
+            params.form.savedData({physicalThings: this.physicalThings, screenshots: screenshots, projectRelations: this.projectRelatedResources});
             params.form.saving(false);
             params.form.complete(true);
         };
