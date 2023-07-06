@@ -33,7 +33,7 @@ def download_project_files_task(userid, files, project_name):
         button_text=_("Download Now"),
         closing=_("Thank you"),
         email=user.email,
-        email_link=str(settings.ARCHES_NAMESPACE_FOR_DATA_EXPORT).rstrip("/") + "/files/" + str(search_history_obj.downloadfile) if search_history_obj else None,
+        email_link=str(settings.ARCHES_NAMESPACE_FOR_DATA_EXPORT).rstrip("/") + settings.MEDIA_URL + str(search_history_obj.downloadfile) if search_history_obj else None,
     )
 
     notify_completion(msg, user, notiftype_name, context)
