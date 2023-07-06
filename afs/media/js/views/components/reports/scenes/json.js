@@ -24,7 +24,7 @@ define([
             self.setSelectedJson = async (format) => {
                 if(!self.json[format]){
                     const response = await fetch(`${arches.urls.api_resources(self.resourceInstanceId)}?format=${format}`);
-                    self.json[format] = await response.json();
+                    self.json[format] = response.ok ? await response.json() : undefined;
                 }
                 self.selectedJSON(JSON.stringify(self.json[format], null, 2));
                 self.selectedFormat(format);

@@ -73,7 +73,9 @@ define([
                                 "X-CSRFToken": Cookies.get('csrftoken')
                             }
                         });
+                        
 
+                        // .json should not typically be awaited without "ok" checking - but 500 seems to return json body in some cases.
                         const body = await resp.json();
 
                         if(resp.status == 200 || (resp.status == 500 && body?.message?.includes("likely already deleted"))){
@@ -202,17 +204,19 @@ define([
                     });
 
                     self.loading(false);
-                    const datasetInfo = await resp.json();
-                    self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
-                    this.datasetId = datasetInfo.datasetResourceId;
-                    const newDatasetFiles = self.files().filter(
-                        x => datasetInfo.removedFiles.find(
-                            y => {
-                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
-                            }) == undefined
-                    );
-                    self.files([...newDatasetFiles, ...datasetInfo.files]);
-                    self.datasetNameTileId = datasetInfo.datasetNameTileId;
+                    if(resp.ok) {
+                        const datasetInfo = await resp.json();
+                        self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
+                        this.datasetId = datasetInfo.datasetResourceId;
+                        const newDatasetFiles = self.files().filter(
+                            x => datasetInfo.removedFiles.find(
+                                y => {
+                                    return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
+                                }) == undefined
+                        );
+                        self.files([...newDatasetFiles, ...datasetInfo.files]);
+                        self.datasetNameTileId = datasetInfo.datasetNameTileId;
+                    }
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);

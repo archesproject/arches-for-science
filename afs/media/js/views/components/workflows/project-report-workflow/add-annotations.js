@@ -88,12 +88,14 @@ define([
 
         const fetchResource = async function(resourceid) {
             const response = await window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta');
-            return await response.json();
+            const resource = response.ok ? await response.json() : undefined;
+            return resource;
         };
 
-        const getRelatedResources = async function(resourceid, relatedResources) {
+        const getRelatedResources = async function(resourceid) {
             const response = await window.fetch(arches.urls.related_resources + resourceid + "?paginate=false");
-            return await response.json();
+            const resources = response.ok ? await response.json() : undefined;
+            return resources;
         };
 
         (async() => {
@@ -276,12 +278,16 @@ define([
                             "X-CSRFToken": cookies.get('csrftoken')
                         }
                     });
-                    const responseJson = await response.json();
-                    const fileId = responseJson['file_id'];
-                    return {
-                        imageName: screenshot.imageName, 
-                        fileId
-                    };
+                    if(response.ok){
+                        const responseJson = await response.json();
+                        const fileId = responseJson['file_id'];
+                        return {
+                            imageName: screenshot.imageName, 
+                            fileId
+                        };
+                    } else {
+                        throw('error saving temp file!'); // we can't continue - we have to be able to save these files since they'll be in the report.
+                    }
                 } else {
                     return screenshot;
                 }
