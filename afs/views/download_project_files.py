@@ -56,11 +56,14 @@ class FileDownloader(View):
             else:
                 download_files.append({"name": file["name"], "downloadfile": file["file"]})
 
-        zip_stream = zip_utils.create_zip_file(download_files, "downloadfile")
-        now = datetime.datetime.now().isoformat()
-        name = f"{project_name}_{now}.zip"
-        search_history_obj = models.SearchExportHistory(user=user, numberofinstances=len(files))
-        f = BytesIO(zip_stream)
-        download = File(f)
-        search_history_obj.downloadfile.save(name, download)
-        return search_history_obj.searchexportid, skipped_files
+        if len(download_files) > 0:
+            zip_stream = zip_utils.create_zip_file(download_files, "downloadfile")
+            now = datetime.datetime.now().isoformat()
+            name = f"{project_name}_{now}.zip"
+            search_history_obj = models.SearchExportHistory(user=user, numberofinstances=len(files))
+            f = BytesIO(zip_stream)
+            download = File(f)
+            search_history_obj.downloadfile.save(name, download)
+            return search_history_obj.searchexportid, skipped_files
+        else:
+            return None, skipped_files
