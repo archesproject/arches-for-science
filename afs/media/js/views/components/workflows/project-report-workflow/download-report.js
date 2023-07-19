@@ -13,7 +13,7 @@ define([
         const self = this;
         const projectId = params.projectId;
         this.templates = ko.observableArray(params.templates);
-        const annotationScreenshots = params.annotationScreenshots;
+        const screenshots = params.annotationScreenshots;
         const physicalThings = params.physicalThings;
         const relatedObjects = params.projectRelations;
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
@@ -56,6 +56,10 @@ define([
             const filename = reportUtils.slugify(`${self.projectName()}_${template.name}_${reportDate}`);
             const physicalThingsDetailsArray = [...Object.values(physicalThingsDetails)];
             const analysisAreas = physicalThingsDetailsArray.filter(physicalThing => physicalThing.resource?.type?.["@display_value"] == 'analysis areas');
+            const annotationScreenshots = screenshots.map((screenshot) => {
+                const url = `${window.location.origin}/temp_file/${screenshot.fileId}`;
+                return {...screenshot, url};
+            });
             const data = {
                 projectId,
                 templateId: template.id,

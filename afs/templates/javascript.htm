@@ -16,6 +16,7 @@
     upload_dataset_file_renderer = '(tileid)=>{return "{% url "upload_dataset_file_renderer" "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" %}".replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", tileid)}',
     format_render_map = '(format)=>{return "{% url "format_render_map" "aaaaaaaa" %}".replace("aaaaaaaa", format)}'
     download_project_files = "{% url 'download_project_files' %}"
+    temp_file = "{% url 'temp_file' %}"
 ></div>
 {% endblock arches_urls %}
 

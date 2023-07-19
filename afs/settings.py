@@ -7,6 +7,7 @@ import inspect
 import json
 import os
 import sys
+import semantic_version
 from django.utils.translation import gettext_lazy as _
 
 try:
@@ -17,6 +18,10 @@ except ImportError:
 APP_NAME = "afs"
 ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
 WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
+
+APP_VERSION = semantic_version.Version(major=1, minor=0, patch=0, prerelease=('a', '0'))
+MIN_ARCHES_VERSION = '7.4.0b0'
+MAX_ARCHES_VERSION = '7.4.1'
 
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 STATICFILES_DIRS = (

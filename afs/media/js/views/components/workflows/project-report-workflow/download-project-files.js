@@ -52,23 +52,26 @@ define([
 
             for (const observataion of projectObservations) {
                 const relatedFiles = ko.observableArray();
-                const response = await window.fetch(arches.urls.related_resources + observataion.resourceinstanceid  + "?paginate=false")
-                const json = await response.json();
-                observation = json.resource_instance;
-                observation.expanded = ko.observable();
-                observation.description = observation.descriptors[arches.activeLanguage].description;
-                digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
-                digitalResources.forEach((res) => 
-                    res.tiles.forEach((tile) => {
-                        if (tile.nodegroup_id == fileNodeId) {
-                            const selected = ko.observable();
-                            const interpretation = res.tiles.find(tile2 => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
-                            const file = { ...tile.data[fileNodeId][0], interpretation, selected };
-                            relatedFiles.push(file);
-                        }
-                    })
-                );
-                self.relatedObservations.push({ ...observation, relatedFiles});
+                const response = await window.fetch(arches.urls.related_resources + observataion.resourceinstanceid  + "?paginate=false");
+                
+                if(response.ok) {
+                    const json = await response.json();
+                    observation = json.resource_instance;
+                    observation.expanded = ko.observable();
+                    observation.description = observation.descriptors[arches.activeLanguage].description;
+                    digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
+                    digitalResources.forEach((res) => 
+                        res.tiles.forEach((tile) => {
+                            if (tile.nodegroup_id == fileNodeId) {
+                                const selected = ko.observable();
+                                const interpretation = res.tiles.find(tile2 => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
+                                const file = { ...tile.data[fileNodeId][0], interpretation, selected };
+                                relatedFiles.push(file);
+                            }
+                        })
+                    );
+                    self.relatedObservations.push({ ...observation, relatedFiles});
+                }
             }
             self.relatedObservations.sort((a,b) => b.relatedFiles().length - a.relatedFiles().length);
         };

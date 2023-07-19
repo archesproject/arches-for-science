@@ -18,30 +18,35 @@ define([
 
         this.getTemplates = async() => {
             const response = await fetch(arches.urls.reports_list);
-            const data = await response.json();
-            archesTemplates = data.map(template => {
-                if(!template.thumbnail){
-                    template.thumbnail = {
-                        'name': null,
-                        'url': null
+
+            if(response.ok) {
+                const data = await response.json();
+                archesTemplates = data.map(template => {
+                    if(!template.thumbnail){
+                        template.thumbnail = {
+                            'name': null,
+                            'url': null
+                        };
+                    }
+                    if(!template.preview){
+                        template.preview = {
+                            'name': null,
+                            'url': null
+                        };
+                    }
+                    return {
+                        id: template.templateid,
+                        name: template.name,
+                        format: template.template.name.split('.').pop(),
+                        description: template.description,
+                        template: template.template.url,
+                        preview: template.preview.url,
+                        thumbnail: template.thumbnail.url,
                     };
-                }
-                if(!template.preview){
-                    template.preview = {
-                        'name': null,
-                        'url': null
-                    };
-                }
-                return {
-                    id: template.templateid,
-                    name: template.name,
-                    format: template.template.name.split('.').pop(),
-                    description: template.description,
-                    template: template.template.url,
-                    preview: template.preview.url,
-                    thumbnail: template.thumbnail.url,
-                };
-            });
+                });
+            } else {
+                throw('couldn\'t fetch report templates', response)
+            }
             this.docxTemplates = archesTemplates.filter(template => template.format === 'docx');
             this.pptTemplates = archesTemplates.filter(template => template.format === 'pptx');
             // this.xlsxTemplates = archesTemplates.filter(template => template.format === 'xlsx');
@@ -97,6 +102,14 @@ define([
                 });
             }       
         });
+
+        //initialize
+        (() => {
+            const templates = params.form.value()?.templates;
+            if(templates){
+                this.reportTemplates(templates);
+            }
+        })();
     }
 
     ko.components.register('report-template-select', {
