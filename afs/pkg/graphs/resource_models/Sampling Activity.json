@@ -82,7 +82,7 @@
                     "instructions": {
                         "en": "Enter the dates of the project. "
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Dates of Sampling Activity"
                     },
@@ -324,7 +324,7 @@
                     "instructions": {
                         "en": "Describe the sampling activity in general terms. Add a new statement for additional information (ex. rights statement, etc.)"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Statement about Sampling Activity"
                     },
@@ -353,7 +353,7 @@
                     "instructions": {
                         "en": "Person(s) or group(s) that performed the sampling"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Samplers"
                     },
@@ -382,7 +382,7 @@
                     "instructions": {
                         "en": "Enter the name of research project or task."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Name of Sampling Activity"
                     },
@@ -440,7 +440,7 @@
                     "instructions": {
                         "en": "Select the larger project that this sampling activity is a component of. If none, leave blank."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Parent Project of Sampling Activity"
                     },
@@ -612,7 +612,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Type of Sampling Activity"
                     },
@@ -639,7 +639,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Digital Reference to Sampling Activity"
                     },
@@ -722,7 +722,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Sampling Unit for Sampling Activity"
                     },
@@ -3678,7 +3678,7 @@
             ],
             "graphid": "03357848-1d9d-11eb-a29f-024e0d439fdb",
             "iconclass": "fa fa-youtube-play",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -4155,13 +4155,19 @@
                             {
                                 "graphid": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "2cc7dbf5-b625-4ac7-81d6-39623280b24d",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "adc8937e-1259-45bd-af5e-ffe892eb1a88",
+                                "relationshipConcept": "d9c30118-e13b-440f-8a5d-dc5c18e25121",
+                                "useOntologyRelationship": false
                             },
                             {
                                 "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "ontologyProperty": "",
+                                "relationshipCollection": "00000000-0000-0000-0000-000000000005",
+                                "relationshipConcept": "ac41d9be-79db-4256-b368-2f4559cfbe55",
                                 "useOntologyRelationship": true
                             }
                         ],
@@ -4352,8 +4358,11 @@
                             {
                                 "graphid": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "c069bc82-3e68-49b6-a008-e5ca6dd26fc6",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "adc8937e-1259-45bd-af5e-ffe892eb1a88",
+                                "relationshipConcept": "3a1446dc-0751-4b24-a7df-372ec0642a39",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -4985,8 +4994,11 @@
                             {
                                 "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "d9bf1253-2246-4006-a540-b1ac70481d78",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "adc8937e-1259-45bd-af5e-ffe892eb1a88",
+                                "relationshipConcept": "36e577b4-febe-4029-8cd7-34829405fb57",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -5787,9 +5799,12 @@
                             {
                                 "graphid": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
                                 "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to",
+                                "inverseRelationshipConcept": "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa",
                                 "name": "Digital Resources",
                                 "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "adc8937e-1259-45bd-af5e-ffe892eb1a88",
+                                "relationshipConcept": "be3f33e9-216d-4355-8766-aced1e95616c",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -5944,9 +5959,12 @@
                             {
                                 "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                                 "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P12i_was_present_at",
+                                "inverseRelationshipConcept": "fe4e083a-d764-4eee-806c-3b96beb2cdbd",
                                 "name": "Physical Thing",
                                 "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P12_occurred_in_the_presence_of",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "adc8937e-1259-45bd-af5e-ffe892eb1a88",
+                                "relationshipConcept": "4d8bb347-023d-498c-af87-4cb004ac938e",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -5976,7 +5994,11 @@
                         "graphs": [
                             {
                                 "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
-                                "name": "Physical Thing"
+                                "inverseRelationshipConcept": "ea975259-b349-43b9-85fb-8c762a41c484",
+                                "name": "Physical Thing",
+                                "relationshipCollection": "adc8937e-1259-45bd-af5e-ffe892eb1a88",
+                                "relationshipConcept": "0233939a-4b2b-4695-8020-9604c87bfdf4",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -6006,7 +6028,11 @@
                         "graphs": [
                             {
                                 "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
-                                "name": "Physical Thing"
+                                "inverseRelationshipConcept": "dee862c0-954e-41e1-95e8-30102e39265f",
+                                "name": "Physical Thing",
+                                "relationshipCollection": "adc8937e-1259-45bd-af5e-ffe892eb1a88",
+                                "relationshipConcept": "1caa8744-6bc4-4f40-839e-1d96715cfa85",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -6383,9 +6409,8 @@
             "publication": {
                 "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
                 "notes": null,
-                "publicationid": "e5be2ffa-2a99-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-24T20:18:16.787",
-                "user_id": 1
+                "publicationid": "9a702c16-2c00-11ee-a7c6-913c09b89e22",
+                "published_time": "2023-07-26T15:05:59.772"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -6414,27 +6439,6 @@
                 "en": "Projects, Research Tasks and Experiments"
             },
             "template_id": "4c864659-fc0d-45ec-a4da-c8fb8a7ec24e",
-            "topnode": {
-                "alias": "sampling_activity",
-                "config": {},
-                "datatype": "semantic",
-                "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                "exportable": false,
-                "fieldname": null,
-                "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
-                "hascustomalias": false,
-                "is_collector": false,
-                "isrequired": false,
-                "issearchable": true,
-                "istopnode": true,
-                "name": "Sampling Activity",
-                "nodegroup_id": null,
-                "nodeid": "03357894-1d9d-11eb-a29f-024e0d439fdb",
-                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
-                "parentproperty": "",
-                "sortorder": 0,
-                "sourcebranchpublication_id": null
-            },
             "version": ""
         }
     ],

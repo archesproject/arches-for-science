@@ -82,7 +82,7 @@
                     "instructions": {
                         "en": "Select the scale of the project (i.e. initiative, project, research task)"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Scale of Project"
                     },
@@ -198,7 +198,7 @@
                     "instructions": {
                         "en": "Enter the dates of the project. "
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Dates of Project"
                     },
@@ -227,7 +227,7 @@
                     "instructions": {
                         "en": "Enter the name of research project or task."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Name of Project"
                     },
@@ -527,7 +527,7 @@
                     "instructions": {
                         "en": "Describe the project and its objectives. Add a new statement for additional information (ex. rights statement,etc etc)"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Statement about Project"
                     },
@@ -695,7 +695,7 @@
                     "instructions": {
                         "en": "Select the objects or groups of objects (collections) that are part of this project."
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Object or Collection Referenced in Project"
                     },
@@ -724,7 +724,7 @@
                     "instructions": {
                         "en": "Person(s) or group(s) that participated in the project"
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Project Team"
                     },
@@ -3488,7 +3488,7 @@
             ],
             "graphid": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
             "iconclass": "fa fa-youtube-play",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -4779,8 +4779,11 @@
                             {
                                 "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "d9bf1253-2246-4006-a540-b1ac70481d78",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "ac85c692-0d2b-4132-8e5f-2ec3138294d5",
+                                "relationshipConcept": "36e577b4-febe-4029-8cd7-34829405fb57",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -5938,8 +5941,11 @@
                             {
                                 "graphid": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "1bba5905-5893-454e-818a-eb8006e65263",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "ac85c692-0d2b-4132-8e5f-2ec3138294d5",
+                                "relationshipConcept": "5799681f-f781-43be-a7a8-9ebc8d30670c",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -5970,14 +5976,20 @@
                             {
                                 "graphid": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "2cc7dbf5-b625-4ac7-81d6-39623280b24d",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "ac85c692-0d2b-4132-8e5f-2ec3138294d5",
+                                "relationshipConcept": "a722ee0d-05e0-47b9-936e-f32fb141c640",
+                                "useOntologyRelationship": false
                             },
                             {
                                 "graphid": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "2cc7dbf5-b625-4ac7-81d6-39623280b24d",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "ac85c692-0d2b-4132-8e5f-2ec3138294d5",
+                                "relationshipConcept": "a722ee0d-05e0-47b9-936e-f32fb141c640",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -6003,7 +6015,12 @@
                 }
             ],
             "ontology_id": "0b1f5462-faa7-11e9-8f09-3af9d3b32b71",
-            "publication": null,
+            "publication": {
+                "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
+                "notes": null,
+                "publicationid": "c8c66310-2bff-11ee-a7c6-913c09b89e22",
+                "published_time": "2023-07-26T15:00:08.016"
+            },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
@@ -6031,27 +6048,6 @@
                 "en": "Projects, Research Tasks and Experiments"
             },
             "template_id": "2b124304-6e42-4c0c-8161-14c010dcef71",
-            "topnode": {
-                "alias": "project",
-                "config": {},
-                "datatype": "semantic",
-                "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                "exportable": false,
-                "fieldname": null,
-                "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
-                "hascustomalias": false,
-                "is_collector": false,
-                "isrequired": false,
-                "issearchable": true,
-                "istopnode": true,
-                "name": "Project",
-                "nodegroup_id": null,
-                "nodeid": "0b92f217-ca85-11e9-b05e-a4d18cec433a",
-                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E7_Activity",
-                "parentproperty": "",
-                "sortorder": 0,
-                "sourcebranchpublication_id": null
-            },
             "version": ""
         }
     ],

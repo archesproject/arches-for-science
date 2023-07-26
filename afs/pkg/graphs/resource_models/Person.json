@@ -575,7 +575,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": false,
+                    "is_editable": true,
                     "name": {
                         "en": "Name of Person"
                     },
@@ -14532,7 +14532,7 @@
             ],
             "graphid": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
             "iconclass": "fa fa-user",
-            "is_editable": false,
+            "is_editable": true,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -18203,8 +18203,11 @@
                             {
                                 "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "d9bf1253-2246-4006-a540-b1ac70481d78",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "cb3e0447-a6f4-4137-b376-99c3c32bd4c6",
+                                "relationshipConcept": "36e577b4-febe-4029-8cd7-34829405fb57",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -25184,9 +25187,8 @@
             "publication": {
                 "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
                 "notes": null,
-                "publicationid": "f57bb6ba-2a8f-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-24T19:07:08.228",
-                "user_id": 1
+                "publicationid": "c6f3dfb0-2bfd-11ee-a7c6-913c09b89e22",
+                "published_time": "2023-07-26T14:45:45.965"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -25215,27 +25217,6 @@
                 "en": "An individual, named human person"
             },
             "template_id": "15d3ab75-1191-41f0-a766-e7e8ce7b9ca9",
-            "topnode": {
-                "alias": "person",
-                "config": {},
-                "datatype": "semantic",
-                "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                "exportable": false,
-                "fieldname": null,
-                "graph_id": "f71f7b9c-b25b-11e9-901e-a4d18cec433a",
-                "hascustomalias": false,
-                "is_collector": false,
-                "isrequired": false,
-                "issearchable": true,
-                "istopnode": true,
-                "name": "Person",
-                "nodegroup_id": null,
-                "nodeid": "f71f770a-b25b-11e9-a9c3-a4d18cec433a",
-                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
-                "parentproperty": "",
-                "sortorder": 0,
-                "sourcebranchpublication_id": null
-            },
             "version": ""
         }
     ],

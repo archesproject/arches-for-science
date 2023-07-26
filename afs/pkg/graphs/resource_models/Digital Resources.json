@@ -9170,8 +9170,11 @@
                             {
                                 "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "d9bf1253-2246-4006-a540-b1ac70481d78",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "a978368f-4219-4c27-a3fe-42e543919f58",
+                                "relationshipConcept": "36e577b4-febe-4029-8cd7-34829405fb57",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -9727,8 +9730,11 @@
                             {
                                 "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                                 "inverseOntologyProperty": "",
+                                "inverseRelationshipConcept": "1f598f8e-593c-4152-a53f-5def10a36fd8",
                                 "ontologyProperty": "",
-                                "useOntologyRelationship": true
+                                "relationshipCollection": "a978368f-4219-4c27-a3fe-42e543919f58",
+                                "relationshipConcept": "6f7f8889-e18b-4f41-b97f-98a9a0b4edc7",
+                                "useOntologyRelationship": false
                             }
                         ],
                         "searchDsl": "",
@@ -11692,9 +11698,8 @@
             "publication": {
                 "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
                 "notes": null,
-                "publicationid": "d172200e-2ab9-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-25T00:06:46.629",
-                "user_id": 1
+                "publicationid": "9e7d6764-2bfc-11ee-a7c6-913c09b89e22",
+                "published_time": "2023-07-26T14:37:28.583"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -11723,27 +11728,6 @@
                 "en": "Digital images, texts or other document types. Might be a single file or multiple, consistent files."
             },
             "template_id": "e6390e54-31c4-4055-b064-ea9296c1c13a",
-            "topnode": {
-                "alias": "digital_resources",
-                "config": {},
-                "datatype": "semantic",
-                "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                "exportable": false,
-                "fieldname": null,
-                "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
-                "hascustomalias": false,
-                "is_collector": false,
-                "isrequired": false,
-                "issearchable": true,
-                "istopnode": true,
-                "name": "Digital Resources",
-                "nodegroup_id": null,
-                "nodeid": "707ae319-ca7a-11e9-9bdf-a4d18cec433a",
-                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object",
-                "parentproperty": "",
-                "sortorder": 0,
-                "sourcebranchpublication_id": null
-            },
             "version": ""
         }
     ],
