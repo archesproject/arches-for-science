@@ -19,11 +19,8 @@ from django.conf import settings
 
 class AddChemicalAnalysisImagesFileUpload(View):
     def post(self, request):
-        recorded_value_node_id = "dd596aae-c457-11e9-956b-a4d18cec433a"
         observation_digital_source_nodegroup_id = "0ae149ba-8e30-11eb-a9c4-faffc265b501"
         observation_digital_source_node_id = "0ae14d2a-8e30-11eb-a9c4-faffc265b501"
-        digital_reference_node_id = "a298ee52-8d59-11eb-a9c4-faffc265b501"
-        digital_reference_node_group_id = "8a4ad932-8d59-11eb-a9c4-faffc265b501"
         dataset_name_node_group_id = "d2fdae3d-ca7a-11e9-ad84-a4d18cec433a"
         dataset_name_node_id = "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"
         dataset_file_node_group_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
@@ -32,52 +29,47 @@ class AddChemicalAnalysisImagesFileUpload(View):
         transaction_id = request.POST.get("transaction_id")
         observation_id = request.POST.get("observation_id")
         digital_resource_instance_ids = []
-        # posted_dataset = request.POST.get("dataset")
-        # observation_ref_tile = request.POST.get("observation_ref_tile", None)
 
         files = request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), [])
         removed_files = []
-        # Create dataset for each file
-        # 'Upload' files
         # Relate each dataset to existing observation
 
 
-        with transaction.atomic():
+        def create_reference_to_observation(dataset_resource):
+            observation_reference_tile = Tile().get_blank_tile_from_nodegroup_id(observation_digital_source_nodegroup_id)
+            observation_reference_tile.resourceinstance_id = observation_id
+            observation_reference_tile.data[observation_digital_source_node_id] = [
+                {
+                    "resourceId": str(dataset_resource.resourceinstanceid),
+                    "ontologyProperty": "",
+                    "inverseOntologyProperty": "",
+                }
+            ]
+
+            observation_reference_tile.save(user=request.user, transaction_id=transaction_id)
 
 
-            def create_reference_to_observation(dataset_resource):
-                observation_reference_tile = Tile().get_blank_tile_from_nodegroup_id(observation_digital_source_nodegroup_id)
-                observation_reference_tile.resourceinstance_id = observation_id
-                observation_reference_tile.data[observation_digital_source_node_id] = [
-                    {
-                        "resourceId": str(dataset_resource.resourceinstanceid),
-                        "ontologyProperty": "",
-                        "inverseOntologyProperty": "",
-                    }
-                ]
+        def create_digital_resource(file):
+            # create a dataset (digital resource) and a name tile for it.
+            graphid = Node.objects.filter(nodegroup=dataset_name_node_group_id)[0].graph_id
+            dataset_resource = Resource()
+            dataset_resource.graph_id = graphid
+            dataset_resource.save(user=request.user, transaction_id=transaction_id)
 
-                observation_reference_tile.save(user=request.user, transaction_id=transaction_id)
+            dataset_name_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_name_node_group_id)
+            dataset_name_tile.resourceinstance_id = dataset_resource.resourceinstanceid
 
-
-            def create_digital_resource(file):
-                # create a dataset (digital resource) and a name tile for it.
-                graphid = Node.objects.filter(nodegroup=dataset_name_node_group_id)[0].graph_id
-                dataset_resource = Resource()
-                dataset_resource.graph_id = graphid
-                dataset_resource.save(user=request.user, transaction_id=transaction_id)
-
-                dataset_name_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_name_node_group_id)
-                dataset_name_tile.resourceinstance_id = dataset_resource.resourceinstanceid
-
-                string_data_type = StringDataType()
-                dataset_name_tile.data[dataset_name_node_id] = string_data_type.transform_value_for_tile(file['name'])
-                dataset_name_tile.save(transaction_id=transaction_id)
-                dataset_resource.load_tiles(user=request.user)
-                
-                return dataset_resource
+            string_data_type = StringDataType()
+            dataset_name_tile.data[dataset_name_node_id] = string_data_type.transform_value_for_tile(file['name'])
+            dataset_name_tile.save(transaction_id=transaction_id)
+            dataset_resource.load_tiles(user=request.user)
             
+            return dataset_resource
+        
 
-            def save_file(dataset_resource, file):
+        def save_file(dataset_resource, file):
+
+
                 dataset_default_format = None
 
                 if file[0] is not None:
@@ -137,15 +129,8 @@ class AddChemicalAnalysisImagesFileUpload(View):
                         raise
                     else:
                         file_data["tileid"] = response["tileid"]
-            # try:
-            #     file_response = [
-            #         {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
-            #         for f in new_files
-            #     ]
-            # except KeyError:
-            #     # XRF files do not have a renderer (yet) and use this same endpoint.
-            #     file_response = [{"name": f[0]["name"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]} for f in new_files]
 
+        with transaction.atomic():
             dataset_files = request.FILES.getlist("file-list_{}_preloaded".format(dataset_file_node_id), []) + request.FILES.getlist(
                 "file-list_{}".format(dataset_file_node_id), []
             )
@@ -166,10 +151,5 @@ class AddChemicalAnalysisImagesFileUpload(View):
         return JSONResponse(
             {
                 "digitalResourceInstanceIds": digital_resource_instance_ids
-                # "observationReferenceTileId": str(observation_reference_tile.tileid),
-                # "datasetResourceId": str(dataset_name_tile.resourceinstance.resourceinstanceid),
-                # "datasetNameTileId": dataset_name_tile.tileid,
-                # "removedFiles": removed_files,
-                # "files": file_response,
             }
         )

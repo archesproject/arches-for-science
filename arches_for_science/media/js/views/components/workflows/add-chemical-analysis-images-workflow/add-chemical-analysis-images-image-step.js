@@ -46,11 +46,6 @@ define([
         this.observationDigitalReferencePreferredManifestResourceData = ko.observableArray();
         this.observationDigitalReferenceAlternateManifestResourceData = ko.observableArray();
 
-
-
-
-        
-
         this.physicalThingResourceId = koMapping.toJS(params.physicalThingResourceId);
 
         this.physicalThingDigitalReferenceCard = ko.observable();
@@ -63,9 +58,6 @@ define([
         this.physicalThingDigitalReferencePreferredManifestResourceData = ko.observableArray();
         this.physicalThingDigitalReferenceAlternateManifestResourceData = ko.observableArray();
 
-
-
-        
         var digitalResourceNameNodegroupId = 'd2fdae3d-ca7a-11e9-ad84-a4d18cec433a';
         var digitalResourceNameCard = params.form.topCards.find(function(topCard) {
             return topCard.nodegroupid === digitalResourceNameNodegroupId;
@@ -154,11 +146,6 @@ define([
 
                     formData.append(`file-list_${datasetFileNodeId}_data`, JSON.stringify(fileInfo));
                     formData.append(`file-list_${datasetFileNodeId}_preloaded`, new Blob([file]), file.name);
-
-
-                    // self.fileData.push(JSON.stringify(fileInfo));
-                    // self.fileDataPreloaded.push(new Blob(), file.name)
-                    // formData.append(`file-list_${digitalResourceFileNodegroupId}_preloaded`, new Blob(), file.name);
                 }
             }
         };
@@ -173,10 +160,7 @@ define([
                 // Then save a file tile to the digital resource for each associated file
                 self.saveDatasetFile(self.formData, file);
             });
-            
-            // self.formData.append('file_data', JSON.stringify(self.fileData));
-            // // self.formData.append('file_data_preloaded', JSON.stringify(self.fileDataPreloaded));
-        });
+                });
 
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
