@@ -1,0 +1,1994 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <skos:Concept rdf:about="https://afs.test.fargeo.com/f54b7c1d-6fd2-4d10-8c64-01e8b9f74d63">
+    <skos:inverseOf>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/82535c52-9e39-428b-947d-f04ef5533a28">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f54b7c1d-6fd2-4d10-8c64-01e8b9f74d63"/>
+        <skos:prefLabel xml:lang="en">{"id": "61730926-a05d-440b-a9fb-554850e5af69", "value": "period of birth event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:inverseOf>
+    <skos:prefLabel xml:lang="en">{"id": "bcc0dc37-c289-4dc7-a96f-5c5e2eceaf9e", "value": "period of birth of"}</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001">
+        <dcterms:title xml:lang="en-us">{"id": "d8c60bf4-e786-11e6-905a-b756ec83dad5", "value": "Arches"}</dcterms:title>
+        <skos:hasTopConcept rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000004"/>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://afs.test.fargeo.com/5a7c3476-2197-4277-b459-d4d8b95e730d">
+    <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+    <skos:prefLabel xml:lang="en">{"id": "c468ed9e-f720-4e6b-bb76-8c980a545636", "value": "physical object used in curation of"}</skos:prefLabel>
+    <skos:inverseOf>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/25fcee5d-e563-470f-beb3-c85fc33f56ff">
+        <skos:prefLabel xml:lang="en">{"id": "d9e94339-f203-4f1d-9d1a-65947ff02582", "value": "physical object used in curation event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5a7c3476-2197-4277-b459-d4d8b95e730d"/>
+      </skos:Concept>
+    </skos:inverseOf>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://afs.test.fargeo.com/90d7c629-8d3d-4814-9e53-697a7c82a030">
+    <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+    <skos:prefLabel xml:lang="en">{"id": "f7294b25-f50e-4062-ad08-c1f31e52a9aa", "value": "causally related to production of"}</skos:prefLabel>
+    <skos:inverseOf>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/9d612a11-accb-4476-8eaa-fb3222a34682">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/90d7c629-8d3d-4814-9e53-697a7c82a030"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "2c9ff401-1fa0-45db-b9d4-7de19cb7e672", "value": "event causal to production"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:inverseOf>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://afs.test.fargeo.com/8be4ac1b-581b-4967-b7d6-5e2fe36fadb6">
+    <skos:prefLabel xml:lang="en">{"id": "76702aef-f24f-4609-b71d-fe52aba1b676", "value": "period of creation"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+    <skos:inverseOf>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b7b40309-f000-41cb-bc1b-630487e657ee">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/8be4ac1b-581b-4967-b7d6-5e2fe36fadb6"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "5d3cd254-96c4-4e2b-b038-36e82b0f0c6f", "value": "period of creation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:inverseOf>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://afs.test.fargeo.com/d94192dd-b513-443e-b20f-b5002aba0176">
+    <skos:inverseOf>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d49cabd7-bbbc-4cba-8d61-23c3a794ac59">
+        <skos:prefLabel xml:lang="en">{"id": "a25c7ed3-00b1-4e5a-8840-95f4cd9b4744", "value": "location of group leaving event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d94192dd-b513-443e-b20f-b5002aba0176"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:inverseOf>
+    <skos:prefLabel xml:lang="en">{"id": "529c5bf5-b55b-47b8-8d27-bf1227d79c47", "value": "location of group leaving event of"}</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000004">
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5c69a1f4-01ca-4ee1-8000-493bc6b9b28e">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/941d2212-7f9a-46ce-8fc2-14ca6f068511"/>
+        <skos:prefLabel xml:lang="en">{"id": "fe4e083a-d764-4eee-806c-3b96beb2cdbd", "value": "sampled by"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b65471e5-4a52-4fd5-8bd2-73eb0e98f029">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/dd621f69-7e2a-492c-9921-30d42bbac20d"/>
+        <skos:prefLabel xml:lang="en">{"id": "393152b2-cb84-49de-98fe-7a490e7175b3", "value": "refers to"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/507664bb-567a-4833-a142-52358ec05b7d">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/147bb168-4bd4-4c99-a3dd-5e799e6cab0c"/>
+        <skos:prefLabel xml:lang="en">{"id": "5c717abe-23f1-4f91-8dbd-57fda7de5ccb", "value": "parent textual work"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/40a37f81-29fa-4d6e-a0fa-ea99d894343d">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "bfb0c238-302d-4185-87ee-0f05751154a4", "value": "physical object used in group joining event of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/60b354e4-52fd-4c7b-9fc8-83350e894738"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/de8785a1-26e0-47f6-8612-a1909d88f55e">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2ab5c7a0-d903-4d2d-bf47-1d866d78f170"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "6a2d8063-d3da-41ba-b2b3-2d05aaca8a9c", "value": "location of creation"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/fc49c02e-42cf-4ebb-8952-ddd323c4dd7f">
+        <skos:prefLabel xml:lang="en">{"id": "34beffd3-fd0d-441f-ae7b-97e8af068aa1", "value": "procedure used in"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a6b75972-d4f5-47b3-9b15-e8edacfa910d"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4ddf7134-357f-4a39-8804-36b791b9c61f"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/46ded2f4-2147-4136-92ed-1fa178f79b10"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e0b7f712-f47f-4353-a454-b8e61a31a66a">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/02350960-6bac-47c9-abd9-5995ecfcd4da"/>
+        <skos:prefLabel xml:lang="en">{"id": "63939f91-9596-46d3-8f6d-9af7d5e23105", "value": "used in group leaving event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/341e95b4-a453-45ca-ad53-46863ab6cf85">
+        <skos:prefLabel xml:lang="en">{"id": "8f59d634-c9d2-4d87-bf0b-8ecdee117670", "value": "digital source for visual work"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/da6bcc24-8780-47f8-a1c4-4c39e4dca03c"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/ae38a9a6-5e28-41ff-957d-f9527a07a57a">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/651dec1d-d823-4b52-a37b-47e7fe013ff2"/>
+        <skos:prefLabel xml:lang="en">{"id": "1080a946-2cce-4574-8168-38006b0c7f14", "value": "group joined"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000007">
+        <skos:prefLabel xml:lang="en-us">{"id": "ac41d9be-79db-4256-b368-2f4559cfbe55", "value": "is related to"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b55dcf94-3e0d-4d33-af82-9262dc4e2e0f">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e5657d2a-4609-4c99-9131-12f91089b5b8"/>
+        <skos:prefLabel xml:lang="en">{"id": "3ceabbe3-31c6-4a4e-b9c8-6182ce0dbda6", "value": "period of publication event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c06853d6-857b-49e1-9ce4-e94e67d81554">
+        <skos:prefLabel xml:lang="en">{"id": "45f6876f-eb22-4179-aa70-359d5681a246", "value": "period of destruction event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/88ab2b99-d06a-46a1-b886-c5fc2d16be37"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/203d8caa-92d1-4d47-a14c-a377658a7ffe">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f5cc9b43-ae9b-43ed-91e5-baf11f7eafd2"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "b0e2b408-a0eb-4b4f-ab3f-fce3af4d9ea3", "value": "period of part removal event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6add5a1c-f3ad-4393-ad77-3092929d3079">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2507a724-9cb6-420d-8010-47a053c9bb5a"/>
+        <skos:prefLabel xml:lang="en">{"id": "2191cba6-6c85-4ba3-8738-952d5ac228b2", "value": "source reference work for birth event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/db499c64-e4fa-4b38-846e-7066796eabe1">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a949df20-5c8c-4ad9-b2f4-03dc9b8d09ee"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "2aadd7c5-bfc4-4a14-a0e9-b05645d207a2", "value": "influence on group joining event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/774a6a6e-66f0-4b6c-92de-ea1f8c0c1018">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c643ce0e-ccfa-4980-9346-abb2a959ee39", "value": "observation instrument used in"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6398dee0-6c11-40aa-97ef-496009784adb">
+        <skos:prefLabel xml:lang="en">{"id": "c7a52a2a-1a5b-47eb-8267-32f2a8f7bdd5", "value": "source reference for creation of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/cb4cc06d-3d14-480f-aab1-b02c28042946"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/904f4d83-449f-4848-8444-d19c598a70e5">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/688998b4-4abf-4b21-aa02-6a3a2ebd28e2"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "0a0d0bee-cc67-432b-885d-8a7aae82441e", "value": "actor in curation event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2c9c3fac-817d-4bf4-8598-e788c9997064">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b847a987-4d8a-4a0b-93fa-8e236585bfbc"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "65072fa3-93df-406a-9d68-5157afd21abf", "value": "source reference for"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/8455d232-8591-4e04-ac90-1f04ccd46f73">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/cf4707c0-4fbf-46a7-998c-fa04f9552a96"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "d9bf1253-2246-4006-a540-b1ac70481d78", "value": "source reference for name of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/35cd4540-54b2-4bd0-a7d8-8d7801c177ef">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "e2bc3195-1860-4966-8742-b3a1498f41d0", "value": "source reference for curation of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f3f82fdc-b944-44d3-ad88-bdae0bf97b74"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/abef629f-5d8c-45ef-be56-ab9d6f7c9ba4">
+        <skos:prefLabel xml:lang="en">{"id": "43a2f393-bec8-4c91-9952-95f1316b65d6", "value": "source reference for death of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5188d98d-4faf-4150-aaaf-d70038f9e202"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4455ae0b-c49e-4940-b43a-4b818848fdd4">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3c44d93c-01e5-4768-9b00-61db7f350d6a"/>
+        <skos:prefLabel xml:lang="en">{"id": "3218b329-fd63-4272-9bc5-35e8e6c3843a", "value": "influence on creation of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2224c58e-75aa-4da7-be59-05c984002196">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/afc13dca-6cef-4a8a-95a5-071ff442988f"/>
+        <skos:prefLabel xml:lang="en">{"id": "d3da7628-3286-4217-8480-f064f80be699", "value": "digital reference for"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/eef169bf-1736-495e-bfae-f0bf3a5a2189">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/55a12730-d6e1-4809-81df-4973a723f5b1"/>
+        <skos:prefLabel xml:lang="en">{"id": "96e9f515-5a63-4c22-b75b-7794ab227a56", "value": "text carried by physical object"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6e229a28-05ae-483a-b6ec-16fb3f9af098">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "97c2e045-2a12-4d98-b5b9-34b7418cf2a0", "value": "period of professional activity of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4574d04f-cf3d-4c2f-91d7-0c50f3d7aa14"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/9a887cba-44fe-49b1-a36c-c517ab107a94">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "440d1a02-6b1e-4dc4-a458-5738cc237971", "value": "influence on part removal event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/16ef6491-1bb6-42cf-ad67-ce870f97be25">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "9e860cf6-8fc0-481f-b11f-5a904f89734b", "value": "parent group"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/61a740d5-03dd-460a-8b45-6ae438b4c352">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/feabbbcb-92a4-4c1f-b4cd-d4ad84802a88"/>
+        <skos:prefLabel xml:lang="en">{"id": "9a8c0ea0-ee70-4d4d-b53d-e7d9bb4fd0f3", "value": "influence on publication event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d9eba15b-b804-4be2-9d76-a71308a7a5dc">
+        <skos:prefLabel xml:lang="en">{"id": "094c0d85-a6e1-41bd-992e-6fdf0fb2e1c4", "value": "physical object removed by part removal event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/1b8bcbc1-60b1-4476-b52a-659a59f891ad"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/bf289514-b63e-46e6-9575-ac40d643f5e7">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3d5fe8da-ee28-44d1-bb12-d736c9ebc8b9"/>
+        <skos:prefLabel xml:lang="en">{"id": "7814ef6f-a68f-4167-8808-ba012a11cb53", "value": "parent place"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2f4c6357-f437-4948-9a7c-78350dfe37b8">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "2cb42e50-8302-40fa-96e1-bf1121d38d25", "value": "source reference for group leaving event of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c601ffd7-0ec9-4208-8591-756a0aa86755"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d2345f0c-b4e8-4190-b199-cbf283f405f5">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f252adb6-3b7a-44ae-815d-10a72ff83666"/>
+        <skos:prefLabel xml:lang="en">{"id": "93e2db72-7f35-43ac-80a7-1abbee3488a5", "value": "modification used in"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/dd621f69-7e2a-492c-9921-30d42bbac20d">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b65471e5-4a52-4fd5-8bd2-73eb0e98f029"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "4212793b-ba01-4c64-86bd-63440a0caf3e", "value": "is referred to in"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/590afd37-bae2-4f4c-bdc4-07da5d69057b">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/eaea40ec-8d19-4cc6-ae36-7ad042d50e3b"/>
+        <skos:prefLabel xml:lang="en">{"id": "3b5cba65-a8f0-4b9d-95e2-0cb51e626c2e", "value": "source reference for set addition event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/14e00b4d-126d-4b88-a9fa-76a6ae5dd089">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3b515129-0c9e-4471-b2e0-2d64231a8e43"/>
+        <skos:prefLabel xml:lang="en">{"id": "51399902-cf7e-4a61-9f76-6cdde8c454a2", "value": "occurs before creation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2e20c0c0-154a-484f-9f2c-81e6dc680586">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/63af640c-f979-47ad-9cb1-edb5e685d756"/>
+        <skos:prefLabel xml:lang="en">{"id": "e5c17471-fd66-4951-9828-d7d895fc698d", "value": "period of curation"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/02350960-6bac-47c9-abd9-5995ecfcd4da">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e0b7f712-f47f-4353-a454-b8e61a31a66a"/>
+        <skos:prefLabel xml:lang="en">{"id": "19d2d59e-7051-49b4-b22e-dccd46c0a2b1", "value": "physical object used in group leaving event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/68236382-7c0b-495b-a0c3-ad694e87914e">
+        <skos:prefLabel xml:lang="en">{"id": "02404924-40a4-44aa-bc07-e7b70e5cc718", "value": "physical object part of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e844ea45-fb8c-43e1-bf5d-34dda5575c14"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/27b0c339-73b3-41c7-9a6a-736085f7cfb3"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6ea01af9-52df-4ddf-bd9e-2efda73f574f">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c6dd62b4-e4c9-4346-b6b7-b2bfd3ab5104", "value": "creator of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/00a828d4-74d8-45ed-b4ec-cf6f709bb693"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a949df20-5c8c-4ad9-b2f4-03dc9b8d09ee">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/db499c64-e4fa-4b38-846e-7066796eabe1"/>
+        <skos:prefLabel xml:lang="en">{"id": "3c696c8e-cfea-4d4e-9b3e-13c01ecef4aa", "value": "influence on group joining event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/406d3dd2-2308-4bd8-9ad0-74ceeecd4e95">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/237f9065-c319-4c54-a8b5-065fd0fb7f92"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "67faf7c3-be04-4c82-bdbc-b03e74ff3b7f", "value": "source reference for dissolution of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5d228ed2-d659-40ef-9f43-ca3209ea0896">
+        <skos:prefLabel xml:lang="en">{"id": "49c40bf4-e797-4d36-8d54-072cf1fada88", "value": "related project"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5f20f94f-880a-4891-905a-48a2c4be1c73"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/83da6018-d9b0-4524-a239-e8e02bdef92a">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2e0fefb8-7556-4ffb-b946-e3546bac2e72"/>
+        <skos:prefLabel xml:lang="en">{"id": "d9c30118-e13b-440f-8a5d-dc5c18e25121", "value": "actor carrying out sampling activity"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5d21b903-1d8b-4539-9185-a5c07006f16f">
+        <skos:prefLabel xml:lang="en">{"id": "891934b3-c9f5-4d8a-8551-edd995aef150", "value": "period of group joining event of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/7090abfd-2702-47b7-8a66-4186cb607197"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f913b688-45d3-4d9f-818b-081b9232ca4b">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5283f14c-71c8-4a02-803d-b98ddc78fe17"/>
+        <skos:prefLabel xml:lang="en">{"id": "3ac23eee-fc00-485e-af5a-0918441b575a", "value": "location of publication event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/58c824cc-8ed7-4cd4-8431-125a7dc924e7">
+        <skos:prefLabel xml:lang="en">{"id": "f8eb4000-16c1-4dc5-bde1-1cfba3b74807", "value": "source reference for part removal event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/10871f3f-688c-400e-8e60-3e072457d782"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/55bda626-a4f8-4e30-82b8-ed438a02edc7">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/8ca43306-a4ee-426f-967f-12f327ead6a2"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "cd7dfbf1-f474-422d-ab8c-8758a6837a32", "value": "influence on group leaving event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:prefLabel xml:lang="en-us">{"id": "c12e7e6c-e417-11e6-b14b-0738913905b4", "value": "Resource To Resource Relationship Types"}</skos:prefLabel>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6a86dfe8-4cca-409f-9fbe-95dd3e1c5a16">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "4c1e9d1a-76a7-4555-8faa-f11d5796ac99", "value": "has observation activity"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/0f434613-5533-490e-89f0-0aae96040b52"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/941d2212-7f9a-46ce-8fc2-14ca6f068511">
+        <skos:prefLabel xml:lang="en">{"id": "4d8bb347-023d-498c-af87-4cb004ac938e", "value": "overall object sampled"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5c69a1f4-01ca-4ee1-8000-493bc6b9b28e"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/795ed653-676b-4057-b468-fcbe1a4ec8c5">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/87bfe412-f950-46f1-b27f-0f9a1a56f4cf"/>
+        <skos:prefLabel xml:lang="en">{"id": "3091b0d4-6fa3-4af4-8d61-88ed08557e8e", "value": "physical object used in publication event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5f20f94f-880a-4891-905a-48a2c4be1c73">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5d228ed2-d659-40ef-9f43-ca3209ea0896"/>
+        <skos:prefLabel xml:lang="en">{"id": "c252f48a-3529-4a7a-b873-fed4e9259e1f", "value": "related to set"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/deb7b57d-3b11-4e62-866f-b48cb12a4dbe">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c07f05bc-0397-49c8-880a-46ed69ce2a4a", "value": "digital resource part of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/525aee44-e205-4684-9218-b5c4f39397ee"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/8078e585-b5bc-4016-ba55-8161b4cf4c41">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5957d1e1-64be-415a-aa72-653243364544"/>
+        <skos:prefLabel xml:lang="en">{"id": "ffcdb2e4-8efa-49cd-b317-e52751a5cffc", "value": "period of group leaving event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/96caef6b-c991-445b-a9fc-edacf6772ca4">
+        <skos:prefLabel xml:lang="en">{"id": "1bba5905-5893-454e-818a-eb8006e65263", "value": "set used in"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3b515129-0c9e-4471-b2e0-2d64231a8e43">
+        <skos:prefLabel xml:lang="en">{"id": "07bae5c2-5835-4c8a-b416-334acb661414", "value": "creation starts after event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/14e00b4d-126d-4b88-a9fa-76a6ae5dd089"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3ff85615-be42-4e63-a92e-c0074717ecf2">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/654d8f80-ed8c-42a9-a085-f9afc9d76493"/>
+        <skos:prefLabel xml:lang="en">{"id": "abe1b5f1-a8e3-42c5-b5a6-3382b75967d2", "value": "observed by"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/9d733804-5991-4980-a476-5d714f08d5d9">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/63e4f894-576a-4035-aa8b-f4b392efd20f"/>
+        <skos:prefLabel xml:lang="en">{"id": "f2af3eb8-1321-4a3a-bd28-31ff726e04c2", "value": "source reference for publication event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3077e707-7e96-4370-9e88-08d38a4e6fad">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/70847092-39b5-4620-97ed-2ec6e1a14c21"/>
+        <skos:prefLabel xml:lang="en">{"id": "9ff27c6a-dfe6-48bf-8f6f-5fd2c962c214", "value": "period"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/05137059-4a6c-4bf5-934d-c1ca7378246d">
+        <skos:prefLabel xml:lang="en">{"id": "4b724c9b-c858-49a3-b78a-c9b8b9ee8345", "value": "source reference work for contact information"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a7cb9b76-59e2-47d4-8da6-52891ebbf4a5"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/0f434613-5533-490e-89f0-0aae96040b52">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "5d7372a0-f802-4a94-a03e-4f7c7586dc04", "value": "parent project of observation"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6a86dfe8-4cca-409f-9fbe-95dd3e1c5a16"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/24f4f6ae-ca63-4559-bfec-f50ab6c8346b">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/aaf58bb4-82c4-4aa6-b8c0-7755018217eb"/>
+        <skos:prefLabel xml:lang="en">{"id": "2406a100-4b43-4e45-9da5-70aaed255f4c", "value": "location of production event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4a07b2a8-c879-43f4-9691-612335fb09d1">
+        <skos:prefLabel xml:lang="en">{"id": "0e0bd1f5-8f7a-419c-8919-531079610fe0", "value": "source reference for destruction event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/103f37b1-6d21-4889-99ad-2c82e8adf685"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2a343ae1-3e8d-43f7-a84e-fbf38dcda817">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6046ddcf-6698-4e9f-8c04-7459109d04e3"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "bcbe364d-083e-42c9-aa56-bf819600b6f2", "value": "location of professional activity of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4554b39c-d680-4dc3-a57e-cc44634114ba">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/095af6aa-f642-4051-86f0-a5c2a39800a7"/>
+        <skos:prefLabel xml:lang="en">{"id": "0280086a-e38d-4081-b9fb-22e5fbac8587", "value": "parent visual work"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/8e6005a1-849d-426e-b657-5907b817d79b">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/49961e2c-7ee0-4989-bae4-385e47472ef0"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "4d555e82-f710-4ede-b94e-98b1a2f3a4f1", "value": "physical object used in professional activity"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/88ab2b99-d06a-46a1-b886-c5fc2d16be37">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "0b928d99-17cb-4d3a-ad88-f729f853041e", "value": "period of destruction event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c06853d6-857b-49e1-9ce4-e94e67d81554"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/654d8f80-ed8c-42a9-a085-f9afc9d76493">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "efc8f0f4-ddb8-4e75-ae36-c7908b77fe7c", "value": "physical object observed"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3ff85615-be42-4e63-a92e-c0074717ecf2"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f252adb6-3b7a-44ae-815d-10a72ff83666">
+        <skos:prefLabel xml:lang="en">{"id": "8a7c85b6-9a0d-4464-a812-0cb8af5ff31c", "value": "tool used in modification"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d2345f0c-b4e8-4190-b199-cbf283f405f5"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5061b3a0-2e10-4b74-909a-2a8bfa4e5192">
+        <skos:prefLabel xml:lang="en">{"id": "1ca9b064-2668-4d78-aa47-c9c6e8217180", "value": "has influence on set addition event of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/facf36fa-b7ab-4307-bd1e-9471e37fde9e"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/87bfe412-f950-46f1-b27f-0f9a1a56f4cf">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/795ed653-676b-4057-b468-fcbe1a4ec8c5"/>
+        <skos:prefLabel xml:lang="en">{"id": "eb8a8bd0-c74e-4878-b46e-cb5ff12c71a2", "value": "physical object used in publication event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a7cb9b76-59e2-47d4-8da6-52891ebbf4a5">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/05137059-4a6c-4bf5-934d-c1ca7378246d"/>
+        <skos:prefLabel xml:lang="en">{"id": "b965036e-e0d9-4a90-932b-f381209e195c", "value": "source reference for contact information of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a65becad-25b5-4039-8dc0-f8d8c04af227">
+        <skos:prefLabel xml:lang="en">{"id": "8af0b47f-3be3-467f-a967-4d64a165f310", "value": "location of part removal event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4a313fdf-bad8-47a3-a0f3-3918de7d5920"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b5767b7c-6c4e-48bd-abfa-caf3ff139cc8">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c53742f1-4a2d-4b63-be4f-4cacc9bc9319"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "34ce4ca5-35e4-45fa-a930-78bb8a33c846", "value": "used in"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4942787a-6681-4d14-be93-dc7edb58d5bf">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a4ed26e7-7da4-4f68-84aa-e4136f599263"/>
+        <skos:prefLabel xml:lang="en">{"id": "bbc7aae7-d01e-421b-a220-cff02ef3d576", "value": "starts after creation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c19fd08b-6aed-4535-83a0-b80ff2655475">
+        <skos:prefLabel xml:lang="en">{"id": "83fcaa71-0fa5-4d56-b0ca-7bf58ff7d01f", "value": "has modification activity"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4e7a7cdf-2e4b-4ac7-995a-22d44d075115"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/da6bcc24-8780-47f8-a1c4-4c39e4dca03c">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/341e95b4-a453-45ca-ad53-46863ab6cf85"/>
+        <skos:prefLabel xml:lang="en">{"id": "09cf094c-b0e4-4217-82ab-4fca15c8fb1d", "value": "visual work referenced by digital source"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/103f37b1-6d21-4889-99ad-2c82e8adf685">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4a07b2a8-c879-43f4-9691-612335fb09d1"/>
+        <skos:prefLabel xml:lang="en">{"id": "14b910e1-ebdc-47d9-9bbe-cb4b8e478661", "value": "source reference work for destruction event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/46ded2f4-2147-4136-92ed-1fa178f79b10">
+        <skos:prefLabel xml:lang="en">{"id": "851ffdfa-5e58-403a-8d0d-3e85d0fd8d98", "value": "sampling procedure used"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/fc49c02e-42cf-4ebb-8952-ddd323c4dd7f"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/24ce7a28-25c7-4037-907e-319edad7f474">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2e0fefb8-7556-4ffb-b946-e3546bac2e72"/>
+        <skos:prefLabel xml:lang="en">{"id": "3c71b902-5542-456a-83c0-e884c9971383", "value": "actor carrying out observation"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/fdc542c4-9009-4558-9e90-28ef26d70f80">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "a0ed3c16-7b69-4db1-b2a1-2872ca8288d0", "value": "instrument used in observation"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4975d51f-8f85-4f86-8047-cbd123f52df1">
+        <skos:prefLabel xml:lang="en">{"id": "8ce530d1-548e-4a2f-bdb7-b31e2dae72b9", "value": "causally affected destruction of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/51613e01-7a47-4bb9-b9ae-75d449dbcda7"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/70847092-39b5-4620-97ed-2ec6e1a14c21">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3077e707-7e96-4370-9e88-08d38a4e6fad"/>
+        <skos:prefLabel xml:lang="en">{"id": "b9ad1f4c-a7f7-405e-9e39-d9daa39a9fd1", "value": "period of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d81a487b-712e-46e9-851d-52674ecbf9ff">
+        <skos:prefLabel xml:lang="en">{"id": "c56b032a-81f8-44ac-a6db-f048d385fa00", "value": "location of dissolution event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c7406ab4-e50c-47d2-8459-636186e25ebe"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/582ce144-b5a7-4b1b-883f-163f323d3a66">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "8808d1e5-49ad-4d47-bf4d-9301ceeb8d68", "value": "observation procedure used in"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/bd10b3df-47fc-49fb-a459-108f9cd60d16">
+        <skos:prefLabel xml:lang="en">{"id": "272c2bd9-b085-4417-b201-7f17b34b941c", "value": "dissolution event period"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c7613a4c-cce5-4709-b4f4-542909856180"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3d5fe8da-ee28-44d1-bb12-d736c9ebc8b9">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/bf289514-b63e-46e6-9575-ac40d643f5e7"/>
+        <skos:prefLabel xml:lang="en">{"id": "4470e433-909d-4663-834a-70eaf71027c2", "value": "has place part"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/49961e2c-7ee0-4989-bae4-385e47472ef0">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/8e6005a1-849d-426e-b657-5907b817d79b"/>
+        <skos:prefLabel xml:lang="en">{"id": "f6d7fed5-5fd5-4544-b67c-cef484ebbfd5", "value": "used in professional activity of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/cead6e47-d4b2-42fe-84b6-42bca2857d11">
+        <skos:prefLabel xml:lang="en">{"id": "71b72c6f-b455-460c-bb0b-93caf5edded7", "value": "physical object used in creation of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/af047bfd-5454-41ef-812a-9fbf6ad9a0ac"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c601ffd7-0ec9-4208-8591-756a0aa86755">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2f4c6357-f437-4948-9a7c-78350dfe37b8"/>
+        <skos:prefLabel xml:lang="en">{"id": "5c772a95-e997-4682-9583-72fcbb8c44c4", "value": "source reference work for group leaving event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/cb4cc06d-3d14-480f-aab1-b02c28042946">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6398dee0-6c11-40aa-97ef-496009784adb"/>
+        <skos:prefLabel xml:lang="en">{"id": "9eeddab1-2077-4037-8e96-0e02ae1ddd02", "value": "source reference work for creation event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/afc13dca-6cef-4a8a-95a5-071ff442988f">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "54192d5d-f00d-440c-99fe-e788941f3b6a", "value": "digital reference to observation"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2224c58e-75aa-4da7-be59-05c984002196"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/51933bfe-248b-4ed3-a4e1-36bf1bac589d">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6574ad8a-e271-49ee-8853-640db00a8ec2"/>
+        <skos:prefLabel xml:lang="en">{"id": "c6f2434e-9658-4953-a8f0-71383171b684", "value": "influence on set removal event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e416cd94-bddd-4f63-bb15-066400ece24d">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/7c182fc3-2385-4e1c-9a2e-f3f21d6daf06"/>
+        <skos:prefLabel xml:lang="en">{"id": "38b91577-842d-49db-92bd-eefe2db5a2b1", "value": "source reference work for formation event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/be081cac-13ef-4370-ba34-457cb2d4a981">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/7151deec-9e15-48de-a9a2-8a7b36206729"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "fc1b6596-e058-494a-abaa-9eeeba42d72c", "value": "annotator in part identifier assignment of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4aff2b02-eee2-4076-9c56-47fe699a44b4">
+        <skos:prefLabel xml:lang="en">{"id": "43362911-670e-44ef-bde4-fe57fd178f9f", "value": "actor in set addition event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c29f7171-e670-443e-8a22-9b4587e1e5f5"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/30af05cf-3a15-4bb5-a0c9-a5f5f946e309">
+        <skos:prefLabel xml:lang="en">{"id": "0f2fd170-d9f4-4d52-a40f-58a3ec7895c3", "value": "textual source for"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6cc8d2de-439f-4345-8b99-fa42bc692d7e"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/dfa3a38f-4f2b-4f85-a454-7ad200d0fcd0">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "4193133a-8fff-4009-b76d-deee3961b273", "value": "location of curation event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3e29bed6-4503-41ca-b5fe-ba92f158a5d9"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/19b929c2-91ac-4d15-81c3-60b7f77322d9">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/fb173f25-ffe6-46a2-9bc9-daa4a6a21fb1"/>
+        <skos:prefLabel xml:lang="en">{"id": "72d5d579-390a-4c64-8895-7dd7db934a11", "value": "influence on curation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/ae0239c0-1f46-46c1-9821-616824e6cb8d">
+        <skos:prefLabel xml:lang="en">{"id": "ae66199d-ddd7-4019-b1be-dba48de56a13", "value": "location of formation event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/84556902-d04b-4ad0-8dee-1cab211a98f6"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/03f3f737-5ba8-4a49-94a0-187325d0df24">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/bb565261-55b7-4c1a-93aa-90ae78b28cee"/>
+        <skos:prefLabel xml:lang="en">{"id": "a2ff8a9f-3eaa-4875-9c65-f9f3b07ea158", "value": "approximates location"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/46123a1f-6786-4cef-8193-c1f72e67cc5c">
+        <skos:prefLabel xml:lang="en">{"id": "31327077-8af5-4398-bbcc-e75675a9d37e", "value": "member of set"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5bd80233-7f66-41a1-bc32-2e9b49126bef"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/d94192dd-b513-443e-b20f-b5002aba0176"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/60b354e4-52fd-4c7b-9fc8-83350e894738">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/40a37f81-29fa-4d6e-a0fa-ea99d894343d"/>
+        <skos:prefLabel xml:lang="en">{"id": "c284b777-55c3-4861-833f-105a4cc51c07", "value": "physical object used in group joining"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c3074d88-9974-43e7-817e-686dcada6b9c">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "96a4e8f5-6214-4af3-b4cc-b79c206d00f0", "value": "recorded value of observation"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2405aba5-e27c-42e6-9bd2-f6faf5e97369"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b5c6f06d-d6a6-482a-bebf-83c6da262e10">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/bcea7794-7ce8-4f82-882a-3aa6b083a275"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "af99c6cd-6169-4e45-87b2-25a369ed880e", "value": "creator in production event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f3f82fdc-b944-44d3-ad88-bdae0bf97b74">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/35cd4540-54b2-4bd0-a7d8-8d7801c177ef"/>
+        <skos:prefLabel xml:lang="en">{"id": "d45eaae2-8bb7-4246-a662-159b1b9729ac", "value": "source reference work for curation event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4574d04f-cf3d-4c2f-91d7-0c50f3d7aa14">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6e229a28-05ae-483a-b6ec-16fb3f9af098"/>
+        <skos:prefLabel xml:lang="en">{"id": "5ff87be8-b7cb-4742-8431-f37e9b4e1de9", "value": "period of professional activity"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c7613a4c-cce5-4709-b4f4-542909856180">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/bd10b3df-47fc-49fb-a459-108f9cd60d16"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "56f0afbd-d58c-4eb2-8a23-cbcfb2ddf614", "value": "period of dissolution of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/80cf80fe-9e17-48da-abc4-c7bef6a26cf5">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/66a5028b-f43d-4637-b824-bb2d1952a8b8"/>
+        <skos:prefLabel xml:lang="en">{"id": "9b91f5ca-eaaa-4dec-a1ea-36c0c73e66a9", "value": "starts after publication of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/79576a25-77f0-4036-bdb7-5f38cb960414">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/470382b3-1230-402a-8e9c-42c68887df31"/>
+        <skos:prefLabel xml:lang="en">{"id": "3b69d7dd-f725-4fbe-9f91-8a2145667b31", "value": "visual image shown on"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/313487f7-e22b-48ed-8b94-c2c7bdb384fd">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5da14416-2e56-4426-b4a8-86601b428ab4"/>
+        <skos:prefLabel xml:lang="en">{"id": "329b28a8-acf6-4df1-9434-83938215a5b6", "value": "group left"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/8f3bebaa-3ee9-41a8-bbed-f484d2efc300">
+        <skos:prefLabel xml:lang="en">{"id": "b9ecd075-f34a-4112-add5-c19c61e85eba", "value": "location of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/cd093911-f1e1-4abb-bbb2-fcaea3ca03ab"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3e6defea-fff6-459a-ae5a-c71f849a362d">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c8613c26-82eb-485c-8854-7ccb619276ab"/>
+        <skos:prefLabel xml:lang="en">{"id": "aae49e1e-89c9-401f-9ca6-77c8f7efbc2d", "value": "location of death of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c29f7171-e670-443e-8a22-9b4587e1e5f5">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4aff2b02-eee2-4076-9c56-47fe699a44b4"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "b629b9f7-e36e-45f3-8079-ad9aa10259c8", "value": "actor in set addition event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d52bc3d2-4933-48a0-ae88-998b576a8e85">
+        <skos:prefLabel xml:lang="en">{"id": "0233939a-4b2b-4695-8020-9604c87bfdf4", "value": "sample created"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/be85e667-6ccf-4a41-9664-4ba298d60e12">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/262d850e-0eb6-4a58-b3d2-b44675801633"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "88feffa0-06eb-49af-b5f4-d14f480322a8", "value": "actor in part removal event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/49e10ca8-12ae-4ead-9494-34c35a8de316">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "720ec3c0-0dee-4078-9c77-7e3cd89241d6", "value": "image shown"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c3e6c25d-0ea2-44e9-ba4c-8faf4397ec06"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f7df4fa5-f302-410e-9855-2c1283338846">
+        <skos:prefLabel xml:lang="en">{"id": "074e4e35-f3d3-4213-8297-eea722bdceef", "value": "physical object used in set removal event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/176f9d09-0020-4913-bd6a-750b3eefe586"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f62ccd87-14d8-48b9-9114-b8f752b6d999">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/1b8ef6a7-c0ed-4437-b836-16c3dec42ce9"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "445316cc-eeb0-4eb6-a8f7-a3826d24445a", "value": "has influence on"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d86b855e-6af4-402d-a94a-d13e36bddf8e">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/9d84c6cb-70b1-4607-a035-2175a18f1991"/>
+        <skos:prefLabel xml:lang="en">{"id": "46c04c03-139e-4850-8762-a6ee49489d1c", "value": "source reference for dimension of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/855d9e88-1368-489a-893c-47f2a31db561">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "3a1446dc-0751-4b24-a7df-372ec0642a39", "value": "parent project"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/71c34097-58ba-444d-8c8b-ba3d108454f5"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/237f9065-c319-4c54-a8b5-065fd0fb7f92">
+        <skos:prefLabel xml:lang="en">{"id": "6892b575-1e8f-44c6-b492-f1af7132d8b4", "value": "source reference work for dissolution event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/406d3dd2-2308-4bd8-9ad0-74ceeecd4e95"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/32337acf-91a0-4f1c-ae5b-c14155d64941">
+        <skos:prefLabel xml:lang="en">{"id": "1caa8744-6bc4-4f40-839e-1d96715cfa85", "value": "sample area name"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/dd1ea5a4-1740-4577-9983-f54ea56e8f95"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3161211b-d4f3-4ce7-9e5d-ace00c3ad361">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/ca1546cf-6ee5-428d-9728-b90fc8820baa"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "5a901cb9-6b8c-4057-9fa2-92a5962d6879", "value": "occurs before event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/35c808fa-3af2-4a8e-8d64-0f5d48dc2c59">
+        <skos:prefLabel xml:lang="en">{"id": "b5adee9e-a5f5-414d-a9a1-48a122baa9df", "value": "source reference work for identifier"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/92be9ab3-7782-4633-adc3-c1fb4716fb83"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/cf4707c0-4fbf-46a7-998c-fa04f9552a96">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/8455d232-8591-4e04-ac90-1f04ccd46f73"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "36e577b4-febe-4029-8cd7-34829405fb57", "value": "source reference work for name"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/fd194f67-9432-451b-98dc-be6b76742965">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/61dfad8f-cd46-47fd-820f-3e69ac423cc6"/>
+        <skos:prefLabel xml:lang="en">{"id": "a1d7e618-d467-4f52-a3da-9b9f46e2888a", "value": "related event causal to creation event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/71c34097-58ba-444d-8c8b-ba3d108454f5">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/855d9e88-1368-489a-893c-47f2a31db561"/>
+        <skos:prefLabel xml:lang="en">{"id": "db43ccb0-6858-450b-abcd-0c8322137e4e", "value": "has project part"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/834b28f1-d181-4366-b294-44e21f4810f1">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a795a0c7-7643-4748-94a1-70e45cbd65e5"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "f4e2242d-5258-4da5-b765-4fd2fe92bb79", "value": "period of death event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/adfd842e-3eb4-4ac7-8115-d3f886a66a93">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "ea975259-b349-43b9-85fb-8c762a41c484", "value": "sample created by"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/7e932636-476c-41f5-99d3-2e13615d024f">
+        <skos:prefLabel xml:lang="en">{"id": "dc3c55b2-03b0-40bd-a729-7463c618b641", "value": "owner"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c64fe7b5-1fca-4de8-8562-cdc32fc26c98"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/5a7c3476-2197-4277-b459-d4d8b95e730d"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/93dc6410-1d4f-4c8e-8652-497a4f9cec9f">
+        <skos:prefLabel xml:lang="en">{"id": "05dd703e-ad1e-4e75-9dc2-b6bb7cfd41d4", "value": "source reference work for production event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/291354a2-c0b8-4143-baaf-534a9fae15a9"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/eec63d9c-cc98-4f2b-86cc-6a51485ff9b3">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "3c7c7ac2-85ed-48ba-bdcc-88a0ae14882b", "value": "influence on formation event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/46744fc9-2c59-4dda-a056-36ebf04dd941"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d3e01a25-cbc3-422c-ab2a-b6ca1fe64f7b">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/66f57ae1-a868-4ff5-85be-758b4c2620c7"/>
+        <skos:prefLabel xml:lang="en">{"id": "fe2ac845-8368-4052-8cf4-9d809faba147", "value": "collection added to"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3e29bed6-4503-41ca-b5fe-ba92f158a5d9">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/dfa3a38f-4f2b-4f85-a454-7ad200d0fcd0"/>
+        <skos:prefLabel xml:lang="en">{"id": "6a8b0fd6-ddf1-4bf3-9055-321a05eeb997", "value": "location of curation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2405aba5-e27c-42e6-9bd2-f6faf5e97369">
+        <skos:prefLabel xml:lang="en">{"id": "9566b743-b23e-41df-bddb-af75f22edcc5", "value": "output of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c3074d88-9974-43e7-817e-686dcada6b9c"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/90d7c629-8d3d-4814-9e53-697a7c82a030"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e5657d2a-4609-4c99-9131-12f91089b5b8">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "ae73aa4c-916d-4752-bcc5-f5f00ca17b10", "value": "period of publication event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b55dcf94-3e0d-4d33-af82-9262dc4e2e0f"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/facf36fa-b7ab-4307-bd1e-9471e37fde9e">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5061b3a0-2e10-4b74-909a-2a8bfa4e5192"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "823e9a08-f58d-4f5a-b9b2-bb7a84056c98", "value": "influence on set addition event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/f54b7c1d-6fd2-4d10-8c64-01e8b9f74d63"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/82232006-fd11-44a4-9f82-7a365bd8edff">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "583313bd-b862-46f8-b142-293e1bd51318", "value": "visual work shown in physical object part"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b8ed6e07-e681-415f-a08e-08cc4546db30"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/ca1546cf-6ee5-428d-9728-b90fc8820baa">
+        <skos:prefLabel xml:lang="en">{"id": "a765b7f7-8ea5-48b1-be8f-3c1f6874c4ab", "value": "occurs after"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3161211b-d4f3-4ce7-9e5d-ace00c3ad361"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/00dbc576-0934-4c4b-9fa1-f15ddc565c33">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/665fd81b-d783-41d5-8aa0-99640ed8acb4"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "22a4a382-5ea2-44f0-9178-ac0c7ed8a59b", "value": "physical object depicted by"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/fbc6a24a-26d7-47fe-bd09-d283cba4348a">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "10bb36bc-683c-4e99-9878-6b28040b0089", "value": "observation used in"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/68000b8c-5b5c-4718-9b0a-b70a08379f1f"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6cc8d2de-439f-4345-8b99-fa42bc692d7e">
+        <skos:prefLabel xml:lang="en">{"id": "3a7099c1-5e10-4ad8-83ec-7e2106f752e0", "value": "textual source"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/30af05cf-3a15-4bb5-a0c9-a5f5f946e309"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c3e6c25d-0ea2-44e9-ba4c-8faf4397ec06">
+        <skos:prefLabel xml:lang="en">{"id": "988f13c5-3883-44dc-8807-2af3f158fcd0", "value": "has digital encoding"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/49e10ca8-12ae-4ead-9494-34c35a8de316"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/d49cabd7-bbbc-4cba-8d61-23c3a794ac59"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c897e183-1f0d-4b47-83d4-5c7a49bb6b5b">
+        <skos:prefLabel xml:lang="en">{"id": "6f8dad8f-f6e4-4e3a-8aac-eb837e7047cf", "value": "period of production event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3e308dfd-eb14-4ecf-842f-7a37c1baf89c"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/25fcee5d-e563-470f-beb3-c85fc33f56ff"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b49c7a4b-e991-4725-b419-24177f07d05c">
+        <skos:prefLabel xml:lang="en">{"id": "89780565-1acb-47a1-a9bd-a0b0a80522b1", "value": "physical object used in production"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/45ba0f19-5c56-4ed0-b408-667071af9b51"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/095af6aa-f642-4051-86f0-a5c2a39800a7">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4554b39c-d680-4dc3-a57e-cc44634114ba"/>
+        <skos:prefLabel xml:lang="en">{"id": "d595eb88-91bf-4bbc-93fe-466fdc495944", "value": "has visual work part"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/7c182fc3-2385-4e1c-9a2e-f3f21d6daf06">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e416cd94-bddd-4f63-bb15-066400ece24d"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "f0c38c55-232b-4fc3-b1e1-54fa22938aed", "value": "source reference for formation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a795a0c7-7643-4748-94a1-70e45cbd65e5">
+        <skos:prefLabel xml:lang="en">{"id": "d0724013-776a-4add-b464-6dbc2c0fd714", "value": "period of death of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/834b28f1-d181-4366-b294-44e21f4810f1"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c7406ab4-e50c-47d2-8459-636186e25ebe">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "7f0a8928-322a-4384-ae0c-a6eccb6b14d3", "value": "location of dissolution of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d81a487b-712e-46e9-851d-52674ecbf9ff"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/ade10811-70ea-401c-b4f6-ea811592c4d9">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "98e01628-26ad-455f-b432-ac1887579c9b", "value": "location of group joining event of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/26ed262a-f60b-44a9-8401-af993bcb3ed4"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/66a5028b-f43d-4637-b824-bb2d1952a8b8">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/80cf80fe-9e17-48da-abc4-c7bef6a26cf5"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "fd7b7c0a-a613-476a-973f-2ce7d34fd549", "value": "publication ends before event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f5cc9b43-ae9b-43ed-91e5-baf11f7eafd2">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/203d8caa-92d1-4d47-a14c-a377658a7ffe"/>
+        <skos:prefLabel xml:lang="en">{"id": "ede03de5-e4a2-41eb-88fe-a3e6d11e9343", "value": "period of part removal event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/8be4ac1b-581b-4967-b7d6-5e2fe36fadb6"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/577e77ea-4381-47a9-962b-eadd844a9110">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e4e16e39-49c9-44dd-a618-b51b2f75be6b"/>
+        <skos:prefLabel xml:lang="en">{"id": "3fffaa5a-bed1-44ca-abcc-3faf1f542d25", "value": "period of set addition event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2ab5c7a0-d903-4d2d-bf47-1d866d78f170">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/de8785a1-26e0-47f6-8612-a1909d88f55e"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c8e1ac59-6c4f-4340-80e3-5f52c6c1673a", "value": "location of creation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/bd6d0d34-a399-4b19-98e3-f19dd1ba50ea">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c7376c39-6e1a-46f1-8bde-974ea63be6fe"/>
+        <skos:prefLabel xml:lang="en">{"id": "c5a63709-c85b-4adc-8e2f-e043f6b7b23e", "value": "depicts"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5da14416-2e56-4426-b4a8-86601b428ab4">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "2266bc53-d2dc-42bd-9b75-b946757e6432", "value": "formerly had member"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/313487f7-e22b-48ed-8b94-c2c7bdb384fd"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e05856b0-bc90-4ce5-9ea4-b6a891adfecb">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "037717af-1989-432c-9308-ff2cc76d22db", "value": "location of set addition event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f0cf2005-d8da-4dcd-b862-d215ab2ac8b9"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/0cd2452d-daca-4cb1-bb15-d6aba7ca0b26">
+        <skos:prefLabel xml:lang="en">{"id": "54f89853-70f1-46ba-af5b-e758ec17bdc0", "value": "source reference work for professional activity"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d3e16385-0bb4-4940-b9b7-780d305d1592"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a7cd7054-82e2-498d-a6cf-e63bdc310046">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/cc7bbe70-cea7-4c54-89ea-cbc00ec7e470"/>
+        <skos:prefLabel xml:lang="en">{"id": "06c92b34-abcd-4b12-890d-7cafd5365f6a", "value": "source reference work for set removal event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5283f14c-71c8-4a02-803d-b98ddc78fe17">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f913b688-45d3-4d9f-818b-081b9232ca4b"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "9e4276d1-75e3-40ff-9085-67467c0ab8c3", "value": "location of publication event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/198c9b4e-f3bd-4312-99cd-de73783686d7">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b413ecb6-090a-42d0-ac17-5b3542a2d147"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "f2f5796c-6230-4992-9e58-085b6ee71bab", "value": "formation event period"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/67f6e3e0-b6ae-4417-9c72-d71c5d48b971">
+        <skos:prefLabel xml:lang="en">{"id": "4589f31d-6b54-41b2-8493-9d9e7cbaee0f", "value": "collection removed from"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/ef8baa96-3c1e-4479-8c7b-60877b70e1d4"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5957d1e1-64be-415a-aa72-653243364544">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/8078e585-b5bc-4016-ba55-8161b4cf4c41"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "8d7d03e6-8ce5-4a62-ac45-5a3de99a1616", "value": "period of group leaving event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/399f8888-2090-4290-a67e-61b5e59caeaf">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "28f6b39e-962e-4396-b160-83d354c35258", "value": "has influence on part removal event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/46744fc9-2c59-4dda-a056-36ebf04dd941">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/eec63d9c-cc98-4f2b-86cc-6a51485ff9b3"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "5c2bd2d1-a409-4734-8263-f46fc396feb7", "value": "influence on formation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c7376c39-6e1a-46f1-8bde-974ea63be6fe">
+        <skos:prefLabel xml:lang="en">{"id": "2a80e895-b0d6-41a4-aa51-275326658a64", "value": "is depicted by"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/bd6d0d34-a399-4b19-98e3-f19dd1ba50ea"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e4362f02-74d1-4229-a33c-06aac1540e65">
+        <skos:prefLabel xml:lang="en">{"id": "07fd80d3-4487-4416-bd68-8b074ee26d75", "value": "occurs after event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/814cfe88-8330-43b7-a600-26096b7764c1"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2e0fefb8-7556-4ffb-b946-e3546bac2e72">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/83da6018-d9b0-4524-a239-e8e02bdef92a"/>
+        <skos:prefLabel xml:lang="en">{"id": "2cc7dbf5-b625-4ac7-81d6-39623280b24d", "value": "actor in"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/54e55a90-d134-40a5-a4f0-4b2dfdb86448"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/24ce7a28-25c7-4037-907e-319edad7f474"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/9e9677da-5452-46cc-9bd2-682f001c60fc"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4a7ec821-f41e-4f5b-bec0-2e81f1ae3f20">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3b20d306-21f5-473a-a012-8f9ba70742db"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "f46de8da-8367-4c81-8dad-87bd2cdb9108", "value": "source reference for group joining event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5188d98d-4faf-4150-aaaf-d70038f9e202">
+        <skos:prefLabel xml:lang="en">{"id": "3ac16cef-6327-4838-b657-1a32ff7308ee", "value": "source reference work for death event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/abef629f-5d8c-45ef-be56-ab9d6f7c9ba4"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/1f0d2c15-fdaa-4809-84f6-165cf66a1d3d">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "be3f33e9-216d-4355-8766-aced1e95616c", "value": "digital source"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/27b0c339-73b3-41c7-9a6a-736085f7cfb3">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "6d2969ea-41a2-4866-be92-14ba2b24f338", "value": "physical object part"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/68236382-7c0b-495b-a0c3-ad694e87914e"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/907fce8b-2b57-44ee-bd98-d40aa28abd77">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "e0774278-76d4-4933-a3a6-6b4c93d5cebe", "value": "modified by"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/cb051e82-7c14-4630-a08d-5892be6070cf"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e844ea45-fb8c-43e1-bf5d-34dda5575c14">
+        <skos:prefLabel xml:lang="en">{"id": "da51c93e-950e-4801-90a7-31beff7d4f2b", "value": "parent physical object"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/68236382-7c0b-495b-a0c3-ad694e87914e"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/63e4f894-576a-4035-aa8b-f4b392efd20f">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/9d733804-5991-4980-a476-5d714f08d5d9"/>
+        <skos:prefLabel xml:lang="en">{"id": "0df0ebc7-6b58-4228-85ee-f3eff35e426d", "value": "source reference work for publication event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/61dfad8f-cd46-47fd-820f-3e69ac423cc6">
+        <skos:prefLabel xml:lang="en">{"id": "025f23db-567c-4fc9-b0e7-4b4df44e7a0b", "value": "causally relevant to creation of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/fd194f67-9432-451b-98dc-be6b76742965"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/9d612a11-accb-4476-8eaa-fb3222a34682"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d81a34d7-5653-4592-9b1c-44856cac6021">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c069bc82-3e68-49b6-a008-e5ca6dd26fc6", "value": "has sampling activity"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/44a26d59-7aec-4a10-b042-5a9e20fbea1c">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/48905a90-6f06-42e3-b82c-e64729a69da3"/>
+        <skos:prefLabel xml:lang="en">{"id": "1139c83a-eb81-431d-a5af-9f8823361304", "value": "period of set removal event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b5cd85b4-622b-434d-b5b1-4da47d089517">
+        <skos:prefLabel xml:lang="en">{"id": "2d5ae290-6b0d-4126-8f85-32364ba72e42", "value": "location of destruction event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/1095a156-7683-4887-911a-e6c8cf0c9212"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a6b75972-d4f5-47b3-9b15-e8edacfa910d">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/fc49c02e-42cf-4ebb-8952-ddd323c4dd7f"/>
+        <skos:prefLabel xml:lang="en">{"id": "e495c9a4-013b-43d2-8992-4a9912834a49", "value": "observation activity procedure"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/bc56bd76-01b7-48e5-81d7-9753553196c6">
+        <skos:prefLabel xml:lang="en">{"id": "a4f67442-6b6f-43ce-bd60-92c3d5d21a17", "value": "set removal event carried out by actor"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e9e3ddad-b36e-4d6f-8741-1c552978835d"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/7655e50b-5fbe-4d1c-91ac-2f22592d8dff">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "1c531c63-0a76-4452-bb5d-8eaaff20c231", "value": "location of birth event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/45290c05-28b7-447e-bc6d-d8cf3c86a748"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3b20d306-21f5-473a-a012-8f9ba70742db">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4a7ec821-f41e-4f5b-bec0-2e81f1ae3f20"/>
+        <skos:prefLabel xml:lang="en">{"id": "83a79bab-80df-475a-aaed-2687c058ebaa", "value": "source reference work for group joining event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/feabbbcb-92a4-4c1f-b4cd-d4ad84802a88">
+        <skos:prefLabel xml:lang="en">{"id": "75fd4648-feef-4dec-8213-0560fd61b45e", "value": "has influence on publication event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/61a740d5-03dd-460a-8b45-6ae438b4c352"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/75221889-4ace-4cb4-ae7e-6044a938a2ff">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d1b6852a-95cf-4ceb-a4de-78096e48b457"/>
+        <skos:prefLabel xml:lang="en">{"id": "2e3b46ef-4936-4956-a111-21cb40be3c1a", "value": "occurs before publication of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/10d4f4dc-0326-43e7-9dd9-3e892fcc62d4">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/085e2a58-ecaf-4f67-a8f7-5eafc905bbe0"/>
+        <skos:prefLabel xml:lang="en">{"id": "04f591f4-b56e-4e4a-b6fc-8b761ebb95ac", "value": "has influence on production event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/0c71372e-f347-4814-9e2b-c205af195806">
+        <skos:prefLabel xml:lang="en">{"id": "8ae37429-c792-4456-a431-299d5ea771e7", "value": "digital resource used in assignment of geometric identifier"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/cc673522-5344-4a32-ac44-c7a10e7d1b89"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f61056d0-07cf-40da-8694-e23c2deb3bd5">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "d751902f-9a9d-4cc4-bf7b-7dff8a67d78d", "value": "influence on professional activity"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b03fb895-dc2d-4643-a770-a59ff4161637"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/45290c05-28b7-447e-bc6d-d8cf3c86a748">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "fbaabe34-d488-4518-ae3e-82f840caebc9", "value": "location of birth of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/7655e50b-5fbe-4d1c-91ac-2f22592d8dff"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6574ad8a-e271-49ee-8853-640db00a8ec2">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/51933bfe-248b-4ed3-a4e1-36bf1bac589d"/>
+        <skos:prefLabel xml:lang="en">{"id": "d22f3f95-7d4e-4b16-8ec4-f0933f2ac525", "value": "has influence on set removal event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/bb565261-55b7-4c1a-93aa-90ae78b28cee">
+        <skos:prefLabel xml:lang="en">{"id": "bd488136-9855-4bc0-8357-73e175c67ea6", "value": "approximate location"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/03f3f737-5ba8-4a49-94a0-187325d0df24"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4a313fdf-bad8-47a3-a0f3-3918de7d5920">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a65becad-25b5-4039-8dc0-f8d8c04af227"/>
+        <skos:prefLabel xml:lang="en">{"id": "ea019112-1d7e-4a72-8893-7b6003bdbe8f", "value": "location of part removal event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/10871f3f-688c-400e-8e60-3e072457d782">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/58c824cc-8ed7-4cd4-8431-125a7dc924e7"/>
+        <skos:prefLabel xml:lang="en">{"id": "66cd84fe-3a9a-47ba-8f98-2f047162b2ae", "value": "source reference work for part removal event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/eaea40ec-8d19-4cc6-ae36-7ad042d50e3b">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/590afd37-bae2-4f4c-bdc4-07da5d69057b"/>
+        <skos:prefLabel xml:lang="en">{"id": "80548fa6-0edd-4582-9ab3-8cd300b7ba83", "value": "source reference work for set addition event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b30bcc05-bf01-47e8-b863-29103cf3b52c">
+        <skos:prefLabel xml:lang="en">{"id": "843aadc8-5a29-412b-badd-b6261650f21b", "value": "causally relevant to formation of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/93011327-679b-4c33-8197-fbf47f500c51"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/68000b8c-5b5c-4718-9b0a-b70a08379f1f">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/fbc6a24a-26d7-47fe-bd09-d283cba4348a"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "bf7873de-6898-4036-9f80-77ab8ff941ef", "value": "digital resource used in observation"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/ed080f48-eafc-4b7f-b7f4-8ef01ddb7eba">
+        <skos:prefLabel xml:lang="en">{"id": "1f598f8e-593c-4152-a53f-5def10a36fd8", "value": "source reference for statement about"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6748d659-f49e-4abb-b383-d97dfe6cc368"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e7801af8-3f25-4103-aef2-c5a023b1b15e">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/1a7aa305-ab78-4ea3-abd2-16ac8d8ce10e"/>
+        <skos:prefLabel xml:lang="en">{"id": "2b4502a8-3078-423b-ad68-da79e9024d24", "value": "text carried by digital resource"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/45ba0f19-5c56-4ed0-b408-667071af9b51">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b49c7a4b-e991-4725-b419-24177f07d05c"/>
+        <skos:prefLabel xml:lang="en">{"id": "7509a6e0-f72b-4dfd-85c9-612604e42ad5", "value": "physical object used in production of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/651dec1d-d823-4b52-a37b-47e7fe013ff2">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "7e474cae-7cfa-4775-9bfd-facffa8e1aa8", "value": "has member"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/ae38a9a6-5e28-41ff-957d-f9527a07a57a"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/176f9d09-0020-4913-bd6a-750b3eefe586">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f7df4fa5-f302-410e-9855-2c1283338846"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "62152b90-241f-48ab-8ab6-73e47c95ea44", "value": "physical object used in set removal event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/525aee44-e205-4684-9218-b5c4f39397ee">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c04138e2-7ea8-4ca0-9e81-d4355362b686", "value": "parent digital resource"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/deb7b57d-3b11-4e62-866f-b48cb12a4dbe"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a4ed26e7-7da4-4f68-84aa-e4136f599263">
+        <skos:prefLabel xml:lang="en">{"id": "47743f57-8989-4aa6-9bd1-33a818462d18", "value": "creation ends before event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4942787a-6681-4d14-be93-dc7edb58d5bf"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c8613c26-82eb-485c-8854-7ccb619276ab">
+        <skos:prefLabel xml:lang="en">{"id": "42b256a8-0ea5-436d-8bcd-98228aa4348d", "value": "location of death event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/3e6defea-fff6-459a-ae5a-c71f849a362d"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4ddf7134-357f-4a39-8804-36b791b9c61f">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/fc49c02e-42cf-4ebb-8952-ddd323c4dd7f"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "caeb0fd3-115e-4556-bff0-4ae4c4751534", "value": "modification activity procedure"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/f0cf2005-d8da-4dcd-b862-d215ab2ac8b9">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e05856b0-bc90-4ce5-9ea4-b6a891adfecb"/>
+        <skos:prefLabel xml:lang="en">{"id": "4d95a9a4-7d1b-41d0-a041-e53f76b17f05", "value": "location of set addition event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b8ed6e07-e681-415f-a08e-08cc4546db30">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/82232006-fd11-44a4-9f82-7a365bd8edff"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "b935a613-d6e4-4713-b325-f479eab7c2c0", "value": "physical object part shown by visual work"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/cc7bbe70-cea7-4c54-89ea-cbc00ec7e470">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a7cd7054-82e2-498d-a6cf-e63bdc310046"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "b0bf6353-d122-45b9-93d5-a105edf4fef6", "value": "source reference for set removal event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/1095a156-7683-4887-911a-e6c8cf0c9212">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b5cd85b4-622b-434d-b5b1-4da47d089517"/>
+        <skos:prefLabel xml:lang="en">{"id": "0b0ab842-0b59-4c1d-9654-cef72053622c", "value": "location of destruction event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b03fb895-dc2d-4643-a770-a59ff4161637">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f61056d0-07cf-40da-8694-e23c2deb3bd5"/>
+        <skos:prefLabel xml:lang="en">{"id": "bd6c5303-349b-4333-a317-4bb1df11b84d", "value": "influence on professional activity of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6046ddcf-6698-4e9f-8c04-7459109d04e3">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2a343ae1-3e8d-43f7-a84e-fbf38dcda817"/>
+        <skos:prefLabel xml:lang="en">{"id": "da364102-fc71-4f22-81c4-8deab03c00ab", "value": "location of professional activity"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/9e9677da-5452-46cc-9bd2-682f001c60fc">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2e0fefb8-7556-4ffb-b946-e3546bac2e72"/>
+        <skos:prefLabel xml:lang="en">{"id": "7faa6b6e-9dec-4e9a-b274-d19d21bd4854", "value": "actor carrying out modification"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/b7b40309-f000-41cb-bc1b-630487e657ee"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/bcea7794-7ce8-4f82-882a-3aa6b083a275">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b5c6f06d-d6a6-482a-bebf-83c6da262e10"/>
+        <skos:prefLabel xml:lang="en">{"id": "ba9467f7-df0c-49bf-9578-4c2dd6dc95e9", "value": "producer of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/080cc639-4eef-4eef-80aa-8bc022e7c92b">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "544b8b7a-84ac-4997-89b2-2563bb562af1", "value": "group part of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/cd093911-f1e1-4abb-bbb2-fcaea3ca03ab">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "9e0df260-01b2-4449-b3f2-7fad4379e80f", "value": "location"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/8f3bebaa-3ee9-41a8-bbed-f484d2efc300"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c53742f1-4a2d-4b63-be4f-4cacc9bc9319">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "9ab9f6f8-68f7-4bca-b1e7-36b10fad5604", "value": "physical object used"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b5767b7c-6c4e-48bd-abfa-caf3ff139cc8"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/283aec4b-cdeb-4a9f-bc12-f64fb6bacc14">
+        <skos:prefLabel xml:lang="en">{"id": "7246cb4f-eba8-457d-a128-8feb9aa6e49d", "value": "physical object used in set addition event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3c44d93c-01e5-4768-9b00-61db7f350d6a">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4455ae0b-c49e-4940-b43a-4b818848fdd4"/>
+        <skos:prefLabel xml:lang="en">{"id": "52e0484a-168b-4d02-9774-e032fabdec9c", "value": "influence on creation event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower rdf:resource="https://afs.test.fargeo.com/82535c52-9e39-428b-947d-f04ef5533a28"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/688998b4-4abf-4b21-aa02-6a3a2ebd28e2">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/904f4d83-449f-4848-8444-d19c598a70e5"/>
+        <skos:prefLabel xml:lang="en">{"id": "bde04ff3-3489-40a3-aa5f-0d5895789b09", "value": "actor in curation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/ef8baa96-3c1e-4479-8c7b-60877b70e1d4">
+        <skos:prefLabel xml:lang="en">{"id": "f301351b-d058-410d-ad69-fb0c11b82d34", "value": "physical object removed from collection"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/67f6e3e0-b6ae-4417-9c72-d71c5d48b971"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/af047bfd-5454-41ef-812a-9fbf6ad9a0ac">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/cead6e47-d4b2-42fe-84b6-42bca2857d11"/>
+        <skos:prefLabel xml:lang="en">{"id": "991ad3d2-1d2c-4dc8-bc25-ee14a3f60515", "value": "physical object used in creation"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/085e2a58-ecaf-4f67-a8f7-5eafc905bbe0">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/10d4f4dc-0326-43e7-9dd9-3e892fcc62d4"/>
+        <skos:prefLabel xml:lang="en">{"id": "e254779a-6ed6-4935-9984-c40fd23ae967", "value": "influence on production event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/84556902-d04b-4ad0-8dee-1cab211a98f6">
+        <skos:prefLabel xml:lang="en">{"id": "b3df63aa-3997-4677-b44c-49d7b9477efa", "value": "location of formation of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/ae0239c0-1f46-46c1-9821-616824e6cb8d"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/26ed262a-f60b-44a9-8401-af993bcb3ed4">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/ade10811-70ea-401c-b4f6-ea811592c4d9"/>
+        <skos:prefLabel xml:lang="en">{"id": "872f0d72-3549-4591-a25a-dff897715054", "value": "location of group joining event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/963f3f6a-c52e-4119-92fd-76d6fec9d31e">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/88acc148-088a-4161-8715-7fccf7d6fd5d"/>
+        <skos:prefLabel xml:lang="en">{"id": "882a6c54-f441-4c28-bae7-6399a62c2da9", "value": "parent instrument"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/92be9ab3-7782-4633-adc3-c1fb4716fb83">
+        <skos:prefLabel xml:lang="en">{"id": "e9a643a2-2b21-4e0b-aba7-2d53933e26a2", "value": "source reference for identifier of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/35c808fa-3af2-4a8e-8d64-0f5d48dc2c59"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/eda0630d-68b1-4948-94dd-5c1317142729">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/a019643e-9b29-4b5d-bed7-f2ecaa4e86f9"/>
+        <skos:prefLabel xml:lang="en">{"id": "f7ac3abe-a795-4c86-8d74-a4a788349771", "value": "actor in formation event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4e7a7cdf-2e4b-4ac7-995a-22d44d075115">
+        <skos:prefLabel xml:lang="en">{"id": "e64188ac-b9ab-41a4-8453-301d5a006c59", "value": "parent project of modification"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c19fd08b-6aed-4535-83a0-b80ff2655475"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/013d5917-b323-42e4-b138-5fc5d1a28937">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "831b69db-713f-4c7b-867d-a2253094bf1e", "value": "physical object used in set addition event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/48905a90-6f06-42e3-b82c-e64729a69da3">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "5fda6795-756f-4189-8d19-30eb5648b150", "value": "period of set removal event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/44a26d59-7aec-4a10-b042-5a9e20fbea1c"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/814cfe88-8330-43b7-a600-26096b7764c1">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "059a3de2-d6d5-49d7-8af2-01929841a827", "value": "occurs before"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e4362f02-74d1-4229-a33c-06aac1540e65"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/7a2954a9-df05-40e4-9630-dabdf41903dc">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/85e3eee2-24cc-4adc-9fd9-6e2444beaafb"/>
+        <skos:prefLabel xml:lang="en">{"id": "971f7cba-df27-441c-8eb1-a83e1ef787f5", "value": "physical object used in part removal event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b847a987-4d8a-4a0b-93fa-8e236585bfbc">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2c9c3fac-817d-4bf4-8598-e788c9997064"/>
+        <skos:prefLabel xml:lang="en">{"id": "b320caa0-5721-4b9f-81af-5d7eea609227", "value": "source reference work"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/4a3a2e3f-35ac-4ed4-994d-12e4c12b9bdc">
+        <skos:prefLabel xml:lang="en">{"id": "5799681f-f781-43be-a7a8-9ebc8d30670c", "value": "used set"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/9d84c6cb-70b1-4607-a035-2175a18f1991">
+        <skos:prefLabel xml:lang="en">{"id": "b8abd95a-4a81-4b08-8b63-9be0d729c0b9", "value": "source reference work for dimension"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d86b855e-6af4-402d-a94a-d13e36bddf8e"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/7151deec-9e15-48de-a9a2-8a7b36206729">
+        <skos:prefLabel xml:lang="en">{"id": "a2b5c87c-111a-416b-b4d5-0276f6bc9d85", "value": "annotator in part identifier assignment"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/be081cac-13ef-4370-ba34-457cb2d4a981"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/00a828d4-74d8-45ed-b4ec-cf6f709bb693">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6ea01af9-52df-4ddf-bd9e-2efda73f574f"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "60c66ef6-3c5b-4389-b7ea-a296c23725d9", "value": "creator"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/665fd81b-d783-41d5-8aa0-99640ed8acb4">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "9c06d527-a313-4e59-8af6-5477e82c7d9a", "value": "physical object depicted"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/00dbc576-0934-4c4b-9fa1-f15ddc565c33"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/c64fe7b5-1fca-4de8-8562-cdc32fc26c98">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/7e932636-476c-41f5-99d3-2e13615d024f"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "293c9c67-3c42-4c72-99cf-75c91ed25944", "value": "owner of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/2507a724-9cb6-420d-8010-47a053c9bb5a">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/6add5a1c-f3ad-4393-ad77-3092929d3079"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "bb2ba390-d9b6-49d4-b529-24087a23e095", "value": "source reference for birth of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:altLabel xml:lang="en">{"id": "197012cc-ae79-46dd-ba7d-cbd605afdc53", "value": "resource to resource relationship types"}</skos:altLabel>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/dd1ea5a4-1740-4577-9983-f54ea56e8f95">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/32337acf-91a0-4f1c-ae5b-c14155d64941"/>
+        <skos:prefLabel xml:lang="en">{"id": "dee862c0-954e-41e1-95e8-30102e39265f", "value": "sample area identified in"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d1b6852a-95cf-4ceb-a4de-78096e48b457">
+        <skos:prefLabel xml:lang="en">{"id": "28fbf8af-cbbd-484d-8a10-807f6a5c16b2", "value": "publication starts after event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/75221889-4ace-4cb4-ae7e-6044a938a2ff"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/291354a2-c0b8-4143-baaf-534a9fae15a9">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "5e3c06e0-0dc8-4100-a6ee-93b4cce34ce1", "value": "source reference for production of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/93dc6410-1d4f-4c8e-8652-497a4f9cec9f"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/1b8ef6a7-c0ed-4437-b836-16c3dec42ce9">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/f62ccd87-14d8-48b9-9114-b8f752b6d999"/>
+        <skos:prefLabel xml:lang="en">{"id": "59cdc432-532f-41be-a97e-afd385b13115", "value": "influence on activity"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e9e3ddad-b36e-4d6f-8741-1c552978835d">
+        <skos:prefLabel xml:lang="en">{"id": "ab0e9e49-64bd-4d97-a300-954aaf01dc22", "value": "actor carrying out set removal event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/bc56bd76-01b7-48e5-81d7-9753553196c6"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/aaf58bb4-82c4-4aa6-b8c0-7755018217eb">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c81ff9ef-d6dc-429e-8598-2559333f3e8d", "value": "location of production of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/24f4f6ae-ca63-4559-bfec-f50ab6c8346b"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/8ca43306-a4ee-426f-967f-12f327ead6a2">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/55bda626-a4f8-4e30-82b8-ed438a02edc7"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "e64188cd-680f-47ca-9ef2-13c811b27658", "value": "influence on group leaving event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/a019643e-9b29-4b5d-bed7-f2ecaa4e86f9">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/eda0630d-68b1-4948-94dd-5c1317142729"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "e4de790f-4258-4ed9-8714-e5373f8fd32a", "value": "actor in formation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/88acc148-088a-4161-8715-7fccf7d6fd5d">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/963f3f6a-c52e-4119-92fd-76d6fec9d31e"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "f2b461a8-8200-4256-b017-e45c95932191", "value": "instrument part of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/9605ed38-f319-4678-8976-a1502c241ca4">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "6518e25e-969f-4a56-861e-9975acff750b", "value": "location of set removal event of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/93011327-679b-4c33-8197-fbf47f500c51">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/b30bcc05-bf01-47e8-b863-29103cf3b52c"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "34ceb7f3-807d-4e6d-bb0b-1f9ea89d8456", "value": "related event causal to formation event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/7090abfd-2702-47b7-8a66-4186cb607197">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/5d21b903-1d8b-4539-9185-a5c07006f16f"/>
+        <skos:prefLabel xml:lang="en">{"id": "e805d56f-a4c0-4a31-95c8-3e454476120c", "value": "period of group joining event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/1a7aa305-ab78-4ea3-abd2-16ac8d8ce10e">
+        <skos:prefLabel xml:lang="en">{"id": "ea3c9334-e822-4d9e-ac43-b6ee277fa9c5", "value": "digital carrier"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/e7801af8-3f25-4103-aef2-c5a023b1b15e"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/63af640c-f979-47ad-9cb1-edb5e685d756">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2e20c0c0-154a-484f-9f2c-81e6dc680586"/>
+        <skos:prefLabel xml:lang="en">{"id": "58e6adc9-1c2b-4bbd-92f0-7b5e4b2be837", "value": "period of curation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/d3e16385-0bb4-4940-b9b7-780d305d1592">
+        <skos:prefLabel xml:lang="en">{"id": "b0428dee-be4b-46b1-b795-5757c0da99f7", "value": "source reference for professional activity of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/0cd2452d-daca-4cb1-bb15-d6aba7ca0b26"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/3e308dfd-eb14-4ecf-842f-7a37c1baf89c">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "e9e8649c-a246-4be8-bedc-634024c3f6d4", "value": "period of production of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/c897e183-1f0d-4b47-83d4-5c7a49bb6b5b"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/54e55a90-d134-40a5-a4f0-4b2dfdb86448">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "a722ee0d-05e0-47b9-936e-f32fb141c640", "value": "actor carrying out project"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/2e0fefb8-7556-4ffb-b946-e3546bac2e72"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/5bd80233-7f66-41a1-bc32-2e9b49126bef">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "6e7cf6a4-aba0-4a17-9a36-c69412212699", "value": "set member of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/46123a1f-6786-4cef-8193-c1f72e67cc5c"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/262d850e-0eb6-4a58-b3d2-b44675801633">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/be85e667-6ccf-4a41-9664-4ba298d60e12"/>
+        <skos:prefLabel xml:lang="en">{"id": "cb4f9a5d-7bc3-4a64-a9bb-4a245a6d92c6", "value": "actor in part removal event of"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/51613e01-7a47-4bb9-b9ae-75d449dbcda7">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/4975d51f-8f85-4f86-8047-cbd123f52df1"/>
+        <skos:prefLabel xml:lang="en">{"id": "3970de4a-0cda-46ba-8aec-5d00fbf0283a", "value": "event causal to destruction"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/55a12730-d6e1-4809-81df-4973a723f5b1">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/eef169bf-1736-495e-bfae-f0bf3a5a2189"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "75639bc5-6b9c-4822-a417-bfc35346c029", "value": "physical object carrier"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/6748d659-f49e-4abb-b383-d97dfe6cc368">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/ed080f48-eafc-4b7f-b7f4-8ef01ddb7eba"/>
+        <skos:prefLabel xml:lang="en">{"id": "6f7f8889-e18b-4f41-b97f-98a9a0b4edc7", "value": "source reference work for statement"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/1b8bcbc1-60b1-4476-b52a-659a59f891ad">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "6fc21c46-2106-4802-b768-fe4f36f7c6e0", "value": "physical object removed by part removal event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d9eba15b-b804-4be2-9d76-a71308a7a5dc"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/b413ecb6-090a-42d0-ac17-5b3542a2d147">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/198c9b4e-f3bd-4312-99cd-de73783686d7"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "75a6537b-29e3-43ae-9208-4ef4eca3a62d", "value": "period of formation of"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/66f57ae1-a868-4ff5-85be-758b4c2620c7">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "d9d5d468-5fd5-4f72-9d55-73068e7f12ae", "value": "physical object added to collection"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/d3e01a25-cbc3-422c-ab2a-b6ca1fe64f7b"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/fb173f25-ffe6-46a2-9bc9-daa4a6a21fb1">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/19b929c2-91ac-4d15-81c3-60b7f77322d9"/>
+        <skos:prefLabel xml:lang="en">{"id": "357dfce3-eab5-4e16-83a3-5ac68bdf61e6", "value": "influence on curation event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/470382b3-1230-402a-8e9c-42c68887df31">
+        <skos:prefLabel xml:lang="en">{"id": "27ff5c70-87d7-4b55-90d4-d4c081bdf489", "value": "visual image shown"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/79576a25-77f0-4036-bdb7-5f38cb960414"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/ecc650ae-ab21-4e48-b0c7-3a8b915a6bb4">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "7c5dc984-78c5-407a-9e5a-8d4613f367eb", "value": "location of set removal event"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/cb051e82-7c14-4630-a08d-5892be6070cf">
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/907fce8b-2b57-44ee-bd98-d40aa28abd77"/>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "80179aba-62c7-4090-814f-fe2d097d6811", "value": "physical object modified"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/cc673522-5344-4a32-ac44-c7a10e7d1b89">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "c7db6114-ed92-4a53-86cb-c2aaab06ab99", "value": "used in assignment of geometric identifier of"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/0c71372e-f347-4814-9e2b-c205af195806"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/147bb168-4bd4-4c99-a3dd-5e799e6cab0c">
+        <skos:prefLabel xml:lang="en">{"id": "cabc09b1-b20e-4e63-a19b-be072f613541", "value": "has textual work part"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/507664bb-567a-4833-a142-52358ec05b7d"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/e4e16e39-49c9-44dd-a618-b51b2f75be6b">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "043784d1-79e3-4e74-b956-f7e10a9d2d30", "value": "period of set addition event"}</skos:prefLabel>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/577e77ea-4381-47a9-962b-eadd844a9110"/>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/79002668-68b7-4d4c-a5ae-e05007039bdd">
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:prefLabel xml:lang="en">{"id": "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa", "value": "digital source for"}</skos:prefLabel>
+      </skos:Concept>
+    </skos:narrower>
+    <skos:narrower>
+      <skos:Concept rdf:about="https://afs.test.fargeo.com/85e3eee2-24cc-4adc-9fd9-6e2444beaafb">
+        <skos:prefLabel xml:lang="en">{"id": "e0f59edc-906d-42f1-9eaa-8ffc31e6d577", "value": "physical object used in part removal event"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="https://afs.test.fargeo.com/00000000-0000-0000-0000-000000000001"/>
+        <skos:inverseOf rdf:resource="https://afs.test.fargeo.com/7a2954a9-df05-40e4-9630-dabdf41903dc"/>
+      </skos:Concept>
+    </skos:narrower>
+  </skos:Concept>
+</rdf:RDF>
