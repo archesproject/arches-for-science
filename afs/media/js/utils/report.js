@@ -1,40 +1,11 @@
 define([
     'arches',
-    'knockout'
-], function(arches, ko) {
-    const standardizeNode = (obj) => {
-        if(obj){
-            const keys = Object.keys(obj);
-            keys.forEach(x => {
-                obj[x.toLowerCase().trim()] = obj[x];
-            });
-        }
-    };
+    'knockout',
+    'utils/label-based-graph-utils'
+], function(arches, ko, labelBasedGraphUtils) {
 
-    const getRawNodeValue = (resource, ...args) => {
-        let rootNode = resource;
-        let testPaths = undefined;
-
-        if(typeof(args?.[0]) == 'object'){
-            testPaths = args[0]?.testPaths;
-        } else {
-            testPaths = [args];
-        }
-
-        for(path of testPaths){
-            let node = rootNode;
-            for(let i = 0; i < path.length; ++i){
-                standardizeNode(node);
-                const pathComponent = path[i];
-                node = node?.[pathComponent];
-            }
-            if(node){
-                return node;
-            }
-        }
-    };
-
-    const deleteTile = async (tileid, card) => {
+    // TODO: this library is a bit dangerous with an undeclared jquery dependency.  Those should be removed; they aren't necessary.
+    const deleteTile = async(tileid, card) => {
         const tile = card.tiles().find(y => tileid == y.tileid);
         if(tile){
             return $.ajax({
@@ -49,49 +20,30 @@ define([
                 }
             });
         }
-        throw Error("Couldn't delete; tile was not found.")
+        throw Error("Couldn't delete; tile was not found.");
     };
     const removedTiles = ko.observableArray();
 
     const checkNestedData = (resource, ...args) => {
         if(!resource) { return false; }
-        for (key of Object.keys(resource)){
+        for (const key of Object.keys(resource)){
             if(args.includes(key)){ continue; }
-            const rawValue = getRawNodeValue(resource, key);
+            const rawValue = labelBasedGraphUtils.getRawNodeValue(resource, key);
             if(!rawValue || (typeof (rawValue) !== 'object')) { continue; }
-            if(processRawNodeValue(rawValue) != '--'){
+            if(labelBasedGraphUtils.processRawNodeValue(rawValue) != '--'){
                 return true;
             } else {
                 try{
-                if(checkNestedData(rawValue)) {
-                    return true;
-                }}
+                    if(checkNestedData(rawValue)) {
+                        return true;
+                    }
+                }
                 catch(e){
                     console.log(e);
                 }
             }
         }
         return false;
-    };
-
-    const processRawNodeValue = (rawValue) => {
-        if(typeof rawValue === 'string') {
-            return rawValue;
-        } else if(!rawValue) {
-            return '--';
-        }
-        const nodeValue = rawValue?.['@display_value'] || rawValue?.['display_value'];
-        const geojson = rawValue?.geojson;
-        if(geojson){
-            return geojson;
-        }
-        
-        //strict checks here because some nodeValues (0, false, etc.) should be rendered differently.
-        if(nodeValue !== undefined && nodeValue !== null && nodeValue !== ''){
-            return $(`<span>${nodeValue}</span>`).text();
-        } else {
-            return '--';
-        }
     };
 
     const getResourceLink = (node) => {
@@ -133,13 +85,13 @@ define([
 
         getRelatedResources: async(resourceid) => {
             return (window.fetch(arches.urls.related_resources + resourceid + "?paginate=false")
-                .then(response => response.json()))
+                .then(response => response.json()));
         },
 
         removedTiles: removedTiles,
 
         // used to collapse sections within a tab
-        toggleVisibility: (observable) => { observable(!observable()) },
+        toggleVisibility: (observable) => { observable(!observable()); },
 
         deleteTile: async(tileid, card, ...params) => {
             try {
@@ -159,7 +111,7 @@ define([
 
         editTile: function(tileid, card){
             if(card){
-                const tile = card.tiles().find(y => tileid == y.tileid)
+                const tile = card.tiles().find(y => tileid == y.tileid);
                 if(tile){
                     tile.selected(true);
                 }
@@ -168,11 +120,11 @@ define([
 
         // Used to add a new tile object to a given card.  If nested card, saves the parent tile for the
         // card and uses the same card underneath the parent tile.
-        addNewTile: async (card) => {
+        addNewTile: async(card) => {
             let currentCard = card;
             if(card.parentCard && !card.parent?.tileid){
                 await card.parentCard.saveParentTile();
-                currentCard = card.parentCard.tiles()?.[0].cards.find(x => x.nodegroupid == card.nodegroupid)
+                currentCard = card.parentCard.tiles()?.[0].cards.find(x => x.nodegroupid == card.nodegroupid);
             }
             currentCard.canAdd() ? currentCard.selected(true) : currentCard.tiles()[0].selected(true);
             if(currentCard.cardinality == 'n' || (currentCard.cardinality == '1' && !currentCard.tiles().length)) {
@@ -189,17 +141,17 @@ define([
                 return;
             }
             const dictionary = {};
-            for(card of cards){
+            for(const card of cards){
                 dictionary[card.model.name()] = card;
             }
-            standardizeNode(dictionary)
+            labelBasedGraphUtils.standardizeNode(dictionary);
             return dictionary;
         },
 
         // extract a value from a resource graph given a specific path (args)
-        getRawNodeValue: getRawNodeValue,
+        getRawNodeValue: labelBasedGraphUtils.getRawNodeValue,
 
-        processRawValue: processRawNodeValue,
+        processRawValue: labelBasedGraphUtils.processRawNodeValue,
 
         getResourceLink: getResourceLink,   
         
@@ -209,30 +161,31 @@ define([
             }
         },
 
-        getNodeValue: (resource, ...args) => {
-            const rawValue = getRawNodeValue(resource, ...args);
-            return processRawNodeValue(rawValue);
-        },
+        getNodeValue: labelBasedGraphUtils.getNodeValue,
 
         getResourceListNodeValue: (resource, ...args) => {
-            const rawValue = getRawNodeValue(resource, ...args);
+            const rawValue = labelBasedGraphUtils.getRawNodeValue(resource, ...args);
             const resourceListValue = Array.isArray(rawValue) ? 
-                rawValue.reduce((acc, val) => acc.concat(getRawNodeValue(val, 'instance_details')), []) :
-                getRawNodeValue(rawValue, 'instance_details');
+                rawValue.reduce((acc, val) => acc.concat(labelBasedGraphUtils.getRawNodeValue(val, 'instance_details')), []) :
+                labelBasedGraphUtils.getRawNodeValue(rawValue, 'instance_details');
             const resourceList = resourceListValue?.map(val => {
-                displayValue = processRawNodeValue(val);
-                link = getResourceLink(val);
-                return {displayValue, link}
+                const displayValue = labelBasedGraphUtils.processRawNodeValue(val);
+                const link = getResourceLink(val);
+                return {displayValue, link};
             });
             return (resourceList);
         },
 
-        stripTags (original) {
+        stripTags(original) {
             return original.replace(/(<([^>]+)>)/gi, "");
+        },
+
+        slugify: (text) => {
+            return text.toString().toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
         },
 
         // see if there's any node with a valid displayable value.  If yes, return true.
         // potentially useful for deeply nested resources
         nestedDataExists: checkNestedData
-    } 
+    };
 });

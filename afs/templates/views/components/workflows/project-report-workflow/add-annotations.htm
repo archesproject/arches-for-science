@@ -1,0 +1,96 @@
+{% load i18n %}
+
+<div>
+    <div style="padding: 0;" class="widget-input-label">Select Physical Thing</div>
+    <div style="display: flex; flex-direction: row; align-items:center">
+        <div>
+        <div style="display: inline-block;padding: 0 10;width: 600px;">
+            <div>
+                <div data-bind="if: physicalThingList()" class="col-xs-12 resource-instance-wrapper">
+                    <input style="display:inline-block;"
+                        data-bind="
+                            value: physicalThingValue,
+                            select2Query: {
+                                select2Config: {
+                                    clickBubble: false,
+                                    disabled: false,
+                                    data: physicalThingList(),
+                                    value: physicalThingValue,
+                                    closeOnSlect: false,
+                                    allowClear: true,
+                                    multiple: false,
+                                    placeholder: {% trans "'Available Physical Things'" %}}}
+                        ">
+                </div>
+            </div>
+        </div></div>
+        <button style="height:40px; margin: 0 10px;" class="btn btn-info" data-bind="click: screenshot">Add a Annotation Summary Image to Report</button>
+        <div style="flex: 0.66;"></div>
+    </div>
+    <div>
+        <div style="padding: 0;" class="widget-input-label">Name of Summary</div>
+        <input style="display: inline-block;padding: 0 10;width: 600px;border:1px solid #eee;height:36px" data-bind="value: summaryName, valueUpdate: 'keyup'" />
+    </div>
+
+    <div class="screenshot-table" data-bind="if: screenshots().length">
+        <div style="width: 100%;">
+            <table data-bind="datatable: screenshotTableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd;" width="100%">
+                <thead>
+                    <tr>
+                        <th>{% trans "Screenshot" %}</th>
+                        <th>{% trans "Thumbnail" %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: {data: screenshots, as: 'screenshot'}">
+                    <tr style="cursor: pointer">
+                        <td><div class="summary-value" data-bind="text: screenshot.imageName"></div></td>
+                        <td><a data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"><img style="max-height: 50px" data-bind="attr: {src: (screenshot.url || '/temp_file/' + screenshot.fileId)}"></a></td>
+                        <td style="display: flex; flex-direction: row;">
+                            <div style="flex: 1"></div>
+                            <i style="padding: 10px 5px;font-size:25px" class="fa fa-download"><a data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"></a></i>
+                            <i style="padding: 10px 5px; font-size:25px;" class="fa fa-trash" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}"></i>
+                        </td>
+                    </tr>
+                <tbody>
+            </table>
+        </div>
+    </div>
+    <div id="annotation-report" style="display: inline-flex; flex-direction: column; width: 100%; padding: 10px;">
+        <h3 data-bind="text:summaryName"></h3>
+        <div data-bind="if: leafletConfig()">
+            <div style="border: solid 1px #ddd">
+                <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
+            </div>
+        </div>
+        <div class="annotation-table" data-bind="if: annotation()">
+            <div style="width: 100%;">
+                <table data-bind="datatable: annotationTableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd;" width="100%">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Region Name" %}</th>
+                            <th>{% trans "Annotator" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: {data: annotation().info, as: 'part'}">
+                        <tr style="cursor: pointer" 
+                            data-bind="
+                            css:
+                                {'selected': $parent.selectedAnnotationTileId() === part.tileId }, 
+                            click: function() {
+                                $parent.highlightAnnotation(part.tileId);
+                            }">
+                            <td><div class="summary-value" data-bind="text: part.name"></div></td>
+                            <td><div class="summary-value" data-bind="text: part.annotator"></div></td>
+                        </tr>
+                    <tbody>
+                </table>
+                <div class="final-step-section-block-item">
+                    <div class="block-item files-metadata" style="display: inline-flex; color: #777;">
+                        <div class="" style="font-size: 13px; padding-right: 3px;" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation().info.length'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div>

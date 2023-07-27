@@ -1,0 +1,96 @@
+{% load i18n %}
+<!-- Preview Viewer -->
+<div id="pdf-preview-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: end; padding-bottom: 0;">
+                <button class="btn btn-sm btn-danger btn-labeled fa fa-times" 
+                    data-bind="click: function(){ showPDFPreview(null); }"
+                ><span>{% trans "Close Preview" %}</span></button>
+            </div>
+            <div class="modal-body">
+                <div data-bind="component: {
+                    name: 'pdfreader',
+                    params: {
+                        displayContent: {
+                            url: preview(),
+                            type: 'application/pdf'
+                        },
+                        context: 'render',
+                        selected: previewSelected,
+                    }
+                }"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template Options -->
+<div data-bind="foreach: { data: allTemplateFormats, as: 'templateFormatGroup', noChildContext: true }">
+    <div class="template-format-heading" data-bind="text: templateFormatGroup.heading"></div>
+
+    <!-- ko if: templateFormatGroup.templates.length === 0 -->
+    <div class="template-option-container">
+        <span class="h5" style="font-weight: normal;" data-bind="text: 'There are no ' + templateFormatGroup.heading + '.'"></span>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: templateFormatGroup.templates.length >= 1 -->
+    <div class="columns option-input" data-bind="foreach: templateFormatGroup.templates">
+        <div class="template-option-container">
+            <!-- ko if: preview -->
+                <div tabindex="0" style="cursor: pointer;" role="button" aria-controls="pdf-preview-modal"
+                    data-toggle="tooltip" data-placement="top" 
+                    data-bind="click: function() {
+                        $parent.showPDFPreview(preview);
+                    }, 
+                    attr: {
+                        'aria-expanded': $parent.previewSelected().toString(),
+                        title: 'Preview ' + name + ' report'
+                    }"
+                >
+                    <!-- ko if: thumbnail -->
+                    <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
+                    <!-- /ko -->
+                    <!-- ko ifnot: thumbnail -->
+                    <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>
+                    <!-- /ko -->
+                </div>
+            <!-- /ko -->
+            <!-- ko ifnot: preview -->
+                <!-- ko if: thumbnail -->
+                <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
+                <!-- /ko -->
+                <!-- ko ifnot: thumbnail -->
+                <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>
+                <!-- /ko -->
+            <!-- /ko -->
+
+            <label class="form-checkbox form-normal form-primary form-text" role="checkbox" tabindex="0"
+                data-bind="css: { 
+                        'active': $parent.isTemplateSelected($data) 
+                    },
+                    click: function() { 
+                        $parent.setTemplateSelection($data);
+                    },
+                    attr: {
+                        'aria-checked': $parent.isTemplateSelected($data),
+                    }
+                "
+            >
+                <input type="checkbox" 
+                    data-bind="
+                        checked: $parent.isTemplateSelected($data), 
+                        attr: {
+                            value: id, 
+                            name: name
+                        }
+                    "
+                >
+                <span class="template-option-label" data-bind="text: name"></span>
+            </label>
+            <div class="template-option-description" data-bind="text: description"></div>
+        </div>
+    </div>
+    <!-- /ko -->
+    <hr style="border-color: #eee;">
+</div>

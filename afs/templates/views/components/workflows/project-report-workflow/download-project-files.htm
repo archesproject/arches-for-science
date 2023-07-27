@@ -1,0 +1,53 @@
+{% load i18n %}
+<div class="download-project-files-step" data-bind="let: {self:$data}">
+    <div>
+        <h5 class="file-list-label" data-bind="text: $root.translations.dataForDownload"></h5>
+    </div>
+    <div class="expand-select-buttons">
+        <a class="expand-select-button" data-bind="click: function() { expandAll(true); }"><i class="ion-plus"></i>{% trans ' Expand' %}</a>
+        <a class="expand-select-button" data-bind="click: function() { expandAll(false); }"><i class="ion-minus"></i>{% trans ' Collapse' %}</a>
+        <a class="expand-select-button" data-bind="click: function() { selectAll(true); }"><i class="ion-checkmark"></i>{% trans ' Select All' %}</a>
+        <a class="expand-select-button" data-bind="click: function() { selectAll(false); }"><i class="ion-close"></i>{%  trans ' Clear All' %}</a>
+    </div>
+    <!-- ko foreach: { data: relatedObservations, as: "observation" } -->
+    <div class="file-list-container" data-bind="if: observation.relatedFiles().length > 0">
+        <div class="observation-list" data-bind="click: function() { observation.expanded(!observation.expanded()); }">
+            <span>
+                <i class="fa" data-bind="css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()}"></i>
+            </span>
+            <span data-bind="text: observation.name"></span>
+        </div>
+        <!-- ko if: observation.expanded() -->
+        <table class="table table-striped" width="100%">
+            <thead>
+                <tr class="afs-table-header">
+                    <th data-bind="text: $root.translations.fileName"></th>
+                    <th data-bind="text: $root.translations.interpretation"></th>
+                    <th data-bind="text: $root.translations.parameters"></th>
+                    <th data-bind="text: $root.translations.format">Format</th>
+                </tr>
+            </thead>
+            <tbody data-bind="dataTablesForEach: { data: observation.relatedFiles, as: 'file', noChildContext: true, dataTableOptions: $parent.fileTableConfig }">
+                <tr>
+                    <td>
+                        <input type="checkbox" data-bind="checked: file.selected">
+                        <a class="file-listing-link" data-bind="text: file.name, attr: { href: file.url }"></a>
+                    </td>
+                    <td class="file-listing-value" data-bind="text: file.interpretation"></td>
+                    <td class="file-listing-value" data-bind="text: observation.description"></td>
+                    <td class="file-listing-value" data-bind="text: file.type"></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+    <div class="file-download-button">
+        <button class="btn btn-primary" data-bind="click: downloadFiles, css: {disabled: !ready() }">
+            <span data-bind="text: $root.translations.downloadSelected"></span>
+        </button>
+        <span>
+            <h4 data-bind="text: message"></h4>
+        </span>
+    </div>
+</div>
