@@ -65,6 +65,8 @@ class UpdateResourceListView(View):
     def add_collection_to_project(self, resourceinstaneid, r_resourceinstaneid, transaction_id):
         used_set_node_id = "cc5d6df3-d477-11e9-9f59-a4d18cec433a"  # Project nodegroup (hidden nodegroup)
         related_resource_template["resourceId"] = r_resourceinstaneid
+        related_resource_template["ontologyProperty"] = "49c40bf4-e797-4d36-8d54-072cf1fada88"
+        related_resource_template["inverseOntologyProperty"] = "c252f48a-3529-4a7a-b873-fed4e9259e1f"
         tile = Tile.get_blank_tile(nodeid=used_set_node_id, resourceid=resourceinstaneid)
         tile.data[used_set_node_id] = [related_resource_template]
         tile.save(transaction_id=transaction_id, index=False)
@@ -154,6 +156,8 @@ class UpdateResourceListView(View):
 
                     if collection_resourceid not in list_of_rr_resources and action == "add":
                         related_resource_template["resourceId"] = collection_resourceid
+                        related_resource_template["ontologyProperty"] = "31327077-8af5-4398-bbcc-e75675a9d37e"
+                        related_resource_template["inverseOntologyProperty"] = "6e7cf6a4-aba0-4a17-9a36-c69412212699"
                         tile.data[member_of_set_node_id].append(related_resource_template)
                         resources.append(Resource.objects.get(pk=tile.resourceinstance_id))
                         tile.save(transaction_id=transaction_id, index=False)
