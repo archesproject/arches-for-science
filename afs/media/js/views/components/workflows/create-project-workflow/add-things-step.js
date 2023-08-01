@@ -89,15 +89,10 @@ define([
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
                 if (action.status === 'added') {
-                    $.ajax({
-                        url: arches.urls.api_resources(ko.unwrap(action.value)),
-                        data: {
-                            format: 'json',
-                            includetiles: 'false'
-                        }
-                    }).done(function(data) {
-                        self.selectedResources.push(data);
-                    });
+                    const targetResource = ko.unwrap(self.targetResources).find(
+                        r => r._id === ko.unwrap(action.value)
+                    );
+                    self.selectedResources.push(targetResource._source);
                 } else if (action.status === 'deleted') {
                     self.selectedResources().forEach(function(val) {
                         if (val.resourceinstanceid === ko.unwrap(action.value)) {
