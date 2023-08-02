@@ -26,7 +26,7 @@ RUN set -ex \
   mime-support \
   libgdal-dev \
   python3-venv \
-  postgresql-client-12 \
+  postgresql-client-14 \
   python3.10 \
   python3.10-distutils \
   python3.10-venv \
