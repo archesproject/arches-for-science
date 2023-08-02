@@ -51,9 +51,9 @@
                     <div class="wf-multi-tile-card-info">
                         <!-- <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span></div> -->
                         <div class="wf-multi-tile-card-info-details">
-                            <dt data-bind="text: $parent.getStringValue($data.displayname)"></dt>
+                            <dt data-bind="text: $data.displayname"></dt>
                             <dd>
-                                <a data-bind="html: $parent.stripTags($parent.getStringValue($data.displaydescription)) || 'No description'"></a>
+                                <a data-bind="html: $parent.stripTags($data.displaydescription) || 'No description'"></a>
                             </dd>
                         </div>
                     </div>

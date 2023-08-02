@@ -68,16 +68,16 @@ define([
         this.termOptions = [];
         this.value = ko.observableArray([]).extend({
             rateLimit: 100
-        });
-        this.startValue = ko.observableArray();
-        this.selectedResources = ko.observableArray([]);
-        this.addedValues = ko.observableArray();
-        this.removedValues = ko.observableArray();
+        });  // resourceinstanceid[]
+        this.startValue = ko.observableArray();  // Resource[]
+        this.selectedResources = ko.observableArray([]);  // Resource[]
+        this.addedValues = ko.observableArray();  // resourceinstanceid[]
+        this.removedValues = ko.observableArray();  // resourceinstanceid[]
 
         this.dirty = ko.pureComputed(function() {
             if (self.startValue() && self.value()){
-                return !!(self.startValue().find(x => !self.value().includes(x))
-                    || self.value().find(x => !self.startValue().includes(x)));
+                return !!(self.startValue().find(x => !self.value().includes(x.resourceinstanceid))
+                    || self.value().find(x => !self.startValue().map(v => v.resourceinstanceid).includes(x)));
             } else {
                 return false;
             }
@@ -89,10 +89,24 @@ define([
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
                 if (action.status === 'added') {
-                    const targetResource = ko.unwrap(self.targetResources).find(
-                        r => r._id === ko.unwrap(action.value)
-                    );
-                    self.selectedResources.push(targetResource._source);
+                    let resource;
+                    if (self.dirty()) {
+                        resource = ko.unwrap(self.targetResources).find(
+                            r => r._id === ko.unwrap(action.value)
+                        )._source;
+                        resource = {
+                            ...resource,
+                            displayname: self.getStringValue(resource.displayname),
+                            displaydescription: self.getStringValue(resource.displaydescription),
+                        };
+                    } else {
+                        resource = ko.unwrap(self.startValue).find(
+                            r => r.resourceinstanceid === ko.unwrap(
+                                action.value
+                            )
+                        );
+                    }
+                    self.selectedResources.push(resource);
                 } else if (action.status === 'deleted') {
                     self.selectedResources().forEach(function(val) {
                         if (val.resourceinstanceid === ko.unwrap(action.value)) {
@@ -116,11 +130,10 @@ define([
                         .filter(rr =>
                             rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
                         )
-                        .map(rr => rr.resourceinstanceid)
                 );
     
                 self.startValue().forEach(function(val){
-                    self.value.push(val);
+                    self.value.push(val.resourceinstanceid);
                 });    
             }
         };
@@ -152,7 +165,7 @@ define([
             if (self.startValue()) {
                 self.value.removeAll();
                 self.startValue().forEach(function(val){
-                    self.value.push(val);
+                    self.value.push(val.resourceinstanceid);
                 });
             }
         };
@@ -173,8 +186,9 @@ define([
 
         const createResourceListToUpdate = () => {
             let resourcesToUpdate = [];
-            self.addedValues(self.value().filter(val => !self.startValue().includes(val)));
-            self.removedValues(self.startValue().filter(val => !self.value().includes(val)));
+            const startResourceIds = self.startValue().map(v => v.resourceinstanceid);
+            self.addedValues(self.value().filter(id => !startResourceIds.includes(id)));
+            self.removedValues(startResourceIds.filter(id => !self.value().includes(id)));
 
             self.addedValues().map(function(value){
                 resourcesToUpdate.push({
