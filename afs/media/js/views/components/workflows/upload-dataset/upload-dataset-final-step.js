@@ -130,7 +130,7 @@ define([
                 try {
                     self.reportVals.statements = val.resource['Statement'].map(function(val){
                         return {
-                            content:  {'name': 'Instrument Parameters', 'value': self.getResourceValue(val, ['Statement_content','@display_value'])},
+                            content:  {'name': 'Parameters for Experiment', 'value': self.getResourceValue(val, ['Statement_content','@display_value'])},
                             type: {'name': 'type', 'value': self.getResourceValue(val, ['Statement_type','@display_value'])}
                         };
                     });
@@ -141,16 +141,16 @@ define([
                 var foundStatement = _.find(self.reportVals.statements, function(statement) {
                     return statement.type.value.split(",").indexOf(type) > -1;
                 });
-                return foundStatement ? foundStatement.content : {'name': 'Instrument Parameters', 'value': 'None'};
+                return foundStatement ? foundStatement.content : {'name': 'Parameters for Experiment', 'value': 'None'};
             };
     
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
-                observationName: {'name': 'Experiment/Observation Name', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
-                project: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
+                observationName: {'name': 'Observation Event Name', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
+                project: {'name': 'Part of Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
                 usedObject: {'name': 'Used Object', 'value': this.getResourceValue(val.resource, ['observed','@display_value'])},
-                usedInstrument: {'name': 'Instrument', 'value': this.getResourceValue(val.resource, ['used instrument','@display_value'])},
-                usedProcess: {'name': 'Technique', 'value': this.getResourceValue(val.resource, ['used process','@display_value'])},
+                usedInstrument: {'name': 'Instrument Used', 'value': this.getResourceValue(val.resource, ['used instrument','@display_value'])},
+                usedProcess: {'name': 'Technique Used', 'value': this.getResourceValue(val.resource, ['used process','@display_value'])},
             };
 
             self.reportVals.statement = findStatementType(val, 'description');
