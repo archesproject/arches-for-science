@@ -29,7 +29,7 @@
     </div>
     <div>
         <div style="padding: 0;" class="widget-input-label">Name of Summary</div>
-        <input style="display: inline-block;padding: 0 10;width: 600px;border:1px solid #eee;height:36px" data-bind="value: summaryName, valueUpdate: 'keyup'" />
+        <input style="display: flex;padding: 0 10;width: 600px;border:1px solid #eee;height:36px" data-bind="value: summaryName, valueUpdate: 'keyup'" />
     </div>
 
     <div class="screenshot-table" data-bind="if: screenshots().length">
@@ -48,7 +48,7 @@
                         <td><a data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"><img style="max-height: 50px" data-bind="attr: {src: (screenshot.url || '/temp_file/' + screenshot.fileId)}"></a></td>
                         <td style="display: flex; flex-direction: row;">
                             <div style="flex: 1"></div>
-                            <i style="padding: 10px 5px;font-size:25px" class="fa fa-download"><a data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"></a></i>
+                            <a data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"><i style="padding: 10px 5px;font-size:25px" class="fa fa-download"></i></a>
                             <i style="padding: 10px 5px; font-size:25px;" class="fa fa-trash" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}"></i>
                         </td>
                     </tr>
