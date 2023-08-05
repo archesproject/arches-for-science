@@ -2,7 +2,6 @@ from django.conf.urls import url
 from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
-from afs.views.temp_file import TempFileView
 from arches.app.views.plugin import PluginView
 from afs.views.workflows.upload_dataset.format_render_map import FormatRenderMap
 from afs.views.workflows.upload_dataset.update_file_format import UpdateFileFormat
@@ -60,8 +59,6 @@ urlpatterns = [
     url(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
     url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
     url(r"^download_project_files", FileDownloader.as_view(), name="download_project_files"),
-    url(r"^temp_file/(?P<file_id>[^\/]+)", TempFileView.as_view(), name="temp_file"),
-    url(r"^temp_file$", TempFileView.as_view(), name="temp_file"),
     path("reports/", include("arches_templating.urls")),
     url(r"^", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
