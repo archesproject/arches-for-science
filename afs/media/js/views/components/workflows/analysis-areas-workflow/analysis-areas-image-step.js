@@ -82,7 +82,7 @@ define([
 
         this.buildStrObject = str => {
             return {[arches.activeLanguage]: {
-                "value": str,
+                "value": str || '',
                 "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
             }};
         };
