@@ -7,8 +7,9 @@ define([
     'models/graph',
     'viewmodels/card',
     'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-image-step.htm',
+    'views/components/workflows/stringUtils',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, analysisAreasImageStepTemplate) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, analysisAreasImageStepTemplate, stringUtils) {
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
@@ -80,23 +81,15 @@ define([
         const digitalResourceServiceTypeNodeId= '5ceedd21-ca7c-11e9-a60f-a4d18cec433a';
         const digitalResourceTypeNodeId = '09c1778a-ca7b-11e9-860b-a4d18cec433a';
 
-        this.buildStrObject = str => {
-            return {[arches.activeLanguage]: {
-                "value": str || '',
-                "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
-            }};
-        };
-
-
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
-                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](self.buildStrObject(manifestData.label));
-                const manifestDescription = Array.isArray(manifestData.description) ? self.buildStrObject(manifestData.description[0]) : self.buildStrObject(manifestData.description);
+                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](stringUtils.buildStrObject(manifestData.label));
+                const manifestDescription = Array.isArray(manifestData.description) ? stringUtils.buildStrObject(manifestData.description[0]) : stringUtils.buildStrObject(manifestData.description);
                 self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescription);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](self.buildStrObject(manifestData['@id']));
+                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](stringUtils.buildStrObject(manifestData['@id']));
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
-                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](self.buildStrObject(manifestData['@context']));
+                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](stringUtils.buildStrObject(manifestData['@context']));
             }
             else {
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](null);
