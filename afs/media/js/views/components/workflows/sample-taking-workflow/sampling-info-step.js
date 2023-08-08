@@ -189,24 +189,32 @@ define([
         };
 
         this.saveProject = function() {
+            // relationship valueids
+            const parentProject = '3a1446dc-0751-4b24-a7df-372ec0642a39';
+            const hasSamplingActivity = 'c069bc82-3e68-49b6-a008-e5ca6dd26fc6';
+
             var data = [{
                 'resourceId': self.projectValue,  // resourceid of the project
-                'ontologyProperty': '',
-                'inverseOntologyProperty':'',
-                'resourceXresourceId':''
+                'ontologyProperty': parentProject,
+                'inverseOntologyProperty': hasSamplingActivity,
+                'resourceXresourceId': ''
             }];
             return self.saveNodeValue(parentProjectNode, JSON.stringify(data), self.samplingActivityResourceId(), self.projectTile());
         };
 
         this.saveSamplers = function() {
+            // relationship valueids
+            const actorCarryingOutSamplingActivity = 'd9c30118-e13b-440f-8a5d-dc5c18e25121';
+            const actorIn = '2cc7dbf5-b625-4ac7-81d6-39623280b24d';
+        
             var samplersData = [];
             if (self.samplers()) {
                 self.samplers().forEach(function(sampler){
                     samplersData.push({
                         'resourceId': sampler,  // resourceid of the person
-                        'ontologyProperty': '',
-                        'inverseOntologyProperty':'',
-                        'resourceXresourceId':''
+                        'ontologyProperty': actorCarryingOutSamplingActivity,
+                        'inverseOntologyProperty': actorIn,
+                        'resourceXresourceId': ''
                     });
                 }); 
             }
