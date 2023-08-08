@@ -16,12 +16,12 @@ from arches.app.utils.response import JSONResponse
 logger = logging.getLogger(__name__)
 
 
-def get_related_resource_template(resourceid):
+def get_related_resource_template(resourceid, relationship_type="", inverse_relationship_type=""):
     return {
         "resourceId": resourceid,
-        "ontologyProperty": "",
+        "ontologyProperty": relationship_type,
         "resourceXresourceId": "",
-        "inverseOntologyProperty": "",
+        "inverseOntologyProperty": inverse_relationship_type
     }
 
 
@@ -58,7 +58,7 @@ class SaveAnnotationView(View):
 
         return tile
 
-    def save_related_resource_node(self, resourceinstanceid, nodeid, transactionid, related_resourceid, tileid=None):
+    def save_related_resource_node(self, resourceinstanceid, nodeid, transactionid, related_resourceid, tileid=None, relationship_type="", inverse_relationship_type=""):
         if tileid is not None:
             tile = Tile.objects.get(pk=tileid)
             tile.data[nodeid][0]["resourceId"] = related_resourceid
@@ -67,7 +67,7 @@ class SaveAnnotationView(View):
                 tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup=nodeid)
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
-            related_resource_template = get_related_resource_template(related_resourceid)
+            related_resource_template = get_related_resource_template(related_resourceid, relationship_type, inverse_relationship_type)
             tile.data[nodeid] = [related_resource_template]
         tile.save(transaction_id=transactionid, index=False)
 
@@ -140,18 +140,24 @@ class SaveAnnotationView(View):
 
     def save_physical_thing_related_collection(self, resourceinstanceid, transactionid, related_resourceid):
         physical_thing_member_of_nodeid = "63e49254-c444-11e9-afbe-a4d18cec433a"
-        tile = self.save_related_resource_node(resourceinstanceid, physical_thing_member_of_nodeid, transactionid, related_resourceid)
+        relationship_type = "31327077-8af5-4398-bbcc-e75675a9d37e"
+        inverse_relationship_type = "6e7cf6a4-aba0-4a17-9a36-c69412212699"
+        tile = self.save_related_resource_node(resourceinstanceid, physical_thing_member_of_nodeid, transactionid, related_resourceid, relationship_type=relationship_type, inverse_relationship_type=inverse_relationship_type)
         return tile
 
     def save_physical_thing_part_of_tile(self, resourceid, transactionid, related_resourceid):
         physical_thing_part_of_nodeid = "f8d5fe4c-b31d-11e9-9625-a4d18cec433a"
-        tile = self.save_related_resource_node(resourceid, physical_thing_part_of_nodeid, transactionid, related_resourceid)
+        relationship_type = "da51c93e-950e-4801-90a7-31beff7d4f2b"
+        inverse_relationship_type = "6d2969ea-41a2-4866-be92-14ba2b24f338"
+        tile = self.save_related_resource_node(resourceid, physical_thing_part_of_nodeid, transactionid, related_resourceid, relationship_type=relationship_type, inverse_relationship_type=inverse_relationship_type)
         return tile
 
     def save_parent_physical_thing_part_of_tile(self, resourceid, related_resourceid, transactionid, tiledata, tileid):
         part_identifier_assignment_nodegroupid = "fec59582-8593-11ea-97eb-acde48001122"
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
-        related_resource_template = get_related_resource_template(related_resourceid)
+        relationship_type = "6d2969ea-41a2-4866-be92-14ba2b24f338"
+        inverse_relationship_type = "02404924-40a4-44aa-bc07-e7b70e5cc718"
+        related_resource_template = get_related_resource_template(related_resourceid, relationship_type, inverse_relationship_type)
         tiledata[physical_part_of_object_nodeid] = [related_resource_template]
         tile = self.save_tile(resourceid, part_identifier_assignment_nodegroupid, transactionid, tiledata, tileid)
         return tile
