@@ -248,6 +248,14 @@ class SaveSampleAreaView(SaveAnnotationView):
         part_identifier_assignment_polygon_identifier_nodeid = "97c30c42-8594-11ea-97eb-acde48001122"
         sample_area_visualization = part_identifier_assignment_tile_data[part_identifier_assignment_polygon_identifier_nodeid]
 
+        # relationship valueids
+        overall_object_sampled = "4d8bb347-023d-498c-af87-4cb004ac938e"
+        sampled_by = "fe4e083a-d764-4eee-806c-3b96beb2cdbd"
+        sample_area_name = "1caa8744-6bc4-4f40-839e-1d96715cfa85"
+        sample_area_identified_in = "dee862c0-954e-41e1-95e8-30102e39265f"
+        sample_created = "0233939a-4b2b-4695-8020-9604c87bfdf4"
+        sample_created_by = "ea975259-b349-43b9-85fb-8c762a41c484"
+
         if tileid is not None:
             tile = Tile.objects.get(pk=tileid)
         else:
@@ -267,9 +275,9 @@ class SaveSampleAreaView(SaveAnnotationView):
                     nodegroup_id=sampling_unit_nodegroupid, resourceid=sampling_activity_resourceid
                 )
 
-        tile.data[overall_object_sampled_nodeid] = [get_related_resource_template(parent_physical_thing_resourceid)]
-        tile.data[sampling_area_nodeid] = [get_related_resource_template(sample_area_physical_thing_resourceid)]
-        tile.data[sampling_area_sample_created_nodeid] = [get_related_resource_template(sample_physical_thing_resourceid)]
+        tile.data[overall_object_sampled_nodeid] = [get_related_resource_template(parent_physical_thing_resourceid, overall_object_sampled, sampled_by)]
+        tile.data[sampling_area_nodeid] = [get_related_resource_template(sample_area_physical_thing_resourceid, sample_area_name, sample_area_identified_in)]
+        tile.data[sampling_area_sample_created_nodeid] = [get_related_resource_template(sample_physical_thing_resourceid, sample_created, sample_created_by)]
         tile.data[sampling_area_visualization_nodeid] = sample_area_visualization
 
         tile.save(transaction_id=transactionid, index=False)
@@ -314,7 +322,12 @@ class SaveSampleAreaView(SaveAnnotationView):
     def save_removed_from_tile(self, sample_resourceid, removed_from_resourceids, transactionid):
         removed_from_nodeid = "38814345-d2bd-11e9-b9d6-a4d18cec433a"
         removal_from_object_nodegroupid = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a"
-        removed_from_related_list = [get_related_resource_template(resourceid) for resourceid in removed_from_resourceids]
+
+        # relationship valueids
+        physical_object_removed_by_part_removal_event = '6fc21c46-2106-4802-b768-fe4f36f7c6e0'
+        physical_object_removed_by_part_removal_event_of = '094c0d85-a6e1-41bd-992e-6fdf0fb2e1c4' 
+
+        removed_from_related_list = [get_related_resource_template(resourceid, physical_object_removed_by_part_removal_event, physical_object_removed_by_part_removal_event_of) for resourceid in removed_from_resourceids]
         tile = self.save_node(
             sample_resourceid, removal_from_object_nodegroupid, removed_from_nodeid, transactionid, removed_from_related_list
         )
