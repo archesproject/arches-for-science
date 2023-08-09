@@ -7,8 +7,9 @@ define([
     'models/graph',
     'viewmodels/card',
     'templates/views/components/workflows/sample-taking-workflow/sample-taking-image-step.htm',
+    'views/components/workflows/stringUtils',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, sampleTakingImageStepTemplate) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, sampleTakingImageStepTemplate, stringUtils) {
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
@@ -87,19 +88,15 @@ define([
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
-                const digitalResourceName = {};
-                digitalResourceName[arches.activeLanguage] = {"value": manifestData.label, "direction": arches.activeLanguageDir};
+                const digitalResourceName = stringUtils.buildStrObject(manifestData.label);
                 self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](digitalResourceName);                
                 const manifestDescription = Array.isArray(manifestData.description) ? manifestData.description[0] : manifestData.description;
-                const manifestDescriptionTileValue = {};
-                manifestDescriptionTileValue[arches.activeLanguage] = {"value": manifestDescription || "", "direction": arches.activeLanguageDir};
+                const manifestDescriptionTileValue = stringUtils.buildStrObject(manifestDescription);
                 self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescriptionTileValue);                
-                const manifestContentIdValue = {};
-                manifestContentIdValue[arches.activeLanguage] = {"value": manifestData['@id'], "direction": arches.activeLanguageDir};
+                const manifestContentIdValue = stringUtils.buildStrObject(manifestData['@id']);
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](manifestContentIdValue);
                 self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id               
-                const conformanceNodeValue = {};
-                conformanceNodeValue[arches.activeLanguage] = {"value": manifestData['@context'], "direction": arches.activeLanguageDir};
+                const conformanceNodeValue = stringUtils.buildStrObject(manifestData['@context']);
                 self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](conformanceNodeValue);
             }
             else {
