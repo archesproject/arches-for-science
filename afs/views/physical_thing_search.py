@@ -20,7 +20,7 @@ class PhysicalThingSearchView(View):
         return self.search_results(request)
 
     def search_results(self, request):
-        has_filters = True if len(list(request.GET.items())) > 1 is not None else False
+        has_filters = len(list(request.GET.items())) > 1
         request.GET = request.GET.copy()
 
         se = SearchEngineFactory().create()
