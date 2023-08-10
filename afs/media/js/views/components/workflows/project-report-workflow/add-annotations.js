@@ -174,6 +174,7 @@ define([
         </div>`;
 
         this.screenshot = async() => {
+            if (!self.leafletConfig()) { return; }
             const currentdate = new Date();
             const url = await domToImage.toPng(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
             const blob = await domToImage.toBlob(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
