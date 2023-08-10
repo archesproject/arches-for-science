@@ -27,6 +27,12 @@ class SelectDatasetFilesStep(View):
         dataset_file_node_group_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
         dataset_file_node_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
 
+        # relationship valueids
+        recorded_value_of_observation = "96a4e8f5-6214-4af3-b4cc-b79c206d00f0"
+        output_of = "9566b743-b23e-41df-bddb-af75f22edcc5"
+        digital_source = "be3f33e9-216d-4355-8766-aced1e95616c"
+        digital_source_for = "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa"
+
         transaction_id = request.POST.get("transaction_id")
         observation_id = request.POST.get("observation_id")
         posted_dataset = request.POST.get("dataset")
@@ -62,7 +68,11 @@ class SelectDatasetFilesStep(View):
                 digital_reference_tile = Tile().get_blank_tile_from_nodegroup_id(digital_reference_node_group_id)
                 digital_reference_tile.resourceinstance_id = part_resource_id
                 digital_reference_tile.data[digital_reference_node_id] = [
-                    {"resourceId": str(dataset_resource.resourceinstanceid), "ontologyProperty": "", "inverseOntologyProperty": ""}
+                    {
+                        "resourceId": str(dataset_resource.resourceinstanceid), 
+                        "ontologyProperty": digital_source,
+                        "inverseOntologyProperty": digital_source_for
+                    }
                 ]
                 digital_reference_tile.save(user=request.user, transaction_id=transaction_id)
 
@@ -75,8 +85,8 @@ class SelectDatasetFilesStep(View):
                     observation_reference_tile.data[recorded_value_node_id].append(
                         {
                             "resourceId": str(dataset_resource.resourceinstanceid),
-                            "ontologyProperty": "",
-                            "inverseOntologyProperty": "",
+                            "ontologyProperty": recorded_value_of_observation,
+                            "inverseOntologyProperty": output_of,
                             "partResource": part_resource_id,
                         }
                     )
@@ -86,8 +96,8 @@ class SelectDatasetFilesStep(View):
                 observation_reference_tile.data[recorded_value_node_id] = [
                     {
                         "resourceId": str(dataset_resource.resourceinstanceid),
-                        "ontologyProperty": "",
-                        "inverseOntologyProperty": "",
+                        "ontologyProperty": recorded_value_of_observation,
+                        "inverseOntologyProperty": output_of,
                         "partResource": part_resource_id,
                     }
                 ]

@@ -34,6 +34,16 @@ define([
         const statementTypeConceptValue = ['72202a9f-1551-4cbc-9c7a-73c02321f3ea', 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0'];
         const relatedGraphIds = ['b6c819b8-99f6-11ea-a9b7-3af9d3b32b71'];
 
+        // relationship valueids
+        const parentProjectOfObservation = "5d7372a0-f802-4a94-a03e-4f7c7586dc04";
+        const hasObservationActivity = "4c1e9d1a-76a7-4555-8faa-f11d5796ac99";
+        const observationActivityProcedure = "e495c9a4-013b-43d2-8992-4a9912834a49";
+        const observationProcedureUsedIn = "8808d1e5-49ad-4d47-bf4d-9301ceeb8d68";
+        const physicalObjectObserved = "efc8f0f4-ddb8-4e75-ae36-c7908b77fe7c";
+        const observedBy = "abe1b5f1-a8e3-42c5-b5a6-3382b75967d2";
+        const instrumentUsedInObservation = "a0ed3c16-7b69-4db1-b2a1-2872ca8288d0";
+        const observationInstrumentUsedIn = "c643ce0e-ccfa-4980-9346-abb2a959ee39";
+
         const getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key]) {
                 return prop ? params.value()[key][prop] : params.value()[key];
@@ -68,16 +78,16 @@ define([
             parameterValue: self.parameterValue()
         };
 
-        this.createRelatedInstance = function(val){
+        this.createRelatedInstance = function(val, ontologyProperty, inverseOntologyProperty){
             return [{
                 resourceId: val,
-                ontologyProperty: "",
-                inverseOntologyProperty: ""
+                ontologyProperty,
+                inverseOntologyProperty
             }];
         };
 
-        this.instrumentInstance = ko.observable(this.instrumentValue() ? this.createRelatedInstance(this.instrumentValue()) : null);
-        this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue()) : null);
+        this.instrumentInstance = ko.observable(this.instrumentValue() ? this.createRelatedInstance(this.instrumentValue(), instrumentUsedInObservation, observationInstrumentUsedIn) : null);
+        this.procedureInstance = ko.observable(this.procedureValue() ? this.createRelatedInstance(this.procedureValue(), observationActivityProcedure, observationProcedureUsedIn) : null);
 
         const createStrObject = str => {
             return {[arches.activeLanguage]: {
@@ -90,7 +100,7 @@ define([
             params.form.dirty(Boolean(val) && !self.locked());
             if (val && !relatedGraphIds.includes(val)) {
                 let instrumentData = resourceUtils.lookupResourceInstanceData(val);
-                self.instrumentInstance(self.createRelatedInstance(val));
+                self.instrumentInstance(self.createRelatedInstance(val, instrumentUsedInObservation, observationInstrumentUsedIn));
                 instrumentData.then(function(data){
                     self.instrumentName(data._source.displayname);
                     self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
@@ -106,7 +116,7 @@ define([
 
         this.procedureValue.subscribe(function(val){
             if (val) {
-                self.procedureInstance(self.createRelatedInstance(val));
+                self.procedureInstance(self.createRelatedInstance(val, observationActivityProcedure, observationProcedureUsedIn));
             }
         });
 
@@ -222,11 +232,11 @@ define([
                 "transaction_id": params.form.workflowId
             };
             let observedThingData = {};
-            observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
+            observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId, physicalObjectObserved, observedBy);
             tiles['observedThingTile'] = self.buildTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid);
 
             let partOfProjectData = {};
-            partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId);
+            partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId, parentProjectOfObservation, hasObservationActivity);
             tiles['partOfProjectTile'] = self.buildTile(partOfProjectData, projectNodeId, self.observationInstanceId(), projectTileId);
 
             let nameData = {};
