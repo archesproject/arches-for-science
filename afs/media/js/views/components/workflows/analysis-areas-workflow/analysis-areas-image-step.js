@@ -158,11 +158,14 @@ define([
                                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
                                 var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+                                // relationship valueids
+                                const digitalSource = "be3f33e9-216d-4355-8766-aced1e95616c";
+                                const digitalSourceFor = "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa";
 
                                 digitalReferenceTile.data[digitalSourceNodeId] = [{
                                     "resourceId": data.resourceinstance_id,
-                                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                                    "ontologyProperty": digitalSource,
+                                    "inverseOntologyProperty": digitalSourceFor
                                 }];
 
                                 var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)

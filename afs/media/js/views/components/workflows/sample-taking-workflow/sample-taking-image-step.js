@@ -85,6 +85,10 @@ define([
         const digitalResourceServiceTypeNodeId= '5ceedd21-ca7c-11e9-a60f-a4d18cec433a';
         const digitalResourceTypeNodeId = '09c1778a-ca7b-11e9-860b-a4d18cec433a';
 
+        // relationship valueids
+        const digitalSource = "be3f33e9-216d-4355-8766-aced1e95616c";
+        const digitalSourceFor = "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa";
+        
         this.manifestData = ko.observable();
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
@@ -146,9 +150,9 @@ define([
                     "4099e8e0-8e31-11eb-a9c4-faffc265b501": [
                         {
                             "resourceId": digitalResourceInstanceId,
-                            "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                            "ontologyProperty": digitalSource,
                             "resourceXresourceId": "",
-                            "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                            "inverseOntologyProperty": digitalSourceFor
                         }
                     ]
                 },
@@ -206,8 +210,8 @@ define([
     
                                 digitalReferenceTile.data[digitalSourceNodeId] = [{
                                     "resourceId": data.resourceinstance_id,
-                                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                                    "ontologyProperty": digitalSource,
+                                    "inverseOntologyProperty": digitalSourceFor
                                 }];
                                 
                                 var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)

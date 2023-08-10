@@ -7,10 +7,14 @@ define(['arches', 'uuid', 'utils/resource'], function(arches, uuid, ResourceUtil
             const memberOfSetNodeid = '63e49254-c444-11e9-afbe-a4d18cec433a';
             const data = {};
 
+            // relationship valueids
+            const memberOfSet = "31327077-8af5-4398-bbcc-e75675a9d37e";
+            const setMemberOf = "6e7cf6a4-aba0-4a17-9a36-c69412212699";
+
             data[memberOfSetNodeid] = [{
                 "resourceId": projectSetInstanceId,
-                "ontologyProperty": "",
-                "resourceXresourceId": "",
+                "ontologyProperty": memberOfSet,
+                "resourceXresourceId": setMemberOf,
                 "inverseOntologyProperty": ""
             }];
 
