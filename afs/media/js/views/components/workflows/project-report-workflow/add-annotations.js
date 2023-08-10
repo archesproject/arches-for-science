@@ -118,17 +118,17 @@ define([
             const filteredTiles = this.physicalThings.map((physicalThing) => physicalThing.tiles.filter(thing => thing.nodegroup_id == MANIFEST_NODEGROUP_ID));
             const annotations = filteredTiles.filter(annotation => annotation.length > 0);
             const labelBasedresources = await Promise.all(annotations.map(async(x) => await fetchResource(x[0].resourceinstance_id)));
-            
+
             annotationGroups = await Promise.all(labelBasedresources.map(async(x) => await annotationUtils.compressFeatures(x)));
-            const currentGroup = annotationGroups[0];
+            const currentGroup = annotationGroups?.[0];
 
             self.physicalThingList(annotationGroups.map((annotation) => {
                 return {
-                    text: annotation.annotationCollection.parentDisplayName, 
+                    text: annotation.annotationCollection.parentDisplayName,
                     id: annotation.annotationCollection.parentResourceId
                 };
             }));
-            self.physicalThingValue(currentGroup.annotationCollection.parentResourceId);
+            self.physicalThingValue(currentGroup?.annotationCollection.parentResourceId);
             
         })();
         this.map = ko.observable();
