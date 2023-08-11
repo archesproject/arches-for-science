@@ -20,14 +20,20 @@ ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
 WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
 
 APP_VERSION = semantic_version.Version(major=1, minor=0, patch=0, prerelease=('a', '0'))
+
+ARCHES_APPLICATIONS = ()
+
 MIN_ARCHES_VERSION = '7.4.0b0'
 MAX_ARCHES_VERSION = '7.4.1'
 
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-STATICFILES_DIRS = (
-    os.path.join(APP_ROOT, "media", "build"),
-    os.path.join(APP_ROOT, "media"),
-) + STATICFILES_DIRS
+
+STATICFILES_DIRS =  build_staticfiles_dirs(
+    root_dir=ROOT_DIR,
+    app_root=APP_ROOT,
+    arches_applications=ARCHES_APPLICATIONS,
+)
+
 WEBPACK_LOADER = {
     "DEFAULT": {
         "STATS_FILE": os.path.join(APP_ROOT, "webpack/webpack-stats.json"),
@@ -40,10 +46,14 @@ DATATYPE_LOCATIONS.append("afs.datatypes")
 FUNCTION_LOCATIONS.append("afs.functions")
 ETL_MODULE_LOCATIONS.append("afs.etl_modules")
 SEARCH_COMPONENT_LOCATIONS.append("afs.search_components")
-TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "functions", "templates"))
-TEMPLATES[0]["DIRS"].append(os.path.join(APP_ROOT, "widgets", "templates"))
-TEMPLATES[0]["DIRS"].insert(0, os.path.join(APP_ROOT, "templates"))
-TEMPLATES[0]["OPTIONS"]["context_processors"].append("afs.utils.context_processors.project_settings")
+
+TEMPLATES = build_templates_config(
+    root_dir=ROOT_DIR,
+    debug=DEBUG,
+    app_root=APP_ROOT,
+    arches_applications=ARCHES_APPLICATIONS,
+)
+
 APP_PATHNAME = ""
 
 BYPASS_CARDINALITY_TILE_VALIDATION = False
@@ -328,17 +338,14 @@ if DOCKER:
     except ImportError:
         pass
 
+PUBLIC_SERVER_ADDRESS = 'http://localhost:8009'
 
 if __name__ == "__main__":
-    print(
-        json.dumps(
-            {
-                "ARCHES_NAMESPACE_FOR_DATA_EXPORT": ARCHES_NAMESPACE_FOR_DATA_EXPORT,
-                "STATIC_URL": STATIC_URL,
-                "ROOT_DIR": ROOT_DIR,
-                "APP_ROOT": APP_ROOT,
-                "WEBPACK_DEVELOPMENT_SERVER_PORT": WEBPACK_DEVELOPMENT_SERVER_PORT,
-            }
-        )
+    transmit_webpack_django_config(
+        root_dir=ROOT_DIR,
+        app_root=APP_ROOT,
+        arches_applications=ARCHES_APPLICATIONS,
+        public_server_address=PUBLIC_SERVER_ADDRESS,
+        static_url=STATIC_URL,
+        webpack_development_server_port=WEBPACK_DEVELOPMENT_SERVER_PORT,
     )
-    sys.stdout.flush()
