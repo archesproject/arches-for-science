@@ -15,7 +15,8 @@ define([
 ], function(_, arches, ko, cookies, annotationUtils, geojsonExtent, L, MapComponentViewModel, selectFeatureLayersFactory, AlertViewModel, domToImage, addAnnotationsTemplate) {
     function viewModel(params) {
         const self = this;
-        const projectId = params.projectId;
+        const projectId = params.projectId || "6bc146ce-37d9-4810-99ff-90d2b8ef3082";
+
         const template = params.templateId;
         let annotationGroups;
         let currentGroup;
@@ -30,6 +31,16 @@ define([
         this.initialData = ko.observableArray();
         this.physicalThings = undefined;
         this.projectRelatedResources = undefined;
+
+        this.canvases = ko.observableArray();
+        this.selectedCanvas = ko.observable();
+        this.canvasClick = (canvas) => { self.selectedCanvas(canvas.id); };
+        this.selectedCanvas.subscribe(() => {
+            self.refreshAnnotation();
+        });
+        
+        this.getCanvasService = () => { return; };
+        this.getAnnotationCount = () => { return; };
 
         this.screenshots = ko.observableArray();
         
@@ -65,23 +76,47 @@ define([
             self.screenshots(self.screenshots().filter(screenshot => screenshot.imageName != screenshotName));
         };
 
+        this.refreshAnnotation = () => {
+            self.leafletConfig(null);
+            const selectedAnnotation = currentGroup.annotationCollection.annotations.find(
+                (annotation) => annotation.featureCollection.features[0].properties.canvas === self.selectedCanvas()
+            );
+            self.leafletConfig(self.prepareAnnotation(selectedAnnotation.featureCollection));
+            this.annotation({
+                info: currentGroup.annotationCollection.canvases[self.selectedCanvas()].map(canvas => {
+                    return {
+                        tileId: canvas.tileId,
+                        name: canvas.annotationName,
+                        annotator: canvas.annotator,
+                    };
+                }),
+                leafletConfig: self.leafletConfig(),
+                featureCollection: annotationGroups,
+            });
+        };
+
+        this.getManifestData = async(manifestURL) => {
+            const response = await fetch(manifestURL);
+            const json = await response.json();
+            return json;
+        };
+
         this.physicalThingValue.subscribe((value) => {
             currentGroup = annotationGroups.find(group => group.annotationCollection.parentResourceId == value);
 
             if (currentGroup){
-                self.leafletConfig(self.prepareAnnotation(currentGroup.annotationCombined));
-                const [canvasName] = Object.keys(currentGroup.annotationCollection.canvases); // extract the first canvas - currently not supporting multiple canvases.
-                this.annotation({
-                    info: currentGroup.annotationCollection.canvases[canvasName].map(canvas => {
+                self.canvases(Object.keys(currentGroup.annotationCollection.canvases).map(
+                    canvas => {
+                        const manifestData = self.getManifestData(currentGroup.annotationCollection.canvases[canvas][0].manifest);
                         return {
-                            tileId: canvas.tileId,
-                            name: canvas.annotationName,
-                            annotator: canvas.annotator
+                            id: canvas,
+                            label: manifestData?.sequences?.[0].canvases[0].label,
+                            thumbnail: manifestData?.sequences?.[0].canvases[0].thumbnail['@id'],
                         };
-                    }),
-                    leafletConfig: self.leafletConfig(),
-                    featureCollection: annotationGroups,
-                });
+                    })
+                );
+                self.selectedCanvas(self.canvases()[0]?.id);
+                self.refreshAnnotation();
                 this.summaryName(`Annotation Summary for ${self.physicalThingList()?.find(thing => thing.id == self.physicalThingValue())?.text}`);
             }
         });

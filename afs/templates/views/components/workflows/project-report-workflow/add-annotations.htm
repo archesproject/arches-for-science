@@ -1,5 +1,7 @@
 {% load i18n %}
+{% load webpack_static from webpack_loader %}
 
+<!--ko let: {self: $data} -->
 <div>
     <div style="padding: 0;" class="widget-input-label">Select Physical Thing</div>
     <div style="display: flex; flex-direction: row; align-items:center">
@@ -63,6 +65,23 @@
                 <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
             </div>
         </div>
+        <div class="iiif-gallery-sequence">
+            <div class="iiif-gallery-sequence-canvases" data-bind="foreach: {data: canvases, as: 'canvas'}">
+                <div style="display: inline-block;">
+                    <div class="iiif-gallery-canvas" data-bind="
+                        click: function() { self.canvasClick(canvas); },
+                        css: { active: canvas.id === self.selectedCanvas(),}"
+                    >
+                        <div style="text-align:center" class="iiif-gallery-canvas-thumbnail">
+                            <img data-bind="attr: { src: canvas.thumbnail || '{% webpack_static 'img/photo_missing.png' %}', title: canvas.label}">
+                        </div>
+                        <div style="text-align:center;" class="iiif-gallery-canvas-label">
+                            <span data-bind="text: canvas.label"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="annotation-table" data-bind="if: annotation()">
             <div style="width: 100%;">
                 <table data-bind="datatable: annotationTableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd;" width="100%">
@@ -93,4 +112,5 @@
             </div>
         </div>
     </div>
-<div>
+</div>
+<!-- /ko -->
