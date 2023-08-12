@@ -118,6 +118,11 @@ define([
                 self.selectedCanvas(self.canvases()[0]?.id);
                 self.refreshAnnotation();
                 this.summaryName(`Annotation Summary for ${self.physicalThingList()?.find(thing => thing.id == self.physicalThingValue())?.text}`);
+            } else {
+                self.summaryName(null);
+                self.canvases([]);
+                self.leafletConfig(null);
+                self.annotation(null);
             }
         });
 
