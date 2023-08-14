@@ -15,7 +15,7 @@ define([
 ], function(_, arches, ko, cookies, annotationUtils, geojsonExtent, L, MapComponentViewModel, selectFeatureLayersFactory, AlertViewModel, domToImage, addAnnotationsTemplate) {
     function viewModel(params) {
         const self = this;
-        const projectId = params.projectId || "6bc146ce-37d9-4810-99ff-90d2b8ef3082";
+        const projectId = params.projectId;
 
         const template = params.templateId;
         let annotationGroups;
@@ -34,7 +34,9 @@ define([
 
         this.canvases = ko.observableArray();
         this.selectedCanvas = ko.observable();
-        this.canvasClick = (canvas) => { self.selectedCanvas(canvas.id); };
+        this.canvasClick = (canvas) => {
+            self.selectedCanvas(canvas.id);
+        };
         this.selectedCanvas.subscribe(() => {
             self.refreshAnnotation();
         });
