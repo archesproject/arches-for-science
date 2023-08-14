@@ -103,20 +103,20 @@ define([
             return json;
         };
 
-        this.physicalThingValue.subscribe((value) => {
+        this.physicalThingValue.subscribe(async(value) => {
             currentGroup = annotationGroups.find(group => group.annotationCollection.parentResourceId == value);
 
             if (currentGroup){
-                self.canvases(Object.keys(currentGroup.annotationCollection.canvases).map(
-                    canvas => {
-                        const manifestData = self.getManifestData(currentGroup.annotationCollection.canvases[canvas][0].manifest);
+                const canvases = await Promise.all(Object.keys(currentGroup.annotationCollection.canvases).map(
+                    async(canvas) => {
+                        const manifestData = await self.getManifestData(currentGroup.annotationCollection.canvases[canvas][0].manifest);
                         return {
                             id: canvas,
                             label: manifestData?.sequences?.[0].canvases[0].label,
                             thumbnail: manifestData?.sequences?.[0].canvases[0].thumbnail['@id'],
                         };
-                    })
-                );
+                    }));
+                self.canvases(canvases);
                 self.selectedCanvas(self.canvases()[0]?.id);
                 self.refreshAnnotation();
                 this.summaryName(`Annotation Summary for ${self.physicalThingList()?.find(thing => thing.id == self.physicalThingValue())?.text}`);
