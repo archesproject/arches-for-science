@@ -68,14 +68,14 @@
         <div class="iiif-gallery-sequence" data-bind="if: canvases().length > 0">
             <div class="iiif-gallery-sequence-canvases" data-bind="foreach: {data: canvases, as: 'canvas'}">
                 <div style="display: inline-block;">
-                    <div class="iiif-gallery-canvas" data-bind="
+                    <div style="text-align:center;" class="iiif-gallery-canvas" data-bind="
                         click: function() { self.canvasClick(canvas); },
                         css: { active: canvas.id === self.selectedCanvas(),}"
                     >
-                        <div style="text-align:center" class="iiif-gallery-canvas-thumbnail">
+                        <div class="iiif-gallery-canvas-thumbnail">
                             <img data-bind="attr: { src: canvas.thumbnail || '{% webpack_static 'img/photo_missing.png' %}', title: canvas.label}">
                         </div>
-                        <div style="text-align:center;" class="iiif-gallery-canvas-label">
+                        <div class="iiif-gallery-canvas-label">
                             <span data-bind="text: canvas.label"></span>
                         </div>
                     </div>
