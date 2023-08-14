@@ -29,7 +29,7 @@
         <button style="height:40px; margin: 0 10px;" class="btn btn-info" data-bind="click: screenshot, css: {disabled: !leafletConfig() }">Add a Annotation Summary Image to Report</button>
         <div style="flex: 0.66;"></div>
     </div>
-    <div>
+    <div data-bind="if: leafletConfig()">
         <div style="padding: 0;" class="widget-input-label">Name of Summary</div>
         <input style="display: flex;padding: 0 10;width: 600px;border:1px solid #eee;height:36px" data-bind="value: summaryName, valueUpdate: 'keyup'" />
     </div>
