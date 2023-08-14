@@ -65,7 +65,7 @@
                 <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
             </div>
         </div>
-        <div class="iiif-gallery-sequence">
+        <div class="iiif-gallery-sequence" data-bind="if: canvases.length > 0">
             <div class="iiif-gallery-sequence-canvases" data-bind="foreach: {data: canvases, as: 'canvas'}">
                 <div style="display: inline-block;">
                     <div class="iiif-gallery-canvas" data-bind="
