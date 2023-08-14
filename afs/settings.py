@@ -258,6 +258,17 @@ RENDERERS += [
         "exclude": "",
     },
     {
+        "name": "xy-reader",
+        "title": "XY Data File Reader",
+        "description": "Use for all instrument outputs with x-y data",
+        "id": "e93b7b27-40d8-4141-996e-e59ff08742f3",
+        "iconclass": "fa fa-bolt",
+        "component": "views/components/cards/file-renderers/xy-reader",
+        "ext": "txt",
+        "type": "text/plain",   
+        "exclude": "",
+    },
+    {
         "name": "pdbreader",
         "title": "PDB File Reader",
         "description": "",

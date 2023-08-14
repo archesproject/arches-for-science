@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
+from afs.views.renderer_config import RendererConfigView, RendererView
 from afs.views.temp_file import TempFileView
 from arches.app.views.plugin import PluginView
 from afs.views.workflows.upload_dataset.format_render_map import FormatRenderMap
@@ -61,6 +62,9 @@ urlpatterns = [
     url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
     url(r"^download_project_files", FileDownloader.as_view(), name="download_project_files"),
     url(r"^temp_file/(?P<file_id>[^\/]+)", TempFileView.as_view(), name="temp_file"),
+    url(r"^renderer/(?P<renderer_id>[^\/]+)", RendererView.as_view(), name="renderer_config"),
+    url(r"^renderer_config/(?P<renderer_config_id>[^\/]+)", RendererConfigView.as_view(), name="renderer_config"),
+    url(r"^renderer_config/", RendererConfigView.as_view(), name="renderer_config"),
     url(r"^temp_file$", TempFileView.as_view(), name="temp_file"),
     path("reports/", include("arches_templating.urls")),
     url(r"^", include("arches.urls")),

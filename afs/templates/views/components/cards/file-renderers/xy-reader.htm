@@ -1,0 +1,43 @@
+{% extends "views/components/cards/file-renderers/afs-reader.htm" %}
+{% load i18n %}
+
+{% block renderer_header %}
+<div class="xy-reader" style="margin: 15px; display: flex; justify-content: space-between;">
+    
+    <input style="display:inline-block; flex: 1"
+    data-bind="select2Query: {
+        select2Config: {
+            clickBubble: false,
+            disabled: false,
+            width: 'element',
+            ajax:{
+                url: rendererUrl,
+                results: processConfigs
+            },
+            initSelection: function() {
+                return;
+            },
+            value: selectedConfig,
+            closeOnSlect: false,
+            allowClear: true,
+            multiple: false,
+            placeholder: {% trans "'Available Renderer Configurations'" %}}}">
+    <button type="button" class="btn btn-success" data-bind="click: function(){addConfiguration()}">
+        <span>{% trans "Add Configuration" %}</span>
+    </button>
+</div>
+
+<div style="margin: 15px;" data-bind="visible: showConfigAdd">
+    <label class="form-normal form-primary form-text" for="configName">Configuration Name</label>
+    <input type="text" name="configName" data-bind="textInput: configName">
+    <label class="form-normal form-primary form-text" for="headerDelimiter">Header Delimiter</label>
+    <input type="text" name="headerDelimiter" data-bind="textInput: headerDelimiter">
+    <label class="form-normal form-primary form-text" for="headerFixedLines">Header Fixed Lines</label>
+    <input type="text" name="headerFixedLines" data-bind="textInput: headerFixedLines">
+    <label class="form-normal form-primary form-text" for="delimiterCharacter">Delimiter Character</label>
+    <input type="text" name="delimiterCharacter" data-bind="textInput: delimiterCharacter">
+    <button type="button" class="btn btn-success" data-bind="click: function(){saveConfiguration()}">
+        <span>{% trans "Save Configuration" %}</span>
+    </button>
+</div>
+{% endblock renderer_header %}

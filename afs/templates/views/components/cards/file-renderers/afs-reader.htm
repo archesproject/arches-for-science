@@ -7,6 +7,8 @@
 <div class="">
     <!--ko if: params.selected() -->
     <div class="preview file-viewer" style="position: relative;">
+        {% block renderer_header %}
+        {% endblock renderer_header %}
         <div class='loading-mask' data-bind="visible: loading()"></div>
         <!--ko if: chartData -->
         <div class="chart" data-bind='plotly: {

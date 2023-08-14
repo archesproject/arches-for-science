@@ -12,6 +12,7 @@ define([
     'views/components/workflows/upload-dataset/instrument-info-step',
     'views/components/workflows/upload-dataset/upload-dataset-final-step',
     'views/components/workflows/upload-dataset/file-interpretation-step',
+    'views/components/workflows/upload-dataset/select-renderer-step',
     'views/components/workflows/upload-dataset/select-dataset-files-step',
     'views/components/workflows/upload-dataset/upload-files-step',
 ], function(ko, $, arches, Workflow, AlertViewModel, uploadDatasetWorkflowTemplate) {
@@ -162,6 +163,30 @@ define([
                     ],
                 },
                 {
+                    title: 'Select File Renderers',
+                    name: 'select-renderers',
+                    required: true,
+                    informationboxdata: {
+                        heading: 'Select file renderers',
+                        text: 'select file renderers',
+                    },
+                    layoutSections: [
+                        {
+                            componentConfigs: [
+                                { 
+                                    componentName: 'select-renderer-step',
+                                    uniqueInstanceName: 'select-renderer-step', /* unique to step */
+                                    parameters: {
+                                        activeTab: 'edit',
+                                        datasetInfo: "['select-dataset-files-step']",
+                                        datasetInfoFromUploadFilesStep: "['upload-files']"
+                                    },
+                                },
+                            ], 
+                        },
+                    ],
+                },
+                {
                     title: 'File Interpretation',
                     name: 'file-interpretation',
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
@@ -231,8 +256,8 @@ define([
                         'All data created during the course of this workflow will be deleted.',
                         function(){}, //does nothing when canceled
                         () => {
-                            params.loading('Cleaning up...')
-                            this.reverseWorkflowTransactions()
+                            params.loading('Cleaning up...');
+                            this.reverseWorkflowTransactions();
                         },
                     )
                 );

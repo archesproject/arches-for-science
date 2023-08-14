@@ -18,13 +18,7 @@ define([
             const observationInfo = params.observationinfo['instrument-info'].savedData();
 
             const datasetFileNodeId = "7c486328-d380-11e9-b88e-a4d18cec433a";
-            const rendererLookup = {
-                "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-                "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
-                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "fors-renderer", rendererid: "88dccb59-14e3-4445-8f1b-07f0470b38bb"},
-                "image": {rendererid: "5e05aa2e-5db0-4922-8938-b4d2b7919733", renderer: "imagereader"},
-                "pdf": {rendererid: "09dec059-1ee8-4fbd-85dd-c0ab0428aa94", renderer: "pdfreader"},
-            };
+
             const physThingName = params.projectinfo["select-phys-thing-step"].savedData().physThingName;
 
             this.datasetId = undefined;
@@ -219,14 +213,13 @@ define([
             };
 
             this.saveFiles = async(files) => {
-                file = files?.[0]
                 try {
                     const formData = new window.FormData();
                     formData.append("transaction_id", params.form.workflowId);
-                    formData.append("instrument_id", observationInfo.instrument.value)
-                    formData.append("observation_id", observationInfo.observationInstanceId)
+                    formData.append("instrument_id", observationInfo.instrument.value);
+                    formData.append("observation_id", observationInfo.observationInstanceId);
                     if(self.observationReferenceTileId){
-                        formData.append("observation_ref_tile", self.observationReferenceTileId)
+                        formData.append("observation_ref_tile", self.observationReferenceTileId);
                     }
 
                     // For each part of parent phys thing, create a digital resource with a Name tile
@@ -255,13 +248,13 @@ define([
                     });
 
                     self.loading(false);
-                    const datasetInfo = await resp.json()
+                    const datasetInfo = await resp.json();
                     self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
                     this.datasetId = datasetInfo.datasetResourceId;
                     const newDatasetFiles = self.files().filter(
                         x => datasetInfo.removedFiles.find(
                             y => {
-                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid)
+                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
                             }) == undefined
                     );
                     self.files([...newDatasetFiles, ...datasetInfo.files]);

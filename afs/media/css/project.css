@@ -13,14 +13,28 @@
     background: none;
 }
 
+.file-configuration .CodeMirror {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    overflow: auto;
+}
+.file-configuration .cm{
+    flex:1 1 auto;
+    margin-top:0;
+    height:100%;
+    position:relative;
+}
+
 .down-button {
     border-width: 2px;
 }
 
 .chart {
-    margin-right: 105px;
-    margin-left: 15px;
-    margin-top: 20px;
+    margin: 10px 15px;
 }
 
 .boxed {
@@ -40,6 +54,10 @@
 .workbench-card-sidepanel{
     display: flex;
     flex-direction: column;
+}
+
+.xy-reader .select2-container{
+    width: auto !important;
 }
 
 .workbench-button-panel {
@@ -1157,4 +1175,12 @@
     top: 8px;
     transition: all linear .3s;
     z-index: 1;
+}
+
+.file-configuration h4{
+    padding: 0;
+}
+
+.file-configuration i {
+    padding: 5px;
 }

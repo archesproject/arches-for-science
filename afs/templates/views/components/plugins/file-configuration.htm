@@ -1,0 +1,79 @@
+{% load i18n %}
+<div class="file-configuration" style="display: flex;height: calc(100% - 105px)">
+    <div style="flex: 3;  padding: 10px">
+        <h4><span>{% trans "Data Files" %}</span></h4>
+        <span>{% trans "Select files to define configuration for viewing" %}</span>
+        <div class="pad-btm" data-bind="visible: files().length > 0" style="overflow-y: scroll;padding: 7px; max-height: calc(100% - 100px);">
+            <table class="table table-striped" cellspacing="0" width="100%">
+                <thead>
+                    <tr class="afs-table-header">
+                        <th class="min-tabletl">{% trans "Name" %}</th>
+                        <th class="min-tabletl">{% trans "Configuration" %}</th>
+                        <th style="width:40px;" class="afs-table-control all"></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="dataTablesForEach: { data: files, as: 'file', dataTableOptions: fileTableConfig }">
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items:center;">
+                                <input style="margin: 8px" type="checkbox" name="selectedFiles" data-bind="checked: $parent.selectedFiles, value: file.fileid"></input>
+                                <div data-bind="text: file.details.name"></div>
+                            </div>
+                        </td>
+                        <td data-bind="text: $parent.rendererConfigs()?.find(config => config.configid == file.details.rendererConfig)?.name"></td>
+                        <td>
+                            <div style="display: flex;">
+                                <i style="flex:1"></i>
+                                <i data-bind="visible: $parent.visibleFile() == file.fileid" role="button" aria-label="{% trans "Selected File" %}" class="fa fa-eye"></i>
+                                <i role="button" aria-label="{% trans "Display File Contents" %}" data-bind="click: function() { $parent.updateCodeMirror(file) }" class="fa fa-arrow-right"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button style="margin: 12px 0;" class="btn btn-primary" data-bind="visible: applyConfigurationVisible, click: function() { updateConfiguration() }">{% trans "Apply Configuration" %}</button>
+    </div>
+    <div style="flex: 4; border: 1px solid #ddd">
+        <div class="cm" data-bind="codemirror: {
+            value: codeMirrorText,
+            mode: { name: 'javascript', json: true },
+            lineNumbers: true,
+            lineWrapping: true
+        }"></div>
+    </div>
+    <div class="file-configuration" style="flex: 2;padding: 10px; ">
+        <h4><span>{% trans "Select Importer Configuration" %}</span></h4>
+        <span>{% trans "Define how to import your x/y data" %}</span>
+        <div>
+            <!-- ko foreach: {data: rendererConfigs, as: 'configuration'} -->
+            <div style="padding:8px; display:flex;align-items: center;">
+                <input style="margin: 8px" type="radio" name="selectedConfiguration" data-bind="checked: $parent.selectedConfiguration, value: configuration.configid"></input>
+                <span style="flex:1" data-bind="text: configuration.name"></span>
+                <i role="button" aria-label="{% trans Edit %}" class="fa fa-pencil"></i>
+                <i role="button" aria-label="{% trans Delete %}" class="fa fa-trash"></i>
+            </div>
+            <!-- /ko -->
+        </div>
+        <button class="btn btn-primary" data-bind="click:()=>{showConfigurationPanel(true)}">{% trans "Add Importer Configuration" %}</button>
+        <div data-bind="visible: showConfigurationPanel">
+            <div>{% trans "Add Importer Configuration" %}</div>
+            <div>
+                <div>
+                    <div>{% trans "Header" %}</div>
+                    <input type="radio" name="headerConfig" value="none" data-bind="checked: headerConfig">
+                    <input type="radio" name="headerConfig" value="fixed" data-bind="checked: headerConfig">
+                    <input type="radio" name="headerConfig" value="delimited" data-bind="checked: headerConfig">
+
+                    <input type="text" name="headerDelimiter" data-bind="textInput: headerDelimiter">
+                    <input type="text" name="headerFixed Lines" data-bind="textInput: headerFixedLines">
+                </div>
+                <div>
+                    <label>{% trans "Data Column Delimiter" %}</label>
+                    <input type="text" name="delimiterCharacter" data-bind="textInput: delimiterCharacter">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
