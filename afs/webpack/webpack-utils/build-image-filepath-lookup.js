@@ -1,12 +1,16 @@
 const Path = require('path');
 const fs = require('fs');
 
-const _buildImageFilePathLookup = function(publicPath, path, outerAcc, imageDirectoryPath) {
-    const outerPath = imageDirectoryPath || path;   // original `path` arg is persisted through recursion
+const buildImageFilePathLookup = function(publicPath, path, outerAcc, imageDirectoryPath) {
+    if (!fs.existsSync(path)) {
+        return;
+    }
 
     return fs.readdirSync(path).reduce((acc, name) => {
+        const outerPath = imageDirectoryPath || path;   // original `path` arg is persisted through recursion
+        
         if (fs.lstatSync(Path.join(path, name)).isDirectory() ) {
-            return _buildImageFilePathLookup(
+            return buildImageFilePathLookup(
                 publicPath,
                 Path.join(path, name), 
                 acc, 
@@ -22,20 +26,10 @@ const _buildImageFilePathLookup = function(publicPath, path, outerAcc, imageDire
 
             return { 
                 ...acc, 
-                [Path.join(publicPath, 'img', filename)]: Path.resolve(__dirname, Path.join(outerPath, subPath))
+                [Path.join(publicPath, 'img', filename).replace(/\\/g, '/')]: Path.resolve(__dirname, Path.join(outerPath, subPath))
             };
         }
     }, outerAcc);
-};
-
-const buildImageFilePathLookup = function(publicPath, archesImagePath, projectImagePath) {
-    const coreArchesImageFilePathConfiguration = _buildImageFilePathLookup(publicPath, archesImagePath, {});
-    const projectImagePathConfiguration = _buildImageFilePathLookup(publicPath, projectImagePath, {});
-
-    return { 
-        ...coreArchesImageFilePathConfiguration,
-        ...projectImagePathConfiguration 
-    };
 };
 
 module.exports = { buildImageFilePathLookup };
