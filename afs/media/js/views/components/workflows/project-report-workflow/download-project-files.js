@@ -44,28 +44,26 @@ define([
         };
 
         this.getFilesFromObservation = async() => {
-            let projectObservations, observation, digitalResources;
-            const response = await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false")
+            const response = await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false");
             const json = await response.json();
             self.projectName = json.resource_instance.displayname;
-            projectObservations = json.related_resources.filter(res => res.graph_id == observationGraphId)
+            const projectObservations = json.related_resources.filter(res => res.graph_id == observationGraphId)
                 .filter(res => {
                     const objectTile = res.tiles.find(tile => tile.nodegroup_id === objectObeservedNodeId);
                     const object = objectTile?.data[objectObeservedNodeId][0]['resourceId'];
                     return physicalThings.includes(object);
                 });
 
-            for (const observataion of projectObservations) {
+            for (const projectObservation of projectObservations) {
                 const relatedFiles = ko.observableArray();
-                const response = await window.fetch(arches.urls.related_resources + observataion.resourceinstanceid  + "?paginate=false");
+                const response = await window.fetch(arches.urls.related_resources + projectObservation.resourceinstanceid  + "?paginate=false");
                 
                 if(response.ok) {
                     const json = await response.json();
-                    observation = json.resource_instance;
+                    const observation = json.resource_instance;
                     observation.expanded = ko.observable();
-                    console.log(observation, observataion);
                     observation.description = observation.descriptors[arches.activeLanguage].description;
-                    digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
+                    const digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
                     digitalResources.forEach((res) => 
                         res.tiles.forEach((tile) => {
                             if (tile.nodegroup_id == fileNodeId) {
