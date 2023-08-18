@@ -1,3 +1,19 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "afs"
+readme = "README.rst"
+requires-python = ">=3.9"
+dependencies = [
+  "arches @ git+https://github.com/archesproject/arches.git@dev/7.5.x",
+]
+version = "1.1.0a0"
+
+[tool.setuptools]
+packages = ["afs"]
+
 [tool.black]
 line-length = 140
 target-version = ['py37']
