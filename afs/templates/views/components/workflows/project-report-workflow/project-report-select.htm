@@ -12,4 +12,25 @@
             disabled: locked,
         }
     }"></div>
+    <!-- ko if: hasSetWithPhysicalThing() === false -->
+    <div class="tabbed-workflow-step-information-box widget-input-label" style="text-align: center; margin-top: 16px; height:fit-content; background-color: #fde9ad;">
+        This project has no associated Objects. Your project must have an associated Object Collection with an Object before proceeding.
+    </div>
+    <!-- /ko -->
+    <!-- ko if: termFilter() || physicalThingsValue() -->
+    <div style="padding: 5px; margin-top: 15px;">
+        <div class="widget-input-label">
+            <span>{% trans "Select an Object" %}</span>
+        </div>
+        <div data-bind="component: {
+            name: 'resource-instance-multiselect-widget',
+            params: {
+                termFilter: termFilter(),
+                renderContext: 'workflow', 
+                value: physicalThingsValue,
+                disabled: locked,
+            }
+        }"></div>
+    </div>
+    <!--/ko-->
 </div>
