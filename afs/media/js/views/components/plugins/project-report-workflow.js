@@ -71,7 +71,8 @@ define([
                                     uniqueInstanceName: 'add-annotations',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        projectId: "['select-project']['select-project']['project']"
+                                        projectId: "['select-project']['select-project']['project']",
+                                        physicalThings: "['select-project']['select-project']['physicalThings']",
                                     }
                                 },
                             ], 
