@@ -32,6 +32,7 @@ define([
         this.hasSetWithPhysicalThing = ko.observable();
         this.isPhysicalThingValid = ko.observable();
         this.originalValue = params.form.value();
+        let initializing = true;
         
         this.updateValues = function(val){
             if (val !== null) {
@@ -49,8 +50,11 @@ define([
         this.locked = params.form.locked;
         
         this.projectValue.subscribe(function(val){
+            if (!initializing) {
+                self.physicalThingValue(null);
+            }
+            initializing = false;
             self.isPhysicalThingValid(null);
-            self.physicalThingValue(null);
             if (val) {
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
@@ -66,7 +70,6 @@ define([
                             if (setTileResourceInstanceIds) {
                                 self.setsThatBelongToTheProject(setTileResourceInstanceIds);
                             }
-                            self.physicalThingValue(null);
                         } else {
                             self.hasSetWithPhysicalThing(false);
                         }
