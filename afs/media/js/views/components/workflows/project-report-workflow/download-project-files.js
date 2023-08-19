@@ -14,8 +14,12 @@ define([
 
         const observationGraphId = '615b11ee-c457-11e9-910c-a4d18cec433a';
         const digitalResourcegGraphId = '707cbd78-ca7a-11e9-990b-a4d18cec433a';
+        const collectionGraphId = '1b210ef3-b25c-11e9-a037-a4d18cec433a';
+        const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
         const fileNodeId = '7c486328-d380-11e9-b88e-a4d18cec433a';
         const objectObeservedNodeId = "cd412ac5-c457-11e9-9644-a4d18cec433a";
+        const RemovalFromObjectNodegroupId = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a"
+        const removedFromNodeId = "38814345-d2bd-11e9-b9d6-a4d18cec433a";
         const fileStatementContentNodeId = 'ca227726-78ed-11ea-a33b-acde48001122';
         this.relatedObservations = ko.observableArray();
         this.message = ko.observable();
@@ -42,16 +46,27 @@ define([
             });
             self.expandAll(true);
         };
-
         this.getFilesFromObservation = async() => {
-            const response = await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false");
-            const json = await response.json();
-            self.projectName = json.resource_instance.displayname;
-            const projectObservations = json.related_resources.filter(res => res.graph_id == observationGraphId)
+            const projectResponse = await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false");
+            const projectJson = await projectResponse.json();
+
+            const collectionForProject = projectJson.related_resources.find(res => res.graph_id === collectionGraphId).resourceinstanceid;
+            const collectionResponse = await window.fetch(arches.urls.related_resources + collectionForProject  + "?paginate=false");
+            const collectionJson = await collectionResponse.json();
+
+            const projectPhysicalThings = collectionJson.related_resources.filter(res => res.graph_id === physicalThingGraphId)
+                .filter(res => {
+                    const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === RemovalFromObjectNodegroupId);
+                    const removedFrom = removedFromTile?.data[removedFromNodeId].map(rr => rr.resourceId);
+                    return removedFrom?.some(res => physicalThings.includes(res)) || physicalThings.includes(res.resourceinstanceid);
+                }).map(res => res.resourceinstanceid);
+
+            self.projectName = projectJson.resource_instance.displayname;
+            const projectObservations = projectJson.related_resources.filter(res => res.graph_id == observationGraphId)
                 .filter(res => {
                     const objectTile = res.tiles.find(tile => tile.nodegroup_id === objectObeservedNodeId);
                     const object = objectTile?.data[objectObeservedNodeId][0]['resourceId'];
-                    return physicalThings.includes(object);
+                    return projectPhysicalThings.includes(object);
                 });
 
             for (const projectObservation of projectObservations) {
