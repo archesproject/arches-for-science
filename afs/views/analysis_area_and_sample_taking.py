@@ -73,7 +73,7 @@ class SaveAnnotationView(View):
 
         return tile
 
-    def add_related_resource_node(self, resourceinstanceid, nodeid, transactionid, related_resourceid, tileid=None):
+    def add_related_resource_node(self, request, resourceinstanceid, nodeid, transactionid, related_resourceid, tileid=None):
         if tileid is not None:
             tile = Tile.objects.get(pk=tileid)
             tile.data[nodeid](0)["resourceId"] = related_resourceid
@@ -82,11 +82,11 @@ class SaveAnnotationView(View):
             tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
             related_resource_template = get_related_resource_template(related_resourceid)
             tile.data[nodeid] = [related_resource_template]
-        tile.save(transaction_id=transactionid, index=False)
+        tile.save(transaction_id=transactionid, request=request, index=False)
 
         return tile
 
-    def add_to_related_resource_list_tile(self, resourceinstanceid, nodeid, transactionid, related_resourceid, tileid=None):
+    def add_to_related_resource_list_tile(self, request, resourceinstanceid, nodeid, transactionid, related_resourceid, tileid=None):
         if tileid is not None:
             tile = Tile.objects.get(pk=tileid)
         else:
@@ -100,7 +100,7 @@ class SaveAnnotationView(View):
         if related_resourceid not in list_of_rr_resources:
             related_resource_template = get_related_resource_template(related_resourceid)
             tile.data[nodeid].append(related_resource_template)
-            tile.save(transaction_id=transactionid, index=False)
+            tile.save(transaction_id=transactionid, request=request, index=False)
 
         return tile
 
@@ -309,7 +309,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         tile.data[statement_content_nodeid][get_language()] = {"value": statement, "direction": "rtl" if get_language_bidi() else "ltr"}
         tile.data[statement_type_nodeid] = [statement_types[type]]
         tile.data[statement_language_nodeid] = [english_conceptid]
-        tile.save(request, index=False)
+        tile.save(request=request, index=False)
 
         return tile
 
@@ -320,7 +320,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         tile = self.save_node(
             request, sample_resourceid, removal_from_object_nodegroupid, removed_from_nodeid, transactionid, removed_from_related_list
         )
-        tile.save(transaction_id=transactionid, index=False)
+        tile.save(transaction_id=transactionid, request=request, index=False)
 
     def post(self, request):
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
@@ -364,7 +364,9 @@ class SaveSampleAreaView(SaveAnnotationView):
                 sample_area_name_tile = self.save_physical_thing_name(
                     request, sample_area_physical_thing_resourceid, transaction_id, sample_area_name
                 )
-                sample_area_type_tile = self.save_physical_thing_type(request, sample_area_physical_thing_resourceid, transaction_id, "sample_area")
+                sample_area_type_tile = self.save_physical_thing_type(
+                    request, sample_area_physical_thing_resourceid, transaction_id, "sample_area"
+                )
                 sample_area_member_of_tile = self.save_physical_thing_related_collection(
                     request, sample_area_physical_thing_resourceid, transaction_id, collection_resourceid
                 )
@@ -376,8 +378,12 @@ class SaveSampleAreaView(SaveAnnotationView):
                 if sample_physical_thing_resourceid is None:
                     sample_physical_thing_resourceid = self.create_physical_thing_resource(request, transaction_id)
 
-                sample_name_tile = self.save_physical_thing_name(request, sample_physical_thing_resourceid, transaction_id, sample_name)
-                sample_type_tile = self.save_physical_thing_type(request, sample_physical_thing_resourceid, transaction_id, "sample")
+                sample_name_tile = self.save_physical_thing_name(
+                    request, sample_physical_thing_resourceid, transaction_id, sample_name
+                )
+                sample_type_tile = self.save_physical_thing_type(
+                    request, sample_physical_thing_resourceid, transaction_id, "sample"
+                )
                 sample_member_of_tile = self.save_physical_thing_related_collection(
                     request, sample_physical_thing_resourceid, transaction_id, collection_resourceid
                 )
@@ -406,7 +412,9 @@ class SaveSampleAreaView(SaveAnnotationView):
                     request, sample_physical_thing_resourceid, sample_description, "description"
                 )
 
-                sample_motivation_tile = self.save_sample_statement_tile(request, sample_physical_thing_resourceid, sample_motivation, "motivation")
+                sample_motivation_tile = self.save_sample_statement_tile(
+                    request, sample_physical_thing_resourceid, sample_motivation, "motivation"
+                )
 
                 # saving the parent physical thing area resource and tiles
                 physical_part_of_object_tile = self.save_parent_physical_thing_part_of_tile(
@@ -512,10 +520,14 @@ class DeleteSampleAreaView(View):
             )
 
             with transaction.atomic():
-                Resource.objects.get(resourceinstanceid=sample_area_physical_thing_resourceid).delete(transaction_id=transaction_id)
-                Resource.objects.get(resourceinstanceid=sample_physical_thing_resourceid).delete(transaction_id=transaction_id)
-                Tile.objects.get(tileid=parentPhysicalThingSampleTile.tileid_id).delete(transaction_id=transaction_id)
-                Tile.objects.get(tileid=samplingActivitySampleTile.tileid_id).delete(transaction_id=transaction_id)
+                Resource.objects.get(resourceinstanceid=sample_area_physical_thing_resourceid).delete(
+                    transaction_id=transaction_id, request=request)
+                Resource.objects.get(resourceinstanceid=sample_physical_thing_resourceid).delete(
+                    transaction_id=transaction_id, request=request)
+                Tile.objects.get(tileid=parentPhysicalThingSampleTile.tileid_id).delete(
+                    transaction_id=transaction_id, request=request)
+                Tile.objects.get(tileid=samplingActivitySampleTile.tileid_id).delete(
+                    transaction_id=transaction_id, request=request)
             return JSONResponse(status=200)
         except:
             response = {"message": _("Unable to delete"), "title": _("Delete Failed")}
@@ -549,8 +561,10 @@ class DeleteAnalysisAreaView(View):
             )
 
             with transaction.atomic():
-                Resource.objects.get(resourceinstanceid=analysis_area_physical_thing_resourceid).delete(transaction_id=transaction_id)
-                Tile.objects.get(tileid=parentPhysicalThingAnalysisTile.tileid_id).delete(transaction_id=transaction_id)
+                Resource.objects.get(resourceinstanceid=analysis_area_physical_thing_resourceid).delete(
+                    transaction_id=transaction_id, user=request.user)
+                Tile.objects.get(tileid=parentPhysicalThingAnalysisTile.tileid_id).delete(
+                    transaction_id=transaction_id, request=request)
             return JSONResponse(status=200)
         except:
             response = {"message": _("Unable to delete"), "title": _("Delete Failed")}
