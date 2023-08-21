@@ -2,7 +2,7 @@ from arches.app.views.search import get_provisional_type
 from django.views.generic import View
 from arches.app.search.search_engine_factory import SearchEngineFactory
 from django.http import HttpResponseNotFound
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.shortcuts import render
 from datetime import datetime
 from arches.app.search.components.base import SearchFilterFactory
