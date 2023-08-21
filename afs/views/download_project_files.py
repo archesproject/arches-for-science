@@ -6,7 +6,7 @@ import json
 from django.contrib.auth.models import User
 from django.core.files import File
 from django.http import HttpRequest
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views.generic import View
 from arches.app.models import models
 from arches.app.utils.response import JSONResponse, JSONErrorResponse

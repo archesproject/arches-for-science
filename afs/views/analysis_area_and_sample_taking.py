@@ -3,7 +3,7 @@ import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import get_language, get_language_bidi

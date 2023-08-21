@@ -1,7 +1,7 @@
 import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views.generic import View
 from arches.app.datatypes.datatypes import StringDataType, DataTypeFactory
 from arches.app.models.tile import Tile
