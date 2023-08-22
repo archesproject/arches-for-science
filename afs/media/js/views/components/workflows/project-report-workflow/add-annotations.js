@@ -110,10 +110,11 @@ define([
                 const canvases = await Promise.all(Object.keys(currentGroup.annotationCollection.canvases).map(
                     async(canvas) => {
                         const manifestData = await self.getManifestData(currentGroup.annotationCollection.canvases[canvas][0].manifest);
+                        const currentCanvas = manifestData?.sequences?.[0].canvases.find((x) => x.images[0].resource.service['@id'] === canvas);
                         return {
                             id: canvas,
-                            label: manifestData?.sequences?.[0].canvases[0].label,
-                            thumbnail: manifestData?.sequences?.[0].canvases[0].thumbnail['@id'],
+                            label: currentCanvas.label,
+                            thumbnail: currentCanvas.thumbnail['@id'],
                         };
                     }));
                 self.canvases(canvases);
