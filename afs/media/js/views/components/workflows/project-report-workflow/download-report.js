@@ -48,19 +48,24 @@ define([
         const generateReport = async(template) => {
             const relatedObjects = await getRelatedResources(projectId);
             const collections = relatedObjects.related_resources.filter(rr => rr.graph_id == collectionGraphId);
-            const allPhysicalThings = collections.map(async(collection) => {
+            const allPhysicalThingsResponse = collections.map(async(collection) => {
                 const collectionRelatedResources = await getRelatedResources(collection.resourceinstanceid);
                 return collectionRelatedResources?.related_resources.filter(rr => rr.graph_id == physicalThingGraphId);
             });
 
-            this.physicalThings = [].concat(...(await Promise.all(allPhysicalThings))).filter(res => {
+            self.physicalThings = [].concat(...(await Promise.all(allPhysicalThingsResponse))).filter(res => {
                 const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === removalFromObjectNodegroupId);
                 const removedFrom = removedFromTile?.data[removedFromNodeId].map(rr => rr.resourceId);
                 return removedFrom?.some(res => physicalThingFromPreviousStep.includes(res)) || physicalThingFromPreviousStep.includes(res.resourceinstanceid);
             });
 
-            const physicalThingDetailsUrl = this.physicalThings.reduce(
+            const physicalThingDetailsUrl = self.physicalThings.reduce(
                 (acc, current) => acc + current.resourceinstanceid + ",", 
+                lbgApiEndpoint
+            ).replace(/,$/, '');
+
+            const objectOfStudyDetailsUrl = physicalThingFromPreviousStep.reduce(
+                (acc, current) => acc + current + ",", 
                 lbgApiEndpoint
             ).replace(/,$/, '');
 
@@ -74,7 +79,8 @@ define([
             const observationDetails = await (await window.fetch(`${lbgApiEndpoint}${observationIds}`)).json();
 
             const physicalThingsDetails = await (await window.fetch(physicalThingDetailsUrl)).json();
-
+            const objectOfStudyDetails = await (await window.fetch(objectOfStudyDetailsUrl)).json();
+            
             const projectDetails = await (await window.fetch(projectDetailsUrl)).json();
             
             const today = new Date();
@@ -82,6 +88,7 @@ define([
             const reportDate = today.toLocaleDateString('en-US', options);
             const filename = reportUtils.slugify(`${self.projectName()}_${template.name}_${reportDate}`);
             const physicalThingsDetailsArray = [...Object.values(physicalThingsDetails)];
+            const objectOfStudyDetailsArray = [...Object.values(objectOfStudyDetails)];
             const analysisAreas = physicalThingsDetailsArray.filter(physicalThing => physicalThing.resource?.type?.["@display_value"] == 'analysis areas');
             const annotationScreenshots = screenshots.map((screenshot) => {
                 const url = `${window.location.origin}/temp_file/${screenshot.fileId}`;
@@ -96,7 +103,8 @@ define([
                 analysisAreas,
                 observationDetails: [...Object.values(observationDetails)],
                 projectDetails: [...Object.values(projectDetails)],
-                physicalThingsDetails: physicalThingsDetailsArray
+                physicalThingsDetails: physicalThingsDetailsArray,
+                objectOfStudyDetails: objectOfStudyDetailsArray
             };
 
             const result = await fetch(arches.urls.reports(template.id), {
