@@ -9,25 +9,34 @@ define([
 ], function(_, arches, ko, koMapping, cookies, reportUtils, downloadReportTemplate) {
     function viewModel(params) {
         const observationGraphId = "615b11ee-c457-11e9-910c-a4d18cec433a";
+        const collectionGraphId = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
+        const physicalThingGraphId = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a";
+        const removalFromObjectNodegroupId = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a";
+        const removedFromNodeId = "38814345-d2bd-11e9-b9d6-a4d18cec433a";
 
         const self = this;
         const projectId = params.projectId;
+        const physicalThingFromPreviousStep = params.physicalThingIds;
         this.templates = ko.observableArray(params.templates);
         const screenshots = params.annotationScreenshots;
-        const physicalThings = params.physicalThings;
-        const relatedObjects = params.projectRelations;
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
-        const physicalThingDetailsUrl = physicalThings.reduce(
-            (acc, current) => acc + current.resourceinstanceid + ",", 
-            lbgApiEndpoint
-        ).replace(/,$/, '');
         const projectDetailsUrl = lbgApiEndpoint + projectId;
         
         const regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/i;
 
-
         this.downloadInfo = ko.observableArray();
         this.projectName = ko.observable();
+
+        const getRelatedResources = async function(resourceid) {
+            const response = await window.fetch(arches.urls.related_resources + resourceid + "?paginate=false");
+
+            if (response.ok) {
+                return await response.json();
+            } else { 
+                throw('error retrieving related resources', response); // throw - this should never happen. 
+            }
+
+        };
 
         const getProjectName = async() => {
             const response = await fetch(`${arches.urls.api_resources(projectId)}?format=json`);
@@ -37,6 +46,24 @@ define([
         getProjectName();
 
         const generateReport = async(template) => {
+            const relatedObjects = await getRelatedResources(projectId);
+            const collections = relatedObjects.related_resources.filter(rr => rr.graph_id == collectionGraphId);
+            const allPhysicalThings = collections.map(async(collection) => {
+                const collectionRelatedResources = await getRelatedResources(collection.resourceinstanceid);
+                return collectionRelatedResources?.related_resources.filter(rr => rr.graph_id == physicalThingGraphId);
+            });
+
+            this.physicalThings = [].concat(...(await Promise.all(allPhysicalThings))).filter(res => {
+                const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === removalFromObjectNodegroupId);
+                const removedFrom = removedFromTile?.data[removedFromNodeId].map(rr => rr.resourceId);
+                return removedFrom?.some(res => physicalThingFromPreviousStep.includes(res)) || physicalThingFromPreviousStep.includes(res.resourceinstanceid);
+            });
+
+            const physicalThingDetailsUrl = this.physicalThings.reduce(
+                (acc, current) => acc + current.resourceinstanceid + ",", 
+                lbgApiEndpoint
+            ).replace(/,$/, '');
+
             const observations = relatedObjects.related_resources.filter(resource => resource.graph_id == observationGraphId);
             
             const observationIds = observations.reduce((accumulator, currentValue)=> {

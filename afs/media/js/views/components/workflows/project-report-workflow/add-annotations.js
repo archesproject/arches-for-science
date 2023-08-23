@@ -276,8 +276,8 @@ define([
                     return screenshot;
                 }
             }));
-            params.form.value({physicalThings: this.physicalThings, screenshots: screenshots, projectRelations: this.projectRelatedResources});
-            params.form.savedData({physicalThings: this.physicalThings, screenshots: screenshots, projectRelations: this.projectRelatedResources});
+            params.form.value({ screenshots: screenshots });
+            params.form.savedData({ screenshots: screenshots });
             params.form.saving(false);
             params.form.complete(true);
         };

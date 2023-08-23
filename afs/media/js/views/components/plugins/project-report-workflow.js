@@ -120,8 +120,7 @@ define([
                                     parameters: {
                                         templates: "['select-report-template']['select-template']['templates']",
                                         projectId: "['select-project']['select-project']['project']",
-                                        physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
-                                        projectRelations: "['add-annotations']['add-annotations']['projectRelations']",
+                                        physicalThingIds: "['select-project']['select-project']['physicalThings']",
                                         annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
                                     }
                                 },
