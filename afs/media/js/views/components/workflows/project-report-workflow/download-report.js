@@ -64,11 +64,6 @@ define([
                 lbgApiEndpoint
             ).replace(/,$/, '');
 
-            const objectOfStudyDetailsUrl = physicalThingFromPreviousStep.reduce(
-                (acc, current) => acc + current + ",", 
-                lbgApiEndpoint
-            ).replace(/,$/, '');
-
             const observations = relatedObjects.related_resources.filter(resource => resource.graph_id == observationGraphId);
             
             const observationIds = observations.reduce((accumulator, currentValue)=> {
