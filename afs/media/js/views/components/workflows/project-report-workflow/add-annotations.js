@@ -41,9 +41,6 @@ define([
             self.refreshAnnotation();
         });
         
-        this.getCanvasService = () => { return; };
-        this.getAnnotationCount = () => { return; };
-
         this.screenshots = ko.observableArray();
         
         this.relatedResources = ko.observableArray();
