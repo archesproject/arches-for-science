@@ -54,14 +54,15 @@ define(['utils/label-based-graph-utils'], function(labelBasedGraphUtils) {
                                     annotationLabel: annotationLabel,
                                     annotator: annotator,
                                     annotationJson: annotationJson,
+                                    manifest: currentManifestUrl,
                                 }
                             );
                         }
                     }
                 }
             });
-            let annotationCombined = {}; 
             for(const canvas in annotationCollection.canvases){
+                let annotationCombined = {}; 
                 annotationCollection.canvases[canvas].forEach((annotation) => {
                     if (annotationCombined?.features) {
                         annotationCombined.features = annotationCombined.features.concat(annotation.annotationJson.features);
@@ -69,8 +70,11 @@ define(['utils/label-based-graph-utils'], function(labelBasedGraphUtils) {
                         annotationCombined = annotation.annotationJson;
                     }
                 });
+                (annotationCollection.annotations || (annotationCollection.annotations = [])).push({
+                    featureCollection: annotationCombined,
+                });
             }
-            return { annotationCollection, annotationCombined };
+            return { annotationCollection };
         },
     };
 });
