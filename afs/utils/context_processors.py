@@ -21,6 +21,6 @@ from arches.app.models.system_settings import settings
 
 def project_settings(request):
     cloud_storage_enabled = (
-        settings.DEFAULT_FILE_STORAGE == "storages.backends.s3boto3.S3Boto3Storage"
+        settings.STORAGES["default"]["BACKEND"] == "storages.backends.s3boto3.S3Boto3Storage"
     )  # add additional supported formats as needed
     return {"project_settings": {"FORMATS": settings.FORMATS, "CLOUD_STORAGE_ENABLED": "true" if cloud_storage_enabled else "false"}}
