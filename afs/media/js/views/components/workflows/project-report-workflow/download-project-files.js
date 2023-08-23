@@ -18,7 +18,7 @@ define([
         const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
         const fileNodeId = '7c486328-d380-11e9-b88e-a4d18cec433a';
         const objectObeservedNodeId = "cd412ac5-c457-11e9-9644-a4d18cec433a";
-        const RemovalFromObjectNodegroupId = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a"
+        const removalFromObjectNodegroupId = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a";
         const removedFromNodeId = "38814345-d2bd-11e9-b9d6-a4d18cec433a";
         const fileStatementContentNodeId = 'ca227726-78ed-11ea-a33b-acde48001122';
         this.relatedObservations = ko.observableArray();
@@ -56,7 +56,7 @@ define([
 
             const projectPhysicalThings = collectionJson.related_resources.filter(res => res.graph_id === physicalThingGraphId)
                 .filter(res => {
-                    const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === RemovalFromObjectNodegroupId);
+                    const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === removalFromObjectNodegroupId);
                     const removedFrom = removedFromTile?.data[removedFromNodeId].map(rr => rr.resourceId);
                     return removedFrom?.some(res => physicalThings.includes(res)) || physicalThings.includes(res.resourceinstanceid);
                 }).map(res => res.resourceinstanceid);
