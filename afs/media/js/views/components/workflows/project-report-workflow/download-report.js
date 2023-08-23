@@ -77,10 +77,7 @@ define([
             }, []).join(",");
             
             const observationDetails = await (await window.fetch(`${lbgApiEndpoint}${observationIds}`)).json();
-
             const physicalThingsDetails = await (await window.fetch(physicalThingDetailsUrl)).json();
-            const objectOfStudyDetails = await (await window.fetch(objectOfStudyDetailsUrl)).json();
-            
             const projectDetails = await (await window.fetch(projectDetailsUrl)).json();
             
             const today = new Date();
@@ -88,7 +85,7 @@ define([
             const reportDate = today.toLocaleDateString('en-US', options);
             const filename = reportUtils.slugify(`${self.projectName()}_${template.name}_${reportDate}`);
             const physicalThingsDetailsArray = [...Object.values(physicalThingsDetails)];
-            const objectOfStudyDetailsArray = [...Object.values(objectOfStudyDetails)];
+            const objectOfStudyDetailsArray = physicalThingsDetailsArray.filter(thing => physicalThingFromPreviousStep.includes(thing.resourceinstanceid));
             const analysisAreas = physicalThingsDetailsArray.filter(physicalThing => physicalThing.resource?.type?.["@display_value"] == 'analysis areas');
             const annotationScreenshots = screenshots.map((screenshot) => {
                 const url = `${window.location.origin}/temp_file/${screenshot.fileId}`;
