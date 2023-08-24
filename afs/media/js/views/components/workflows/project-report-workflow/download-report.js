@@ -18,7 +18,7 @@ define([
         const projectId = params.projectId;
         const physicalThingFromPreviousStep = params.physicalThingIds;
         this.templates = ko.observableArray(params.templates);
-        const screenshots = params.annotationStepData?.screenshots;
+        const screenshots = params.annotationStepData ? params.annotationStepData.screenshots : [];
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
         const projectDetailsUrl = lbgApiEndpoint + projectId;
         
