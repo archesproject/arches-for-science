@@ -18,7 +18,7 @@ define([
         const projectId = params.projectId;
         const physicalThingFromPreviousStep = params.physicalThingIds;
         this.templates = ko.observableArray(params.templates);
-        const screenshots = params.annotationScreenshots;
+        const screenshots = params.annotationStepData?.screenshots;
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
         const projectDetailsUrl = lbgApiEndpoint + projectId;
         
@@ -82,7 +82,7 @@ define([
             const physicalThingsDetailsArray = [...Object.values(physicalThingsDetails)];
             const objectOfStudyDetailsArray = physicalThingsDetailsArray.filter(thing => physicalThingFromPreviousStep.includes(thing.resourceinstanceid));
             const analysisAreas = physicalThingsDetailsArray.filter(physicalThing => physicalThing.resource?.type?.["@display_value"] == 'analysis areas');
-            const annotationScreenshots = screenshots.map((screenshot) => {
+            const annotationScreenshots = screenshots?.map((screenshot) => {
                 const url = `${window.location.origin}/temp_file/${screenshot.fileId}`;
                 return {...screenshot, url};
             });

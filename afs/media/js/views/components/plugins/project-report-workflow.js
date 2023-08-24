@@ -121,7 +121,7 @@ define([
                                         templates: "['select-report-template']['select-template']['templates']",
                                         projectId: "['select-project']['select-project']['project']",
                                         physicalThingIds: "['select-project']['select-project']['physicalThings']",
-                                        annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
+                                        annotationStepData: "['add-annotations']['add-annotations']"
                                     }
                                 },
                             ], 
