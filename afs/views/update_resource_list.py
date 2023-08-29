@@ -69,7 +69,7 @@ class UpdateResourceListView(View):
         related_resource_template["inverseOntologyProperty"] = "c252f48a-3529-4a7a-b873-fed4e9259e1f"
         tile = Tile.get_blank_tile(nodeid=used_set_node_id, resourceid=resourceinstaneid)
         tile.data[used_set_node_id] = [related_resource_template]
-        tile.save(reqest=request, transaction_id=transaction_id, index=False)
+        tile.save(request=request, transaction_id=transaction_id, index=False)
 
         return (tile.tileid, Resource.objects.get(pk=tile.resourceinstance_id))
 
