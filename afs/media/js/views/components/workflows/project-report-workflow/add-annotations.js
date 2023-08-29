@@ -16,6 +16,7 @@ define([
     function viewModel(params) {
         const self = this;
         const projectId = params.projectId;
+
         const template = params.templateId;
         let annotationGroups;
         let currentGroup;
@@ -31,6 +32,15 @@ define([
         this.physicalThings = undefined;
         this.projectRelatedResources = undefined;
 
+        this.canvases = ko.observableArray();
+        this.selectedCanvas = ko.observable();
+        this.canvasClick = (canvas) => {
+            self.selectedCanvas(canvas.id);
+        };
+        this.selectedCanvas.subscribe(() => {
+            self.refreshAnnotation();
+        });
+        
         this.screenshots = ko.observableArray();
         
         this.relatedResources = ko.observableArray();
@@ -65,24 +75,54 @@ define([
             self.screenshots(self.screenshots().filter(screenshot => screenshot.imageName != screenshotName));
         };
 
-        this.physicalThingValue.subscribe((value) => {
+        this.refreshAnnotation = () => {
+            self.leafletConfig(null);
+            const selectedAnnotation = currentGroup.annotationCollection.annotations.find(
+                (annotation) => annotation.featureCollection.features[0].properties.canvas === self.selectedCanvas()
+            );
+            self.leafletConfig(self.prepareAnnotation(selectedAnnotation.featureCollection));
+            this.annotation({
+                info: currentGroup.annotationCollection.canvases[self.selectedCanvas()].map(canvas => {
+                    return {
+                        tileId: canvas.tileId,
+                        name: canvas.annotationName,
+                        annotator: canvas.annotator,
+                    };
+                }),
+                leafletConfig: self.leafletConfig(),
+                featureCollection: annotationGroups,
+            });
+        };
+
+        this.getManifestData = async(manifestURL) => {
+            const response = await fetch(manifestURL);
+            const json = await response.json();
+            return json;
+        };
+
+        this.physicalThingValue.subscribe(async(value) => {
             currentGroup = annotationGroups.find(group => group.annotationCollection.parentResourceId == value);
 
             if (currentGroup){
-                self.leafletConfig(self.prepareAnnotation(currentGroup.annotationCombined));
-                const [canvasName] = Object.keys(currentGroup.annotationCollection.canvases); // extract the first canvas - currently not supporting multiple canvases.
-                this.annotation({
-                    info: currentGroup.annotationCollection.canvases[canvasName].map(canvas => {
+                const canvases = await Promise.all(Object.keys(currentGroup.annotationCollection.canvases).map(
+                    async(canvas) => {
+                        const manifestData = await self.getManifestData(currentGroup.annotationCollection.canvases[canvas][0].manifest);
+                        const currentCanvas = manifestData?.sequences?.[0].canvases.find((x) => x.images[0].resource.service['@id'] === canvas);
                         return {
-                            tileId: canvas.tileId,
-                            name: canvas.annotationName,
-                            annotator: canvas.annotator
+                            id: canvas,
+                            label: currentCanvas.label,
+                            thumbnail: currentCanvas.thumbnail['@id'],
                         };
-                    }),
-                    leafletConfig: self.leafletConfig(),
-                    featureCollection: annotationGroups,
-                });
+                    }));
+                self.canvases(canvases);
+                self.selectedCanvas(self.canvases()[0]?.id);
+                self.refreshAnnotation();
                 this.summaryName(`Annotation Summary for ${self.physicalThingList()?.find(thing => thing.id == self.physicalThingValue())?.text}`);
+            } else {
+                self.summaryName(null);
+                self.canvases([]);
+                self.leafletConfig(null);
+                self.annotation(null);
             }
         });
 
@@ -118,17 +158,17 @@ define([
             const filteredTiles = this.physicalThings.map((physicalThing) => physicalThing.tiles.filter(thing => thing.nodegroup_id == MANIFEST_NODEGROUP_ID));
             const annotations = filteredTiles.filter(annotation => annotation.length > 0);
             const labelBasedresources = await Promise.all(annotations.map(async(x) => await fetchResource(x[0].resourceinstance_id)));
-            
+
             annotationGroups = await Promise.all(labelBasedresources.map(async(x) => await annotationUtils.compressFeatures(x)));
-            const currentGroup = annotationGroups[0];
+            const currentGroup = annotationGroups?.[0];
 
             self.physicalThingList(annotationGroups.map((annotation) => {
                 return {
-                    text: annotation.annotationCollection.parentDisplayName, 
+                    text: annotation.annotationCollection.parentDisplayName,
                     id: annotation.annotationCollection.parentResourceId
                 };
             }));
-            self.physicalThingValue(currentGroup.annotationCollection.parentResourceId);
+            self.physicalThingValue(currentGroup?.annotationCollection.parentResourceId);
             
         })();
         this.map = ko.observable();
@@ -174,6 +214,7 @@ define([
         </div>`;
 
         this.screenshot = async() => {
+            if (!self.leafletConfig()) { return; }
             const currentdate = new Date();
             const url = await domToImage.toPng(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
             const blob = await domToImage.toBlob(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
