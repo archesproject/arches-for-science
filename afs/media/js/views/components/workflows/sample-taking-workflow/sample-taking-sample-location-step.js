@@ -307,7 +307,7 @@ define([
         };
 
         this.updateSampleLocationInstances = function() {
-            canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id'])
+            const canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id']);
 
             const tileids = self.card.tiles().map(tile => tile.tileid);
             if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid){
@@ -325,18 +325,18 @@ define([
                                             tile.data[key][arches.activeLanguage][childkey](self.selectedSampleLocationInstance().data[key][arches.activeLanguage][childkey]());
                                         });
                                     }
-                                };
+                                }
                             });
-                        };
+                        }
                     });
                 }
-            };
+            }
 
             const tilesBelongingToManifest = self.card.tiles().filter(
                 tile => canvasids.find(
-                    canvas => canvas.startsWith(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas())
-                    )
-                );
+                    canvas => canvas.startsWith(ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas))
+                )
+            );
 
             tilesBelongingToManifest.forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
             self.sampleLocationInstances(tilesBelongingToManifest);
