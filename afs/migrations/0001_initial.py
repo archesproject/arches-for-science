@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
                 ('configid', models.UUIDField(primary_key=True, serialize=False, unique=True)),
                 ('rendererid', models.UUIDField()),
                 ('name', models.TextField()),
+                ('description', models.TextField(blank=True, null=True)),
                 ('config', models.JSONField(default=dict)),
             ],
             options={

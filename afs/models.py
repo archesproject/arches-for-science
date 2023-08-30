@@ -6,6 +6,7 @@ class RendererConfig(models.Model):
     configid = models.UUIDField(primary_key=True, unique=True)
     rendererid = models.UUIDField()
     name = models.TextField(blank=False, null=False)
+    description = models.TextField(blank=True, null=True)
     config = JSONField(default=dict)
     
 

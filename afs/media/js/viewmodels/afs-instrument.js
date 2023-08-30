@@ -279,6 +279,8 @@ define(['jquery',
             this.type = this.displayContent.type;
             if (self.params.context === 'render') {
                 self.render();
+            } else if (self.params.context === 'parse'){
+                self.render();
             }
         }
 

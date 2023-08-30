@@ -1,8 +1,8 @@
 {% extends "views/components/cards/file-renderers/afs-reader.htm" %}
 {% load i18n %}
 
-{% block renderer_header %}
-<div class="xy-reader" style="margin: 15px; display: flex; justify-content: space-between;">
+{% block renderer_configuration %}
+{% comment %} <div class="xy-reader" style="margin: 15px; display: flex; justify-content: space-between;">
     
     <input style="display:inline-block; flex: 1"
     data-bind="select2Query: {
@@ -39,5 +39,16 @@
     <button type="button" class="btn btn-success" data-bind="click: function(){saveConfiguration()}">
         <span>{% trans "Save Configuration" %}</span>
     </button>
+</div> {% endcomment %}
+<div style="padding: 10px;">
+<!-- ko component: {
+    name: 'importer-configuration',
+    params: {
+        selectedConfiguration: selectedConfig
+    }
+} --> 
+<!-- /ko -->
 </div>
-{% endblock renderer_header %}
+{% endblock renderer_configuration %}
+{% block preview %}
+{% endblock preview %}

@@ -7,8 +7,6 @@
 <div class="">
     <!--ko if: params.selected() -->
     <div class="preview file-viewer" style="position: relative;">
-        {% block renderer_header %}
-        {% endblock renderer_header %}
         <div class='loading-mask' data-bind="visible: loading()"></div>
         <!--ko if: chartData -->
         <div class="chart" data-bind='plotly: {
@@ -56,7 +54,7 @@
     <div class="workbench-card-sidepanel-header-container file-workbench">
         <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Chart Configuration'"></h4>
     </div>
-    <div class="col-xs-12 pad-no crud-widget-container chart-config-panel">
+    <div style="overflow: auto;margin-top: 0" class="col-xs-12 pad-no crud-widget-container chart-config-panel">
         <div class="row form-group widget-wrapper">
             <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Title Text and Font Size" %}</div>
             <div style="display: inline-flex">
@@ -78,6 +76,8 @@
                 <input style="margin-left: 5px; width: 20%; padding-right: 5px;" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
             </div>
         </div>
+        {% block renderer_configuration %}
+        {% endblock renderer_configuration %}
     </div>
     <!--/ko-->
 

@@ -72,27 +72,10 @@
                 </div>
 
                 <div data-bind="visible: self.showDatasetDetails">
-
-                    <div class="format-select" data-bind="visible: selectedPartHasCurrentObservation() && selectedPartDefaultFormat() == undefined">
-                        <input style="display:inline-block; margin-top: 70px;"
-                        data-bind="select2Query: {
-                            select2Config: {
-                                clickBubble: true,
-                                disabled: false,
-                                data: formats(),
-                                value: selectedPartDefaultFormat,
-                                allowClear: true,
-                                multiple: false,
-                                placeholder: {% trans "'Choose a Default Text File Format'" %}}}" >
-                    </div>
-                    <div style="margin-bottom: 10px" data-bind="visible: selectedPartDefaultFormat() != undefined">
-                        <span>{% trans "Default Text File Format" %}:</span>
-                        <span style="font-weight: bold" data-bind="text: formats().find((x) => x.id == ko.unwrap(selectedPartDefaultFormat))?.text"></span>
-                    </div>
-                    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 5px; background-color: #f9f9f9;" data-bind="visible: selectedPartDefaultFormat() != undefined">
+                    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 5px; background-color: #f9f9f9;">
                         <span>{% trans "Supported image files and PDF files are automatically detected and displayed." %}</span>
                     </div>
-                    <div data-bind="visible: selectedPartDefaultFormat() != undefined || !selectedPartHasCurrentObservation()">
+                    <div data-bind="visible: selectedPartHasCurrentObservation()">
                         <div class="dataset-name">
                             <label class="control-label">{% trans "Dataset Name" %}</label>
                             <div style="display: flex">

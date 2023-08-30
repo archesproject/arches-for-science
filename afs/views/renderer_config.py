@@ -37,16 +37,33 @@ class RendererConfigView(View):
             else:
                 return HttpResponseNotFound('<h1>Renderers config does not exist</h1>')
     
-    def post(self, request):
+    def post(self, request, renderer_config_id=None):
         body = JSONDeserializer().deserialize(request.body)
-
-        renderer_config = RendererConfig.objects.create(rendererid=body["rendererId"], name=body["name"], config=body)
+        if(renderer_config_id):
+            renderer_config = RendererConfig.objects.get(configid=renderer_config_id)
+            renderer_config.rendererid = body["rendererId"]
+            renderer_config.name = body["name"]
+            renderer_config.description = body["description"]
+            body.pop("rendererId")
+            body.pop("name")
+            body.pop("description")
+            renderer_config.config = body
+            renderer_config.save()
+        else:
+            renderer_config = RendererConfig.objects.create(rendererid=body["rendererId"], name=body["name"], config=body)
 
         response_dict = JSONSerializer().serialize(renderer_config)
 
         return JSONResponse(response_dict)
 
 
+    def delete(self, request, renderer_config_id):
 
+        renderer_config = RendererConfig.objects.get(configid=renderer_config_id)
+        renderer_config.delete()
+
+        response_dict = {"deleted": JSONSerializer().serialize(renderer_config)}
+
+        return JSONResponse(response_dict)
 
 

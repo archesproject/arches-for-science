@@ -3,9 +3,11 @@ define(['jquery',
     'templates/views/components/cards/file-renderers/xy-reader.htm',
     'viewmodels/afs-instrument',
     'js-cookie',
+    'utils/xy-parser',
     'bindings/plotly',
     'bindings/select2-query',
-], function($, ko, afsReaderTemplate, AfsInstrumentViewModel, Cookies) {
+    'views/components/plugins/importer-configuration'
+], function($, ko, afsReaderTemplate, AfsInstrumentViewModel, Cookies, XyParser) {
     return ko.components.register('xy-reader', {
         viewModel: function(params) {
             const self = this;
@@ -14,7 +16,8 @@ define(['jquery',
             this.delimiterCharacter = ko.observable();
             this.headerDelimiter = ko.observable();
             this.headerFixedLines = ko.observable();
-            this.selectedConfig = ko.observable();
+            this.selectedConfig = params.selectedConfig || ko.observable();
+            this.selectedFile = params.selectedFile || ko.observable();
             this.selectedConfiguration = undefined;
             AfsInstrumentViewModel.apply(this, [params]);
             this.rendererUrl = `/renderer/${self.renderer}`;
@@ -28,26 +31,29 @@ define(['jquery',
                     const renderers = await rendererResponse.json();
                     const configs = renderers?.configs;
                     this.rendererConfigs(configs);
-                    if (self.fileViewer.displayContent()) {	
-                        const tile = self.fileViewer.displayContent().tile;	
-                        const node = ko.unwrap(tile.data[self.fileViewer.fileListNodeId]);
-                        const configId = ko.unwrap(node[0].rendererConfig);
+                    const displayContent = self.fileViewer?.displayContent() || self.displayContent;
+                    if (displayContent) {
+                        const tile = displayContent.tile;	
+
+                        // displayContent is formatted differently from the core file viewer.
+                        const configId = tile ? ko.unwrap(tile.data[self.fileViewer.fileListNodeId])?.[0]?.rendererConfig : displayContent?.rendererConfig;
+
                         if(configId){
-                            this.selectedConfig(configId);
+                            this.selectedConfig(ko.unwrap(configId));
                         }
                     }
                 }
             });
 
             this.selectedConfig.subscribe((config) => {
-                if(!config) {
+                if(!config || (this.selectedFile() && this.selectedFile().url != this.displayContent.url)) {
                     return;
                 }
                 this.selectedConfiguration = this.rendererConfigs().find(currentConfig => {
                     return currentConfig.configid == config;
                 });
                 self.render();
-                if (self.fileViewer.displayContent()) {	
+                if (self.fileViewer?.displayContent()) {	
                     const tile = self.fileViewer.displayContent().tile;	
                     const node = ko.unwrap(tile.data[self.fileViewer.fileListNodeId]);
                     const currentRendererConfig = ko.unwrap(node[0].rendererConfig);
@@ -57,10 +63,6 @@ define(['jquery',
                     }
                 }	
             });
-
-            this.processConfigs = (data) => {
-                return { "results": data?.configs?.map(renderer => {return { text: renderer.name, "id": renderer.configid};})};
-            };
 
             rendererConfigRefresh();
     
@@ -89,30 +91,10 @@ define(['jquery',
                 self.showConfigAdd(false);
             };
             this.parse = function(text, series){
-                let values;
                 const config = this.selectedConfiguration?.config;
-                try {
-                    if(config?.headerDelimiter){
-                        values = text.split(config?.headerDelimiter)[1].trim().split('\n');
-                    } else if (config?.headerFixedLines) {
-                        const lines = text.split('\n');
-                        values = lines.slice(config?.headerFixedLines);
-                    } else {
-                        values = text.split('\n'); 
-                    }
-                } catch(e) {
-                    values = text.split('\n');
-                }
-                const delimiterCharacter = config?.delimiterCharacter ?? ',';
-                const valueRegex = new RegExp(`[ ${delimiterCharacter}]+`);
-
-                values.forEach(function(val){
-                    var rec = val.trim().split(valueRegex);
-                    if (Number(rec[1]) > 30 && rec[0] > 0.5) {
-                        series.count.push(Number(rec[1]));
-                        series.value.push(Number(rec[0]));
-                    }
-                });
+                const parsedData = XyParser.parse(text, config);
+                series.value.push(...parsedData.x);
+                series.count.push(...parsedData.y);
             };
             this.chartTitle("XRF Spectrum");
             this.xAxisLabel("keV");

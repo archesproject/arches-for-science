@@ -168,7 +168,7 @@ define([
                     required: true,
                     informationboxdata: {
                         heading: 'Select file renderers',
-                        text: 'select file renderers',
+                        text: 'Select an Importer configuration and data files to apply those configurations to those files.',
                     },
                     layoutSections: [
                         {

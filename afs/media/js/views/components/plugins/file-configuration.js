@@ -3,9 +3,14 @@ define([
     'arches',
     'file-renderers',
     'models/tile',
+    'js-cookie',
+    'utils/xy-parser',
     'templates/views/components/plugins/file-configuration.htm',
     'bindings/codemirror',
-], function(ko, arches, fileRenderers, TileModel, fileConfigurationTemplate) {
+    'views/components/cards/file-renderers/xy-reader',
+    'bindings/select2v4',
+    'select2'
+], function(ko, arches, fileRenderers, TileModel, Cookies, xyParser, fileConfigurationTemplate) {
     /*
         params.files - Must be structured as follows for each file.
             [{
@@ -18,19 +23,122 @@ define([
     */
     const vm = function(params) {
         this.files = params.files;
+        this.fileMap = ko.observable();
+        this.fileMode = ko.observable('data');
+        this.currentFiles = ko.observable([]);
+        this.dataFiles = ko.observable([]);
+        this.displayContent = ko.observable();
+        this.additionalFiles = ko.observable([]);
+        this.parsedData = ko.observable();
+        
+        this.files.subscribe(() => {
+            if(!this.rendererConfigs()){
+                return;
+            }
+            this.fileMap(this.files().reduce((a, v) => ({ ...a, [v.fileid]: v}), {})); //flatten files 
+
+            const filteredFiles = this.files().filter(file => file.details?.type == "text/plain");
+            const additionalFiles = this.files().filter(file => file.details?.type !== "text/plain");
+            filteredFiles.map(file => {
+                if(file.details?.rendererConfig){
+                    file.details.rendererConfig = ko.observable(file.details?.rendererConfig);
+                } else {
+                    file.details.rendererConfig = ko.observable();
+                }
+                file.details.disabledConfig = ko.observable(true);
+                file.details.rendererConfig.subscribe(() => {
+                    this.updateConfiguration(file.details.file_id, file.details.rendererConfig());
+                });
+                return file;
+            });
+            this.dataFiles(filteredFiles);
+            this.additionalFiles(additionalFiles);
+            this.fileMode.valueHasMutated();
+        });
+
         this.codeMirrorText = ko.observable();
         this.rendererConfigs = ko.observableArray();
+        this.rendererConfigs.subscribe(() => {
+            if(this.files()){
+                this.files.valueHasMutated();
+            }
+        });
         this.selectedConfiguration = ko.observable();
+
+        this.selectedFile = ko.observable();
         this.selectedFiles = ko.observableArray();
+
+        const checkApplyConfigurationVisible = () => {
+            if(this.selectedFiles().length > 1 && this.selectedConfiguration()){
+                this.applyConfigurationVisible(true);
+            }
+        }
+
+        this.selectedFiles.subscribe(() => {
+            checkApplyConfigurationVisible();
+        });
+
+        this.selectedConfiguration.subscribe(() => {
+            checkApplyConfigurationVisible();
+            this.selectedFile()?.details?.rendererConfig(this.selectedConfiguration());
+        })
         this.visibleFile = ko.observable();
         this.showConfigurationPanel = ko.observable();
+        this.editConfigurationId = ko.observable(undefined);
+
+
         this.applyConfigurationVisible = ko.observable(false);
         this.fileFormatRenderers = Object.values(fileRenderers);
 
+        this.configurationName = ko.observable();
+        this.configurationDescription = ko.observable();
+        this.headerDelimiter = ko.observable();
+        this.headerConfig = ko.observable();
         this.delimiterCharacter = ko.observable();
         this.headerFixedLines = ko.observable();
+        this.dataDelimiterRadio = ko.observable();
+        this.dataDelimiter = ko.observable();
+
+        this.rendererConfigs = ko.observableArray();
+
+        this.dataDelimiterRadio.subscribe(value => {
+            if(value != 'other'){
+                this.dataDelimiter(value);
+            } else {
+                this.dataDelimiter("");
+            }
+        });
+
+        const refreshPreview = () => {
+            if (!this.selectedConfiguration() || !this.codeMirrorText()){
+                return;
+            }
+            const config = this.selectedConfiguration();
+            const currentConfig = this.rendererConfigs().find(conf => conf.configid == config);
+            const parsedArrays = xyParser.parse(this.codeMirrorText(), currentConfig.config);
+            this.parsedData(parsedArrays.x.map((xItem, index) => `X: ${xItem} Y: ${parsedArrays.y[index]}`).join('\n'));
+        }
+
+        this.codeMirrorText.subscribe(() => {
+            refreshPreview()
+        });
+
+        this.selectedConfiguration.subscribe(() => {
+            refreshPreview();
+        });
+
+        const currentVm = this;
+        this.initSelection = function(selectedConfig, callback) {
+            const configId = selectedConfig[0].value;
+            callback({id: configId, text: currentVm.rendererConfigs().find(config => config.configid == configId)?.name});
+        };
+
+        this.processConfigs = (data) => {
+            return { "results": data?.configs?.map(renderer => {return { "text": renderer.name, "id": renderer.configid};})};
+        };
 
         this.renderer = 'e93b7b27-40d8-4141-996e-e59ff08742f3';
+        this.rendererUrl = `/renderer/${this.renderer}`;
 
         this.fileTableConfig = {
             responsive: {
@@ -57,6 +165,33 @@ define([
             }],
         };
 
+        this.resizer = () => {
+            const resizers = document.getElementsByClassName('resizer');
+            const resizerArray = [].slice.call(resizers);
+            resizerArray.map((resizerCol) => resizerCol.addEventListener('mousedown', (e) => {
+                const dragElement = resizerCol;
+                const startX = e.clientX;
+                const dragRight = dragElement.nextElementSibling;
+                const drStartWidth = parseInt(document.defaultView.getComputedStyle(dragRight).width);
+                const dragLeft = dragElement.previousElementSibling;
+                const dlStartWidth = parseInt(document.defaultView.getComputedStyle(dragLeft).width);
+                const doDrag = (el) => {
+                    dragRight.style.width = (drStartWidth + (startX - el.clientX)) + "px";
+                    dragLeft.style.width = (dlStartWidth - (startX - el.clientX)) + "px";
+                    return false;
+                };
+                dragElement.parentElement.addEventListener('mousemove', doDrag, false);
+                const stopDrag = () => {
+                    dragElement.parentElement.removeEventListener('mousemove', doDrag, false);
+                    dragElement.parentElement.removeEventListener('mouseup', stopDrag, false);
+                    return false;
+                };
+                dragElement.parentElement.addEventListener('mouseup', stopDrag, false);
+                return false;
+            }, false));
+        };
+        this.resizer();
+
         this.dataFileTable = {
             ...this.fileTableConfig,
             columns: Array(3).fill(null)
@@ -67,31 +202,33 @@ define([
             columns: Array(2).fill(null)
         };
 
-        const applyConfigurationVisibleCheck = () => {
-            if (this.selectedConfiguration() && this.selectedFiles().length){
-                this.applyConfigurationVisible(true);
+        const preparedRenderer = fileRenderers[this.renderer];
+        preparedRenderer.state = {};
+        preparedRenderer.disabled = true;
+        this.selectedRenderer = ko.observable(preparedRenderer);
+
+        this.loadConfiguration = (configuration) => {
+            this.configurationName(configuration.name);
+            this.configurationDescription(configuration.description);
+            const delimiterCharacter = configuration.config.delimiterCharacter;
+            if(configuration.config?.headerFixedLines){
+                this.headerConfig('fixed');
+                this.headerFixedLines(configuration.config.headerFixedLines);
+            } else if (configuration.config?.headerDelimiter) {
+                this.headerConfig('delimited');
+                this.headerDelimiter(configuration.config.headerDelimiter);
+            } else {
+                this.headerConfig('none');
             }
+
+            const radioValue = ((!delimiterCharacter) ? '' : delimiterCharacter == ',' || delimiterCharacter == '|' ? delimiterCharacter : 'other');
+            this.dataDelimiterRadio(radioValue);
+            if(radioValue == "other"){
+                this.dataDelimiter(delimiterCharacter);
+            }
+            this.editConfigurationId(configuration.configid);
+            this.showConfigurationPanel(true);
         };
-
-        this.selectedConfiguration.subscribe(applyConfigurationVisibleCheck);
-
-        const rendererConfigRefresh = (async() => {
-            const rendererResponse = await fetch(`/renderer/${this.renderer}`);
-            if(rendererResponse.ok){
-                const renderers = await rendererResponse.json();
-                const configs = renderers?.configs;
-                this.rendererConfigs(configs);
-
-                // if (self.fileViewer.displayContent()) {	
-                //     const tile = self.fileViewer.displayContent().tile;	
-                //     const node = ko.unwrap(tile.data[self.fileViewer.fileListNodeId]);
-                //     const configId = ko.unwrap(node[0].rendererConfig);
-                //     if(configId){
-                //         this.selectedConfig(configId);
-                //     }
-                // }
-            }
-        });
 
         this.getDisplayContent = function(tiledata){
             var iconclass;
@@ -117,50 +254,59 @@ define([
                 url: url, type: type, name: name, renderer: renderer, iconclass: iconclass, renderers: availableRenderers
             };
             ret.availableRenderers = this.getDefaultRenderers(type, ret);
-
-            ret.validRenderer.subscribe(validity => {
-                this.currentRendererValid(validity);
-            });
             
             return ret;
         };
 
-        this.updateConfiguration = async() => {
-            const fileMap = this.selectedFiles().map(x => {
-                return this.files().find(y => y.fileid == x);
+        this.updateConfiguration = async(fileid, rendererConfigId) => {
+            const file = this.files().find(file => {
+                return file.fileid == fileid;
             });
 
-            await Promise.all(fileMap.map(async(file) => {
-                const tilesResponse = await fetch(arches.urls.api_tiles(file.tileid));
-                if(tilesResponse.ok) {
-                    const tile = await tilesResponse.json();
-                    const fileNode = tile?.data?.[file.nodeid];
-                    if(fileNode){
-                        const currentFile = fileNode.find(currentFile => currentFile.file_id == file.fileid);
-                        currentFile.rendererConfig = this.selectedConfiguration();
-                        currentFile.renderer = this.renderer;
-                        file.details.rendererConfig = this.selectedConfiguration();
-                        file.details.renderer = this.renderer;
-                        (new TileModel(tile)).save();
-                        this.rendererConfigs.valueHasMutated();
-                    }
-                }
-            }));
-        };
-
-        this.updateCodeMirror = async(file) => {
-            this.visibleFile(file.fileid);
-            const displayContent = this.getDisplayContent(file.details);
-            if(displayContent){
-                const response = await fetch(displayContent.url);
-                if(response.ok){
-                    const fileContents = await response.text();
-                    this.codeMirrorText(fileContents);
+            const tilesResponse = await fetch(arches.urls.api_tiles(file.tileid));
+            if(tilesResponse.ok) {
+                const tile = await tilesResponse.json();
+                const fileNode = tile?.data?.[file.nodeid];
+                if(fileNode){
+                    const currentFile = fileNode.find(currentFile => currentFile.file_id == fileid);
+                    currentFile.rendererConfig = rendererConfigId;
+                    currentFile.renderer = this.renderer;
+                    (new TileModel(tile)).save();
+                    this.rendererConfigs.valueHasMutated();
                 }
             }
         };
 
-        rendererConfigRefresh();
+        this.fileMode.subscribe((mode) => {
+            if(mode == 'data') {
+                this.currentFiles(this.dataFiles());
+            } else {
+                this.currentFiles(this.additionalFiles());
+            }
+        });
+
+        this.displayFile = async(file) => {
+            this.visibleFile(file.fileid);
+            const dc = this.getDisplayContent(file.details);
+            this.dataFiles().map(visibleFile => {
+                visibleFile.details.disabledConfig(true);
+            })
+            file.details.disabledConfig(false);
+            this.displayContent(dc);
+            if(dc){
+                const response = await fetch(dc.url);
+                if(response.ok){
+                    const fileContents = await response.text();
+                    this.selectedFile(file);
+                    this.codeMirrorText(fileContents);
+                }
+            }
+            return false;
+        };
+
+        this.selectedFile.subscribe((file) => {
+            this.selectedConfiguration(ko.unwrap(file?.details?.rendererConfig))
+        });
 
         this.getDefaultRenderers = function(type, file){
             var defaultRenderers = [];
