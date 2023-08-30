@@ -17,20 +17,17 @@
     <!--ko if: termFilter() -->
     <div style="padding: 5px; margin-top: 15px;">
         <div class="widget-input-label">
-            <!-- ko if: datasetRoute == 'non-destructive' -->
-            <span>
+            <!-- ko if: datasetRoute === 'non-destructive' -->
+            <div>
                 Select an Object from your Project
-            </span>
+            </div>
             <div style="font-style: italic; margin-bottom: 10px;">
                 Object must have at least one analysis area or sample location
             </div>
             <!-- /ko -->
-            <!-- ko if:  datasetRoute == 'destructive' -->
-            <span>
+            <!-- ko if:  datasetRoute === 'destructive' -->
+            <div>
                 Select a Sample of interest
-            </span>
-            <div style="font-style: italic; margin-bottom: 10px;">
-                Object must be a sample
             </div>
             <!-- /ko -->
         </div>
