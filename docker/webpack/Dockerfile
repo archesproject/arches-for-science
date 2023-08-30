@@ -30,7 +30,7 @@ RUN apt-get update && apt-get -y install curl \
   && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install nodejs && npm install -g yarn && apt install wait-for-it
 WORKDIR ${ARCHES_ROOT}
-RUN pip install -e . --user --no-use-pep517  
+RUN pip install -e . --user
 RUN pip install -r arches/install/requirements.txt 
 RUN pip install -r arches/install/requirements_dev.txt
 COPY /afs/docker/webpack/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
