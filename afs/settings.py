@@ -306,10 +306,6 @@ FORMATS = [
 
 DOCKER = False
 
-ELASTICSEARCH_HTTP_PORT = 9202  # this should be in increments of 200, eg: 9400, 9600, 9800
-ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": "localhost", "port": ELASTICSEARCH_HTTP_PORT}]
-
-
 try:
     from .package_settings import *
 except ImportError:
