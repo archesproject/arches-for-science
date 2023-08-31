@@ -21,7 +21,7 @@ WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
 
 APP_VERSION = semantic_version.Version(major=1, minor=0, patch=0, prerelease=('a', '0'))
 MIN_ARCHES_VERSION = '7.4.0b0'
-MAX_ARCHES_VERSION = '7.4.1'
+MAX_ARCHES_VERSION = '7.6.0'
 
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 STATICFILES_DIRS = (
@@ -305,6 +305,10 @@ FORMATS = [
 ]
 
 DOCKER = False
+
+ELASTICSEARCH_HTTP_PORT = 9202  # this should be in increments of 200, eg: 9400, 9600, 9800
+ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": "localhost", "port": ELASTICSEARCH_HTTP_PORT}]
+
 
 try:
     from .package_settings import *
