@@ -17,6 +17,11 @@
     <!--ko if: termFilter() -->
     <div style="padding: 5px; margin-top: 15px;">
         <div class="widget-input-label">
+            <!-- ko if: datasetRoute === undefined -->
+            <div>
+                Select an Object
+            </div>
+            <!-- /ko -->
             <!-- ko if: datasetRoute === 'non-destructive' -->
             <div>
                 Select an Object from your Project
