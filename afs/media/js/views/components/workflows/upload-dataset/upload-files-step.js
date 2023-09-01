@@ -38,74 +38,6 @@ define([
             this.loading = ko.observable(false);
             this.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id}}));
 
-            // var FileTile = function(){
-            //     var self = this;
-                
-            //     const fileTemplate = {
-            //         "tileid": "",
-            //         "data": {
-            //             "29d5ecb8-79a5-11ea-8ae2-acde48001122": null,
-            //             "7c486328-d380-11e9-b88e-a4d18cec433a": null,
-            //             "5e1791d4-79a5-11ea-8ae2-acde48001122": null,
-            //             "21d0ba4e-78eb-11ea-a33b-acde48001122": null
-            //         },
-            //         "nodegroup_id": "7c486328-d380-11e9-b88e-a4d18cec433a",
-            //         "parenttile_id": null,
-            //         "resourceinstance_id": "",
-            //         "sortorder": 1,
-            //         "tiles": {},
-            //         "transaction_id": params.form.workflowId
-            //     };
-
-            //     // this.setFile = function(file) {
-            //     //     this.fileInfo = {
-            //     //         name: file.name,
-            //     //         accepted: file.accepted,
-            //     //         height: file.height,
-            //     //         lastModified: file.lastModified,
-            //     //         size: file.size,
-            //     //         status: file.status,
-            //     //         type: file.type,
-            //     //         width: file.width,
-            //     //         url: null,
-            //     //         uploaded: ko.observable(false),
-            //     //         // eslint-disable-next-line camelcase
-            //     //         file_id: null,
-            //     //         // index: i,
-            //     //         content: window.URL.createObjectURL(file),
-            //     //         error: file.error
-            //     //     };
-            //     //     if (['txt', 'dx'].includes(file.name.split('.').pop())) {
-            //     //         this.fileInfo.renderer = rendererLookup[observationInfo.instrument.value].rendererid;
-            //     //     } else if (file.type.split('/').includes('image')) {
-            //     //         this.fileInfo.renderer = rendererLookup["image"].rendererid
-            //     //     } else if (file.type.split('/').includes('pdf')) {
-            //     //         this.fileInfo.renderer = rendererLookup["pdf"].rendererid
-            //     //     };
-
-            //     //     fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [this.fileInfo];
-                    
-            //     //     this.formData = new window.FormData();
-            //     //     this.formData.append('transaction_id', params.form.workflowId);
-            //     //     this.formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
-                    
-            //     //     this.tile = new TileModel(fileTemplate);
-            //     // }
-
-            //     this.setResourceId = function(resId){
-            //         self.tile.set("resourceinstance_id", resId);
-            //     };
-
-            //     this.save = function(resId) {
-            //         self.setResourceId(resId);
-            //         return self.tile.save(null, self, self.formData)
-            //         .then(function(response){
-            //             self.tile.set('tileid', response.tileid);
-            //             self.fileInfo.uploaded(true);
-            //         });
-            //     };
-            // };
-
             this.deleteFile = async(file) => {
                 const fileTile = ko.unwrap(file.tileId);
                 if(fileTile){
@@ -148,9 +80,6 @@ define([
                 this.defaultFormat(params.form.value()?.defaultFormat);
                 this.datasetNameTileId = params.form.value()?.datasetNameTileId ?? "";
                 (params.form.value()?.files ?? []).forEach(function(file){
-                    /*const file = new FileTile();
-                    file.fileInfo = fileInfo.fileInfo;
-                    file.fileInfo.uploaded = ko.observable(fileInfo.fileInfo.uploaded);*/
                     self.files.push(file);
                 });
             }
@@ -171,11 +100,6 @@ define([
             });
             this.files.subscribe(function(files){
                 params.form.dirty(false);
-                // files.forEach(function(file){
-                //     if(!ko.unwrap(file.fileInfo.uploaded) && params.form.value()?.datasetName !== ""){
-                //         params.form.dirty(true);
-                //     }
-                // })
             });
 
 

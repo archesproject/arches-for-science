@@ -22,7 +22,9 @@ define([
             }]
     */
     const vm = function(params) {
+        this.fileRenderers = fileRenderers;
         this.files = params.files;
+        this.selected = ko.observable(true);
         this.fileMap = ko.observable();
         this.fileMode = ko.observable('data');
         this.currentFiles = ko.observable([]);
@@ -30,6 +32,9 @@ define([
         this.displayContent = ko.observable();
         this.additionalFiles = ko.observable([]);
         this.parsedData = ko.observable();
+        this.loadingFile = ko.observable(false);
+        this.renderer = 'e93b7b27-40d8-4141-996e-e59ff08742f3'; // xy reader uuid
+        this.rendererUrl = `/renderer/${this.renderer}`;;
         
         this.files.subscribe(() => {
             if(!this.rendererConfigs()){
@@ -37,8 +42,8 @@ define([
             }
             this.fileMap(this.files().reduce((a, v) => ({ ...a, [v.fileid]: v}), {})); //flatten files 
 
-            const filteredFiles = this.files().filter(file => file.details?.type == "text/plain");
-            const additionalFiles = this.files().filter(file => file.details?.type !== "text/plain");
+            const filteredFiles = this.files().filter(file => file.details?.renderer == this.renderer);
+            const additionalFiles = this.files().filter(file => file.details?.renderer != this.renderer);
             filteredFiles.map(file => {
                 if(file.details?.rendererConfig){
                     file.details.rendererConfig = ko.observable(file.details?.rendererConfig);
@@ -47,7 +52,8 @@ define([
                 }
                 file.details.disabledConfig = ko.observable(true);
                 file.details.rendererConfig.subscribe(() => {
-                    this.updateConfiguration(file.details.file_id, file.details.rendererConfig());
+                    this.updateConfiguration(file, file.details.rendererConfig());
+                    this.selectedConfiguration(file.details.rendererConfig())
                 });
                 return file;
             });
@@ -74,13 +80,39 @@ define([
             }
         }
 
+        this.applyImporterToSelection = async() => {
+            await Promise.all(this.selectedFiles().map(async(file) => {
+                // await this.updateConfiguration(file, this.selectedConfiguration());
+                const fileObject = this.files().find(fileObject => {
+                    return fileObject.details.file_id == file
+                });
+
+                fileObject.details.rendererConfig(this.selectedConfiguration());
+            }));
+            this.applyConfigurationVisible(false);
+            this.selectedFiles([]);
+            this.selectedConfiguration(undefined);
+        }
+
         this.selectedFiles.subscribe(() => {
+            if(this.selectedFiles().length > 1){
+                this.dataFiles().map(file => {file.details.disabledConfig(true)});
+            }
+            if(this.selectedFiles().length == 1){
+                const fileObject = this.files().find(fileObject => {
+                    return fileObject.details.file_id == this.selectedFiles()[0]
+                });
+                this.displayFile(fileObject);
+            }
             checkApplyConfigurationVisible();
         });
 
         this.selectedConfiguration.subscribe(() => {
             checkApplyConfigurationVisible();
-            this.selectedFile()?.details?.rendererConfig(this.selectedConfiguration());
+            if(this.selectedFiles().length == 1 && this.selectedFile()){
+                this.updateConfiguration(this.selectedFile(), this.selectedConfiguration())
+                this.selectedFile()?.details?.rendererConfig?.(this.selectedConfiguration());
+            }
         })
         this.visibleFile = ko.observable();
         this.showConfigurationPanel = ko.observable();
@@ -137,8 +169,6 @@ define([
             return { "results": data?.configs?.map(renderer => {return { "text": renderer.name, "id": renderer.configid};})};
         };
 
-        this.renderer = 'e93b7b27-40d8-4141-996e-e59ff08742f3';
-        this.rendererUrl = `/renderer/${this.renderer}`;
 
         this.fileTableConfig = {
             responsive: {
@@ -258,17 +288,13 @@ define([
             return ret;
         };
 
-        this.updateConfiguration = async(fileid, rendererConfigId) => {
-            const file = this.files().find(file => {
-                return file.fileid == fileid;
-            });
-
+        this.updateConfiguration = async(file, rendererConfigId) => {
             const tilesResponse = await fetch(arches.urls.api_tiles(file.tileid));
             if(tilesResponse.ok) {
                 const tile = await tilesResponse.json();
                 const fileNode = tile?.data?.[file.nodeid];
                 if(fileNode){
-                    const currentFile = fileNode.find(currentFile => currentFile.file_id == fileid);
+                    const currentFile = fileNode.find(currentFile => currentFile.file_id == file.fileid);
                     currentFile.rendererConfig = rendererConfigId;
                     currentFile.renderer = this.renderer;
                     (new TileModel(tile)).save();
@@ -283,21 +309,26 @@ define([
             } else {
                 this.currentFiles(this.additionalFiles());
             }
+            this.selectedFile(undefined);
+            this.selectedFiles([]);
+            this.selectedConfiguration(undefined);
         });
 
         this.displayFile = async(file) => {
+            if(this.selectedFiles().length > 1 || !file){
+                return; // don't show files if more than one are selected
+            }
             this.visibleFile(file.fileid);
             const dc = this.getDisplayContent(file.details);
             this.dataFiles().map(visibleFile => {
                 visibleFile.details.disabledConfig(true);
             })
-            file.details.disabledConfig(false);
+            file?.details?.disabledConfig?.(false);
             this.displayContent(dc);
             if(dc){
                 const response = await fetch(dc.url);
                 if(response.ok){
                     const fileContents = await response.text();
-                    this.selectedFile(file);
                     this.codeMirrorText(fileContents);
                 }
             }
@@ -305,7 +336,8 @@ define([
         };
 
         this.selectedFile.subscribe((file) => {
-            this.selectedConfiguration(ko.unwrap(file?.details?.rendererConfig))
+            this.selectedConfiguration(ko.unwrap(file?.details?.rendererConfig));
+            this.selectedFiles([file?.details?.file_id])
         });
 
         this.getDefaultRenderers = function(type, file){

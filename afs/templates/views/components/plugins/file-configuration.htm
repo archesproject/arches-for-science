@@ -4,9 +4,9 @@
         <h4><span>{% trans "Uploaded Files" %}</span></h4>
         <span>{% trans "Specify how to process the data files for viewing.  Any additional files (such as images) will be automatically displayed if possible." %}</span>
         <div class="file-button-container">
-            <div class="file-buttons" data-bind="click:() => {fileMode('data')}" role="button">{% trans "Data Files" %}</div>
+            <div class="file-buttons" data-bind="click:() => {fileMode('data')}, css: {active: fileMode() == 'data'}" role="button">{% trans "Data Files" %}</div>
             <div style="margin: 0 5px"></div>
-            <div class="file-buttons" data-bind="click:() => {fileMode('other')}" role="button">{% trans "Additional Files" %}</div>
+            <div class="file-buttons" data-bind="click:() => {fileMode('other'); selectedFiles([])}, css: {active: fileMode() != 'data'}" role="button">{% trans "Additional Files" %}</div>
         </div>
 
         <div class="pad-btm" data-bind="visible: currentFiles().length > 0" style="overflow-y: scroll;padding: 7px; max-height: calc(100% - 100px);">
@@ -22,12 +22,15 @@
                     <tr>
                         <td>
                             <div style="display: flex; align-items:center;">
-                                <input style="margin: 10px" type="checkbox" data-bind="value: file.fileid, checked: $parent.selectedFiles">
-                                <div style="padding:8px;min-height: 39px;align-items:center;display:flex;cursor:pointer;width:100%" data-bind="click: function() { $parent.displayFile(file) },text: file.details.name"></div>
+                                <div style="display: flex; align-items: center;">
+                                    <div style="width: 25px;min-height:25px; margin: 0 5px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }"><i data-bind="visible: $parent.visibleFile() == file.fileid && $parent.selectedFiles().length <= 1" role="button" aria-label="{% trans "Selected File" %}" class="fa fa-eye"></i></div>
+                                    <input style="margin: 0 5px" type="checkbox" data-bind="visible: $parent.fileMode() == 'data', value: file.fileid, checked: $parent.selectedFiles">
+                                </div>
+                                <div style="padding:8px;min-height: 39px;align-items:center;display:flex;cursor:pointer; flex: 1" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); },text: file.details.name"></div>
                             </div>
                         </td>
-                        <td style="padding:8px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file) }">
-                            <div>
+                        <td style="padding:8px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }">
+                            <div data-bind="visible: (typeof file.details?.rendererConfig == 'function')">
                                 <input style="display:inline-block; flex: 1"
                                     data-bind="
                                     value: file.details.rendererConfig,
@@ -50,10 +53,6 @@
                             </div>
                         </td>
                         <td style="padding:8px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file) }">
-                            <div style="display: flex;min-width: 34px;">
-                                <i style="flex:1"></i>
-                                <i data-bind="visible: $parent.visibleFile() == file.fileid" role="button" aria-label="{% trans "Selected File" %}" class="fa fa-eye"></i>
-                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -62,7 +61,7 @@
     </div>
     <div style="cursor:col-resize; width:18px;" class="resizer"></div>
     <div class="active-files" style="width: 31.9659%; display: flex; flex-direction: column">
-        <div data-bind="visible: !(selectedFiles().length > 1)">
+        <div data-bind="visible: !(selectedFiles().length > 1) && fileMode() == 'data'">
             <h4 data-bind="text: selectedFile()?.details?.name"></h4>
             <div class="cm" style="border: 1px solid #ddd" >
                 <div data-bind="codemirror: {
@@ -73,7 +72,7 @@
                 }"></div>
             </div>
         </div>
-        <div data-bind="visible: parsedData() && !(selectedFiles().length > 1)">
+        <div data-bind="visible: parsedData() && selectedConfiguration() && (selectedFiles().length == 1) && fileMode() == 'data'">
             <h4>{% trans "Import Preview" %}</h4>
             <div style="display: flex;flex-direction: column; flex: 1" class="parsing-preview">
                 <div class="cm" style="border: 1px solid #ddd" >
@@ -86,17 +85,39 @@
                 </div>
             </div>
         </div>
-        <div data-bind="visible: (selectedFiles().length > 1)">
+        <div data-bind="visible: (selectedFiles().length > 1) && fileMode() == 'data'">
             <h4>{% trans "Selected Files" %}</h4>
             <div class="selected-files" data-bind="foreach: {data: selectedFiles(), as: 'file'}">
                 <div data-bind="text: $parent.fileMap()[file]?.details?.name"></div>
             </div>
-            <span data-bind="visible: !applyConfigurationVisible()">{% trans "Select an importer configuration on the right to apply to all files" %}</span>
-            <button class="btn btn-primary" data-bind="visible: applyConfigurationVisible(), click:()=>{applyConfigurationVisible(false), selectedFiles([])}">{% trans "Apply Importer to Selected Files" %}</button>
+            <span style="margin-top: 10px; font-weight: bold;" data-bind="visible: !applyConfigurationVisible()">{% trans "Select an importer configuration on the right to apply to all files" %}</span>
+            <button class="btn btn-primary" data-bind="visible: applyConfigurationVisible(), click:()=>{applyImporterToSelection()}">{% trans "Apply Importer to Selected Files" %}</button>
+        </div>        
+        <div data-bind="visible: (fileMode() != 'data')">
+            <h4>{% trans "File Preview" %}</h4>
+            <div>
+                <div style="border: 1px solid #ddd; padding: 10px; background-color #fdfdfd;" data-bind="visible: selectedFile()?.details && !(fileRenderers?.[selectedFile()?.details?.renderer]?.name)">{% trans "This file type cannot be previewed." %}</div>
+                <!-- ko if: selectedFile && fileMode() != 'data' && fileRenderers?.[selectedFile()?.details?.renderer]?.name -->
+                <!-- ko component: {
+                        name: fileRenderers[selectedFile()?.details?.renderer].name,
+                        params: {
+                            // fileViewer: $data,
+                            //card: $parent.card,
+                            selected: selected,
+                            state: {},
+                            displayContent: displayContent,
+                            context: 'render',
+                            params: $data,
+                            loading: loadingFile
+                        }
+                    } -->
+                <!-- /ko -->
+                <!-- /ko -->
+            </div>
         </div>
     </div>
     <div style="cursor:col-resize;width:18px;" class="resizer"></div>
-    <div style="width: 32.3226%;padding: 10px; padding-top: 0;">
+    <div style="width: 32.3226%;padding: 10px; padding-top: 0;" data-bind="visible: fileMode() == 'data'">
         {% block importerConfiguration %}
         <!-- ko component: {
             name: 'importer-configuration',
