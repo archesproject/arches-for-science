@@ -1,6 +1,5 @@
-from django.conf.urls import url
 from django.conf import settings
-from django.urls import path, include
+from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from afs.views.renderer_config import RendererConfigView, RendererView
 from afs.views.temp_file import TempFileView
@@ -26,46 +25,46 @@ from afs.views.instrument_info_step import InstrumentInfoStepFormSaveView
 uuid_regex = settings.UUID_REGEX
 
 urlpatterns = [
-    url(r"^physical-thing-search-results", PhysicalThingSearchView.as_view(), name="physical-thing-search-results"),
-    url(r"^physical-things-in-set", PhysicalThingSetView.as_view(), name="physical_things_set"),
-    url(
+    re_path(r"^physical-thing-search-results", PhysicalThingSearchView.as_view(), name="physical-thing-search-results"),
+    re_path(r"^physical-things-in-set", PhysicalThingSetView.as_view(), name="physical_things_set"),
+    re_path(
         r"^digital-resources-by-object-parts/(?P<resourceid>%s)$" % uuid_regex,
         DigitalResourcesByObjectParts.as_view(),
         name="digital-resources-by-object-parts",
     ),
-    url(
+    re_path(
         r"^workflows/upload-dataset-workflow/select-dataset-files-step",
         SelectDatasetFilesStep.as_view(),
         name="upload_dataset_select_dataset_files_step",
     ),
-    url(
+    re_path(
         r"^workflows/upload-dataset-workflow/file-renderer/(?P<tileid>%s)$" % uuid_regex,
         UpdateFileFormat.as_view(),
         name="upload_dataset_file_renderer",
     ),
-    url(
+    re_path(
         r"^workflows/upload-dataset-workflow/get-format-renderer/(?P<format>[0-9a-zA-Z_\-./]*)$",
         FormatRenderMap.as_view(),
         name="format_render_map",
     ),
-    url(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
-    url(r"^s3/multipart/(?P<uploadid>[^\/]+)/complete$", complete_upload, name="s3_multipart_upload_complete"),
-    url(r"^s3/multipart/(?P<uploadid>[^\/]+)/batch", batch_sign, name="s3_multipart_batch_sign"),
-    url(r"^s3/multipart/(?P<uploadid>[^\/]+)/(?P<partnumber>\d+)$", upload_part, name="s3_multipart_upload_part"),
-    url(r"^s3/multipart/(?P<uploadid>[^\/]+)", S3MultipartUploadManagerView.as_view(), name="s3_multipart_upload"),
-    url(r"^s3/multipart$", S3MultipartUploaderView.as_view(), name="s3_multipart_upload"),
-    url(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),
-    url(r"^saveanalysisarea", SaveAnalysisAreaView.as_view(), name="saveanalysisarea"),
-    url(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),
-    url(r"^deletesamplearea", DeleteSampleAreaView.as_view(), name="deletesamplearea"),
-    url(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
-    url(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
-    url(r"^download_project_files", FileDownloader.as_view(), name="download_project_files"),
-    url(r"^temp_file/(?P<file_id>[^\/]+)", TempFileView.as_view(), name="temp_file"),
-    url(r"^renderer/(?P<renderer_id>[^\/]+)", RendererView.as_view(), name="renderer_config"),
-    url(r"^renderer_config/(?P<renderer_config_id>[^\/]+)", RendererConfigView.as_view(), name="renderer_config"),
-    url(r"^renderer_config/", RendererConfigView.as_view(), name="renderer_config"),
-    url(r"^temp_file$", TempFileView.as_view(), name="temp_file"),
+    re_path(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
+    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)/complete$", complete_upload, name="s3_multipart_upload_complete"),
+    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)/batch", batch_sign, name="s3_multipart_batch_sign"),
+    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)/(?P<partnumber>\d+)$", upload_part, name="s3_multipart_upload_part"),
+    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)", S3MultipartUploadManagerView.as_view(), name="s3_multipart_upload"),
+    re_path(r"^s3/multipart$", S3MultipartUploaderView.as_view(), name="s3_multipart_upload"),
+    re_path(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),
+    re_path(r"^saveanalysisarea", SaveAnalysisAreaView.as_view(), name="saveanalysisarea"),
+    re_path(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),
+    re_path(r"^deletesamplearea", DeleteSampleAreaView.as_view(), name="deletesamplearea"),
+    re_path(r"^deleteanalysisarea", DeleteAnalysisAreaView.as_view(), name="deleteanalysisarea"),
+    re_path(r"^analysisarealocked", GetLockedStatus.as_view(), name="analysisarealocked"),
+    re_path(r"^download_project_files", FileDownloader.as_view(), name="download_project_files"),
+    re_path(r"^renderer/(?P<renderer_id>[^\/]+)", RendererView.as_view(), name="renderer_config"),
+    re_path(r"^renderer_config/(?P<renderer_config_id>[^\/]+)", RendererConfigView.as_view(), name="renderer_config"),
+    re_path(r"^renderer_config/", RendererConfigView.as_view(), name="renderer_config"),
+    re_path(r"^temp_file/(?P<file_id>[^\/]+)", TempFileView.as_view(), name="temp_file"),
+    re_path(r"^temp_file$", TempFileView.as_view(), name="temp_file"),
     path("reports/", include("arches_templating.urls")),
-    url(r"^", include("arches.urls")),
+    path("", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
