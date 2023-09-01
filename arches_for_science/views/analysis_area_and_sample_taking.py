@@ -109,7 +109,7 @@ class SaveAnnotationView(View):
         physical_thing_name_nodeid = "b9c1d8a6-b497-11e9-876b-a4d18cec433a"
         physical_thing_name_type_nodeid = "b9c1d7ab-b497-11e9-9ab7-a4d18cec433a"
         physical_thing_name_language_nodeid = "b9c1d400-b497-11e9-90ea-a4d18cec433a"
-        preferred_terms_conceptid = "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+        primary_name_conceptid = "e7d4b0bf-f37a-4af3-aa0b-4f63152ef9f6"
         english_conceptid = "bc35776b-996f-4fc1-bd25-9f6432c1f349"
 
         if tileid is not None:
@@ -121,7 +121,7 @@ class SaveAnnotationView(View):
                 tile = Tile.get_blank_tile(nodeid=physical_thing_name_nodeid, resourceid=resourceid)
         tile.data[physical_thing_name_nodeid] = {}
         tile.data[physical_thing_name_nodeid][get_language()] = {"value": name, "direction": "rtl" if get_language_bidi() else "ltr"}
-        tile.data[physical_thing_name_type_nodeid] = [preferred_terms_conceptid]
+        tile.data[physical_thing_name_type_nodeid] = [primary_name_conceptid]
         tile.data[physical_thing_name_language_nodeid] = [english_conceptid]
         tile.save(transaction_id=transactionid, request=request, index=False)
 
