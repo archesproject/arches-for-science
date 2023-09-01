@@ -8,6 +8,10 @@ readme = "README.rst"
 requires-python = ">=3.9"
 dependencies = [
   "arches @ git+https://github.com/archesproject/arches.git@dev/7.5.x",
+  "supervisor==4.2.1",
+  "django-storages==1.13.2",
+  "boto3==1.25.3",
+  "arches-templating>=0.1.1",
 ]
 version = "1.1.0a0"
 
