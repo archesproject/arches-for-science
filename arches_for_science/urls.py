@@ -1,25 +1,25 @@
 from django.conf import settings
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
-from afs.views.temp_file import TempFileView
+from arches_for_science.views.temp_file import TempFileView
 from arches.app.views.plugin import PluginView
-from afs.views.workflows.upload_dataset.format_render_map import FormatRenderMap
-from afs.views.workflows.upload_dataset.update_file_format import UpdateFileFormat
-from afs.views.workflows.upload_dataset.select_dataset_files_step import SelectDatasetFilesStep
-from afs.views.download_project_files import FileDownloader
-from afs.views.physical_thing_search import PhysicalThingSearchView
-from afs.views.physical_things_in_set import PhysicalThingSetView
-from afs.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, batch_sign, complete_upload, upload_part
-from afs.views.update_resource_list import UpdateResourceListView
-from afs.views.analysis_area_and_sample_taking import (
+from arches_for_science.views.workflows.upload_dataset.format_render_map import FormatRenderMap
+from arches_for_science.views.workflows.upload_dataset.update_file_format import UpdateFileFormat
+from arches_for_science.views.workflows.upload_dataset.select_dataset_files_step import SelectDatasetFilesStep
+from arches_for_science.views.download_project_files import FileDownloader
+from arches_for_science.views.physical_thing_search import PhysicalThingSearchView
+from arches_for_science.views.physical_things_in_set import PhysicalThingSetView
+from arches_for_science.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, batch_sign, complete_upload, upload_part
+from arches_for_science.views.update_resource_list import UpdateResourceListView
+from arches_for_science.views.analysis_area_and_sample_taking import (
     SaveAnalysisAreaView,
     SaveSampleAreaView,
     DeleteSampleAreaView,
     DeleteAnalysisAreaView,
     GetLockedStatus,
 )
-from afs.views.digital_resources_by_object_parts import DigitalResourcesByObjectParts
-from afs.views.instrument_info_step import InstrumentInfoStepFormSaveView
+from arches_for_science.views.digital_resources_by_object_parts import DigitalResourcesByObjectParts
+from arches_for_science.views.instrument_info_step import InstrumentInfoStepFormSaveView
 
 uuid_regex = settings.UUID_REGEX
 
