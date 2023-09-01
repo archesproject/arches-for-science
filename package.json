@@ -27,13 +27,13 @@
         "start": "NODE_PATH=media/node_modules NODE_OPTIONS=--max-old-space-size=2048 ./media/node_modules/.bin/webpack serve --config webpack/webpack.config.dev.js"
     },
     "nodeModulesPaths": {
-        "plotly.js-dist": "afs/node_modules/plotly.js-dist",
-        "Plotly": "afs/node_modules/plotly.js-dist",
-        "three": "afs/node_modules/three",
-        "CSS2DRenderer": "afs/node_modules/three/examples/jsm/renderers/CSS2DRenderer",
-        "TrackballControls": "afs/node_modules/three/examples/jsm/controls/TrackballControls",
-        "PDBLoader": "afs/node_modules/three/examples/jsm/loaders/PDBLoader",
-        "PCDLoader": "afs/node_modules/three/examples/jsm/loaders/PCDLoader",
-        "ColladaLoader": "afs/node_modules/three/examples/jsm/loaders/ColladaLoader"
+        "plotly.js-dist": "node_modules/plotly.js-dist",
+        "Plotly": "node_modules/plotly.js-dist",
+        "three": "node_modules/three",
+        "CSS2DRenderer": "node_modules/three/examples/jsm/renderers/CSS2DRenderer",
+        "TrackballControls": "node_modules/three/examples/jsm/controls/TrackballControls",
+        "PDBLoader": "node_modules/three/examples/jsm/loaders/PDBLoader",
+        "PCDLoader": "node_modules/three/examples/jsm/loaders/PCDLoader",
+        "ColladaLoader": "node_modules/three/examples/jsm/loaders/ColladaLoader"
     }
 }
