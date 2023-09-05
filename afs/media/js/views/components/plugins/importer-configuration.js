@@ -2,9 +2,12 @@ define([
     'knockout',
     'jquery',
     'js-cookie',
+    'utils/xy-parser',
     'templates/views/components/plugins/importer-configuration.htm',
-    'bootstrap'
-], function(ko, $, Cookies, importerConfigurationTemplate) {
+    'bootstrap',
+    'bindings/select2v4',
+    'select2'
+], function(ko, $, Cookies, xyParser, importerConfigurationTemplate) {
     const vm = function(params) {
         this.rendererConfigs = params.rendererConfigs || ko.observableArray();
         this.selectedConfiguration = params.selectedConfiguration || ko.observable();
@@ -14,12 +17,27 @@ define([
         this.applyConfigurationVisible = ko.observable(false);
         this.configurationName = ko.observable();
         this.configurationDescription = ko.observable();
-        this.headerDelimiter = ko.observable();
         this.headerConfig = ko.observable();
+        this.footerConfig = ko.observable();
+        this.headerDelimiter = ko.observable();
+        this.footerDelimiter = ko.observable();
         this.delimiterCharacter = ko.observable();
+        this.includeDelimiter = ko.observable();
         this.headerFixedLines = ko.observable();
         this.dataDelimiterRadio = ko.observable();
         this.dataDelimiter = ko.observable();
+        this.placeholder = 'Select a Transformation';
+
+        const transformations = xyParser.transformations().map(transform => {
+            return {
+                "text": transform, 
+                "id": transform
+            };
+        });
+
+        this.xyTransformations = ko.observable(transformations);
+        this.selectedTransformation = ko.observable();
+        this.selectedTransformation.subscribe(val => console.log(val));
 
         this.dataDelimiterRadio.subscribe(value => {
             if(value != 'other'){
@@ -44,13 +62,19 @@ define([
             if(this.headerConfig() !== 'delimited') {
                 this.headerDelimiter(undefined); // blank out previous values; don't save them.
             }
+            if(this.footerConfig() !== 'delimited') {
+                this.footerDelimiter(undefined); // blank out previous values; don't save them.
+            }
 
             const newConfiguration = {
                 name: this.configurationName(),
                 description: this.configurationDescription(),
                 headerDelimiter: this.headerDelimiter(),
+                footerDelimiter: this.footerDelimiter(),
+                includeDelimiter: this.includeDelimiter(),
                 headerFixedLines: this.headerFixedLines(),
                 delimiterCharacter: this.dataDelimiter(),
+                transformation: this.selectedTransformation(),
                 rendererId: this.renderer
             };
 
@@ -102,12 +126,21 @@ define([
                 this.headerConfig('none');
             }
 
+            if(configuration.config?.footerDelimiter){
+                this.footerConfig('delimited');
+                this.footerDelimiter(configuration.config.footerDelimiter)
+            } else {
+                this.footerConfig('none');
+            }
+
             const radioValue = ((!delimiterCharacter) ? '' : delimiterCharacter == ',' || delimiterCharacter == '|' ? delimiterCharacter : 'other');
             this.dataDelimiterRadio(radioValue);
             if(radioValue == "other"){
                 this.dataDelimiter(delimiterCharacter);
             }
             this.editConfigurationId(configuration.configid);
+            this.includeDelimiter(configuration?.config?.includeDelimiter);
+            this.selectedTransformation(configuration?.config?.transformation);
             this.showConfigurationPanel(true);
         };
 

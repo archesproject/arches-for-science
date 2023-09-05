@@ -7,34 +7,43 @@ define([
 
     const runTransformation = (yValues, transform) => {
         switch(transform) {
-            case 'average':
-                return average();
+            case 'mean':
+                return average(yValues);
             default:
                 return yValues[0];
         }
     };
 
     return {
+        transformations: () => {
+            return ["mean"]
+        },
         parse: (text, config) => {
             let values;
+            let workingText = text;
             const parsedData = {x: [], y: []};
             try {
+                if(config?.footerDelimiter){
+                    workingText = workingText.split(config?.footerDelimiter)[0].trim();
+                }
                 if(config?.headerDelimiter){
-                    values = text.split(config?.headerDelimiter)[1].trim().split('\n');
+                    values = workingText.split(config?.headerDelimiter)[1].trim().split('\n');
                 } else if (config?.headerFixedLines) {
-                    const lines = text.split('\n');
+                    const lines = workingText.split('\n');
                     values = lines.slice(config?.headerFixedLines);
                 } else {
-                    values = text.split('\n'); 
+                    values = workingText.trim().split('\n'); 
                 }
             } catch(e) {
-                values = text.split('\n');
+                values = workingText.trim().split('\n');
             }
             const delimiterCharacter = config?.delimiterCharacter ?? ',';
-            const valueRegex = new RegExp(`[ \t${delimiterCharacter}]+`);
-            const transform = config?.transform ? config.transform : 'basic';
+
+            const valueRegex = (delimiterCharacter.length < 2) ? new RegExp(`[${delimiterCharacter}\\s]+`) : new RegExp(`${delimiterCharacter}`);
+            
+            const transform = config?.transformation ? config.transformation : 'basic';
             values.forEach(function(val){
-                const rec = val.trim().split(valueRegex);
+                const rec = val.trim().split(valueRegex).filter(element => element !== "");
                 parsedData.x.push(parseFloat(rec[0]));
                 const yValues = rec.slice(1).map(val => parseFloat(val));
                 parsedData.y.push(runTransformation(yValues, transform));
