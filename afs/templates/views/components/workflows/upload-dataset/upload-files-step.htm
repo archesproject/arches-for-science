@@ -29,28 +29,12 @@
         <!-- /ko -->
     </div>
 
-    <div class="format-select" style="width: 50%" data-bind="visible: defaultFormat() == undefined">
-        <input style="display:inline-block;"
-        data-bind="select2Query: {
-            select2Config: {
-                clickBubble: true,
-                disabled: false,
-                data: formats(),
-                value: defaultFormat,
-                allowClear: true,
-                multiple: false,
-                placeholder: {% trans "'Available Formats'" %}}}" >
-    </div>
-    <div style="margin-bottom: 10px" data-bind="visible: defaultFormat() != undefined">
-        <span>{% trans "Default Text File Format" %}:</span>
-        <span style="font-weight: bold" data-bind="text: formats().find((x) => x.id == ko.unwrap(defaultFormat))?.text"></span>
-    </div>
-    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 5px; background-color: #f9f9f9; width: 50%" data-bind="visible: defaultFormat() != undefined">
+    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 5px; background-color: #f9f9f9; width: 50%">
         <span>{% trans "Supported image files and PDF files are automatically detected and displayed." %}</span>
     </div>
 </div>
 
-<div class="file-chart-upload-panel" data-bind="visible: defaultFormat() != undefined">
+<div class="file-chart-upload-panel">
     <!-- ko if: files().length === 0 -->
     <div class="gallery-controls new-tile">
         <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">

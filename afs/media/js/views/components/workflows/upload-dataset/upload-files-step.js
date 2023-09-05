@@ -22,7 +22,6 @@ define([
             const physThingName = params.projectinfo["select-phys-thing-step"].savedData().physThingName;
 
             this.datasetId = undefined;
-            this.defaultFormat = ko.observable();
             this.datasetName = ko.observable();
             this.calcDatasetName = ko.computed(function() {
                 const basename = self.datasetName() || 'Dataset';
@@ -77,7 +76,6 @@ define([
                 this.observationReferenceTileId = params.form.value()?.observationReferenceTileId ?? "";
                 this.datasetId = params.form.value()?.datasetId ?? "";
                 this.datasetName(params.form.value()?.datasetName ?? "");
-                this.defaultFormat(params.form.value()?.defaultFormat);
                 this.datasetNameTileId = params.form.value()?.datasetNameTileId ?? "";
                 (params.form.value()?.files ?? []).forEach(function(file){
                     self.files.push(file);
@@ -152,7 +150,6 @@ define([
                         "tileId": self.datasetNameTileId,
                         "resourceInstanceId": self.datasetId,
                         "partResourceId": physicalThingId,
-                        "defaultFormat": ko.unwrap(self.defaultFormat)
                     }));
 
                     self.loading(true);
@@ -250,7 +247,6 @@ define([
                         datasetName: self.datasetName(),
                         datasetNameTileId: self.datasetNameTileId,
                         datasetId: self.datasetId,
-                        defaultFormat: self.defaultFormat(),
                         files: self.files()
                     };
 
