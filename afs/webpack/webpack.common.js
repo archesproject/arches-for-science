@@ -125,7 +125,7 @@ module.exports = () => {
                         ) {
                             console.warn(
                                 '\x1b[33m%s\x1b[0m',  // yellow
-                                `"${alias}" has failed to load, it has already been defined in the project, another arches application, or the Arches application.`
+                                `"${alias}" is already loaded! It has might have been defined in the project, another arches application, or the Arches software.`
                             )
                         }
                         else {
@@ -353,18 +353,13 @@ module.exports = () => {
 
                                     let templatePath;
 
-                                    for (const archesApplicationPath of Object.values(ARCHES_APPLICATIONS_PATHS)) {
+                                    for (const archesApplicationPath of Object.values(ARCHES_APPLICATIONS_PATHS)) {  // arches application component
                                         if (resourcePath.includes(archesApplicationPath)) {
                                             templatePath = resourcePath.split(archesApplicationPath)[1];
                                         }
                                     }
 
-                                    if (!templatePath && resourcePath.includes(SITE_PACKAGES_DIRECTORY)) {  // arches application component
-                                        const archesAppPath = resourcePath.split(SITE_PACKAGES_DIRECTORY)[1];  // first split off arches applications path
-                                        const [_emptyValueBeforeFirstSlash, _appName, ...subPath] = archesAppPath.split('/') // then split off arches application name
-                                        templatePath = '/' + subPath.join('/');
-                                    }
-                                    else if (!templatePath && resourcePath.includes(APP_ROOT)) {  // project-level component
+                                    if (!templatePath && resourcePath.includes(APP_ROOT)) {  // project-level component
                                         templatePath = resourcePath.split(APP_ROOT)[1];
                                     }
                                     else if (!templatePath) {  // arches core component
