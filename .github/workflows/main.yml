@@ -53,6 +53,11 @@ jobs:
         with:
           elasticsearch-version: 8
 
+      - name: Check for missing migrations
+        working-directory: afs
+        run: |
+          PYTHONPATH="../arches" python manage.py makemigrations --check --settings=arches_for_science.test_settings
+
       - name: Run afs unit tests
         working-directory: afs
         run: |
