@@ -534,9 +534,9 @@ class DeleteSampleAreaView(View):
 
             with transaction.atomic():
                 Resource.objects.get(resourceinstanceid=sample_area_physical_thing_resourceid).delete(
-                    transaction_id=transaction_id, request=request)
+                    transaction_id=transaction_id, user=request.user)
                 Resource.objects.get(resourceinstanceid=sample_physical_thing_resourceid).delete(
-                    transaction_id=transaction_id, request=request)
+                    transaction_id=transaction_id, user=request.user)
                 Tile.objects.get(tileid=parentPhysicalThingSampleTile.tileid_id).delete(
                     transaction_id=transaction_id, request=request)
                 Tile.objects.get(tileid=samplingActivitySampleTile.tileid_id).delete(
