@@ -1,0 +1,11 @@
+prune docker
+
+exclude .eslintrc.js
+exclude .stickler.yml
+exclude docker-compose.yml
+exclude Dockerfile
+exclude arches_for_science/settings_local.py
+exclude arches_for_science/settings_docker.py
+
+global-exclude *.log
+global-exclude *.pyc

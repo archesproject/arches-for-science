@@ -14,7 +14,7 @@ except ImportError:
 
 @shared_task
 def download_project_files_task(userid, files, project_name):
-    from afs.views.download_project_files import FileDownloader
+    from arches_for_science.views.download_project_files import FileDownloader
 
     downloader = FileDownloader()
     user = User.objects.get(pk=userid)

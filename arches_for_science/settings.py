@@ -1,5 +1,5 @@
 """
-Django settings for afs project.
+Django settings for arches_for_science project.
 """
 
 import arches
@@ -17,7 +17,7 @@ except ImportError:
 
 ARCHES_APPLICATIONS = ()
 
-APP_NAME = "afs"
+APP_NAME = "arches_for_science"
 ARCHES_NAMESPACE_FOR_DATA_EXPORT = "http://localhost:8000/"
 PUBLIC_SERVER_ADDRESS = ARCHES_NAMESPACE_FOR_DATA_EXPORT
 WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
@@ -41,17 +41,17 @@ WEBPACK_LOADER = {
 STATIC_ROOT = os.path.join(ROOT_DIR, "staticfiles")
 STATIC_URL = "/static/"
 
-DATATYPE_LOCATIONS.append("afs.datatypes")
-FUNCTION_LOCATIONS.append("afs.functions")
-ETL_MODULE_LOCATIONS.append("afs.etl_modules")
-SEARCH_COMPONENT_LOCATIONS.append("afs.search_components")
+DATATYPE_LOCATIONS.append("arches_for_science.datatypes")
+FUNCTION_LOCATIONS.append("arches_for_science.functions")
+ETL_MODULE_LOCATIONS.append("arches_for_science.etl_modules")
+SEARCH_COMPONENT_LOCATIONS.append("arches_for_science.search_components")
 TEMPLATES = build_templates_config(
     root_dir=ROOT_DIR,
     debug=DEBUG,
     app_root=APP_ROOT,
     arches_applications=ARCHES_APPLICATIONS,
 )
-TEMPLATES[0]["OPTIONS"]["context_processors"].append("afs.utils.context_processors.project_settings")
+TEMPLATES[0]["OPTIONS"]["context_processors"].append("arches_for_science.utils.context_processors.project_settings")
 APP_PATHNAME = ""
 
 BYPASS_CARDINALITY_TILE_VALIDATION = False
@@ -67,14 +67,14 @@ SECRET_KEY = "(hdj_k6s^6*+ve_y9i(&$jo4cj4&jb=ryedo$2jh56bi82ye%*"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ROOT_URLCONF = "afs.urls"
+ROOT_URLCONF = "arches_for_science.urls"
 FILE_UPLOAD_PERMISSIONS = 0o644
 # a prefix to append to all elasticsearch indexes, note: must be lower case
-ELASTICSEARCH_PREFIX = "afs"
+ELASTICSEARCH_PREFIX = "arches_for_science"
 
 ELASTICSEARCH_CUSTOM_INDEXES = []
 # [{
-#     'module': 'afs.search_indexes.sample_index.SampleIndex',
+#     'module': 'arches_for_science.search_indexes.sample_index.SampleIndex',
 #     'name': 'my_new_custom_index' <-- follow ES index naming rules
 # }]
 
@@ -93,7 +93,7 @@ DATABASES = {
         "CONN_MAX_AGE": 0,
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "HOST": "localhost",
-        "NAME": "afs",
+        "NAME": "arches_for_science",
         "OPTIONS": {},
         "PASSWORD": "postgis",
         "PORT": "5432",
@@ -123,7 +123,7 @@ INSTALLED_APPS = (
     "corsheaders",
     "oauth2_provider",
     "django_celery_results",
-    "afs",
+    "arches_for_science",
     "compressor",
     # "debug_toolbar"
 )
@@ -149,7 +149,7 @@ MIDDLEWARE = [
 ALLOWED_HOSTS = ["afs.local", "10.0.2.2", "localhost"]
 
 SYSTEM_SETTINGS_LOCAL_PATH = os.path.join(APP_ROOT, "system_settings", "System_Settings.json")
-WSGI_APPLICATION = "afs.wsgi.application"
+WSGI_APPLICATION = "arches_for_science.wsgi.application"
 
 RESOURCE_IMPORT_LOG = os.path.join(APP_ROOT, "logs", "resource_import.log")
 
@@ -186,7 +186,7 @@ MEDIA_ROOT = os.path.join(APP_ROOT)
 DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 
 # Unique session cookie ensures that logins are treated separately for each app
-SESSION_COOKIE_NAME = "afs"
+SESSION_COOKIE_NAME = "arches_for_science"
 
 CACHES = {
     "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "unique-snowflake"},
