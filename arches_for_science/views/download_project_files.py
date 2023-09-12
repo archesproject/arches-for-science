@@ -12,7 +12,7 @@ from arches.app.models import models
 from arches.app.utils.response import JSONResponse, JSONErrorResponse
 import arches.app.utils.zip as zip_utils
 import arches.app.utils.task_management as task_management
-import afs.tasks as tasks
+import arches_for_science.tasks as tasks
 
 
 class FileDownloader(View):

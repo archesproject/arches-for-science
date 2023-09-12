@@ -1,9 +1,10 @@
 {
-    "name": "arches",
+    "name": "arches_for_science",
     "repository": {
-        "url": "git@github.com:archesproject/arches.git",
+        "url": "git@github.com:archesproject/arches-for-science-prj.git",
         "type": "git"
     },
+    "version": "1.1.0",
     "dependencies": {
         "@uppy/aws-s3-multipart": "^2.4.1",
         "@uppy/core": "^2.3.1",
@@ -20,10 +21,10 @@
         "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.5.x"
     },
     "scripts": {
-        "build_production": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max-old-space-size=2048 NODE_ENV=production ./media/node_modules/.bin/webpack --config webpack/webpack.config.prod.js",
-        "build_development": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max-old-space-size=2048 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js",
-        "build_test": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max-old-space-size=2048 ./media/node_modules/.bin/webpack --config webpack/webpack.config.dev.js --env test=true",
-        "start": "NODE_PATH=./media/node_modules NODE_OPTIONS=--max-old-space-size=2048 ./media/node_modules/.bin/webpack serve --config webpack/webpack.config.dev.js"
+        "build_production": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 NODE_ENV=production arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.prod.js",
+        "build_development": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.dev.js",
+        "build_test": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.dev.js --env test=true",
+        "start": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack serve --config arches_for_science/webpack/webpack.config.dev.js"
     },
     "nodeModulesPaths": {
         "plotly.js-dist": "node_modules/plotly.js-dist",

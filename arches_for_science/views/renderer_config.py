@@ -2,7 +2,7 @@ import logging
 import uuid
 from django.utils.translation import ugettext as _
 from django.views.generic import View
-from afs.models import RendererConfig
+from arches_for_science.models import RendererConfig
 from arches.app.utils.response import JSONResponse
 from django.http import HttpResponse, HttpResponseNotFound
 from mimetypes import MimeTypes

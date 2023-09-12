@@ -3,7 +3,7 @@ USER root
 ENV WEB_ROOT=/web_root
 ENV ARCHES_ROOT=${WEB_ROOT}/arches
 ENV APP_ROOT=${WEB_ROOT}/afs
-RUN mkdir -p ${APP_ROOT}/afs/webpack
+RUN mkdir -p ${APP_ROOT}/arches_for_science/webpack
 
 RUN apt-get update && apt-get install -y make software-properties-common
 RUN set -ex \
