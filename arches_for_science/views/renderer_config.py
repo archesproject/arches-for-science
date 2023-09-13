@@ -1,11 +1,8 @@
 import logging
-import uuid
-from django.utils.translation import ugettext as _
 from django.views.generic import View
 from arches_for_science.models import RendererConfig
 from arches.app.utils.response import JSONResponse
-from django.http import HttpResponse, HttpResponseNotFound
-from mimetypes import MimeTypes
+from django.http import HttpResponseNotFound
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 
 logger = logging.getLogger(__name__)
