@@ -14,10 +14,12 @@ module.exports = () => {
                 mode: 'production',
                 devtool: false,
                 bail: true,
+                parallelism: 1,
                 optimization: {
                     minimizer: [
                         new TerserPlugin({
-                            terserOptions:{
+                            parallel: 3,
+                            terserOptions: {
                                 mangle: { keep_fnames: true },
                             },
                         }),
