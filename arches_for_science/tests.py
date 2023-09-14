@@ -9,7 +9,7 @@ from arches.app.models.models import Node, NodeGroup, ResourceInstance, Resource
 from arches.app.models.tile import Tile
 
 def setUpModule():
-    call_command("packages", "-o load_package -s afs/pkg -y".split())
+    call_command("packages", "-o load_package -s arches_for_science/pkg -y".split())
 
 
 class AnalysisAreaAndSampleTakingTests(TestCase):

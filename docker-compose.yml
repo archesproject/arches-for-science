@@ -12,7 +12,7 @@ services:
         - ../arches/:/web_root/arches
         - ./:/web_root/afs
         - ../arches_templating/:/web_root/arches_templating
-        - cantaloupe-data-afs7:/web_root/afs/afs/uploadedfiles
+        - cantaloupe-data-afs7:/web_root/afs/arches_for_science/uploadedfiles
       env_file:
         - ./docker/env_file.env
       ports:

@@ -128,7 +128,7 @@ copy_settings_local() {
 
 start_celery_supervisor() {
 	cd ${APP_FOLDER}
-	supervisord -c docker/afs-supervisor.conf
+	supervisord -c docker/arches_for_science-supervisor.conf
 }
 
 run_migrations() {

@@ -7,7 +7,7 @@ run_webpack() {
 	echo ""
 	cd ${APP_FOLDER}
     echo "Running Webpack"
-	exec sh -c "cd /web_root/afs/afs && yarn install && wait-for-it afs7:80 -t 1200 && yarn start"
+	exec sh -c "cd /web_root/afs/arches_for_science && yarn install && wait-for-it afs7:80 -t 1200 && yarn start"
 }
 
 run_webpack
