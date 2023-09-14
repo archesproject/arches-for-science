@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  # push: -- just run on PRs for now
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:13-3.0
+        env:
+          POSTGRES_PASSWORD: postgis
+          POSTGRES_DB: arches
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Check out arches
+        uses: actions/checkout@v3
+        with:
+          repository: archesproject/arches
+          ref: dev/7.5.x
+          path: arches
+
+      - name: Check out afs
+        uses: actions/checkout@v2
+        with:
+          path: afs
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install afs
+        working-directory: afs
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+          echo Project installed
+
+      - name: Install Java, GDAL, and other system dependencies
+        run: |
+          sudo apt update
+          sudo apt-get install libxml2-dev libpq-dev openjdk-8-jdk libgdal-dev
+          echo Postgres and ES dependencies installed
+
+      - uses: ankane/setup-elasticsearch@v1
+        with:
+          elasticsearch-version: 8
+
+      - name: Check for missing migrations
+        working-directory: afs
+        run: |
+          PYTHONPATH="../arches" python manage.py makemigrations --check --settings=arches_for_science.test_settings
+
+      - name: Run afs unit tests
+        working-directory: afs
+        run: |
+          PYTHONPATH="../arches" python -W default::DeprecationWarning manage.py test --settings=arches_for_science.test_settings
