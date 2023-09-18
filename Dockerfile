@@ -58,7 +58,7 @@ WORKDIR ${ARCHES_ROOT}
 
 RUN pip install -e . --user --no-use-pep517 && pip install -r arches/install/requirements.txt && pip install -r arches/install/requirements_dev.txt
 
-COPY /afs/afs/install/requirements.txt requirements.txt
+COPY /afs/arches_for_science/install/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY /afs/docker/entrypoint.sh ${WEB_ROOT}/entrypoint.sh
