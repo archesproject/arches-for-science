@@ -88,7 +88,7 @@ define([
 
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
-                if (action.status === 'added') {
+                                if (action.status === 'added') {
                     let resource;
                     if (self.dirty()) {
                         resource = ko.unwrap(self.targetResources).find(
@@ -150,10 +150,12 @@ define([
                 if (cachedValue['usedSetTileId']){
                     self.usedSetTileId(cachedValue['usedSetTileId']);
                 }
+                if (cachedValue['startValue']) {
+                    self.startValue(ko.unwrap(cachedValue['startValue']));
+                }
                 if (cachedValue["value"]){
-                    self.startValue(ko.unwrap(cachedValue["value"]));
                     self.startValue().forEach(function(val){
-                        self.value.push(val);
+                        self.value.push(val.resourceinstanceid);
                     });
                 }
             } else if (params.action === "update") {
@@ -227,6 +229,7 @@ define([
                     self.usedSetTileId(response.result.projectUsedSetTileId || ko.unwrap(self.usedSetTileId));
                     self.savedData(
                         {
+                            startValue: ko.unwrap(self.startValue),
                             value: ko.unwrap(self.value),
                             projectResourceId: ko.unwrap(self.projectResourceId),
                             collectionResourceId: ko.unwrap(self.collectionResourceId),
