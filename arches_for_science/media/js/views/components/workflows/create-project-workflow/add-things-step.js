@@ -86,6 +86,12 @@ define([
             params.dirty(dirty);
         });
 
+        const sampleSubstring = '[Sample';  // for "[Sample of ..." and "[Sample Area of ..."
+        const regionSubstring = '[Region';
+        const sampleConceptId = '9db724b9-b3c7-4761-9a50-673d64a15bd8';
+        const sampleAreaConceptId = '2703e524-b5ea-4548-bea7-7ce354e4e05a';
+        const regionConceptId = 'a2588fa8-5ae6-4770-a473-dec0c05fb175';
+
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
                 if (action.status === 'added') {
@@ -115,6 +121,12 @@ define([
                     collectionRelatedResources.related_resources.related_resources
                         .filter(rr =>
                             rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
+                        )
+                        // Exclude related resources that are samples or sample areas
+                        .filter(rr =>
+                            rr.domains.map(d => d.conceptid).filter(
+                                cid => [sampleConceptId, sampleAreaConceptId, regionConceptId].includes(cid)
+                            ).length === 0
                         )
                 );
     
@@ -237,6 +249,27 @@ define([
         params.form.save = self.submit;
         params.form.onSaveSuccess = function() {};
 
+        const termFilterExcludingSamples = {
+            type: 'string',
+            context: '',
+            context_label: 'Exclude samples',
+            id: 'sample',
+            // not localized
+            text: sampleSubstring,
+            value: sampleSubstring,
+            inverted: 'true',
+        };
+        const termFilterExcludingRegions = {
+            type: 'string',
+            context: '',
+            context_label: 'Exclude regions',
+            id: 'region',
+            // not localized
+            text: regionSubstring,
+            value: regionSubstring,
+            inverted: 'true',
+        };
+
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
             minimumInputLength: 2,
@@ -270,11 +303,15 @@ define([
                         text: value,
                         value: value
                     });
+                    results.push(termFilterExcludingSamples);
+                    results.push(termFilterExcludingRegions);
                     self.termOptions = results;
 
                     const filteredResults = results.filter(function(result){
-                        return result.context_label.includes("Physical Thing") ||
-                        result.context_label.includes("Search Term");
+                        return (
+                            result.context_label.includes("Physical Thing") ||
+                            result.context_label.includes("Search Term")
+                        ) && !result.text.includes(sampleSubstring) && !result.text.includes(regionSubstring);
                     });
                     return {
                         results: filteredResults,
@@ -314,10 +351,12 @@ define([
                 }
             });
 
+            const termFiltersToUse = [termFilterExcludingSamples, termFilterExcludingRegions];
             if (termFilter) {
                 termFilter['inverted'] = false;
-                filters["term-filter"] = JSON.stringify([termFilter]);
-            } 
+                termFiltersToUse.unshift(termFilter);
+            }
+            filters['term-filter'] = JSON.stringify(termFiltersToUse);
 
             if (pagingFilter) {
                 filters['paging-filter'] = pagingFilter;
