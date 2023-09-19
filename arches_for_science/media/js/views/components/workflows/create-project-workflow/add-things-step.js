@@ -68,16 +68,16 @@ define([
         this.termOptions = [];
         this.value = ko.observableArray([]).extend({
             rateLimit: 100
-        });  // resourceinstanceid[]
+        });  // Resource[]
         this.startValue = ko.observableArray();  // Resource[]
         this.selectedResources = ko.observableArray([]);  // Resource[]
-        this.addedValues = ko.observableArray();  // resourceinstanceid[]
-        this.removedValues = ko.observableArray();  // resourceinstanceid[]
+        this.addedValues = ko.observableArray();  // Resource[]
+        this.removedValues = ko.observableArray();  // Resource[]
 
         this.dirty = ko.pureComputed(function() {
             if (self.startValue() && self.value()){
-                return !!(self.startValue().find(x => !self.value().includes(x.resourceinstanceid))
-                    || self.value().find(x => !self.startValue().map(v => v.resourceinstanceid).includes(x)));
+                return !!(self.startValue().find(x => !self.value().includes(x))
+                    || self.value().find(x => !self.startValue().includes(x)));
             } else {
                 return false;
             }
@@ -88,28 +88,14 @@ define([
 
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
-                                if (action.status === 'added') {
-                    let resource;
-                    if (self.dirty()) {
-                        resource = ko.unwrap(self.targetResources).find(
-                            r => r._id === ko.unwrap(action.value)
-                        )._source;
-                        resource = {
-                            ...resource,
-                            displayname: self.getStringValue(resource.displayname),
-                            displaydescription: self.getStringValue(resource.displaydescription),
-                        };
-                    } else {
-                        resource = ko.unwrap(self.startValue).find(
-                            r => r.resourceinstanceid === ko.unwrap(
-                                action.value
-                            )
-                        );
-                    }
+                if (action.status === 'added') {
+                    const resource = self.value().find(
+                        r => r.resourceinstanceid === ko.unwrap(action.value).resourceinstanceid
+                    );
                     self.selectedResources.push(resource);
                 } else if (action.status === 'deleted') {
                     self.selectedResources().forEach(function(val) {
-                        if (val.resourceinstanceid === ko.unwrap(action.value)) {
+                        if (val.resourceinstanceid === ko.unwrap(action.value).resourceinstanceid) {
                             self.selectedResources.remove(val);
                         }
                     });
@@ -133,7 +119,7 @@ define([
                 );
     
                 self.startValue().forEach(function(val){
-                    self.value.push(val.resourceinstanceid);
+                    self.value.push(val);
                 });    
             }
         };
@@ -153,10 +139,8 @@ define([
                 if (cachedValue['startValue']) {
                     self.startValue(ko.unwrap(cachedValue['startValue']));
                 }
-                if (cachedValue["value"]){
-                    self.startValue().forEach(function(val){
-                        self.value.push(val.resourceinstanceid);
-                    });
+                if (cachedValue['value']) {
+                    self.value(ko.unwrap(cachedValue['value']))
                 }
             } else if (params.action === "update") {
                 loadExistingCollection();
@@ -167,41 +151,40 @@ define([
             if (self.startValue()) {
                 self.value.removeAll();
                 self.startValue().forEach(function(val){
-                    self.value.push(val.resourceinstanceid);
+                    self.value.push(val);
                 });
             }
         };
         params.form.reset = this.resetTile;
 
-        this.updateTileData = function(resourceid) {
+        this.updateTileData = function(resource) {
             var val = self.value().find(function(item) {
-                return ko.unwrap(item) === resourceid;
+                return ko.unwrap(item).resourceinstanceid === resource.resourceinstanceid;
             });
 
             if (!!val) {
                 // remove item, we don't want users to add the same item twice
                 self.value.remove(val);
             } else {
-                self.value.push(resourceid);
+                self.value.push(resource);
             }
         };
 
         const createResourceListToUpdate = () => {
             let resourcesToUpdate = [];
-            const startResourceIds = self.startValue().map(v => v.resourceinstanceid);
-            self.addedValues(self.value().filter(id => !startResourceIds.includes(id)));
-            self.removedValues(startResourceIds.filter(id => !self.value().includes(id)));
+            self.addedValues(self.value().filter(val => !self.startValue().includes(val)));
+            self.removedValues(self.startValue().filter(val => !self.value().includes(val)));
 
             self.addedValues().map(function(value){
                 resourcesToUpdate.push({
-                    resourceid: value,
+                    resourceid: value.resourceinstanceid,
                     action: 'add',
                 });
             });
 
             self.removedValues().map(function(value){
                 resourcesToUpdate.push({
-                    resourceid: value,
+                    resourceid: value.resourceinstanceid,
                     action: 'remove',
                 });
             });
@@ -400,6 +383,9 @@ define([
         };
 
         this.getStringValue = (value) => {
+            if (typeof value === 'string') {
+                return value;
+            }
             return value.find(str => str.language == arches.activeLanguage)?.value;
         };
     }
