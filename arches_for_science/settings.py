@@ -24,7 +24,7 @@ WEBPACK_DEVELOPMENT_SERVER_PORT = 9000
 
 # Make sure to update pyproject.toml, which is the source of truth for packaging
 APP_VERSION = semantic_version.Version(major=1, minor=1, patch=0, prerelease=('a', '0'))
-MIN_ARCHES_VERSION = '7.5.0b0'
+MIN_ARCHES_VERSION = '7.5.0a0'
 MAX_ARCHES_VERSION = '7.5.1'
 
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))

@@ -82,6 +82,14 @@ define([
             }).then(function(response) {
                 if (response.ok) {
                     return response.json();
+                } else {
+                    response.json()
+                    .then(data => { params.pageVm.alert(
+                        new params.form.AlertViewModel('ep-alert-red', data.title, data.message)) 
+                    })
+                    .catch(_ => { params.pageVm.alert(
+                        new params.form.AlertViewModel('ep-alert-red', 'Error saving project name')) 
+                    });
                 }
             });
         };

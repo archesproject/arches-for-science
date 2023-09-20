@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 from django.core.management import call_command
 
 from django.test import TestCase
@@ -9,7 +12,10 @@ from arches.app.models.models import Node, NodeGroup, ResourceInstance, Resource
 from arches.app.models.tile import Tile
 
 def setUpModule():
-    call_command("packages", "-o load_package -s arches_for_science/pkg -y".split())
+    # TODO: when py 3.11 is min (soon), we can use contextlib.chdir() context mgr
+    os.chdir(Path(__file__).parent)
+    # TODO: this command isn't using a tempdir, so it's leaving behind files
+    call_command("packages", "-o load_package -s pkg -y".split())
 
 
 class AnalysisAreaAndSampleTakingTests(TestCase):

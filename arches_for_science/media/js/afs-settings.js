@@ -3,11 +3,15 @@ define([], function() {
         return string.replace(/,\s*}*$/, "}");
     }
 
-    const afsSettingsDataHTML = document.querySelector('#projectSettings');
-    const cloudStorageText = afsSettingsDataHTML.getAttribute('cloudStorage');
-    const cloudStorage = JSON.parse(removeTrailingCommaFromObject(cloudStorageText));
+    try {
+        const afsSettingsDataHTML = document.querySelector('#projectSettings');
+        const cloudStorageText = afsSettingsDataHTML.getAttribute('cloudStorage');
+        const cloudStorage = JSON.parse(removeTrailingCommaFromObject(cloudStorageText));
 
-    return {
-        cloudStorage
-    };
+        return {
+            cloudStorage
+        };
+    } catch (error) {
+        console.error(error);
+    }
 });

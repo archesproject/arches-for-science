@@ -17,7 +17,7 @@ define([
         this.workflowId = params.form.workflowId;
 
         this.isManifestManagerHidden = ko.observable(true);
-        this.shouldShowEditService = ko.observable(true);
+        this.shouldShowSelectService = ko.observable(true);
 
         this.selectedPhysicalThingImageServiceName = ko.observable();
         this.selectedPhysicalThingImageServiceName.subscribe(function(imageServiceName) {
