@@ -687,6 +687,10 @@ define([
                 $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
                     self.loadExternalCardData(data);
                 });
+
+                // Unselect the sample so that it does not disappear when re-edited
+                // https://github.com/archesproject/arches-for-science/issues/1249
+                self.selectSampleLocationInstance(undefined);
             })
             .fail(function(error){
                 console.log(error);
