@@ -65,15 +65,17 @@ RENDERERS += [
         "type": "",
         "exclude": "",
     },
-    # {
-    #     "name": "colladareader",
-    #     "id": "3732bdf0-74b1-412f-955a-9ca038e7db31",
-    #     "iconclass": "fa fa-spoon",
-    #     "component": "views/components/cards/file-renderers/colladareader",
-    #     "ext": "dae",
-    #     "type": "",
-    #    "exclude": [],
-    # },
+    {
+        "name": "xy-reader",
+        "title": "XY Data File Reader",
+        "description": "Use for all instrument outputs with x-y data",
+        "id": "e93b7b27-40d8-4141-996e-e59ff08742f3",
+        "iconclass": "fa fa-bolt",
+        "component": "views/components/cards/file-renderers/xy-reader",
+        "ext": "txt",
+        "type": "text/plain",   
+        "exclude": "",
+    },
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
