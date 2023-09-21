@@ -14,7 +14,7 @@
                     <div data-bind="css: {'loading-mask': reportDataLoading}">
                         <div class="afs-project-search-result-details-container" data-bind="foreach: targetResources">
                             <div class="search-result-item" data-bind="css: {'selected-instance': $parent.value().map(function(resource){return resource}).indexOf($data['_source']['resourceinstanceid']) >= 0},
-                            click: function(){$parent.updateTileData($data['_source']['resourceinstanceid'])}">
+                            click: function(){$parent.updateTileData($data._source)}">
                                 <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
                                     <div class="summary-report-title" data-bind="text: $parent.getStringValue($data._source.displayname)"></div>
                                 </div>
@@ -51,15 +51,15 @@
                     <div class="wf-multi-tile-card-info">
                         <!-- <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span></div> -->
                         <div class="wf-multi-tile-card-info-details">
-                            <dt data-bind="text: $data.displayname"></dt>
+                            <dt data-bind="text: $parent.getStringValue($data.displayname)"></dt>
                             <dd>
-                                <a data-bind="html: $parent.stripTags($data.displaydescription) || 'No description'"></a>
+                                <a data-bind="html: $parent.getStringValue($data.displaydescription) || 'No description'"></a>
                             </dd>
                         </div>
                     </div>
                     <div class="wf-multi-tile-step-card-controls">
                         <span
-                            data-bind="click: function(){$parent.updateTileData($data.resourceinstanceid)}"
+                            data-bind="click: function(){$parent.updateTileData($data)}"
                         >
                             <span>
                                 <i class="fa fa-times-circle"></i>
