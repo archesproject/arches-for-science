@@ -27,6 +27,7 @@ define([
 
 
         this.downloadInfo = ko.observableArray();
+        this.errorInfo = ko.observableArray();
         this.projectName = ko.observable();
 
         const getProjectName = async() => {
@@ -81,19 +82,25 @@ define([
                 body: JSON.stringify(data)
             });
 
-            const blobResult = await result.blob();
-            let downloadName;
-            result.headers.forEach(header => {
-                if (header.match(regex)) {
-                    downloadName = header.match(regex)[1];
-                }
-            });
+            if(result.ok){
+                const blobResult = await result.blob();
+                let downloadName;
+                result.headers.forEach(header => {
+                    if (header.match(regex)) {
+                        downloadName = header.match(regex)[1];
+                    }
+                });
 
-            this.downloadInfo.push({
-                downloadLink: URL.createObjectURL(blobResult),
-                downloadName: downloadName,
-                templateName: template.name,
-            });
+                this.downloadInfo.push({
+                    downloadLink: URL.createObjectURL(blobResult),
+                    downloadName: downloadName,
+                    templateName: template.name,
+                });
+            } else {
+                this.errorInfo.push({
+                    templateName: template.name,
+                })
+            }
         };
 
         this.templates().forEach(template => {
