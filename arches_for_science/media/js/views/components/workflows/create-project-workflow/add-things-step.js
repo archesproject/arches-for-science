@@ -255,6 +255,7 @@ define([
                         start: (page - 1) * limit,
                         // eslint-disable-next-line camelcase
                         page_limit: limit,
+                        lang: '*',
                         q: term
                     };
                     return data;
