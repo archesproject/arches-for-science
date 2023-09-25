@@ -136,11 +136,11 @@ define([
                 if (cachedValue['usedSetTileId']){
                     self.usedSetTileId(cachedValue['usedSetTileId']);
                 }
-                if (cachedValue['startValue']) {
-                    self.startValue(ko.unwrap(cachedValue['startValue']));
-                }
                 if (cachedValue['value']) {
-                    self.value(ko.unwrap(cachedValue['value']))
+                    self.startValue(ko.unwrap(cachedValue['value']));
+                    self.startValue().forEach(function(val){
+                        self.value.push(val);
+                    });        
                 }
             } else if (params.action === "update") {
                 loadExistingCollection();
@@ -212,7 +212,6 @@ define([
                     self.usedSetTileId(response.result.projectUsedSetTileId || ko.unwrap(self.usedSetTileId));
                     self.savedData(
                         {
-                            startValue: ko.unwrap(self.startValue),
                             value: ko.unwrap(self.value),
                             projectResourceId: ko.unwrap(self.projectResourceId),
                             collectionResourceId: ko.unwrap(self.collectionResourceId),
