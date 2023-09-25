@@ -14,6 +14,7 @@ define([
             // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
 
             var self = this;
+            self.uploadFailed = ko.observable(false);
             const physicalThingId = params.projectinfo["select-phys-thing-step"].savedData().physicalThing;
             const observationInfo = params.observationinfo['instrument-info'].savedData();
 
@@ -169,17 +170,22 @@ define([
                     });
 
                     self.loading(false);
-                    const datasetInfo = await resp.json();
-                    self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
-                    this.datasetId = datasetInfo.datasetResourceId;
-                    const newDatasetFiles = self.files().filter(
-                        x => datasetInfo.removedFiles.find(
-                            y => {
-                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
-                            }) == undefined
-                    );
-                    self.files([...newDatasetFiles, ...datasetInfo.files]);
-                    self.datasetNameTileId = datasetInfo.datasetNameTileId;
+                    if(resp.ok){
+                        const datasetInfo = await resp.json();
+                        self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
+                        this.datasetId = datasetInfo.datasetResourceId;
+                        const newDatasetFiles = self.files().filter(
+                            x => datasetInfo.removedFiles.find(
+                                y => {
+                                    return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
+                                }) == undefined
+                        );
+                        self.files([...newDatasetFiles, ...datasetInfo.files]);
+                        self.datasetNameTileId = datasetInfo.datasetNameTileId;
+                        self.uploadFailed(false);
+                    } else {
+                        self.uploadFailed(true);
+                    }
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
