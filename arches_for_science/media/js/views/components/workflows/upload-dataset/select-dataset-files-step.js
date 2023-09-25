@@ -67,7 +67,7 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(false);
             this.files = ko.observableArray([]);
-
+            this.uploadFailed = ko.observable(false);
             self.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id};}));
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
@@ -297,18 +297,26 @@ define([
                     });
 
                     self.loading(false);
-                    const datasetInfo = await resp.json();
-                    self.observationReferenceTileId(datasetInfo.observationReferenceTileId);
-                    part.datasetId(datasetInfo.datasetResourceId);
-                    const newDatasetFiles = part.datasetFiles().filter(
-                        x => datasetInfo.removedFiles.find(
-                            y => {
-                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
-                            }) == undefined
-                    );
-                    part.datasetFiles([...newDatasetFiles, ...datasetInfo.files]);
-                    part.nameTileId(datasetInfo.datasetNameTileId);
-                    part.nameDirty(false);
+                    if(resp.ok){
+                        const datasetInfo = await resp.json();
+                        self.observationReferenceTileId(datasetInfo.observationReferenceTileId);
+                        part.datasetId(datasetInfo.datasetResourceId);
+                        const newDatasetFiles = part.datasetFiles().filter(
+                            x => datasetInfo.removedFiles.find(
+                                y => {
+                                    return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
+                                }) == undefined
+                        );
+                        part.datasetFiles([...newDatasetFiles, ...datasetInfo.files]);
+                        part.nameTileId(datasetInfo.datasetNameTileId);
+                        part.nameDirty(false);
+                        self.uploadFailed(false);
+                        saveWorkflowState();
+                        self.snapshot = params.form.savedData();
+                        params.form.complete(true);
+                    } else {
+                        self.uploadFailed(true);
+                    }
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
@@ -316,9 +324,6 @@ define([
                     part.nameDirty(true);
                 }
 
-                saveWorkflowState();
-                self.snapshot = params.form.savedData();
-                params.form.complete(true);
             };
 
             this.dropzoneOptions = {

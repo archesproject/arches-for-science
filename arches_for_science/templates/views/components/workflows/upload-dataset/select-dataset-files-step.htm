@@ -86,6 +86,12 @@
                                 <input class="afs-calculated-datasetname" style="flex: 1" disabled type="text" data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
                             </div>
                         </div>
+                        <!-- ko if: uploadFailed -->
+                        <div style="padding: 10px; border: 1px solid #eee;" class="afs-error-message ep-alert-red">
+                            <i class="fa fa-warning" style="margin: 0 6px;"></i>
+                            {% trans 'Failed to upload files.  Try again or contact an administrator.'%}
+                        </div>
+                        <!-- /ko -->
                         <div class="dropzone-photo-upload" style="height: 80px;" data-bind="visible: selectedPartHasCurrentObservation(), dropzone: dropzoneOptions">
                             <div class="file-workbench-links">
                                 <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
