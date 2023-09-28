@@ -57,7 +57,6 @@ define([
             this.partFilter = ko.observable("");
             this.annotations = ko.observableArray([]);
             this.selectedPartObservationId = ko.observable();
-            this.selectedPartDefaultFormat = ko.observable();
             this.parts = ko.observableArray([]);
             this.uniqueId = uuid.generate();
             this.observationReferenceTileId = ko.observable();
@@ -68,7 +67,7 @@ define([
             this.firstLoad = true;
             this.mainMenu = ko.observable(false);
             this.files = ko.observableArray([]);
-
+            this.uploadFailed = ko.observable(false);
             self.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id};}));
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
@@ -116,14 +115,10 @@ define([
             this.getAnnotationProperty = function(tile, property){
                 return tile.data[physicalThingPartAnnotationNodeId].features[0].properties[property];
             };
-            self.selectedPartDefaultFormat.subscribe((defaultFormat) => {
-                self.selectedPart().defaultFormat(defaultFormat);
-            });
 
             this.selectedPart.subscribe(async(data) => {
                 self.selectedPartObservationId(self.selectedPart().observationResourceId);
-                const savedDefaultFormat = ko.unwrap(params.form.savedData()?.parts.find(part => part.partResourceId == data.resourceid)?.defaultFormat);
-                self.selectedPartDefaultFormat(ko.unwrap(self.selectedPart()?.defaultFormat) || savedDefaultFormat);
+
                 self.annotations([data]);
                 if (self.annotations().length) {
                     self.selectedAnnotationTile(self.annotations()[0]);
@@ -222,7 +217,6 @@ define([
                             nameTileId: part.nameTileId(),
                             datasetName: part.datasetName() || '',
                             resourceReferenceId: part.resourceReferenceId(),
-                            defaultFormat: part.defaultFormat(),
                             tileid: part.tileid,
                             partResourceId: part.resourceid
                         };
@@ -281,8 +275,7 @@ define([
                         "name": self.buildStrObject(part.calcDatasetName()),
                         "tileId": part.nameTileId(),
                         "resourceInstanceId": ko.unwrap(part.datasetId),
-                        "partResourceId": ko.unwrap(part.resourceid),
-                        "defaultFormat": ko.unwrap(part.defaultFormat)
+                        "partResourceId": ko.unwrap(part.resourceid)
                     }));
 
                     self.loading(true);
@@ -304,18 +297,26 @@ define([
                     });
 
                     self.loading(false);
-                    const datasetInfo = await resp.json();
-                    self.observationReferenceTileId(datasetInfo.observationReferenceTileId);
-                    part.datasetId(datasetInfo.datasetResourceId);
-                    const newDatasetFiles = part.datasetFiles().filter(
-                        x => datasetInfo.removedFiles.find(
-                            y => {
-                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
-                            }) == undefined
-                    );
-                    part.datasetFiles([...newDatasetFiles, ...datasetInfo.files]);
-                    part.nameTileId(datasetInfo.datasetNameTileId);
-                    part.nameDirty(false);
+                    if(resp.ok){
+                        const datasetInfo = await resp.json();
+                        self.observationReferenceTileId(datasetInfo.observationReferenceTileId);
+                        part.datasetId(datasetInfo.datasetResourceId);
+                        const newDatasetFiles = part.datasetFiles().filter(
+                            x => datasetInfo.removedFiles.find(
+                                y => {
+                                    return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
+                                }) == undefined
+                        );
+                        part.datasetFiles([...newDatasetFiles, ...datasetInfo.files]);
+                        part.nameTileId(datasetInfo.datasetNameTileId);
+                        part.nameDirty(false);
+                        self.uploadFailed(false);
+                        saveWorkflowState();
+                        self.snapshot = params.form.savedData();
+                        params.form.complete(true);
+                    } else {
+                        self.uploadFailed(true);
+                    }
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
@@ -323,9 +324,6 @@ define([
                     part.nameDirty(true);
                 }
 
-                saveWorkflowState();
-                self.snapshot = params.form.savedData();
-                params.form.complete(true);
             };
 
             this.dropzoneOptions = {
@@ -395,7 +393,6 @@ define([
                     part.datasetFiles = part.datasetFiles || ko.observableArray([]);
                     part.stagedFiles = part.stagedFiles || ko.observableArray([]);
                     part.datasetName = part.datasetName || ko.observable();
-                    part.defaultFormat = ko.observable(params.form.savedData()?.parts.find(savedPart => part.resourceid == savedPart?.partResourceId)?.defaultFormat);
 
                     const childPhysThingName = related._source.displayname;
                     let timeoutId = 0;

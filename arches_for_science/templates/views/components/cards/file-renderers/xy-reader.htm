@@ -1,0 +1,14 @@
+{% extends "views/components/cards/file-renderers/afs-reader.htm" %}
+{% load i18n %}
+
+{% block renderer_configuration %}
+<div style="padding: 10px;">
+<!-- ko component: {
+    name: 'importer-configuration',
+    params: {
+        selectedConfiguration: selectedConfig
+    }
+} --> 
+<!-- /ko -->
+</div>
+{% endblock renderer_configuration %}

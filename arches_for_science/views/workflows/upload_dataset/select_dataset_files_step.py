@@ -43,7 +43,6 @@ class SelectDatasetFilesStep(View):
             tile_id = dataset.get("tileId", None)
             part_resource_id = dataset.get("partResourceId", None)
             dataset_resource_id = dataset.get("resourceInstanceId", None)
-            dataset_default_format = dataset.get("defaultFormat", None)
 
             # create a dataset (digital resource) and a name tile for it.
             if not dataset_resource_id:
@@ -139,11 +138,10 @@ class SelectDatasetFilesStep(View):
                         file_data["renderer"] = next(
                             (renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "pdfreader"), None
                         )
-                    elif dataset_default_format is not None:  # instrument was given by zip file name
+                    elif file_data["name"].split(".")[-1] == "dx" or file_data["name"].split(".")[-1] == 'txt':  # instrument was given by zip file name
                         file_data["renderer"] = next(
-                            (format["renderer"] for format in settings.FORMATS if format["id"] == dataset_default_format), None
+                            (renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "xy-reader"), None
                         )
-                        file_data["format"] = dataset_default_format
 
                     # file has not been uploaded
                     dataset_file_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_file_node_group_id)

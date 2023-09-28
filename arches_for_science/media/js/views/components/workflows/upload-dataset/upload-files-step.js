@@ -14,21 +14,15 @@ define([
             // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
 
             var self = this;
+            self.uploadFailed = ko.observable(false);
             const physicalThingId = params.projectinfo["select-phys-thing-step"].savedData().physicalThing;
             const observationInfo = params.observationinfo['instrument-info'].savedData();
 
             const datasetFileNodeId = "7c486328-d380-11e9-b88e-a4d18cec433a";
-            const rendererLookup = {
-                "3526790a-c73d-4558-b29d-98f574c91e61": {name: "Bruker Artax x-ray fluorescence spectrometer", renderer: "xrf-reader", rendererid: "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-                "73717b33-1235-44a1-8acb-63c97a5c1157": {name: "Renishaw inVia Raman microscope using a 785 nm laser", renderer: "raman-reader", rendererid: "94fa1720-6773-4f99-b49b-4ea0926b3933"},
-                "3365c1bf-070d-4a8e-b859-52dec6876c1d": {name: "ASD HiRes FieldSpec4", renderer: "fors-renderer", rendererid: "88dccb59-14e3-4445-8f1b-07f0470b38bb"},
-                "image": {rendererid: "5e05aa2e-5db0-4922-8938-b4d2b7919733", renderer: "imagereader"},
-                "pdf": {rendererid: "09dec059-1ee8-4fbd-85dd-c0ab0428aa94", renderer: "pdfreader"},
-            };
+
             const physThingName = params.projectinfo["select-phys-thing-step"].savedData().physThingName;
 
             this.datasetId = undefined;
-            this.defaultFormat = ko.observable();
             this.datasetName = ko.observable();
             this.calcDatasetName = ko.computed(function() {
                 const basename = self.datasetName() || 'Dataset';
@@ -43,74 +37,6 @@ define([
             this.loadingMessage = ko.observable();
             this.loading = ko.observable(false);
             this.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id}}));
-
-            // var FileTile = function(){
-            //     var self = this;
-                
-            //     const fileTemplate = {
-            //         "tileid": "",
-            //         "data": {
-            //             "29d5ecb8-79a5-11ea-8ae2-acde48001122": null,
-            //             "7c486328-d380-11e9-b88e-a4d18cec433a": null,
-            //             "5e1791d4-79a5-11ea-8ae2-acde48001122": null,
-            //             "21d0ba4e-78eb-11ea-a33b-acde48001122": null
-            //         },
-            //         "nodegroup_id": "7c486328-d380-11e9-b88e-a4d18cec433a",
-            //         "parenttile_id": null,
-            //         "resourceinstance_id": "",
-            //         "sortorder": 1,
-            //         "tiles": {},
-            //         "transaction_id": params.form.workflowId
-            //     };
-
-            //     // this.setFile = function(file) {
-            //     //     this.fileInfo = {
-            //     //         name: file.name,
-            //     //         accepted: file.accepted,
-            //     //         height: file.height,
-            //     //         lastModified: file.lastModified,
-            //     //         size: file.size,
-            //     //         status: file.status,
-            //     //         type: file.type,
-            //     //         width: file.width,
-            //     //         url: null,
-            //     //         uploaded: ko.observable(false),
-            //     //         // eslint-disable-next-line camelcase
-            //     //         file_id: null,
-            //     //         // index: i,
-            //     //         content: window.URL.createObjectURL(file),
-            //     //         error: file.error
-            //     //     };
-            //     //     if (['txt', 'dx'].includes(file.name.split('.').pop())) {
-            //     //         this.fileInfo.renderer = rendererLookup[observationInfo.instrument.value].rendererid;
-            //     //     } else if (file.type.split('/').includes('image')) {
-            //     //         this.fileInfo.renderer = rendererLookup["image"].rendererid
-            //     //     } else if (file.type.split('/').includes('pdf')) {
-            //     //         this.fileInfo.renderer = rendererLookup["pdf"].rendererid
-            //     //     };
-
-            //     //     fileTemplate.data["7c486328-d380-11e9-b88e-a4d18cec433a"] = [this.fileInfo];
-                    
-            //     //     this.formData = new window.FormData();
-            //     //     this.formData.append('transaction_id', params.form.workflowId);
-            //     //     this.formData.append('file-list_7c486328-d380-11e9-b88e-a4d18cec433a', file, file.name);
-                    
-            //     //     this.tile = new TileModel(fileTemplate);
-            //     // }
-
-            //     this.setResourceId = function(resId){
-            //         self.tile.set("resourceinstance_id", resId);
-            //     };
-
-            //     this.save = function(resId) {
-            //         self.setResourceId(resId);
-            //         return self.tile.save(null, self, self.formData)
-            //         .then(function(response){
-            //             self.tile.set('tileid', response.tileid);
-            //             self.fileInfo.uploaded(true);
-            //         });
-            //     };
-            // };
 
             this.deleteFile = async(file) => {
                 const fileTile = ko.unwrap(file.tileId);
@@ -151,12 +77,8 @@ define([
                 this.observationReferenceTileId = params.form.value()?.observationReferenceTileId ?? "";
                 this.datasetId = params.form.value()?.datasetId ?? "";
                 this.datasetName(params.form.value()?.datasetName ?? "");
-                this.defaultFormat(params.form.value()?.defaultFormat);
                 this.datasetNameTileId = params.form.value()?.datasetNameTileId ?? "";
                 (params.form.value()?.files ?? []).forEach(function(file){
-                    /*const file = new FileTile();
-                    file.fileInfo = fileInfo.fileInfo;
-                    file.fileInfo.uploaded = ko.observable(fileInfo.fileInfo.uploaded);*/
                     self.files.push(file);
                 });
             }
@@ -177,11 +99,6 @@ define([
             });
             this.files.subscribe(function(files){
                 params.form.dirty(false);
-                // files.forEach(function(file){
-                //     if(!ko.unwrap(file.fileInfo.uploaded) && params.form.value()?.datasetName !== ""){
-                //         params.form.dirty(true);
-                //     }
-                // })
             });
 
 
@@ -219,14 +136,13 @@ define([
             };
 
             this.saveFiles = async(files) => {
-                file = files?.[0]
                 try {
                     const formData = new window.FormData();
                     formData.append("transaction_id", params.form.workflowId);
-                    formData.append("instrument_id", observationInfo.instrument.value)
-                    formData.append("observation_id", observationInfo.observationInstanceId)
+                    formData.append("instrument_id", observationInfo.instrument.value);
+                    formData.append("observation_id", observationInfo.observationInstanceId);
                     if(self.observationReferenceTileId){
-                        formData.append("observation_ref_tile", self.observationReferenceTileId)
+                        formData.append("observation_ref_tile", self.observationReferenceTileId);
                     }
 
                     // For each part of parent phys thing, create a digital resource with a Name tile
@@ -235,7 +151,6 @@ define([
                         "tileId": self.datasetNameTileId,
                         "resourceInstanceId": self.datasetId,
                         "partResourceId": physicalThingId,
-                        "defaultFormat": ko.unwrap(self.defaultFormat)
                     }));
 
                     self.loading(true);
@@ -255,17 +170,22 @@ define([
                     });
 
                     self.loading(false);
-                    const datasetInfo = await resp.json()
-                    self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
-                    this.datasetId = datasetInfo.datasetResourceId;
-                    const newDatasetFiles = self.files().filter(
-                        x => datasetInfo.removedFiles.find(
-                            y => {
-                                return ko.unwrap(x.tileId) == ko.unwrap(y.tileid)
-                            }) == undefined
-                    );
-                    self.files([...newDatasetFiles, ...datasetInfo.files]);
-                    self.datasetNameTileId = datasetInfo.datasetNameTileId;
+                    if(resp.ok){
+                        const datasetInfo = await resp.json();
+                        self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
+                        this.datasetId = datasetInfo.datasetResourceId;
+                        const newDatasetFiles = self.files().filter(
+                            x => datasetInfo.removedFiles.find(
+                                y => {
+                                    return ko.unwrap(x.tileId) == ko.unwrap(y.tileid);
+                                }) == undefined
+                        );
+                        self.files([...newDatasetFiles, ...datasetInfo.files]);
+                        self.datasetNameTileId = datasetInfo.datasetNameTileId;
+                        self.uploadFailed(false);
+                    } else {
+                        self.uploadFailed(true);
+                    }
                 } catch(err) {
                     // eslint-disable-next-line no-console
                     console.log('Tile update failed', err);
@@ -333,7 +253,6 @@ define([
                         datasetName: self.datasetName(),
                         datasetNameTileId: self.datasetNameTileId,
                         datasetId: self.datasetId,
-                        defaultFormat: self.defaultFormat(),
                         files: self.files()
                     };
 

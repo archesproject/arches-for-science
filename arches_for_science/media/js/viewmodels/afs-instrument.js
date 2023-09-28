@@ -27,7 +27,7 @@ define(['jquery',
         var localStore = window.localStorage;
 
         var renderer = this.displayContent.renderer.id;
-
+        this.renderer = renderer;
         var formatDefaults = {
             'title': localStore.getItem(renderer + 'title') || '',
             'titlesize': localStore.getItem(renderer + 'titlesize') || 24, 
@@ -47,8 +47,8 @@ define(['jquery',
                     var compat = self.fileViewer.card.tiles().filter(function(tile){
                         return self.fileViewer.getUrl(tile).renderer &&
                         self.fileViewer.getUrl(tile).renderer.id === self.fileViewer.displayContent().renderer.id &&
-                        self.fileViewer.selected().tileid !== tile.tileid
-                    }).map(function(t){return {text: self.fileViewer.getUrl(t).name, id: t.tileid }});
+                        self.fileViewer.selected().tileid !== tile.tileid;
+                    }).map(function(t){return {text: self.fileViewer.getUrl(t).name, id: t.tileid };});
                     return compat;
                 }
             });
@@ -112,7 +112,7 @@ define(['jquery',
         });
 
         this.toggleSelected = function(tile) {
-            var selectable = (self.seriesData().filter(function(t){return t.tileid === tile.tileid}).length === 1);
+            var selectable = (self.seriesData().filter(function(t){return t.tileid === tile.tileid;}).length === 1);
             if(!tile || tile == self.selectedSeriesTile()) {
                 self.selectedSeriesTile(null);
             } else if (selectable || tile) {
@@ -144,7 +144,7 @@ define(['jquery',
                     }
                 });
             }
-        }
+        };
 
         this.addData = function(tile) {
             var seriesStyle = {
@@ -278,6 +278,8 @@ define(['jquery',
             this.url = this.displayContent.url;
             this.type = this.displayContent.type;
             if (self.params.context === 'render') {
+                self.render();
+            } else if (self.params.context === 'parse'){
                 self.render();
             }
         }

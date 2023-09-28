@@ -136,7 +136,6 @@
             showFileInfo(false); 
             selectedRenderer(undefined);
             selectedFile(undefined);
-            selectedFileFormat(undefined);
         }">
             <i class="fa fa-list" style="color: #eee"></i> {% trans "Show File List" %}</button>
         
@@ -154,18 +153,6 @@
                     <i style="padding: 0px 10px;" role="presentation" class="fa fa-exclamation-triangle"></i>
                     <div>{% trans 'The current renderer is not valid.  Please select a different renderer.' %}</div>
                 </div>
-            </div>
-            <div class="format-select">
-                <input style="display:inline-block; margin-top: 70px;"
-                data-bind="select2Query: {
-                    select2Config: {
-                        clickBubble: true,
-                        disabled: false,
-                        data: formats(),
-                        value: selectedFileFormat,
-                        allowClear: true,
-                        multiple: false,
-                        placeholder: {% trans "'Available Formats'" %}}}" >
             </div>
         </div>
         <div style="display: flex; flex-direction: column;">

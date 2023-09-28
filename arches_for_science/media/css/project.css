@@ -18,9 +18,7 @@
 }
 
 .chart {
-    margin-right: 105px;
-    margin-left: 15px;
-    margin-top: 20px;
+    margin: 10px 15px;
 }
 
 .boxed {
@@ -40,6 +38,10 @@
 .workbench-card-sidepanel{
     display: flex;
     flex-direction: column;
+}
+
+.xy-reader .select2-container{
+    width: auto !important;
 }
 
 .workbench-button-panel {
@@ -1159,10 +1161,144 @@
     z-index: 1;
 }
 
+.file-configuration .CodeMirror {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    overflow: auto;
+}
+
+.file-configuration .cm{
+    flex:1 1 auto;
+    margin-top:0;
+    height:100%;
+    position:relative;
+}
+
+.file-configuration h4{
+    padding: 0;
+}
+
+.file-configuration i {
+    padding: 5px;
+}
+
+.file-configuration h4{
+    position: relative;
+    cursor: pointer;
+    color: #213e5f;
+    font-size: 14px;
+}
+.file-configuration input[type=radio]{
+    margin:0;
+}
+.file-configuration button {
+    margin: 10px 5px;
+    min-width: 100px;
+}
+
+.importer-configuration .data-delimiter-radio{
+    display:flex; 
+    flex-direction: row; 
+    align-items:center; 
+    margin: 0 3px;
+}
+
+.importer-configuration button {
+    margin: 10px 5px;
+    min-width: 100px;
+}
+
+.importer-configuration label {
+    padding: 2px 5px;
+    margin:0
+}
+.importer-configuration i {
+    padding: 5px;
+}
+.importer-configuration h4{
+    padding: 0;
+}
+
+.importer-configuration h4{
+    position: relative;
+    cursor: pointer;
+    color: #213e5f;
+    font-size: 14px;
+}
+.importer-configuration input[type=radio]{
+    margin:0;
+}
+.importer-configuration textarea, .importer-configuration input[type=text] {
+    border: 1px solid #ddd;
+    width: 100%;
+}
+.file-configuration .file-button-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.file-configuration .file-buttons{
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 10px 20px;
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+}
+.file-configuration .file-buttons.active {
+    font-weight: bold;
+}
+.file-configuration .dataTables_wrapper .row:first-child{
+    background-color: #ddd;
+    padding: 0 5px;
+    padding-top: 5px;
+}
+.file-configuration .uploaded-files .table>tbody>tr>td{
+    padding: 0;
+}
+.file-configuration .active-files>div {
+    display: flex;
+    flex-direction: column; 
+    flex: 1;
+}
+.importer-configuration .tip {
+  position: relative;
+  display: inline-block;
+}
+
+.importer-configuration .tip .tooltiptext {
+  visibility: hidden;
+  max-width: 200px;
+  min-width: 150px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tip:hover .tooltiptext {
+  visibility: visible;
+}
 .object-selector-label {
     text-align: center;
     margin: 16px 0px 16px 30px;
     height:fit-content; 
     background-color: #fde9ad;
     overflow-y: auto;
+}
+
+.afs-error-message {
+    font-weight:bold;
+    color: #fff;
+    display: flex;
+    align-items: center;
 }
