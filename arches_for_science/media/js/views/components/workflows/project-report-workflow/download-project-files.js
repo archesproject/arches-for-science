@@ -17,7 +17,7 @@ define([
         const collectionGraphId = '1b210ef3-b25c-11e9-a037-a4d18cec433a';
         const physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
         const fileNodeId = '7c486328-d380-11e9-b88e-a4d18cec433a';
-        const objectObeservedNodeId = "cd412ac5-c457-11e9-9644-a4d18cec433a";
+        const objectObservedNodeId = "cd412ac5-c457-11e9-9644-a4d18cec433a";
         const removalFromObjectNodegroupId = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a";
         const removedFromNodeId = "38814345-d2bd-11e9-b9d6-a4d18cec433a";
         const fileStatementContentNodeId = 'ca227726-78ed-11ea-a33b-acde48001122';
@@ -64,8 +64,8 @@ define([
             self.projectName = projectJson.resource_instance.displayname;
             const projectObservations = projectJson.related_resources.filter(res => res.graph_id == observationGraphId)
                 .filter(res => {
-                    const objectTile = res.tiles.find(tile => tile.nodegroup_id === objectObeservedNodeId);
-                    const object = objectTile?.data[objectObeservedNodeId][0]['resourceId'];
+                    const objectTile = res.tiles.find(tile => tile.nodegroup_id === objectObservedNodeId);
+                    const object = objectTile?.data[objectObservedNodeId][0]['resourceId'];
                     return projectPhysicalThings.includes(object);
                 });
 
