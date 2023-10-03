@@ -65,12 +65,13 @@
       </skos:Concept>
     </skos:narrower>
     <skos:narrower>
-      <skos:ConceptScheme rdf:about="http://localhost:8000/1c9052ae-db51-4033-aba0-fc767330fd12">
-        <dcterms:title xml:lang="en">{"id": "75575b99-fb14-45e2-867b-9f3f6147e59e", "value": "art collections"}</dcterms:title>
+      <skos:Concept rdf:about="http://localhost:8000/1c9052ae-db51-4033-aba0-fc767330fd12">
+        <skos:prefLabel xml:lang="en">{"id": "75575b99-fb14-45e2-867b-9f3f6147e59e", "value": "art collections"}</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://localhost:8000/b73e741b-46da-496c-8960-55cc1007bec4"/>
         <dcterms:identifier xml:lang="en">{"id": "9f5131a8-b8a6-4559-bd3c-6874f6a08aa0", "value": "http://localhost:8000/1c9052ae-db51-4033-aba0-fc767330fd12"}</dcterms:identifier>
-        <dcterms:description xml:lang="en">{"id": "68463cc6-cbc0-4e49-b810-1d23789c0253", "value": "Accumulations or groupings of works of art that are acquired and assembled by private individuals or public instiutions."}</dcterms:description>
+        <dcterms:scopeNote xml:lang="en">{"id": "68463cc6-cbc0-4e49-b810-1d23789c0253", "value": "Accumulations or groupings of works of art that are acquired and assembled by private individuals or public instiutions."}</dcterms:scopeNote>
         <dcterms:identifier xml:lang="en">{"id": "cc4541b4-0923-4bed-99e6-c835ace12663", "value": "http://localhost:8000/1c9052ae-db51-4033-aba0-fc767330fd12"}</dcterms:identifier>
-      </skos:ConceptScheme>
+      </skos:Concept>
     </skos:narrower>
     <skos:narrower>
       <skos:Concept rdf:about="http://localhost:8000/759cca44-5219-4074-beda-214a81c201b0">
