@@ -9,7 +9,7 @@ from arches_for_science.views.workflows.upload_dataset.select_dataset_files_step
 from arches_for_science.views.download_project_files import FileDownloader
 from arches_for_science.views.physical_thing_search import PhysicalThingSearchView
 from arches_for_science.views.physical_things_in_set import PhysicalThingSetView
-from arches_for_science.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, batch_sign, complete_upload, upload_part
+from arches_for_science.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, S3BatchSignView, S3CompleteUploadView, S3UploadPartView, S3UploadView
 from arches_for_science.views.update_resource_list import UpdateResourceListView
 from arches_for_science.views.analysis_area_and_sample_taking import (
     SaveAnalysisAreaView,
@@ -47,11 +47,12 @@ urlpatterns = [
         name="format_render_map",
     ),
     re_path(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
-    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)/complete$", complete_upload, name="s3_multipart_upload_complete"),
-    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)/batch", batch_sign, name="s3_multipart_batch_sign"),
-    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)/(?P<partnumber>\d+)$", upload_part, name="s3_multipart_upload_part"),
-    re_path(r"^s3/multipart/(?P<uploadid>[^\/]+)", S3MultipartUploadManagerView.as_view(), name="s3_multipart_upload"),
-    re_path(r"^s3/multipart$", S3MultipartUploaderView.as_view(), name="s3_multipart_upload"),
+    re_path(r"^uppy/s3/multipart/(?P<uploadid>[^\/]+)/complete$", S3CompleteUploadView.as_view(), name="s3_multipart_upload_complete"),
+    re_path(r"^uppy/s3/multipart/(?P<uploadid>[^\/]+)/batch", S3BatchSignView.as_view(), name="s3_multipart_batch_sign"),
+    re_path(r"^uppy/s3/multipart/(?P<uploadid>[^\/]+)/(?P<partnumber>\d+)", S3UploadPartView.as_view(), name="s3_multipart_upload_part"),
+    re_path(r"^uppy/s3/multipart/(?P<uploadid>[^\/]+)", S3MultipartUploadManagerView.as_view(), name="s3_multipart_upload"),
+    re_path(r"^uppy/s3/multipart$", S3MultipartUploaderView.as_view(), name="s3_multipart_upload"),
+    re_path(r"^uppy/s3/params", S3UploadView.as_view(), name="s3_upload"),
     re_path(r"^instrument-info-form-save", InstrumentInfoStepFormSaveView.as_view(), name="instrument-info-form-save"),
     re_path(r"^saveanalysisarea", SaveAnalysisAreaView.as_view(), name="saveanalysisarea"),
     re_path(r"^savesamplearea", SaveSampleAreaView.as_view(), name="savesamplearea"),

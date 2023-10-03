@@ -171,14 +171,15 @@ class SelectDatasetFilesStep(View):
                         raise
                     else:
                         file_data["tileid"] = response["tileid"]
+                        file_data["path"] = response["data"][dataset_file_node_id][0]['path']
             try:
                 file_response = [
-                    {"name": f[0]["name"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
+                    {"name": f[0]["name"],"path":f[0]["path"],"clientId":f[0]["clientFileId"], "renderer": f[0]["renderer"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]}
                     for f in new_files
                 ]
             except KeyError:
                 # XRF files do not have a renderer (yet) and use this same endpoint.
-                file_response = [{"name": f[0]["name"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]} for f in new_files]
+                file_response = [{"name": f[0]["name"],"path":f[0]["path"],"clientId":f[0]["clientFileId"], "format": f[0].get("format", None), "tileId": f[0]["tileid"]} for f in new_files]
 
         return JSONResponse(
             {
