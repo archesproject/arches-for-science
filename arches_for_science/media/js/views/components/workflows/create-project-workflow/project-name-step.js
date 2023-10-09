@@ -17,12 +17,7 @@ define([
                 return prop ? params.value()[key][prop] : params.value()[key];
             } else {
                 if (isString) {
-                    const emptyStrObject = {};
-                    emptyStrObject[arches.activeLanguage] = {
-                        "value":'',
-                        "direction": arches.languages.find(lang => lang.code == arches.activeLanguage).default_direction
-                    };
-                    return emptyStrObject;
+                    return '';
                 } else {
                     return null;
                 }
@@ -101,9 +96,13 @@ define([
 
         params.form.save = function() {
             params.form.complete(false);
-            if (!self.nameValue()){
+            if (!self.nameValue() || (self.nameValue() && !self.nameValue()[arches.activeLanguage].value)){
                 params.form.error(new Error("Missing Required Value"));
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Missing Required Value", "Name is required."));
+                if (params.form.savedData()) {
+                    self.nameValue(params.form.savedData().name.value);
+                }
+                params.form.complete(true);
                 return;
             }
     
