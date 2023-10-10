@@ -47,6 +47,8 @@ class UpdateResourceListView(View):
     def create_new_collection(self, request, transaction_id, project_name):
         collection_graphid = "1b210ef3-b25c-11e9-a037-a4d18cec433a"
         name_node_id = "52aa2007-c450-11e9-b5d4-a4d18cec433a"
+        name_type_node_id = "52aa1f17-c450-11e9-a114-a4d18cec433a"
+        preferred_terms_value_id = "8f40c740-3c02-4839-b1a4-f1460823a9fe"
         resource = Resource()
         resource.graph_id = collection_graphid
         resource.save(transaction_id=transaction_id)
@@ -55,6 +57,7 @@ class UpdateResourceListView(View):
         tile = Tile.get_blank_tile(nodeid=name_node_id, resourceid=collection_resourceinstance_id)
         stringDataType = StringDataType()
         tile.data[name_node_id] = stringDataType.transform_value_for_tile("Collection for {0}".format(project_name))
+        tile.data[name_type_node_id] = [preferred_terms_value_id]
         tile.save(request=request, transaction_id=transaction_id, index=False)
 
         resource.calculate_descriptors()
