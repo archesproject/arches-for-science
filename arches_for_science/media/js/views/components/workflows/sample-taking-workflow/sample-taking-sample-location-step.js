@@ -306,9 +306,20 @@ define([
             self.annotationNodes(annotationNodes);
         };
 
-        this.updateSampleLocationInstances = function() {
+        this.tilesBelongingToManifest = (tiles) => {
+            if (!self.canvases) {
+                return tiles;
+            }
             const canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id']);
 
+            return tiles.filter(
+                tile => canvasids.find(
+                    canvas => canvas.startsWith(ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas))
+                )
+            );
+        };
+
+        this.updateSampleLocationInstances = function() {
             const tileids = self.card.tiles().map(tile => tile.tileid);
             if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid){
                 if (!tileids.includes(self.selectedSampleLocationInstance().tileid)) {
@@ -332,12 +343,7 @@ define([
                 }
             }
 
-            const tilesBelongingToManifest = self.card.tiles().filter(
-                tile => canvasids.find(
-                    canvas => canvas.startsWith(ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features()[0].properties.canvas))
-                )
-            );
-
+            const tilesBelongingToManifest = this.tilesBelongingToManifest(self.card.tiles(), self.canvases());
             tilesBelongingToManifest.forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
             self.sampleLocationInstances(tilesBelongingToManifest);
         };
@@ -777,7 +783,7 @@ define([
                     }
                 });
                 card.tiles().forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
-                self.sampleLocationInstances(card.tiles());
+                self.sampleLocationInstances(self.tilesBelongingToManifest(card.tiles()));
                 self.analysisAreaTileIds = self.analysisAreaResourceIds.map(item => item.tileid);
             });
         };
