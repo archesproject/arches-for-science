@@ -15,14 +15,9 @@ define([
 ], function(_, arches, ko, cookies, annotationUtils, geojsonExtent, L, MapComponentViewModel, selectFeatureLayersFactory, AlertViewModel, domToImage, addAnnotationsTemplate) {
     function viewModel(params) {
         const self = this;
-        const projectId = params.projectId;
-
-        const template = params.templateId;
+        const physicalThings = params.physicalThings;
         let annotationGroups;
         let currentGroup;
-        const COLLECTION_GRAPH_ID = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
-        const PHYSICAL_THING_GRAPH_ID = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a";
-        const MANIFEST_NODEGROUP_ID = "fec59582-8593-11ea-97eb-acde48001122";
         this.resourceData = ko.observable();
         this.physicalThingValue = ko.observable();
         this.physicalThingList = ko.observable();
@@ -136,29 +131,8 @@ define([
             }
         };
 
-        const getRelatedResources = async function(resourceid) {
-            const response = await window.fetch(arches.urls.related_resources + resourceid + "?paginate=false");
-
-            if (response.ok) {
-                return await response.json();
-            } else { 
-                throw('error retrieving related resources', response); // throw - this should never happen. 
-            }
-
-        };
-
         (async() => {
-            self.projectRelatedResources = await getRelatedResources(projectId);
-            const collections = self.projectRelatedResources.related_resources.filter(rr => rr.graph_id == COLLECTION_GRAPH_ID);
-            const physicalThings = collections.map(async(collection) => {
-                const collectionRelatedResources = await getRelatedResources(collection.resourceinstanceid);
-                return collectionRelatedResources?.related_resources.filter(rr => rr.graph_id == PHYSICAL_THING_GRAPH_ID);
-            });
-            this.physicalThings = [].concat(...(await Promise.all(physicalThings))); // flattens array of collections
-            const filteredTiles = this.physicalThings.map((physicalThing) => physicalThing.tiles.filter(thing => thing.nodegroup_id == MANIFEST_NODEGROUP_ID));
-            const annotations = filteredTiles.filter(annotation => annotation.length > 0);
-            const labelBasedresources = await Promise.all(annotations.map(async(x) => await fetchResource(x[0].resourceinstance_id)));
-
+            const labelBasedresources = await Promise.all(physicalThings.map(async(x) => await fetchResource(x)));
             annotationGroups = await Promise.all(labelBasedresources.map(async(x) => await annotationUtils.compressFeatures(x)));
             const currentGroup = annotationGroups?.[0];
 
@@ -342,8 +316,8 @@ define([
                     return screenshot;
                 }
             }));
-            params.form.value({physicalThings: this.physicalThings, screenshots: screenshots, projectRelations: this.projectRelatedResources});
-            params.form.savedData({physicalThings: this.physicalThings, screenshots: screenshots, projectRelations: this.projectRelatedResources});
+            params.form.value({ screenshots: screenshots });
+            params.form.savedData({ screenshots: screenshots });
             params.form.saving(false);
             params.form.complete(true);
         };

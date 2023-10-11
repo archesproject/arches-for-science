@@ -71,7 +71,8 @@ define([
                                     uniqueInstanceName: 'add-annotations',
                                     tilesManaged: 'none',
                                     parameters: {
-                                        projectId: "['select-project']['select-project']['project']"
+                                        projectId: "['select-project']['select-project']['project']",
+                                        physicalThings: "['select-project']['select-project']['physicalThings']",
                                     }
                                 },
                             ], 
@@ -94,6 +95,7 @@ define([
                                     tilesManaged: 'none',
                                     parameters: {
                                         projectId: "['select-project']['select-project']['project']",
+                                        physicalThings: "['select-project']['select-project']['physicalThings']",
                                     }
                                 },
                             ], 
@@ -118,9 +120,8 @@ define([
                                     parameters: {
                                         templates: "['select-report-template']['select-template']['templates']",
                                         projectId: "['select-project']['select-project']['project']",
-                                        physicalThings: "['add-annotations']['add-annotations']['physicalThings']",
-                                        projectRelations: "['add-annotations']['add-annotations']['projectRelations']",
-                                        annotationScreenshots: "['add-annotations']['add-annotations']['screenshots']"
+                                        physicalThingIds: "['select-project']['select-project']['physicalThings']",
+                                        annotationStepData: "['add-annotations']['add-annotations']"
                                     }
                                 },
                             ], 
