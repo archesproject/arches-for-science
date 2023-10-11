@@ -41,12 +41,14 @@ define([
                 var res = resourceUtils.lookupResourceInstanceData(val);
                 res.then(
                     function(data){
+                        console.log(data._source);
                         self.projectNameValue(data._source.displayname);
                         let setTileResourceInstanceIds;
                         let setTile = data._source.tiles.find(function(tile){
                             return tile.nodegroup_id === self.physThingSetNodegroupId;
                         });
-                        if (setTile && Object.keys(setTile.data).includes(self.physThingSetNodegroupId) && setTile.data[self.physThingSetNodegroupId].length) {
+                        console.log(setTile);
+                        if (setTile?.data?.[self.physThingSetNodegroupId]?.length) {
                             self.setsThatBelongToTheProject(null);
                             setTileResourceInstanceIds = setTile.data[self.physThingSetNodegroupId].map((instance) => instance.resourceId);
                             if (setTileResourceInstanceIds) {
