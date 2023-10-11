@@ -86,11 +86,16 @@ define([
             params.dirty(dirty);
         });
 
+        this.includeSamples = ko.observable(false);
+        this.includeAnalysisAreas = ko.observable(false);
+        this.childPhysicalThingValue = {
+            sample: '77d8cf19-ce9c-4e0a-bde1-9148d870e11c',
+            location: '7375a6fb-0bfb-4bcf-81a3-6180cdd26123',
+            analysis: '31d97bdd-f10f-4a26-958c-69cb5ab69af1',
+        };
+        this.physicalThingTypeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
         const sampleSubstring = '[Sample';  // for "[Sample of ..." and "[Sample Area of ..."
         const regionSubstring = '[Region';
-        const sampleConceptId = '9db724b9-b3c7-4761-9a50-673d64a15bd8';
-        const sampleAreaConceptId = '2703e524-b5ea-4548-bea7-7ce354e4e05a';
-        const regionConceptId = 'a2588fa8-5ae6-4770-a473-dec0c05fb175';
 
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
@@ -121,12 +126,6 @@ define([
                     collectionRelatedResources.related_resources.related_resources
                         .filter(rr =>
                             rr.graph_id === "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
-                        )
-                        // Exclude related resources that are samples or sample areas
-                        .filter(rr =>
-                            rr.domains.map(d => d.conceptid).filter(
-                                cid => [sampleConceptId, sampleAreaConceptId, regionConceptId].includes(cid)
-                            ).length === 0
                         )
                 );
     
@@ -249,27 +248,6 @@ define([
         params.form.save = self.submit;
         params.form.onSaveSuccess = function() {};
 
-        const termFilterExcludingSamples = {
-            type: 'string',
-            context: '',
-            context_label: 'Exclude samples',
-            id: 'sample',
-            // not localized
-            text: sampleSubstring,
-            value: sampleSubstring,
-            inverted: 'true',
-        };
-        const termFilterExcludingRegions = {
-            type: 'string',
-            context: '',
-            context_label: 'Exclude regions',
-            id: 'region',
-            // not localized
-            text: regionSubstring,
-            value: regionSubstring,
-            inverted: 'true',
-        };
-
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
             minimumInputLength: 2,
@@ -303,15 +281,14 @@ define([
                         text: value,
                         value: value
                     });
-                    results.push(termFilterExcludingSamples);
-                    results.push(termFilterExcludingRegions);
                     self.termOptions = results;
 
                     const filteredResults = results.filter(function(result){
                         return (
                             result.context_label.includes("Physical Thing") ||
                             result.context_label.includes("Search Term")
-                        ) && !result.text.includes(sampleSubstring) && !result.text.includes(regionSubstring);
+                        ) && (self.includeSamples() || !result.text.includes(sampleSubstring))
+                        && (self.includeAnalysisAreas() || !result.text.includes(regionSubstring))
                     });
                     return {
                         results: filteredResults,
@@ -344,19 +321,56 @@ define([
         
         var getResultData = function(termFilter, pagingFilter) {
             var filters = {};
-            // let's empty our termFilters
+            // let's empty term-filter and advanced-search
             _.each(self.filters, function(_value, key) {
                 if (key !== 'paging-filter' && key !== 'search-results') {
                     delete self.filters[key];
                 }
             });
 
-            const termFiltersToUse = [termFilterExcludingSamples, termFilterExcludingRegions];
             if (termFilter) {
                 termFilter['inverted'] = false;
-                termFiltersToUse.unshift(termFilter);
+                filters["term-filter"] = JSON.stringify([termFilter]);
+            } 
+
+            const conceptFilters = [];
+            if (!self.includeSamples()) {
+                conceptFilters.push({
+                    op: 'and',
+                    [self.physicalThingTypeNodeId]: {
+                        op: '!eq',
+                        val: self.childPhysicalThingValue.sample,
+                    },
+                });
+                conceptFilters.push({
+                    op: 'and',
+                    [self.physicalThingTypeNodeId]: {
+                        op: '!eq',
+                        val: self.childPhysicalThingValue.location,
+                    },
+                });
             }
-            filters['term-filter'] = JSON.stringify(termFiltersToUse);
+            if (!self.includeAnalysisAreas()) {
+                conceptFilters.push({
+                    op: 'and',
+                    [self.physicalThingTypeNodeId]: {
+                        op: '!eq',
+                        val: self.childPhysicalThingValue.analysis,
+                    },
+                });
+            }
+            if (!self.includeAnalysisAreas() || !self.includeSamples()) {
+                conceptFilters.push({
+                    op: 'or',
+                    [self.physicalThingTypeNodeId]: {
+                        op: 'null',
+                        val: '',
+                    },
+                });
+            }
+            if (conceptFilters.length) {
+                filters['advanced-search'] = JSON.stringify(conceptFilters);
+            }
 
             if (pagingFilter) {
                 filters['paging-filter'] = pagingFilter;
