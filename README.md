@@ -22,7 +22,6 @@ pip install -e .
 pip install arches-for-science
 ```
 
-
 ## 2. Project Configuration
 
 If you don't already have an Arches project, you'll need to create one by following the instructions in the Arches [documentation](http://archesproject.org/documentation/)
@@ -64,7 +63,7 @@ Next ensure arches and arches_for_science are included as dependencies in packag
 ```
 "dependencies": {
     "arches": "archesproject/arches#dev/7.5.x",
-    "arches_for_science": "archesproject/arches-for-science-prj#dev/1.1.x"
+    "arches_for_science": "archesproject/arches-for-science#dev/1.1.x"
 }
 ```
 
