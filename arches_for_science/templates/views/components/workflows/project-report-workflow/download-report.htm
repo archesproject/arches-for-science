@@ -4,7 +4,7 @@
         <span class="h5 file-list-label" data-bind="text: projectName() + $root.translations.reportDownload"></span>
     </div>
 
-    <!-- ko if: downloadInfo().length !== templates().length -->
+    <!-- ko if: (downloadInfo().length + errorInfo().length)  !== templates().length -->
         <div class="download-report-container">
             <div class="loading-mask" style="background-color: transparent;"></div>
 
@@ -18,7 +18,7 @@
         </div>
     <!-- /ko -->
 
-    <!-- ko if: downloadInfo().length === templates().length -->
+    <!-- ko if: (downloadInfo().length + errorInfo().length) === templates().length -->
         <!-- ko foreach: downloadInfo -->
             <div class="download-report-button-container">
                 <div class="file-download-button btn btn-success" role="link">
@@ -28,6 +28,11 @@
                             text:  $root.translations.download + ' ' + templateName"
                     ></a><i class="fa fa-download" style="margin-inline-start: 0.5em; margin-block-start: 0.25em"></i>
                 </div>
+            </div>
+        <!-- /ko -->
+        <!-- ko foreach: errorInfo -->
+            <div class="download-report-container">
+                <div>{% trans "There was a problem generating a report for " %}<span data-bind="text: templateName"></span>{% trans ".  You can try again (refresh this page) or contact an administrator for help." %}</div>
             </div>
         <!-- /ko -->
     <!-- /ko -->
