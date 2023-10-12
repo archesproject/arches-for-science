@@ -4,67 +4,45 @@ Please see the [project page](http://archesproject.org/) for more information on
 
 The Arches Installation Guide and Arches User Guide are available [here](http://archesproject.org/documentation/).
 
-#### Installation Notes
 
-Ensure your project's `settings.py` contains the following:
+## How to setup Arches for Science for your project
 
+## 1. Installation
+`Important`: Installing the arches-for-science app will install Arches as a dependency. This may replace your current install of Arches with a version from PyPi. If you've installed Arches for development using the `--editable` flag, you'll need to reinstall Arches after installing arches-for-science
+
+### If installing for development
+Clone the arches-for-science repo and checkout the latest `dev/x.x.x` branch. 
+Navigate to the `arches-for-science` directory from your terminal and run:
+ ```
+pip install -e .
+ ```
+
+### If installing for deployment, run:
 ```
+pip install arches-for-science
+```
+
+## 2. Project Configuration
+
+If you don't already have an Arches project, you'll need to create one by following the instructions in the Arches [documentation](http://archesproject.org/documentation/)
+
+When your project is ready add "arches_templating" and "arches_for_science" to INSTALLED_APPS and "arches_for_science" to ARCHES_APPLICATIONS in your project's settings.py file:
+```
+INSTALLED_APPS = (
+    ...
+    "arches_templating",
+    "arches_for_science",
+    "myappname",
+)
+
+ARCHES_APPLICATIONS = ('arches_for_science',)
+```
+
+Also add the following lines to settings.py:
+```
+TEMPLATES[0]["OPTIONS"]["context_processors"].append("arches_for_science_package.utils.context_processors.project_settings")
+
 RENDERERS += [
-    {
-        "name": "fors-reader",
-        "title": "ASD Hi Res FieldSpec4",
-        "description": "Use for exports from all our ASD High Resolution Field Spectroscopy",
-        "id": "88dccb59-14e3-4445-8f1b-07f0470b38bb",
-        "iconclass": "fa fa-bar-chart-o",
-        "component": "views/components/cards/file-renderers/fors-reader",
-        "ext": "txt",
-        "type": "text/plain",
-        "exclude": "",
-    },
-    {
-        "name": "xrf-reader",
-        "title": "HP Spectrometer XRF ASCII Output",
-        "description": "Use for exports from all our HP XRF outputs",
-        "id": "31be40ae-dbe6-4f41-9c13-1964d7d17042",
-        "iconclass": "fa fa-bar-chart-o",
-        "component": "views/components/cards/file-renderers/xrf-reader",
-        "ext": "txt",
-        "type": "text/plain",
-        "exclude": "",
-    },
-    {
-        "name": "raman-reader",
-        "title": "Raman File Reader",
-        "description": "Use for exports from all our HP raman and gas chromatograph spectrometers",
-        "id": "94fa1720-6773-4f99-b49b-4ea0926b3933",
-        "iconclass": "fa fa-bolt",
-        "component": "views/components/cards/file-renderers/raman-reader",
-        "ext": "txt",
-        "type": "text/plain",   
-        "exclude": "",
-    },
-    {
-        "name": "pdbreader",
-        "title": "PDB File Reader",
-        "description": "",
-        "id": "3744d5ec-c3f1-45a1-ab79-a4a141ee4197",
-        "iconclass": "fa fa-object-ungroup",
-        "component": "views/components/cards/file-renderers/pdbreader",
-        "ext": "pdb",
-        "type": "",
-        "exclude": "",
-    },
-    {
-        "name": "pcdreader",
-        "title": "Point Cloud Reader",
-        "description": "",
-        "id": "e96e84f2-bcb2-4ca4-8793-7568b09d7374",
-        "iconclass": "fa fa-cloud",
-        "component": "views/components/cards/file-renderers/pcdreader",
-        "ext": "pcd",
-        "type": "",
-        "exclude": "",
-    },
     {
         "name": "xy-reader",
         "title": "XY Data File Reader",
@@ -79,17 +57,37 @@ RENDERERS += [
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
+```
 
-FORMATS = [
-    {"name": "Bruker M6 (point)", "id": "bm6", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-    {"name": "Bruker 5g", "id": "b5g", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-    {"name": "Bruker Tracer IV-V", "id": "bt45", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-    {"name": "Bruker Tracer III", "id": "bt3", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-    {"name": "Bruker 5i", "id": "b5i", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-    {"name": "Bruker Artax", "id": "bart", "renderer": "31be40ae-dbe6-4f41-9c13-1964d7d17042"},
-    {"name": "Renishaw InVia - 785", "id": "r785", "renderer": "94fa1720-6773-4f99-b49b-4ea0926b3933"},
-    {"name": "Ranishsaw inVia - 633/514", "id": "r633", "renderer": "94fa1720-6773-4f99-b49b-4ea0926b3933"},
-    {"name": "ASD FieldSpec IV hi res", "id": "asd", "renderer": "88dccb59-14e3-4445-8f1b-07f0470b38bb"},
-]
+Next ensure arches and arches_for_science are included as dependencies in package.json
+```
+"dependencies": {
+    "arches": "archesproject/arches#dev/7.5.x",
+    "arches_for_science": "archesproject/arches-for-science#dev/1.1.x"
+}
+```
 
+Update urls.py to include the arches-for-science urls
+```
+urlpatterns = [
+    url(r'^', include('arches.urls')),
+    url(r"^", include("arches_for_science.urls")),
+    path("reports/", include("arches_templating.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+Install the arches application package (models and other data)
+```
+python manage.py packages -o load_package -a arches_for_science -dev -y
+```
+
+Start your project
+```
+python manage.py runserver
+```
+
+Next cd into your project's app directory (the one with package.json e.g. `$PROJECT_NAME/$PROJECT_NAME/`) install and build front-end dependencies:
+```
+yarn install
+yarn build_development
 ```
