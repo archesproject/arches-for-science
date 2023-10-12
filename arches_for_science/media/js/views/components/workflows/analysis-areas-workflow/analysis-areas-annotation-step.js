@@ -255,13 +255,18 @@ define([
 
         this.resetCanvasFeatures = function() {
             var annotationNodes = self.annotationNodes();
-            
+
+            var physicalThingAnnotationNodeName = "Analysis Areas";
+            var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+
+            if (self.hasExternalCardData()) {
+                savedFeatures = self.form.savedData().data.map(ann => ann.data[physicalThingPartAnnotationNodeId].features[0]);
+                physicalThingAnnotationNode.annotations(savedFeatures);
+                self.updateAnalysisAreaInstances();
+            }
             if (self.selectedAnalysisAreaInstanceFeatures()) {
-                var physicalThingAnnotationNodeName = "Analysis Areas";
-                var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
-                    return annotationNode.name === physicalThingAnnotationNodeName;
-                });
-    
                 var physicalThingAnnotationNodeAnnotationIds = physicalThingAnnotationNode.annotations().map(function(annotation) {
                     return ko.unwrap(annotation.id);
                 });
@@ -276,14 +281,13 @@ define([
                 }, []);
     
                 physicalThingAnnotationNode.annotations([...physicalThingAnnotationNode.annotations(), ...unaddedSelectedAnalysisAreaInstanceFeatures]);
-    
-                var physicalThingAnnotationNodeIndex = annotationNodes.findIndex(function(annotationNode) {
-                    return annotationNode.name === physicalThingAnnotationNodeName;
-                });
-    
-                annotationNodes[physicalThingAnnotationNodeIndex] = physicalThingAnnotationNode;
             }
 
+            var physicalThingAnnotationNodeIndex = annotationNodes.findIndex(function(annotationNode) {
+                return annotationNode.name === physicalThingAnnotationNodeName;
+            });
+
+            annotationNodes[physicalThingAnnotationNodeIndex] = physicalThingAnnotationNode;
             self.annotationNodes(annotationNodes);
         };
 
@@ -781,7 +785,10 @@ define([
                                     self.selectAnalysisAreaInstance(analysisAreaInstance);
                                 }
                                 else {
-                                    self.tile.reset();
+                                    if (!self.hasExternalCardData()) {
+                                        // If there is external (saved) card data, let resetCanvasFeatures() handle it.
+                                        self.tile.reset();
+                                    }
                                     self.resetCanvasFeatures();
     
                                     var selectedFeature = ko.toJS(self.selectedAnalysisAreaInstanceFeatures().find(function(selectedAnalysisAreaInstanceFeature) {
