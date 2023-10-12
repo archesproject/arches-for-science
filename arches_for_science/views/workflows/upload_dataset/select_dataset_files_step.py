@@ -138,7 +138,7 @@ class SelectDatasetFilesStep(View):
                         file_data["renderer"] = next(
                             (renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "pdfreader"), None
                         )
-                    elif file_data["name"].split(".")[-1] == "dx" or file_data["name"].split(".")[-1] == 'txt':  # instrument was given by zip file name
+                    elif file_data["name"].split(".")[-1] in settings.INSTRUMENT_FILE_FORMATS:  # instrument was given by zip file name
                         file_data["renderer"] = next(
                             (renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "xy-reader"), None
                         )
