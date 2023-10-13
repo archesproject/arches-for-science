@@ -115,7 +115,7 @@ class S3BatchSignView(BaseManagerView):
 
 @method_decorator(can_edit_resource_instance, name="dispatch")
 class S3UploadView(BaseManagerView):
-    """"""
+    """Generates a single presigned URL to be used in a post to S3 (for small files)"""
     def get(self, request):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
@@ -131,8 +131,6 @@ class S3UploadView(BaseManagerView):
             key = KEY_BASE + "/" + file_name
 
         fields={}
-        #fields = dict(('x-amz-meta-{}'.format(key[9:len(key)-1]), value) for (key, value) in all_items if key.startswith('metadata') and key != 'metadata[type]')
-        #fields['content-type'] = content_type
         response = s3.generate_presigned_post(
             storage_bucket,
             key,
@@ -148,6 +146,7 @@ class S3UploadView(BaseManagerView):
 
 @method_decorator(can_edit_resource_instance, name="dispatch")
 class S3UploadPartView(BaseManagerView):
+    """Generates a presigned URL for a single part of a multipart upload"""
     def get(self, request, uploadid, partnumber):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
@@ -170,6 +169,7 @@ class S3UploadPartView(BaseManagerView):
 
 @method_decorator(can_edit_resource_instance, name="dispatch")
 class S3CompleteUploadView(BaseManagerView):
+    """Finalizes a multipart upload in s3"""
     def post(self, request, uploadid):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
