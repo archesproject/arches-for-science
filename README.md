@@ -56,6 +56,8 @@ RENDERERS += [
     },
 ]
 
+INSTRUMENT_FILE_FORMATS = ["txt"]
+
 X_FRAME_OPTIONS = "SAMEORIGIN"
 ```
 
