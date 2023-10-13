@@ -271,7 +271,7 @@ define([
             self.highlightAnnotation();
         }
 
-        this.resetCanvasFeatures = function() {
+        this.resetCanvasFeatures = function(optionalNewInstance) {
             var annotationNodes = self.annotationNodes();
 
             var physicalThingAnnotationNodeName = "Sample Locations";
@@ -279,11 +279,11 @@ define([
                 return annotationNode.name === physicalThingAnnotationNodeName;
             });
 
-            if (self.hasExternalCardData()) {
+            if (self.form.savedData()) {
                 // NB: not exactly the same as analysis area, need to drill into savedData()[0]
                 savedFeatures = self.form.savedData()[0].data.map(ann => ann.data[physicalThingPartAnnotationNodeId].features[0]);
                 physicalThingAnnotationNode.annotations(savedFeatures);
-                self.updateAnalysisAreaInstances();
+                self.updateAnalysisAreaInstances(optionalNewInstance);
             }
 
             if (self.selectedSampleLocationInstanceFeatures()) {
@@ -325,21 +325,29 @@ define([
             );
         };
 
-        this.updateSampleLocationInstances = function() {
+        this.updateSampleLocationInstances = function(optionalNewInstance) {
+            // `optionalNewInstance` is used by deleteAnalysisAreaInstance() since it
+            // calls this function *before* updating selectedAnalysisAreaInstance.
+            // (It passes null, not undefined so that other callers can continue to pass no argument.)
+            const selectedInstance = (
+                optionalNewInstance !== undefined  // might be null
+                ? optionalNewInstance
+                : self.selectedSampleLocationInstance()
+            );
             const tileids = self.card.tiles().map(tile => tile.tileid);
-            if (self.selectedSampleLocationInstance() && self.selectedSampleLocationInstance().tileid){
-                if (!tileids.includes(self.selectedSampleLocationInstance().tileid)) {
-                    self.card.tiles.push(self.selectedSampleLocationInstance());
+            if (selectedInstance?.tileid){
+                if (!tileids.includes(selectedInstance.tileid)) {
+                    self.card.tiles.push(selectedInstance);
                 } else {
                     self.card.tiles().forEach(function(tile){
-                        if (tile.tileid === self.selectedSampleLocationInstance().tileid) {
+                        if (tile.tileid === selectedInstance.tileid) {
                             Object.keys(tile.data).map(key => {
                                 if (ko.isObservable(tile.data[key])) {
-                                    tile.data[key](self.selectedSampleLocationInstance().data[key]());
+                                    tile.data[key](selectedInstance.data[key]());
                                 } else if (key !== '__ko_mapping__') {
                                     if (tile.data[key]?.[arches.activeLanguage]){
                                         Object.keys(tile.data[key][arches.activeLanguage]).map(childkey => {
-                                            tile.data[key][arches.activeLanguage][childkey](self.selectedSampleLocationInstance().data[key][arches.activeLanguage][childkey]());
+                                            tile.data[key][arches.activeLanguage][childkey](selectedInstance.data[key][arches.activeLanguage][childkey]());
                                         });
                                     }
                                 }
@@ -453,18 +461,20 @@ define([
             var previouslySelectedSampleLocationInstance = self.selectedSampleLocationInstance();
 
             /* resets any changes not explicity saved to the tile */ 
-            if (sampleLocationInstance === undefined || (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid)) {
+            if (!sampleLocationInstance || (previouslySelectedSampleLocationInstance && previouslySelectedSampleLocationInstance.tileid !== sampleLocationInstance.tileid)) {
                 previouslySelectedSampleLocationInstance.reset();
 
                 self.drawFeatures([]);
-                self.resetCanvasFeatures();
+                self.resetCanvasFeatures(sampleLocationInstance);
             }
 
             if (self.physicalThingPartIdentifierAssignmentTile()) {
                 self.physicalThingPartIdentifierAssignmentTile().reset();
             }
 
-            self.selectedSampleLocationInstance(sampleLocationInstance);
+            // Coalesce null to undefined. resetCanvasFeatures() distinguishes null from undefined
+            // to allow some callers to call with no argument, but everything else expects undefined.
+            self.selectedSampleLocationInstance(sampleLocationInstance ?? undefined);
             self.refreshSelectedSample();
         };
 
@@ -554,7 +564,7 @@ define([
                 });
                 self.sampleLocationInstances.remove(selectedSampleLocationInstance);
                 self.card.tiles.remove(selectedSampleLocationInstance);
-                self.selectSampleLocationInstance(undefined);
+                self.selectSampleLocationInstance(null);  // NB: not undefined
                 self.resetSampleLocationTile();
             });
         }
@@ -1095,6 +1105,15 @@ define([
                     self.drawFeatures([]);
                 }
                 /* END update canvas */ 
+
+                if (self.form.savedData()) {
+                    self.form.savedData({
+                        ...self.form.savedData(),
+                        data: self.form.savedData().data.filter(
+                            ann => ann.data[physicalThingPartAnnotationNodeId].features[0].id !== feature.id()
+                        ),
+                    });
+                }
             }
 
             self.editFeature = function(feature) {
