@@ -280,8 +280,7 @@ define([
             });
 
             if (self.form.savedData()) {
-                // NB: not exactly the same as analysis area, need to drill into savedData()[0]
-                savedFeatures = self.form.savedData()[0].data.map(ann => ann.data[physicalThingPartAnnotationNodeId].features[0]);
+                savedFeatures = self.form.savedData().map(ann => ann.data[physicalThingPartAnnotationNodeId].features[0]);
                 physicalThingAnnotationNode.annotations(savedFeatures);
                 self.updateAnalysisAreaInstances(optionalNewInstance);
             }
