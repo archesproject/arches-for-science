@@ -418,14 +418,14 @@
     <div class="workbench-button-panel">
         <button 
             class="btn btn-success" 
-            data-bind="click: $data.saveSampleLocationTile, css: {disabled: !$data.tileDirty()}"
+            data-bind="click: $data.saveSampleLocationTile, css: {disabled: !$data.tileDirty()}, attr: {disabled: !$data.tileDirty()}"
         >
             <i class="ion-android-cloud-done"></i>
             <span style="padding-left: 4px">{% trans 'Save' %}</span>
         </button>
         <button 
             class="btn btn-danger" 
-            data-bind="click: $data.resetSampleLocationTile, css: {disabled: !$data.tileDirty()}"
+            data-bind="click: $data.resetSampleLocationTile, css: {disabled: !$data.tileDirty()}, attr: {disabled: !$data.tileDirty()}"
         >
             <i class="ion-android-cancel"></i>
             <span style="padding-left: 4px">{% trans 'Cancel' %}</span>
