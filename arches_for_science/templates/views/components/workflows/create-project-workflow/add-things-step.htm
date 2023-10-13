@@ -13,7 +13,8 @@
                 <div class="workflow-search-list search-result-details">
                     <div data-bind="css: {'loading-mask': reportDataLoading}">
                         <div class="afs-project-search-result-details-container" data-bind="foreach: targetResources">
-                            <div class="search-result-item" data-bind="css: {'selected-instance': $parent.value().map(function(resource){return resource}).indexOf($data['_source']['resourceinstanceid']) >= 0},
+                            <div class="search-result-item" data-bind="css: {'selected-instance': $parent.value().findIndex(
+                                res => res.resourceinstanceid === $data['_source']['resourceinstanceid']) >= 0},
                             click: function(){$parent.updateTileData($data._source)}">
                                 <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
                                     <div class="summary-report-title" data-bind="text: $parent.getStringValue($data._source.displayname)"></div>
