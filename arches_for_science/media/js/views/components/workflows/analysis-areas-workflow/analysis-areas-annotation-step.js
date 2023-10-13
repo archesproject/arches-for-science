@@ -424,8 +424,13 @@ define([
                 if(response.ok){
                     return;
                 }
-                
-                throw response;
+                response.json().then(function(error){
+                    params.pageVm.alert(new params.form.AlertViewModel(
+                        "ep-alert-red",
+                        error.title,
+                        error.message,
+                    ));
+                });
             }).then(function(data){
                 parentPhysicalThing.data[physicalThingPartAnnotationNodeId].features().forEach(function(feature){
                     self.deleteFeature(feature);
@@ -434,14 +439,6 @@ define([
                 self.card.tiles.remove(parentPhysicalThing);
                 self.selectAnalysisAreaInstance(undefined);
                 self.resetAnalysisAreasTile();
-            }).catch((response) => {
-                response.json().then(function(error){
-                    params.pageVm.alert(new params.form.AlertViewModel(
-                        "ep-alert-red",
-                        error.title,
-                        error.message,
-                    )); 
-                });
             });
         };
 
