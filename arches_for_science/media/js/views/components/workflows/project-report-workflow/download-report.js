@@ -72,7 +72,7 @@ define([
                 return accumulator;
             }, []).join(",");
             
-            const observationDetails = await (await window.fetch(`${lbgApiEndpoint}${observationIds}`)).json();
+            const observationDetails = observationIds ? await (await window.fetch(`${lbgApiEndpoint}${observationIds}`)).json() : {};
             const physicalThingsDetails = await (await window.fetch(physicalThingDetailsUrl)).json();
             const projectDetails = await (await window.fetch(projectDetailsUrl)).json();
             
