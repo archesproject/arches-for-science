@@ -47,8 +47,8 @@ define([
                 dragDropTarget: '.dropzone-photo-upload',
                 fileInputTarget: ".fileinput-button."+ this.uniqueidClass(),
                 autoProceed: true,
-                filesAdded: (files) => {
-                    files.successful.map(file => self.saveFiles(file));
+                beforeUpload: async(files) => {
+                    return Promise.all(files.map(async(file) => self.saveFiles(file)));
                 }
             };
 
@@ -128,25 +128,26 @@ define([
                 self.loading(true);
 
                 if(file) {
-                    self.loadingMessage(`File upload complete, building data structures`);
+                    self.loadingMessage(`Building arches data structures before upload...`);
                     let fileInfo;
                     
                     if (!ko.unwrap(file.tileId)) {
                         fileInfo = {
                             name: file.name,
                             accepted: true,
-                            height: file.height,
-                            lastModified: file.lastModified,
-                            size: file.size,
-                            status: file.status,
+                            height: file.data.height,
+                            lastModified: file.data.lastModified,
+                            size: file.data.size,
+                            status: file.data.status,
                             type: file.type,
-                            width: file.width,
+                            width: file.data.width,
                             url: null,
                             uploaded: ko.observable(false),
                             // eslint-disable-next-line camelcase
                             file_id: null,
                             index: 0,
                             content: null,
+                            clientFileId: file.id,
                             error: file.error,
                         };
 
@@ -166,6 +167,7 @@ define([
             };
 
             this.saveFiles = async(files) => {
+                let datasetInfo = undefined
                 if(!Array.isArray(files)){
                     files = [files];
                 }
@@ -205,7 +207,7 @@ define([
 
                     self.loading(false);
                     if(resp.ok) {
-                        const datasetInfo = await resp.json();
+                        datasetInfo = await resp.json();
                         self.observationReferenceTileId = datasetInfo.observationReferenceTileId;
                         this.datasetId = datasetInfo.datasetResourceId;
                         const newDatasetFiles = self.files().filter(
@@ -228,6 +230,7 @@ define([
                 saveWorkflowState();
                 self.snapshot = params.form.savedData();
                 params.form.complete(true);
+                return datasetInfo.files;
             };
 
 

@@ -6,9 +6,10 @@ define([
     '@uppy/core',
     '@uppy/dashboard',
     '@uppy/drag-drop',
-    '@uppy/aws-s3-multipart',
-    '@uppy/progress-bar'
-], function($, _, ko, Cookies, uppy, Dashboard, DragDrop, AwsS3Multipart, ProgressBar) {
+    '@uppy/aws-s3',
+    '@uppy/progress-bar',
+    './uppy-django-storages'
+], function($, _, ko, Cookies, uppy, Dashboard, DragDrop, AwsS3, ProgressBar, uppyDjangoStorages) {
     /**
      * @constructor
      * @name dropzone
@@ -19,7 +20,7 @@ define([
             ko.applyBindingsToDescendants(innerBindingContext, element);
             const options = valueAccessor() || {};
 
-            const uppyObj = new uppy({
+            const uppyObj = new uppy.Uppy({
                 debug: true, 
                 autoProceed: true,
                 onBeforeFileAdded: (currentFile) => {
@@ -34,22 +35,25 @@ define([
                     };
                     return modifiedFile;
                 },
-            }).use(DragDrop, {
+            }).use(DragDrop.default, {
                 inline: options.inline,
                 target: element,
                 autoProceed: true,
                 logger: uppy.debugLogger,
-            }).use(AwsS3Multipart, {
-                companionUrl: "/",
+            }).use(uppyDjangoStorages.default, {
+                beforeUpload: options.beforeUpload
+            }).use(AwsS3.default, {
+                companionUrl: "/uppy",
                 companionHeaders: {
                     'X-CSRFToken': Cookies.get('csrftoken')
-                }
-            }).use(ProgressBar, {
+                },
+                shouldUseMultipart: (file) => file.size > 50 * (1000 ** 2)
+            }).use(ProgressBar.default, {
                 target: ".uppy-progress"
             });
             
-            if(options.filesAdded) {
-                uppyObj.on('complete', options.filesAdded);
+            if(options.complete) {
+                uppyObj.on('compete', options.complete);
             }
 
             return { controlsDescendantBindings: true };
