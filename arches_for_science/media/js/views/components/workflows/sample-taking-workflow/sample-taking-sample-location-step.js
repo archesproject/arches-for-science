@@ -696,7 +696,7 @@ define([
                     self.savingTile(false);
                     params.dirty(false);
                     let mappedInstances = self.sampleLocationInstances().map((instance) => { return { "data": instance.data }});
-                    params.form.savedData(mappedInstances);
+                    params.form.savedData(ko.toJS(mappedInstances));
                     params.form.value(params.form.savedData());
                     params.pageVm.alert("");
                     self.drawFeatures([]);
