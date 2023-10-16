@@ -286,7 +286,7 @@ define([
                 
                 var unaddedSelectedSampleLocationInstanceFeatures = self.selectedSampleLocationInstanceFeatures().reduce(function(acc, feature) {
                     if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id)) &&
-                        feature.properties.canvas === self.canvas) {
+                        ko.unwrap(feature.properties.canvas) === ko.unwrap(self.canvas)) {
                         feature.properties.tileId = self.selectedSampleLocationInstance().tileid;
                         acc.push(ko.toJS(feature));
                     }
