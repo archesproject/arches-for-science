@@ -1106,12 +1106,12 @@ define([
                 /* END update canvas */ 
 
                 if (self.form.savedData()) {
-                    self.form.savedData({
-                        ...self.form.savedData(),
-                        data: self.form.savedData().data.filter(
+                    // NB: unlike analysis area, savedData is shaped as an array.
+                    self.form.savedData(
+                        self.form.savedData().filter(
                             ann => ann.data[physicalThingPartAnnotationNodeId].features[0].id !== feature.id()
-                        ),
-                    });
+                        )
+                    );
                 }
             }
 
