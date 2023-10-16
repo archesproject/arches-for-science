@@ -282,7 +282,7 @@ define([
             if (self.form.savedData()) {
                 savedFeatures = self.form.savedData().map(ann => ann.data[physicalThingPartAnnotationNodeId].features[0]);
                 physicalThingAnnotationNode.annotations(savedFeatures);
-                self.updateAnalysisAreaInstances(optionalNewInstance);
+                self.updateSampleLocationInstances(optionalNewInstance);
             }
 
             if (self.selectedSampleLocationInstanceFeatures()) {
