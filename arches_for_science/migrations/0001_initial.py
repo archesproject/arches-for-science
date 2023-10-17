@@ -8,6 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ("models", "10121_workflowhistory"),
     ]
 
     operations = [
