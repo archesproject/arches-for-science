@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
-from arches_for_science.views.temp_file import TempFileView
 from arches_for_science.views.renderer_config import RendererConfigView, RendererView
 from arches.app.views.plugin import PluginView
 from arches_for_science.views.workflows.upload_dataset.format_render_map import FormatRenderMap
@@ -64,8 +63,6 @@ urlpatterns = [
     re_path(r"^renderer/(?P<renderer_id>[^\/]+)", RendererView.as_view(), name="renderer_config"),
     re_path(r"^renderer_config/(?P<renderer_config_id>[^\/]+)", RendererConfigView.as_view(), name="renderer_config"),
     re_path(r"^renderer_config/", RendererConfigView.as_view(), name="renderer_config"),
-    re_path(r"^temp_file/(?P<file_id>[^\/]+)", TempFileView.as_view(), name="temp_file"),
-    re_path(r"^temp_file$", TempFileView.as_view(), name="temp_file"),
     path("reports/", include("arches_templating.urls")),
     path("", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
