@@ -17,7 +17,7 @@
         "
     >
         <div 
-            style="background-color: white; width: 1000px; max-height: 800px; border-radius: 4px; cursor: default;"
+            style="background-color: white; width: 1000px; max-height: 480px; border-radius: 4px; cursor: default; overflow: hidden;"
         >
             <div style="width: 100%; display: flex; justify-content: flex-end; padding: 10px 12px;">
                 <i 
@@ -26,31 +26,36 @@
                 ></i>
             </div>
             <div style="display: flex; flex-direction: column; align-items: center;">
-                <h2>{% trans 'Attention' %}</h2>
+                <h2>{% trans 'You have incomplete workflows' %}</h2>
                 <p>
-                    {% trans 'You have incomplete workflows. Please either complete or delete the workflows listed below.' %}
+                    {% trans 'Please either complete or delete the workflows listed below.' %}
                 </p>
             </div>
+
             <div style="padding: 40px 80px; display: flex; justify-content: center;">
                 <table class="table table-striped" style="border: 1px solid #ddd;">
                     <thead>
-                        <tr>
-                            <th>
+                        <tr style="display: flex; justify-content: space-between;">
+                            <th style="width: 219px;">
+                                {% trans 'Created' %}
+                            </th>
+                            <th style="width: 400px;">
                                 {% trans 'Workflow Name' %}
                             </th>
-                            <th>
+                            <th style="width: 219px;">
                                 {% trans 'Link' %}
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="display:block; overflow:auto; max-height:200px; width:100%;">
                         <!-- ko foreach: $data.incompleteWorkflows -->
-                        <tr>
-                            <td data-bind="text: $data.workflowname"></td>
-                            <td>
+                        <tr style="display: flex; justify-content: space-between;">
+                            <td style="width: 219px;" data-bind="text: $data.created"></td>
+                            <td style="width: 400px;" data-bind="text: $data.workflowname"></td>
+                            <td style="width: 219px;">
                                 <a 
-                                 data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
-                                 style="text-decoration: underline; color: blue;"
+                                    data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
+                                    style="text-decoration: underline; color: blue;"
                                 >{% trans 'Go to Workflow' %}</a>
                             </td>
                         </tr>

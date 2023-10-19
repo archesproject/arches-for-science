@@ -16,6 +16,7 @@ define([
 
         this.incompleteWorkflows = ko.observableArray([]);
         this.incompleteWorkflows.subscribe(incompleteWorkflows => {
+            console.log(incompleteWorkflows, arches)
             if (incompleteWorkflows.length) {
                 this.shouldShowIncompleteWorkflowsModal(true);
             }
@@ -29,7 +30,12 @@ define([
                 params.alert(new JsonErrorAlertViewModel('ep-alert-red', resp.responseJSON))
             }
         }).then(respJSON => {
-            this.incompleteWorkflows(respJSON['incomplete_workflows']);
+            this.incompleteWorkflows(respJSON['incomplete_workflows'].map(workflowData => {
+                const datetime = new Date(workflowData['created']);
+                workflowData['created'] = datetime.toLocaleString();
+
+                return workflowData;
+            }));
         });
 
         // filters out the chemical image workflow, if cloud storage is not enabled.
