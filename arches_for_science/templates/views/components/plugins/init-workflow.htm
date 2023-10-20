@@ -13,11 +13,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
         "
     >
         <div 
-            style="background-color: white; width: 1000px; max-height: 480px; border-radius: 4px; cursor: default; overflow: hidden;"
+            style="
+                background-color: white; 
+                width: 100%; 
+                max-width: 1000px;
+                max-height: 480px; 
+                border-radius: 4px; 
+                cursor: default; 
+                overflow: hidden;
+            "
         >
             <div style="width: 100%; display: flex; justify-content: flex-end; padding: 10px 12px;">
                 <i 
@@ -36,13 +43,13 @@
                 <table class="table table-striped" style="border: 1px solid #ddd;">
                     <thead>
                         <tr style="display: flex; justify-content: space-between;">
-                            <th style="width: 219px;">
+                            <th style="flex-grow: 1; max-width: 200px;">
                                 {% trans 'Created' %}
                             </th>
-                            <th style="width: 400px;">
+                            <th style="flex-grow: 2; max-width: 600px;">
                                 {% trans 'Workflow Name' %}
                             </th>
-                            <th style="width: 219px;">
+                            <th style="flex-grow: 1; max-width: 200px;">
                                 {% trans 'Link' %}
                             </th>
                         </tr>
@@ -50,9 +57,9 @@
                     <tbody style="display:block; overflow:auto; max-height:200px; width:100%;">
                         <!-- ko foreach: $data.incompleteWorkflows -->
                         <tr style="display: flex; justify-content: space-between;">
-                            <td style="width: 219px;" data-bind="text: $data.created"></td>
-                            <td style="width: 400px;" data-bind="text: $data.workflowname"></td>
-                            <td style="width: 219px;">
+                            <td style="flex-grow: 1; max-width: 200px;" data-bind="text: $data.created"></td>
+                            <td style="flex-grow: 2; max-width: 600px;" data-bind="text: $data.workflowname"></td>
+                            <td style="flex-grow: 1; max-width: 200px;">
                                 <a 
                                     data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
                                     style="text-decoration: underline; color: blue;"

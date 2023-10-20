@@ -16,7 +16,6 @@ define([
 
         this.incompleteWorkflows = ko.observableArray([]);
         this.incompleteWorkflows.subscribe(incompleteWorkflows => {
-            console.log(incompleteWorkflows, arches)
             if (incompleteWorkflows.length) {
                 this.shouldShowIncompleteWorkflowsModal(true);
             }
