@@ -38,7 +38,10 @@ INSTALLED_APPS = (
 ARCHES_APPLICATIONS = ('arches_for_science',)
 ```
 
-Also add the following lines to settings.py:
+Also add the following lines to settings.py. (Note: ``arches-project create``
+before Arches 6.2.6 or 7.5.0 did not create ``RENDERERS``, so you may need to
+[add it first](https://github.com/archesproject/arches/pull/10171/files)
+before extending it as shown below):
 ```
 TEMPLATES[0]["OPTIONS"]["context_processors"].append("arches_for_science_package.utils.context_processors.project_settings")
 
@@ -72,8 +75,8 @@ Next ensure arches and arches_for_science are included as dependencies in packag
 Update urls.py to include the arches-for-science urls
 ```
 urlpatterns = [
-    url(r'^', include('arches.urls')),
-    url(r"^", include("arches_for_science.urls")),
+    path("", include("arches.urls")),
+    path("", include("arches_for_science.urls")),
     path("reports/", include("arches_templating.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
