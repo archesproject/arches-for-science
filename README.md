@@ -24,7 +24,7 @@ pip install arches-for-science
 
 ## 2. Project Configuration
 
-If you don't already have an Arches project, you'll need to create one by following the instructions in the Arches [documentation](http://archesproject.org/documentation/)
+If you don't already have an Arches project, you'll need to create one by following the instructions in the Arches [documentation](http://archesproject.org/documentation/).
 
 When your project is ready add "arches_templating" and "arches_for_science" to INSTALLED_APPS and "arches_for_science" to ARCHES_APPLICATIONS in your project's settings.py file:
 ```
@@ -43,7 +43,7 @@ before Arches 6.2.6 or 7.5.0 did not create ``RENDERERS``, so you may need to
 [add it first](https://github.com/archesproject/arches/pull/10171/files)
 before extending it as shown below):
 ```
-TEMPLATES[0]["OPTIONS"]["context_processors"].append("arches_for_science_package.utils.context_processors.project_settings")
+TEMPLATES[0]["OPTIONS"]["context_processors"].append("arches_for_science.utils.context_processors.project_settings")
 
 RENDERERS += [
     {
