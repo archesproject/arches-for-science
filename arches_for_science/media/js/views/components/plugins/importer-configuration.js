@@ -109,6 +109,8 @@ define([
                 //         this.selectedConfig(configId);
                 //     }
                 // }
+            } else {
+                this.rendererConfigs([]);
             }
         });
 
@@ -153,7 +155,7 @@ define([
                 }
             });
             if(configDeleteResponse.ok){
-                this.rendererConfigRefresh();
+                rendererConfigRefresh();
             }
         };
 
