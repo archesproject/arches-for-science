@@ -1,13 +1,105 @@
-<div class="workflow-select-plugin">
-    <div class="workflow-select-card-container">
-        <!-- ko foreach: {data: workflows, as: 'workflow'} -->
-        <a data-bind="attr: {href: workflow.url, title: workflow.name}" href="#"><div data-bind="style: {'background-color': workflow.bgColor}" class="workflow-select-card">
-            <h4 class="workflow-select-title" data-bind="text: workflow.name"></h4>
-            <div data-bind="style: {'background-color': workflow.circleColor}" class="workflow-select-wf-circle">
-                <span><i data-bind="attr:{class: ('fa '+workflow.icon +' workflow-select-wf-icon')}"></i></span>
+{% load i18n %} 
+
+<div>
+    <!-- Modal -->
+    <!-- ko if: shouldShowIncompleteWorkflowsModal() -->
+    <div 
+        style="
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        "
+    >
+        <div 
+            style="
+                background-color: white; 
+                width: 100%; 
+                max-width: 1000px;
+                max-height: 480px; 
+                border-radius: 4px; 
+                cursor: default; 
+                overflow: hidden;
+            "
+        >
+            <div style="width: 100%; display: flex; justify-content: flex-end; padding: 10px 12px;">
+                <i 
+                    aria-label="{% trans 'Close Incomplete Workflow Modal' %}"
+                    class="fa fa-times" style="font-size: 20px; cursor: pointer;"
+                    data-bind="click: function(){ $data.shouldShowIncompleteWorkflowsModal(false); }"
+                ></i>
             </div>
-            <p data-bind="text: workflow.desc" class="workflow-select-desc"></p>
-        </div></a>
-        <!-- /ko -->
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <h2>{% trans 'You have incomplete workflows' %}</h2>
+                <p>
+                    {% trans 'Please either complete or delete the workflows listed below.' %}
+                </p>
+            </div>
+
+            <div style="padding: 40px 80px; display: flex; justify-content: center;">
+                <table class="table table-striped" style="border: 1px solid #ddd;">
+                    <thead>
+                        <tr style="display: flex; justify-content: space-between;">
+                            <th style="flex-grow: 1; max-width: 200px;">
+                                {% trans 'Created' %}
+                            </th>
+                            <th style="flex-grow: 2; max-width: 600px;">
+                                {% trans 'Workflow Name' %}
+                            </th>
+                            <th style="flex-grow: 1; max-width: 200px;">
+                                {% trans 'Link' %}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="display:block; overflow:auto; max-height:200px; width:100%;">
+                        <!-- ko foreach: $data.incompleteWorkflows -->
+                        <tr style="display: flex; justify-content: space-between;">
+                            <td style="flex-grow: 1; max-width: 200px;" data-bind="text: $data.created"></td>
+                            <td style="flex-grow: 2; max-width: 600px;" data-bind="text: $data.workflowname"></td>
+                            <td style="flex-grow: 1; max-width: 200px;">
+                                <a 
+                                    data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
+                                    style="text-decoration: underline; color: blue;"
+                                >{% trans 'Go to Workflow' %}</a>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <div>
+        <!-- Modal button -->
+        <div style="height: 40px; width: 100%; background-color: #ddd; display: flex; justify-content: flex-end; border-bottom: 1px solid #ddd">
+            <button 
+                class="btn btn-info btn-sm"
+                style="margin: 5px; margin-right: 10px; border-radius: 4px;"
+                data-bind="
+                    enable: $data.incompleteWorkflows().length,
+                    click: function(){ $data.shouldShowIncompleteWorkflowsModal(true); }
+                "
+            >{% trans 'Show Incomplete Workflows' %}</button>
+        </div>
+    
+        <!-- Workflow Icons -->
+        <div class="workflow-select-card-container" style="padding: 20px 40px;">
+            <!-- ko foreach: {data: workflows, as: 'workflow'} -->
+            <a data-bind="attr: {href: workflow.url, title: workflow.name}" href="#"><div data-bind="style: {'background-color': workflow.bgColor}" class="workflow-select-card">
+                <h4 class="workflow-select-title" data-bind="text: workflow.name"></h4>
+                <div data-bind="style: {'background-color': workflow.circleColor}" class="workflow-select-wf-circle">
+                    <span><i data-bind="attr:{class: ('fa '+workflow.icon +' workflow-select-wf-icon')}"></i></span>
+                </div>
+                <p data-bind="text: workflow.desc" class="workflow-select-desc"></p>
+            </div></a>
+            <!-- /ko -->
+        </div>
     </div>
 </div>
+
