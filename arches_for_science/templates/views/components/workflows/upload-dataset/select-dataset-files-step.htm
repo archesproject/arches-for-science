@@ -40,15 +40,18 @@
                 <i class="fa fa-list" style="color: #fff"></i> {% trans "Show Sampled Area List" %}</button>
         </div>
 
-        <div style="margin-top:10px" data-bind="visible: !self.showDatasetDetails()">
-            <label class="control-label">{% trans "Sampled Locations" %}</label>
-            <div style="margin-bottom: 10px; border: 1px solid rgb(221, 221, 221); padding: 5px; background-color: rgb(249, 249, 249);">
-                <span>{% trans "Select a location or area to upload or view files." %}</span>
+        <div data-bind="visible: !self.showDatasetDetails()">
+            <label class="control-label" style="font-size: 1.25em; font-weight: 500;">{% trans "Sampled Locations" %}</label>
+            <div style="margin-bottom: 10px; border: 1px solid #9951C0; padding: 20px; background-color: #FFFF00; border-radius: 2px;">
+                <div style="font-size: 1.15em; text-align: center; color: #440468;">
+                    <i class="fa fa-info-circle"></i><span style="margin-left: 5px;">{% trans "Select a Location or Area" %}</span>
+                </div>
+                <div style="color: #9951C0; text-align: center;"> {% trans "Select a location or area from the list below to associate with your uploaded files. Files for locked locations/areas were uploaded by others and can't be edited" %}</div>
             </div>
             <input type="text" class="form-control" style="width: 100%;" placeholder="Filter" data-bind="textInput: partFilter">
         </div>
         <div class="panel">
-            <div style="margin-top: 10px">
+            <div style="margin-top: 5px">
                 <div data-bind="visible: !self.showDatasetDetails()">
                     <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
                         <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
