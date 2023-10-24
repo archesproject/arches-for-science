@@ -109,7 +109,7 @@ define([
                 //         this.selectedConfig(configId);
                 //     }
                 // }
-            }else{
+            } else {
                 this.rendererConfigs([]);
             }
         });
