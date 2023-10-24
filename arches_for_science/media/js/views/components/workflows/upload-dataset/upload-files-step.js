@@ -4,11 +4,10 @@ define([
     'uuid',
     'arches',
     'models/tile',
-    'afs-formats',
     'js-cookie',
     'templates/views/components/workflows/upload-dataset/upload-files-step.htm',
     'bindings/dropzone'
-], function(_, ko, uuid, arches, TileModel, formats, Cookies, uploadFilesStepTemplate) {
+], function(_, ko, uuid, arches, TileModel, Cookies, uploadFilesStepTemplate) {
     return ko.components.register('upload-files-step', {
         viewModel: function(params) {
             // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
@@ -36,7 +35,6 @@ define([
 
             this.loadingMessage = ko.observable();
             this.loading = ko.observable(false);
-            this.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id}}));
 
             this.deleteFile = async(file) => {
                 const fileTile = ko.unwrap(file.tileId);

@@ -9,13 +9,11 @@ define([
     'viewmodels/alert-json',
     'views/components/iiif-viewer',
     'js-cookie',
-    'afs-formats',
     'templates/views/components/workflows/upload-dataset/select-dataset-files-step.htm',
     'bindings/dropzone'
-], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies, formats, selectDatasetFilesStepTemplate) {
+], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies, selectDatasetFilesStepTemplate) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
-            // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
 
             this.buildStrObject = str => {
                 return {[arches.activeLanguage]: {
@@ -68,7 +66,6 @@ define([
             this.mainMenu = ko.observable(false);
             this.files = ko.observableArray([]);
             this.uploadFailed = ko.observable(false);
-            self.formats = ko.observableArray(Object.values(formats).map(format => {return {"text": format.name, "id": format.id};}));
             this.initialValue = params.form.savedData() || undefined;
             this.snapshot = undefined;
             this.loadingMessage = ko.observable();
