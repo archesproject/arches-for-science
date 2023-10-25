@@ -80,7 +80,6 @@
                             <label class="control-label">{% trans "Dataset Name" %}</label>
                             <div style="display: flex">
                                 <input style="flex: 1;" type="text" class="form-control" placeholder="Dataset name" data-bind="enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
-                                <button style="margin: 0px 5px" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && selectedPart()?.nameDirty()), click: function(){$parent.saveFiles(); }" style="">Save</button>
                             </div>
                             <div style="display: flex;" >
                                 <input class="afs-calculated-datasetname" style="flex: 1" disabled type="text" data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
@@ -138,9 +137,21 @@
 
     </div>
 </div>
-
-
 <!--/ko-->
+
+{% block form_buttons %}
+<div class="workbench-button-panel">
+    <button 
+        style="width: 100%;"
+        class="btn btn-success" 
+        data-bind="click: function(){$parent.saveFiles(); }, css: {disabled: !(self.showDatasetDetails() && selectedPart()?.nameDirty())}, attr: {disabled: !(self.showDatasetDetails() && selectedPart()?.nameDirty())}"
+    >
+        <i class="ion-android-cloud-done"></i>
+        <span>{% trans 'Save' %}</span>
+    </button>
+</div>
+{% endblock form_buttons %}
+
 <!--/ko-->
 {{ block.super }}
 {% endblock sidepanel %}
