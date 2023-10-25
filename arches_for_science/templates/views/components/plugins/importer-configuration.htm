@@ -3,6 +3,7 @@
     <h4><span>{% trans "Importer Configurations" %}</span></h4>
     <span>{% trans "Define how to import your x/y data" %}</span>
     <div>
+        <div class="afs-error-message ep-alert-red" style="padding:5px;" data-bind="visible: rendererInUse">{% trans "This importer is in use - it should be replace it in all files where it is used before deleting." %}</div>
         <!-- ko foreach: {data: rendererConfigs, as: 'configuration' } -->
         <div style="padding:8px; display:flex;align-items: center;">
             <input style="margin: 8px" type="radio" name="selectedConfiguration" data-bind="checked: $parent.selectedConfiguration, value: configuration.configid"></input>
@@ -64,6 +65,7 @@
             </div>
             <div>
                 <h4>{% trans "Data Column Delimiter" %}</h4>
+                <div class="afs-error-message ep-alert-red" style="padding:5px;" data-bind="visible: invalidDelimiter()">{% trans "The data delimiter must be a valid regular expression" %}</div>
                 <h5>{% trans "Define how the data are separated" %}</h5>
                 <div style="display: flex; flex-direction: row">
                     <div class="data-delimiter-radio"><input id="delimiter-space" type="radio" name="dataDelimiter" value="" data-bind="checked: dataDelimiterRadio"><label for="delimiter-space">{% trans "Whitespace" %}</label></div>
@@ -78,7 +80,7 @@
         <div style="display: flex;background-color: #eee;border-top: 1px solid #ddd">
             <div style="flex: 1"></div>
             <button class="btn btn-danger" type="text" name="delimiterCharacter" data-bind="click: cancelConfigEdit">{% trans "Cancel" %}</button>
-            <button class="btn btn-success" type="text" name="delimiterCharacter" data-bind="click: saveConfigEdit">{% trans "Save" %}</button>
+            <button class="btn btn-success" type="text" name="delimiterCharacter" data-bind="disable: invalidDelimiter(), click: saveConfigEdit">{% trans "Save" %}</button>
         </div>
     </div>
 </div>
