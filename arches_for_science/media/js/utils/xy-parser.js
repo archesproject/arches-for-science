@@ -40,7 +40,7 @@ define([
             const delimiterCharacter = config?.delimiterCharacter ?? ',';
             
             try {
-                const valueRegex = (delimiterCharacter.length < 2) ? new RegExp(`[\\${delimiterCharacter}\\s]+`) : new RegExp(`${delimiterCharacter}`);
+                const valueRegex = (delimiterCharacter.length < 2) ? new RegExp(`[${delimiterCharacter}\\s]+`) : new RegExp(`${delimiterCharacter}`);
                 const transform = config?.transformation ? config.transformation : 'basic';
                 values.forEach(function(val){
                     const rec = val.trim().split(valueRegex).filter(element => element !== "");

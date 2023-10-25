@@ -57,7 +57,7 @@ define([
 
         this.dataDelimiter.subscribe(newDelimiter => {
             try {
-                const valueRegex = (newDelimiter.length < 2) ? new RegExp(`[\\${newDelimiter}\\s]+`) : new RegExp(`${newDelimiter}`)
+                const valueRegex = (newDelimiter.length < 2) ? new RegExp(`[${newDelimiter}\\s]+`) : new RegExp(`${newDelimiter}`)
                 this.invalidDelimiter(false);
             } catch (e) {
                 this.invalidDelimiter(true);
