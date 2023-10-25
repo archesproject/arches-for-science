@@ -10,7 +10,6 @@ define([
 ], function(_, ko, uuid, arches, TileModel, Cookies, uploadFilesStepTemplate) {
     return ko.components.register('upload-files-step', {
         viewModel: function(params) {
-            // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
 
             var self = this;
             self.uploadFailed = ko.observable(false);
