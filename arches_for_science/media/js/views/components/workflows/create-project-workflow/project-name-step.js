@@ -83,7 +83,7 @@ define([
                         new params.form.AlertViewModel('ep-alert-red', data.title, data.message)) 
                     })
                     .catch(_ => { params.pageVm.alert(
-                        new params.form.AlertViewModel('ep-alert-red', 'Error saving project name')) 
+                        new params.form.AlertViewModel('ep-alert-red', params.form.error() || 'Error saving project name')) 
                     });
                 }
             });
