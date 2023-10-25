@@ -1,15 +1,15 @@
 {% load i18n %}
 <div class="file-configuration" style="width: 100vw; margin: -20px; display: flex; height: calc(100% + 40px);">
-    <div class="uploaded-files" style="width: 450px; padding: 10px;">
+    <div class="uploaded-files" style="width: 450px; padding: 10px; min-width: 250px;">
         <h4><span>{% trans "Uploaded Files" %}</span></h4>
-        <span>{% trans "Specify how to process the data files for viewing.  Any additional files (such as images) will be automatically displayed if possible." %}</span>
+        <span class="file-config-instuctions">{% trans "Specify how to process the data files for viewing.  Any additional files (such as images) will be automatically displayed if possible." %}</span>
         <div class="file-button-container">
             <div class="file-buttons" data-bind="click:() => {fileMode('data')}, css: {active: fileMode() == 'data'}" role="button">{% trans "Data Files" %}</div>
             <div style="margin: 0 5px"></div>
             <div class="file-buttons" data-bind="click:() => {fileMode('other'); selectedFiles([])}, css: {active: fileMode() != 'data'}" role="button">{% trans "Additional Files" %}</div>
         </div>
 
-        <div class="pad-btm" data-bind="visible: currentFiles().length > 0" style="overflow-y: scroll;padding: 7px; max-height: calc(100% - 100px);">
+        <div class="pad-btm" data-bind="visible: currentFiles().length > 0" style="overflow-y: scroll;padding: 7px; height: 600px;">
             <table class="table table-striped" cellspacing="0" width="100%">
                 <thead>
                     <tr class="afs-table-header">
@@ -60,8 +60,8 @@
         </div>
     </div>
     <div style="cursor:col-resize; width:12px; background: #fcfcfc; border-right: 1px solid #eee; border-left: 1px solid #ddd;" class="resizer"></div>
-    <div class="active-files" style="width: 31.9659%; min-width: 550px; display: flex; flex-direction: column; padding-left: 20px; padding-bottom: 20px;">
-        <div data-bind="visible: !(selectedFiles().length > 1) && fileMode() == 'data'">
+    <div class="active-files" style="width: 31.9659%; min-width: 550px; display: flex; flex-direction: column; padding: 10px 10px 20px 20px;">
+        <div style="margin-bottom: 10px;" data-bind="visible: !(selectedFiles().length > 1) && fileMode() == 'data'">
             <h4 data-bind="text: selectedFile()?.details?.name"></h4>
             <div class="cm" style="border: 1px solid #ddd" >
                 <div data-bind="codemirror: {
@@ -116,7 +116,7 @@
             </div>
         </div>
     </div>
-    <div style="width: 550px; min-width: 550px; padding: 10px; padding: 10px 50px 20px 20px;" data-bind="visible: fileMode() == 'data'">
+    <div style="width: 550px; min-width: 550px; position: relative; padding: 10px 50px 20px 20px;" data-bind="visible: fileMode() == 'data'">
         {% block importerConfiguration %}
         <!-- ko component: {
             name: 'importer-configuration',

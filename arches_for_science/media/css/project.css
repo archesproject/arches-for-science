@@ -1191,6 +1191,9 @@
     cursor: pointer;
     color: #213e5f;
     font-size: 14px;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .file-configuration input[type=radio]{
     margin:0;
@@ -1223,7 +1226,7 @@
     padding: 0;
 }
 
-.importer-configuration h4{
+.importer-configuration {
     position: relative;
     cursor: pointer;
     color: #213e5f;
@@ -1236,6 +1239,48 @@
     border-bottom: 1px solid #ddd;
 }
 
+.importer-list-container {
+    width: 470px;
+}
+ 
+.importer-list-container div:hover {
+    background: #EBF6FC;
+}
+
+.file-config-header {
+    font-size: 14px;
+    color: #213e5f;
+    margin: 5px 0px 0px 0px;
+}
+
+.file-config-instuctions {
+    margin: 0px 0px 5px 0px;
+    font-weight: 400;
+    color: #666;
+    font-size: 13px;
+}
+
+.importer-config-panel input {
+    margin-top: 3px;
+    margin-bottom: 10px;
+    height: 28px;
+    font-size: 13px;
+}
+
+.importer-config-panel input::placeholder {
+    font-size: 12px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+
+.importer-config-panel textarea {
+    margin-top: 3px;
+}
+
+.importer-config-panel textarea::placeholder {
+    font-size: 12px;
+    margin-left: 5px;
+}
 
 .importer-configuration input[type=radio]{
     margin:0;
@@ -1255,11 +1300,18 @@
     align-items: center;
     display: flex;
     padding: 10px 20px;
-    background-color: #fdfdfd;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
 }
+
+.file-configuration .file-buttons:hover {
+    background: #fff;
+}
+
 .file-configuration .file-buttons.active {
     font-weight: bold;
+    font-size: 13px;
+    background: #fff;
 }
 .file-configuration .dataTables_wrapper .row:first-child{
     background-color: #ddd;
