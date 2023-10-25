@@ -6,6 +6,34 @@
         <div class="workflow-search-count">
             <div class="count-number" data-bind="text: totalResults()"></div><div>Physical Things</div>
         </div>
+        <div class="child-exclusion">
+            <div
+            data-bind="
+                component: {
+                    name: 'views/components/simple-switch',
+                    params: {
+                        value: includeSamples,
+                        config: {
+                            label: 'Include samples',
+                        }
+                    }
+                }
+            "
+            ></div>
+            <div
+                data-bind="
+                    component: {
+                        name: 'views/components/simple-switch',
+                        params: {
+                            value: includeAnalysisAreas,
+                            config: {
+                                label: 'Include analysis areas',
+                            }
+                        }
+                    }
+                "
+            ></div>
+        </div>
     </div>
     <div class="workflow-search-results">
         <div class="workflow-search-results-full-container">

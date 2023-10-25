@@ -429,6 +429,13 @@ define([
             self.updateSearchResults(self.termFilter(), query['paging-filter']);
         });
 
+        this.includeSamples.subscribe(function(val) {
+            self.updateSearchResults(self.termFilter());
+        });
+        this.includeAnalysisAreas.subscribe(function(val) {
+            self.updateSearchResults(self.termFilter());
+        });
+
         this.initialize();
 
         this.stripTags = (original) => {

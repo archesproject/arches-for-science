@@ -100,6 +100,27 @@
     padding-right: 5px;
 }
 
+.child-exclusion {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.child-exclusion .toggle-container {
+    padding-bottom: 0px;
+    display: inline-flex;
+}
+
+.child-exclusion .toggle-container .arches-toggle-sm {
+    margin: 0;
+    color: #888;
+}
+
+.child-exclusion .toggle-container .arches-toggle-subtitle {
+    display: none;
+}
+
 .object-search-step .search-results-footer {
     height: 55px;
     background-color: #f3f3f3;
