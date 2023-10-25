@@ -1,6 +1,6 @@
 {% load i18n %}
 <div class="file-configuration" style="width: 100vw; margin: -20px; display: flex; height: calc(100% + 40px);">
-    <div class="uploaded-files" style="width: 450px; padding: 10px; min-width: 250px;">
+    <div class="uploaded-files" style="width: 500px; padding: 10px;">
         <h4><span>{% trans "Uploaded Files" %}</span></h4>
         <span class="file-config-instuctions">{% trans "Specify how to process the data files for viewing.  Any additional files (such as images) will be automatically displayed if possible." %}</span>
         <div class="file-button-container">
@@ -59,7 +59,7 @@
             </table>
         </div>
     </div>
-    <div style="cursor:col-resize; width:12px; background: #fcfcfc; border-right: 1px solid #eee; border-left: 1px solid #ddd;" class="resizer"></div>
+    <div style="cursor:col-resize; min-width:12px; background: #fcfcfc; border-right: 1px solid #eee; border-left: 1px solid #ddd;" class="resizer"></div>
     <div class="active-files" style="width: 31.9659%; min-width: 550px; display: flex; flex-direction: column; padding: 10px 10px 20px 20px; z-index: 10;">
         <div style="margin-bottom: 10px;" data-bind="visible: !(selectedFiles().length > 1) && fileMode() == 'data'">
             <h4 data-bind="text: selectedFile()?.details?.name"></h4>
