@@ -23,8 +23,7 @@
                         <td>
                             <div style="display: flex; align-items:center;">
                                 <div style="display: flex; align-items: center;">
-                                    <div style="width: 25px; min-height:25px; margin: 0 5px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }"><i data-bind="visible: $parent.visibleFile() == file.fileid && $parent.selectedFiles().length <= 1" role="button" aria-label="{% trans "Selected File" %}" class="fa fa-eye"></i></div>
-                                    <input style="margin: 0 5px" type="checkbox" data-bind="visible: $parent.fileMode() == 'data', value: file.fileid, checked: $parent.selectedFiles">
+                                    <input style="margin: 0px 5px 0px 10px;" type="checkbox" data-bind="visible: $parent.fileMode() == 'data', value: file.fileid, checked: $parent.selectedFiles">
                                 </div>
                                 <div style="padding:1px 5px;min-height: 39px;align-items:center;display:flex;cursor:pointer; flex: 1" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); },text: file.details.name"></div>
                             </div>
