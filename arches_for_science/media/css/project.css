@@ -1294,6 +1294,9 @@
     flex-direction: row;
     margin-top: 10px;
     margin-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    width: 100%;
 }
 .file-configuration .file-buttons{
     flex: 1;
@@ -1343,6 +1346,23 @@
   border-radius: 6px;
   position: absolute;
   z-index: 1;
+}
+
+.table-tools-container {
+    display: flex;
+    margin-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+}
+
+.import-tool {
+    color: #579ddb;
+    margin-right: 10px;
+}
+
+.import-tool:hover {
+    color: #156AB7;
+    cursor: pointer;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
