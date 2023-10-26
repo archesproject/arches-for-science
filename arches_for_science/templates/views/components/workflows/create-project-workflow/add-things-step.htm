@@ -76,7 +76,7 @@
                 </div>
                 <!--/ko -->
                 <!-- ko foreach: selectedResources -->
-                <div class="wf-multi-tile-step-card" >
+                <div class="wf-multi-tile-step-card" data-bind="css: { child: $parent.resourceIsSampleOrAnalysis($data) }">
                     <div class="wf-multi-tile-card-info">
                         <!-- <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span></div> -->
                         <div class="wf-multi-tile-card-info-details">

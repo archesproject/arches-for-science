@@ -156,7 +156,7 @@ define([
 
             // Then, reorder child physical things under parents.
             const sortedParents = this.selectedResources().filter(resource =>
-                !Object.values(self.childPhysicalThingValue).includes(self.getChildPhysicalThingType(resource))
+                !self.resourceIsSampleOrAnalysis(resource)
             );
             const childrenByParentResourceId = {};
             for (const child of this.selectedResources().filter(r => !sortedParents.includes(r))) {
@@ -502,7 +502,11 @@ define([
         this.getChildPhysicalThingType = (resource) => {
             return resource.tiles.find(tile => tile.data[self.physicalThingTypeNodeId] !== undefined)
             ?.data?.[this.physicalThingTypeNodeId]?.[0];
-        }
+        };
+
+        this.resourceIsSampleOrAnalysis = (resource) => {
+            return Object.values(self.childPhysicalThingValue).includes(self.getChildPhysicalThingType(resource));
+        };
     }
 
     ko.components.register('add-things-step', {
