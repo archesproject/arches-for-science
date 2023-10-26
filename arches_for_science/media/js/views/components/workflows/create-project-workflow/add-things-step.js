@@ -112,6 +112,7 @@ define([
                     });
                 }
             });
+            self.sortSelectedResources();
         }, null, "arrayChange");
 
         const loadExistingCollection = async function(){
@@ -133,6 +134,25 @@ define([
                     self.value.push(val);
                 });    
             }
+        };
+
+        this.sortSelectedResources = () => {
+            const sortedDisplayNames = self.selectedResources().map(
+                res => self.getStringValue(res.displayname)
+            ).map(val => val.toLowerCase()).sort();
+
+            const resourceSortFn = (a, b) => {
+                const aIndex = sortedDisplayNames.indexOf(self.getStringValue(a.displayname).toLowerCase());
+                const bIndex = sortedDisplayNames.indexOf(self.getStringValue(b.displayname).toLowerCase());
+                if (aIndex < bIndex) {
+                    return -1;
+                } else if (aIndex === bIndex) {
+                    return 0;
+                }
+                return 1;
+            };
+            this.selectedResources().sort(resourceSortFn);
+            this.selectedResources.valueHasMutated();
         };
 
         this.initialize = function(){
