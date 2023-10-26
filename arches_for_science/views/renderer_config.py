@@ -1,8 +1,10 @@
 import logging
 from django.views.generic import View
 from arches_for_science.models import RendererConfig
+from arches.app.models import models
 from arches.app.utils.response import JSONResponse
 from django.http import HttpResponseNotFound
+from django.db.models import Q
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 
 logger = logging.getLogger(__name__)
@@ -55,11 +57,20 @@ class RendererConfigView(View):
 
 
     def delete(self, request, renderer_config_id):
-
+        file_nodegroup_id = '7c486328-d380-11e9-b88e-a4d18cec433a'
         renderer_config = RendererConfig.objects.get(configid=renderer_config_id)
-        renderer_config.delete()
-
-        response_dict = {"deleted": JSONSerializer().serialize(renderer_config)}
+        query = Q(**{
+            "nodegroup_id": file_nodegroup_id,
+            "data__has_key": file_nodegroup_id,
+            f"data__{file_nodegroup_id}__0__rendererConfig": renderer_config_id
+        })
+ 
+        renderer_used = models.TileModel.objects.filter(query).exists()
+        if not renderer_used:
+            renderer_config.delete()
+            response_dict = {"deleted": JSONSerializer().serialize(renderer_config)}
+        else:
+            response_dict = {"deleted": False}
 
         return JSONResponse(response_dict)
 

@@ -38,17 +38,22 @@ define([
                 values = workingText.trim().split('\n');
             }
             const delimiterCharacter = config?.delimiterCharacter ?? ',';
-
-            const valueRegex = (delimiterCharacter.length < 2) ? new RegExp(`[${delimiterCharacter}\\s]+`) : new RegExp(`${delimiterCharacter}`);
             
-            const transform = config?.transformation ? config.transformation : 'basic';
-            values.forEach(function(val){
-                const rec = val.trim().split(valueRegex).filter(element => element !== "");
-                parsedData.x.push(parseFloat(rec[0]));
-                const yValues = rec.slice(1).map(val => parseFloat(val));
-                parsedData.y.push(runTransformation(yValues, transform));
-            });
-            return parsedData;
+            try {
+                const valueRegex = (delimiterCharacter.length < 2) ? new RegExp(`[${delimiterCharacter}\\s]+`) : new RegExp(`${delimiterCharacter}`);
+                const transform = config?.transformation ? config.transformation : 'basic';
+                values.forEach(function(val){
+                    const rec = val.trim().split(valueRegex).filter(element => element !== "");
+                    parsedData.x.push(parseFloat(rec[0]));
+                    const yValues = rec.slice(1).map(val => parseFloat(val));
+                    parsedData.y.push(runTransformation(yValues, transform));
+                });
+                return parsedData;
+            } catch (e) {
+                if(e instanceof SyntaxError){
+                    throw new Error("Invalid regular expression.  Delimiter Character in config must be a valid regular expression.")
+                }
+            }
         }
     };
 });
