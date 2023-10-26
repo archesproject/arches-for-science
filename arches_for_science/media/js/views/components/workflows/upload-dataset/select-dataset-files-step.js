@@ -247,6 +247,17 @@ define([
                                 ko.unwrap(datasetFile.tileId) != fileTile
                             ));
 
+                            let isStepComplete = false;
+                            for (const part of this.parts()) {
+                                if (part.hasCurrentObservation() && part.datasetFiles().length) {
+                                    isStepComplete = true;
+                                }
+                            }
+
+                            if (!isStepComplete) {
+                                params.form.complete(false);
+                            }
+
                             saveWorkflowState();
                         }
                     } finally {
