@@ -12,7 +12,6 @@ define([
     'models/tile',
 ], function($, ko, fileInterpretationStepTemplate, arches, uuid, CardComponentViewModel, CardMultiSelectViewModel, WorkbenchComponentViewModel, fileRenderers, Cookies, TileModel) {
     function viewModel(params) {
-        // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
 
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
         var self = this;

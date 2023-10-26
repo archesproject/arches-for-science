@@ -64,6 +64,7 @@
             </div>
             <div class="importer-config-panel">
                 <div class="file-config-header">{% trans "Data Column Delimiter" %}</div>
+                <div class="afs-error-message ep-alert-red" style="padding:5px;" data-bind="visible: invalidDelimiter()">{% trans "The data delimiter must be a valid regular expression" %}</div>
                 <div class="file-config-instuctions">{% trans "Define how the data are separated" %}</div>
                 <div style="display: flex; flex-direction: row">
                     <div class="data-delimiter-radio"><input id="delimiter-space" type="radio" name="dataDelimiter" value="" data-bind="checked: dataDelimiterRadio"><label for="delimiter-space">{% trans "Whitespace" %}</label></div>
@@ -81,7 +82,7 @@
         <div style="display: flex;background-color: #eee;border-top: 1px solid #ddd">
             <div style="flex: 1"></div>
             <button class="btn btn-danger" type="text" name="delimiterCharacter" data-bind="click: cancelConfigEdit">{% trans "Cancel" %}</button>
-            <button class="btn btn-success" type="text" name="delimiterCharacter" data-bind="click: saveConfigEdit">{% trans "Save" %}</button>
+            <button class="btn btn-success" type="text" name="delimiterCharacter" data-bind="disable: invalidDelimiter(), click: saveConfigEdit">{% trans "Save" %}</button>
         </div>
     </div>
 </div>

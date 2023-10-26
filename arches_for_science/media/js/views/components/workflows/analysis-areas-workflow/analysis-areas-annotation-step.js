@@ -268,7 +268,7 @@ define([
                 
                 var unaddedSelectedAnalysisAreaInstanceFeatures = self.selectedAnalysisAreaInstanceFeatures().reduce(function(acc, feature) {
                     if (!physicalThingAnnotationNodeAnnotationIds.includes(ko.unwrap(feature.id)) &&
-                        feature.properties.canvas === self.canvas) {
+                        ko.unwrap(feature.properties.canvas) === ko.unwrap(self.canvas)) {
                         feature.properties.tileId = self.selectedAnalysisAreaInstance().tileid;
                         acc.push(ko.toJS(feature));
                     }
@@ -424,8 +424,13 @@ define([
                 if(response.ok){
                     return;
                 }
-                
-                throw response;
+                response.json().then(function(error){
+                    params.pageVm.alert(new params.form.AlertViewModel(
+                        "ep-alert-red",
+                        error.title,
+                        error.message,
+                    ));
+                });
             }).then(function(data){
                 parentPhysicalThing.data[physicalThingPartAnnotationNodeId].features().forEach(function(feature){
                     self.deleteFeature(feature);
@@ -434,14 +439,6 @@ define([
                 self.card.tiles.remove(parentPhysicalThing);
                 self.selectAnalysisAreaInstance(undefined);
                 self.resetAnalysisAreasTile();
-            }).catch((response) => {
-                response.json().then(function(error){
-                    params.pageVm.alert(new params.form.AlertViewModel(
-                        "ep-alert-red",
-                        error.title,
-                        error.message,
-                    )); 
-                });
             });
         };
 

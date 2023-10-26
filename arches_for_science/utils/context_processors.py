@@ -23,4 +23,4 @@ def project_settings(request):
     cloud_storage_enabled = (
         settings.STORAGES["default"]["BACKEND"] == "storages.backends.s3boto3.S3Boto3Storage"
     )  # add additional supported formats as needed
-    return {"project_settings": {"FORMATS": settings.FORMATS, "CLOUD_STORAGE_ENABLED": "true" if cloud_storage_enabled else "false"}}
+    return {"project_settings": {"CLOUD_STORAGE_ENABLED": "true" if cloud_storage_enabled else "false"}}
