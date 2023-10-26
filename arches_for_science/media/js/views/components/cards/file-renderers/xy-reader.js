@@ -11,7 +11,7 @@ define(['jquery',
     return ko.components.register('xy-reader', {
         viewModel: function(params) {
             const self = this;
-            this.alert = params.pageVm.alert;
+            this.alert = params?.pageVm?.alert;
             this.showConfigAdd = ko.observable(false);
             this.configName = ko.observable();
             this.delimiterCharacter = ko.observable();
@@ -106,12 +106,12 @@ define(['jquery',
                 try {
                     const parsedData = XyParser.parse(text, config);
                     this.invalidDelimiter(false);
+                    series.value.push(...parsedData.x);
+                    series.count.push(...parsedData.y);
                 } catch(e){
                     this.invalidDelimiter(true);
                     throw(e);
                 }
-                series.value.push(...parsedData.x);
-                series.count.push(...parsedData.y);
             };
             this.chartTitle("XRF Spectrum");
             this.xAxisLabel("keV");

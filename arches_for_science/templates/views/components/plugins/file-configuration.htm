@@ -33,6 +33,7 @@
                             <div data-bind="visible: (typeof file.details?.rendererConfig == 'function')">
                                 <input style="display:inline-block; flex: 1"
                                     data-bind="
+                                    value: file.details.rendererConfig,
                                     select2Query: {
                                         select2Config: {
                                             clickBubble: false,
