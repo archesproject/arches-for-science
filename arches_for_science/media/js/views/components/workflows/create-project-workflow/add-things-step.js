@@ -137,6 +137,7 @@ define([
         };
 
         this.sortSelectedResources = () => {
+            // Sort alphabetically by display name, without regard to child physical things.
             const sortedDisplayNames = self.selectedResources().map(
                 res => self.getStringValue(res.displayname)
             ).map(val => val.toLowerCase()).sort();
@@ -152,7 +153,36 @@ define([
                 return 1;
             };
             this.selectedResources().sort(resourceSortFn);
-            this.selectedResources.valueHasMutated();
+
+            // Then, reorder child physical things under parents.
+            const sortedParents = this.selectedResources().filter(resource =>
+                !Object.values(self.childPhysicalThingValue).includes(self.getChildPhysicalThingType(resource))
+            );
+            const childrenByParentResourceId = {};
+            for (const child of this.selectedResources().filter(r => !sortedParents.includes(r))) {
+                const parentResourceId = child.tiles.find(t => t.data['f8d5fe4c-b31d-11e9-9625-a4d18cec433a'])
+                    .data['f8d5fe4c-b31d-11e9-9625-a4d18cec433a'][0].resourceId;
+                if (childrenByParentResourceId[parentResourceId] === undefined) {
+                    childrenByParentResourceId[parentResourceId] = [child];
+                } else {
+                    childrenByParentResourceId[parentResourceId].push(child);
+                }
+            }
+            var finalSort = [];
+            for (const parent of sortedParents) {
+                finalSort.push(parent);
+                if (childrenByParentResourceId[parent.resourceinstanceid]) {
+                    finalSort = finalSort.concat(childrenByParentResourceId[parent.resourceinstanceid]);
+                    delete childrenByParentResourceId[parent.resourceinstanceid];
+                }
+            }
+            // Tack on children of missing parents (unlikely, but possible)
+            for (const orphans of Object.values(childrenByParentResourceId)) {
+                if (orphans) {
+                    finalSort = finalSort.concat(orphans);
+                }
+            }
+            this.selectedResources(finalSort);
         };
 
         this.initialize = function(){
@@ -468,6 +498,11 @@ define([
             }
             return value.find(str => str.language == arches.activeLanguage)?.value;
         };
+
+        this.getChildPhysicalThingType = (resource) => {
+            return resource.tiles.find(tile => tile.data[self.physicalThingTypeNodeId] !== undefined)
+            ?.data?.[this.physicalThingTypeNodeId]?.[0];
+        }
     }
 
     ko.components.register('add-things-step', {
