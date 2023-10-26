@@ -28,10 +28,6 @@
         <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: saveFiles">{% trans 'Save'%}</button>
         <!-- /ko -->
     </div>
-
-    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 5px; background-color: #f9f9f9; width: 50%">
-        <span>{% trans "Supported image files and PDF files are automatically detected and displayed." %}</span>
-    </div>
 </div>
 
 <!-- ko if: uploadFailed -->
@@ -44,27 +40,24 @@
 <div class="file-chart-upload-panel">
     <!-- ko if: files().length === 0 -->
     <div class="gallery-controls new-tile">
-        <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+        <div style="padding: 10px 45px 45px 45px;" class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
             <div class="file-select-window">
-                <div class="bord-top pad-ver file-select">
+                <div style="background: #C1F25F; border: dashed 1px #619100; border-radius: 2px;" class="bord-top pad-ver file-select">
                     <div class="" style="padding: 5px">
-                        <h2>{% trans 'Upload Files' %}</h2>
-                        <h4>{% trans 'Drag & Drop your files onto this panel to upload' %}</h4>
+                        <h2><i class="fa fa-cloud-upload"></i><span style="margin-left: 5px;">{% trans "Upload files" %}</h2>
+                        <h4 style="font-weight: 400;">{% trans 'Drag & Drop your files onto this panel to upload' %}</h4>
                     </div>
-                    <button type="button" class="btn btn-lg btn-file-select upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                    <button style="margin: 0px 0px 15px 0px;" type="button" class="btn btn-lg btn-file-select upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
                         <i class="fa fa-file"></i>
                         <span>{% trans "Select Files" %}</span>
                     </button>
                     <br>
-                    <div style="padding: 10px">{% trans "Adding files to this record is " %}
-                        <span><strong>{% trans "optional." %}</strong></span>
+                    <div style="padding: 10px 10px 25px 10px;">{% trans "You may upload files of various formats " %}
+                        <span><strong>{% trans "but only ASCII files with X/Y data columns can be displayed on an interactive graph." %}</strong></span>
                         <br>
                         {% trans "You may upload as many files as you wish; check with the site admin on the maximum file size." %}
                     </div>
 
-                </div>
-                <div class="file-upload-footer">
-                    <span></span>
                 </div>
             </div>
 
@@ -76,9 +69,11 @@
     <!-- /ko -->
       
     <!-- ko if: files().length > 0 -->
-    
-    <div style="background-color: white; padding: 45px;">
-        <div class="dropzone-photo-upload" style="background: #fafafa; border: dashed 1px purple; padding: 40px; text-align: center;" data-bind="dropzone: dropzoneOptions">
+    <div style="background-color: white; padding: 10px 45px 45px 45px;">
+        <div class="dropzone-photo-upload" style="background: #C1F25F; border: dashed 1px #619100; padding: 40px; text-align: center; border-radius: 2px;" data-bind="dropzone: dropzoneOptions">
+            <div style="font-size: 1.35em; text-align: center; color: #440468;">
+                <i class="fa fa-cloud-upload"></i><span style="margin-left: 5px;">{% trans "File Upload" %}</span>
+            </div>
             <div class="file-workbench-links">
                 <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
                     <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span>
@@ -89,7 +84,7 @@
                 <div id="hidden-dz-previews" style="display:none"></div>
             </div>
         </div>
-        <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 485px; border: solid 1px lightgrey; padding: 20px;">
+        <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 385px; border: solid 1px lightgrey;">
             
             <!-- ko foreach: {data: files, as: 'file'} -->
                 <div class="file-workbench-file">
@@ -101,6 +96,10 @@
                     </div>
                 </div>
             <!-- /ko -->
+        </div>
+        <div class="table-tools-container">
+            <div class="import-tool">x files</div>
+            <div class="import-tool">Remove All</div>
         </div>
     </div>
     <!-- /ko -->
