@@ -11,6 +11,7 @@ define(['jquery',
     return ko.components.register('xy-reader', {
         viewModel: function(params) {
             const self = this;
+            this.alert = params.pageVm.alert;
             this.showConfigAdd = ko.observable(false);
             this.configName = ko.observable();
             this.delimiterCharacter = ko.observable();

@@ -8,8 +8,8 @@ define([
     'views/components/plugins/file-configuration',
 ], function($, ko, fileInterpretationStepTemplate, arches, WorkbenchComponentViewModel, fileRenderers) {
     function viewModel(params) {
+        this.alert = params.pageVm.alert;
         // TODO: Fix afs-formats.js, loadComponentDependencies was commented out
-
         params.configKeys = ['acceptedFiles', 'maxFilesize'];
         const datasetInfo = params.datasetInfo;
         let datasetIds = undefined;

@@ -22,6 +22,7 @@ define([
             }]
     */
     const vm = function(params) {
+        this.alert = params.alert;
         this.fileRenderers = fileRenderers;
         this.files = params.files;
         this.selected = ko.observable(true);

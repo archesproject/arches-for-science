@@ -3,12 +3,14 @@ define([
     'jquery',
     'js-cookie',
     'utils/xy-parser',
+    'viewmodels/alert',
     'templates/views/components/plugins/importer-configuration.htm',
     'bootstrap',
     'bindings/select2v4',
     'select2'
-], function(ko, $, Cookies, xyParser, importerConfigurationTemplate) {
+], function(ko, $, Cookies, xyParser, AlertViewModel, importerConfigurationTemplate) {
     const vm = function(params) {
+        this.alert = params.alert;
         this.rendererConfigs = params.rendererConfigs || ko.observableArray();
         this.selectedConfiguration = params.selectedConfiguration || ko.observable();
         this.showConfigurationPanel = ko.observable();
@@ -21,7 +23,6 @@ define([
         this.footerConfig = ko.observable();
         this.headerDelimiter = ko.observable();
         this.footerDelimiter = ko.observable();
-        this.rendererInUse = ko.observable(false);
         this.delimiterCharacter = ko.observable();
         this.invalidDelimiter = ko.observable(false);
         this.includeDelimiter = ko.observable();
@@ -170,9 +171,11 @@ define([
                 const responseJson = await configDeleteResponse.json();
                 if(responseJson.deleted){
                     rendererConfigRefresh();
-                    this.rendererInUse(false);
                 } else {
-                    this.rendererInUse(true);
+                    this.alert(
+                        new AlertViewModel('ep-alert-red', "Importer in Use", "This importer is in use - it should be replaced it in all files where it is used before deleting.")
+                    );
+                    
                 }
             }
         };

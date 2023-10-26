@@ -3,7 +3,6 @@
     <h4><span>{% trans "Importer Configurations" %}</span></h4>
     <span>{% trans "Define how to import your x/y data" %}</span>
     <div>
-        <div class="afs-error-message ep-alert-red" style="padding:5px;" data-bind="visible: rendererInUse">{% trans "This importer is in use - it should be replace it in all files where it is used before deleting." %}</div>
         <!-- ko foreach: {data: rendererConfigs, as: 'configuration' } -->
         <div style="padding:8px; display:flex;align-items: center;">
             <input style="margin: 8px" type="radio" name="selectedConfiguration" data-bind="checked: $parent.selectedConfiguration, value: configuration.configid"></input>
