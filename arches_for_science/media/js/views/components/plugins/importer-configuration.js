@@ -173,7 +173,7 @@ define([
                     rendererConfigRefresh();
                 } else {
                     this.alert(
-                        new AlertViewModel('ep-alert-red', "Importer in Use", "This importer is in use - it should be replaced it in all files where it is used before deleting.")
+                        new AlertViewModel('ep-alert-red', "Importer in Use", "This importer is in use - it should be replaced in all files where it is used before deleting.")
                     );
                     
                 }
