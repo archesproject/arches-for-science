@@ -41,6 +41,8 @@ define([
         // if(!afsSettings.cloudStorage.enabled){
         //     this.workflows = this.workflows.filter(workflow => workflow.workflowid != 'c206cfc6-6b4a-481e-a018-8da72aeb7074');
         // }
+
+        console.log('!!', this.workflows)
     };
 
     return ko.components.register('init-workflow', {
