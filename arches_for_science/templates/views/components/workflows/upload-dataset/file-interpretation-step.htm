@@ -123,7 +123,8 @@
                     $parent.selectedFile(f);
                     $parent.showFileInfo(true);
                     $parent.showFileList(false);
-                }, container: '.file-workbench-files'">
+                }, container: '.file-workbench-files',
+                css:{'selected': file['@tile_id'] === ($parent.selectedFile() ? $parent.selectedFile()['@tile_id'] : '') }">
                 <i role="presentation" data-bind="class: 'fa fa-file'"></i>
                 <div class='file-name' data-bind="text: file.file_details[0].name"></div>
             </div>
@@ -133,9 +134,7 @@
     <div data-bind="visible: showFileInfo">
         <button class="btn" style="background: #9490EE;color: #eee;" data-bind=" click: function(){
             showFileList(true); 
-            showFileInfo(false); 
-            selectedRenderer(undefined);
-            selectedFile(undefined);
+            showFileInfo(false);
         }">
             <i class="fa fa-list" style="color: #eee"></i> {% trans "Show File List" %}</button>
         
