@@ -3,12 +3,14 @@ define([
     'jquery',
     'js-cookie',
     'utils/xy-parser',
+    'viewmodels/alert',
     'templates/views/components/plugins/importer-configuration.htm',
     'bootstrap',
     'bindings/select2v4',
     'select2'
-], function(ko, $, Cookies, xyParser, importerConfigurationTemplate) {
+], function(ko, $, Cookies, xyParser, AlertViewModel, importerConfigurationTemplate) {
     const vm = function(params) {
+        this.alert = params.alert;
         this.rendererConfigs = params.rendererConfigs || ko.observableArray();
         this.selectedConfiguration = params.selectedConfiguration || ko.observable();
         this.showConfigurationPanel = ko.observable();
@@ -22,6 +24,7 @@ define([
         this.headerDelimiter = ko.observable();
         this.footerDelimiter = ko.observable();
         this.delimiterCharacter = ko.observable();
+        this.invalidDelimiter = ko.observable(false);
         this.includeDelimiter = ko.observable();
         this.headerFixedLines = ko.observable();
         this.dataDelimiterRadio = ko.observable();
@@ -52,6 +55,15 @@ define([
         this.cancelConfigEdit = () => {
             this.showConfigurationPanel(false);
         };
+
+        this.dataDelimiter.subscribe(newDelimiter => {
+            try {
+                const valueRegex = (newDelimiter.length < 2) ? new RegExp(`[${newDelimiter}\\s]+`) : new RegExp(`${newDelimiter}`)
+                this.invalidDelimiter(false);
+            } catch (e) {
+                this.invalidDelimiter(true);
+            }
+        });
 
         this.saveConfigEdit = async() => {
             const configId = this.editConfigurationId() ?? '';
@@ -154,8 +166,17 @@ define([
                     "X-CSRFToken": Cookies.get('csrftoken')
                 }
             });
+            
             if(configDeleteResponse.ok){
-                rendererConfigRefresh();
+                const responseJson = await configDeleteResponse.json();
+                if(responseJson.deleted){
+                    rendererConfigRefresh();
+                } else {
+                    this.alert(
+                        new AlertViewModel('ep-alert-red', "Importer in Use", "This importer is in use - it should be replaced in all files where it is used before deleting.")
+                    );
+                    
+                }
             }
         };
 

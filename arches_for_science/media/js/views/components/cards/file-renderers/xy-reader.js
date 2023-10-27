@@ -11,9 +11,11 @@ define(['jquery',
     return ko.components.register('xy-reader', {
         viewModel: function(params) {
             const self = this;
+            this.alert = params?.pageVm?.alert;
             this.showConfigAdd = ko.observable(false);
             this.configName = ko.observable();
             this.delimiterCharacter = ko.observable();
+            this.invalidDelimiter = ko.observable(false);
             this.headerDelimiter = ko.observable();
             this.headerFixedLines = ko.observable();
             this.selectedConfig = params.selectedConfig || ko.observable();
@@ -65,7 +67,16 @@ define(['jquery',
             });
 
             rendererConfigRefresh();
-    
+
+            this.delimiterCharacter.subscribe(x => {
+                try {
+                    const valueRegex = (delimiterCharacter.length < 2) ? new RegExp(`[${delimiterCharacter}\\s]+`) : new RegExp(`${delimiterCharacter}`)
+                    this.invalidDelimiter(false);
+                } catch {
+                    this.invalidDelimiter(true)
+                }
+            });
+
             this.addConfiguration = () => {
                 self.showConfigAdd(true);
             };
@@ -92,9 +103,15 @@ define(['jquery',
             };
             this.parse = function(text, series){
                 const config = this.selectedConfiguration?.config;
-                const parsedData = XyParser.parse(text, config);
-                series.value.push(...parsedData.x);
-                series.count.push(...parsedData.y);
+                try {
+                    const parsedData = XyParser.parse(text, config);
+                    this.invalidDelimiter(false);
+                    series.value.push(...parsedData.x);
+                    series.count.push(...parsedData.y);
+                } catch(e){
+                    this.invalidDelimiter(true);
+                    throw(e);
+                }
             };
             this.chartTitle("XRF Spectrum");
             this.xAxisLabel("keV");
