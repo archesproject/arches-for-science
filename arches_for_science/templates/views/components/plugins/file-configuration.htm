@@ -38,6 +38,7 @@
                                         select2Config: {
                                             clickBubble: false,
                                             disabled: file.details.disabledConfig,
+                                            placeholder: 'Select a Configuration',
                                             width: 'element',
                                             ajax:{
                                                 url: $parent.rendererUrl,
@@ -46,7 +47,7 @@
                                             initSelection: $parent.initSelection,
                                             value: file.details.rendererConfig,
                                             closeOnSelect: true,
-                                            allowClear: false,
+                                            allowClear: true,
                                             multiple: false 
                                         }
                                     }">
