@@ -61,7 +61,7 @@
     <div id="annotation-report" style="display: inline-flex; flex-direction: column; width: 100%; padding: 10px;">
         <h3 data-bind="text:summaryName"></h3>
         <div data-bind="if: leafletConfig()">
-            <div style="border: solid 1px #ddd">
+            <div id="leaflet-map-cllipped" style="border: solid 1px #ddd">
                 <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
             </div>
         </div>
