@@ -75,6 +75,15 @@
                 <input type="text" name="delimiterCharacter" data-bind="visible: dataDelimiterRadio()=='other', textInput: dataDelimiter">
                 <div style="display: flex; margin: 5px 0;"><input type="checkbox" name="includeDelimiter" value="includeDelimiter" data-bind="checked:includeDelimiter"><label style="padding: 0 10px" for="header-config-none">{% trans "Include Delimiter in Value (example: + or - might be part of a numeric value)" %}</label></div>
             </div>
+            <div>
+                <h4>{% trans "Display/Charting" %}</h4>
+                <h4 class="file-config-header">{% trans "Chart Title" %}</h4>
+                <input type="text" placeholder="{% trans "Title" %}" name="chartTitle" data-bind="textInput: chartTitle">
+                <h4 class="file-config-header">{% trans "X Axis Label" %}</h4>
+                <input type="text" placeholder="{% trans "X Axis" %}" name="xAxisLabel" data-bind="textInput: xAxisLabel">
+                <h4 class="file-config-header">{% trans "Y Axis Label" %}</h4>
+                <input type="text" placeholder="{% trans "Y Axis" %}" name="yAxisLabel" data-bind="textInput: yAxisLabel">
+            </div>
         </div>
         <div style="display: flex;background-color: #eee;border-top: 1px solid #ddd">
             <div style="flex: 1"></div>

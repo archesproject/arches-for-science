@@ -64,6 +64,9 @@ define(['jquery',
                         tile.save();
                     }
                 }	
+                this.chartTitle(this.selectedConfiguration?.config?.display?.chartTitle ? this.selectedConfiguration.config.display.chartTitle : 'Data');
+                this.xAxisLabel(this.selectedConfiguration?.config?.display?.xAxisLabel ? this.selectedConfiguration.config.display.xAxisLabel : 'X Axis');
+                this.yAxisLabel(this.selectedConfiguration?.config?.display?.yAxisLabel ? this.selectedConfiguration.config.display.yAxisLabel : 'Y Axis');
             });
 
             rendererConfigRefresh();
@@ -113,9 +116,6 @@ define(['jquery',
                     throw(e);
                 }
             };
-            this.chartTitle("XRF Spectrum");
-            this.xAxisLabel("keV");
-            this.yAxisLabel("Count");
         },
         template: afsReaderTemplate
     });

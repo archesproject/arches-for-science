@@ -28,6 +28,9 @@ define([
         this.includeDelimiter = ko.observable();
         this.headerFixedLines = ko.observable();
         this.dataDelimiterRadio = ko.observable();
+        this.chartTitle = ko.observable();
+        this.xAxisLabel = ko.observable();
+        this.yAxisLabel = ko.observable();
         this.dataDelimiter = ko.observable();
         this.placeholder = 'Select a Transformation';
 
@@ -87,6 +90,11 @@ define([
                 headerFixedLines: this.headerFixedLines(),
                 delimiterCharacter: this.dataDelimiter(),
                 transformation: this.selectedTransformation(),
+                display: {
+                    chartTitle: this.chartTitle(),
+                    xAxisLabel: this.xAxisLabel(),
+                    yAxisLabel: this.yAxisLabel()
+                },
                 rendererId: this.renderer
             };
 
@@ -155,6 +163,9 @@ define([
             this.editConfigurationId(configuration.configid);
             this.includeDelimiter(configuration?.config?.includeDelimiter);
             this.selectedTransformation(configuration?.config?.transformation);
+            this.chartTitle(configuration?.config?.display?.chartTitle);
+            this.xAxisLabel(configuration?.config?.display?.xAxisLabel);
+            this.yAxisLabel(configuration?.config?.display?.yAxisLabel);
             this.showConfigurationPanel(true);
         };
 
