@@ -215,9 +215,51 @@ define([
             }
         };
 
+        this.savePhysicalThingDigitalReferenceTile = function(data) {
+            var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
+            var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+
+            var digitalResourceInstanceId = data.resourceinstance_id
+
+            digitalReferenceTile.data[digitalSourceNodeId] = [{
+                "resourceId": digitalResourceInstanceId,
+                "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+            }];
+
+            var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
+            digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
+
+            digitalReferenceTile.transactionId = params.form.workflowId;
+            return digitalReferenceTile.save();
+        }
+
+        this.saveObservationDigitalReferenceTile = function(data) {
+            if (self.observationDigitalReferenceTile()) {
+                self.observationResourceInstanceId(self.observationDigitalReferenceTile().resourceinstance_id);
+                var digitalReferenceTile = self.observationDigitalReferenceTile();
+                var digitalSourceNodeId = '0ae14d2a-8e30-11eb-a9c4-faffc265b501'; // Digital Source (E73) (observation)
+
+                var digitalResourceInstanceId = data.resourceinstance_id
+
+                digitalReferenceTile.data[digitalSourceNodeId] = [{
+                    "resourceId": digitalResourceInstanceId,
+                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
+                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
+                }];
+
+                var digitalReferenceTypeNodeId = '0ae14c58-8e30-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (observation)
+                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
+
+                digitalReferenceTile.transactionId = params.form.workflowId;
+                return digitalReferenceTile.save();
+            }
+        };
+
         this.save = function() {
             params.form.complete(false);
             params.form.saving(true);
+            params.pageVm.loading(true);
 
             params.form.lockExternalStep("select-project", true);
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
@@ -240,43 +282,9 @@ define([
                             self.digitalResourceServiceIdentifierTile.save().then(async function(data) {
                                 params.form.savedData(data);
 
-                                var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
-                                var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+                                self.savePhysicalThingDigitalReferenceTile(data);
+                                self.saveObservationDigitalReferenceTile(data);
 
-                                var digitalResourceInstanceId = data.resourceinstance_id
-
-                                digitalReferenceTile.data[digitalSourceNodeId] = [{
-                                    "resourceId": digitalResourceInstanceId,
-                                    "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                                    "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
-                                }];
-
-                                var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
-                                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
-
-                                digitalReferenceTile.transactionId = params.form.workflowId;
-                                await digitalReferenceTile.save()
-
-                                // Do the save again for observation
-                                if (self.observationDigitalReferenceTile()) {
-                                    self.observationResourceInstanceId(self.observationDigitalReferenceTile().resourceinstance_id);
-                                    var digitalReferenceTile = self.observationDigitalReferenceTile();
-                                    var digitalSourceNodeId = '0ae14d2a-8e30-11eb-a9c4-faffc265b501'; // Digital Source (E73) (observation)
-
-                                    digitalReferenceTile.data[digitalSourceNodeId] = [{
-                                        "resourceId": digitalResourceInstanceId,
-                                        "ontologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                                        "inverseOntologyProperty": "http://www.cidoc-crm.org/cidoc-crm/P67_refers_to"
-                                    }];
-    
-                                    var digitalReferenceTypeNodeId = '0ae14c58-8e30-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (observation)
-                                    digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
-    
-                                    digitalReferenceTile.transactionId = params.form.workflowId;
-                                    await digitalReferenceTile.save()
-                                }
-
-                                
                                 self.formData.append("transaction_id", params.form.workflowId);
                                 self.formData.append("observation_id", self.observationResourceInstanceId());
 
@@ -301,6 +309,7 @@ define([
 
                                 params.form.complete(true);
                                 params.form.saving(false);
+                                params.pageVm.loading(false);
                             })
                         });
                     });
@@ -319,10 +328,41 @@ define([
                         return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                     });
     
-                    params.form.savedData(matchingTile);
+                    self.saveObservationDigitalReferenceTile(matchingTile);
+    
+                    self.formData.append("transaction_id", params.form.workflowId);
+                    self.formData.append("observation_id", self.observationResourceInstanceId());
+    
+                    fetch(arches.urls.add_chemical_analysis_images_file_upload, {
+                        method: 'POST',
+                        credentials: 'include',
+                        body: self.formData,
+                        headers: {
+                            "X-CSRFToken": Cookies.get('csrftoken')
+                        }
+                    }).then(resp => {
+                        return resp.json();
+                    }).then(respJSON => {
+                        respJSON.digitalResourceInstanceIds.forEach(function(d){
+                            self.digitalResourcesInstanceIds.push(d);
+                        });
+        
+                        matchingTile.digitalResourceInstancesIds = [];
+                        matchingTile.digitalResourceInstancesIds = self.digitalResourcesInstanceIds();
+                        matchingTile.ManifestResourceId = matchingTile.resourceinstance_id;
+                        params.form.savedData(matchingTile);
+                        params.form.value(matchingTile);
+        
+                        params.form.complete(true);
+                        params.form.saving(false);
+                        params.pageVm.loading(false);
+                    });
                 }
-                params.form.complete(true);
-                params.form.saving(false);        
+                else {
+                    params.form.complete(true);
+                    params.form.saving(false);
+                    params.pageVm.loading(false);
+                }
             }
         };
 

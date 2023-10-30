@@ -19,12 +19,18 @@ define([
 
         SummaryStep.apply(this, [params]);
 
-        this.resourceData.subscribe(function(val){
+        self.loading(true);
+
+        this.resourceData.subscribe(async function(val){
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
                 projectName: {'name': 'Project', 'value': params.relatedProjectData.projectName, 'resourceid': params.relatedProjectData.project},
                 observationName: {'name': 'Observation', 'value': params.relatedProjectData.observationName, 'resourceid': params.relatedProjectData.observation},
             };
+            
+            await getWorkflowDigitalResources();
+            await getWorkflowManifestResource();
+
             this.loading(false);
         }, this);
 
@@ -33,16 +39,15 @@ define([
             return await response.json()
         };
         
-        (async (val) => {
+        async function getWorkflowDigitalResources() {
             self.workflowDigitalResources(await Promise.all(self.digitalResourcesIds.map( async function(resourceid){
                 return await self.getWorkflowResourceData(resourceid);
             })));
-        })();
+        };
 
-        (async (val) => {
+        async function getWorkflowManifestResource() {
             self.workflowManifestResource(await self.getWorkflowResourceData(self.manifestResourceId))
-        })()
-
+        };
     }
 
     ko.components.register('add-chemical-analysis-images-final-step', {

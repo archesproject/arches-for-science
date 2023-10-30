@@ -42,14 +42,19 @@
         <h5 class="summary-value">{% trans 'Related Digital Files' %}</h5>
         <div class="afs-final-step-block">
             <div style="display: flex; flex-direction: column;">
-               <!-- ko foreach: {data: workflowDigitalResources, as: 'digitalResource'} -->
-                <div style="display: inline-flex;">
-                    <a data-bind="attr: { href: $parent.urls.resource + '/' + digitalResource.resourceinstanceid}" target="_blank">
-                        <div class="summary-value" 
-                            data-bind = "text: digitalResource.displayname">
-                        </div>
-                    </a>
-                </div>
+                <!-- ko if: workflowDigitalResources().length -->
+                    <!-- ko foreach: {data: workflowDigitalResources, as: 'digitalResource'} -->
+                    <div style="display: inline-flex;">
+                        <a data-bind="attr: { href: $parent.urls.resource + '/' + digitalResource.resourceinstanceid}" target="_blank">
+                            <div class="summary-value" 
+                                data-bind = "text: digitalResource.displayname">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot: workflowDigitalResources().length -->
+                    <div>{% trans 'None' %}</div>
                 <!-- /ko -->
             </div>
         </div>
