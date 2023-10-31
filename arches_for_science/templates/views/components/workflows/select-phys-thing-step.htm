@@ -39,6 +39,9 @@
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
+                graphids: [
+                    physicalThingGraphId,
+                ],
                 termFilter: termFilter(),
                 renderContext: 'workflow', 
                 value: physicalThingValue,
