@@ -321,7 +321,20 @@ define([
                         self.uploadFailed(false);
                         saveWorkflowState();
                         self.snapshot = params.form.savedData();
-                        params.form.complete(true);
+                        
+                        let isStepComplete = false;
+                        for (const part of this.parts()) {
+                            if (part.hasCurrentObservation() && part.datasetFiles().length) {
+                                isStepComplete = true;
+                            }
+                        }
+
+                        if (!isStepComplete) {
+                            params.form.complete(false);
+                        }
+                        else {
+                            params.form.complete(true);
+                        }
                     } else {
                         self.uploadFailed(true);
                     }
@@ -476,6 +489,17 @@ define([
                 }
                 self.parts(parts);
                 self.selectedPart(self.parts()[0]);
+
+                let isStepComplete = false;
+                for (const part of this.parts()) {
+                    if (part.hasCurrentObservation() && part.datasetFiles().length) {
+                        isStepComplete = true;
+                    }
+                }
+
+                if (!isStepComplete) {
+                    params.form.complete(false);
+                }
 
                 self.loading(false);
             };
