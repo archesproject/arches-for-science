@@ -38,11 +38,9 @@ define([
         });
 
         // filters out the chemical image workflow, if cloud storage is not enabled.
-        // if(!afsSettings.cloudStorage.enabled){
-        //     this.workflows = this.workflows.filter(workflow => workflow.workflowid != 'c206cfc6-6b4a-481e-a018-8da72aeb7074');
-        // }
-
-        console.log('!!', this.workflows)
+        if(!afsSettings.cloudStorage.enabled){
+            this.workflows = this.workflows.filter(workflow => workflow.workflowid != 'c206cfc6-6b4a-481e-a018-8da72aeb7074');
+        }
     };
 
     return ko.components.register('init-workflow', {
