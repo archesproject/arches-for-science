@@ -437,7 +437,9 @@ define([
                 });
                 self.analysisAreaInstances.remove(parentPhysicalThing);
                 self.card.tiles.remove(parentPhysicalThing);
-                self.selectAnalysisAreaInstance(undefined);
+                // Clear the selectedAnalysisAreaInstance directly rather than via
+                // selectAnalysisAreaInstance() to avoid adding it back to the canvas.
+                self.selectedAnalysisAreaInstance(undefined);
                 self.resetAnalysisAreasTile();
             });
         };
