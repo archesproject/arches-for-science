@@ -76,16 +76,71 @@
     <!-- /ko -->
 
     <div>
-        <!-- Modal button -->
         <div style="height: 40px; width: 100%; background-color: #ddd; display: flex; justify-content: flex-end; border-bottom: 1px solid #ddd">
+            <!-- Modal button -->
             <button 
                 class="btn btn-info btn-sm"
-                style="margin: 5px; margin-right: 10px; border-radius: 4px;"
+                style="margin: 5px; border-radius: 4px;"
                 data-bind="
                     enable: $data.incompleteWorkflows().length,
                     click: function(){ $data.shouldShowIncompleteWorkflowsModal(true); }
                 "
-            >{% trans 'Show Incomplete Workflows' %}</button>
+            >
+                {% trans 'Show Incomplete Workflows' %}
+            </button>
+
+            <!-- Workflow Help button -->
+            <button 
+                class="btn btn-info btn-sm"
+                style="margin: 5px; margin-right: 10px; border-radius: 4px;"
+                data-bind="
+                    click: function(){ $data.shouldShowWorkflowHelp(true); }
+                "
+            >
+                {% trans 'Show Workflow Help' %}
+            </button>
+        </div>
+
+        <div 
+            id="ep-help-panel" 
+            class="ep-help" 
+            style="display: none"
+            data-bind="slide: shouldShowWorkflowHelp, duration: 400, direction: {direction: 'right'}, easing: 'slide'"
+        >
+            <div class="ep-edits-header">
+                <div class="ep-help-title">
+                    <span>{% trans "Workflow Guidance" %}</span>
+                </div>
+                <a 
+                    href="javascript:void(0);" 
+                    class="ep-help-toggle ep-help-close ep-tools ep-tools-right" 
+                    style="border:none; box-sizing: content-box;"
+                    data-bind="click: function(){shouldShowWorkflowHelp(false)}"
+                >
+                    <div class="" data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Close Help" %}">
+                        <i class="fa fa-times-circle fa-lg"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <div style="padding: 20px;">
+                <input 
+                    data-bind="
+                        select2Query: {
+                            value: selectedHelpTemplate,
+                            select2Config: {
+                                clickBubble: false,
+                                disabled: false,
+                                data: [],
+                                value: selectedHelpTemplate,
+                                closeOnSlect: false,
+                                allowClear: true,
+                                multiple: false,
+                            }
+                        }
+                    "
+                >
+            </div>
         </div>
     
         <!-- Workflow Icons -->

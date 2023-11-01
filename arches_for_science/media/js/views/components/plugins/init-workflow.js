@@ -13,6 +13,9 @@ define([
         }, this);
 
         this.shouldShowIncompleteWorkflowsModal = ko.observable(false);
+        this.shouldShowWorkflowHelp = ko.observable(false);
+
+        this.selectedHelpTemplate = ko.observable();
 
         this.incompleteWorkflows = ko.observableArray([]);
         this.incompleteWorkflows.subscribe(incompleteWorkflows => {
