@@ -1,0 +1,56 @@
+{% load i18n %}
+<div style="height: 100%; padding: 10px 24px;">
+    <div style="padding: 5px">
+        <div class="widget-input-label">Project</div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                graphids: [
+                    projectGraphId,
+                ],
+                renderContext: 'workflow', 
+                value: projectValue,
+                disabled: locked,
+            }
+        }"></div>
+    </div>
+    <!--ko if: termFilter() -->
+    <div style="padding: 5px; margin-top: 15px;">
+        <div class="widget-input-label">
+            <span data-bind="if not: datasetRoute">
+                Select an Observation
+            </span>
+            <span data-bind="if: datasetRoute == 'non-destructive'">
+                Select an Object that has an Area of interest
+            </span>
+            <span data-bind="if: datasetRoute == 'destructive'">
+                Select a Sample of interest
+            </span>
+        </div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                termFilter: termFilter(),
+                renderContext: 'workflow', 
+                value: observationValue,
+                disabled: locked,
+            }
+        }"></div>
+    </div>
+    <!--/ko-->
+    <!-- ko if: hasSetWithPhysicalThing() === false -->
+    <div class="tabbed-workflow-step-information-box widget-input-label" style="text-align: center; margin-top: 16px; height:fit-content; background-color: #fde9ad;">
+        This project has no associated Objects. Your project must have an associated Object Collection with an Object before proceeding.
+    </div>
+    <!-- /ko -->
+    <!-- ko if: validateThing && isPhysicalThingValid() === false -->
+    <div class="tabbed-workflow-step-information-box widget-input-label" style="text-align: center; margin-top: 16px; height:fit-content; background-color: #fde9ad;">
+        <span data-bind="if: datasetRoute == 'non-destructive'">
+            You have to select an object with the analysis areas. Please complete the analysis area workflow or start the workflow over and select the sample dataset type.
+        </span>
+        <span data-bind="if: datasetRoute == 'destructive'">
+            You have to select a sample. Please complete the sample taking workflow or start the workflow over and select the area dataset type.
+        </span>
+    </div>
+    <!-- /ko -->
+</div>
