@@ -83,7 +83,7 @@ define([
                         new params.form.AlertViewModel('ep-alert-red', data.title, data.message)) 
                     })
                     .catch(_ => { params.pageVm.alert(
-                        new params.form.AlertViewModel('ep-alert-red', 'Error saving project name')) 
+                        new params.form.AlertViewModel('ep-alert-red', params.form.error() || 'Error saving project name')) 
                     });
                 }
             });
@@ -130,16 +130,24 @@ define([
 
             return self.saveTile(nameTileData, nameNodeGroupId, self.projectResourceId(), nameTileId())
                 .then(function(data) {
-                    nameTileId(data.tileid);
-                    self.projectResourceId(data.resourceinstance_id);
-                    return self.saveTile(typeTileData, typeNodeGroupId, data.resourceinstance_id, typeTileId());
+                    if (data) {
+                        nameTileId(data.tileid);
+                        self.projectResourceId(data.resourceinstance_id);
+                        return self.saveTile(typeTileData, typeNodeGroupId, data.resourceinstance_id, typeTileId());
+                    } else {
+                        params.form.error('Error saving project name');
+                    }
                 })
                 .then(function(data) {
-                    typeTileId(data.tileid);
-                    params.form.savedData(params.form.value());
-                    params.form.complete(true);
-                    params.form.dirty(false);
-                    params.pageVm.alert("");
+                    if (data) {
+                        typeTileId(data.tileid);
+                        params.form.savedData(params.form.value());
+                        params.form.complete(true);
+                        params.form.dirty(false);
+                        params.pageVm.alert("");
+                    } else {
+                        params.form.error('Error saving project type');
+                    }
                 });
         };
     }
