@@ -922,7 +922,6 @@ define([
                                     self.selectSampleLocationInstance(sampleLocationInstance);
                                 }
                                 else {
-                                    self.tile.reset();
                                     self.resetCanvasFeatures();
     
                                     const selectedFeature = ko.toJS(self.selectedSampleLocationInstanceFeatures().find(function(selectedSampleLocationInstanceFeature) {

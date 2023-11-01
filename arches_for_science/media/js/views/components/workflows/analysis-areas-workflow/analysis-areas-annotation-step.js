@@ -778,7 +778,6 @@ define([
                                     self.selectAnalysisAreaInstance(analysisAreaInstance);
                                 }
                                 else {
-                                    self.tile.reset();
                                     self.resetCanvasFeatures();
     
                                     var selectedFeature = ko.toJS(self.selectedAnalysisAreaInstanceFeatures().find(function(selectedAnalysisAreaInstanceFeature) {
