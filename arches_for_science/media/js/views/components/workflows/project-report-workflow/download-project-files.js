@@ -1,11 +1,8 @@
 define([
-    'jquery',
-    'js-cookie',
     'knockout',
     'arches',
-    'viewmodels/alert-json',
     'templates/views/components/workflows/project-report-workflow/download-project-files.htm',
-], function($, Cookies, ko, arches, JsonErrorAlertViewModel, downloadFilesTemplate) {
+], function(ko, arches, downloadFilesTemplate) {
     function viewModel(params) {
         var self = this;
 
@@ -134,47 +131,6 @@ define([
         };
 
         this.getFilesFromObservation();
-
-        // this.downloadFiles = () => {
-        //     const files = self.relatedObservations().reduce(
-        //         (acc, observation) => acc.concat(observation.relatedFiles().filter(
-        //             file => file.selected())), [])
-        //         .map(file => {
-        //             return {'name': file.name, 'fileid': file.file_id, 'project': self.projectName};
-        //         });
-        //     const formData = new window.FormData();
-
-        //     formData.append('files', JSON.stringify(files));
-        //     window.fetch(arches.urls.download_project_files, {
-        //         method: 'POST', 
-        //         credentials: 'include',
-        //         body: formData,
-        //         headers: {
-        //             "X-CSRFToken": Cookies.get('csrftoken')
-        //         }
-        //     })
-        //         .then(response => {
-        //             if (response.ok) {
-        //                 return response.json();
-        //             } else {
-        //                 throw response;
-        //             }
-        //         })
-        //         .then((json) => self.message(json.message))
-        //         .catch((response) => {
-        //             response.json().then(
-        //                 error => {
-        //                     params.pageVm.alert(
-        //                         new JsonErrorAlertViewModel(
-        //                             'ep-alert-red',
-        //                             error,
-        //                             null,
-        //                             function(){}
-        //                         )
-        //                     );
-        //                 });
-        //         });
-        // };
     }
 
     ko.components.register('download-project-files', {

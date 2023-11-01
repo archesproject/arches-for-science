@@ -13,17 +13,17 @@ except ImportError:
 
 
 @shared_task
-def download_project_files_task(userid, files, project_name):
+def download_project_files_task(userid, files, temp_files, project_name):
     from arches_for_science.views.download_project_files import FileDownloader
 
     downloader = FileDownloader()
     user = User.objects.get(pk=userid)
-    exportid, files = downloader.create_download_zipfile(user, files, project_name)
+    exportid, files = downloader.create_download_zipfile(user, files, temp_files, project_name)
 
     search_history_obj = SearchExportHistory.objects.get(pk=exportid) if exportid else None
 
     msg = _(
-        "The related files for the project '{}' are ready for download. You have 24 hours to download your files before they are automatically removed."
+        "The report(s) and the related file(s) for the project '{}' are ready to download. You have 24 hours to download your files before they are automatically removed."
     ).format(project_name)
     notiftype_name = "Search Export Download Ready"
     context = dict(
