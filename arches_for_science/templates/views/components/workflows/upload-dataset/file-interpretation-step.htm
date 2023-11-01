@@ -142,13 +142,13 @@
         </button>
         
         <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
-            <span>{% trans "Dataset" %}:</span>
+            <h2 class="file-workbench-filter-header">{% trans "Dataset" %}</h2>
             <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource()?.displayname"></span>
         </div>
 
         <!-- ko if: $data.selectedFileDropdownData() && $data.filteredFiles().length -->
         <div style="margin-top: 14px;">
-            <span>{% trans "File" %}:</span>
+            <h2 class="file-workbench-filter-header">{% trans "File" %}</h2>
     
             <input 
                 style="display:inline-block;"
