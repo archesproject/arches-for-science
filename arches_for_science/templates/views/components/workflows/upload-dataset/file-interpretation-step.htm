@@ -132,20 +132,45 @@
         </div>
     </div>
     <div data-bind="visible: showFileInfo">
-        <button class="btn" style="background: #9490EE;color: #eee;" data-bind=" click: function(){
-            showFileList(true); 
-            showFileInfo(false);
-        }">
-            <i class="fa fa-list" style="color: #eee"></i> {% trans "Show File List" %}</button>
+            
+        <button 
+            class="btn" 
+            style="background: #9490EE;color: #eee;" 
+            data-bind=" click: function(){showDatasetList(true); showFileList(false); showFileInfo(false);}"
+        >
+            <i class="fa fa-list" style="color: #eee"></i> {% trans "Show Dataset List" %}
+        </button>
         
         <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
-            <span>{% trans "Dataset" %}:</span>
+            <h2 class="file-workbench-filter-header">{% trans "Dataset" %}</h2>
             <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource()?.displayname"></span>
         </div>
-        <div style="margin-top: 0px">
-            <span>{% trans "File" %}:</span>
-            <span style="font-weight: bold" data-bind="text: selectedFile()?.file_details[0].name"></span>
+
+        <!-- ko if: $data.selectedFileDropdownData() && $data.filteredFiles().length -->
+        <div style="margin-top: 14px;">
+            <h2 class="file-workbench-filter-header">{% trans "File" %}</h2>
+    
+            <input 
+                style="display:inline-block;"
+                data-bind="
+                    select2Query: {
+                        value: selectedFileDropdownData,
+                        select2Config: {
+                            clickBubble: false,
+                            disabled: false,
+                            data: filteredFiles().map(file => { return {text: file.file_details[0].name, id: file.file_details[0].file_id } }),
+                            value: selectedFileDropdownData,
+                            initSelection: initSelection,
+                            closeOnSlect: false,
+                            allowClear: true,
+                            multiple: false,
+                        }
+                    }
+                "
+            >
         </div>
+        <!-- /ko -->
+
         <div data-bind="visible: selectedFile()?.file_details?.[0] != undefined && (selectedFile().file_details[0].name.endsWith('txt') || selectedFile().file_details[0].name.endsWith('dx'))">
             <div data-bind="hidden: currentRendererValid">
                 <div style="border: 1px solid #ddd; background-color: #F8735A; display: flex; color: #fff; padding: 10px 0px; align-items: center;">
