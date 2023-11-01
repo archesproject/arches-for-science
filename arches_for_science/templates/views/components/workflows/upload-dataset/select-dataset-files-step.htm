@@ -123,8 +123,6 @@
                         </div>
                         <div style="margin-bottom: 10px;"><span data-bind="text: ko.unwrap(selectedPart().datasetFiles).length"></span> {% trans "files" %}</div>
                     </div>
-                    <button style="width: 150px;" class="btn btn-md btn-mint" data-bind="visible: (self.showDatasetDetails() && selectedPart()?.nameDirty()), click: function(){$parent.saveFiles(); }" style="">Save</button>
-                    
                 </div>
             </div>
         </div>
@@ -145,6 +143,18 @@
     </div>
 </div>
 
+{% block form_buttons %}
+<div class="workbench-button-panel">
+    <button 
+        style="width: 100%;"
+        class="btn btn-success" 
+        data-bind="click: function(){$parent.saveFiles(); }, css: {disabled: !(self.showDatasetDetails() && selectedPart()?.nameDirty())}, attr: {disabled: !(self.showDatasetDetails() && selectedPart()?.nameDirty())}"
+    >
+        <i class="ion-android-cloud-done"></i>
+        <span>{% trans 'Save' %}</span>
+    </button>
+</div>
+{% endblock form_buttons %}
 
 <!--/ko-->
 <!--/ko-->
