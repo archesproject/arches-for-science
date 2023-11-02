@@ -15,7 +15,7 @@ define([
         this.selectedConfiguration = params.selectedConfiguration || ko.observable();
         this.showConfigurationPanel = ko.observable();
         this.editConfigurationId = ko.observable(undefined);
-    
+        this.showImporterList = ko.observable(true);
         this.applyConfigurationVisible = ko.observable(false);
         this.configurationName = ko.observable();
         this.configurationDescription = ko.observable();
@@ -54,6 +54,7 @@ define([
 
         this.cancelConfigEdit = () => {
             this.showConfigurationPanel(false);
+            this.showImporterList(true);
         };
 
         this.dataDelimiter.subscribe(newDelimiter => {
@@ -104,6 +105,7 @@ define([
             }
 
             this.showConfigurationPanel(false);
+            this.showImporterList(true);
         };
 
         const rendererConfigRefresh = (async() => {
@@ -156,6 +158,7 @@ define([
             this.includeDelimiter(configuration?.config?.includeDelimiter);
             this.selectedTransformation(configuration?.config?.transformation);
             this.showConfigurationPanel(true);
+            this.showImporterList(false);
         };
 
         this.deleteConfiguration = async(configuration) => {

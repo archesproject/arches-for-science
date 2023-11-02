@@ -1,6 +1,6 @@
 {% load i18n %}
-<div class="file-configuration" style="width: 100vw; margin: -20px; display: flex; height: calc(100% + 40px);">
-    <div class="uploaded-files" style="width: 500px; padding: 10px;">
+<div class="file-configuration" style="display: flex; height: 100%;">
+    <div class="uploaded-files" style="width: calc(39.3% - 4px);min-width: 493px; padding: 10px;">
         <h4><span>{% trans "Uploaded Files" %}</span></h4>
         <span class="file-config-instuctions">{% trans "Specify how to process the data files for viewing.  Any additional files (such as images) will be automatically displayed if possible." %}</span>
         <div class="file-button-container">
@@ -9,8 +9,8 @@
             <div class="file-buttons" data-bind="click:() => {fileMode('other'); selectedFiles([])}, css: {active: fileMode() != 'data'}" role="button">{% trans "Additional Files" %}</div>
         </div>
 
-        <div>
-            <div class="" style="border: 1px solid #ddd; width: 100%; padding: 0px 7px; z-index: 1; position: relative; height: 640px; overflow-y: scroll; overflow-x: hidden;" data-bind="visible: currentFiles().length > 0" style="overflow-y: scroll; height: 600px;">
+        <div style="max-height:calc(100% - 143px)">
+            <div style="border: 1px solid #ddd; width: 100%; padding: 0px 7px; z-index: 1; height: 100%; overflow-y: scroll; overflow-x: hidden;" data-bind="visible: currentFiles().length > 0" style="overflow-y: scroll;">
                 <table class="table table-striped" cellspacing="0" width="100%">
                     <thead>
                         <tr class="afs-table-header">
@@ -19,15 +19,15 @@
                             
                         </tr>
                     </thead>
-                    <tbody data-bind="dataTablesForEach: { data: currentFiles, as: 'file', dataTableOptions: fileTableConfig }">
-                        <tr>
+                    <tbody data-bind="dataTablesForEach: { data: currentFiles, as: 'file', dataTableOptions: dataFileTable }">
+                        <tr data-bind="css: {'active-file': $parent.visibleFile() == file.fileid && $parent.selectedFiles().length <= 1}">
                             <td>
                                 <div style="display: flex; align-items:center;">
                                     <div style="display: flex; align-items: center;">
-                                        <div style="margin: 0 5px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }"><i data-bind="visible: $parent.visibleFile() == file.fileid && $parent.selectedFiles().length <= 1" role="button" aria-label="{% trans "Selected File" %}" class="fa fa-eye"></i></div>
+                                        <div style="margin: 0 5px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }"></div>
                                         <input style="margin: 0px 5px 0px 0px;" type="checkbox" data-bind="visible: $parent.fileMode() == 'data', value: file.fileid, checked: $parent.selectedFiles">
                                     </div>
-                                    <div style="padding:1px 5px;min-height: 39px;align-items:center;display:flex;cursor:pointer; flex: 1" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); },text: file.details.name"></div>
+                                    <div style="padding:1px 5px;min-height: 39px;align-items:center;display:flex;cursor:pointer; flex: 1" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }, text: file.details.name"></div>
                                 </div>
                             </td>
                             <td style="padding:8px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }">
@@ -60,14 +60,14 @@
             </div>
             
         </div>
-        <div class="table-tools-container">
-            <div class="import-tool">x files</div>
-            <div class="import-tool">Select All</div>
-            <div class="import-tool">Remove Importer</div>
+        <div style="position: relative; top: -35px; left: 6px; max-width: 266px;" class="table-tools-container">
+            <div class="import-tool"><span data-bind="text:currentFiles().length"></span> <span data-bind="visible: currentFiles().length != 1">{% trans "files" %}</span><span data-bind="visible: currentFiles().length == 1">{% trans "file" %}</span> <span data-bind="visible: selectedFiles().length">(<span data-bind="text: selectedFiles().length"></span> {% trans "selected" %})</span></div>
+            <button class="import-tool" data-bind="click:() =>{toggleSelect()}"><span data-bind="visible: !selectedFiles().length">{% trans "Select All" %}</span><span data-bind="visible: selectedFiles().length">{% trans "Deselect All" %}</span></button>
+            <!-- <div class="import-tool">Remove Importer</div> -->
         </div>
     </div>
     <div style="cursor:col-resize; min-width:12px; background: #fcfcfc; border-right: 1px solid #eee; border-left: 1px solid #ddd;" class="resizer"></div>
-    <div class="active-files" style="width: 31.9659%; min-width: 550px; display: flex; flex-direction: column; padding: 10px 10px 20px 20px; z-index: 10;">
+    <div class="active-files" style="width: calc(33.3% - 4px);flex:1; display: flex; flex-direction: column; padding: 10px 10px 20px 20px; z-index: 10;">
         <div style="margin-bottom: 10px;" data-bind="visible: !(selectedFiles().length > 1) && fileMode() == 'data'">
             <h4 data-bind="text: selectedFile()?.details?.name"></h4>
             <div class="cm" style="border: 1px solid #ddd" >
@@ -123,14 +123,14 @@
             </div>
         </div>
     </div>
-    <div style="width: 550px; min-width: 550px; position: relative; padding: 10px 50px 20px 20px;" data-bind="visible: fileMode() == 'data'">
+    <div style="width: calc(27.3% - 4px); max-width: 470px; margin: 10px 20px;" data-bind="visible: fileMode() == 'data'">
         {% block importerConfiguration %}
         <!-- ko component: {
             name: 'importer-configuration',
             params: {
                 selectedConfiguration: selectedConfiguration,
                 rendererConfigs: rendererConfigs,
-                alert: alert
+                alert: alert, 
             }
         } --> 
         <!-- /ko -->

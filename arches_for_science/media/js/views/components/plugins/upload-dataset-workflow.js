@@ -166,6 +166,7 @@ define([
                     title: 'Select File Renderers',
                     name: 'select-renderers',
                     required: true,
+                    workflowstepclass: 'select-file-renderers-workflow-step',
                     informationboxdata: {
                         heading: 'Select file renderers',
                         text: 'Select an Importer configuration and data files to apply those configurations to those files.',
