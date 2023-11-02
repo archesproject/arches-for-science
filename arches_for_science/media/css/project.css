@@ -1365,6 +1365,31 @@
     cursor: pointer;
 }
 
+.screenshot-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.screenshot-table {
+    padding-left: 10px;
+    border-left: 1px solid #ddd;
+    margin-top: 10px;
+    min-width: 50%;
+}
+
+.screenshot-item {
+    display: inline-block;
+    width: 250px;
+    margin: 5px 3px;
+}
+
+#annotation-report {
+    display: inline-flex; 
+    flex-direction: column; 
+    width: 50%; 
+    padding: 10px;
+}
+
 /* Show the tooltip text when you mouse over the tooltip container */
 .tip:hover .tooltiptext {
   visibility: visible;
