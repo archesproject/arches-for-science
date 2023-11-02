@@ -1405,6 +1405,6 @@
     cursor: pointer;
 }
 
-.uploaded-files table .active-file{
+#container .uploaded-files table.dataTable.table-striped > tbody > tr.active-file {
     background-color: #dbf1f5;
 }
