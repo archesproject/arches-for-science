@@ -4,7 +4,7 @@
 <!--ko let: {self: $data} -->
 <div>
     <div style="padding: 0;" class="widget-input-label">Select Physical Thing</div>
-    <div style="display: flex; flex-direction: row; align-items:center">
+    <div style="display: flex; flex-direction: row; align-items:center; margin-top: 5px;">
         <div>
         <div style="display: inline-block;padding: 0 10;width: 600px;">
             <div>
@@ -26,12 +26,20 @@
                 </div>
             </div>
         </div></div>
-        <button style="height:40px; margin: 0 10px;" class="btn btn-info" data-bind="click: screenshot, css: {disabled: !leafletConfig() }">Add an Annotation Summary Image to Report</button>
+        
         <div style="flex: 0.66;"></div>
     </div>
 
     <div class="screenshot-container">
-        <div id="annotation-report" style="display: inline-flex; flex-direction: column; width: 50%; min-width: 50; max-width: 50%; padding: 10px;">
+        <div id="annotation-report" style="display: inline-flex; flex-direction: column; min-width: 50%; max-width: 50%; padding: 10px 10px 10px 0px;">
+            <div class="annotation-header">
+                <div style="display: inline-block; margin-top: 7px; font-size: 14px;">
+                    {% trans "Select a canvas, zoom/pan to position it for a screenshot" %}
+                </div>
+                <div style="display: block; float: inline-end;">
+                    <button style="height:32px; border: 1px solid steelblue; border-radius: 2px;" class="btn btn-info" data-bind="click: screenshot, css: {disabled: !leafletConfig() }">Grab Screenshot</button>
+                </div>
+            </div>
             <div data-bind="if: leafletConfig()">
                 <div id="leaflet-map-cllipped" style="border: solid 1px #ddd">
                     <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
@@ -85,10 +93,15 @@
             </div>
         </div>
         <div class="screenshot-table" data-bind="if: screenshots().length">
+            <div class="annotation-header">
+                <div style="display: inline-block; margin-top: 7px; font-size: 14px;">
+                    {% trans 'Screenshots (added to download file)' %}
+                </div>
+            </div>
             <div data-bind="foreach: {data: screenshots, as: 'screenshot'}">
                 <div class="screenshot-item">
                     <div>
-                        <img style="width: 100%;" data-bind="attr: {src: (screenshot.url || '/temp_file/' + screenshot.fileId)}">
+                        <img style="width: 100%; border: 1px solid #454545;" data-bind="attr: {src: (screenshot.url || '/temp_file/' + screenshot.fileId)}">
                         <div class="summary-value" style="float: inline-end; margin-top: 5px; margin-bottom: -8px;" data-bind="text: screenshot.imageName"></div>
                     </div>
                         <div style="display: flex; flex-direction: row; float: inline-end;">

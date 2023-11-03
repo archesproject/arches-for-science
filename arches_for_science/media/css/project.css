@@ -1372,7 +1372,6 @@
 
 .screenshot-table {
     padding-left: 10px;
-    border-left: 1px solid #ddd;
     margin-top: 10px;
     min-width: 50%;
 }
@@ -1388,6 +1387,15 @@
     flex-direction: column; 
     width: 50%; 
     padding: 10px;
+}
+
+.annotation-header {
+    height: 54px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background: #f9f9f9;
+    margin-bottom: 5px;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
