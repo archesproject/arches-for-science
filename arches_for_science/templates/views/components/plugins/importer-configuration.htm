@@ -1,19 +1,23 @@
 {% load i18n %}
 <div class="importer-configuration">
-    <div class="file-config-header">{% trans "Importer Configurations" %}</div>
-    <div class="file-config-instuctions">{% trans "Define how to import your x/y data" %}</div>
-    <div class="importer-list-container">
-        <!-- ko foreach: {data: rendererConfigs, as: 'configuration' } -->
-        <div style="display:flex;align-items: center;">
-            <input style="margin: 8px" type="radio" name="selectedConfiguration" data-bind="checked: $parent.selectedConfiguration, value: configuration.configid"></input>
-            <span style="flex:1"><span data-bind="text: configuration.name"></span><span data-bind="if: configuration.description"><span class="tip"><i class="fa fa-info-circle"></i><span class="tooltiptext" data-bind="text: configuration.description"></span></span></span></span>
-            <i class="fa fa-pencil" role="button" data-bind="click:()=>{$parent.loadConfiguration(configuration);}" aria-label="{% trans Edit %}"></i>
-            <i class="fa fa-trash" role="button" data-bind="click:()=>{$parent.deleteConfiguration(configuration);}" aria-label="{% trans Delete %}"></i>
+    <span data-bind="text: console.log(showImporterList(), showConfigurationPanel())"></span>
+    <div data-bind="visible: showImporterList">
+        <div class="file-config-header">{% trans "Importer Configurations" %}</div>
+        <div class="file-config-instuctions">{% trans "Define how to import your x/y data" %}</div>
+        <div class="importer-list-container">
+            <!-- ko foreach: {data: rendererConfigs, as: 'configuration' } -->
+            <div style="display:flex;align-items: center;">
+                <input style="margin: 8px" type="radio" name="selectedConfiguration" data-bind="checked: $parent.selectedConfiguration, value: configuration.configid"></input>
+                <span style="flex:1"><span data-bind="text: configuration.name"></span><span data-bind="if: configuration.description"><span class="tip"><i class="fa fa-info-circle"></i><span class="tooltiptext" data-bind="text: configuration.description"></span></span></span></span>
+                <i class="fa fa-pencil" role="button" data-bind="click:()=>{$parent.loadConfiguration(configuration);}" aria-label="{% trans Edit %}"></i>
+                <i class="fa fa-trash" role="button" data-bind="click:()=>{$parent.deleteConfiguration(configuration);}" aria-label="{% trans Delete %}"></i>
+            </div>
+            <!-- /ko -->
         </div>
-        <!-- /ko -->
+
+        <button class="btn btn-primary" data-bind="click:()=>{showConfigurationPanel(true), editConfigurationId(undefined)}">{% trans "Add Importer Configuration" %}</button>
     </div>
-    <button class="btn btn-primary" data-bind="click:()=>{showConfigurationPanel(true), editConfigurationId(undefined)}">{% trans "Add Importer Configuration" %}</button>
-    <div data-bind="visible: showConfigurationPanel" style="border: 1px solid #ddd; width: 470px; position: absolute; top: 4px;">
+    <div data-bind="visible: showConfigurationPanel" style="border: 1px solid #ddd; top: 4px;">
         <div style="background-color: #004577; color: #fff; padding: 10px; font-weight: bold;">{% trans "Add Importer Configuration" %}</div>
         <div style="background-color: #fafafa; overflow-y: scroll; height: calc(100vh - 337px);">
             <div class="importer-config-panel">

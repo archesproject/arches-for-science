@@ -35,7 +35,7 @@ define([
         this.parsedData = ko.observable();
         this.loadingFile = ko.observable(false);
         this.renderer = 'e93b7b27-40d8-4141-996e-e59ff08742f3'; // xy reader uuid
-        this.rendererUrl = `/renderer/${this.renderer}`;;
+        this.rendererUrl = `/renderer/${this.renderer}`;
         
         this.files.subscribe(() => {
             if(!this.rendererConfigs()){
@@ -62,6 +62,18 @@ define([
             this.additionalFiles(additionalFiles);
             this.fileMode.valueHasMutated();
         });
+
+        this.toggleSelect = () => {
+            if(!this.selectedFiles().length){
+                this.selectedFiles(this.dataFiles().map(file => file?.details?.file_id));
+                this.currentFiles([]);
+                this.currentFiles(this.dataFiles());
+            } else {
+                this.selectedFiles([]);
+                this.currentFiles([]);
+                this.currentFiles(this.dataFiles());      
+            }
+        };
 
         this.codeMirrorText = ko.observable();
         this.rendererConfigs = ko.observableArray();
@@ -186,7 +198,6 @@ define([
                     {name: 'mobilep', width: 320}
                 ]
             },
-            paging: false,
             searching: true,
             scrollCollapse: true,
             info: false,
@@ -225,12 +236,9 @@ define([
 
         this.dataFileTable = {
             ...this.fileTableConfig,
-            columns: Array(3).fill(null)
-        };
-
-        this.otherFileTable = {
-            ...this.fileTableConfig,
-            columns: Array(2).fill(null)
+            paging: true,
+            pageLength: 5,
+            lengthChange: false
         };
 
         const preparedRenderer = fileRenderers[this.renderer];
@@ -310,6 +318,7 @@ define([
             } else {
                 this.currentFiles(this.additionalFiles());
             }
+            this.currentFiles.valueHasMutated()
             this.selectedFile(undefined);
             this.selectedFiles([]);
             this.selectedConfiguration(undefined);
