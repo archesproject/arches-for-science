@@ -52,18 +52,17 @@ define([
                 key = 'DataTablesForEach_Initialized';
             ko.unwrap(options.data);
             var table;
-            if (!options.dataTableOptions.paging) {
                 table = $(element).closest('table').DataTable();
                 table.destroy();
-            }
             ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
             table = $(element).closest('table').DataTable(options.dataTableOptions);
 
-            if (options.dataTableOptions.paging) {
-                if (table.page.info().pages - ko.bindingHandlers.dataTablesForEach.page == 0)
+            if (options.dataTableOptions.paging && ko.bindingHandlers.dataTablesForEach.page > 0) {
+                if (table.page.info().pages - ko.bindingHandlers.dataTablesForEach.page == 0) {
                     table.page(--ko.bindingHandlers.dataTablesForEach.page).draw(false);
-                else
+                } else {
                     table.page(ko.bindingHandlers.dataTablesForEach.page).draw(false);
+                }
             }
             if (!ko.utils.domData.get(element, key) && (options.data || options.length))
                 ko.utils.domData.set(element, key, true);
