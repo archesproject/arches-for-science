@@ -1376,10 +1376,19 @@
     min-width: 50%;
 }
 
+.screenshot-delete {
+    cursor: pointer; 
+    color: #2B6BA0;
+}
+
+.screenshot-delete:hover {
+    color: #211F95;
+}
+
 .screenshot-item {
     display: inline-block;
     width: 250px;
-    margin: 5px 3px;
+    margin: 0px 6px 10px 0px;
 }
 
 #annotation-report {

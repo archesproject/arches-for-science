@@ -106,8 +106,7 @@
                     </div>
                         <div style="display: flex; flex-direction: row; float: inline-end;">
                             <div style="flex: 1">
-                                <a style="margin-right: 10px;" data-bind="attr: {download: screenshot.imageName, href: (screenshot.url || '/temp_file/' + screenshot.fileId)}"><i style="padding: 10px 5px;font-size:15px" class="fa fa-download"></i> {% trans "Download" %}</a>
-                                <a><i style="padding: 10px 5px; font-size:15px;" class="fa fa-trash" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}"></i> {% trans "Delete" %}</a>
+                                <a class="screenshot-delete" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}"><i style="padding: 10px 0px 10px 5px; font-size:15px;" class="fa fa-trash"></i> {% trans "Delete" %}</a>
                             </div>
                         </div>
                     </div>
