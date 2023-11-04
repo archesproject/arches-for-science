@@ -62,7 +62,7 @@
                             <td style="flex-grow: 2; max-width: 600px;" data-bind="text: $data.workflowname"></td>
                             <td style="flex-grow: 1; max-width: 200px;">
                                 <a 
-                                    data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
+                                    data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.pluginid}`}"
                                     style="text-decoration: underline; color: blue;"
                                 >{% trans 'Go to Workflow' %}</a>
                             </td>
@@ -115,7 +115,7 @@
                     href="javascript:void(0);" 
                     class="ep-help-toggle ep-help-close ep-tools ep-tools-right" 
                     style="border:none; box-sizing: content-box;"
-                    data-bind="click: function(){shouldShowWorkflowHelp(false)}"
+                    data-bind="click: function(){shouldShowWorkflowHelp(false); selectedHelpTemplate(null);}"
                 >
                     <div class="" data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Close Help" %}">
                         <i class="fa fa-times-circle fa-lg"></i>
@@ -123,36 +123,50 @@
                 </a>
             </div>
             
+            <!-- ko if: $data.helpTemplateData().length -->
             <div style="padding: 20px;">
                 <input 
                     data-bind="
                         select2Query: {
-                            value: selectedHelpTemplate,
                             select2Config: {
                                 clickBubble: false,
                                 disabled: false,
-                                data: [],
+                                data: helpTemplateData(),
                                 value: selectedHelpTemplate,
                                 closeOnSlect: false,
                                 allowClear: true,
                                 multiple: false,
+                                placeholder: {% trans "'Select A Workflow'" %}
                             }
                         }
                     "
                 >
             </div>
+            <!-- /ko -->
+
+            <!-- ko if: $data.helpTemplateUrl() -->
+                <iframe
+                    width="100%"
+                    height="100%"
+                    frameBorder="0"
+                    data-bind="attr: {src: $data.helpTemplateUrl()}"
+                >
+                </iframe>
+            <!-- /ko -->
         </div>
     
         <!-- Workflow Icons -->
         <div class="workflow-select-card-container" style="padding: 20px 40px;">
             <!-- ko foreach: {data: workflows, as: 'workflow'} -->
-            <a data-bind="attr: {href: workflow.url, title: workflow.name}" href="#"><div data-bind="style: {'background-color': workflow.bgColor}" class="workflow-select-card">
-                <h4 class="workflow-select-title" data-bind="text: workflow.name"></h4>
-                <div data-bind="style: {'background-color': workflow.circleColor}" class="workflow-select-wf-circle">
-                    <span><i data-bind="attr:{class: ('fa '+workflow.icon +' workflow-select-wf-icon')}"></i></span>
+            <a data-bind="attr: {href: workflow.url, title: workflow.name}" href="#">
+                <div data-bind="style: {'background-color': workflow.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: workflow.name"></h4>
+                    <div data-bind="style: {'background-color': workflow.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+workflow.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: workflow.config.description" class="workflow-select-desc"></p>
                 </div>
-                <p data-bind="text: workflow.desc" class="workflow-select-desc"></p>
-            </div></a>
+            </a>
             <!-- /ko -->
         </div>
     </div>

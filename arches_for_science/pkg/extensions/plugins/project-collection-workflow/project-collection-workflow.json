@@ -4,7 +4,14 @@
     "icon": "fa fa-file",
     "component": "views/components/plugins/project-collection-workflow",
     "componentname": "project-collection-workflow",
-    "config": {"show":false},
+    "config": {
+        "show": false, 
+        "is_workflow": true,
+        "thumbnailBackgroundColor": "#3e89cd",
+        "thumbnailCircleColor": "#6ea7d9",
+        "description": "Add objects to an existing project"
+    },
     "slug": "project-collection-workflow",
-    "sortorder": 0
+    "sortorder": 0,
+    "helptemplate": "project-collection-workflow-help"
 }

@@ -4,7 +4,14 @@
     "icon": "fa fa-flask",
     "component": "views/components/plugins/chemical-analysis-workflow",
     "componentname": "chemical-analysis-workflow",
-    "config": {"show":false},
+    "config": {
+        "show": false, 
+        "is_workflow": true,
+        "thumbnailBackgroundColor": "#5c61b7",
+        "thumbnailCircleColor": "#455486",
+        "description": "Upload chemical image files and select an image service"
+    },
     "slug": "chemical-analysis-workflow",
-    "sortorder": 1
+    "sortorder": 1,
+    "helptemplate": "chemical-analysis-workflow-help"
 }

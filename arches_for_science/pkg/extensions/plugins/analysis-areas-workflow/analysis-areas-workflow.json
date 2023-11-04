@@ -4,7 +4,14 @@
     "icon": "fa fa-pie-chart",
     "component": "views/components/plugins/analysis-areas-workflow",
     "componentname": "analysis-areas-workflow",
-    "config": {"show":false},
+    "config": {
+        "show": false, 
+        "is_workflow": true,
+        "thumbnailBackgroundColor": "#6ea2d8",
+        "thumbnailCircleColor": "#87b9e5",
+        "description": "Define regions of interest on an object or sample"
+    },
     "slug": "analysis-areas-workflow",
-    "sortorder": 1
+    "sortorder": 1,
+    "helptemplate": "analysis-areas-workflow-help"
 }

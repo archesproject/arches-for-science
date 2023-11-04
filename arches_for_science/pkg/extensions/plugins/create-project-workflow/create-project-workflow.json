@@ -4,7 +4,14 @@
     "icon": "fa fa-file",
     "component": "views/components/plugins/create-project-workflow",
     "componentname": "create-project-workflow",
-    "config": {"show":false},
+    "config": {
+        "show": false, 
+        "is_workflow": true,
+        "thumbnailBackgroundColor": "#9591ef",
+        "thumbnailCircleColor": "#b0adf3",
+        "description": "A research effort, study, or conservation project"
+    },
     "slug": "create-project-workflow",
-    "sortorder": 0
+    "sortorder": 0,
+    "helptemplate": "create-project-workflow-help"
 }
