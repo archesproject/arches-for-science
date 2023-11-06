@@ -448,7 +448,7 @@ define([
             const annotationLabelNodeid = "3e541cc6-859b-11ea-97eb-acde48001122";
             const annotationPolygonIdentifierNodeid = "97c30c42-8594-11ea-97eb-acde48001122";
             
-            if (!ko.unwrap(self.selectedAnalysisAreaInstance().data[annotationLabelNodeid])) {
+            if (!ko.unwrap(self.selectedAnalysisAreaInstance().data[annotationLabelNodeid]?.[arches.activeLanguage]?.value)) {
                 params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Name required", "Providing a name is required"));
                 return;
             }
