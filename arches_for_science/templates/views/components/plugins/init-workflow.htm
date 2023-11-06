@@ -145,30 +145,139 @@
             <!-- /ko -->
 
             <!-- ko if: $data.helpTemplateUrl() -->
+                <!-- ko if: $data.isHelpTemplateLoading() -->
+                    <div class="loading-mask" style="bottom: unset; right: unset; left: 30%"></div>
+                <!-- /ko -->
+                
                 <iframe
                     width="100%"
                     height="100%"
                     frameBorder="0"
-                    data-bind="attr: {src: $data.helpTemplateUrl()}"
+                    data-bind="
+                        style: { visibility: $data.isHelpTemplateLoading() ? 'hidden' : 'visible' },
+                        attr: {
+                            src: $data.helpTemplateUrl(), 
+                            onload: setTimeout(function(){$data.isHelpTemplateLoading(false)}, 500) 
+                        }
+                    "
                 >
                 </iframe>
             <!-- /ko -->
         </div>
     
         <!-- Workflow Icons -->
+        <!-- ko if: $data.workflows().length -->
         <div class="workflow-select-card-container" style="padding: 20px 40px;">
-            <!-- ko foreach: {data: workflows, as: 'workflow'} -->
-            <a data-bind="attr: {href: workflow.url, title: workflow.name}" href="#">
-                <div data-bind="style: {'background-color': workflow.config.thumbnailBackgroundColor}" class="workflow-select-card">
-                    <h4 class="workflow-select-title" data-bind="text: workflow.name"></h4>
-                    <div data-bind="style: {'background-color': workflow.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
-                        <span><i data-bind="attr:{class: ('fa '+workflow.icon +' workflow-select-wf-icon')}"></i></span>
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "a1667717-b7bd-4570-b27a-ec352c767e0e") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
                     </div>
-                    <p data-bind="text: workflow.config.description" class="workflow-select-desc"></p>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "ef3a374c-f795-4317-aaee-83e1493eabb6") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "730be1cd-0575-44d7-be68-1316c345a8fb") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
                 </div>
             </a>
             <!-- /ko -->
         </div>
+
+        <div class="workflow-select-card-container" style="padding: 20px 40px;">
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "1132c953-8af4-4acb-87c5-39c5b996799e") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "29512c4e-ed06-4a6b-ae2d-e423817b3f6e") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+        </div>
+
+        <div class="workflow-select-card-container" style="padding: 20px 40px;">
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "afedd8cd-1ba7-43ec-b3c5-d0fab03525ca") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "1132c953-5d8w-4acb-87c5-39c5b996799e") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+        </div>
+
+        <div class="workflow-select-card-container" style="padding: 20px 40px;">
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "c206cfc6-6b4a-481e-a018-8da72aeb7074") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+            <!-- ko with: workflows().find(workflow => workflow.pluginid === "af06e949-5e16-49f0-b23e-e8529e8ce321") -->
+            <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
+                <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
+                    <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
+                    <div data-bind="style: {'background-color': $data.config.thumbnailCircleColor}" class="workflow-select-wf-circle">
+                        <span><i data-bind="attr:{class: ('fa '+$data.icon +' workflow-select-wf-icon')}"></i></span>
+                    </div>
+                    <p data-bind="text: $data.config.description" class="workflow-select-desc"></p>
+                </div>
+            </a>
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
     </div>
 </div>
 

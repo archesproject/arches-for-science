@@ -47,9 +47,11 @@ define([
 
         this.shouldShowWorkflowHelp = ko.observable(false);
         this.helpTemplateUrl = ko.observable();
+        this.isHelpTemplateLoading = ko.observable();
         this.selectedHelpTemplate = ko.observable();
         this.selectedHelpTemplate.subscribe(helpTemplateName => {
             if (helpTemplateName) {
+                this.isHelpTemplateLoading(true);
                 this.helpTemplateUrl(arches.urls.help_template + `?template=${helpTemplateName}`)
             }
             else {
