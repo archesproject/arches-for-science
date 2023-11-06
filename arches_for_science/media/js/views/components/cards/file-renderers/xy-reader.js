@@ -24,6 +24,11 @@ define(['jquery',
             AfsInstrumentViewModel.apply(this, [params]);
             this.rendererUrl = `/renderer/${self.renderer}`;
 
+            // set defaults for chart title/axis
+            this.chartTitle('Data');
+            this.xAxisLabel('X Axis');
+            this.yAxisLabel('Y Axis');
+
             this.rendererConfigs = ko.observable([]);
 
             // on init, get available renderer configs for display to user.

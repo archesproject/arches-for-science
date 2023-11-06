@@ -14,7 +14,7 @@
             <!-- /ko -->
         </div>
 
-        <button class="btn btn-primary" data-bind="click:()=>{showConfigurationPanel(true), editConfigurationId(undefined)}">{% trans "Add Importer Configuration" %}</button>
+        <button class="btn btn-primary" data-bind="click:()=>{showConfigurationPanel(true); showImporterList(false); editConfigurationId(undefined)}">{% trans "Add Importer Configuration" %}</button>
     </div>
     <div data-bind="visible: showConfigurationPanel" style="border: 1px solid #ddd; top: 4px;">
         <div style="background-color: #004577; color: #fff; padding: 10px; font-weight: bold;">{% trans "Add Importer Configuration" %}</div>
