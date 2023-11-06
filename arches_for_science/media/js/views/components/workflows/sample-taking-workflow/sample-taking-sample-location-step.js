@@ -698,7 +698,11 @@ define([
                 self.selectSampleLocationInstance(undefined);
             })
             .fail(function(error){
-                console.log(error);
+                params.pageVm.alert(new params.form.AlertViewModel(
+                    "ep-alert-red",
+                    error.responseJSON.result.title,
+                    error.responseJSON.result.message,
+                ));
                 self.savingTile(false);                
             })
         };
