@@ -40,7 +40,14 @@
                     <button style="height:32px; border: 1px solid steelblue; border-radius: 2px;" class="btn btn-info" data-bind="click: screenshot, css: {disabled: !leafletConfig() }">Grab Screenshot</button>
                 </div>
             </div>
-            <div style="border: 1px solid #ddd" class="iiif-gallery-sequence" data-bind="if: canvases().length > 0">
+            
+            <div data-bind="if: leafletConfig()">
+                <div id="leaflet-map-cllipped" style="border: solid 1px #ddd">
+                    <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
+                </div>
+            </div>
+
+            <div style="border: 1px solid #ddd; border-top: none;" class="iiif-gallery-sequence" data-bind="if: canvases().length > 0">
                 <div class="iiif-gallery-sequence-canvases" data-bind="foreach: {data: canvases, as: 'canvas'}">
                     <div style="display: inline-block;">
                         <div style="text-align:center;" class="iiif-gallery-canvas" data-bind="
@@ -55,11 +62,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div data-bind="if: leafletConfig()">
-                <div id="leaflet-map-cllipped" style="border: solid 1px #ddd">
-                    <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
                 </div>
             </div>
             
