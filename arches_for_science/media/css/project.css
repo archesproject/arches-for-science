@@ -729,8 +729,7 @@
 
 .afs-image-service-list-item {
     display: inline-flex;
-    flex-direction: column;
-    align-items: baseline;
+    align-items: center;
     padding-left: 5px;
 }
 
@@ -1191,6 +1190,9 @@
     cursor: pointer;
     color: #213e5f;
     font-size: 14px;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .file-configuration input[type=radio]{
     margin:0;
@@ -1223,12 +1225,58 @@
     padding: 0;
 }
 
-.importer-configuration h4{
+.importer-configuration {
     position: relative;
     cursor: pointer;
     color: #213e5f;
     font-size: 14px;
+    margin-bottom: 0px;
 }
+
+.importer-config-panel {
+    padding: 2px 15px 15px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.importer-list-container div:hover {
+    background: #EBF6FC;
+}
+
+.file-config-header {
+    font-size: 14px;
+    color: #213e5f;
+    margin: 5px 0px 0px 0px;
+}
+
+.file-config-instuctions {
+    margin: 0px 0px 5px 0px;
+    font-weight: 400;
+    color: #666;
+    font-size: 13px;
+}
+
+.importer-config-panel input {
+    margin-top: 3px;
+    margin-bottom: 10px;
+    height: 28px;
+    font-size: 13px;
+}
+
+.importer-config-panel input::placeholder {
+    font-size: 12px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+
+.importer-config-panel textarea {
+    margin-top: 3px;
+}
+
+.importer-config-panel textarea::placeholder {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
 .importer-configuration input[type=radio]{
     margin:0;
 }
@@ -1240,6 +1288,10 @@
     display: flex;
     flex-direction: row;
     margin-top: 10px;
+    margin-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    width: 100%;
 }
 .file-configuration .file-buttons{
     flex: 1;
@@ -1247,11 +1299,18 @@
     align-items: center;
     display: flex;
     padding: 10px 20px;
-    background-color: #fdfdfd;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
 }
+
+.file-configuration .file-buttons:hover {
+    background: #fff;
+}
+
 .file-configuration .file-buttons.active {
     font-weight: bold;
+    font-size: 13px;
+    background: #fff;
 }
 .file-configuration .dataTables_wrapper .row:first-child{
     background-color: #ddd;
@@ -1284,6 +1343,13 @@
   z-index: 1;
 }
 
+.table-tools-container {
+    display: flex;
+    margin-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+}
+
 /* Show the tooltip text when you mouse over the tooltip container */
 .tip:hover .tooltiptext {
   visibility: visible;
@@ -1292,8 +1358,14 @@
     text-align: center;
     margin: 16px 0px 16px 30px;
     height:fit-content; 
-    background-color: #fde9ad;
+    background-color: #FFFF00;
+    border: 1px solid #9951C0;
+    border-radius: 2px;
+    color: #440468;
+    font-weight: 400;
     overflow-y: auto;
+    padding: 40px;
+    width: 600px;
 }
 
 .afs-error-message {
@@ -1306,4 +1378,32 @@
 .file-workbench-file.selected,
 .file-workbench-file.selected:hover {
     background: #b4d1f0;
+}
+
+.select-file-renderers-workflow-step {
+    height: 100%;
+}
+
+.uploaded-files div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin: 0 5px;
+}
+
+
+.uploaded-files .import-tool {
+    color: #579ddb;
+    background-color: transparent;
+    border: none;
+    margin: 0 6px;
+    min-width: 0;
+    padding: 0;
+    max-width: 266px;
+}
+
+.uploaded-files button.import-tool:hover {
+    color: #156AB7;
+    cursor: pointer;
+}
+
+#container .uploaded-files table.dataTable.table-striped > tbody > tr.active-file {
+    background-color: #dbf1f5;
 }

@@ -437,7 +437,9 @@ define([
                 });
                 self.analysisAreaInstances.remove(parentPhysicalThing);
                 self.card.tiles.remove(parentPhysicalThing);
-                self.selectAnalysisAreaInstance(undefined);
+                // Clear the selectedAnalysisAreaInstance directly rather than via
+                // selectAnalysisAreaInstance() to avoid adding it back to the canvas.
+                self.selectedAnalysisAreaInstance(undefined);
                 self.resetAnalysisAreasTile();
             });
         };
@@ -778,7 +780,6 @@ define([
                                     self.selectAnalysisAreaInstance(analysisAreaInstance);
                                 }
                                 else {
-                                    self.tile.reset();
                                     self.resetCanvasFeatures();
     
                                     var selectedFeature = ko.toJS(self.selectedAnalysisAreaInstanceFeatures().find(function(selectedAnalysisAreaInstanceFeature) {

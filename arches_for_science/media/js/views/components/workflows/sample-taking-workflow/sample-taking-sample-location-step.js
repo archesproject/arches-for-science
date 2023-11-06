@@ -548,7 +548,9 @@ define([
                 });
                 self.sampleLocationInstances.remove(selectedSampleLocationInstance);
                 self.card.tiles.remove(selectedSampleLocationInstance);
-                self.selectSampleLocationInstance(undefined);
+                // Clear the selectedSampleLocationInstance directly rather than via
+                // selectSampleLocationInstance() to avoid adding it back to the canvas.
+                self.selectedSampleLocationInstance(undefined);
                 self.resetSampleLocationTile();
             });
         }
@@ -922,7 +924,6 @@ define([
                                     self.selectSampleLocationInstance(sampleLocationInstance);
                                 }
                                 else {
-                                    self.tile.reset();
                                     self.resetCanvasFeatures();
     
                                     const selectedFeature = ko.toJS(self.selectedSampleLocationInstanceFeatures().find(function(selectedSampleLocationInstanceFeature) {

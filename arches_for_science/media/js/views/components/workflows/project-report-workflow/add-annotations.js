@@ -190,8 +190,10 @@ define([
         this.screenshot = async() => {
             if (!self.leafletConfig()) { return; }
             const currentdate = new Date();
-            const url = await domToImage.toPng(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
-            const blob = await domToImage.toBlob(document.getElementById('annotation-report'), {bgcolor: '#ffffff'});
+            const leafletMapElement = document.getElementById('leaflet-map');
+            const leafletMapPane = document.getElementsByClassName('leaflet-map-pane')[0];
+            const url = await domToImage.toPng(leafletMapPane, {bgcolor: '#ffffff', width: leafletMapElement.offsetWidth, height: leafletMapElement.offsetHeight});
+            const blob = await domToImage.toBlob(leafletMapPane, {bgcolor: '#ffffff', width: leafletMapElement.offsetWidth, height: leafletMapElement.offsetHeight});
             const imageName = `${currentdate.getFullYear()}-${currentdate.getMonth() + 1}-${currentdate.getDate()} - ${Date.now()}.png`;
             self.screenshots.push({imageName, url, blob});
         };
