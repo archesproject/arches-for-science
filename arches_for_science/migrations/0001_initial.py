@@ -11,6 +11,432 @@ class Migration(migrations.Migration):
         ("models", "10121_workflowhistory"),
     ]
 
+    def add_plugins(apps, schema_editor):
+        Plugin = apps.get_model("models", "Plugin")
+
+        # Deletes current review-dataset workflow if it exists, it has an invalid pluginid
+        review_dataset_workflow_plugin_query = Plugin.objects.filter(componentname="review-dataset-workflow")
+        if len(review_dataset_workflow_plugin_query):
+            review_dataset_workflow_plugin = review_dataset_workflow_plugin_query[0]
+            review_dataset_workflow_plugin.delete()
+
+        # Add Chemical Analysis Images Workflow
+        Plugin.objects.update_or_create(
+            pluginid="af06e949-5e16-49f0-b23e-e8529e8ce321",
+            name="Add Chemical Analysis Images",
+            icon="fa fa-pie-chart",
+            component="views/components/plugins/add-chemical-analysis-images-workflow",
+            componentname="add-chemical-analysis-images-workflow",
+            config={
+                "show": False,
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#7a7ecf",
+                "thumbnailCircleColor": "#59699e",
+                "description": "Add images to a chemical analysis"
+            },
+            slug="add-chemical-analysis-images-workflow",
+            sortorder=1,
+            helptemplate="add-chemical-analysis-images-workflow-help"
+        )
+
+        # Analysis Areas Workflow
+        Plugin.objects.update_or_create(
+            pluginid="29512c4e-ed06-4a6b-ae2d-e423817b3f6e",
+            name="Analysis Areas",
+            icon="fa fa-pie-chart",
+            component="views/components/plugins/analysis-areas-workflow",
+            componentname="analysis-areas-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#6ea2d8",
+                "thumbnailCircleColor": "#87b9e5",
+                "description": "Define regions of interest on an object or sample"
+            },
+            slug="analysis-areas-workflow",
+            sortorder=1,
+            helptemplate="analysis-areas-workflow-help"
+        )
+
+        # Chemical Analysis Workflow
+        Plugin.objects.update_or_create(
+            pluginid="c206cfc6-6b4a-481e-a018-8da72aeb7074",
+            name="Chemical Analysis Data Upload",
+            icon="fa fa-flask",
+            component="views/components/plugins/chemical-analysis-workflow",
+            componentname="chemical-analysis-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#5c61b7",
+                "thumbnailCircleColor": "#455486",
+                "description": "Upload chemical image files and select an image service"
+            },
+            slug="chemical-analysis-workflow",
+            sortorder=1,
+            helptemplate="chemical-analysis-workflow-help"
+        )
+
+        # Create Project Workflow
+        Plugin.objects.update_or_create(
+            pluginid="a1667717-b7bd-4570-b27a-ec352c767e0e",
+            name="New Project",
+            icon="fa fa-file",
+            component="views/components/plugins/create-project-workflow",
+            componentname="create-project-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#9591ef",
+                "thumbnailCircleColor": "#b0adf3",
+                "description": "A research effort, study, or conservation project"
+            },
+            slug="create-project-workflow",
+            sortorder=0,
+            helptemplate="create-project-workflow-help"
+        )
+
+        # Init Workflow
+        Plugin.objects.update_or_create(
+            pluginid="49507fb0-89c6-47b7-b506-9b2b29a3b8d8",
+            name="Workflows",
+            icon="fa fa-play-circle",
+            component="views/components/plugins/init-workflow",
+            componentname="init-workflow",
+            config={"show": True},
+            slug="init-workflow",
+            sortorder=0
+        )
+
+        # Project Collection Workflow
+        Plugin.objects.update_or_create(
+            pluginid="ef3a374c-f795-4317-aaee-83e1493eabb6",
+            name="Update Project Collection",
+            icon="fa fa-file",
+            component="views/components/plugins/project-collection-workflow",
+            componentname="project-collection-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#3e89cd",
+                "thumbnailCircleColor": "#6ea7d9",
+                "description": "Add objects to an existing project"
+            },
+            slug="project-collection-workflow",
+            sortorder=0,
+            helptemplate="project-collection-workflow-help"
+        )
+
+        # Project Report Workflow
+        Plugin.objects.update_or_create(
+            pluginid="730be1cd-0575-44d7-be68-1316c345a8fb",
+            name="Project Report",
+            icon="fa fa-paperclip",
+            component="views/components/plugins/project-report-workflow",
+            componentname="project-report-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#3e89cd",
+                "thumbnailCircleColor": "#6ea7d9",
+                "description": "Project Report Workflow"
+            },
+            slug="project-report-workflow",
+            sortorder=1,
+            helptemplate="project-report-workflow-help"
+        )
+
+        # Review Dataset Workflow
+        Plugin.objects.update_or_create(
+            pluginid="129d18d4-261a-4a3c-b46e-cf74e71d848c",
+            name="Review Dataset",
+            icon="fa fa-files-o",
+            component="views/components/plugins/review-dataset-workflow",
+            componentname="review-dataset-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#3e89cd",
+                "thumbnailCircleColor": "#6ea7d9",
+                "description": "Review digital data files generated by a lab instrument"
+            },
+            slug="review-dataset-workflow",
+            sortorder=1,
+            helptemplate="review-dataset-workflow-help"
+        )
+
+        # Sample Taking Workflow
+        Plugin.objects.update_or_create(
+            pluginid="1132c953-8af4-4acb-87c5-39c5b996799e",
+            name="Sample Taking",
+            icon="fa fa-file",
+            component="views/components/plugins/sample-taking-workflow",
+            componentname="sample-taking-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#87bdeb",
+                "thumbnailCircleColor": "#a6cdf1",
+                "description": "An activity to obtain a portion of an object for analysis"
+            },
+            slug="sample-taking-workflow",
+            sortorder=1,
+            helptemplate="sample-taking-workflow-help"
+        )
+
+        # Upload Dataset Workflow
+        Plugin.objects.update_or_create(
+            pluginid="afedd8cd-1ba7-43ec-b3c5-d0fab03525ca",
+            name="Upload XY Data",
+            icon="fa fa-upload",
+            component="views/components/plugins/upload-dataset-workflow",
+            componentname="upload-dataset-workflow",
+            config={
+                "show": False, 
+                "is_workflow": True,
+                "thumbnailBackgroundColor": "#408acd",
+                "thumbnailCircleColor": "#6fa8d9",
+                "description": "Digital spectral data files generated by a lab instrument"
+            },
+            slug="upload-dataset-workflow",
+            sortorder=1,
+            helptemplate="upload-dataset-workflow-help"
+        )
+
+    def add_reports(apps, schema_editor):
+        ReportTemplate = apps.get_model("models", "ReportTemplate")
+
+        # Collection or Set Template
+        ReportTemplate.objects.update_or_create(
+            name="Collection or Set Template",
+            component="views/components/reports/collection-set",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Collection or Set report",
+            componentname="collection-set-report",
+            templateid="b5380d34-15ef-4a38-95c0-df228068916d",
+            preload_resource_data=False
+        )
+
+        # Digital Resource Template
+        ReportTemplate.objects.update_or_create(
+            name="Digital Resource Template",
+            component="views/components/reports/digital-resource",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Digital Resource report",
+            componentname="digital-resource-report",
+            templateid="e6390e54-31c4-4055-b064-ea9296c1c13a",
+            preload_resource_data=False
+        )
+
+        # Group Template
+        ReportTemplate.objects.update_or_create(
+            name="Group Template",
+            component="views/components/reports/group",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Group report",
+            componentname="group-report",
+            templateid="3a9fd7d1-f065-4777-b664-3fda0eb39ffe",
+            preload_resource_data=False
+        )
+
+        # Instrument Template
+        ReportTemplate.objects.update_or_create(
+            name="Instrument Template",
+            component="views/components/reports/instrument",
+            defaultconfig={ 
+                "uncompacted_reporting": True
+            },
+            description="Instrument report",
+            componentname="instrument-report",
+            templateid="c2edf720-9db0-4029-a102-48e6762ded79",
+            preload_resource_data=False
+        )
+
+        # Modification Template
+        ReportTemplate.objects.update_or_create(
+            name="Modification Template",
+            component="views/components/reports/modification",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Modification report",
+            componentname="modification-report",
+            templateid="f02f4b69-08d9-49fa-a4d1-94ef8178fbce",
+            preload_resource_data=False
+        )
+
+        # Observation Template
+        ReportTemplate.objects.update_or_create(
+            name="Observation Template",
+            component="views/components/reports/observation",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Observation report",
+            componentname="observation-report",
+            templateid="e581f911-185b-4456-873d-f83b46fd89ec",
+            preload_resource_data=False
+        )
+
+        # Period Template
+        ReportTemplate.objects.update_or_create(
+            name="Period Template",
+            component="views/components/reports/period",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Period report",
+            componentname="period-report",
+            templateid="9f6b087b-12f4-4436-8bfc-257d1665ba40",
+            preload_resource_data=False
+        )
+
+        # Person Template
+        ReportTemplate.objects.update_or_create(
+            name="Person Template",
+            component="views/components/reports/person",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Person report",
+            componentname="person-report",
+            templateid="15d3ab75-1191-41f0-a766-e7e8ce7b9ca9",
+            preload_resource_data=False
+        )
+
+        # Physical Thing Template
+        ReportTemplate.objects.update_or_create(
+            name="Physical Thing Template",
+            component="views/components/reports/physical-thing",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Physical Thing report",
+            componentname="physical-thing-report",
+            templateid="b3056c21-33c4-4055-b064-ea9296c1c13a",
+            preload_resource_data=False
+        )
+
+        # Place Template
+        ReportTemplate.objects.update_or_create(
+            name="Place Template",
+            component="views/components/reports/place",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Place report",
+            componentname="place-report",
+            templateid="34b7109d-2c0a-47fa-a307-4e361e142bfe",
+            preload_resource_data=False
+        )
+
+        # Project Template
+        ReportTemplate.objects.update_or_create(
+            name="Project Template",
+            component="views/components/reports/project",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Project report",
+            componentname="project-report",
+            templateid="2b124304-6e42-4c0c-8161-14c010dcef71",
+            preload_resource_data=False
+        )
+
+        # Provenance Activity Template
+        ReportTemplate.objects.update_or_create(
+            name="Provenance Activity Template",
+            component="views/components/reports/provenance-activity",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="provenance Activity report",
+            componentname="provenance-activity-report",
+            templateid="1a51566c-4ba0-4633-b717-18f629350c9c",
+            preload_resource_data=False
+        )
+
+        # Sampling Activity Template
+        ReportTemplate.objects.update_or_create(
+            name="Sampling Activity Template",
+            component="views/components/reports/sampling-activity",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Sampling Activity report",
+            componentname="sampling-activity-report",
+            templateid="4c864659-fc0d-45ec-a4da-c8fb8a7ec24e",
+            preload_resource_data=False
+        )
+
+        # Textual Work Template
+        ReportTemplate.objects.update_or_create(
+            name="Textual Work Template",
+            component="views/components/reports/textual-work",
+            defaultconfig={
+                "uncompacted_reporting": True
+            },
+            description="Textual Work report",
+            componentname="textual-work-report",
+            templateid="590a02ad-7d47-4b29-90a3-2e29aada677d",
+            preload_resource_data=False
+        )
+
+        # Thematic Work Template
+        ReportTemplate.objects.update_or_create(
+            name="Thematic Template",
+            component="views/components/reports/thematic",
+            defaultconfig={},
+            description="Thematic report template",
+            componentname="thematic-report",
+            preload_resource_data=False,
+            templateid="c560f22a-99b9-4a1c-b805-0891bbe63ada"
+        )
+
+        # Visual Work Template
+        ReportTemplate.objects.update_or_create(
+            name="Visual Work Template",
+            component="views/components/reports/visual-work",
+            defaultconfig={
+                "tabs": [{
+                        "icon": "fa fa-info",
+                        "name": "Identity",
+                        "nodegroup_ids": []
+                    },
+                    {
+                        "icon": "fa fa-chain",
+                        "name": "Links",
+                        "nodegroup_ids": []
+                    }
+                ],
+                "activeTabIndex": 1
+            },
+            description="Visual Work report",
+            componentname="visual-work-report",
+            templateid="c4167d32-33c4-4055-b064-ea9296c1c13a"
+        )
+
+    def add_card_components(apps, schema_editor):
+        CardComponent = apps.get_model("models", "CardComponent")
+
+        # Physical Thing IIIF Card
+        CardComponent.objects.update_or_create(
+            componentid="10ae2f00-cbda-4a0d-8ca2-5af3b46b37ad",
+            name="Physical Thing IIIF Card",
+            description="",
+            component="views/components/cards/physical-thing-iiif-card",
+            componentname="physical-thing-iiif-card",
+            defaultconfig={
+                "defaultManifest": ""
+            }
+        )
+
     operations = [
         migrations.CreateModel(
             name='RendererConfig',
@@ -26,4 +452,7 @@ class Migration(migrations.Migration):
                 'managed': True,
             },
         ),
+        migrations.RunPython(add_plugins, migrations.RunPython.noop),
+        migrations.RunPython(add_reports, migrations.RunPython.noop),
+        migrations.RunPython(add_card_components, migrations.RunPython.noop),
     ]
