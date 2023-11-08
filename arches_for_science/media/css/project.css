@@ -1045,29 +1045,43 @@
     margin: 0;
 }
 
+.download-project-files-step {
+    padding-left: 20px;
+}
+
 .download-project-files-step .file-list-label {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 400;
     color: #2b547c;
-    padding: 10px 10px;
+    padding: 10px 0px 5px 0px;
     margin-bottom: 0px;
 }
 
 .download-project-files-step .expand-select-button {
-    padding: 0.3rem 1rem;
-    font-size: 1rem;
-    background-color: #ebeef0;
-    border-radius: 5px;
+    padding: 0.5rem 3rem;
+    font-size: 1.25rem;
+    background-color: #fafafa;
+    border-radius: 2px;
     cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.download-project-files-step .expand-select-button:hover {
+    background-color: #f1f1f1;
+}
+
+.download-project-files-step .expand-select-button:active {
+    background-color: #f1f1f1;
 }
 
 .download-project-files-step .file-list-container {
-    padding-bottom: 10px;
+    padding-bottom: 0px;
 }
 
 .download-project-files-step .file-list-container .dataTables_wrapper {
     padding: 0px 20px;
     margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 
 .download-project-files-step .file-download-button {
@@ -1076,14 +1090,18 @@
 }
 
 .download-project-files-step .expand-select-buttons {
-    padding: 10px;}
+    padding: 10px 10px 15px 0px;
+}
 
 .download-project-files-step .observation-list {
-    display: felx;
+    display: flex;
     font-size: 1.4rem;
     color: #2b547c;
     padding: 10px 10px;
     cursor: pointer;
+    border: 1px solid #ddd;
+    background: #f3f3f3;
+    margin-bottom: 5px;
 }
 
 .download-project-files-step .file-listing-link {
@@ -1102,8 +1120,8 @@
 
 .template-format-heading {
     padding-left: 25px;
-    font-weight: bold;
-    font-size: 1.5em;
+    font-weight: 400;
+    font-size: 1.25em;
     color: #2b547c;
 }
 
@@ -1118,9 +1136,10 @@
 }
 
 .template-option-label {
-    font-size: 1.25em;
-    font-weight: 500;
+    font-size: 1.15em;
+    font-weight: 400;
     color: #004577;
+    margin-left: -20px;
 }
 
 .template-option-description {
@@ -1348,6 +1367,58 @@
     margin-top: 5px;
     padding-left: 5px;
     padding-bottom: 10px;
+}
+
+.import-tool {
+    color: #579ddb;
+    margin-right: 10px;
+}
+
+.import-tool:hover {
+    color: #156AB7;
+    cursor: pointer;
+}
+
+.screenshot-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.screenshot-table {
+    padding-left: 10px;
+    margin-top: 10px;
+    min-width: 50%;
+}
+
+.screenshot-delete {
+    cursor: pointer; 
+    color: #2B6BA0;
+}
+
+.screenshot-delete:hover {
+    color: #211F95;
+}
+
+.screenshot-item {
+    display: inline-block;
+    width: 250px;
+    margin: 0px 6px 10px 0px;
+}
+
+#annotation-report {
+    display: inline-flex; 
+    flex-direction: column; 
+    width: 50%; 
+    padding: 10px;
+}
+
+.annotation-header {
+    height: 54px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background: #f1f1f1;
+    margin-bottom: 5px;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
