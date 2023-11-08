@@ -25,7 +25,7 @@
     <div class="file-list-container" data-bind="if: observation.relatedFiles().length > 0">
         <div class="observation-list" data-bind="click: function() { observation.expanded(!observation.expanded()); }">
             <span>
-                <i class="fa" data-bind="css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()}"></i>
+                <i style="padding-right: 5px;" class="fa" data-bind="css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()}"></i>
             </span>
             <span data-bind="text: observation.name"></span>
         </div>

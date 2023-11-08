@@ -67,15 +67,11 @@
                     <thead>
                         <tr>
                             <th>{% trans "File Name:" %}</th>
-                            <th>{% trans "Interpretation" %}</th>
-                            <th>{% trans "File Parameters" %}</th>
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: {data: fileList, as: 'file'}">
                         <tr>
                             <td><div class="summary-value" data-bind="text: file.name"></div></td>
-                            <td><div class="summary-value" data-bind="text: file.interpretation"></div></td>
-                            <td><div class="summary-value" data-bind="text: file.parameter"></div></td>
                         </tr>
                     <tbody>
                 </table>
