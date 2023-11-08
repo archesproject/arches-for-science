@@ -45,7 +45,6 @@ define([
         });
 
         this.fileTableConfig = {
-            info: false,
             columns: Array(4).fill(null)
         };
 
