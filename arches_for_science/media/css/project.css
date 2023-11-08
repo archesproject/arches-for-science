@@ -1057,23 +1057,6 @@
     margin-bottom: 0px;
 }
 
-.download-project-files-step .expand-select-button {
-    padding: 0.5rem 3rem;
-    font-size: 1.25rem;
-    background-color: #fafafa;
-    border-radius: 2px;
-    cursor: pointer;
-    border: 1px solid #ddd;
-}
-
-.download-project-files-step .expand-select-button:hover {
-    background-color: #f1f1f1;
-}
-
-.download-project-files-step .expand-select-button:active {
-    background-color: #f1f1f1;
-}
-
 .download-project-files-step .file-list-container {
     padding-bottom: 0px;
 }
@@ -1087,10 +1070,6 @@
 .download-project-files-step .file-download-button {
     display: inline-flex;
     padding: 10px;
-}
-
-.download-project-files-step .expand-select-buttons {
-    padding: 10px 10px 15px 0px;
 }
 
 .download-project-files-step .observation-list {
@@ -1303,7 +1282,8 @@
     border: 1px solid #ddd;
     width: 100%;
 }
-.file-configuration .file-button-container{
+
+.file-configuration .file-button-container {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
@@ -1312,7 +1292,8 @@
     position: relative;
     width: 100%;
 }
-.file-configuration .file-buttons{
+
+.file-configuration .file-buttons {
     flex: 1;
     justify-content: center;
     align-items: center;
@@ -1460,7 +1441,8 @@
 }
 
 
-.uploaded-files .import-tool {
+.uploaded-files .import-tool,
+.project-file-selection {
     color: #579ddb;
     background-color: transparent;
     border: none;
@@ -1470,7 +1452,8 @@
     max-width: 266px;
 }
 
-.uploaded-files button.import-tool:hover {
+.uploaded-files button.import-tool:hover,
+button.project-file-selection:hover {
     color: #156AB7;
     cursor: pointer;
 }

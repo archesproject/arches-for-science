@@ -30,6 +30,20 @@ define([
             });
         });
 
+        this.numberOfSelectedFiles = ko.computed(() => {
+            const count = self.relatedObservations().reduce((acc, observation) => {
+                return acc + observation.relatedFiles().filter(file => file.selected()).length;
+            }, 0);
+            return count;
+        });
+
+        this.numberOfFiles = ko.computed(() => {
+            const count = self.relatedObservations().reduce((acc, observation) => {
+                return acc + observation.relatedFiles().length;
+            }, 0);
+            return count;
+        });
+
         this.fileTableConfig = {
             columns: Array(4).fill(null)
         };
@@ -40,7 +54,11 @@ define([
             });
         };
 
-        this.selectAll = function(bool) {
+        this.toggleSelection = function() {
+            let bool = false;
+            if (self.numberOfSelectedFiles() === 0) {
+                bool = true;
+            }
             self.relatedObservations().forEach((observation) => {
                 observation.relatedFiles().forEach(file => file.selected(bool));
             });
