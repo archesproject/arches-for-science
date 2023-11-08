@@ -15,6 +15,8 @@ import arches.app.utils.task_management as task_management
 import arches_for_science.tasks as tasks
 from arches_templating.views.template import TemplateView
 
+logger = logging.getLogger(__name__)
+
 
 class FileDownloader(View):
     def post(self, request):
@@ -47,7 +49,7 @@ class FileDownloader(View):
         screenshots = [{"fileid": i["fileId"], "name": i["imageName"]} for i in json_data["annotationScreenshots"]]
         temp_files = generated_reports + screenshots
 
-        project_name = files[0]["project"]
+        project_name = json_data["projectDetails"][0]["displayname"]
         userid = request.user.id
 
         if len(files) + len(temp_files) == 0:
@@ -89,10 +91,13 @@ class FileDownloader(View):
         skipped_files = []
         size_limit = 104857600  # 100MByte
         for file in all_files:
-            if file["file"].size >= size_limit:
-                skipped_files.append({"name": file["name"], "fileid": file["fileid"]})
-            else:
-                download_files.append({"name": file["name"], "downloadfile": file["file"]})
+            try:
+                if file["file"].size >= size_limit:
+                    skipped_files.append({"name": file["name"], "fileid": file["fileid"]})
+                else:
+                    download_files.append({"name": file["name"], "downloadfile": file["file"]})
+            except:
+                logger.warn(_("Unable to locate {}".format(file["name"])))
 
         if len(download_files) > 0:
             zip_stream = zip_utils.create_zip_file(download_files, "downloadfile")

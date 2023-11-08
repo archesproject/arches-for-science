@@ -80,11 +80,11 @@ define([
                     ],
                 },
                 {
-                    title: 'Download Files',
+                    title: 'Select Files',
                     name: 'download-project-files',
                     informationboxdata: {
-                        heading: 'Download Files',
-                        text: 'Download from a list of files related to the project',
+                        heading: 'Select Files',
+                        text: 'Select files from a list of files related to the project',
                     },
                     layoutSections: [
                         {

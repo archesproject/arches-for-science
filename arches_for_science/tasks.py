@@ -23,7 +23,7 @@ def download_project_files_task(userid, files, temp_files, project_name):
     search_history_obj = SearchExportHistory.objects.get(pk=exportid) if exportid else None
 
     msg = _(
-        "The report(s) and the related file(s) for the project '{}' are ready to download. You have 24 hours to download your files before they are automatically removed."
+        "The report(s) and the related file(s) for the project '{}' are ready for download."
     ).format(project_name)
     notiftype_name = "Search Export Download Ready"
     context = dict(

@@ -26,13 +26,13 @@ define([
 
         if (ko.unwrap(params.value)) {
             const files =  params.value().files;
-            files?.forEach((file)=>{
+            files?.forEach((file) => {
                 self.startIds.push(file.fileid);                    
                 self.selectedFiles.push(file);
             });
         };
 
-        this.selectedFiles.subscribe(val => {
+        this.selectedFiles.subscribe((val) => {
             params.value({ files: val });
         });
 
@@ -55,8 +55,8 @@ define([
 
         const addSelectedFiles = () => {
             self.selectedFiles.removeAll();
-            self.relatedObservations().forEach((observation)=>{
-                observation.relatedFiles().forEach((file)=>{
+            self.relatedObservations().forEach((observation) => {
+                observation.relatedFiles().forEach((file) => {
                     if (file.selected()) {
                         self.selectedFiles.push({'name': file.name, 'fileid': file.file_id, 'project': self.projectName});
                     }
@@ -66,8 +66,8 @@ define([
 
         params.form.reset = () => {
             self.selectedFiles.removeAll();
-            self.relatedObservations().forEach((observation)=>{
-                observation.relatedFiles().forEach((file)=>{
+            self.relatedObservations().forEach((observation) => {
+                observation.relatedFiles().forEach((file) => {
                     if (self.startIds().includes(file.file_id)) {
                         file.selected(true);
                     } else {
@@ -82,26 +82,26 @@ define([
             const projectResponse = await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false");
             const projectJson = await projectResponse.json();
 
-            const collectionForProject = projectJson.related_resources.find(res => res.graph_id === collectionGraphId).resourceinstanceid;
+            const collectionForProject = projectJson.related_resources.find((res) => res.graph_id === collectionGraphId).resourceinstanceid;
             const collectionResponse = await window.fetch(arches.urls.related_resources + collectionForProject  + "?paginate=false");
             const collectionJson = await collectionResponse.json();
 
-            const projectPhysicalThings = collectionJson.related_resources.filter(res => res.graph_id === physicalThingGraphId)
-                .filter(res => {
-                    const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === removalFromObjectNodegroupId);
-                    const removedFrom = removedFromTile?.data[removedFromNodeId].map(rr => rr.resourceId);
-                    return removedFrom?.some(res => physicalThings.includes(res)) || physicalThings.includes(res.resourceinstanceid);
-                }).map(res => res.resourceinstanceid);
+            const projectPhysicalThings = collectionJson.related_resources.filter((res) => res.graph_id === physicalThingGraphId)
+                .filter((res) => {
+                    const removedFromTile = res.tiles.find((tile) => tile.nodegroup_id === removalFromObjectNodegroupId);
+                    const removedFrom = removedFromTile?.data[removedFromNodeId].map((rr) => rr.resourceId);
+                    return removedFrom?.some((res) => physicalThings.includes(res)) || physicalThings.includes(res.resourceinstanceid);
+                }).map((res) => res.resourceinstanceid);
 
             self.projectName = projectJson.resource_instance.displayname;
-            const projectObservations = projectJson.related_resources.filter(res => res.graph_id == observationGraphId)
-                .filter(res => {
-                    const objectTile = res.tiles.find(tile => tile.nodegroup_id === objectObservedNodeId);
+            const projectObservations = projectJson.related_resources.filter((res) => res.graph_id == observationGraphId)
+                .filter((res) => {
+                    const objectTile = res.tiles.find((tile) => tile.nodegroup_id === objectObservedNodeId);
                     const object = objectTile?.data[objectObservedNodeId][0]['resourceId'];
                     return projectPhysicalThings.includes(object);
                 });
 
-            const selectedFileIds = self.selectedFiles().map((file)=>file.fileid);
+            const selectedFileIds = self.selectedFiles().map((file) => file.fileid);
             for (const projectObservation of projectObservations) {
                 const relatedFiles = ko.observableArray();
                 const response = await window.fetch(arches.urls.related_resources + projectObservation.resourceinstanceid  + "?paginate=false");
@@ -111,14 +111,14 @@ define([
                     const observation = json.resource_instance;
                     observation.expanded = ko.observable();
                     observation.description = observation.descriptors[arches.activeLanguage].description;
-                    const digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
+                    const digitalResources = json.related_resources.filter((res) => res.graph_id == digitalResourcegGraphId);
                     digitalResources.forEach((res) => 
                         res.tiles.forEach((tile) => {
                             if (tile.nodegroup_id == fileNodeId) {
                                 const selected = ko.observable();
                                 if (selectedFileIds.includes(tile.data[fileNodeId][0].file_id)) { selected(true); }
                                 selected.subscribe(() => addSelectedFiles());
-                                const interpretation = res.tiles.find(tile2 => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
+                                const interpretation = res.tiles.find((tile2) => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
                                 const file = { ...tile.data[fileNodeId][0], interpretation, selected };
                                 relatedFiles.push(file);
                             }
