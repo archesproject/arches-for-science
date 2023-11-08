@@ -2,11 +2,11 @@ define([
     'underscore',
     'arches',
     'knockout',
-    'knockout-mapping',
     'js-cookie',
     'utils/report',
+    'viewmodels/alert-json',
     'templates/views/components/workflows/project-report-workflow/download-report.htm'
-], function(_, arches, ko, koMapping, cookies, reportUtils, downloadReportTemplate) {
+], function(_, arches, ko, cookies, reportUtils, JsonErrorAlertViewModel, downloadReportTemplate) {
     function viewModel(params) {
         const observationGraphId = "615b11ee-c457-11e9-910c-a4d18cec433a";
         const collectionGraphId = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
@@ -17,6 +17,8 @@ define([
         const self = this;
         const projectId = params.projectId;
         const physicalThingFromPreviousStep = params.physicalThingIds;
+        const projectFiles = params.projectFiles;
+        this.message = ko.observable();
         this.templates = ko.observableArray(params.templates);
         const screenshots = params.annotationStepData ? params.annotationStepData.screenshots : [];
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
@@ -46,7 +48,7 @@ define([
         };
         getProjectName();
 
-        const generateReport = async(template) => {
+        this.generateReport = async() => {
             const relatedObjects = await getRelatedResources(projectId);
             const collections = relatedObjects.related_resources.filter(rr => rr.graph_id == collectionGraphId);
             const allPhysicalThingsResponse = collections.map(async(collection) => {
@@ -79,7 +81,6 @@ define([
             const today = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const reportDate = today.toLocaleDateString('en-US', options);
-            const filename = reportUtils.slugify(`${self.projectName()}_${template.name}_${reportDate}`);
             const physicalThingsDetailsArray = [...Object.values(physicalThingsDetails)];
             const objectOfStudyDetailsArray = physicalThingsDetailsArray.filter(thing => physicalThingFromPreviousStep.includes(thing.resourceinstanceid));
             const analysisAreas = physicalThingsDetailsArray.filter(physicalThing => physicalThing.resource?.type?.["@display_value"] == 'analysis areas');
@@ -87,52 +88,55 @@ define([
                 const url = `${window.location.origin}/temp_file/${screenshot.fileId}`;
                 return {...screenshot, url};
             });
-            const data = {
-                projectId,
+            const files = projectFiles;
+
+            const templates = self.templates().map((template) => ({
                 templateId: template.id,
-                filename,
+                filename: reportUtils.slugify(`${self.projectName()}_${template.name}_${reportDate}`)
+            }));
+
+            data = {
+                projectId,
+                templates,
                 annotationScreenshots,
                 reportDate,
                 analysisAreas,
                 observationDetails: [...Object.values(observationDetails)],
                 projectDetails: [...Object.values(projectDetails)],
                 physicalThingsDetails: physicalThingsDetailsArray,
-                objectOfStudyDetails: objectOfStudyDetailsArray
+                objectOfStudyDetails: objectOfStudyDetailsArray,
+                files: files
             };
 
-            const result = await fetch(arches.urls.reports(template.id), {
+            window.fetch(arches.urls.download_project_files, {
                 method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json',
                     "X-CSRFToken": cookies.get('csrftoken')
-                },
-                body: JSON.stringify(data)
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw response;
+                }
+            })
+            .then((json) => self.message(json.message))
+            .catch((response) => {
+                response.json().then(
+                    error => {
+                        params.pageVm.alert(
+                            new JsonErrorAlertViewModel(
+                                'ep-alert-red',
+                                error,
+                                null,
+                                function(){}
+                            )
+                        );
+                    });
             });
-
-            if(result.ok){
-                const blobResult = await result.blob();
-                let downloadName;
-                result.headers.forEach(header => {
-                    if (header.match(regex)) {
-                        downloadName = header.match(regex)[1];
-                    }
-                });
-
-                this.downloadInfo.push({
-                    downloadLink: URL.createObjectURL(blobResult),
-                    downloadName: downloadName,
-                    templateName: template.name,
-                });
-            } else {
-                this.errorInfo.push({
-                    templateName: template.name,
-                })
-            }
         };
-
-        this.templates().forEach(template => {
-            generateReport(template);
-        });
     }
 
     ko.components.register('download-report', {

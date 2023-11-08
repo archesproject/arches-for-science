@@ -1,11 +1,8 @@
 define([
-    'jquery',
-    'js-cookie',
     'knockout',
     'arches',
-    'viewmodels/alert-json',
     'templates/views/components/workflows/project-report-workflow/download-project-files.htm',
-], function($, Cookies, ko, arches, JsonErrorAlertViewModel, downloadFilesTemplate) {
+], function(ko, arches, downloadFilesTemplate) {
     function viewModel(params) {
         var self = this;
 
@@ -22,12 +19,21 @@ define([
         const removedFromNodeId = "38814345-d2bd-11e9-b9d6-a4d18cec433a";
         const fileStatementContentNodeId = 'ca227726-78ed-11ea-a33b-acde48001122';
         this.relatedObservations = ko.observableArray();
+        this.startIds = ko.observableArray();
         this.message = ko.observable();
 
-        this.ready = ko.computed(() => {
-            return self.relatedObservations().find((observation) => {
-                return !!observation.relatedFiles().find(file => file.selected() == true );
+        this.selectedFiles = ko.observableArray();
+
+        if (ko.unwrap(params.value)) {
+            const files =  params.value().files;
+            files?.forEach((file) => {
+                self.startIds.push(file.fileid);                    
+                self.selectedFiles.push(file);
             });
+        };
+
+        this.selectedFiles.subscribe((val) => {
+            params.value({ files: val });
         });
 
         this.numberOfSelectedFiles = ko.computed(() => {
@@ -64,29 +70,56 @@ define([
             });
             self.expandAll(true);
         };
+
+        const addSelectedFiles = () => {
+            self.selectedFiles.removeAll();
+            self.relatedObservations().forEach((observation) => {
+                observation.relatedFiles().forEach((file) => {
+                    if (file.selected()) {
+                        self.selectedFiles.push({'name': file.name, 'fileid': file.file_id, 'project': self.projectName});
+                    }
+                });
+            });
+        };
+
+        params.form.reset = () => {
+            self.selectedFiles.removeAll();
+            self.relatedObservations().forEach((observation) => {
+                observation.relatedFiles().forEach((file) => {
+                    if (self.startIds().includes(file.file_id)) {
+                        file.selected(true);
+                    } else {
+                        file.selected(false);
+                    }
+                });
+            });
+            addSelectedFiles();
+        };
+
         this.getFilesFromObservation = async() => {
             const projectResponse = await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false");
             const projectJson = await projectResponse.json();
 
-            const collectionForProject = projectJson.related_resources.find(res => res.graph_id === collectionGraphId).resourceinstanceid;
+            const collectionForProject = projectJson.related_resources.find((res) => res.graph_id === collectionGraphId).resourceinstanceid;
             const collectionResponse = await window.fetch(arches.urls.related_resources + collectionForProject  + "?paginate=false");
             const collectionJson = await collectionResponse.json();
 
-            const projectPhysicalThings = collectionJson.related_resources.filter(res => res.graph_id === physicalThingGraphId)
-                .filter(res => {
-                    const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === removalFromObjectNodegroupId);
-                    const removedFrom = removedFromTile?.data[removedFromNodeId].map(rr => rr.resourceId);
-                    return removedFrom?.some(res => physicalThings.includes(res)) || physicalThings.includes(res.resourceinstanceid);
-                }).map(res => res.resourceinstanceid);
+            const projectPhysicalThings = collectionJson.related_resources.filter((res) => res.graph_id === physicalThingGraphId)
+                .filter((res) => {
+                    const removedFromTile = res.tiles.find((tile) => tile.nodegroup_id === removalFromObjectNodegroupId);
+                    const removedFrom = removedFromTile?.data[removedFromNodeId].map((rr) => rr.resourceId);
+                    return removedFrom?.some((res) => physicalThings.includes(res)) || physicalThings.includes(res.resourceinstanceid);
+                }).map((res) => res.resourceinstanceid);
 
             self.projectName = projectJson.resource_instance.displayname;
-            const projectObservations = projectJson.related_resources.filter(res => res.graph_id == observationGraphId)
-                .filter(res => {
-                    const objectTile = res.tiles.find(tile => tile.nodegroup_id === objectObservedNodeId);
+            const projectObservations = projectJson.related_resources.filter((res) => res.graph_id == observationGraphId)
+                .filter((res) => {
+                    const objectTile = res.tiles.find((tile) => tile.nodegroup_id === objectObservedNodeId);
                     const object = objectTile?.data[objectObservedNodeId][0]['resourceId'];
                     return projectPhysicalThings.includes(object);
                 });
 
+            const selectedFileIds = self.selectedFiles().map((file) => file.fileid);
             for (const projectObservation of projectObservations) {
                 const relatedFiles = ko.observableArray();
                 const response = await window.fetch(arches.urls.related_resources + projectObservation.resourceinstanceid  + "?paginate=false");
@@ -96,12 +129,14 @@ define([
                     const observation = json.resource_instance;
                     observation.expanded = ko.observable();
                     observation.description = observation.descriptors[arches.activeLanguage].description;
-                    const digitalResources = json.related_resources.filter(res => res.graph_id == digitalResourcegGraphId);
+                    const digitalResources = json.related_resources.filter((res) => res.graph_id == digitalResourcegGraphId);
                     digitalResources.forEach((res) => 
                         res.tiles.forEach((tile) => {
                             if (tile.nodegroup_id == fileNodeId) {
                                 const selected = ko.observable();
-                                const interpretation = res.tiles.find(tile2 => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
+                                if (selectedFileIds.includes(tile.data[fileNodeId][0].file_id)) { selected(true); }
+                                selected.subscribe(() => addSelectedFiles());
+                                const interpretation = res.tiles.find((tile2) => tile2.parenttile_id == tile.tileid)?.data[fileStatementContentNodeId][arches.activeLanguage].value;
                                 const file = { ...tile.data[fileNodeId][0], interpretation, selected };
                                 relatedFiles.push(file);
                             }
@@ -114,50 +149,6 @@ define([
         };
 
         this.getFilesFromObservation();
-        
-        this.downloadFiles = () => {
-            if (!self.ready()) {
-                return;
-            }
-            const files = self.relatedObservations().reduce(
-                (acc, observation) => acc.concat(observation.relatedFiles().filter(
-                    file => file.selected())), [])
-                .map(file => {
-                    return {'name': file.name, 'fileid': file.file_id, 'project': self.projectName};
-                });
-            const formData = new window.FormData();
-
-            formData.append('files', JSON.stringify(files));
-            window.fetch(arches.urls.download_project_files, {
-                method: 'POST', 
-                credentials: 'include',
-                body: formData,
-                headers: {
-                    "X-CSRFToken": Cookies.get('csrftoken')
-                }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                })
-                .then((json) => self.message(json.message))
-                .catch((response) => {
-                    response.json().then(
-                        error => {
-                            params.pageVm.alert(
-                                new JsonErrorAlertViewModel(
-                                    'ep-alert-red',
-                                    error,
-                                    null,
-                                    function(){}
-                                )
-                            );
-                        });
-                });
-        };
     }
 
     ko.components.register('download-project-files', {
