@@ -1057,23 +1057,6 @@
     margin-bottom: 0px;
 }
 
-.download-project-files-step .expand-select-button {
-    padding: 0.5rem 3rem;
-    font-size: 1.25rem;
-    background-color: #fafafa;
-    border-radius: 2px;
-    cursor: pointer;
-    border: 1px solid #ddd;
-}
-
-.download-project-files-step .expand-select-button:hover {
-    background-color: #f1f1f1;
-}
-
-.download-project-files-step .expand-select-button:active {
-    background-color: #f1f1f1;
-}
-
 .download-project-files-step .file-list-container {
     padding-bottom: 0px;
 }
@@ -1087,10 +1070,6 @@
 .download-project-files-step .file-download-button {
     display: inline-flex;
     padding: 10px;
-}
-
-.download-project-files-step .expand-select-buttons {
-    padding: 10px 10px 15px 0px;
 }
 
 .download-project-files-step .observation-list {
@@ -1304,8 +1283,7 @@
     width: 100%;
 }
 
-.file-configuration .file-button-container,
-.expand-select-buttons {
+.file-configuration .file-button-container {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
@@ -1315,8 +1293,7 @@
     width: 100%;
 }
 
-.file-configuration .file-buttons,
-.expand-select-button {
+.file-configuration .file-buttons {
     flex: 1;
     justify-content: center;
     align-items: center;
@@ -1326,21 +1303,8 @@
     border: 1px solid #ddd;
 }
 
-.file-configuration .file-buttons:hover,
-.expand-select-button:hover {
+.file-configuration .file-buttons:hover {
     background: #fff;
-}
-
-.expand-select-buttons {
-    max-width: 300px;
-}
-
-.expand-select-button {
-    margin-right: 10px;
-}
-
-.expand-select-button i {
-    padding-right: 10px;
 }
 
 .file-configuration .file-buttons.active {
