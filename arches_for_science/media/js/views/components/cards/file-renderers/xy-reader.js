@@ -24,6 +24,11 @@ define(['jquery',
             AfsInstrumentViewModel.apply(this, [params]);
             this.rendererUrl = `/renderer/${self.renderer}`;
 
+            // set defaults for chart title/axis
+            this.chartTitle('Data');
+            this.xAxisLabel('X Axis');
+            this.yAxisLabel('Y Axis');
+
             this.rendererConfigs = ko.observable([]);
 
             // on init, get available renderer configs for display to user.
@@ -64,6 +69,9 @@ define(['jquery',
                         tile.save();
                     }
                 }	
+                this.chartTitle(this.selectedConfiguration?.config?.display?.chartTitle ? this.selectedConfiguration.config.display.chartTitle : 'Data');
+                this.xAxisLabel(this.selectedConfiguration?.config?.display?.xAxisLabel ? this.selectedConfiguration.config.display.xAxisLabel : 'X Axis');
+                this.yAxisLabel(this.selectedConfiguration?.config?.display?.yAxisLabel ? this.selectedConfiguration.config.display.yAxisLabel : 'Y Axis');
             });
 
             rendererConfigRefresh();
@@ -113,9 +121,6 @@ define(['jquery',
                     throw(e);
                 }
             };
-            this.chartTitle("XRF Spectrum");
-            this.xAxisLabel("keV");
-            this.yAxisLabel("Count");
         },
         template: afsReaderTemplate
     });
