@@ -562,8 +562,9 @@ define([
             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
             const featureCollection = ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])
-            if (!ko.unwrap(featureCollection?.features)?.length ||
-                (!ko.unwrap(ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])?.[arches.activeLanguage]?.value) && !ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])) ) { //Sample Name Node
+            if (!ko.unwrap(featureCollection?.features)?.length ||  // Sample location
+                !ko.unwrap(ko.unwrap(self.selectedSampleLocationInstance().data[partIdentifierAssignmentLabelNodeId])?.[arches.activeLanguage]?.value)  // Sample name
+            ) {
                 params.pageVm.alert(new params.form.AlertViewModel(
                     "ep-alert-red",
                     "Missing Values",
@@ -697,7 +698,11 @@ define([
                 self.selectSampleLocationInstance(undefined);
             })
             .fail(function(error){
-                console.log(error);
+                params.pageVm.alert(new params.form.AlertViewModel(
+                    "ep-alert-red",
+                    error.responseJSON.result.title,
+                    error.responseJSON.result.message,
+                ));
                 self.savingTile(false);                
             })
         };

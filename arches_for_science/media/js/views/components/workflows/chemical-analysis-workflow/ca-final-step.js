@@ -24,8 +24,6 @@ define([
             "ordering": false,
             "columns": [
                 null,
-                null,
-                null,
             ]
         };
 

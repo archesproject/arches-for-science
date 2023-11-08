@@ -729,8 +729,7 @@
 
 .afs-image-service-list-item {
     display: inline-flex;
-    flex-direction: column;
-    align-items: baseline;
+    align-items: center;
     padding-left: 5px;
 }
 
@@ -1258,10 +1257,6 @@
     border-bottom: 1px solid #ddd;
 }
 
-.importer-list-container {
-    width: 470px;
-}
- 
 .importer-list-container div:hover {
     background: #EBF6FC;
 }
@@ -1454,4 +1449,32 @@
 .file-workbench-file.selected,
 .file-workbench-file.selected:hover {
     background: #b4d1f0;
+}
+
+.select-file-renderers-workflow-step {
+    height: 100%;
+}
+
+.uploaded-files div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin: 0 5px;
+}
+
+
+.uploaded-files .import-tool {
+    color: #579ddb;
+    background-color: transparent;
+    border: none;
+    margin: 0 6px;
+    min-width: 0;
+    padding: 0;
+    max-width: 266px;
+}
+
+.uploaded-files button.import-tool:hover {
+    color: #156AB7;
+    cursor: pointer;
+}
+
+#container .uploaded-files table.dataTable.table-striped > tbody > tr.active-file {
+    background-color: #dbf1f5;
 }
