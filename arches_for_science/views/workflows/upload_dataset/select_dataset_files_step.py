@@ -142,6 +142,7 @@ class SelectDatasetFilesStep(View):
                         file_data["renderer"] = next(
                             (renderer["id"] for renderer in settings.RENDERERS if renderer["name"] == "xy-reader"), None
                         )
+                        file_data["type"] = "text/plain"
 
                     # file has not been uploaded
                     dataset_file_tile = Tile().get_blank_tile_from_nodegroup_id(dataset_file_node_group_id)

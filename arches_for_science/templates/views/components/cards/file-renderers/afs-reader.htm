@@ -52,30 +52,8 @@
 <!--ko if: params.context === 'tab-contents' -->
     <!--ko if: fileViewer.activeTab() === 'file-context' -->
     <div class="workbench-card-sidepanel-header-container file-workbench">
-        <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Chart Configuration'"></h4>
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel">{% trans 'Chart Configuration' %}</h4>
     </div>
-    <div style="overflow: auto;margin-top: 0" class="col-xs-12 pad-no crud-widget-container chart-config-panel">
-        <div class="row form-group widget-wrapper">
-            <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Title Text and Font Size" %}</div>
-            <div style="display: inline-flex">
-                <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: chartTitle">
-                <input style="margin-left: 5px; width: 20%; padding-right: 5px;" class="form-control input-lg widget-input" type="number" data-bind="textInput: titleSize">
-            </div>
-        </div>
-        <div class="row form-group widget-wrapper">
-            <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "X Axis Label and Font Size" %}</div>
-            <div style="display: inline-flex">
-                <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: xAxisLabel">
-                <input style="margin-left: 5px; width: 20%; padding-right: 5px;" class="form-control input-lg widget-input" type="number" data-bind="textInput: xAxisLabelSize">
-            </div>
-        </div>
-        <div class="row form-group widget-wrapper">
-            <div style="padding-top: 3px" class="control-label widget-input-label">{% trans "Y Axis Label and Font Size" %}</div>
-            <div style="display: inline-flex">
-                <input style="margin-left: 5px" class="form-control input-lg widget-input" data-bind="textInput: yAxisLabel">
-                <input style="margin-left: 5px; width: 20%; padding-right: 5px;" class="form-control input-lg widget-input" type="number" data-bind="textInput: yAxisLabelSize">
-            </div>
-        </div>
         {% block renderer_configuration %}
         {% endblock renderer_configuration %}
     </div>
@@ -83,7 +61,7 @@
 
     <!--ko if: fileViewer.activeTab() === 'other-tab' -->
     <div class="workbench-card-sidepanel-header-container file-workbench">
-        <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel, text: 'Manage Series Data'"></h4>
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: fileViewer.hideSidePanel">{% trans 'Manage Series Data' %}</h4>
     </div>
     
     <!-- ko if: fileViewer -->

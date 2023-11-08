@@ -3,17 +3,27 @@
     <div>
         <h5 class="file-list-label" data-bind="text: $root.translations.dataForDownload"></h5>
     </div>
-    <div class="expand-select-buttons">
-        <a class="expand-select-button" data-bind="click: function() { expandAll(true); }"><i class="ion-plus"></i>{% trans ' Expand' %}</a>
-        <a class="expand-select-button" data-bind="click: function() { expandAll(false); }"><i class="ion-minus"></i>{% trans ' Collapse' %}</a>
-        <a class="expand-select-button" data-bind="click: function() { selectAll(true); }"><i class="ion-checkmark"></i>{% trans ' Select All' %}</a>
-        <a class="expand-select-button" data-bind="click: function() { selectAll(false); }"><i class="ion-close"></i>{%  trans ' Clear All' %}</a>
+    <div class="expand-select-container">
+        <div class="table-tools-container">
+            <button class="project-file-selection" data-bind="click: function() { expandAll(true); }"><i class="ion-plus"></i>{% trans ' Expand' %}</button>
+            <button class="project-file-selection" data-bind="click: function() { expandAll(false); }"><i class="ion-minus"></i>{% trans ' Collapse' %}</button>
+            <div class="project-file-selection">
+                <span data-bind="text: numberOfFiles()"></span>
+                <span data-bind="visible: numberOfSelectedFiles() != 1">{% trans "files" %}</span>
+                <span data-bind="visible: numberOfSelectedFiles() == 1">{% trans "file" %}</span>
+                <span data-bind="visible: numberOfSelectedFiles()">(<span data-bind="text: numberOfSelectedFiles()"></span> {% trans "selected" %})</span>
+            </div>
+            <button class="project-file-selection" data-bind="click:() =>{toggleSelection()}">
+                <span data-bind="visible: !numberOfSelectedFiles()">{% trans "Select All" %}</span>
+                <span data-bind="visible: numberOfSelectedFiles()">{% trans "Deselect All" %}</span>
+            </button>
+        </div>
     </div>
     <!-- ko foreach: { data: relatedObservations, as: "observation" } -->
     <div class="file-list-container" data-bind="if: observation.relatedFiles().length > 0">
         <div class="observation-list" data-bind="click: function() { observation.expanded(!observation.expanded()); }">
             <span>
-                <i class="fa" data-bind="css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()}"></i>
+                <i style="padding-right: 5px;" class="fa" data-bind="css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()}"></i>
             </span>
             <span data-bind="text: observation.name"></span>
         </div>
@@ -42,12 +52,4 @@
         <!-- /ko -->
     </div>
     <!-- /ko -->
-    <div class="file-download-button">
-        <button class="btn btn-primary" data-bind="click: downloadFiles, css: {disabled: !ready() }">
-            <span data-bind="text: $root.translations.downloadSelected"></span>
-        </button>
-        <span>
-            <h4 data-bind="text: message"></h4>
-        </span>
-    </div>
 </div>
