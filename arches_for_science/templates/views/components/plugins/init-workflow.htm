@@ -19,12 +19,12 @@
             style="
                 background-color: white; 
                 width: 100%; 
-                max-width: 1000px;
                 max-height: 480px; 
                 border-radius: 4px; 
                 cursor: default; 
                 overflow: hidden;
             "
+            data-bind="style: {maxWidth: $data.requestingUserIsSuperuser() ? '1200px' : '1000px'}"
         >
             <div style="width: 100%; display: flex; justify-content: flex-end; padding: 10px 12px;">
                 <i 
@@ -34,20 +34,25 @@
                 ></i>
             </div>
             <div style="display: flex; flex-direction: column; align-items: center;">
-                <h2>{% trans 'You have incomplete workflows' %}</h2>
+                <h2>{% trans 'Incomplete Workflows' %}</h2>
                 <p>
                     {% trans 'Please either complete or delete the workflows listed below.' %}
                 </p>
             </div>
 
-            <div style="padding: 40px 80px; display: flex; justify-content: center;">
+            <div style="padding: 40px 100px; display: flex; justify-content: center;">
                 <table class="table table-striped" style="border: 1px solid #ddd;">
                     <thead>
                         <tr style="display: flex; justify-content: space-between;">
                             <th style="flex-grow: 1; max-width: 200px;">
                                 {% trans 'Created' %}
                             </th>
-                            <th style="flex-grow: 2; max-width: 600px;">
+                            <!-- ko if: requestingUserIsSuperuser() -->
+                                <th style="flex-grow: 1; max-width: 200px;">
+                                    {% trans 'User' %}
+                                </th>
+                            <!-- /ko -->
+                            <th style="flex-grow: 2; max-width: 400px;">
                                 {% trans 'Workflow Name' %}
                             </th>
                             <th style="flex-grow: 1; max-width: 200px;">
@@ -59,7 +64,10 @@
                         <!-- ko foreach: $data.incompleteWorkflows -->
                         <tr style="display: flex; justify-content: space-between;">
                             <td style="flex-grow: 1; max-width: 200px;" data-bind="text: $data.created"></td>
-                            <td style="flex-grow: 2; max-width: 600px;" data-bind="text: $data.workflowname"></td>
+                            <!-- ko if: $parent.requestingUserIsSuperuser() -->
+                                <td style="flex-grow: 1; max-width: 200px;" data-bind="text: $data.username"></td>
+                            <!-- /ko -->
+                            <td style="flex-grow: 2; max-width: 400px;" data-bind="text: $data.workflowname"></td>
                             <td style="flex-grow: 1; max-width: 200px;">
                                 <a 
                                     data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
