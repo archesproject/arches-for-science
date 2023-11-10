@@ -15,7 +15,7 @@ define([
                 return resp.json();
             }
             else {
-                params.alert(new JsonErrorAlertViewModel('ep-alert-red', resp.responseJSON))
+                params.alert(new JsonErrorAlertViewModel('ep-alert-red', resp.responseJSON));
             }
         }).then(respJSON => {
             let workflows = respJSON.reduce((acc, plugin) => {
@@ -38,11 +38,11 @@ define([
             this.workflows(workflows);
             this.helpTemplateData(workflows.reduce((acc, workflow) => {
                 if (workflow.helptemplate) {
-                    acc.push({'text': workflow.name, 'id': workflow.helptemplate})
+                    acc.push({'text': workflow.name, 'id': workflow.helptemplate});
                 }
 
                 return acc;
-            }, []))
+            }, []));
         });
 
         this.shouldShowWorkflowHelp = ko.observable(false);
@@ -52,7 +52,7 @@ define([
         this.selectedHelpTemplate.subscribe(helpTemplateName => {
             if (helpTemplateName) {
                 this.isHelpTemplateLoading(true);
-                this.helpTemplateUrl(arches.urls.help_template + `?template=${helpTemplateName}`)
+                this.helpTemplateUrl(arches.urls.help_template + `?template=${helpTemplateName}`);
             }
             else {
                 this.helpTemplateUrl(null);
@@ -72,7 +72,7 @@ define([
                 return resp.json();
             }
             else {
-                params.alert(new JsonErrorAlertViewModel('ep-alert-red', resp.responseJSON))
+                params.alert(new JsonErrorAlertViewModel('ep-alert-red', resp.responseJSON));
             }
         }).then(respJSON => {
             this.incompleteWorkflows(respJSON['incomplete_workflows'].map(workflowData => {
