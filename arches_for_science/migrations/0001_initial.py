@@ -14,12 +14,6 @@ class Migration(migrations.Migration):
     def add_plugins(apps, schema_editor):
         Plugin = apps.get_model("models", "Plugin")
 
-        # Deletes current review-dataset workflow if it exists, it has an invalid pluginid
-        review_dataset_workflow_plugin_query = Plugin.objects.filter(componentname="review-dataset-workflow")
-        if len(review_dataset_workflow_plugin_query):
-            review_dataset_workflow_plugin = review_dataset_workflow_plugin_query[0]
-            review_dataset_workflow_plugin.delete()
-
         # Add Chemical Analysis Images Workflow
         Plugin.objects.update_or_create(
             pluginid="af06e949-5e16-49f0-b23e-e8529e8ce321",
@@ -202,6 +196,28 @@ class Migration(migrations.Migration):
             sortorder=1,
             helptemplate="upload-dataset-workflow-help"
         )
+
+    def remove_plugins(apps, schema_editor):
+        Plugin = apps.get_model("models", "Plugin")
+
+        for plugin in Plugin.objects.filter(pk__in=[
+            "af06e949-5e16-49f0-b23e-e8529e8ce321",  # Add Chemical Analysis Images Workflow
+            "29512c4e-ed06-4a6b-ae2d-e423817b3f6e",  # Analysis Areas Workflow
+            "c206cfc6-6b4a-481e-a018-8da72aeb7074",  # Chemical Analysis Workflow
+            "a1667717-b7bd-4570-b27a-ec352c767e0e",  # Create Project Workflow
+            "49507fb0-89c6-47b7-b506-9b2b29a3b8d8",  # Init Workflow
+            "ef3a374c-f795-4317-aaee-83e1493eabb6",  # Project Collection Workflow
+            "730be1cd-0575-44d7-be68-1316c345a8fb",  # Project Report Workflow
+            "1132c953-8af4-4acb-87c5-39c5b996799e",  # Sample Taking Workflow
+            "afedd8cd-1ba7-43ec-b3c5-d0fab03525ca",  # Upload Dataset Workflow
+        ]):
+            plugin.delete()
+
+        # Deletes current review-dataset workflow if it exists, it has an invalid pluginid
+        review_dataset_workflow_plugin_query = Plugin.objects.filter(componentname="review-dataset-workflow")
+        if len(review_dataset_workflow_plugin_query):
+            review_dataset_workflow_plugin = review_dataset_workflow_plugin_query[0]
+            review_dataset_workflow_plugin.delete()
 
     def add_reports(apps, schema_editor):
         ReportTemplate = apps.get_model("models", "ReportTemplate")
@@ -422,6 +438,29 @@ class Migration(migrations.Migration):
             templateid="c4167d32-33c4-4055-b064-ea9296c1c13a"
         )
 
+    def remove_reports(apps, schema_editor):
+        ReportTemplate = apps.get_model("models", "ReportTemplate")
+
+        for report_template in ReportTemplate.objects.filter(pk__in=[
+            "b5380d34-15ef-4a38-95c0-df228068916d",  # Collection or Set Template
+            "e6390e54-31c4-4055-b064-ea9296c1c13a",  # Digital Resource Template
+            "3a9fd7d1-f065-4777-b664-3fda0eb39ffe",  # Group Template
+            "c2edf720-9db0-4029-a102-48e6762ded79",  # Instrument Template
+            "f02f4b69-08d9-49fa-a4d1-94ef8178fbce",  # Modification Template
+            "e581f911-185b-4456-873d-f83b46fd89ec",  # Observation Template
+            "9f6b087b-12f4-4436-8bfc-257d1665ba40",  # Period Template
+            "15d3ab75-1191-41f0-a766-e7e8ce7b9ca9",  # Person Template
+            "b3056c21-33c4-4055-b064-ea9296c1c13a",  # Physical Thing Template
+            "34b7109d-2c0a-47fa-a307-4e361e142bfe",  # Place Template
+            "2b124304-6e42-4c0c-8161-14c010dcef71",  # Project Template
+            "1a51566c-4ba0-4633-b717-18f629350c9c",  # Provenance Activity Template
+            "4c864659-fc0d-45ec-a4da-c8fb8a7ec24e",  # Sampling Activity Template
+            "590a02ad-7d47-4b29-90a3-2e29aada677d",  # Textual Work Template
+            "c560f22a-99b9-4a1c-b805-0891bbe63ada",  # Thematic Work Template
+            "c4167d32-33c4-4055-b064-ea9296c1c13a",  # Visual Work Template
+        ]):
+            report_template.delete()
+
     def add_card_components(apps, schema_editor):
         CardComponent = apps.get_model("models", "CardComponent")
 
@@ -436,6 +475,14 @@ class Migration(migrations.Migration):
                 "defaultManifest": ""
             }
         )
+
+    def remove_card_components(apps, schema_editor):
+        CardComponent = apps.get_model("models", "CardComponent")
+
+        for card_component in CardComponent.objects.filter(pk__in=[
+            "10ae2f00-cbda-4a0d-8ca2-5af3b46b37ad",  # Physical Thing IIIF Card
+        ]):
+            card_component.delete()
 
     operations = [
         migrations.CreateModel(
@@ -452,7 +499,7 @@ class Migration(migrations.Migration):
                 'managed': True,
             },
         ),
-        migrations.RunPython(add_plugins, migrations.RunPython.noop),
-        migrations.RunPython(add_reports, migrations.RunPython.noop),
-        migrations.RunPython(add_card_components, migrations.RunPython.noop),
+        migrations.RunPython(add_plugins, remove_plugins),
+        migrations.RunPython(add_reports, remove_reports),
+        migrations.RunPython(add_card_components, remove_card_components),
     ]
