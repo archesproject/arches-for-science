@@ -13,6 +13,7 @@ define([
         }, this);
 
         this.shouldShowIncompleteWorkflowsModal = ko.observable(false);
+        this.requestingUserIsSuperuser = ko.observable(false);
 
         this.incompleteWorkflows = ko.observableArray([]);
         this.incompleteWorkflows.subscribe(incompleteWorkflows => {
@@ -35,6 +36,8 @@ define([
 
                 return workflowData;
             }));
+
+            this.requestingUserIsSuperuser(respJSON['requesting_user_is_superuser']);
         });
 
         // filters out the chemical image workflow, if cloud storage is not enabled.
