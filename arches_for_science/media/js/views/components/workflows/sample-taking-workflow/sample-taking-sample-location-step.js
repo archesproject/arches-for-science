@@ -343,7 +343,7 @@ define([
                 }
             }
 
-            const tilesBelongingToManifest = this.tilesBelongingToManifest(self.card.tiles(), self.canvases());
+            const tilesBelongingToManifest = this.tilesBelongingToManifest(self.card.tiles());
             tilesBelongingToManifest.forEach(tile => tile.samplingActivityResourceId = tile.samplingActivityResourceId ? tile.samplingActivityResourceId : ko.observable());
             self.sampleLocationInstances(tilesBelongingToManifest);
         };

@@ -86,6 +86,17 @@ define([
             params.dirty(dirty);
         });
 
+        this.includeSamples = ko.observable(false);
+        this.includeAnalysisAreas = ko.observable(false);
+        this.childPhysicalThingValue = {
+            sample: '77d8cf19-ce9c-4e0a-bde1-9148d870e11c',
+            location: '7375a6fb-0bfb-4bcf-81a3-6180cdd26123',
+            analysis: '31d97bdd-f10f-4a26-958c-69cb5ab69af1',
+        };
+        this.physicalThingTypeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
+        const sampleSubstring = '[Sample';  // for "[Sample of ..." and "[Sample Area of ..."
+        const regionSubstring = '[Region';
+
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
                 if (action.status === 'added') {
@@ -101,6 +112,7 @@ define([
                     });
                 }
             });
+            self.sortSelectedResources();
         }, null, "arrayChange");
 
         const loadExistingCollection = async function(){
@@ -122,6 +134,55 @@ define([
                     self.value.push(val);
                 });    
             }
+        };
+
+        this.sortSelectedResources = () => {
+            // Sort alphabetically by display name, without regard to child physical things.
+            const sortedDisplayNames = self.selectedResources().map(
+                res => self.getStringValue(res.displayname)
+            ).map(val => val.toLowerCase()).sort();
+
+            const resourceSortFn = (a, b) => {
+                const aIndex = sortedDisplayNames.indexOf(self.getStringValue(a.displayname).toLowerCase());
+                const bIndex = sortedDisplayNames.indexOf(self.getStringValue(b.displayname).toLowerCase());
+                if (aIndex < bIndex) {
+                    return -1;
+                } else if (aIndex === bIndex) {
+                    return 0;
+                }
+                return 1;
+            };
+            this.selectedResources().sort(resourceSortFn);
+
+            // Then, reorder child physical things under parents.
+            const sortedParents = this.selectedResources().filter(resource =>
+                !self.resourceIsSampleOrAnalysis(resource)
+            );
+            const childrenByParentResourceId = {};
+            for (const child of this.selectedResources().filter(r => !sortedParents.includes(r))) {
+                const parentResourceId = child.tiles.find(t => t.data['f8d5fe4c-b31d-11e9-9625-a4d18cec433a'])
+                    .data['f8d5fe4c-b31d-11e9-9625-a4d18cec433a'][0].resourceId;
+                if (childrenByParentResourceId[parentResourceId] === undefined) {
+                    childrenByParentResourceId[parentResourceId] = [child];
+                } else {
+                    childrenByParentResourceId[parentResourceId].push(child);
+                }
+            }
+            var finalSort = [];
+            for (const parent of sortedParents) {
+                finalSort.push(parent);
+                if (childrenByParentResourceId[parent.resourceinstanceid]) {
+                    finalSort = finalSort.concat(childrenByParentResourceId[parent.resourceinstanceid]);
+                    delete childrenByParentResourceId[parent.resourceinstanceid];
+                }
+            }
+            // Tack on children of missing parents (unlikely, but possible)
+            for (const orphans of Object.values(childrenByParentResourceId)) {
+                if (orphans) {
+                    finalSort = finalSort.concat(orphans);
+                }
+            }
+            this.selectedResources(finalSort);
         };
 
         this.initialize = function(){
@@ -273,8 +334,11 @@ define([
                     self.termOptions = results;
 
                     const filteredResults = results.filter(function(result){
-                        return result.context_label.includes("Physical Thing") ||
-                        result.context_label.includes("Search Term");
+                        return (
+                            result.context_label.includes("Physical Thing") ||
+                            result.context_label.includes("Search Term")
+                        ) && (self.includeSamples() || !result.text.includes(sampleSubstring))
+                        && (self.includeAnalysisAreas() || !result.text.includes(regionSubstring))
                     });
                     return {
                         results: filteredResults,
@@ -307,7 +371,7 @@ define([
         
         var getResultData = function(termFilter, pagingFilter) {
             var filters = {};
-            // let's empty our termFilters
+            // let's empty term-filter and advanced-search
             _.each(self.filters, function(_value, key) {
                 if (key !== 'paging-filter' && key !== 'search-results') {
                     delete self.filters[key];
@@ -318,6 +382,45 @@ define([
                 termFilter['inverted'] = false;
                 filters["term-filter"] = JSON.stringify([termFilter]);
             } 
+
+            const conceptFilters = [];
+            if (!self.includeSamples()) {
+                conceptFilters.push({
+                    op: 'and',
+                    [self.physicalThingTypeNodeId]: {
+                        op: '!eq',
+                        val: self.childPhysicalThingValue.sample,
+                    },
+                });
+                conceptFilters.push({
+                    op: 'and',
+                    [self.physicalThingTypeNodeId]: {
+                        op: '!eq',
+                        val: self.childPhysicalThingValue.location,
+                    },
+                });
+            }
+            if (!self.includeAnalysisAreas()) {
+                conceptFilters.push({
+                    op: 'and',
+                    [self.physicalThingTypeNodeId]: {
+                        op: '!eq',
+                        val: self.childPhysicalThingValue.analysis,
+                    },
+                });
+            }
+            if (!self.includeAnalysisAreas() || !self.includeSamples()) {
+                conceptFilters.push({
+                    op: 'or',
+                    [self.physicalThingTypeNodeId]: {
+                        op: 'null',
+                        val: '',
+                    },
+                });
+            }
+            if (conceptFilters.length) {
+                filters['advanced-search'] = JSON.stringify(conceptFilters);
+            }
 
             if (pagingFilter) {
                 filters['paging-filter'] = pagingFilter;
@@ -376,6 +479,13 @@ define([
             self.updateSearchResults(self.termFilter(), query['paging-filter']);
         });
 
+        this.includeSamples.subscribe(function(val) {
+            self.updateSearchResults(self.termFilter());
+        });
+        this.includeAnalysisAreas.subscribe(function(val) {
+            self.updateSearchResults(self.termFilter());
+        });
+
         this.initialize();
 
         this.stripTags = (original) => {
@@ -387,6 +497,15 @@ define([
                 return value;
             }
             return value.find(str => str.language == arches.activeLanguage)?.value;
+        };
+
+        this.getChildPhysicalThingType = (resource) => {
+            return resource.tiles.find(tile => tile.data[self.physicalThingTypeNodeId] !== undefined)
+            ?.data?.[this.physicalThingTypeNodeId]?.[0];
+        };
+
+        this.resourceIsSampleOrAnalysis = (resource) => {
+            return Object.values(self.childPhysicalThingValue).includes(self.getChildPhysicalThingType(resource));
         };
     }
 
