@@ -81,6 +81,8 @@ define([
 
                 return workflowData;
             }));
+
+            this.requestingUserIsSuperuser(respJSON['requesting_user_is_superuser']);
         });
     };
 
