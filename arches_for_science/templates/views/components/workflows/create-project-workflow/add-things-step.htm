@@ -6,6 +6,34 @@
         <div class="workflow-search-count">
             <div class="count-number" data-bind="text: totalResults()"></div><div>Physical Things</div>
         </div>
+        <div class="child-exclusion">
+            <div
+            data-bind="
+                component: {
+                    name: 'views/components/simple-switch',
+                    params: {
+                        value: includeSamples,
+                        config: {
+                            label: 'Include samples',
+                        }
+                    }
+                }
+            "
+            ></div>
+            <div
+                data-bind="
+                    component: {
+                        name: 'views/components/simple-switch',
+                        params: {
+                            value: includeAnalysisAreas,
+                            config: {
+                                label: 'Include analysis areas',
+                            }
+                        }
+                    }
+                "
+            ></div>
+        </div>
     </div>
     <div class="workflow-search-results">
         <div class="workflow-search-results-full-container">
@@ -48,7 +76,7 @@
                 </div>
                 <!--/ko -->
                 <!-- ko foreach: selectedResources -->
-                <div class="wf-multi-tile-step-card" >
+                <div class="wf-multi-tile-step-card" data-bind="css: { child: $parent.resourceIsSampleOrAnalysis($data) }">
                     <div class="wf-multi-tile-card-info">
                         <!-- <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span></div> -->
                         <div class="wf-multi-tile-card-info-details">
