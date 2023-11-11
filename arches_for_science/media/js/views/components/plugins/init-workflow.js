@@ -59,7 +59,9 @@ define([
             }
         })
 
-        this.shouldShowIncompleteWorkflowsModal = ko.observable(false);        
+        this.shouldShowIncompleteWorkflowsModal = ko.observable(false);    
+        this.requestingUserIsSuperuser = ko.observable(false);
+
         this.incompleteWorkflows = ko.observableArray([]);
         this.incompleteWorkflows.subscribe(incompleteWorkflows => {
             if (incompleteWorkflows.length) {
