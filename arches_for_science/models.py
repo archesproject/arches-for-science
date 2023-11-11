@@ -35,3 +35,134 @@ class ManifestXCanvas(models.Model):
     class Meta:
         managed = True
         db_table = "manifest_x_canvas"
+
+
+@receiver(post_save, sender=IIIFManifest)
+def create_digital_resources(sender, instance, created, **kwargs):
+    name_content_node_id = "d2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a"
+    identifier_content_node_id = "db05c421-ca7a-11e9-bd7a-a4d18cec433a"
+    identifier_type_node_id = "db05c05e-ca7a-11e9-8824-a4d18cec433a"
+    type_node_id = "09c1778a-ca7b-11e9-860b-a4d18cec433a"
+    statement_content_node_id = "da1fbca1-ca7a-11e9-8256-a4d18cec433a"
+    service_type_node_id= "5ceedd21-ca7c-11e9-a60f-a4d18cec433a"
+    service_type_conformance_node_id = "cec360bd-ca7f-11e9-9ab7-a4d18cec433a"
+    service_identifier_type_node_id = "56f8e759-ca7c-11e9-bda1-a4d18cec433a"
+    service_identifier_content_node_id = "56f8e9bd-ca7c-11e9-b578-a4d18cec433a"
+
+    name_nodegroupid = "d2fdae3d-ca7a-11e9-ad84-a4d18cec433a"
+    identifier_nodegroupid = "db05b5ca-ca7a-11e9-82ca-a4d18cec433a"
+    type_nodegroupid = "09c1778a-ca7b-11e9-860b-a4d18cec433a"
+    statement_nodegroupid = "da1fac57-ca7a-11e9-86a3-a4d18cec433a"
+    service_nodegroupid = "29c8c76e-ca7c-11e9-9e11-a4d18cec433a"
+    service_identifier_nodegroupid = "56f8e26e-ca7c-11e9-9aa3-a4d18cec433a"
+
+    def build_string_object(string):
+        return { get_language(): { "value": string, "direction": "rtl" if get_language_bidi() else "ltr" }}
+    
+    def create_digital_resource():
+        digital_resource_graph = "707cbd78-ca7a-11e9-990b-a4d18cec433a"
+        resource = Resource(graph_id = digital_resource_graph)
+        resource.save()
+        return resource.pk
+    
+    def create_manifest_x_canvas(digital_resource, manifest, canvas=None):
+        manifest_x_canvas = ManifestXCanvas.objects.create(
+            manifest=manifest,
+            canvas=canvas,
+            digitalresource=digital_resource
+        )
+
+    def add_tiles(resource_id, name=None, statement=None, id=None, type=None, service={}, service_identifiers=[]):
+        if name:
+            try:
+                name_tile = Tile.objects.filter(nodegroup_id=name_nodegroupid, resourceinstance_id=resource_id)[0]
+            except:
+                name_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=name_nodegroupid, resourceid=resource_id)
+            name_tile.data[name_content_node_id] = build_string_object(name)
+            name_tile.save(index=False)
+
+        if statement:
+            try:
+                statement_tile = Tile.objects.filter(nodegroup_id=statement_nodegroupid, resourceinstance_id=resource_id)[0]
+            except:
+                statement_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=statement_nodegroupid, resourceid=resource_id)
+            statement_tile.data[statement_content_node_id] = build_string_object(statement)
+            statement_tile.save(index=False)
+
+        if service:
+            for service_type_conformance, service_type in service.items():
+                service_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=service_nodegroupid, resourceid=resource_id)
+                service_tile.data[service_type_conformance_node_id] = build_string_object(service_type_conformance)
+                service_tile.data[service_type_node_id] = service_type
+                service_tile.save(index=False)
+
+        if service_identifiers:
+            for service_identifier in service_identifiers:
+                for service_identifier_content, service_identifier_type in service_identifier.items():
+                    service_identifier_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=service_identifier_nodegroupid, resourceid=resource_id, parenttile=service_tile)
+                    service_identifier_tile.data[service_identifier_type_node_id] = service_identifier_type
+                    service_identifier_tile.data[service_identifier_content_node_id] = build_string_object(service_identifier_content)
+                    service_identifier_tile.save(index=False)
+
+        if id:
+            for identifier_content, identifier_type in id.items():
+                identifier_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=identifier_nodegroupid, resourceid=resource_id)
+                identifier_tile.data[identifier_content_node_id] = build_string_object(identifier_content)
+                identifier_tile.data[identifier_type_node_id] = identifier_type
+                identifier_tile.save(index=False)
+
+        if type:
+            type_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=type_nodegroupid, resourceid=resource_id)
+            type_tile.data[type_node_id] = type
+            type_tile.save(index=True)
+
+    manifest_data = instance.manifest
+    if created:
+        resource_id = create_digital_resource()
+        add_tiles(
+            resource_id,
+            name = manifest_data["label"],
+            statement = manifest_data["description"],
+            id = {instance.globalid: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
+            type = ['305c62f0-7e3d-4d52-a210-b451491e6100'], # IIIF Manifest
+            service = {manifest_data['@context']: ['e208df66-9e61-498b-8071-3024aa7bed30']}, # web service
+            service_identifiers = [
+                {manifest_data["@id"]: ["f32d0944-4229-4792-a33c-aadc2b181dc7"]},
+            ]
+        )
+        create_manifest_x_canvas(resource_id, manifest_data["@id"])
+    else:
+        id_tiles = Tile.objects.filter(nodegroup_id=identifier_nodegroupid)
+        resource_id = [tile.resourceinstance_id for tile in id_tiles
+            if tile.data[identifier_content_node_id]
+            and tile.data[identifier_content_node_id][get_language()]["value"] == str(instance.globalid)
+        ][0]
+        add_tiles(
+            resource_id,
+            name = manifest_data["label"],
+            statement = manifest_data["description"],
+        )
+
+    tiles = Tile.objects.filter(nodegroup_id=service_identifier_nodegroupid)
+    existing_canvases = [
+        tile.data[service_identifier_content_node_id][get_language()]["value"] for tile in tiles
+        if (tile.data[service_identifier_content_node_id]
+        and tile.data[service_identifier_type_node_id] == ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"])
+    ]
+
+    for canvas in manifest_data["sequences"][0]["canvases"]:
+        if canvas["images"][0]["resource"]["service"]["@id"] not in existing_canvases:
+            resource_id = create_digital_resource()
+            add_tiles(
+                resource_id,
+                name = canvas["label"],
+                id = {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
+                type = ['305c62f0-7e3d-4d52-a210-b451491e6100'], #IIIF Manifest #TODO canvas type can be added
+                service = {manifest_data['@context']: ['e208df66-9e61-498b-8071-3024aa7bed30']}, # web service
+                service_identifiers = [
+                    {canvas["images"][0]["resource"]["@id"]: ["f32d0944-4229-4792-a33c-aadc2b181dc7"]},
+                    {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
+                    {canvas["images"][0]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
+                ]
+            )
+            create_manifest_x_canvas(resource_id, manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
