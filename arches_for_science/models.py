@@ -1,4 +1,5 @@
 import uuid
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import JSONField
 from django.db.models.signals import post_save
@@ -64,13 +65,14 @@ def create_digital_resources(sender, instance, created, **kwargs):
         resource = Resource(graph_id = digital_resource_graph)
         resource.save()
         return resource.pk
-    
+
     def create_manifest_x_canvas(digital_resource, manifest, canvas=None):
         manifest_x_canvas = ManifestXCanvas.objects.create(
             manifest=manifest,
             canvas=canvas,
             digitalresource=digital_resource
         )
+        return manifest_x_canvas
 
     def add_tiles(resource_id, name=None, statement=None, id=None, type=None, service={}, service_identifiers=[]):
         if name:
@@ -116,14 +118,13 @@ def create_digital_resources(sender, instance, created, **kwargs):
             type_tile.data[type_node_id] = type
             type_tile.save(index=True)
 
-    manifest_data = instance.manifest
-    if created:
+    def create_manifest_digitla_resource(manifest_data):
         resource_id = create_digital_resource()
         add_tiles(
             resource_id,
             name = manifest_data["label"],
             statement = manifest_data["description"],
-            id = {instance.globalid: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
+            id = {str(instance.globalid): ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
             type = ['305c62f0-7e3d-4d52-a210-b451491e6100'], # IIIF Manifest
             service = {manifest_data['@context']: ['e208df66-9e61-498b-8071-3024aa7bed30']}, # web service
             service_identifiers = [
@@ -131,27 +132,23 @@ def create_digital_resources(sender, instance, created, **kwargs):
             ]
         )
         create_manifest_x_canvas(resource_id, manifest_data["@id"])
-    else:
-        id_tiles = Tile.objects.filter(nodegroup_id=identifier_nodegroupid)
-        resource_id = [tile.resourceinstance_id for tile in id_tiles
-            if tile.data[identifier_content_node_id]
-            and tile.data[identifier_content_node_id][get_language()]["value"] == str(instance.globalid)
-        ][0]
-        add_tiles(
-            resource_id,
-            name = manifest_data["label"],
-            statement = manifest_data["description"],
-        )
 
-    tiles = Tile.objects.filter(nodegroup_id=service_identifier_nodegroupid)
-    existing_canvases = [
-        tile.data[service_identifier_content_node_id][get_language()]["value"] for tile in tiles
-        if (tile.data[service_identifier_content_node_id]
-        and tile.data[service_identifier_type_node_id] == ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"])
-    ]
+    manifest_data = instance.manifest
+    if created:
+        create_manifest_digitla_resource(manifest_data)
+    else:
+        try:
+            resource_id = ManifestXCanvas.objects.get(manifest=manifest_data["@id"], canvas__isnull=True).digitalresource
+            add_tiles(
+                resource_id,
+                name = manifest_data["label"],
+                statement = manifest_data["description"],
+            )
+        except ObjectDoesNotExist:
+            create_manifest_digitla_resource(manifest_data)
 
     for canvas in manifest_data["sequences"][0]["canvases"]:
-        if canvas["images"][0]["resource"]["service"]["@id"] not in existing_canvases:
+        if not ManifestXCanvas.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
             resource_id = create_digital_resource()
             add_tiles(
                 resource_id,
