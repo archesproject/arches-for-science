@@ -57,9 +57,7 @@ define([
             });
 
             self.physicalThings = [].concat(...(await Promise.all(allPhysicalThingsResponse))).filter(res => {
-                const removedFromTile = res.tiles.find(tile => tile.nodegroup_id === removalFromObjectNodegroupId);
-                const removedFrom = removedFromTile?.data[removedFromNodeId].map(rr => rr.resourceId);
-                return removedFrom?.some(res => physicalThingFromPreviousStep.includes(res)) || physicalThingFromPreviousStep.includes(res.resourceinstanceid);
+                return physicalThingFromPreviousStep.includes(res.resourceinstanceid);
             });
 
             const physicalThingDetailsUrl = self.physicalThings.reduce(
