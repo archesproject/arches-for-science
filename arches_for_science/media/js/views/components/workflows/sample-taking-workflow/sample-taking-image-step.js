@@ -68,7 +68,7 @@ define([
             var alternateManifestResourceData = self.physicalThingDigitalReferenceAlternateManifestResourceData().find(function(manifestData) { return manifestData.displayname === imageServiceName; });
 
             var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
-            
+
             /* will not have tiles if creating a new manifest */ 
             if (manifestResourceData && manifestResourceData.tiles && params.form.savedData()) {
                 var previouslyPersistedTileId = params.form.savedData().tileid;
@@ -124,7 +124,16 @@ define([
                 const data = await response.json();
                 const digitalResourcesResourceId = data.find((x) => x.canvas == null).digitalresource
 
-                self.saveSamplingActivityDigitalReference(data.resourceinstance_id);
+                $.getJSON( arches.urls.api_card + digitalResourcesResourceId )
+                    .then(function(data) {
+                        console.log(data);
+                        const digitalServiceTile = data.tiles.find(function(tile) {
+                            return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+                        });
+                        params.form.savedData(digitalServiceTile);
+                    });
+
+                self.saveSamplingActivityDigitalReference(digitalResourcesResourceId);
 
                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
@@ -240,7 +249,7 @@ define([
             });
         };
 
-        this.getThumnail = function(digitalResourceData) {
+        this.getThumbnail = function(digitalResourceData) {
             const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
                 return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
             });
@@ -279,7 +288,7 @@ define([
                     
                     $.getJSON( arches.urls.api_card + physicalThingManifestResourceId )
                         .then(function(data) {
-                            self.getThumnail(data)
+                            self.getThumbnail(data)
                                 .then(function(json) {
                                     data.thumbnail = json.sequences[0].canvases[0].thumbnail['@id'];
                                     if (digitalReferenceTypeValue === preferredManifestConceptValueId) {

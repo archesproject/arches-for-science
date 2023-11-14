@@ -89,6 +89,14 @@ define([
                 const data = await response.json();
                 const digitalResourcesResourceId = data.find((x) => x.canvas == null).digitalresource
 
+                $.getJSON( arches.urls.api_card + digitalResourcesResourceId )
+                .then(function(data) {
+                    const digitalServiceTile = data.tiles.find(function(tile) {
+                        return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+                    });
+                    params.form.savedData(digitalServiceTile);
+                });
+
                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
                 var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
