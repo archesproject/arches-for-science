@@ -11,8 +11,6 @@ define([
         const observationGraphId = "615b11ee-c457-11e9-910c-a4d18cec433a";
         const collectionGraphId = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
         const physicalThingGraphId = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a";
-        const removalFromObjectNodegroupId = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a";
-        const removedFromNodeId = "38814345-d2bd-11e9-b9d6-a4d18cec433a";
 
         const self = this;
         const projectId = params.projectId;
