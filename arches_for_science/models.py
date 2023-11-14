@@ -162,4 +162,5 @@ def create_digital_resources(sender, instance, created, **kwargs):
                     {canvas["images"][0]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
                 ]
             )
+        if not ManifestXCanvas.objects.filter(manifest=manifest_data["@id"],canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
             create_manifest_x_canvas(resource_id, manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
