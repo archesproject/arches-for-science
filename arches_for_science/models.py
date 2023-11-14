@@ -60,10 +60,10 @@ def create_digital_resources(sender, instance, created, **kwargs):
     def build_string_object(string):
         return { get_language(): { "value": string, "direction": "rtl" if get_language_bidi() else "ltr" }}
     
-    def create_digital_resource():
+    def create_digital_resource(transactionid):
         digital_resource_graph = "707cbd78-ca7a-11e9-990b-a4d18cec433a"
         resource = Resource(graph_id = digital_resource_graph)
-        resource.save()
+        resource.save(transaction_id=transactionid)
         return resource.pk
 
     def create_manifest_x_canvas(digital_resource, manifest, canvas=None):
@@ -74,14 +74,14 @@ def create_digital_resources(sender, instance, created, **kwargs):
         )
         return manifest_x_canvas
 
-    def add_tiles(resource_id, name=None, statement=None, id=None, type=None, service={}, service_identifiers=[]):
+    def add_tiles(resource_id, name=None, statement=None, id=None, type=None, service={}, service_identifiers=[], transactionid=None):
         if name:
             try:
                 name_tile = Tile.objects.filter(nodegroup_id=name_nodegroupid, resourceinstance_id=resource_id)[0]
             except:
                 name_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=name_nodegroupid, resourceid=resource_id)
             name_tile.data[name_content_node_id] = build_string_object(name)
-            name_tile.save(index=False)
+            name_tile.save(transaction_id=transactionid, index=False)
 
         if statement:
             try:
@@ -89,14 +89,14 @@ def create_digital_resources(sender, instance, created, **kwargs):
             except:
                 statement_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=statement_nodegroupid, resourceid=resource_id)
             statement_tile.data[statement_content_node_id] = build_string_object(statement)
-            statement_tile.save(index=False)
+            statement_tile.save(transaction_id=transactionid, index=False)
 
         if service:
             for service_type_conformance, service_type in service.items():
                 service_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=service_nodegroupid, resourceid=resource_id)
                 service_tile.data[service_type_conformance_node_id] = build_string_object(service_type_conformance)
                 service_tile.data[service_type_node_id] = service_type
-                service_tile.save(index=False)
+                service_tile.save(transaction_id=transactionid, index=False)
 
         if service_identifiers:
             for service_identifier in service_identifiers:
@@ -104,22 +104,22 @@ def create_digital_resources(sender, instance, created, **kwargs):
                     service_identifier_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=service_identifier_nodegroupid, resourceid=resource_id, parenttile=service_tile)
                     service_identifier_tile.data[service_identifier_type_node_id] = service_identifier_type
                     service_identifier_tile.data[service_identifier_content_node_id] = build_string_object(service_identifier_content)
-                    service_identifier_tile.save(index=False)
+                    service_identifier_tile.save(transaction_id=transactionid, index=False)
 
         if id:
             for identifier_content, identifier_type in id.items():
                 identifier_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=identifier_nodegroupid, resourceid=resource_id)
                 identifier_tile.data[identifier_content_node_id] = build_string_object(identifier_content)
                 identifier_tile.data[identifier_type_node_id] = identifier_type
-                identifier_tile.save(index=False)
+                identifier_tile.save(transaction_id=transactionid, index=False)
 
         if type:
             type_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=type_nodegroupid, resourceid=resource_id)
             type_tile.data[type_node_id] = type
-            type_tile.save(index=True)
+            type_tile.save(transaction_id=transactionid, index=True)
 
-    def create_manifest_digitla_resource(manifest_data):
-        resource_id = create_digital_resource()
+    def create_manifest_digitla_resource(manifest_data, transactionid):
+        resource_id = create_digital_resource(transactionid)
         add_tiles(
             resource_id,
             name = manifest_data["label"],
@@ -129,13 +129,14 @@ def create_digital_resources(sender, instance, created, **kwargs):
             service = {manifest_data['@context']: ['e208df66-9e61-498b-8071-3024aa7bed30']}, # web service
             service_identifiers = [
                 {manifest_data["@id"]: ["f32d0944-4229-4792-a33c-aadc2b181dc7"]},
-            ]
+            ],
+            transactionid=transactionid
         )
         create_manifest_x_canvas(resource_id, manifest_data["@id"])
 
     manifest_data = instance.manifest
     if created:
-        create_manifest_digitla_resource(manifest_data)
+        create_manifest_digitla_resource(manifest_data, instance.transactionid)
     else:
         try:
             resource_id = ManifestXCanvas.objects.get(manifest=manifest_data["@id"], canvas__isnull=True).digitalresource
@@ -143,13 +144,14 @@ def create_digital_resources(sender, instance, created, **kwargs):
                 resource_id,
                 name = manifest_data["label"],
                 statement = manifest_data["description"],
+                transactionid=instance.transactionid
             )
         except ObjectDoesNotExist:
-            create_manifest_digitla_resource(manifest_data)
+            create_manifest_digitla_resource(manifest_data, instance.transactionid)
 
     for canvas in manifest_data["sequences"][0]["canvases"]:
         if not ManifestXCanvas.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
-            resource_id = create_digital_resource()
+            resource_id = create_digital_resource(transactionid=instance.transactionid)
             add_tiles(
                 resource_id,
                 name = canvas["label"],
@@ -160,7 +162,8 @@ def create_digital_resources(sender, instance, created, **kwargs):
                     {canvas["images"][0]["resource"]["@id"]: ["f32d0944-4229-4792-a33c-aadc2b181dc7"]},
                     {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
                     {canvas["images"][0]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
-                ]
+                ],
+                transactionid=instance.transactionid
             )
         if not ManifestXCanvas.objects.filter(manifest=manifest_data["@id"],canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
             create_manifest_x_canvas(resource_id, manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
