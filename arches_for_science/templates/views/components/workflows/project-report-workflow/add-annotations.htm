@@ -37,7 +37,12 @@
                     {% trans "Select a canvas, zoom/pan to position it for a screenshot" %}
                 </div>
                 <div style="display: block; float: inline-end;">
-                    <button style="height:32px; border: 1px solid steelblue; border-radius: 2px;" class="btn btn-info" data-bind="click: screenshot, css: {disabled: !leafletConfig() }">Grab Screenshot</button>
+                    <button style="height:32px; border: 1px solid steelblue; border-radius: 2px;" class="btn btn-info" data-bind="click: screenshot, css: {disabled: !leafletConfig() }">
+                        <div style="display: flex; flex-direction: row">
+                            <div>{% trans "Grab Screenshot" %}</div>
+                            <i style="padding: 4px" class="fa fa-spin fa-spinner" data-bind="visible: loading"></i>
+                        </div>
+                    </button>
                 </div>
             </div>
             
