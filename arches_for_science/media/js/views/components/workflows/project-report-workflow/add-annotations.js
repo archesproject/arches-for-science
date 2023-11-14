@@ -254,11 +254,17 @@ define([
                         });
                     }
                 });
+
+                let hasFitBounds = false;
+
                 iiifLayer.on('load', function() {
-                    map.fitBounds([
-                        [extent[1]-1, extent[0]-1],
-                        [extent[3]+1, extent[2]+1]
-                    ]);
+                    if (!hasFitBounds) {
+                        map.fitBounds([
+                            [extent[1]-1, extent[0]-1],
+                            [extent[3]+1, extent[2]+1]
+                        ]);
+                        hasFitBounds = true;
+                    }
                 });
 
                 map.addLayer(geojsonLayer);
