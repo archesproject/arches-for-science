@@ -9,6 +9,9 @@
             <span style="color: #fff;" data-bind="text: $root.translations.download"></span>
             <i class="fa fa-download" style="margin-inline-start: 0.5em; margin-block-start: 0.25em"></i>
         </button>
-        <div style="padding-top: 10px;" data-bind="text: message"></div>
+        <div style="display: flex; flex-direction: row; padding-top: 10px">
+            <div style="padding-top: 3px" data-bind="text: message"></div>
+            <i style="padding:5px" class="fa fa-spin fa-spinner" data-bind="visible: loading"></i>
+        </div>
     </div>
 </div>
