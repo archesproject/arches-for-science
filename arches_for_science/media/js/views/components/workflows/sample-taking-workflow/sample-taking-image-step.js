@@ -52,7 +52,6 @@ define([
         const digitalSourceFor = "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa";
         
         this.manifestData = ko.observable();
-        this.manifestData.subscribe(x=>console.log(x));
 
         this.initialize = function() {
             params.form.save = self.save;
@@ -126,7 +125,6 @@ define([
 
                 $.getJSON( arches.urls.api_card + digitalResourcesResourceId )
                     .then(function(data) {
-                        console.log(data);
                         const digitalServiceTile = data.tiles.find(function(tile) {
                             return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                         });

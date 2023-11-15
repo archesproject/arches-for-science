@@ -46,9 +46,7 @@ define([
         const digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
         const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
 
-
         this.manifestData = ko.observable();
-        this.manifestData.subscribe(x=>console.log(x));
         
         this.initialize = function() {
             params.form.save = self.save;
