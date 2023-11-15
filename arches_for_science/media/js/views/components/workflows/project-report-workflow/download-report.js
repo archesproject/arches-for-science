@@ -11,14 +11,13 @@ define([
         const observationGraphId = "615b11ee-c457-11e9-910c-a4d18cec433a";
         const collectionGraphId = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
         const physicalThingGraphId = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a";
-        const removalFromObjectNodegroupId = "b11f217a-d2bc-11e9-8dfa-a4d18cec433a";
-        const removedFromNodeId = "38814345-d2bd-11e9-b9d6-a4d18cec433a";
 
         const self = this;
         const projectId = params.projectId;
         const physicalThingFromPreviousStep = params.physicalThingIds;
         const projectFiles = params.projectFiles;
         this.message = ko.observable();
+        this.loading = ko.observable(false);
         this.templates = ko.observableArray(params.templates);
         const screenshots = params.annotationStepData ? params.annotationStepData.screenshots : [];
         const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
@@ -49,6 +48,8 @@ define([
         getProjectName();
 
         this.generateReport = async() => {
+            self.loading(true);
+            self.message(arches.translations.generatingReportMessage)
             const relatedObjects = await getRelatedResources(projectId);
             const collections = relatedObjects.related_resources.filter(rr => rr.graph_id == collectionGraphId);
             const allPhysicalThingsResponse = collections.map(async(collection) => {
@@ -115,6 +116,7 @@ define([
                 }
             }).then(response => {
                 if (response.ok) {
+                    self.loading(false);
                     return response.json();
                 } else {
                     throw response;
@@ -122,6 +124,7 @@ define([
             })
             .then((json) => self.message(json.message))
             .catch((response) => {
+                self.loading(false);
                 response.json().then(
                     error => {
                         params.pageVm.alert(
