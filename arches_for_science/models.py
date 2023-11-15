@@ -2,7 +2,7 @@ import uuid
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import JSONField
-from django.db.models.signals import post_save
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.utils.translation import get_language, get_language_bidi
 from arches.app.models.models import IIIFManifest
@@ -29,9 +29,9 @@ class RendererConfig(models.Model):
 
 
 class ManifestXCanvas(models.Model):
-    manifest = models.TextField()
+    manifest = models.TextField(blank=True, null=True)
     canvas = models.TextField(blank=True, null=True)
-    digitalresource = models.UUIDField()
+    digitalresource = models.UUIDField(blank=True, null=True)
 
     class Meta:
         managed = True
@@ -119,6 +119,10 @@ def create_digital_resources(sender, instance, created, **kwargs):
             type_tile.save(transaction_id=transactionid, index=True)
 
     def create_manifest_digitla_resource(manifest_data, transactionid):
+        """
+            Creates the digital resources resource instance representing manifest
+            and also creates the manifest_x_canvas record
+        """
         resource_id = create_digital_resource(transactionid)
         add_tiles(
             resource_id,
@@ -134,14 +138,15 @@ def create_digital_resources(sender, instance, created, **kwargs):
         )
         create_manifest_x_canvas(resource_id, manifest_data["@id"])
 
+    # the creation of the resource will be only applied to the local manifests that can be created and updated
     manifest_data = instance.manifest
     if created:
         create_manifest_digitla_resource(manifest_data, instance.transactionid)
     else:
         try:
-            resource_id = ManifestXCanvas.objects.get(manifest=manifest_data["@id"], canvas__isnull=True).digitalresource
+            manifest_resource_id = ManifestXCanvas.objects.get(manifest=manifest_data["@id"], canvas__isnull=True).digitalresource
             add_tiles(
-                resource_id,
+                manifest_resource_id,
                 name = manifest_data["label"],
                 statement = manifest_data["description"],
                 transactionid=instance.transactionid
@@ -149,11 +154,12 @@ def create_digital_resources(sender, instance, created, **kwargs):
         except ObjectDoesNotExist:
             create_manifest_digitla_resource(manifest_data, instance.transactionid)
 
+    # add canvas record in manifest_x_canvas if not already available
     for canvas in manifest_data["sequences"][0]["canvases"]:
         if not ManifestXCanvas.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
-            resource_id = create_digital_resource(transactionid=instance.transactionid)
+            canvas_resource_id = create_digital_resource(transactionid=instance.transactionid)
             add_tiles(
-                resource_id,
+                canvas_resource_id,
                 name = canvas["label"],
                 id = {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
                 type = ['305c62f0-7e3d-4d52-a210-b451491e6100'], #IIIF Manifest #TODO canvas type can be added
@@ -165,5 +171,23 @@ def create_digital_resources(sender, instance, created, **kwargs):
                 ],
                 transactionid=instance.transactionid
             )
-        if not ManifestXCanvas.objects.filter(manifest=manifest_data["@id"],canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
-            create_manifest_x_canvas(resource_id, manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
+        else:
+            canvas_resource_id = ManifestXCanvas.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"])[0].digitalresource
+
+        if not ManifestXCanvas.objects.filter(manifest=manifest_data["@id"], canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
+            create_manifest_x_canvas(canvas_resource_id, manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
+
+    # update the canvas in manifest_x_canvas that was removed from the current manifest
+    current_canvases = [canvas["images"][0]["resource"]["service"]["@id"] for canvas in manifest_data["sequences"][0]["canvases"]]
+    for manifest_x_canvas in ManifestXCanvas.objects.filter(manifest=manifest_data["@id"], canvas__isnull=False):
+        if manifest_x_canvas.canvas not in current_canvases:
+            manifest_x_canvas.manifest = None
+            manifest_x_canvas.save()
+
+@receiver(post_delete, sender=IIIFManifest)
+def delete_manifest_x_canvas(sender, instance, **kwargs):
+    try:
+        ManifestXCanvas.objects.filter(manifest=instance.manifest["@id"], canvas__isnull=False).update(manifest=None)
+        ManifestXCanvas.objects.filter(manifest=instance.manifest["@id"], canvas__isnull=True).delete()
+    except:
+        pass

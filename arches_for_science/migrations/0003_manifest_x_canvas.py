@@ -14,9 +14,9 @@ class Migration(migrations.Migration):
             name='ManifestXCanvas',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('manifest', models.TextField()),
+                ('manifest', models.TextField(blank=True, null=True)),
                 ('canvas', models.TextField(blank=True, null=True)),
-                ('digitalresource', models.UUIDField()),
+                ('digitalresource', models.UUIDField(blank=True, null=True)),
             ],
             options={
                 'db_table': 'manifest_x_canvas',
