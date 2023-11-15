@@ -70,7 +70,7 @@
                             <td style="flex-grow: 2; max-width: 400px;" data-bind="text: $data.workflowname"></td>
                             <td style="flex-grow: 1; max-width: 200px;">
                                 <a 
-                                    data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.pluginid}`}"
+                                    data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
                                     style="text-decoration: underline; color: blue;"
                                 >{% trans 'Go to Workflow' %}</a>
                             </td>
