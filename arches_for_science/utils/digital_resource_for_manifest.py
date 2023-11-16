@@ -70,10 +70,10 @@ def add_tiles(resource_id, name=None, statement=None, id=None, type=None, servic
         name_tile.save(transaction_id=transactionid, index=False)
 
     if statement:
-        name_count = Tile.objects.filter(nodegroup_id=name_nodegroupid, resourceinstance_id=resource_id).count()
-        if name_count == 1:
+        statement_count = Tile.objects.filter(nodegroup_id=statement_nodegroupid, resourceinstance_id=resource_id).count()
+        if statement_count == 1:
             statement_tile = Tile.objects.get(nodegroup_id=statement_nodegroupid, resourceinstance_id=resource_id)
-        elif name_count == 0:
+        elif statement_count == 0:
             statement_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=statement_nodegroupid, resourceid=resource_id)
         else:
             return            
@@ -136,7 +136,7 @@ def digital_resources_for_manifest(instance, created):
     # the creation of the resource will be only applied to the local manifests that can be created and updated
     manifest_data = instance.manifest
     if created:
-        create_manifest_digitla_resource(manifest_data, instance.transactionid)
+        create_manifest_digitla_resource(instance)
     else:
         try:
             manifest_resource_id = ManifestXCanvas.objects.get(manifest=manifest_data["@id"], canvas__isnull=True).digitalresource
@@ -147,7 +147,7 @@ def digital_resources_for_manifest(instance, created):
                 transactionid=instance.transactionid
             )
         except ObjectDoesNotExist:
-            create_manifest_digitla_resource(manifest_data, instance.transactionid)
+            create_manifest_digitla_resource(instance)
 
 def digital_resources_for_canvases(instance):
     """

@@ -4,7 +4,6 @@ from django.db.models import JSONField
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from arches.app.models.models import IIIFManifest
-from arches_for_science.utils.digital_resource_for_manifest import digital_resources_manifest, digital_resources_canvas
 
 
 class RendererConfig(models.Model):
@@ -37,8 +36,9 @@ class ManifestXCanvas(models.Model):
 
 @receiver(post_save, sender=IIIFManifest)
 def create_digital_resources(sender, instance, created, **kwargs):
-    digital_resources_manifest(instance, created)
-    digital_resources_canvas(instance)
+    from arches_for_science.utils.digital_resource_for_manifest import digital_resources_for_manifest, digital_resources_for_canvases
+    digital_resources_for_manifest(instance, created)
+    digital_resources_for_canvases(instance)
 
 @receiver(post_delete, sender=IIIFManifest)
 def delete_manifest_x_canvas(sender, instance, **kwargs):
