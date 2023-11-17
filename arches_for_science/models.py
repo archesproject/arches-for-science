@@ -27,6 +27,7 @@ class RendererConfig(models.Model):
 class ManifestXDigitalResource(models.Model):
     manifest = models.TextField(unique=True)
     digitalresource = models.TextField(unique=True)
+
     class Meta:
         managed = True
         db_table = "manifest_x_digitalresource"

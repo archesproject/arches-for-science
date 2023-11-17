@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import get_language, get_language_bidi
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
@@ -119,14 +118,14 @@ def create_digital_resource(instance, iiif_type, canvas=None):
         Creates the digital resources resource instance representing manifest
         and also creates the manifest_x_canvas record
     """
-    iiif_manifest_value = ["305c62f0-7e3d-4d52-a210-b451491e6100"]
+    iiif_manifest_valueid = ["305c62f0-7e3d-4d52-a210-b451491e6100"]
     internal_id_valueid = ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]
     web_service_valueid = ['e208df66-9e61-498b-8071-3024aa7bed30']
     digital_resource_graph = "707cbd78-ca7a-11e9-990b-a4d18cec433a"
 
     manifest_data = instance.manifest
     service = {manifest_data['@context']: web_service_valueid} #TODO canvas does not have its own service
-    type=iiif_manifest_value #TODO canvas type need to be added
+    type=iiif_manifest_valueid #TODO canvas type need to be added
     transactionid=instance.transactionid
 
     resource = Resource(graph_id = digital_resource_graph)
@@ -135,7 +134,6 @@ def create_digital_resource(instance, iiif_type, canvas=None):
 
     if iiif_type == "manifest":
         name = manifest_data["label"]
-        print("manifest_name",name)
         statement = manifest_data["description"]
         id = {str(instance.globalid): internal_id_valueid}
         service_identifiers = [
@@ -143,7 +141,6 @@ def create_digital_resource(instance, iiif_type, canvas=None):
         ]
     elif iiif_type == "canvas":
         name = canvas["label"]
-        print("canvas name",name)
         statement = None
         id = {canvas["images"][0]["resource"]["service"]["@id"]: internal_id_valueid}
         service_identifiers = [
@@ -151,8 +148,6 @@ def create_digital_resource(instance, iiif_type, canvas=None):
             {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
             {canvas["images"][0]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
         ]
-    print("type",type)
-    print("name",name)
     add_tiles(
         resource_id=resource_id,
         name=name,
