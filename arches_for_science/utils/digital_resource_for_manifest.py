@@ -20,23 +20,30 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import get_language, get_language_bidi
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
-from arches_for_science.models import ManifestXCanvas
+from arches_for_science.models import ManifestXDigitalResource, CanvasXDigitalResource, ManifestXCanvas
 
 
 def build_string_object(string):
     return { get_language(): { "value": string, "direction": "rtl" if get_language_bidi() else "ltr" }}
 
-def create_digital_resource(transactionid):
-    digital_resource_graph = "707cbd78-ca7a-11e9-990b-a4d18cec433a"
-    resource = Resource(graph_id = digital_resource_graph)
-    resource.save(transaction_id=transactionid)
-    return resource.pk
-
-def create_manifest_x_canvas(digital_resource, manifest, canvas=None):
-    manifest_x_canvas = ManifestXCanvas.objects.create(
+def create_manifest_x_digitalresource(manifest, digital_resource):
+    manifest_x_digitalresource = ManifestXDigitalResource.objects.create(
         manifest=manifest,
+        digitalresource=digital_resource
+    )
+    return manifest_x_digitalresource
+
+def create_canvas_x_digitalresource(canvas, digital_resource):
+    canvas_x_digitalresource = CanvasXDigitalResource.objects.create(
         canvas=canvas,
         digitalresource=digital_resource
+    )
+    return canvas_x_digitalresource
+
+def create_manifest_x_canvas(manifest, canvas):
+    manifest_x_canvas = ManifestXCanvas.objects.create(
+        manifest=manifest,
+        canvas=canvas
     )
     return manifest_x_canvas
 
@@ -107,80 +114,104 @@ def add_tiles(resource_id, name=None, statement=None, id=None, type=None, servic
         type_tile.data[type_node_id] = type
         type_tile.save(transaction_id=transactionid, index=True)
 
-def create_manifest_digitla_resource(instance):
+def create_digital_resource(instance, iiif_type, canvas=None):
     """
         Creates the digital resources resource instance representing manifest
         and also creates the manifest_x_canvas record
     """
-    manifest_data = instance.manifest
+    iiif_manifest_value = ["305c62f0-7e3d-4d52-a210-b451491e6100"]
+    internal_id_valueid = ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]
+    web_service_valueid = ['e208df66-9e61-498b-8071-3024aa7bed30']
+    digital_resource_graph = "707cbd78-ca7a-11e9-990b-a4d18cec433a"
 
-    resource_id = create_digital_resource(instance.transactionid)
-    add_tiles(
-        resource_id,
-        name = manifest_data["label"],
-        statement = manifest_data["description"],
-        id = {str(instance.globalid): ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
-        type = ['305c62f0-7e3d-4d52-a210-b451491e6100'], # IIIF Manifest
-        service = {manifest_data['@context']: ['e208df66-9e61-498b-8071-3024aa7bed30']}, # web service
+    manifest_data = instance.manifest
+    service = {manifest_data['@context']: web_service_valueid} #TODO canvas does not have its own service
+    type=iiif_manifest_value #TODO canvas type need to be added
+    transactionid=instance.transactionid
+
+    resource = Resource(graph_id = digital_resource_graph)
+    resource.save(transaction_id=instance.transactionid)
+    resource_id = resource.pk
+
+    if iiif_type == "manifest":
+        name = manifest_data["label"]
+        print("manifest_name",name)
+        statement = manifest_data["description"]
+        id = {str(instance.globalid): internal_id_valueid}
         service_identifiers = [
             {manifest_data["@id"]: ["f32d0944-4229-4792-a33c-aadc2b181dc7"]},
-        ],
+        ]
+    elif iiif_type == "canvas":
+        name = canvas["label"]
+        print("canvas name",name)
+        statement = None
+        id = {canvas["images"][0]["resource"]["service"]["@id"]: internal_id_valueid}
+        service_identifiers = [
+            {canvas["images"][0]["resource"]["@id"]: ["f32d0944-4229-4792-a33c-aadc2b181dc7"]},
+            {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
+            {canvas["images"][0]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
+        ]
+    print("type",type)
+    print("name",name)
+    add_tiles(
+        resource_id=resource_id,
+        name=name,
+        statement=statement,
+        id=id,
+        type=type,
+        service=service,
+        service_identifiers=service_identifiers,
+        transactionid=transactionid
+    )
+    return resource_id
+
+def update_manifest_digital_resource(instance):
+    manifest_data = instance.manifest
+    manifest_resource_id = ManifestXDigitalResource.objects.get(manifest=manifest_data["@id"]).digitalresource
+    add_tiles(
+        manifest_resource_id,
+        name = manifest_data["label"],
+        statement = manifest_data["description"],
         transactionid=instance.transactionid
     )
-    create_manifest_x_canvas(resource_id, manifest_data["@id"])
+    return manifest_resource_id
+
 
 def digital_resources_for_manifest(instance, created):
     """
-        main function to crate/update the digital resource for the manifest
+        the main function to crate/update the digital resource for the manifest
     """
     # the creation of the resource will be only applied to the local manifests that can be created and updated
-    manifest_data = instance.manifest
+
     if created:
-        create_manifest_digitla_resource(instance)
+        manifest_resource_id = create_digital_resource(instance, "manifest")
+        create_manifest_x_digitalresource(instance.manifest["@id"], manifest_resource_id)
+
     else:
-        try:
-            manifest_resource_id = ManifestXCanvas.objects.get(manifest=manifest_data["@id"], canvas__isnull=True).digitalresource
-            add_tiles(
-                manifest_resource_id,
-                name = manifest_data["label"],
-                statement = manifest_data["description"],
-                transactionid=instance.transactionid
-            )
-        except ObjectDoesNotExist:
-            create_manifest_digitla_resource(instance)
+        if ManifestXDigitalResource.objects.filter(manifest=instance.manifest["@id"]).count() == 1:
+            update_manifest_digital_resource(instance)
+        else:
+            manifest_resource_id = create_digital_resource(instance, "manifest")
+            create_manifest_x_digitalresource(instance.manifest["@id"], manifest_resource_id)
+
 
 def digital_resources_for_canvases(instance):
     """
-        main function to crate/update the digital resource for the canvases
+        the main function to crate/update the digital resource for the canvases
     """
     manifest_data = instance.manifest
 
     # add canvas record in manifest_x_canvas if not already available
     for canvas in manifest_data["sequences"][0]["canvases"]:
-        if not ManifestXCanvas.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
-            canvas_resource_id = create_digital_resource(transactionid=instance.transactionid)
-            add_tiles(
-                canvas_resource_id,
-                name = canvas["label"],
-                id = {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
-                type = ['305c62f0-7e3d-4d52-a210-b451491e6100'], #IIIF Manifest #TODO canvas type can be added
-                service = {manifest_data['@context']: ['e208df66-9e61-498b-8071-3024aa7bed30']}, # web service
-                service_identifiers = [
-                    {canvas["images"][0]["resource"]["@id"]: ["f32d0944-4229-4792-a33c-aadc2b181dc7"]},
-                    {canvas["images"][0]["resource"]["service"]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
-                    {canvas["images"][0]["@id"]: ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]},
-                ],
-                transactionid=instance.transactionid
-            )
-        else:
-            canvas_resource_id = ManifestXCanvas.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"])[0].digitalresource
+        if not CanvasXDigitalResource.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
+            canvas_resource_id = create_digital_resource(instance, "canvas", canvas)
+            create_canvas_x_digitalresource(canvas["images"][0]["resource"]["service"]["@id"], canvas_resource_id)
 
         if not ManifestXCanvas.objects.filter(manifest=manifest_data["@id"], canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
-            create_manifest_x_canvas(canvas_resource_id, manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
+            create_manifest_x_canvas(manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
 
     # update the canvas in manifest_x_canvas that was removed from the current manifest
     current_canvases = [canvas["images"][0]["resource"]["service"]["@id"] for canvas in manifest_data["sequences"][0]["canvases"]]
-    for manifest_x_canvas in ManifestXCanvas.objects.filter(manifest=manifest_data["@id"], canvas__isnull=False):
+    for manifest_x_canvas in ManifestXCanvas.objects.filter(manifest=manifest_data["@id"]):
         if manifest_x_canvas.canvas not in current_canvases:
-            manifest_x_canvas.manifest = None
-            manifest_x_canvas.save()
+            manifest_x_canvas.delete()

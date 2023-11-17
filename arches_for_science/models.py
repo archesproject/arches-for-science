@@ -24,10 +24,24 @@ class RendererConfig(models.Model):
             self.configid = uuid.uuid4()
 
 
+class ManifestXDigitalResource(models.Model):
+    manifest = models.TextField(unique=True)
+    digitalresource = models.TextField(unique=True)
+    class Meta:
+        managed = True
+        db_table = "manifest_x_digitalresource"
+
+class CanvasXDigitalResource(models.Model):
+    canvas = models.TextField(unique=True)
+    digitalresource = models.TextField(unique=True)
+
+    class Meta:
+        managed = True
+        db_table = "canvas_x_digitalresource"
+
 class ManifestXCanvas(models.Model):
-    manifest = models.TextField(blank=True, null=True)
-    canvas = models.TextField(blank=True, null=True)
-    digitalresource = models.UUIDField(blank=True, null=True)
+    manifest = models.TextField()
+    canvas = models.TextField()
 
     class Meta:
         managed = True
@@ -42,8 +56,5 @@ def create_digital_resources(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=IIIFManifest)
 def delete_manifest_x_canvas(sender, instance, **kwargs):
-    try:
-        ManifestXCanvas.objects.filter(manifest=instance.manifest["@id"], canvas__isnull=False).update(manifest=None)
-        ManifestXCanvas.objects.filter(manifest=instance.manifest["@id"], canvas__isnull=True).delete()
-    except:
-        pass
+    ManifestXCanvas.objects.filter(manifest=instance.manifest["@id"]).delete()
+    ManifestXDigitalResource.objects.filter(manifest=instance.manifest["@id"]).delete()
