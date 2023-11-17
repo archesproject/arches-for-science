@@ -196,7 +196,7 @@ def digital_resources_for_canvases(instance):
     """
     manifest_data = instance.manifest
 
-    # add canvas record in manifest_x_canvas if not already available
+    # add canvas record in canvas_x_digitalresource if not already available
     for canvas in manifest_data["sequences"][0]["canvases"]:
         if not CanvasXDigitalResource.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
             canvas_resource_id = create_digital_resource(instance, "canvas", canvas)
