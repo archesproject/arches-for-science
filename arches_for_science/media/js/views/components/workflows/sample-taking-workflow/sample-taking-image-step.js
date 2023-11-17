@@ -121,7 +121,7 @@ define([
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
                 const response = await fetch(`${arches.urls.manifest_x_canvas}?manifest=${self.manifestData()['@id']}`);
                 const data = await response.json();
-                const digitalResourcesResourceId = data.find((x) => x.canvas == null).digitalresource
+                const digitalResourcesResourceId = data.digital_resource
 
                 $.getJSON( arches.urls.api_card + digitalResourcesResourceId )
                     .then(function(data) {
