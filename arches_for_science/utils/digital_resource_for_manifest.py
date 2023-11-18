@@ -114,9 +114,8 @@ def add_tiles(resource_id, name=None, statement=None, id=None, type=None, servic
         type_tile.save(transaction_id=transactionid, index=True)
 
 def create_digital_resource(instance, iiif_type, canvas=None):
-    """
-        Creates the digital resources resource instance representing manifest
-        and also creates the manifest_x_canvas record
+    """Creates the digital resources resource instance representing manifest
+    and also creates the manifest_x_canvas record
     """
     iiif_manifest_valueid = ["305c62f0-7e3d-4d52-a210-b451491e6100"]
     internal_id_valueid = ["768b2f11-26e4-4ada-a699-7a8d3fe9fe5a"]
@@ -173,9 +172,7 @@ def update_manifest_digital_resource(instance):
 
 
 def digital_resources_for_manifest(instance, created):
-    """
-        the main function to crate/update the digital resource for the manifest
-    """
+    """the main function to create/update the digital resource for the manifest"""
     # the creation of the resource will be only applied to the local manifests that can be created and updated
 
     if created:
@@ -191,12 +188,10 @@ def digital_resources_for_manifest(instance, created):
 
 
 def digital_resources_for_canvases(instance):
-    """
-        the main function to crate/update the digital resource for the canvases
-    """
+    """the main function to create/update the digital resource for the canvases"""
     manifest_data = instance.manifest
 
-    # add canvas record in canvas_x_digitalresource if not already available
+    # add the canvas record to canvas_x_digitalresource if not already available
     for canvas in manifest_data["sequences"][0]["canvases"]:
         if not CanvasXDigitalResource.objects.filter(canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
             canvas_resource_id = create_digital_resource(instance, "canvas", canvas)
@@ -205,7 +200,7 @@ def digital_resources_for_canvases(instance):
         if not ManifestXCanvas.objects.filter(manifest=manifest_data["@id"], canvas=canvas["images"][0]["resource"]["service"]["@id"]).exists():
             create_manifest_x_canvas(manifest_data["@id"], canvas["images"][0]["resource"]["service"]["@id"])
 
-    # update the canvas in manifest_x_canvas that was removed from the current manifest
+    # remove the canvas record in manifest_x_canvas that was removed from the current manifest
     current_canvases = [canvas["images"][0]["resource"]["service"]["@id"] for canvas in manifest_data["sequences"][0]["canvases"]]
     for manifest_x_canvas in ManifestXCanvas.objects.filter(manifest=manifest_data["@id"]):
         if manifest_x_canvas.canvas not in current_canvases:
