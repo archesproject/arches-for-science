@@ -1,5 +1,3 @@
-const { subclip } = require("three/src/animation/AnimationUtils");
-
 define([
     'underscore',
     'jquery',
@@ -87,13 +85,12 @@ define([
                 const data = await response.json();
                 const digitalResourcesResourceId = data.digital_resource
 
-                $.getJSON( arches.urls.api_card + digitalResourcesResourceId )
-                .then(function(data) {
-                    const digitalServiceTile = data.tiles.find(function(tile) {
-                        return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
-                    });
-                    params.form.savedData(digitalServiceTile);
+                const card_response = await fetch( arches.urls.api_card + digitalResourcesResourceId )
+                const card_data = await card_response.json();
+                const digitalServiceTile = card_data.tiles.find(function(tile) {
+                    return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                 });
+                params.form.savedData(digitalServiceTile);
 
                 var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
