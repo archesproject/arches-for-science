@@ -22,6 +22,7 @@ define([
         const projectInfo = params.projectInfoData;
         const physThingName = projectInfo.physThingName;
         const observedThingNodeId = 'cd412ac5-c457-11e9-9644-a4d18cec433a';
+        const observationTypeNodeId = '7b97ee23-c457-11e9-8ce3-a4d18cec433a';
         const observedThingInstanceId = projectInfo.physicalThing;
         const projectInstanceId = projectInfo.project;
         const projectNodeId = '736f06a4-c54d-11ea-9f58-024e0d439fdb';
@@ -48,6 +49,7 @@ define([
         let procedureTileId = getProp('procedure', 'tileid');
         let projectTileId = getProp('project', 'tileid');
         let observedThingTileid = getProp('observedThing', 'tileid');
+        let observationTypeTileId = getProp('type', 'tileid');
         let dateTileId = getProp('date', 'tileid');
         let nameTileId = getProp('name', 'tileid');
 
@@ -55,6 +57,7 @@ define([
         this.procedureValue = ko.observable(getProp('procedure', 'value'));
         this.parameterValue = ko.observable(getProp('parameter', 'value'));
         this.observationInstanceId = ko.observable(getProp('observationInstanceId'));
+        this.observationType = ko.observableArray(getProp("observationType", 'value'));
         this.dateValue = ko.observable(getProp('date', 'value'));
         this.showName = ko.observable(false);
         this.locked = params.form.locked;
@@ -120,6 +123,7 @@ define([
                 date: {value: self.dateValue(), tileid: dateTileId},
                 observedThing: {tileid: observedThingTileid},
                 project: {tileid: projectTileId},
+                observationType: {value: self.observationType(), tileid: observationTypeTileId},
                 observationInstanceId: self.observationInstanceId()
             };
         });
@@ -225,6 +229,10 @@ define([
             let observedThingData = {};
             observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId);
             tiles['observedThingTile'] = self.buildTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid);
+            
+            let observationTypeData = {};
+            observationTypeData[observationTypeNodeId] = self.observationType();
+            tiles['observationTypeTile'] = self.buildTile(observationTypeData, observationTypeNodeId, self.observationInstanceId(), observationTypeTileId);
 
             let partOfProjectData = {};
             partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId);
@@ -267,6 +275,7 @@ define([
                 return response.json();
             }).then(function(json){
                 observedThingTileid = json.observedThingTile.tileid;
+                observationTypeTileId = json.observationTypeTile.tileid;
                 projectTileId = json.partOfProjectTile.tileid;
                 nameTileId = json.nameTile.tileid;
                 dateTileId = json.dateTile.tileid;

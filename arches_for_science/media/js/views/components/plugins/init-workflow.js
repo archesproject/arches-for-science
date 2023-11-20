@@ -27,13 +27,13 @@ define([
             }, []);
 
             // filters out the chemical analysis and chemical image workflows if cloud storage is not enabled.
-            if(!afsSettings.cloudStorage.enabled){
-                workflows = workflows.filter(
-                    workflow => {
-                        return !['c206cfc6-6b4a-481e-a018-8da72aeb7074', "af06e949-5e16-49f0-b23e-e8529e8ce321"].includes(workflow.pluginid);
-                    }
-                );
-            }
+            // if(!afsSettings.cloudStorage.enabled){
+            //     workflows = workflows.filter(
+            //         workflow => {
+            //             return !['c206cfc6-6b4a-481e-a018-8da72aeb7074', "af06e949-5e16-49f0-b23e-e8529e8ce321"].includes(workflow.pluginid);
+            //         }
+            //     );
+            // }
 
             this.workflows(workflows);
             this.helpTemplateData(workflows.reduce((acc, workflow) => {
