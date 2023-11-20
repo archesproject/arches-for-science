@@ -49,7 +49,7 @@
                     }"
                 >
                     <!-- ko if: thumbnail -->
-                    <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
+                    <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}" style="border: 1px solid #ddd">
                     <!-- /ko -->
                     <!-- ko ifnot: thumbnail -->
                     <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>
@@ -58,7 +58,7 @@
             <!-- /ko -->
             <!-- ko ifnot: preview -->
                 <!-- ko if: thumbnail -->
-                <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}">
+                <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}" style="border: 1px solid #ddd">
                 <!-- /ko -->
                 <!-- ko ifnot: thumbnail -->
                 <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>

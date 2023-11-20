@@ -33,12 +33,6 @@ define([
                                 { 
                                     componentName: 'select-observation-step',
                                     uniqueInstanceName: 'select-observation', /* unique to step */
-                                    parameters: {
-                                        graphids: [
-                                            '615b11ee-c457-11e9-910c-a4d18cec433a', /* Observation */
-                                            '0b9235d9-ca85-11e9-9fa2-a4d18cec433a'/* Project */
-                                        ],  
-                                    },
                                 },
                             ], 
                         },
@@ -66,7 +60,7 @@ define([
                                     tilesManaged: 'one',
                                     parameters: {
                                         graphid: '707cbd78-ca7a-11e9-990b-a4d18cec433a',  /* Digital Resources */
-                                        physicalThingResourceId: "['select-project']['select-observation']['phsyicalThingResourceId']",
+                                        physicalThingResourceId: "['select-project']['select-observation']['physicalThingResourceId']",
                                         observationResourceId: "['select-project']['select-observation']['observation']"
                                     },
                                 },

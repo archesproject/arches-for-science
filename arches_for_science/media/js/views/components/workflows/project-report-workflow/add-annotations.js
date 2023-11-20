@@ -23,6 +23,7 @@ define([
         this.physicalThingList = ko.observable();
         this.screenshotLink = ko.observable();
         this.summaryName = ko.observable();
+        this.loading = ko.observable(false);
         this.initialData = ko.observableArray();
         this.physicalThings = undefined;
         this.projectRelatedResources = undefined;
@@ -189,12 +190,14 @@ define([
 
         this.screenshot = async() => {
             if (!self.leafletConfig()) { return; }
+            self.loading(true);
             const currentdate = new Date();
             const leafletMapElement = document.getElementById('leaflet-map');
             const leafletMapPane = document.getElementsByClassName('leaflet-map-pane')[0];
             const url = await domToImage.toPng(leafletMapPane, {bgcolor: '#ffffff', width: leafletMapElement.offsetWidth, height: leafletMapElement.offsetHeight});
             const blob = await domToImage.toBlob(leafletMapPane, {bgcolor: '#ffffff', width: leafletMapElement.offsetWidth, height: leafletMapElement.offsetHeight});
             const imageName = `${currentdate.getFullYear()}-${currentdate.getMonth() + 1}-${currentdate.getDate()} - ${Date.now()}.png`;
+            self.loading(false);
             self.screenshots.push({imageName, url, blob});
         };
 
@@ -254,11 +257,17 @@ define([
                         });
                     }
                 });
+
+                let hasFitBounds = false;
+
                 iiifLayer.on('load', function() {
-                    map.fitBounds([
-                        [extent[1]-1, extent[0]-1],
-                        [extent[3]+1, extent[2]+1]
-                    ]);
+                    if (!hasFitBounds) {
+                        map.fitBounds([
+                            [extent[1]-1, extent[0]-1],
+                            [extent[3]+1, extent[2]+1]
+                        ]);
+                        hasFitBounds = true;
+                    }
                 });
 
                 map.addLayer(geojsonLayer);
