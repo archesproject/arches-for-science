@@ -1,4 +1,7 @@
 from arches.app.functions.primary_descriptors import AbstractPrimaryDescriptorsFunction
+from arches.app.models.system_settings import settings
+
+from django.utils.translation import get_language, gettext as _
 
 # This duplicates the configuration declared in migration 0004,
 # but on first package load, the function will be re-registered, because
@@ -31,5 +34,21 @@ details = {
 
 
 class MulticardResourceDescriptor(AbstractPrimaryDescriptorsFunction):
-    """Implemented in the database via triggers on tiles table."""
-    pass
+    """Implemented in the database via triggers on tiles table.
+    
+    This implementation just fetches the calculated result from the db."""
+
+    def get_primary_descriptor_from_nodes(self, resource, config, context=None, descriptor=None):
+        result = ""
+        requested_language = context.get("language", None) if context else None
+
+        lookup_language = requested_language or get_language() or settings.LANGUAGE_CODE
+        try:
+            result = resource.descriptors[lookup_language][descriptor]
+        except KeyError:
+            pass
+
+        if result.strip() == "":
+            result = _("Undefined")
+
+        return result
