@@ -22,10 +22,22 @@ function($, _, arches, ko, koMapping, ListView, PrimaryDescriptorsView, multicar
             var self = this;
             parentComponent.viewModel.apply(this, arguments);
 
+            this.parseNodeIdsFromStringTemplate = (initialValue) => {
+                const regex = /<(.*?)>/g;
+                const aliases = [...initialValue.matchAll(regex)].map(matchObj => matchObj[1]);
+                return self.graph.nodes.filter(n => aliases.includes(n.alias)).map(n => n.nodeid);
+            }
+
             this.selectedNodes = {
-                name: ko.observableArray(),
-                description: ko.observableArray(),
-                map_popup: ko.observableArray(),
+                name: ko.observableArray(
+                    self.parseNodeIdsFromStringTemplate(self.name.string_template())
+                ),
+                description: ko.observableArray(
+                    self.parseNodeIdsFromStringTemplate(self.description.string_template())
+                ),
+                map_popup: ko.observableArray(
+                    self.parseNodeIdsFromStringTemplate(self.map_popup.string_template())
+                ),
             };
 
             this.groupedNodesForSelect2 = self.graph.cards.map(card => {
