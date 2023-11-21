@@ -28,12 +28,13 @@ If you don't already have an Arches project, you'll need to create one by follow
 Since Arches for Science uses `Cantaloupe` as its IIIF server, take notice of the
 Cantaloupe [installation instructions](https://arches.readthedocs.io/en/stable/developing/advanced/managing-and-hosting-iiif/), too.
 
-When your project is ready add "arches_templating" and "arches_for_science" to INSTALLED_APPS and "arches_for_science" to ARCHES_APPLICATIONS in your project's settings.py file:
+When your project is ready add "arches_templating", "arches_for_science", and "pgtrigger" to INSTALLED_APPS and "arches_for_science" to ARCHES_APPLICATIONS in your project's settings.py file:
 ```
 INSTALLED_APPS = (
     ...
     "arches_templating",
     "arches_for_science",
+    "pgtrigger",
     "myappname",
 )
 

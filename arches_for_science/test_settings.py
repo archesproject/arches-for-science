@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     "django_celery_results",
     "arches_for_science",
     "compressor",
+    "pgtrigger",
     # "debug_toolbar"
 )
 ROOT_URLCONF = "arches_for_science.urls"
