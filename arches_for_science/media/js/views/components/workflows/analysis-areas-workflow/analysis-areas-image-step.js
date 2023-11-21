@@ -40,66 +40,11 @@ define([
 
         this.physicalThingDigitalReferencePreferredManifestResourceData = ko.observableArray();
         this.physicalThingDigitalReferenceAlternateManifestResourceData = ko.observableArray();
-
-        var digitalResourceNameNodegroupId = 'd2fdae3d-ca7a-11e9-ad84-a4d18cec433a';
-        var digitalResourceNameCard = params.form.topCards.find(function(topCard) {
-            return topCard.nodegroupid === digitalResourceNameNodegroupId;
-        });
-        this.digitalResourceNameTile = digitalResourceNameCard.getNewTile();
         this.locked = params.form.locked;
-        
-        var digitalResourceStatementNodegroupId = 'da1fac57-ca7a-11e9-86a3-a4d18cec433a';
-        var digitalResourceStatementCard = params.form.topCards.find(function(topCard) {
-            return topCard.nodegroupid === digitalResourceStatementNodegroupId;
-        });
-        this.digitalResourceStatementTile = digitalResourceStatementCard.getNewTile();
-        
-        
-        var digitalResourceServiceNodegroupId = '29c8c76e-ca7c-11e9-9e11-a4d18cec433a';
-        var digitalResourceServiceCard = params.form.topCards.find(function(topCard) {
-            return topCard.nodegroupid === digitalResourceServiceNodegroupId;
-        });
-        this.digitalResourceServiceTile = digitalResourceServiceCard.getNewTile();
-
-        const digitalResourceTypeNodegroupId = '09c1778a-ca7b-11e9-860b-a4d18cec433a';
-        const digitalResourceTypeCard = params.form.topCards.find(function(topCard) {
-            return topCard.nodegroupid === digitalResourceTypeNodegroupId;
-        });
-        this.digitalResourceTypeTile = digitalResourceTypeCard.getNewTile();
-
-        var digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
-        var digitalResourceServiceIdentifierCard = digitalResourceServiceCard.cards().find(function(topCard) {
-            return topCard.nodegroupid === digitalResourceServiceIdentifierNodegroupId;
-        });
-        this.digitalResourceServiceIdentifierTile = digitalResourceServiceIdentifierCard.getNewTile();
-
-        const digitalResourceNameContentNodeId = 'd2fdc2fa-ca7a-11e9-8ffb-a4d18cec433a';
-        const digitalResourceStatementContentNodeId = 'da1fbca1-ca7a-11e9-8256-a4d18cec433a';
-        const digitalResourceServiceTypeConformanceNodeId = 'cec360bd-ca7f-11e9-9ab7-a4d18cec433a';
+        const digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
         const digitalResourceServiceIdentifierContentNodeId = '56f8e9bd-ca7c-11e9-b578-a4d18cec433a';
-        const digitalResourceServiceIdentifierTypeNodeId = '56f8e759-ca7c-11e9-bda1-a4d18cec433a';
-        const digitalResourceServiceTypeNodeId= '5ceedd21-ca7c-11e9-a60f-a4d18cec433a';
-        const digitalResourceTypeNodeId = '09c1778a-ca7b-11e9-860b-a4d18cec433a';
 
         this.manifestData = ko.observable();
-        this.manifestData.subscribe(function(manifestData) {
-            if (manifestData) {
-                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](stringUtils.buildStrObject(manifestData.label));
-                const manifestDescription = Array.isArray(manifestData.description) ? stringUtils.buildStrObject(manifestData.description[0]) : stringUtils.buildStrObject(manifestData.description);
-                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](manifestDescription);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](stringUtils.buildStrObject(manifestData['@id']));
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](["f32d0944-4229-4792-a33c-aadc2b181dc7"]); // uniform resource locators concept value id
-                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](stringUtils.buildStrObject(manifestData['@context']));
-            }
-            else {
-                self.digitalResourceNameTile.data[digitalResourceNameContentNodeId](null);
-                self.digitalResourceStatementTile.data[digitalResourceStatementContentNodeId](null);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierContentNodeId](null);
-                self.digitalResourceServiceIdentifierTile.data[digitalResourceServiceIdentifierTypeNodeId](null);
-                self.digitalResourceServiceTile.data[digitalResourceServiceTypeConformanceNodeId](null);
-            }
-        });
-
         
         this.initialize = function() {
             params.form.save = self.save;
@@ -130,55 +75,43 @@ define([
             }
         };
 
-        this.save = function() {
+        this.save = async function() {
             params.form.complete(false);
             params.form.saving(true);
 
             params.form.lockExternalStep("select-project", true);
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
-                self.digitalResourceNameTile.transactionId = params.form.workflowId;
-                self.digitalResourceNameTile.save().then(function(data) {
-                    self.digitalResourceTypeTile.resourceinstance_id = data.resourceinstance_id;
-                    self.digitalResourceTypeTile.data[digitalResourceTypeNodeId](['305c62f0-7e3d-4d52-a210-b451491e6100']); // [IIIF Manifest]
-                    self.digitalResourceTypeTile.transactionId = params.form.workflowId;
-                    self.digitalResourceTypeTile.save();
-                    self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
-                    self.digitalResourceStatementTile.transactionId = params.form.workflowId;
-                    self.digitalResourceStatementTile.save().then(function(data) {
-                        self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
-                        self.digitalResourceServiceTile.data[digitalResourceServiceTypeNodeId](['e208df66-9e61-498b-8071-3024aa7bed30']); // web service
-                        self.digitalResourceServiceTile.transactionId = params.form.workflowId;
-                        self.digitalResourceServiceTile.save().then(function(data) {
-                            self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
-                            self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
-                            self.digitalResourceServiceIdentifierTile.transactionId = params.form.workflowId;
-                            self.digitalResourceServiceIdentifierTile.save().then(function(data) {
-                                params.form.savedData(data);
+                const response = await fetch(`${arches.urls.manifest_x_canvas}?manifest=${self.manifestData()['@id']}`);
+                const data = await response.json();
+                const digitalResourcesResourceId = data.digital_resource;
 
-                                var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
+                const card_response = await fetch(arches.urls.api_card + digitalResourcesResourceId);
+                const card_data = await card_response.json();
+                const digitalServiceTile = card_data.tiles.find(function(tile) {
+                    return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
+                });
+                params.form.savedData(digitalServiceTile);
 
-                                var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
-                                // relationship valueids
-                                const digitalSource = "be3f33e9-216d-4355-8766-aced1e95616c";
-                                const digitalSourceFor = "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa";
+                var digitalReferenceTile = self.physicalThingDigitalReferenceTile();
 
-                                digitalReferenceTile.data[digitalSourceNodeId] = [{
-                                    "resourceId": data.resourceinstance_id,
-                                    "ontologyProperty": digitalSource,
-                                    "inverseOntologyProperty": digitalSourceFor
-                                }];
+                var digitalSourceNodeId = 'a298ee52-8d59-11eb-a9c4-faffc265b501'; // Digital Source (E73) (physical thing)
+                // relationship valueids
+                const digitalSource = "be3f33e9-216d-4355-8766-aced1e95616c";
+                const digitalSourceFor = "ff6a0510-6c91-4c45-8c67-dbbcf8d7d7fa";
 
-                                var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
-                                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
+                digitalReferenceTile.data[digitalSourceNodeId] = [{
+                    "resourceId": digitalResourcesResourceId,
+                    "ontologyProperty": digitalSource,
+                    "inverseOntologyProperty": digitalSourceFor
+                }];
 
-                                digitalReferenceTile.transactionId = params.form.workflowId;
-                                digitalReferenceTile.save().then(function(data) {
-                                    params.form.complete(true);
-                                    params.form.saving(false);
-                                });
-                            });
-                        });
-                    });
+                var digitalReferenceTypeNodeId = 'f11e4d60-8d59-11eb-a9c4-faffc265b501'; // Digital Reference Type (E55) (physical thing)
+                digitalReferenceTile.data[digitalReferenceTypeNodeId] = '1497d15a-1c3b-4ee9-a259-846bbab012ed'; // Preferred Manifest concept value
+
+                digitalReferenceTile.transactionId = params.form.workflowId;
+                digitalReferenceTile.save().then(function(data) {
+                    params.form.complete(true);
+                    params.form.saving(false);
                 });
             }
             else {
@@ -188,8 +121,6 @@ define([
                 var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
 
                 if (manifestResourceData && manifestResourceData.tiles) {
-                    var digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
-                    
                     var matchingTile = manifestResourceData.tiles.find(function(tile) {
                         return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                     });

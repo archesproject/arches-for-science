@@ -21,6 +21,7 @@ from arches_for_science.views.analysis_area_and_sample_taking import (
 )
 from arches_for_science.views.digital_resources_by_object_parts import DigitalResourcesByObjectParts
 from arches_for_science.views.instrument_info_step import InstrumentInfoStepFormSaveView
+from arches_for_science.views.manifest_x_canvas import ManifestXCanvasView
 
 uuid_regex = settings.UUID_REGEX
 
@@ -69,6 +70,7 @@ urlpatterns = [
     re_path(r"^renderer/(?P<renderer_id>[^\/]+)", RendererView.as_view(), name="renderer_config"),
     re_path(r"^renderer_config/(?P<renderer_config_id>[^\/]+)", RendererConfigView.as_view(), name="renderer_config"),
     re_path(r"^renderer_config/", RendererConfigView.as_view(), name="renderer_config"),
+    re_path(r"^manifest_x_canvas/", ManifestXCanvasView.as_view(), name="manifest_x_canvas"),
     path("reports/", include("arches_templating.urls")),
     path("", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
