@@ -20,6 +20,7 @@ from arches.app.models.system_settings import settings
 from arches_for_science.utils.thumbnail_fetchers.digital_resource_thumbnail_fetcher import DigitalResourceThumbnailFetcher
 from arches_for_science.utils.thumbnail_fetchers.physical_thing_thumbnail_fetcher import PhysicalThingThumbnailFetcher
 
+
 def project_settings(request):
     cloud_storage_enabled = (
         settings.STORAGES["default"]["BACKEND"] == "storages.backends.s3boto3.S3Boto3Storage"
