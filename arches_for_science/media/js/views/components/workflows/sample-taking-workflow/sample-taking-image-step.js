@@ -121,9 +121,9 @@ define([
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
                 const response = await fetch(`${arches.urls.manifest_x_canvas}?manifest=${self.manifestData()['@id']}`);
                 const data = await response.json();
-                const digitalResourcesResourceId = data.digital_resource
+                const digitalResourcesResourceId = data.digital_resource;
 
-                const card_response = await fetch( arches.urls.api_card + digitalResourcesResourceId )
+                const card_response = await fetch(arches.urls.api_card + digitalResourcesResourceId);
                 const card_data = await card_response.json();
                 const digitalServiceTile = card_data.tiles.find(function(tile) {
                     return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
