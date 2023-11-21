@@ -36,5 +36,5 @@ class InstrumentInfoStepFormSaveView(View):
 
                 resource.save(user=request.user, transaction_id=transaction_id)
                 return JSONResponse(data)
-        except Exception as e:
+        except:
             return JSONResponse(status=500)
