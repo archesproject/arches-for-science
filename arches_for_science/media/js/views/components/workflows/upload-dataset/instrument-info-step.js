@@ -232,51 +232,53 @@ define([
             params.form.lockExternalStep("project-info", true);
             
 
-            let tiles = {
-                "transaction_id": params.form.workflowId
+            let data = {
+                "transaction_id": params.form.workflowId,
+                "resourceinstance_id": self.observationInstanceId(),
             };
+
             let observedThingData = {};
             observedThingData[observedThingNodeId] = self.createRelatedInstance(observedThingInstanceId, physicalObjectObserved, observedBy);
-            tiles['observedThingTile'] = self.buildTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid);
+            data['observedThingTile'] = self.buildTile(observedThingData, observedThingNodeId, self.observationInstanceId(), observedThingTileid);
             
             let observationTypeData = {};
             observationTypeData[observationTypeNodeId] = self.observationType();
-            tiles['observationTypeTile'] = self.buildTile(observationTypeData, observationTypeNodeId, self.observationInstanceId(), observationTypeTileId);
+            data['observationTypeTile'] = self.buildTile(observationTypeData, observationTypeNodeId, self.observationInstanceId(), observationTypeTileId);
 
             let partOfProjectData = {};
             partOfProjectData[projectNodeId] = self.createRelatedInstance(projectInstanceId, parentProjectOfObservation, hasObservationActivity);
-            tiles['partOfProjectTile'] = self.buildTile(partOfProjectData, projectNodeId, self.observationInstanceId(), projectTileId);
+            data['partOfProjectTile'] = self.buildTile(partOfProjectData, projectNodeId, self.observationInstanceId(), projectTileId);
 
             let nameData = {};
             nameData[nameNodeId] = createStrObject(self.nameValue());
             nameData[nameTypeNodeId] = nameTypeConceptValue;
             nameData[nameLanguageNodeId] = languageConceptValue;
-            tiles['nameTile'] = self.buildTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId);
+            data['nameTile'] = self.buildTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId);
 
             let dateData = {};
             dateData[dateNodeId] = self.dateValue();
-            tiles['dateTile'] = self.buildTile(dateData, dateNodeGroupId, self.observationInstanceId(), dateTileId);
+            data['dateTile'] = self.buildTile(dateData, dateNodeGroupId, self.observationInstanceId(), dateTileId);
 
             let instrumentData = {};
             instrumentData[instrumentNodeId] = self.instrumentInstance();
-            tiles['instrumentTile'] = self.buildTile(instrumentData, instrumentNodeId, self.observationInstanceId(), instrumentTileId);
+            data['instrumentTile'] = self.buildTile(instrumentData, instrumentNodeId, self.observationInstanceId(), instrumentTileId);
 
             let procedureData = {};
             if (self.procedureInstance()) {
                 procedureData[procedureNodeId] = self.procedureInstance();
-                tiles['procedureTile'] = self.buildTile(procedureData, procedureNodeId, self.observationInstanceId(), procedureTileId);
+                data['procedureTile'] = self.buildTile(procedureData, procedureNodeId, self.observationInstanceId(), procedureTileId);
             }
 
             let parameterData = {};
             parameterData[parameterNodeId] = self.parameterValue();
             parameterData[statementTypeNodeId] = statementTypeConceptValue;
             parameterData[statementLanguageNodeId] = languageConceptValue;
-            tiles['parameterTile'] = self.buildTile(parameterData, parameterNodeGroupId, self.observationInstanceId(), parameterTileId);
+            data['parameterTile'] = self.buildTile(parameterData, parameterNodeGroupId, self.observationInstanceId(), parameterTileId);
 
             return window.fetch(arches.urls.root + 'instrument-info-form-save', {
                 method: 'POST',
                 credentials: 'include',
-                body: JSON.stringify(tiles),
+                body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
                 },
