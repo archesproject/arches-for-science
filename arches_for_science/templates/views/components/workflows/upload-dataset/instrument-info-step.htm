@@ -15,6 +15,22 @@
             }
         }"></div>
     </div>
+
+    <div style="padding: 5px; margin-top: 0px;">
+        <div class="widget-input-label">{% trans "Observation Type" %}</div>
+        <div 
+            style="margin: -25px 0px 0px 0px;" 
+            data-bind="component: {
+                name: 'concept-multiselect-widget',
+                params: {
+                    node: {'config': {'rdmCollection': '0ca18480-f5f2-41b2-b177-857726e5ecd7'}},
+                    renderContext: 'workflow', 
+                    value: observationType,
+                }
+            }"
+        ></div>
+    </div>
+
     <div style="padding: 5px;">
         <div class="widget-input-label" style="margin-top: 10px;">{% trans "Observation Date" %}</div>
         <div style="margin: -20px 0px 0px 0px;" data-bind="component: {
