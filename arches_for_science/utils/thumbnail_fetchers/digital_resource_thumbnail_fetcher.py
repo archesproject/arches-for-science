@@ -15,7 +15,7 @@ class DigitalResourceThumbnailFetcher(SearchThumbnailFetcher):
         digital_resource_type_tile = next(
             (tile for tile in self.resource.tiles if str(tile.nodegroup_id) == DIGITAL_RESOURCE_TYPE_NODEGROUP_ID), None
         )
-        if IIIF_MANIFEST_TYPE in digital_resource_type_tile.data[DIGITAL_RESOURCE_TYPE_NODEGROUP_ID]:
+        if digital_resource_type_tile and IIIF_MANIFEST_TYPE in digital_resource_type_tile.data[DIGITAL_RESOURCE_TYPE_NODEGROUP_ID]:
             manifest_tile = next((tile for tile in self.resource.tiles if str(tile.nodegroup_id) == MANIFEST_NODEGROUP_ID), None)
             manifest_url = manifest_tile.data[MANIFEST_URL_NODE_ID][get_language()]["value"]
             response = requests.get(manifest_url)
