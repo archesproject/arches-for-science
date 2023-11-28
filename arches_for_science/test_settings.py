@@ -30,6 +30,8 @@ INSTALLED_APPS = (
 )
 ROOT_URLCONF = "arches_for_science.urls"
 
+FUNCTION_LOCATIONS = ["arches_for_science.pkg.extensions.functions"]
+
 # Further settings may need to be added from project, just don't
 # want to clobber anything from core test settings for now.
 # Also, settings can be overridden directly. See @override_settings
