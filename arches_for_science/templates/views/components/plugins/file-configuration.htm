@@ -32,26 +32,15 @@
                             </td>
                             <td style="padding:8px;cursor:pointer" data-bind="click: function() { $parent.displayFile(file); $parent.selectedFile(file); }">
                                 <div data-bind="visible: (typeof file.details?.rendererConfig == 'function')">
-                                    <input style="display:inline-block; flex: 1"
+                                    <select style="display:inline-block; flex: 1"
                                         data-bind="
-                                        value: file.details.rendererConfig,
+                                        options: $parent.rendererConfigs,
+                                        optionsText: 'name', 
+                                        optionsValue: 'configid',
                                         select2Query: {
-                                            select2Config: {
-                                                clickBubble: false,
-                                                disabled: file.details.disabledConfig,
-                                                width: 'element',
-                                                ajax:{
-                                                    url: $parent.rendererUrl,
-                                                    results: $parent.processConfigs
-                                                },
-                                                initSelection: $parent.initSelection,
-                                                value: file.details.rendererConfig,
-                                                closeOnSelect: true,
-                                                placeholder: 'Select an Importer',
-                                                allowClear: true,
-                                                multiple: false 
-                                            }
+                                            select2Config: $parent.getSelect2Config(file.details)
                                         }">
+                                    </select>
                                 </div>
                             </td>
                             
