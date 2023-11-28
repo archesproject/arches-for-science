@@ -1,24 +1,40 @@
 import uuid
 
-from arches.app.models.models import IIIFManifest, TileModel
+from arches.app.models.models import IIIFManifest, TileModel, FunctionXGraph
 from django.db import models
 from django.db.models import JSONField
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 import pgtrigger
 
-from .trigger_functions import MULTICARD_PRIMARY_DESCRIPTOR_FUNC
+from .trigger_functions import CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE, CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_ALL
 
 class TileModelProxy(TileModel):
     class Meta:
         proxy = True
         triggers = [
             pgtrigger.Trigger(
-                name='calculate_multicard_primary_descriptor',
+                name='calculate_multicard_primary_descriptor_single',
                 when=pgtrigger.After,
                 operation=pgtrigger.Insert | pgtrigger.Update | pgtrigger.Delete,
-                func=MULTICARD_PRIMARY_DESCRIPTOR_FUNC,
+                func=CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE,
                 timing=pgtrigger.Deferred,
+            ),
+        ]
+
+class FunctionXGraphProxy(FunctionXGraph):
+    class Meta:
+        proxy = True
+        triggers = [
+            pgtrigger.Trigger(
+                name='calculate_multicard_primary_descriptor_all',
+                when=pgtrigger.After,
+                condition=pgtrigger.Q(
+                    new__function_id="00b2d15a-fda0-4578-b79a-784e4138664b",
+                    new__config__isnull=False,
+                ),
+                operation=pgtrigger.Insert | pgtrigger.Update,
+                func=CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_ALL,
             ),
         ]
 

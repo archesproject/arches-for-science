@@ -1,4 +1,4 @@
-MULTICARD_PRIMARY_DESCRIPTOR_FUNC = """
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE = r"""
 DECLARE
     fn_config jsonb;
     name_template text;
@@ -10,6 +10,7 @@ DECLARE
     descriptor_key text;
 
     graph UUID;
+    resourceid UUID;
     node_alias text;
     alias_with_separators text;
     node_for_alias UUID;
@@ -23,13 +24,17 @@ DECLARE
 
 BEGIN
 
-SELECT config, r.graphid
+SELECT NEW.resourceinstanceid INTO resourceid;
+
+SELECT functions_x_graphs.config, g.graphid
 INTO fn_config, graph
 FROM functions_x_graphs
-INNER JOIN resource_instances AS r ON r.resourceinstanceid = NEW.resourceinstanceid
+INNER JOIN resource_instances AS r ON r.resourceinstanceid = resourceid
+INNER JOIN graphs AS g on r.graphid = g.graphid
 WHERE
     functionid = '00b2d15a-fda0-4578-b79a-784e4138664b'
-    AND config IS NOT NULL;
+    AND functions_x_graphs.config IS NOT NULL
+    AND functions_x_graphs.graphid = g.graphid;
 
 IF FOUND THEN
     SELECT JSONB_OBJECT('{}') INTO localized_calculated_result;
@@ -54,18 +59,19 @@ IF FOUND THEN
         FOR alias_with_separators IN SELECT UNNEST(REGEXP_MATCHES(this_template, '<\w+>', 'g'))
         LOOP
             SELECT TRIM(BOTH '<>' FROM alias_with_separators) INTO node_alias;
-    
+
             SELECT nodeid, nodegroupid INTO node_for_alias, nodegroup_for_alias
                 FROM nodes
                 WHERE alias = node_alias
                 AND graphid = graph;
+
             SELECT tiledata ->> node_for_alias::text INTO localized_string_node_value
                 FROM tiles
-                WHERE resourceinstanceid = NEW.resourceinstanceid
+                WHERE resourceinstanceid = resourceid
                 AND nodegroupid = nodegroup_for_alias
                 AND sortorder = 0
                 LIMIT 1;
-            
+
             -- Replace template with localized string
             FOR lang, inner18n_obj_for_lang IN SELECT * FROM jsonb_each(localized_string_node_value) 
             LOOP
@@ -86,7 +92,7 @@ IF FOUND THEN
                     ELSE (localized_calculated_result -> lang -> descriptor_key)::text
                 END
                 INTO working_string;
-    
+
                 SELECT TRIM(
                     REPLACE(
                         working_string,
@@ -95,16 +101,14 @@ IF FOUND THEN
                     )
                 , '"')
                 INTO resolved_node_value_for_lang;
-    
+
                 -- Update the working value
                 SELECT jsonb_set(
                     localized_calculated_result,
                     ARRAY[lang, descriptor_key],
                     TO_JSONB(resolved_node_value_for_lang)
                 ) INTO localized_calculated_result;
-    
-                RAISE NOTICE '%s', localized_calculated_result;
-    
+
             END LOOP;
 
         END LOOP;
@@ -113,9 +117,62 @@ IF FOUND THEN
 
     UPDATE resource_instances
     SET descriptors = localized_calculated_result
-    WHERE resourceinstanceid = NEW.resourceinstanceid;
+    WHERE resourceinstanceid = resourceid;
 
 END IF;
 END;
 RETURN NULL;
 """
+
+#### Make two adjustments to create a very similar function that works on ALL resource instances.
+
+# REPLACEMENT 1:
+# Just get the config and graph from the edited resource_x_graph record.
+# (This trigger only acts on the wanted function.)
+# Then iterate all resource for that graph.
+target_block_1 = """
+SELECT NEW.resourceinstanceid INTO resourceid;
+
+SELECT functions_x_graphs.config, g.graphid
+INTO fn_config, graph
+FROM functions_x_graphs
+INNER JOIN resource_instances AS r ON r.resourceinstanceid = resourceid
+INNER JOIN graphs AS g on r.graphid = g.graphid
+WHERE
+    functionid = '00b2d15a-fda0-4578-b79a-784e4138664b'
+    AND functions_x_graphs.config IS NOT NULL
+    AND functions_x_graphs.graphid = g.graphid;
+
+IF FOUND THEN
+"""
+assert target_block_1 in CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE
+
+replacement_block_1 = """
+SELECT NEW.config, NEW.graphid
+INTO fn_config, graph;
+
+FOR resourceid IN (SELECT resourceinstanceid FROM resource_instances WHERE graphid = graph)
+LOOP
+"""
+
+# REPLACEMENT 2: Adjust syntax at end.
+target_block_2 = """
+END IF;
+END;
+"""
+assert target_block_2 in CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE
+
+replacement_block_2 = """
+END LOOP;
+END;
+"""
+
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_ALL = (
+    CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE.replace(
+        target_block_1,
+        replacement_block_1
+    ).replace(
+        target_block_2,
+        replacement_block_2
+    )
+)
