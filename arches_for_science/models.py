@@ -1,9 +1,26 @@
 import uuid
+
+from arches.app.models.models import IIIFManifest, TileModel
 from django.db import models
 from django.db.models import JSONField
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
-from arches.app.models.models import IIIFManifest
+import pgtrigger
+
+from .trigger_functions import MULTICARD_PRIMARY_DESCRIPTOR_FUNC
+
+class TileModelProxy(TileModel):
+    class Meta:
+        proxy = True
+        triggers = [
+            pgtrigger.Trigger(
+                name='calculate_multicard_primary_descriptor',
+                when=pgtrigger.After,
+                operation=pgtrigger.Insert | pgtrigger.Update | pgtrigger.Delete,
+                func=MULTICARD_PRIMARY_DESCRIPTOR_FUNC,
+                timing=pgtrigger.Deferred,
+            ),
+        ]
 
 
 class RendererConfig(models.Model):
