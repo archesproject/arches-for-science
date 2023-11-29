@@ -16,7 +16,7 @@ define([
             this.relatedResourceId = params.relatedResourceId;
             this.relatedNodeId = params.relatedNodeId;
 
-            this.lookupResourceInstanceData(self.relatedResourceId).then( data => {
+            ResourceUtils.lookupResourceInstanceData(self.relatedResourceId).then( data => {
                 relatedResourceNodeValues = ResourceUtils.getNodeValues({
                     nodeId: self.relatedNodeId,
                 }, data._source.tiles).map(rr => rr.resourceId);
@@ -45,22 +45,23 @@ define([
                 ajax: {
                     url: arches.urls.related_resources + self.relatedResourceId + "?paginate=false",
                     dataType: 'json',
-                    results: function(data) {
-                        const filteredResources = data.related_resources.filter(resource => relatedResourceNodeValues.includes(resource.resourceinstanceid));
+                    processResults: function(data) {
+                        const filteredResources = data.related_resources.filter(function(resource) {
+                            resource.id = resource.resourceinstanceid;
+                            resource.text = resource.displayname;
+                            return relatedResourceNodeValues.includes(resource.resourceinstanceid);
+                        });
                         return {
                             results: filteredResources,
                         };
                     }
                 },
-                id: function(item) {
-                    return item.resourceinstanceid;
-                },
-                formatResult: function(item) {
+                templateResult: function(item) {
                     if (item.displayname) {
                         return item.displayname;
                     }
                 },
-                formatSelection: function(item) {
+                templatetSelection: function(item) {
                     if (item.displayname) {
                         return item.displayname;
                     }
@@ -83,7 +84,7 @@ define([
                                 resourceId = ko.unwrap(val.resourceId);
                             }
         
-                            var resourceInstance = self.lookupResourceInstanceData(resourceId).then(
+                            var resourceInstance = ResourceUtils.lookupResourceInstanceData(resourceId).then(
                                 function(resourceInstance) { return resourceInstance; }
                             );
                 
@@ -99,6 +100,8 @@ define([
                                     ret = ret[0];
                                 }
                                 callback(ret);
+                            } else {
+                                callback([]);
                             }
                         });
                     }
