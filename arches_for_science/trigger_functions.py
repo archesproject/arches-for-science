@@ -1,4 +1,4 @@
-CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE = r"""
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_BEGIN = """
 DECLARE
     fn_config jsonb;
     name_template text;
@@ -24,7 +24,10 @@ DECLARE
     localized_result_name_only jsonb;
 
 BEGIN
+"""
 
+# For tiles trigger
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_FIRST_BRANCH_SINGLE = """
 SELECT NEW.resourceinstanceid INTO resourceid;
 SELECT graphid INTO graph FROM resource_instances WHERE resourceinstanceid = resourceid;
 
@@ -37,6 +40,18 @@ WHERE
     AND graph = graphid;
 
 IF FOUND THEN
+"""
+
+# For functions_x_graphs trigger
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_FIRST_BRANCH_ALL = """
+SELECT NEW.config, NEW.graphid
+INTO fn_config, graph;
+
+FOR resourceid IN (SELECT resourceinstanceid FROM resource_instances WHERE graphid = graph)
+LOOP
+"""
+
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_COMMON = r"""
     SELECT JSONB_OBJECT('{}') INTO localized_result_all;
     SELECT JSONB_OBJECT('{}') INTO localized_result_name_only;
     SELECT fn_config -> 'descriptor_types' -> 'name' -> 'string_template' INTO name_template;
@@ -126,59 +141,25 @@ IF FOUND THEN
     SET descriptors = localized_result_all, name = localized_result_name_only
     WHERE resourceinstanceid = resourceid;
 
+"""
+
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_END = """
 END IF;
 END;
 RETURN NULL;
 """
 
-#### Make two adjustments to create a very similar function that works on ALL resource instances.
+CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE = (
+    CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_BEGIN
+    + CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_FIRST_BRANCH_SINGLE
+    + CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_COMMON
+    + CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_END
+)
 
-# REPLACEMENT 1:
-# Just get the config and graph from the edited resource_x_graph record.
-# (This trigger only acts on the wanted function.)
-# Then iterate all resource for that graph.
-target_block_1 = """
-SELECT NEW.resourceinstanceid INTO resourceid;
-SELECT graphid INTO graph FROM resource_instances WHERE resourceinstanceid = resourceid;
-
-SELECT config
-INTO fn_config
-FROM functions_x_graphs
-WHERE
-    functionid = '00b2d15a-fda0-4578-b79a-784e4138664b'
-    AND functions_x_graphs.config IS NOT NULL
-    AND graph = graphid;
-
-IF FOUND THEN
-"""
-assert target_block_1 in CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE
-
-replacement_block_1 = """
-SELECT NEW.config, NEW.graphid
-INTO fn_config, graph;
-
-FOR resourceid IN (SELECT resourceinstanceid FROM resource_instances WHERE graphid = graph)
-LOOP
-"""
-
-# REPLACEMENT 2: Adjust syntax at end.
-target_block_2 = """
-END IF;
-END;
-"""
-assert target_block_2 in CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE
-
-replacement_block_2 = """
-END LOOP;
-END;
-"""
 
 CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_ALL = (
-    CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE.replace(
-        target_block_1,
-        replacement_block_1
-    ).replace(
-        target_block_2,
-        replacement_block_2
-    )
+    CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_BEGIN
+    + CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_FIRST_BRANCH_ALL
+    + CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_COMMON
+    + CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_END.replace("IF", "LOOP")
 )
