@@ -146,30 +146,28 @@
             <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource()?.displayname"></span>
         </div>
 
-        <!-- ko if: $data.selectedFileDropdownData() && $data.filteredFiles().length -->
         <div style="margin-top: 14px;">
             <h2 class="file-workbench-filter-header">{% trans "File" %}</h2>
     
-            <input 
+            <select 
                 style="display:inline-block;"
                 data-bind="
+                    options:filteredFiles().map(file => { return {text: file.file_details[0].name, id: file.file_details[0].file_id } }),
+                    optionsText: 'text',
+                    optionsValue: 'id',
                     select2Query: {
-                        value: selectedFileDropdownData,
                         select2Config: {
                             clickBubble: false,
                             disabled: false,
-                            data: filteredFiles().map(file => { return {text: file.file_details[0].name, id: file.file_details[0].file_id } }),
                             value: selectedFileDropdownData,
                             initSelection: initSelection,
-                            closeOnSlect: false,
+                            closeOnSelect: false,
                             allowClear: true,
                             multiple: false,
-                        }
-                    }
-                "
-            >
+                            placeholder: {% trans "'Select File'" %}
+                    }}">
+            </select>
         </div>
-        <!-- /ko -->
 
         <div data-bind="visible: selectedFile()?.file_details?.[0] != undefined && (selectedFile().file_details[0].name.endsWith('txt') || selectedFile().file_details[0].name.endsWith('dx'))">
             <div data-bind="hidden: currentRendererValid">
