@@ -48,22 +48,22 @@
             <div class="importer-config-panel">
                 <h4 class="file-config-header">{% trans "Transformations" %}</h4>
                 <h5 class="file-config-instructions">{% trans "Optionally define a transformation for \"y\" data" %}</h5>
-                <input style="display:inline-block; flex: 1"
-                data-bind="
-                value: selectedTransformation,
-                select2Query: {
-                    select2Config: {
-                        clickBubble: true,
-                        disabled: false,
-                        width: 'element',
-                        data: xyTransformations(),
-                        placeholder: placeholder,
-                        value: selectedTransformation,
-                        closeOnSelect: true,
-                        allowClear: false,
-                        multiple: false 
-                    }
-                }">
+                <select style="display:inline-block; flex: 1"
+                    data-bind="
+                        select2Query: {
+                            select2Config: {
+                                clickBubble: true,
+                                disabled: false,
+                                width: 'element',
+                                data: xyTransformations(),
+                                placeholder: placeholder,
+                                value: selectedTransformation,
+                                closeOnSelect: true,
+                                allowClear: false,
+                                multiple: false 
+                            }
+                        }">
+                </select>
             </div>
             <div class="importer-config-panel">
                 <h4 class="file-config-header">{% trans "Data Column Delimiter" %}</h4>
