@@ -20,24 +20,25 @@ DECLARE
     inner18n_obj_for_lang jsonb;
     resolved_node_value_for_lang text;
     working_string text;
-    localized_calculated_result jsonb;
+    localized_result_all jsonb;
+    localized_result_name_only jsonb;
 
 BEGIN
 
 SELECT NEW.resourceinstanceid INTO resourceid;
+SELECT graphid INTO graph FROM resource_instances WHERE resourceinstanceid = resourceid;
 
-SELECT functions_x_graphs.config, g.graphid
-INTO fn_config, graph
+SELECT config
+INTO fn_config
 FROM functions_x_graphs
-INNER JOIN resource_instances AS r ON r.resourceinstanceid = resourceid
-INNER JOIN graphs AS g on r.graphid = g.graphid
 WHERE
     functionid = '00b2d15a-fda0-4578-b79a-784e4138664b'
     AND functions_x_graphs.config IS NOT NULL
-    AND functions_x_graphs.graphid = g.graphid;
+    AND graph = graphid;
 
 IF FOUND THEN
-    SELECT JSONB_OBJECT('{}') INTO localized_calculated_result;
+    SELECT JSONB_OBJECT('{}') INTO localized_result_all;
+    SELECT JSONB_OBJECT('{}') INTO localized_result_name_only;
     SELECT fn_config -> 'descriptor_types' -> 'name' -> 'string_template' INTO name_template;
     SELECT fn_config -> 'descriptor_types' -> 'map_popup' -> 'string_template' INTO map_popup_template;
     SELECT fn_config -> 'descriptor_types' -> 'description' -> 'string_template' INTO description_template;
@@ -76,38 +77,44 @@ IF FOUND THEN
             FOR lang, inner18n_obj_for_lang IN SELECT * FROM jsonb_each(localized_string_node_value) 
             LOOP
                 -- Initialize language key if missing
-                IF localized_calculated_result -> lang IS NULL THEN
+                IF localized_result_all -> lang IS NULL THEN
                     SELECT jsonb_set(
-                        localized_calculated_result,
+                        localized_result_all,
                         ARRAY[lang],
                         JSONB_OBJECT('{}')
-                    ) INTO localized_calculated_result;
+                    ) INTO localized_result_all;
                 END IF;
 
                 -- Retrieve the current working value, or start from the template
                 SELECT
                 CASE
-                    WHEN localized_calculated_result -> lang -> descriptor_key IS NULL
+                    WHEN localized_result_all -> lang -> descriptor_key IS NULL
                         THEN this_template
-                    ELSE (localized_calculated_result -> lang -> descriptor_key)::text
+                    ELSE TRIM((localized_result_all -> lang -> descriptor_key)::text, '\"')
                 END
                 INTO working_string;
 
-                SELECT TRIM(
-                    REPLACE(
-                        working_string,
-                        alias_with_separators,
-                        (inner18n_obj_for_lang -> 'value')::text
-                    )
-                , '"')
+                SELECT REPLACE(
+                    working_string,
+                    alias_with_separators,
+                    TRIM((inner18n_obj_for_lang -> 'value')::text, '"')
+                )
                 INTO resolved_node_value_for_lang;
 
                 -- Update the working value
                 SELECT jsonb_set(
-                    localized_calculated_result,
+                    localized_result_all,
                     ARRAY[lang, descriptor_key],
                     TO_JSONB(resolved_node_value_for_lang)
-                ) INTO localized_calculated_result;
+                ) INTO localized_result_all;
+
+                IF descriptor_key = 'name' THEN
+                    SELECT jsonb_set(
+                        localized_result_name_only,
+                        ARRAY[lang],
+                        TO_JSONB(resolved_node_value_for_lang)
+                    ) INTO localized_result_name_only;
+                END IF;
 
             END LOOP;
 
@@ -116,7 +123,7 @@ IF FOUND THEN
     END LOOP;
 
     UPDATE resource_instances
-    SET descriptors = localized_calculated_result
+    SET descriptors = localized_result_all, name = localized_result_name_only
     WHERE resourceinstanceid = resourceid;
 
 END IF;
@@ -132,16 +139,15 @@ RETURN NULL;
 # Then iterate all resource for that graph.
 target_block_1 = """
 SELECT NEW.resourceinstanceid INTO resourceid;
+SELECT graphid INTO graph FROM resource_instances WHERE resourceinstanceid = resourceid;
 
-SELECT functions_x_graphs.config, g.graphid
-INTO fn_config, graph
+SELECT config
+INTO fn_config
 FROM functions_x_graphs
-INNER JOIN resource_instances AS r ON r.resourceinstanceid = resourceid
-INNER JOIN graphs AS g on r.graphid = g.graphid
 WHERE
     functionid = '00b2d15a-fda0-4578-b79a-784e4138664b'
     AND functions_x_graphs.config IS NOT NULL
-    AND functions_x_graphs.graphid = g.graphid;
+    AND graph = graphid;
 
 IF FOUND THEN
 """
