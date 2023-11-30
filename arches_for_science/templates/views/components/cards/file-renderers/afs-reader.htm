@@ -65,17 +65,19 @@
     </div>
     
     <!-- ko if: fileViewer -->
-    <input style="display:inline-block; margin-top: 70px;"
-    data-bind="select2Query: {
-        select2Config: {
-            clickBubble: false,
-            disabled: false,
-            data: compatibleSeries(),
-            value: stagedSeries,
-            closeOnSlect: false,
-            allowClear: true,
-            multiple: true,
-            placeholder: {% trans "'Available Series'" %}}}">
+    <select style="display:inline-block; margin-top: 70px;"
+        data-bind="select2Query: {
+            select2Config: {
+                clickBubble: false,
+                disabled: false,
+                data: compatibleSeries(),
+                value: stagedSeries,
+                closeOnSelect: true,
+                allowClear: false,
+                multiple: true,
+                placeholder: {% trans "'Available Series'" %}
+            }}">
+        </select>
     <div style="padding-top: 10px">
         <button style="margin-right: 3px;" class="btn btn-lg btn-workbench btn-primary" data-bind="click: function(){addAllToChart()}, css: {'disabled':stagedSeries().length === 0}"><i class="fa fa-line-chart"></i> {% trans 'Add Series to Chart' %}</button>
     </div>
