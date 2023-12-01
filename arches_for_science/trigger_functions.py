@@ -19,6 +19,7 @@ DECLARE
     lang text;
     inner18n_obj_for_lang jsonb;
     resolved_node_value_for_lang text;
+    resolved_node_values_by_descriptor text;
     working_string text;
     localized_result_all jsonb;
     localized_result_name_only jsonb;
@@ -71,6 +72,11 @@ CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_COMMON = r"""
         END
         INTO descriptor_key;
 
+        -- Remove outer quotes from template
+        SELECT TRIM(this_template, '"') INTO this_template;
+        -- Unescape some characters before doing string replacement
+        SELECT REPLACE(this_template, '\"', '"') INTO this_template;
+
         -- Resolve node values to localized strings
         FOR alias_with_separators IN SELECT UNNEST(REGEXP_MATCHES(this_template, '<\w+>', 'g'))
         LOOP
@@ -88,7 +94,52 @@ CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_COMMON = r"""
                 AND sortorder = 0
                 LIMIT 1;
 
-            -- Replace template with localized string
+            -- Handle no value for string node
+
+            IF localized_string_node_value IS NULL THEN
+                -- Update the template (used below if no aliases have been resolved yet)
+                SELECT REPLACE(this_template, alias_with_separators, ' -- ') INTO this_template;
+                -- Update any intermediate values already saved
+                FOR lang, resolved_node_values_by_descriptor IN SELECT * FROM jsonb_each(localized_result_all)
+                LOOP
+                    SELECT REPLACE(
+                        TRIM((resolved_node_values_by_descriptor::jsonb -> descriptor_key)::text, '\"'),
+                        alias_with_separators,
+                        ' -- '
+                    ) INTO resolved_node_value_for_lang;
+
+                    IF resolved_node_value_for_lang IS NOT NULL THEN
+                        SELECT jsonb_set(
+                            localized_result_all,
+                            ARRAY[lang, descriptor_key],
+                            TO_JSONB(resolved_node_value_for_lang)
+                        ) INTO localized_result_all;
+                    END IF;
+                END LOOP;
+
+                IF descriptor_key = 'name' THEN
+                    FOR lang, resolved_node_value_for_lang IN SELECT * FROM jsonb_each(localized_result_name_only)
+                    LOOP
+                        SELECT REPLACE(
+                            TRIM(resolved_node_value_for_lang, '\"'),
+                            alias_with_separators,
+                            ' -- '
+                        ) INTO resolved_node_value_for_lang;
+
+                        IF resolved_node_value_for_lang IS NOT NULL THEN
+                            SELECT jsonb_set(
+                                localized_result_name_only,
+                                ARRAY[lang],
+                                TO_JSONB(resolved_node_value_for_lang)
+                            ) INTO localized_result_name_only;
+                        END IF;
+                    END LOOP;
+                END IF;
+
+            END IF;
+
+            -- Handle localized string value
+
             FOR lang, inner18n_obj_for_lang IN SELECT * FROM jsonb_each(localized_string_node_value) 
             LOOP
                 -- Initialize language key if missing
