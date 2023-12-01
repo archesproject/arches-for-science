@@ -112,6 +112,11 @@ define([
                                 callback([]);
                             }
                         });
+                    } else if (self.graphIds().includes(self.value())){
+                        self.value(null);
+                        callback([]);
+                    } else {
+                        callback([]);
                     }
                 }
             };
