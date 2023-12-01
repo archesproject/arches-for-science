@@ -19,10 +19,6 @@ define([
                     title: 'Select Project',
                     name: 'select-project',  /* unique to workflow */
                     required: true,
-                    informationboxdata: {
-                        heading: 'Select Project',
-                        text: 'Select a project to update',
-                    },
                     layoutSections: [
                         {
                             sectionTitle: 'Select Project',
@@ -45,10 +41,6 @@ define([
                     name: 'object-search-step',  /* unique to workflow */
                     required: true,
                     workflowstepclass: 'create-project-add-things-step',
-                    informationboxdata: {
-                        heading: 'Update Objects',
-                        text: 'Update Objects in Your Project',
-                    },
                     lockableExternalSteps: ['select-project'],
                     layoutSections: [
                         {

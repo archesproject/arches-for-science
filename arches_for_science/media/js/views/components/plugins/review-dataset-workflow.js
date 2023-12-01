@@ -42,10 +42,6 @@ define([
                     required: false,
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
                     hiddenWorkflowButtons: ['undo', 'save'],
-                    informationboxdata: {
-                        heading: 'Add interpretations for the uploaded dataset',
-                        text: 'Select a file from a dataset and add any relevant parameter and interpretation details.',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [

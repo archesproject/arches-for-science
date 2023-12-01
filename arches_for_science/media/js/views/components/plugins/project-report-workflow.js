@@ -17,10 +17,6 @@ define([
                 {
                     title: 'Select Project',
                     name: 'select-project',
-                    informationboxdata: {
-                        heading: 'Select Project',
-                        text: 'Select a project to create a report',
-                    },
                     required: true,
                     layoutSections: [
                         {
@@ -39,10 +35,6 @@ define([
                 {
                     title: 'Select Template',
                     name: 'select-report-template',
-                    informationboxdata: {
-                        heading: 'Select Template',
-                        text: 'Select a report template to create a report',
-                    },
                     required: true,
                     layoutSections: [
                         {
@@ -59,10 +51,6 @@ define([
                 {
                     title: 'Add Annotations',
                     name: 'add-annotations',
-                    informationboxdata: {
-                        heading: 'Add Annotations',
-                        text: 'Add Annotations to the Report',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -82,10 +70,6 @@ define([
                 {
                     title: 'Select Files',
                     name: 'download-project-files',
-                    informationboxdata: {
-                        heading: 'Select Files',
-                        text: 'Select files from a list of files related to the project',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -106,10 +90,6 @@ define([
                     title: 'Download Report',
                     name: 'download-report',
                     lockableExternalSteps: ['select-project'],
-                    informationboxdata: {
-                        heading: 'Download Report',
-                        text: 'A report is being generated',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [

@@ -21,10 +21,6 @@ define([
                     title: 'Project Info',
                     name: 'select-project',  /* unique to workflow */
                     required: true,
-                    informationboxdata: {
-                        heading: 'Projects and related object',
-                        text: 'Select the project and object that you are sampling',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -46,10 +42,6 @@ define([
                     title: 'Sampling Activity Info',
                     name: 'sample-info',  /* unique to workflow */
                     description: 'The date that the sample was taken',
-                    informationboxdata: {
-                        heading: 'Sampling Information',
-                        text: 'Enter the people, date, method, and notes describing the sampling activities on the object',
-                    },
                     required: true,
                     lockableExternalSteps: ['select-project'],
                     layoutSections: [
@@ -71,13 +63,6 @@ define([
                     title: 'Image',
                     name: 'image-step',  /* unique to workflow */
                     required: true,
-                    informationboxdata: {
-                        heading: 'Image Services',
-                        text: 'Image services provide you with picture(s) of an object, often from multiple vantage points, \
-                        that can be annotated to indicate the location or region of an observation. \
-                        If you wish, you can upload photographs and automatically create a new image service \
-                        to document the location of your observations of an object',
-                    },
                     layoutSections: [
                         {
                             sectionTitle: 'Image Service',
