@@ -23,6 +23,7 @@ DECLARE
     working_string text;
     localized_result_all jsonb;
     localized_result_name_only jsonb;
+    sample_localized_name jsonb;
 
 BEGIN
 """
@@ -185,6 +186,31 @@ CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_COMMON = r"""
             END LOOP;
 
         END LOOP;
+
+        -- Handle a template having no dynamic values.
+        IF alias_with_separators IS NULL THEN
+            -- Get a list of languages from an existing descriptor
+            SELECT name INTO sample_localized_name FROM resource_instances WHERE graphid = graph LIMIT 1;
+
+            FOR lang IN SELECT * FROM JSONB_OBJECT_KEYS(sample_localized_name)
+            LOOP
+                SELECT JSONB_SET(
+                    localized_result_all,
+                    ARRAY[lang, descriptor_key],
+                    TO_JSONB(this_template)
+                ) INTO localized_result_all;
+            END LOOP;
+            IF descriptor_key = 'name' THEN
+                FOR lang IN SELECT * FROM JSONB_OBJECT_KEYS(sample_localized_name)
+                LOOP
+                    SELECT JSONB_SET(
+                        localized_result_name_only,
+                        ARRAY[lang],
+                        TO_JSONB(this_template)
+                    ) INTO localized_result_name_only;
+                END LOOP;
+            END IF;
+        END IF;
 
     END LOOP;
 
