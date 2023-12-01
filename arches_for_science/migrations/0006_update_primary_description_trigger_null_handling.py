@@ -45,7 +45,6 @@ class Migration(migrations.Migration):
                     operation="INSERT OR UPDATE OR DELETE",
                     pgid="pgtrigger_calculate_multicard_primary_descriptor_single_26494",
                     table="tiles",
-                    timing="DEFERRABLE INITIALLY DEFERRED",
                     when="AFTER",
                 ),
             ),

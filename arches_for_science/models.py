@@ -18,7 +18,6 @@ class TileModelProxy(TileModel):
                 when=pgtrigger.After,
                 operation=pgtrigger.Insert | pgtrigger.Update | pgtrigger.Delete,
                 func=CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE,
-                timing=pgtrigger.Deferred,
             ),
         ]
 
