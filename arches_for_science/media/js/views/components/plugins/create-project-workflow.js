@@ -19,10 +19,6 @@ define([
                     title: 'Project Name',
                     name: 'set-project-name',  /* unique to workflow */
                     required: true,
-                    informationboxdata: {
-                        heading: 'Project Name',
-                        text: 'Identify the project by giving it a name',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -40,10 +36,6 @@ define([
                     title: 'Project Statement',
                     name: 'set-project-statement',  /* unique to workflow */
                     required: false,
-                    informationboxdata: {
-                        heading: 'Project Statement',
-                        text: 'Indicate the objectives or motivation of the project',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -65,10 +57,6 @@ define([
                     title: 'Project Start',
                     name: 'set-project-timespan',  /* unique to workflow */
                     required: false,
-                    informationboxdata: {
-                        heading: 'Project Start',
-                        text: 'Indicate the date the project started if known',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -91,10 +79,6 @@ define([
                     title: 'Project Team',
                     name: 'set-project-team',  /* unique to workflow */
                     required: false,
-                    informationboxdata: {
-                        heading: 'Project Team',
-                        text: 'Add the names of people involved in the project',
-                    },                    
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -117,10 +101,6 @@ define([
                     name: 'object-search-step',  /* unique to workflow */
                     required: true,
                     workflowstepclass: 'create-project-add-things-step',
-                    informationboxdata: {
-                        heading: 'Add Objects',
-                        text: 'Add Objects to Your Project',
-                    },
                     layoutSections: [
                         {
                             componentConfigs: [
