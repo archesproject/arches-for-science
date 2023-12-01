@@ -195,6 +195,16 @@
 </div>
 <div class="model-summary-report">
     <div class="afs-report-page">
+        <!-- ko if: $data.thumbnail() -->
+            <!-- Image Preview -->
+            <div class="afs-report-section">
+                <h2 class="afs-report-section-title">{% trans "Digital Resource Image Preview" %}</h2>
+                <div style="padding-top: 10px; padding-left: 10px;">
+                    <img style="border: 1px solid #343434;" data-bind="attr:{src: thumbnail()}">
+                </div>
+            </div>
+        <!-- /ko -->
+
         <!-- Names -->
         <div class="afs-report-section">
             <h2 class="afs-report-section-title">{% trans "Digital Resource Name" %}</h2>
@@ -223,6 +233,7 @@
                 <!-- /ko -->
             </div>
         </div>
+
         <!-- Statements -->
         <div class="afs-report-section">
             <h2 class="afs-report-section-title">{% trans "Statements" %}</h2>

@@ -217,6 +217,15 @@ define([
             self.nameSummary = ko.observable();
             self.statementsSummary = ko.observable();
 
+            const thumbnailUrl = `/thumbnail/${params.report.report_json.resourceinstanceid}`;
+            self.thumbnail = ko.observable();
+
+            fetch(thumbnailUrl, {method: 'HEAD'}).then(resp => { 
+                if (resp.ok) {
+                    self.thumbnail(thumbnailUrl);
+                }
+            });
+
             const nameData = [self.getRawNodeValue(self.resource()?.name)];
             if (nameData) {
                 self.nameSummary(nameData.map(x => {
