@@ -55,6 +55,7 @@
             <div class="card">
 
                 <div style="display: flex; gap: 10px">
+                    <!-- ko if: analysisAreaInstances().length === 0 || !!sampleListShowing() -->
                     <button type="button" class="btn" style="
                             background: #9490EE;
                             color: #eee;
@@ -66,7 +67,8 @@
                             {% trans 'Add New Analysis Area' %}
                         </span>
                     </button>
-                
+                    <!-- /ko -->
+
                     <!-- ko if: analysisAreaInstances().length > 0 && !sampleListShowing() -->
                     <button type="button" class="btn" style="
                             background: #9490EE;

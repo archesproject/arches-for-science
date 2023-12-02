@@ -304,32 +304,29 @@ define([
             placeholder: 'find a physical thing: enter an artist, object name, artwork title or object number',
             clickBubble: true,
             multiple: false,
-            closeOnSlect: false,
+            closeOnSelect: true,
             allowClear: true,
             ajax: {
                 url: arches.urls.search_terms,
                 dataType: 'json',
                 quietMillis: 250,
-                data: function(term, page) {
+                data: function(requestParams) {
+                    var term = requestParams.term || '';
                     var data = {
-                        start: (page - 1) * limit,
-                        // eslint-disable-next-line camelcase
-                        page_limit: limit,
                         lang: '*',
                         q: term
                     };
                     return data;
                 },
-                results: function(data, page) {
-                    const value = window.document.getElementsByClassName('select2-input')[0].value;
+                processResults: function(data, params) {
                     const results = data.terms;
                     results.unshift({
                         type: 'string',
                         context: '',
                         context_label: 'Search Term',
-                        id: value,
-                        text: value,
-                        value: value
+                        id: params.term,
+                        text: params.term,
+                        value: params.term
                     });
                     self.termOptions = results;
 
@@ -341,32 +338,20 @@ define([
                         && (self.includeAnalysisAreas() || !result.text.includes(regionSubstring))
                     });
                     return {
-                        results: filteredResults,
-                        more: data.count >= (page * limit)
+                        "results": filteredResults
                     };
                 }
             },
-            id: function(item) {
-                return item.id;
-            },
-            formatResult: function(item) {
+            templateResult: function(item) {
                 if (item.context_label === 'Search Term') {
                     return `<strong><u>${item.text}</u></strong>`;
                 }
                 return item.text;
             },
-            formatSelection: function(item) {
+            templateSelection: function(item) {
                 return item.text;
             },
-            clear: function() {
-                self.selectedTerm();
-            },
-            isEmpty: ko.computed(function() {
-                return self.selectedTerm() === '' || !self.selectedTerm();
-            }, this),
-            initSelection: function() {
-                return;
-            }
+            escapeMarkup: function(m) {return m;}
         };
         
         var getResultData = function(termFilter, pagingFilter) {

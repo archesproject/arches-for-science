@@ -216,16 +216,18 @@
 
 <div class="col-xs-12 pad-no crud-widget-container">
     <h2 class="file-workbench-filter-header">{% trans 'Loader' %}</h2>
-    <input style="display:inline-block;"
-    data-bind="select2Query: {
-        select2Config: {
-            clickBubble: true,
-            disabled: false,
-            data: fileFormatRenderers,
-            value: managerRenderer,
-            allowClear: false,
-            multiple: false,
-            placeholder: {% trans "'File Renderer'" %}}}">
+    <select style="display:inline-block;"
+        data-bind="select2Query: {
+            select2Config: {
+                clickBubble: true,
+                disabled: false,
+                data: fileFormatRenderers,
+                value: managerRenderer,
+                allowClear: false,
+                multiple: false,
+                placeholder: {% trans "'File Renderer'" %}
+            }}">
+    </select>
     <div style="padding-top: 10px">
         <button style="margin-right: 3px;" class="btn btn-lg btn-workbench btn-primary" data-bind="click: function(){$parent.applyRendererToStaged($parent.getFileFormatRenderer(managerRenderer()))}"><i class="fa fa-gears"></i> {% trans 'Apply to Selected Files' %}</button>
     </div>

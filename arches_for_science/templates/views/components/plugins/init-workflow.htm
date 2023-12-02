@@ -131,26 +131,26 @@
                 </a>
             </div>
             
-            <!-- ko if: $data.helpTemplateData().length -->
+
             <div style="padding: 20px;">
-                <input 
+                <select
                     data-bind="
                         select2Query: {
                             select2Config: {
                                 clickBubble: false,
                                 disabled: false,
-                                data: helpTemplateData(),
+                                data: $data.helpTemplateData,
                                 value: selectedHelpTemplate,
-                                closeOnSlect: false,
+                                dropdownCssClass: 'select2-zindex',
+                                closeOnSelect: true,
                                 allowClear: true,
                                 multiple: false,
                                 placeholder: {% trans "'Select A Workflow'" %}
                             }
                         }
                     "
-                >
+                ></select>
             </div>
-            <!-- /ko -->
 
             <!-- ko if: $data.helpTemplateUrl() -->
                 <!-- ko if: $data.isHelpTemplateLoading() -->

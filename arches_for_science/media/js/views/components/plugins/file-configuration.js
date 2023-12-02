@@ -8,8 +8,7 @@ define([
     'templates/views/components/plugins/file-configuration.htm',
     'bindings/codemirror',
     'views/components/cards/file-renderers/xy-reader',
-    'bindings/select2v4',
-    'select2'
+    'bindings/select2-query'
 ], function(ko, arches, fileRenderers, TileModel, Cookies, xyParser, fileConfigurationTemplate) {
     /*
         params.files - Must be structured as follows for each file.
@@ -108,7 +107,7 @@ define([
         }
 
         this.selectedFiles.subscribe(() => {
-            if(this.selectedFiles().length > 1){
+            if(this.selectedFiles().length > 1 || this.selectedFiles().length === 0){
                 this.dataFiles().map(file => {file.details.disabledConfig(true)});
             }
             if(this.selectedFiles().length == 1){
@@ -172,16 +171,18 @@ define([
             refreshPreview();
         });
 
-        const currentVm = this;
-        this.initSelection = function(selectedConfig, callback) {
-            const configId = selectedConfig[0].value;
-            callback({id: configId, text: currentVm.rendererConfigs().find(config => config.configid == configId)?.name});
-        };
-
-        this.processConfigs = (data) => {
-            return { "results": data?.configs?.map(renderer => {return { "text": renderer.name, "id": renderer.configid};})};
-        };
-
+        this.getSelect2Config = function(fileDetails){
+            return {
+                clickBubble: false,
+                disabled: fileDetails.disabledConfig,
+                width: 'element',
+                value: fileDetails.rendererConfig,
+                closeOnSelect: true,
+                placeholder: 'Select an Importer',
+                allowClear: true,
+                multiple: false 
+            }
+        }
 
         this.fileTableConfig = {
             responsive: {

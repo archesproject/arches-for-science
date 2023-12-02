@@ -6,8 +6,7 @@ define([
     'viewmodels/alert',
     'templates/views/components/plugins/importer-configuration.htm',
     'bootstrap',
-    'bindings/select2v4',
-    'select2'
+    'bindings/select2-query'
 ], function(ko, $, Cookies, xyParser, AlertViewModel, importerConfigurationTemplate) {
     const vm = function(params) {
         this.alert = params.alert;

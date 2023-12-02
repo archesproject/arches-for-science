@@ -9,7 +9,7 @@
         <div style="display: inline-block;padding: 0 10;width: 600px;">
             <div>
                 <div data-bind="if: physicalThingList()" class="col-xs-12 resource-instance-wrapper">
-                    <input style="display:inline-block;"
+                    <select style="display:inline-block;"
                         data-bind="
                             select2Query: {
                                 value: physicalThingValue,
@@ -18,11 +18,12 @@
                                     disabled: false,
                                     data: physicalThingList(),
                                     value: physicalThingValue,
-                                    closeOnSlect: false,
+                                    closeOnSelect: true,
                                     allowClear: true,
                                     multiple: false,
-                                    placeholder: {% trans "'Available Physical Things'" %}}}
-                        ">
+                                    placeholder: {% trans "'Available Physical Things'" %}
+                            }}">
+                    </select>
                 </div>
             </div>
         </div></div>

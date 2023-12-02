@@ -258,11 +258,6 @@ define([
         this.fileFilter = ko.observable('');
         this.selectedRenderer = ko.observable();
         this.selectedFile = ko.observable();
-        this.selectedFile.subscribe(selectedFile => {
-            if (selectedFile) {
-                self.selectedFileDropdownData({text: selectedFile.file_details[0].name, id: selectedFile.file_details[0].file_id })
-            }
-        })
         this.selectedFileDropdownData = ko.observable();
         this.selectedFileDropdownData.subscribe(fileId => {
             const filteredFile = self.filteredFiles().find(file => file.file_details[0].file_id === fileId);
@@ -272,7 +267,11 @@ define([
         })
         this.initSelection = function(selectedConfig, callback) {
             const selectedFile = self.selectedFile();
-            callback({id: selectedFile.file_details[0].id, text: selectedFile.file_details[0].name});
+            if(selectedFile){
+                callback([{id: selectedFile.file_details[0].id, text: selectedFile.file_details[0].name}]);
+            }else{
+                callback([]);
+            }
         };
 
         self.selectedFile.subscribe(function(selectedFile){
@@ -285,6 +284,7 @@ define([
                 var file = params.value()[selectedFile['@tile_id']];
                 self.fileStatementParameter(file.fileStatementParameter.fileStatement());
                 self.fileStatementInterpretation(file.fileStatementInterpretation.fileStatement());
+                self.selectedFileDropdownData(selectedFile.file_details[0].file_id);
             } else {
                 // self.selectedFile.selected(false);
                 self.fileStatementParameter(undefined);
