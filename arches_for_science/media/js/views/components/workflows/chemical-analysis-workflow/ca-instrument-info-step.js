@@ -128,6 +128,10 @@ define([
             };
         });
 
+        if (!params.form.savedData()) {
+            params.form.savedData(this.updatedValue());
+        };
+
         this.updatedValue.subscribe(function(val){
             params.value(val);
         });
@@ -165,10 +169,12 @@ define([
         };
 
         params.form.reset = function(){
+            self.nameValue(null);
+            self.instrumentName(null);
+            self.dateValue(snapshot.dateValue);
             self.instrumentValue(snapshot.instrumentValue);
             self.procedureValue(snapshot.procedureValue);
             self.parameterValue(snapshot.parameterValue);
-            params.form.hasUnsavedData(false);
         };
 
         this.saveTextualWorkType = function(){
