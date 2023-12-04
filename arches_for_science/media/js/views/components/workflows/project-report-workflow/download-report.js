@@ -12,6 +12,9 @@ define([
         const collectionGraphId = "1b210ef3-b25c-11e9-a037-a4d18cec433a";
         const physicalThingGraphId = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a";
 
+        const ramanConceptValueId = "6418248a-bcf5-408b-9bed-2dbfc996f922";
+        const xrfConceptValueId = "c8d6ea37-ebd1-45df-ae96-bfd8201c3f99";
+
         const self = this;
         const projectId = params.projectId;
         const physicalThingFromPreviousStep = params.physicalThingIds;
@@ -100,7 +103,20 @@ define([
                 annotationScreenshots,
                 reportDate,
                 analysisAreas,
-                observationDetails: [...Object.values(observationDetails)],
+                ramanObservationDetails: [
+                    ...Object.values(observationDetails).filter(observationDetail => {
+                        return observationDetail.resource?.type?.concept_details.some(
+                            conceptDetail => conceptDetail.valueid === ramanConceptValueId
+                        );
+                    })
+                ],
+                xrfObservationDetails: [
+                    ...Object.values(observationDetails).filter(observationDetail => {
+                        return observationDetail.resource?.type?.concept_details.some(
+                            conceptDetail => conceptDetail.valueid === xrfConceptValueId
+                        );
+                    })
+                ],
                 projectDetails: [...Object.values(projectDetails)],
                 physicalThingsDetails: physicalThingsDetailsArray,
                 objectOfStudyDetails: objectOfStudyDetailsArray,
