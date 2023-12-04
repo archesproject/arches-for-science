@@ -46,6 +46,8 @@ before Arches 6.2.6 or 7.5.0 did not create ``RENDERERS``, so you may need to
 [add it first](https://github.com/archesproject/arches/pull/10171/files)
 before extending it as shown below):
 ```
+FUNCTION_LOCATIONS.append("arches_for_science.pkg.extensions.functions")
+
 TEMPLATES[0]["OPTIONS"]["context_processors"].append("arches_for_science.utils.context_processors.project_settings")
 
 RENDERERS += [
