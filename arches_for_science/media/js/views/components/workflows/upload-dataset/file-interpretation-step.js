@@ -65,6 +65,9 @@ define([
             return false;
         });
         this.save = async() => {
+            if (!this.dirty()) {
+                return;
+            }
             self.loading(true);
             self.loadingMessage('Saving interpretation data...');
             for (const tileid in params.value()) {
