@@ -144,10 +144,11 @@ define([
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
                 observationName: {'name': 'Experiment/Observation Name', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
+                observationType: {'name': 'Type', 'value': this.getResourceValue(val.resource, ['type','@display_value'])},
                 project: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
                 usedObject: {'name': 'Used Object', 'value': this.getResourceValue(val.resource, ['observed','@display_value'])},
                 usedInstrument: {'name': 'Instrument', 'value': this.getResourceValue(val.resource, ['used instrument','@display_value'])},
-                usedProcess: {'name': 'Technique', 'value': this.getResourceValue(val.resource, ['used process','@display_value'])},
+                usedProcess: {'name': 'Procedure', 'value': this.getResourceValue(val.resource, ['used process','@display_value'])},
             };
 
             self.reportVals.statement = findStatementType(val, 'description');
