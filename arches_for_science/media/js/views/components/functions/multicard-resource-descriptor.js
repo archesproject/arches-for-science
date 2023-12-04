@@ -40,17 +40,36 @@ function($, _, arches, ko, koMapping, ListView, PrimaryDescriptorsView, multicar
                 ),
             };
 
-            this.groupedNodesForSelect2 = self.graph.cards.map(card => {
-                return {
-                    text: card.name,
-                    children: self.graph.nodes.filter(
-                        node => node.datatype === 'string' && node.nodegroup_id === card.nodegroup_id
-                    ).map(node => {
-                        return {
-                            id: node.nodeid,
-                            text: node.alias,
-                        }
-                    }),
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+            const sortedCards = this.graph.cards.toSorted((a, b) => {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                return 0;
+            });
+
+            this.groupedNodesForSelect2 = [];
+            sortedCards.forEach(card => {
+                const stringNodes = this.graph.nodes.filter(
+                    node => node.datatype === 'string' && node.nodegroup_id === card.nodegroup_id
+                );
+
+                if (stringNodes.length) {
+                    this.groupedNodesForSelect2.push({
+                        text: card.name,
+                        children: stringNodes.map(node => {
+                            return {
+                                id: node.nodeid,
+                                text: node.alias,
+                            }
+                        }),
+                    });
                 }
             });
 
