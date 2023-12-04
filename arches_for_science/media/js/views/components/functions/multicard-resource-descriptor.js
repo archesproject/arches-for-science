@@ -67,7 +67,7 @@ function($, _, arches, ko, koMapping, ListView, PrimaryDescriptorsView, multicar
             this.baseSelect2Config = {
                 multiple: true,
                 placeholder: arches.translations.selectPrimaryDescriptionIdentifierCard,
-                data: {results: self.groupedNodesForSelect2},
+                data: self.groupedNodesForSelect2,
             };
 
             this.updateTemplate = (nodeid, actionType, descriptorName) => {
