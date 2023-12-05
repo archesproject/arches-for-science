@@ -58,7 +58,7 @@ define([
         let procedureTileId = getProp('procedure', 'tileid');
         let projectTileId = getProp('project', 'tileid');
         let observedThingTileid = getProp('observedThing', 'tileid');
-        let observationTypeTileId = getProp('type', 'tileid');
+        let observationTypeTileId = getProp('observationType', 'tileid');
         let dateTileId = getProp('date', 'tileid');
         let nameTileId = getProp('name', 'tileid');
 
@@ -76,6 +76,7 @@ define([
 
         const snapshot = {
             dateValue: self.dateValue(),
+            observationType: self.observationType(),
             instrumentValue: self.instrumentValue(),
             procedureValue: self.procedureValue(),
             parameterValue: self.parameterValue()
@@ -108,6 +109,10 @@ define([
                     self.instrumentName(data._source.displayname);
                     self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
                 });
+            }
+            if (!val) {
+                self.instrumentName(null);
+                self.nameValue(null);
             }
         });
 
@@ -178,12 +183,12 @@ define([
         };
 
         params.form.reset = function(){
-            self.nameValue(null);
-            self.instrumentName(null);
-            self.dateValue(snapshot.dateValue);
+            self.observationType(snapshot.observationType);
             self.instrumentValue(snapshot.instrumentValue);
             self.procedureValue(snapshot.procedureValue);
             self.parameterValue(snapshot.parameterValue);
+            // Must run after instrument update, reads instrumentName()
+            self.dateValue(snapshot.dateValue);
         };
 
         this.saveTextualWorkType = function(){
