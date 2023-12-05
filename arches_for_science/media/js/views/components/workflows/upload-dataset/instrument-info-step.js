@@ -128,8 +128,17 @@ define([
             }
         });
 
+        this.isEmpty = obj => {
+            return Object.values(obj).every(
+                val => val === null ||
+                Object.values(val).every(
+                    innerVal => innerVal === null || innerVal instanceof Array && innerVal.length === 0
+                )
+            )
+        };
+
         this.updatedValue = ko.pureComputed(function(){
-            return {
+            const updated = {
                 instrument: {value: self.instrumentValue(), tileid: instrumentTileId},
                 procedure: {value: self.procedureValue(), tileid: procedureTileId},
                 parameter: {value: self.parameterValue(), tileid: parameterTileId},
@@ -140,11 +149,15 @@ define([
                 observationType: {value: self.observationType(), tileid: observationTypeTileId},
                 observationInstanceId: self.observationInstanceId()
             };
+            if (self.isEmpty(updated)) {
+                return undefined;  // null would trigger dirty state, i.e. null !== undefined
+            }
+            return updated;
         });
 
         if (!params.form.savedData()) {
             params.form.savedData(this.updatedValue());
-        };
+        }
 
         this.updatedValue.subscribe(function(val){
             params.value(val);
