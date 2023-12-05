@@ -13,21 +13,27 @@
                 <span data-bind="visible: numberOfSelectedFiles() == 1">{% trans "file" %}</span>
                 <span data-bind="visible: numberOfSelectedFiles()">(<span data-bind="text: numberOfSelectedFiles()"></span> {% trans "selected" %})</span>
             </div>
-            <button class="project-file-selection" data-bind="click:() =>{toggleSelection()}">
-                <span data-bind="visible: !numberOfSelectedFiles()">{% trans "Select All" %}</span>
-                <span data-bind="visible: numberOfSelectedFiles()">{% trans "Deselect All" %}</span>
-            </button>
+
         </div>
     </div>
     <!-- ko foreach: { data: relatedObservations, as: "observation" } -->
     <div class="file-list-container" data-bind="if: observation.relatedFiles().length > 0">
-        <div class="observation-list" data-bind="click: function() { observation.expanded(!observation.expanded()); }">
-            <span>
-                <i style="padding-right: 5px;" class="fa" data-bind="css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()}"></i>
-            </span>
-            <span data-bind="text: observation.name"></span>
-        </div>
-        <!-- ko if: observation.expanded() -->
+        <div class="observation-list" style="display: flex;" data-bind="click: function() { observation.expanded(!observation.expanded()); }">
+            <div style="flex:1;" >
+                <span>
+                    <i style="padding-right: 5px;" class="fa" data-bind="css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()}"></i>
+                </span>
+                <span data-bind="text: observation.name"></span>
+            </div>
+            <div style="max-width: auto;text-align:end;">
+                <button class="project-file-selection" data-bind="clickBubble: false, click:() =>{$parent.toggleSelection(observation);}">
+                    <span data-bind="visible: !observation.relatedFiles().filter(file => file.selected()).length">[{% trans "Select All" %}]</span>
+                    <span data-bind="visible: observation.relatedFiles().filter(file => file.selected()).length">[{% trans "Deselect All" %}]</span>
+                </button>
+            </div>
+        </div>    
+        <!-- ko if: observation.expanded() -->        
+        
         <table class="table table-striped" width="100%">
             <thead>
                 <tr class="afs-table-header">
