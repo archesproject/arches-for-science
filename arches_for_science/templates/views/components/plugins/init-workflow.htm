@@ -84,7 +84,7 @@
     <!-- /ko -->
 
     <div>
-        <div style="height: 40px; width: 100%; background-color: #ddd; display: flex; justify-content: flex-end; border-bottom: 1px solid #ddd">
+        <div style="height: 50px; width: 100%; background-color: #eee; display: flex; justify-content: flex-end; border-bottom: 1px solid #ddd">
             <!-- Modal button -->
             <button 
                 class="btn btn-info btn-sm"
@@ -100,7 +100,7 @@
             <!-- Workflow Help button -->
             <button 
                 class="btn btn-info btn-sm"
-                style="margin: 5px; margin-right: 10px; border-radius: 4px;"
+                style="margin: 5px; margin-right: 10px; margin-left: 0px; border-radius: 2px; font-weight: 600; font-size: 12px;"
                 data-bind="
                     click: function(){ $data.shouldShowWorkflowHelp(true); }
                 "
@@ -109,8 +109,7 @@
             </button>
         </div>
 
-        <div 
-            id="ep-help-panel" 
+        <div id="ep-help-panel" 
             class="ep-help" 
             style="display: none"
             data-bind="slide: shouldShowWorkflowHelp, duration: 400, direction: {direction: 'right'}, easing: 'slide'"
@@ -122,7 +121,7 @@
                 <a 
                     href="javascript:void(0);" 
                     class="ep-help-toggle ep-help-close ep-tools ep-tools-right" 
-                    style="border:none; box-sizing: content-box;"
+                    style="border:none; box-sizing: content-box; padding: 0px 15px; background: #f1f1f1;"
                     data-bind="click: function(){shouldShowWorkflowHelp(false); selectedHelpTemplate(null);}"
                 >
                     <div class="" data-placement="bottom" data-toggle="tooltip" data-original-title="{% trans "Close Help" %}">
@@ -175,8 +174,9 @@
     
         <!-- Workflow Icons -->
         <!-- ko if: $data.workflows().length -->
-        <div style="height: calc(100vh - 100px); overflow-y: scroll;">
-            <div class="workflow-select-card-container" style="padding: 20px 40px;">
+        <div class="afs-workflow-layout" style="height: calc(100vh - 100px); overflow-y: scroll; background: #f9f9f9;">
+            <div class="workflow-select-card-container" style="padding: 20px 20px 0px 20px;">
+                <div class="workflow-group-title">{% trans "Manage Projects" %}</div>
                 <!-- ko with: workflows().find(workflow => workflow.pluginid === "a1667717-b7bd-4570-b27a-ec352c767e0e") -->
                 <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
                     <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
@@ -212,7 +212,8 @@
                 <!-- /ko -->
             </div>
     
-            <div class="workflow-select-card-container" style="padding: 20px 40px;">
+            <div class="workflow-select-card-container" style="padding: 20px 20px 0px 20px;">
+                <div class="workflow-group-title">{% trans "Object Sampling Locations and Analysis Areas" %}</div>
                 <!-- ko with: workflows().find(workflow => workflow.pluginid === "1132c953-8af4-4acb-87c5-39c5b996799e") -->
                 <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
                     <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
@@ -237,7 +238,8 @@
                 <!-- /ko -->
             </div>
     
-            <div class="workflow-select-card-container" style="padding: 20px 40px;">
+            <div class="workflow-select-card-container" style="padding: 20px 20px 0px 20px;">
+                <div class="workflow-group-title">{% trans "Upload/Review 2-D Data Sets" %}</div>
                 <!-- ko with: workflows().find(workflow => workflow.pluginid === "afedd8cd-1ba7-43ec-b3c5-d0fab03525ca") -->
                 <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
                     <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
@@ -262,7 +264,8 @@
                 <!-- /ko -->
             </div>
     
-            <div class="workflow-select-card-container" style="padding: 20px 40px;">
+            <div class="workflow-select-card-container" style="padding: 20px 20px 40px 20px;">
+                <div class="workflow-group-title">{% trans "Upload 3-D Data Sets and Derivative Products" %}</div>
                 <!-- ko with: workflows().find(workflow => workflow.pluginid === "c206cfc6-6b4a-481e-a018-8da72aeb7074") -->
                 <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
                     <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
