@@ -78,7 +78,7 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
             resourceinstanceidto=new_resource,
             tileid=new_tile,
         )
-        rxr.save(transaction_id=transaction_id)
+        rxr.save()
         self.addCleanup(rxr.delete)
 
         delete_data = {
