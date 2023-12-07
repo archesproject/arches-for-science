@@ -58,7 +58,7 @@ define([
         let procedureTileId = getProp('procedure', 'tileid');
         let projectTileId = getProp('project', 'tileid');
         let observedThingTileid = getProp('observedThing', 'tileid');
-        let observationTypeTileId = getProp('type', 'tileid');
+        let observationTypeTileId = getProp('observationType', 'tileid');
         let dateTileId = getProp('date', 'tileid');
         let nameTileId = getProp('name', 'tileid');
 
@@ -76,6 +76,7 @@ define([
 
         const snapshot = {
             dateValue: self.dateValue(),
+            observationType: self.observationType(),
             instrumentValue: self.instrumentValue(),
             procedureValue: self.procedureValue(),
             parameterValue: self.parameterValue()
@@ -109,6 +110,10 @@ define([
                     self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
                 });
             }
+            if (!val) {
+                self.instrumentName(null);
+                self.nameValue(null);
+            }
         });
 
         this.dateValue.subscribe(function(val){
@@ -123,8 +128,17 @@ define([
             }
         });
 
+        this.isEmpty = obj => {
+            return Object.values(obj).every(
+                val => val === null ||
+                Object.values(val).every(
+                    innerVal => innerVal === null || innerVal instanceof Array && innerVal.length === 0
+                )
+            )
+        };
+
         this.updatedValue = ko.pureComputed(function(){
-            return {
+            const updated = {
                 instrument: {value: self.instrumentValue(), tileid: instrumentTileId},
                 procedure: {value: self.procedureValue(), tileid: procedureTileId},
                 parameter: {value: self.parameterValue(), tileid: parameterTileId},
@@ -135,7 +149,15 @@ define([
                 observationType: {value: self.observationType(), tileid: observationTypeTileId},
                 observationInstanceId: self.observationInstanceId()
             };
+            if (self.isEmpty(updated)) {
+                return undefined;  // null would trigger dirty state, i.e. null !== undefined
+            }
+            return updated;
         });
+
+        if (!params.form.savedData()) {
+            params.form.savedData(this.updatedValue());
+        }
 
         this.updatedValue.subscribe(function(val){
             params.value(val);
@@ -174,10 +196,12 @@ define([
         };
 
         params.form.reset = function(){
+            self.observationType(snapshot.observationType);
             self.instrumentValue(snapshot.instrumentValue);
             self.procedureValue(snapshot.procedureValue);
             self.parameterValue(snapshot.parameterValue);
-            params.form.hasUnsavedData(false);
+            // Must run after instrument update, reads instrumentName()
+            self.dateValue(snapshot.dateValue);
         };
 
         this.saveTextualWorkType = function(){
