@@ -313,7 +313,6 @@ define([
                 data: function(requestParams) {
                     var term = requestParams.term || '';
                     var data = {
-                        lang: '*',
                         q: term
                     };
                     return data;
