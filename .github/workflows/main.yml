@@ -43,6 +43,13 @@ jobs:
           pip install .
           echo Project installed
 
+      - name: Install arches dev version
+        working-directory: arches
+        run: |
+          python -m pip uninstall arches -y
+          python -m pip install .
+          echo Arches dev version installed
+
       - name: Install Java, GDAL, and other system dependencies
         run: |
           sudo apt update
