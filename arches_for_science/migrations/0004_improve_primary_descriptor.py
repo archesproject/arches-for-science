@@ -11,7 +11,7 @@ def retire_core_primary_descriptor(apps, schema_editor):
     fn.save()
 
     # create multi-card function
-    Function.objects.create(
+    Function.objects.update_or_create(
         pk="00b2d15a-fda0-4578-b79a-784e4138664b",
         modulename="multicard_resource_descriptor.py",
         classname="MulticardResourceDescriptor",
