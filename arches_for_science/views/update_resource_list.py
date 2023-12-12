@@ -57,8 +57,6 @@ class UpdateResourceListView(View):
         tile.data[name_node_id] = stringDataType.transform_value_for_tile("Collection for {0}".format(project_name))
         tile.save(request=request, transaction_id=transaction_id, index=False)
 
-        resource.calculate_descriptors()
-        resource.save(index=False)
 
         return resource, tile.tileid
 
