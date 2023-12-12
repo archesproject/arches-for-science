@@ -97,7 +97,7 @@ class FileDownloader(View):
                 else:
                     download_files.append({"name": file["name"], "downloadfile": file["file"]})
             except:
-                logger.warn(_("Unable to locate {}".format(file["name"])))
+                logger.warning(_("Unable to locate {}".format(file["name"])))
 
         if len(download_files) > 0:
             zip_stream = zip_utils.create_zip_file(download_files, "downloadfile")

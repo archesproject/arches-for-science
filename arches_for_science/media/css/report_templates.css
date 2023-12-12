@@ -1,13 +1,5 @@
 /*CSS specifically for Arches-HER custom reports*/
 
-/* !important is evil, but necessary to override/revert to default the inline styles for resource-component-abstract */
-.resource-component-abstract {
-    height: auto !important;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-}
-
 .afs-table-control div
 {
     display: inline;
