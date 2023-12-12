@@ -56,11 +56,12 @@ def restore_core_primary_descriptor(apps, schema_editor):
     original_fn.name = "Define Resource Descriptors"
     original_fn.save()
 
-    multi_card_fn = Function.objects.get(pk=MULTICARD_DESCRIPTOR_FUNCTION_PK)
-    multi_card_fn.delete()
-
+    # Update FunctionXGraph records before cascade deleted below
     update_graphs(apps, from_function=multi_card_fn, to_function=original_fn,
                   string_replacement_map=STRING_TEMPLATE_REPLACEMENTS_REVERSED)
+
+    multi_card_fn = Function.objects.get(pk=MULTICARD_DESCRIPTOR_FUNCTION_PK)
+    multi_card_fn.delete()
 
 
 class Migration(migrations.Migration):
