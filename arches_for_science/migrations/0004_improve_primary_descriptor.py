@@ -3,35 +3,64 @@
 from django.db import migrations
 
 
+STRING_TEMPLATE_REPLACEMENTS = {
+    "Statement_content": "statement_content",
+    "Name_content": "name_content",
+    "Name (top)_content": "name_top__content",
+    "<content >": "<statement_content>",
+}
+STRING_TEMPLATE_REPLACEMENTS_REVERSED = {v: k for k, v in STRING_TEMPLATE_REPLACEMENTS.items()}
+
+ORIGINAL_DESCRIPTOR_FUNCTION_PK = "60000000-0000-0000-0000-000000000001"
+MULTICARD_DESCRIPTOR_FUNCTION_PK = "00b2d15a-fda0-4578-b79a-784e4138664b"
+
+
+def update_graphs(apps, from_function, to_function, string_replacement_map):
+    FunctionXGraph = apps.get_model("models", "FunctionXGraph")
+
+    for fn_x_graph in FunctionXGraph.objects.filter(function=from_function):
+        fn_x_graph.function = to_function
+        for descriptor_object in fn_x_graph.config["descriptor_types"].values():
+            for before, after in string_replacement_map.items():
+                descriptor_object["string_template"] = descriptor_object["string_template"].replace(before, after)
+        fn_x_graph.save()
+
+
 def retire_core_primary_descriptor(apps, schema_editor):
     Function = apps.get_model("models", "Function")
-    fn = Function.objects.get(pk="60000000-0000-0000-0000-000000000001")
-    fn.functiontype = "primarydescriptors_retired"
-    fn.name = "(retired) Define Resource Descriptors"
-    fn.save()
+    original_fn = Function.objects.get(pk=ORIGINAL_DESCRIPTOR_FUNCTION_PK)
+    original_fn.functiontype = "primarydescriptors_retired"
+    original_fn.name = "(retired) Define Resource Descriptors"
+    original_fn.save()
 
     # create multi-card function
-    Function.objects.update_or_create(
-        pk="00b2d15a-fda0-4578-b79a-784e4138664b",
+    multi_card_fn, created = Function.objects.update_or_create(
+        pk=MULTICARD_DESCRIPTOR_FUNCTION_PK,
         modulename="multicard_resource_descriptor.py",
         classname="MulticardResourceDescriptor",
         functiontype="primarydescriptors",
         name="Multi-card Resource Descriptor",
         description="Configure the name, description, and map popup of a resource",
-        defaultconfig=fn.defaultconfig,
+        defaultconfig=original_fn.defaultconfig,
         component="views/components/functions/multicard-resource-descriptor",
     )
+
+    update_graphs(apps, from_function=original_fn, to_function=multi_card_fn,
+                  string_replacement_map=STRING_TEMPLATE_REPLACEMENTS)
 
 
 def restore_core_primary_descriptor(apps, schema_editor):
     Function = apps.get_model("models", "Function")
-    fn = Function.objects.get(pk="60000000-0000-0000-0000-000000000001")
-    fn.functiontype = "primarydescriptors"
-    fn.name = "Define Resource Descriptors"
-    fn.save()
+    original_fn = Function.objects.get(pk=ORIGINAL_DESCRIPTOR_FUNCTION_PK)
+    original_fn.functiontype = "primarydescriptors"
+    original_fn.name = "Define Resource Descriptors"
+    original_fn.save()
 
-    multi_card_fn = Function.objects.get(pk="00b2d15a-fda0-4578-b79a-784e4138664b")
+    multi_card_fn = Function.objects.get(pk=MULTICARD_DESCRIPTOR_FUNCTION_PK)
     multi_card_fn.delete()
+
+    update_graphs(apps, from_function=multi_card_fn, to_function=original_fn,
+                  string_replacement_map=STRING_TEMPLATE_REPLACEMENTS_REVERSED)
 
 
 class Migration(migrations.Migration):
