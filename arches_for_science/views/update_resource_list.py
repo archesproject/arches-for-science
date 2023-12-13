@@ -57,10 +57,9 @@ class UpdateResourceListView(View):
         tile.data[name_node_id] = stringDataType.transform_value_for_tile("Collection for {0}".format(project_name))
         tile.save(request=request, transaction_id=transaction_id, index=False)
 
-        resource.calculate_descriptors()
-        resource.save(index=False)
+        collection_resource = Resource.objects.get(pk=resource.pk)
 
-        return resource, tile.tileid
+        return collection_resource, tile.tileid
 
     def add_collection_to_project(self, request, resourceinstaneid, r_resourceinstaneid, transaction_id):
         used_set_node_id = "cc5d6df3-d477-11e9-9f59-a4d18cec433a"  # Project nodegroup (hidden nodegroup)
