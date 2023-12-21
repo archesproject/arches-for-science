@@ -26,9 +26,12 @@ INSTALLED_APPS = (
     "django_celery_results",
     "arches_for_science",
     "compressor",
+    "pgtrigger",
     # "debug_toolbar"
 )
 ROOT_URLCONF = "arches_for_science.urls"
+
+FUNCTION_LOCATIONS = ["arches_for_science.pkg.extensions.functions"]
 
 # Further settings may need to be added from project, just don't
 # want to clobber anything from core test settings for now.

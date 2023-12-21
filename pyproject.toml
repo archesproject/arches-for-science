@@ -27,6 +27,7 @@ requires-python = ">=3.9"
 dependencies = [
   "arches>=7.5.0a1,<7.5.1",
   "supervisor==4.2.1",
+  "django-pgtrigger==4.9.0",
   "django-storages==1.13.2",
   "boto3==1.25.3",
   "arches-templating>=0.1.2",

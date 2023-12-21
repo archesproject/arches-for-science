@@ -28,12 +28,13 @@ If you don't already have an Arches project, you'll need to create one by follow
 Since Arches for Science uses `Cantaloupe` as its IIIF server, take notice of the
 Cantaloupe [installation instructions](https://arches.readthedocs.io/en/stable/developing/advanced/managing-and-hosting-iiif/), too.
 
-When your project is ready add "arches_templating" and "arches_for_science" to INSTALLED_APPS and "arches_for_science" to ARCHES_APPLICATIONS in your project's settings.py file:
+When your project is ready add "arches_templating", "arches_for_science", and "pgtrigger" to INSTALLED_APPS and "arches_for_science" to ARCHES_APPLICATIONS in your project's settings.py file:
 ```
 INSTALLED_APPS = (
     ...
     "arches_templating",
     "arches_for_science",
+    "pgtrigger",
     "myappname",
 )
 
@@ -45,6 +46,8 @@ before Arches 6.2.6 or 7.5.0 did not create ``RENDERERS``, so you may need to
 [add it first](https://github.com/archesproject/arches/pull/10171/files)
 before extending it as shown below):
 ```
+FUNCTION_LOCATIONS.append("arches_for_science.pkg.extensions.functions")
+
 TEMPLATES[0]["OPTIONS"]["context_processors"].append("arches_for_science.utils.context_processors.project_settings")
 
 RENDERERS += [
