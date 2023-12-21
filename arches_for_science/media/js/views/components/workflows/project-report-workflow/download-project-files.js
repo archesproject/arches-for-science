@@ -35,6 +35,8 @@ define([
         this.selectedFiles.subscribe((val) => {
             params.value({ files: val });
         });
+        
+        params.value({ files: [] });
 
         this.numberOfSelectedFiles = ko.computed(() => {
             const count = self.relatedObservations().reduce((acc, observation) => {
