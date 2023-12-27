@@ -14,8 +14,9 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Framework :: Django",
     "Framework :: Django :: 4.2",
     "Intended Audience :: Developers",
@@ -23,9 +24,9 @@ classifiers = [
     "Intended Audience :: Information Technology",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
-  "arches>=7.5.0a1,<7.5.1",
+  "arches>=7.6.0a0,<8",
   "supervisor==4.2.1",
   "django-pgtrigger==4.9.0",
   "django-storages==1.13.2",
@@ -39,7 +40,7 @@ packages = ["arches_for_science"]
 
 [tool.black]
 line-length = 140
-target-version = ['py39']
+target-version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 /(

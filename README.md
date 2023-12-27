@@ -72,7 +72,7 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 Next ensure arches and arches_for_science are included as dependencies in package.json
 ```
 "dependencies": {
-    "arches": "archesproject/arches#dev/7.5.x",
+    "arches": "archesproject/arches#dev/7.6.x",
     "arches_for_science": "archesproject/arches-for-science#dev/1.1.x"
 }
 ```
