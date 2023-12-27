@@ -11,14 +11,14 @@
         "@uppy/dashboard": "^3.5.4",
         "@uppy/drag-drop": "^3.0.3",
         "@uppy/progress-bar": "^3.0.3",
-        "arches": "archesproject/arches#dev/7.5.x",
+        "arches": "archesproject/arches#dev/7.6.x",
         "dom-to-image": "^2.6.0",
         "html2canvas": "^1.4.1",
         "plotly.js-dist": "^2.24.3",
         "three": "^0.148.0"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.5.x"
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#dev/7.6.x"
     },
     "scripts": {
         "build_production": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 NODE_ENV=production arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.prod.js",
