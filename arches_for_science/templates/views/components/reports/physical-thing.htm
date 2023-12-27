@@ -7,7 +7,7 @@
 
         <!-- Title Block -->
         <div class="afs-report-toolbar">
-            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Physical Thing" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Physical Thing:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
         </div>
 
     </div>
@@ -134,15 +134,16 @@
                    }
                }"></div>
                <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.parts)}, css: {'fa-angle-double-right': visible.parts(), 'fa-angle-double-up': !visible.parts()}" class="fa toggle"></i> {% trans "Parts" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.parts)}, css: {'fa-angle-double-right': visible.parts(), 'fa-angle-double-up': !visible.parts()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Parts" %}</h2>
+                    <!-- TODO(jtw) -->
                     <span data-bind="if: $data.cards && $data.cards['parts of object']">
-                        <a class="afs-report-a" data-bind="click: function(){addNewTile($data.cards['parts of object'])}"><i class="fa fa-mail-reply"></i> {% trans "Add Part" %}</a>
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile($data.cards['parts of object'])}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add Part" %}</a>
                     </span>
 
                     <div data-bind="visible: visible.parts" class="afs-report-collapsible-container pad-lft">
                         
                         <!-- ko ifnot: Array.isArray(annotation.info) -->
-                        <div class="afs-nodata-note">No parts for this resource</div>
+                        <div class="afs-nodata-note">{% trans "No parts for this resource" %}</div>
                         <!-- /ko -->
                         
                         <!-- ko if: Array.isArray(annotation.info) -->

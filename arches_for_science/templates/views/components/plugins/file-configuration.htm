@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="file-configuration" style="display: flex; height: 100%;">
     <div class="uploaded-files" style="width: calc(39.3% - 4px);min-width: 493px; padding: 10px;">
-        <h4><span>{% trans "Uploaded Files" %}</span></h4>
+        <h4><span data-bind="text: $root.translations.uploadedFiles"></span></h4>
         <span class="file-config-instuctions">{% trans "Specify how to process the data files for viewing.  Any additional files (such as images) will be automatically displayed if possible." %}</span>
         <div class="file-button-container">
             <div class="file-buttons" data-bind="click:() => {fileMode('data')}, css: {active: fileMode() == 'data'}" role="button">{% trans "Data Files" %}</div>

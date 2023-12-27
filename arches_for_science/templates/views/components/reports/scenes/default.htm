@@ -4,12 +4,12 @@
 
 {% block body %}
 <div class="afs-report-section" data-bind="foreach: {data: data().sections, as: 'section', noChildContext: true}">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible[section.title])}, css: {'fa-angle-double-right': visible[section.title](), 'fa-angle-double-up': !visible[section.title]()}" class="fa toggle"></i> <span data-bind="text: section.title"></span></h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible[section.title])}, css: {'fa-angle-double-right': visible[section.title](), 'fa-angle-double-up': !visible[section.title]()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> <span data-bind="text: section.title"></span></h2>
     <!-- Collapsible content -->
     <div data-bind="visible: visible[section.title]" class="afs-report-collapsible-container pad-lft">
 
          <!-- ko ifnot: section.data.length -->
-         <div class="afs-nodata-note">No data for this section</div>
+         <div class="afs-nodata-note">{% trans "No data for this section" %}</div>
          <!-- /ko -->
          
          <!-- ko if: section.data.length -->
