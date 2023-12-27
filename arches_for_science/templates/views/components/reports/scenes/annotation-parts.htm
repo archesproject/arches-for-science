@@ -37,15 +37,16 @@
                     <div>
                         <div style="display:inline" data-bind="if: annotation.card && annotation.card">
                             <a style="display:inline" data-bind="click: function() {editTile(part.tileId, annotation.card)}">
-                                <i style="display:inline" class="fa fa-mail-reply"></i>
+                                <i style="display:inline" class="fa fa-mail-reply" aria-label="{% trans 'Edit' %}"></i>
                             </a>
                             <a style="display:inline" data-bind="click: $parent.deleteTile.bind($data, part.tileId, annotation.card)">
-                                <i style="display:inline" class="fa fa-trash"></i>
+                                <i style="display:inline" class="fa fa-trash" aria-label="{% trans 'Delete' %}"></i>
                             </a>
                         </div>
                         <a style="display:inline" data-bind="click: function(){selectedAnnotationTileId(part.tileId)}">
-                            <i class="fa fa-globe"></i>
+                            <i class="fa fa-globe" aria-label="{% trans 'Select' %}"></i>
                         </a>
+                        <!-- TODO: add aria-label -->
                         <i style="display:inline" data-bind="visible: selectedAnnotationTileId() === part.tileId" class="fa fa-arrow-left"></i>
                     </div>
                 </td>
@@ -54,7 +55,7 @@
     </table>
     <div class="final-step-section-block-item" style="margin-bottom: 60px;">
         <div class="block-item files-metadata">
-            <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation.info().length'></div>
+            <div class="afs-summary-value" data-bind='text: "{% trans 'Regions of Interest:' %} " + annotation.info().length'></div>
         </div>
     </div>
     <!-- /ko -->

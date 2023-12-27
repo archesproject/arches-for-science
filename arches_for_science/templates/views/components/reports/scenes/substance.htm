@@ -5,16 +5,16 @@
 {% block body %}
 <!-- ko if: dataConfig.dimension -->
 <div class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.dimensions)}, css: {'fa-angle-double-right': visible.dimensions(), 'fa-angle-double-up': !visible.dimensions()}" class="fa toggle"></i> {% trans "Dimensions" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.dimensions)}, css: {'fa-angle-double-right': visible.dimensions(), 'fa-angle-double-up': !visible.dimensions()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Dimensions" %}</h2>
     <span data-bind="if: cards.dimension">
-        <a class="afs-report-a" data-bind="click: function(){add(cards.dimension)}"><i class="fa fa-mail-reply"></i> {% trans "Add Dimension" %}</a>
+        <a class="afs-report-a" data-bind="click: function(){add(cards.dimension)}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add Dimension" %}</a>
     </span>
 
     <!-- Collapsible content -->
     <div data-bind="visible: visible.dimensions" class="afs-report-collapsible-container pad-lft">
 
         <!-- ko ifnot: dimensions().length -->
-        <div class="afs-nodata-note">No dimensions for this resource</div>
+        <div class="afs-nodata-note">{% trans "No dimensions for this resource" %}</div>
         <!-- /ko -->
         
         <!-- ko if: dimensions().length -->
@@ -41,11 +41,13 @@
                                 <td data-bind="text: lowestValue"></td>
                                 <td class="afs-table-control">
                                     <div data-bind="if: $parent.cards && $parent.cards.dimension">
-                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.dimension)}">
-                                            <i class="fa fa-mail-reply"></i>
+                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.dimension)},
+                                            attr: {'aria-label': $root.translations.edit}">
+                                            <i class="fa fa-mail-reply" aria-hidden="true"></i>
                                         </a>
-                                        <a data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.dimension)">
-                                            <i class="fa fa-trash"></i>
+                                        <a data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.dimension),
+                                            attr: {'aria-label': $root.translations.delete}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -59,16 +61,16 @@
     </div>
 </div><span></span>
 <div data-bind="if: additionalData" class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.additionalData)}, css: {'fa-angle-double-right': visible.additionalData(), 'fa-angle-double-up': !visible.additionalData()}" class="fa toggle"></i> {% trans "Additional Data" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.additionalData)}, css: {'fa-angle-double-right': visible.additionalData(), 'fa-angle-double-up': !visible.additionalData()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Additional Data" %}</h2>
     <span data-bind="if: cards.material">
-        <a class="afs-report-a" data-bind="click: function(){add(cards.material)}"><i class="fa fa-mail-reply"></i> {% trans "Add Material" %}</a>
+        <a class="afs-report-a" data-bind="click: function(){add(cards.material)}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add Material" %}</a>
     </span>
 
     <!-- Collapsible content -->
     <div data-bind="visible: visible.additionalData" class="afs-report-collapsible-container pad-lft">
 
         <!-- ko ifnot: additionalData().length -->
-        <div class="afs-nodata-note">No material for this resource</div>
+        <div class="afs-nodata-note">{% trans "No material for this resource" %}</div>
         <!-- /ko -->
         
         <!-- ko if: additionalData().length -->

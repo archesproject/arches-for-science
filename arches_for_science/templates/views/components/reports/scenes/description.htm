@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="afs-report-section">
-    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.statements)}, css: {'fa-angle-double-right': visible.statements(), 'fa-angle-double-up': !visible.statements()}" class="fa toggle"></i> {% trans "Statements" %}</h2>
+    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.statements)}, css: {'fa-angle-double-right': visible.statements(), 'fa-angle-double-up': !visible.statements()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Statements" %}</h2>
     <span data-bind="if: cards.statement && (!statements().length || cards.statement.cardinality == 'n')">
         <a class="afs-report-a" data-bind="click: function(){add(cards.statement)}"><i class="fa fa-mail-reply"></i> {% trans "Add Statement" %}</a>
     </span>
@@ -13,7 +13,7 @@
     <div data-bind="visible: visible.statements" class="afs-report-collapsible-container pad-lft">
 
         <!-- ko ifnot: statements().length -->
-        <div class="afs-nodata-note">No statements for this resource</div>
+        <div class="afs-nodata-note">{% trans "No statements for this resource" %}</div>
         <!-- /ko -->
         
         <!-- ko if: statements().length -->
@@ -36,11 +36,13 @@
                                 <td data-bind="text: language"></td>
                                 <td class="afs-table-control">
                                     <div data-bind="if: $parent.cards && $parent.cards.statement">
-                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.statement)}">
-                                            <i class="fa fa-mail-reply"></i>
+                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.statement)}
+                                            attr: {'aria-label': $root.translations.edit}">
+                                            <i class="fa fa-mail-reply" aria-hidden="true"></i>
                                         </a>
-                                        <a data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.statement)">
-                                            <i class="fa fa-trash"></i>
+                                        <a data-bind="click: $parent.delete.bind($data, tileid, $parent.cards.statement),
+                                            attr: {'aria-label': $root.translations.delete}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </td>

@@ -8,7 +8,7 @@
 
         <!-- Title Block -->
         <div class="afs-report-toolbar">
-            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Observation" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Observation:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
         </div>
 
     </div>
@@ -76,13 +76,13 @@
             <!-- Related Objects Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'objects'">
                 <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedObjects)}, css: {'fa-angle-double-right': visible.relatedObjects(), 'fa-angle-double-up': !visible.relatedObjects()}" class="fa toggle"></i> {% trans "Related Physical Things" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedObjects)}, css: {'fa-angle-double-right': visible.relatedObjects(), 'fa-angle-double-up': !visible.relatedObjects()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Related Physical Things" %}</h2>
                       
                     <!-- Collapsible content -->
                     <div data-bind="visible: visible.relatedObjects" class="afs-report-collapsible-container pad-lft">
 
                         <!-- ko ifnot: collectionOfRelatedObjects().length -->
-                        <div class="afs-nodata-note">No objects related to this observation</div>
+                        <div class="afs-nodata-note">{% trans "No objects related to this observation" %}</div>
                         <!-- /ko -->
 
                         <!-- ko if: collectionOfRelatedObjects().length -->
@@ -104,7 +104,7 @@
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: link">
                                                         <a data-bind="attr: { href: link }">
-                                                            <i class="fa fa-link"></i>
+                                                            <i class="fa fa-link" aria-label="{% trans 'Link' %}"></i>
                                                         </a>
                                                     </div>
                                                 </td>

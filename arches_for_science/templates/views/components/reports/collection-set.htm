@@ -8,7 +8,7 @@
 
         <!-- Title Block -->
         <div class="afs-report-toolbar">
-            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Collection or Set" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Collection or Set:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
         </div>
 
     </div>
@@ -73,19 +73,19 @@
             <!-- Project Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'projects'">
                 <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedProject)}, css: {'fa-angle-double-right': visible.relatedProject(), 'fa-angle-double-up': !visible.relatedProject()}" class="fa toggle"></i> {% trans "Related Projects" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedProject)}, css: {'fa-angle-double-right': visible.relatedProject(), 'fa-angle-double-up': !visible.relatedProject()}, attr: {'aria-label': {% trans "Expand/Collapse" as toggle %} '{{ toggle }}'}" class="fa toggle"></i> {% trans "Related Projects" %}</h2>
                     <div class="afs-card-control" data-bind="if: cards['related project of collection'] && relatedProject().length > 0">
-                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply"></i> {% trans "Edit Related Project" %}</a>
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Edit Related Project" %}</a>
                     </div>
                     <div class="afs-card-control" data-bind="if: cards['related project of collection'] && relatedProject().length == 0">
-                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply"></i> {% trans "Add Related Project" %}</a>
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add Related Project" %}</a>
                     </div>
 
                     <!-- Collapsible content -->
                     <div data-bind="visible: visible.relatedProject" class="afs-report-collapsible-container pad-lft">
                 
                         <!-- ko ifnot: relatedProject().length -->
-                        <div class="afs-nodata-note">No related project for this resource</div>
+                        <div class="afs-nodata-note">{% trans "No related project for this resource" %}</div>
                         <!-- /ko -->
                         <!-- ko if: relatedProject().length -->
                         <div class="afs-report-subsection" >
@@ -104,7 +104,7 @@
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: link">
                                                         <a data-bind="attr: { href: link }">
-                                                            <i class="fa fa-link"></i>
+                                                            <i class="fa fa-link" aria-label="{% trans 'Link' %}"></i>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -121,7 +121,7 @@
             <!-- Publication Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'publications'">
                 <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.textualReference)}, css: {'fa-angle-double-right': visible.textualReference(), 'fa-angle-double-up': !visible.textualReference()}"  class="fa toggle"></i> {% trans "Textual Reference" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.textualReference)}, css: {'fa-angle-double-right': visible.textualReference(), 'fa-angle-double-up': !visible.textualReference()}, attr: {'aria-label': '{{ toggle }}'}" class="fa toggle"></i> {% trans "Textual Reference" %}</h2>
                     <a data-bind="{if: cards['textual reference to collection'], click: function(){addNewTile(cards['textual reference to collection'])}}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add textual reference" %}</a>
 
                     <!-- Collapsible content -->
@@ -148,12 +148,15 @@
                                                 <td><a class="afs-table-link" data-bind="text: textualSource, attr: {href: textualSourceLink}"></a></td>                                                
                                                 <td data-bind="text: textualReferenceType"></td>
                                                 <td class="afs-table-control">
+                                                    <!-- TODO(jtw) -->
                                                     <div data-bind="if: $parent.cards['textual reference to collection']">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['textual reference to collection'])}">
-                                                            <i class="fa fa-mail-reply"></i>
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['textual reference to collection'])},
+                                                            attr: {'aria-label': $root.translations.edit}">
+                                                            <i class="fa fa-mail-reply" aria-hidden="true"></i>
                                                         </a>
-                                                        <a data-bind="click:  function() {$parent.deleteTile(tileid, $parent.cards['textual reference to collection'])}">
-                                                            <i class="fa fa-trash"></i>
+                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards['textual reference to collection'])},
+                                                            attr: {'aria-label': $root.translations.delete}">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -267,11 +270,11 @@
                 <!-- ko if: statementSummary() -->
                 <div class="afs-report-data-block">
                     <div class="afs-block-attributes">
-                        <div class="afs-block-key">{% trans "Statement: " %}</div>
+                        <div class="afs-block-key">{% trans "Statement:" %} </div>
                         <div class="afs-block-value" data-bind="text: statementSummary().content"></div>
                     </div>
                     <div class="afs-block-attributes pad-btm">
-                        <div class="afs-block-key">{% trans "Type: " %}</div>
+                        <div class="afs-block-key">{% trans "Type:" %} </div>
                         <div class="afs-block-value" data-bind="text: statementSummary().type"></div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@
 
         <!-- Title Block -->
         <div class="afs-report-toolbar">
-            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Group" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Group:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
         </div>
 
     </div>
@@ -89,12 +89,12 @@
             <!-- Group Members Tab --> 
             <div class="afs-report-page" data-bind="if: activeSection() === 'members'">
                 <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.groupMembers)}, css: {'fa-angle-double-right': visible.groupMembers(), 'fa-angle-double-up': !visible.groupMembers()}" class="fa toggle"></i> {% trans "Group Members" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.groupMembers)}, css: {'fa-angle-double-right': visible.groupMembers(), 'fa-angle-double-up': !visible.groupMembers()}, attr: {'aria-label': '{{ toggle }}'}" class="fa toggle"></i> {% trans "Group Members" %}</h2>
                     <!-- Collapsible content -->
                     <div data-bind="visible: visible.groupMembers" class="afs-report-collapsible-container pad-lft">
 
                         <!-- ko ifnot: collectionOfGroupMembers().length -->
-                        <div class="afs-nodata-note">No people or sub-groups associated with this group.</div>
+                        <div class="afs-nodata-note">{% trans "No people or sub-groups associated with this group." %}</div>
                         <!-- /ko -->
                         
                         <!-- ko if: collectionOfGroupMembers().length -->
@@ -118,7 +118,7 @@
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: link">
                                                         <a data-bind="attr: { href: link }">
-                                                            <i class="fa fa-link"></i>
+                                                            <i class="fa fa-link" aria-label="{% trans 'Link' as link %}"></i>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -135,12 +135,12 @@
             <!-- Larger Entities Tab --> 
             <div class="afs-report-page" data-bind="if: activeSection() === 'entities'">
                 <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.largerEntities)}, css: {'fa-angle-double-right': visible.largerEntities(), 'fa-angle-double-up': !visible.largerEntities()}" class="fa toggle"></i> {% trans "Larger Entities" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.largerEntities)}, css: {'fa-angle-double-right': visible.largerEntities(), 'fa-angle-double-up': !visible.largerEntities()}, attr: {'aria-label': {% trans "Expand/Collapse" as toggle %} '{{ toggle }}'}" class="fa toggle"></i> {% trans "Larger Entities" %}</h2>
                     <!-- Collapsible content -->
                     <div data-bind="visible: visible.largerEntities" class="afs-report-collapsible-container pad-lft">
 
                         <!-- ko ifnot: collectionOfLargerEntities().length -->
-                        <div class="afs-nodata-note">No larger entities associated with this group.</div>
+                        <div class="afs-nodata-note">{% trans "No larger entities associated with this group." %}</div>
                         <!-- /ko -->
                         
                         <!-- ko if: collectionOfLargerEntities().length -->
@@ -164,7 +164,7 @@
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: link">
                                                         <a data-bind="attr: { href: link }">
-                                                            <i class="fa fa-link"></i>
+                                                            <i class="fa fa-link" aria-label="{{ link }}"></i>
                                                         </a>
                                                     </div>
                                                 </td>

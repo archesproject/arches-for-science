@@ -8,7 +8,7 @@
 
         <!-- Title Block -->
         <div class="afs-report-toolbar">
-            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Project" %}:</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Project:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
         </div>
 
     </div>
@@ -76,12 +76,12 @@
             <!-- Component Project Tab -->
             <div class="afs-report-page" data-bind="if: activeSection() === 'components'">
                 <div class="afs-report-section">
-                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.childProjects)}, css: {'fa-angle-double-right': visible.childProjects(), 'fa-angle-double-up': !visible.childProjects()}" class="fa toggle"></i> {% trans "Child Projects" %}</h2>
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.childProjects)}, css: {'fa-angle-double-right': visible.childProjects(), 'fa-angle-double-up': !visible.childProjects()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Child Projects" %}</h2>
                     <!-- Collapsible content -->
                     <div data-bind="visible: visible.childProjects" class="afs-report-collapsible-container pad-lft">
 
                         <!-- ko ifnot: collectionOfChildProjects().length -->
-                        <div class="afs-nodata-note">No child projects for this project</div>
+                        <div class="afs-nodata-note">{% trans "No child projects for this project" %}</div>
                         <!-- /ko -->
                         
                         <!-- ko if: collectionOfChildProjects().length -->
@@ -103,7 +103,7 @@
                                                 <td class="afs-table-control">
                                                     <div data-bind="if: link">
                                                         <a data-bind="attr: { href: link }">
-                                                            <i class="fa fa-link"></i>
+                                                            <i class="fa fa-link" aria-label="{% trans 'Link' %}"></i>
                                                         </a>
                                                     </div>
                                                 </td>
