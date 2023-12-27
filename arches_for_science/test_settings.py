@@ -31,6 +31,8 @@ INSTALLED_APPS = (
 )
 ROOT_URLCONF = "arches_for_science.urls"
 
+LOCALE_PATHS = [os.path.join(APP_ROOT, "locale")]
+
 FUNCTION_LOCATIONS = ["arches_for_science.pkg.extensions.functions"]
 
 # Further settings may need to be added from project, just don't
