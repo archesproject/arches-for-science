@@ -8,8 +8,8 @@
             <div style="display:flex;align-items: center;">
                 <input style="margin: 8px" type="radio" name="selectedConfiguration" data-bind="checked: $parent.selectedConfiguration, value: configuration.configid"></input>
                 <span style="flex:1"><span data-bind="text: configuration.name"></span><span data-bind="if: configuration.description"><span class="tip"><i class="fa fa-info-circle"></i><span class="tooltiptext" data-bind="text: configuration.description"></span></span></span></span>
-                <i class="fa fa-pencil" role="button" data-bind="click:()=>{$parent.loadConfiguration(configuration);}" aria-label="{% trans Edit %}"></i>
-                <i class="fa fa-trash" role="button" data-bind="click:()=>{$parent.deleteConfiguration(configuration);}" aria-label="{% trans Delete %}"></i>
+                <i class="fa fa-pencil" role="button" data-bind="click:()=>{$parent.loadConfiguration(configuration);}" aria-label="{% trans 'Edit' %}"></i>
+                <i class="fa fa-trash" role="button" data-bind="click:()=>{$parent.deleteConfiguration(configuration);}" aria-label="{% trans 'Delete' %}"></i>
             </div>
             <!-- /ko -->
         </div>
@@ -21,9 +21,9 @@
         <div style="background-color: #fafafa; overflow-y: scroll; height: calc(100vh - 337px);">
             <div class="importer-config-panel">
                 <h4 class="file-config-header">{% trans "Importer Name" %}</h4>
-                <input type="text" name="configurationName" data-bind="textInput: configurationName" placeholder="Name of Importer">
+                <input type="text" name="configurationName" data-bind="textInput: configurationName" placeholder="{% trans 'Name of Importer' %}">
                 <h4 class="file-config-header">{% trans "Importer Description" %}</h4>
-                <textarea style="height: 50px;" type="text" name="configurationDescription" data-bind="textInput: configurationDescription" placeholder="Describe the Importer">
+                <textarea style="height: 50px;" type="text" name="configurationDescription" data-bind="textInput: configurationDescription" placeholder="{% trans 'Describe the Importer' %}">
             </div>
             <div class="importer-config-panel">
                 <h4 class="file-config-header">{% trans "Header" %}</h4>
@@ -33,8 +33,8 @@
                     <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-fixed" type="radio" name="headerConfig" value="fixed" data-bind="checked: headerConfig"><label for="header-config-fixed">{% trans "File has a fixed header (constant number of lines)" %}</label></div>
                     <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-delimited" type="radio" name="headerConfig" value="delimited" data-bind="checked: headerConfig"><label for="header-config-delimited">{% trans "File header ends after specific text" %}</label></div>
                 </div>
-                <input type="text" name="headerDelimiter" data-bind="visible: headerConfig()=='delimited', textInput: headerDelimiter" placeholder="Ending Text">
-                <input type="text" name="headerFixedLines" data-bind="visible: headerConfig()=='fixed', textInput: headerFixedLines" placeholder="Number of Lines">
+                <input type="text" name="headerDelimiter" data-bind="visible: headerConfig()=='delimited', textInput: headerDelimiter" placeholder="{% trans 'Ending Text' %}">
+                <input type="text" name="headerFixedLines" data-bind="visible: headerConfig()=='fixed', textInput: headerFixedLines" placeholder="{% trans 'Number of Lines' %}">
             </div>
             <div class="importer-config-panel">
                 <h4 class="file-config-header">{% trans "Footer" %}</h4>
@@ -43,7 +43,7 @@
                     <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-none" type="radio" name="footerConfig" value="none" data-bind="checked: footerConfig"><label for="header-config-none">{% trans "End of File" %}</label></div>
                     <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-delimited" type="radio" name="footerConfig" value="delimited" data-bind="checked: footerConfig"><label for="header-config-delimited">{% trans "File footer begins after specific text (consistent ending text)" %}</label></div>
                 </div>
-                <input type="text" name="headerDelimiter" data-bind="visible: footerConfig()=='delimited', textInput: footerDelimiter" placeholder="Ending Text">
+                <input type="text" name="headerDelimiter" data-bind="visible: footerConfig()=='delimited', textInput: footerDelimiter" placeholder="{% trans 'Ending Text' %}">
             </div>
             <div class="importer-config-panel">
                 <h4 class="file-config-header">{% trans "Transformations" %}</h4>

@@ -7,7 +7,7 @@
 <div data-bind="ifnot: inline">
     <h4 style="text-transform: capitalize;" data-bind="text: item.key" class="afs-block-key"></h4>
     <div class="afs-card-control" data-bind="if: item.card">
-        <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
+        <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
     </div>        
  </div>
  <!-- /ko -->
@@ -37,42 +37,42 @@
 <div class="firstchild-container">
     <div class="afs-report-subsection-item flex">
         <div class="afs-block-attributes timespan">
-            <h6 data-bind="product" class="afs-block-key">Beginning of the beginning: </h6>
+            <h6 data-bind="product" class="afs-block-key">{% trans "Beginning of the beginning:" %} </h6>
             <div data-bind="text: item.value.beginningStart" class="afs-block-value"></div>
         </div>
         <div class="afs-block-attributes timespan">
-            <h6 class="afs-block-key">End of the beginning: </h6>
+            <h6 class="afs-block-key">{% trans "End of the beginning:" %} </h6>
             <div data-bind="text: item.value.beginningComplete" class="afs-block-value">--</div>
         </div>
     </div>
     <div class="afs-report-subsection-item flex" style="margin-top: -5px;">
         <div class="afs-block-attributes timespan">
-            <h6 class="afs-block-key">Beginning of the end: </h6>
+            <h6 class="afs-block-key">{% trans "Beginning of the end:" %} </h6>
             <div data-bind="text: item.value.endingStart" class="afs-block-value"></div>
         </div>
         <div class="afs-block-attributes timespan">
-            <h6 class="afs-block-key">End of the end: </h6>
+            <h6 class="afs-block-key">{% trans "End of the end:" %} </h6>
             <div data-bind="text:item.value.endingComplete" class="afs-block-value"></div>
         </div>
     </div>
     <div class="afs-report-subsection-item flex column-order pad-top pad-btm">
         <div class="afs-block-attributes">
-            <h6 class="afs-block-key">Name of event timespan: </h6>
+            <h6 class="afs-block-key">{% trans "Name of event timespan:" %} </h6>
             <div data-bind="text: item.value.name" class="afs-block-value"></div>
         </div>
         <div class="afs-block-attributes">
-            <h6 class="afs-block-key">Duration: </h6>
+            <h6 class="afs-block-key">{% trans "Duration:" %} </h6>
             <div data-bind="text: item.value.duration" class="afs-block-value"></div>
         </div>
         <div class="afs-block-attributes">
-            <h6 class="afs-block-key">Name of event duration: </h6>
+            <h6 class="afs-block-key">{% trans "Name of event duration:" %} </h6>
             <div data-bind="text: item.value.durationEventName" class="afs-block-value"></div>
         </div>
     </div>
 </div>
 <!-- /ko -->
 <!-- ko ifnot: item.value -->
-<div class="afs-nodata-note pad-btm">No timespan available for this resource</div>
+<div class="afs-nodata-note pad-btm">{% trans "No timespan available for this resource" %}</div>
 <!-- /ko -->
 <!-- /ko -->
 
@@ -129,7 +129,7 @@
 
 <!-- ko if: inline -->
 <div class="afs-card-control" data-bind="if: item.card">
-    <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
+    <a class="afs-report-a" data-bind="click: function(){add(item.card)}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Edit" %} <span style="text-transform: capitalize;" data-bind="text:item.key"></span></a>
 </div>
 <!-- /ko --> 
  {% endblock body %}
