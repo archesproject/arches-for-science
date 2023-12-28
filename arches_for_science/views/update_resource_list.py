@@ -54,6 +54,7 @@ class UpdateResourceListView(View):
 
         tile = Tile.get_blank_tile(nodeid=name_node_id, resourceid=collection_resourceinstance_id)
         stringDataType = StringDataType()
+        # TODO(jtw)
         tile.data[name_node_id] = stringDataType.transform_value_for_tile("Collection for {0}".format(project_name))
         tile.save(request=request, transaction_id=transaction_id, index=False)
 

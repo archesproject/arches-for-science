@@ -5,6 +5,7 @@ from arches.app.models import models
 from arches.app.utils.response import JSONResponse
 from django.http import HttpResponseNotFound
 from django.db.models import Q
+from django.utils.translation import gettext as _
 from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializer
 
 logger = logging.getLogger(__name__)
@@ -21,7 +22,7 @@ class RendererView(View):
                 renderer["configs"] = renderer_config.values()
                 return JSONResponse(renderer)
             else:
-                return HttpResponseNotFound('<h1>Renderers do not exist</h1>')
+                return HttpResponseNotFound(_('<h1>Renderers do not exist</h1>'))
             
 class RendererConfigView(View):
     def get(self, request, renderer_config_id=None):
@@ -34,7 +35,7 @@ class RendererConfigView(View):
             if renderer_config:
                 return JSONResponse(renderer_config.values())
             else:
-                return HttpResponseNotFound('<h1>Renderers config does not exist</h1>')
+                return HttpResponseNotFound(_('<h1>Renderers config does not exist</h1>'))
     
     def post(self, request, renderer_config_id=None):
         body = JSONDeserializer().deserialize(request.body)

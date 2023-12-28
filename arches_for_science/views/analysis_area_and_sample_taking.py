@@ -183,7 +183,7 @@ class SaveAnalysisAreaView(SaveAnnotationView):
         part_identifier_assignment_tile_id = request.POST.get("partIdentifierAssignmentTileId") or None
         name = request.POST.get("analysisAreaName")
         if not name:
-            raise ValidationError("Name is required.")
+            raise ValidationError(_("Name is required."))
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         analysis_area_physical_thing_resourceid = None
         if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
@@ -365,6 +365,7 @@ class SaveSampleAreaView(SaveAnnotationView):
                     sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
         base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid][get_language()]["value"]
+        # TODO(jtw)
         sample_name = "{} [Sample of {}]".format(base_name, parent_physical_thing_name)
         sample_area_name = "{} [Sample Area of {}]".format(base_name, parent_physical_thing_name)
 
