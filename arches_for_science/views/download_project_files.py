@@ -55,7 +55,7 @@ class FileDownloader(View):
         if len(files) + len(temp_files) == 0:
             message = _(
                 "The report(s) are submitted for download. When completed, the bell icon at the top of the page will update with links to download your files."
-            ).format(len(files))
+            )
             return JSONResponse({"success": True, "message": message})
 
         if task_management.check_if_celery_available():
