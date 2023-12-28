@@ -235,11 +235,7 @@ define([
 
         params.form.save = function() {
             params.form.complete(false);
-            if (!self.instrumentValue()){
-                params.form.error(new Error("Selecting an instrument is required."));
-                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Instrument Required", "Selecting an instrument is required."));
-                return;
-            }
+
             if (self.procedureValue()){
                 self.saveTextualWorkType();
             }
@@ -315,7 +311,13 @@ define([
                 params.pageVm.alert("");
             }).catch(function(error){
                 // alert the workflow that something happend
-                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Error", "There was an issue saving the workflow step."));
+                params.pageVm.alert(
+                    new params.form.AlertViewModel(
+                        'ep-alert-red',
+                        arches.translations.error,
+                        arches.translations.issueSavingWorkflowStep,
+                    )
+                );
                 params.form.complete(false);
                 params.form.dirty(true);
                 params.form.loading(false);
