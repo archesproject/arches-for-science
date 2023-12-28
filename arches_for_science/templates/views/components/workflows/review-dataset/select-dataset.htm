@@ -3,12 +3,12 @@
 
 <div>
     <div class="upload-dataset-related-widget">
-        <h4>Related Datasets</h4>
-        <p style="padding-left: 26px; margin-top: -5px;">We found the following datasets for the object you selected</p>
+        <h4>{% trans "Related Datasets" %}</h4>
+        <p style="padding-left: 26px; margin-top: -5px;">{% trans "We found the following datasets for the object you selected" %}</p>
     </div>
 
     <div style="padding: 5px; margin-bottom: 15px; width: 700px">
-        <div class="widget-input-label" style="margin-bottom: 5px;">Physical Thing*</div>
+        <div class="widget-input-label" style="margin-bottom: 5px;">{% trans "Physical Thing" %}*</div>
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {

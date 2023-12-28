@@ -42,7 +42,8 @@
                 <div class="file-workbench-file">
                     <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
                         <div style="flex: 1">
-                            <i data-bind="click: function(){$parent.deleteFile(file)}" class="fa fa-trash" style="color: black"></i>
+                            <i data-bind="click: function(){$parent.deleteFile(file)}, attr: {'aria-label': $root.translations.delete}"
+                                class="fa fa-trash" style="color: black"></i>
                             <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
                         </div>
                     </div>

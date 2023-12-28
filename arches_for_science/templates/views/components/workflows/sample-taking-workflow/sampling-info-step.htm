@@ -62,7 +62,9 @@
         }"></div>
     </div>
     <div class="afs-experiment-name-block">
-        <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())}, text: showName() ? 'Hide sampling activity name' : 'Show sampling activity name'"></div>
+        <div class="afs-experiment-name" data-bind="click: function(){showName(!showName())},
+            text: showName() ? '{% trans 'Hide sampling activity name' %}' : '{% trans 'Show sampling activity name' %}'">
+        </div>
         <div data-bind="visible: showName">
             <div class="widget-input-label">{% trans "Sampling Activity Name" %}</div>
             <div style="margin: -10px -5px;" data-bind="component: {

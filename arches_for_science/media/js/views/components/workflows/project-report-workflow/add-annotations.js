@@ -161,7 +161,7 @@ define([
         };
         const popupHtml = `
         <div class="mapboxgl-popup-content">
-            <button class="mapboxgl-popup-close-button" type="button" aria-label="Close popup" data-bind="click: closePopup">×</button>
+            <button class="mapboxgl-popup-close-button" type="button" aria-label="${arches.translations.closePopup}" data-bind="click: closePopup">×</button>
             <div class="hover-feature-title-bar">
                 <div class="hover-feature-title">
                     <span class="" data-bind="text: name"></span>

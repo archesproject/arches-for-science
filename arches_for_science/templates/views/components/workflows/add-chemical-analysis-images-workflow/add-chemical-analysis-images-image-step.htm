@@ -25,6 +25,7 @@
                 "
             ></label>
             <span class="iiif-gallery-canvas-thumbnail">
+                <!-- TODO: alt -->
                 <img data-bind="attr: { src: $data.thumbnail }">
             </span>
         </div>
@@ -32,7 +33,7 @@
 </div>
 
 <button class="btn btn-success" style="margin-left: 28px;" data-bind="click: openManifestManager, disable: $parent.locked">
-    <i class="ion-android-cloud-done"></i>
+    <i class="ion-android-cloud-done" aria-hidden="true"></i>
     <span>
         {% trans "Create new Image Service" %}
     </span>
