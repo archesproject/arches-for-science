@@ -146,7 +146,7 @@ define([
                         params.form.dirty(false);
                         params.pageVm.alert("");
                     } else {
-                        params.form.error('Error saving project type');
+                        params.form.error('Error saving project scale');
                     }
                 });
         };
