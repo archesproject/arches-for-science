@@ -1,7 +1,7 @@
 {% load i18n %}
 <div style="height: 100%; padding: 10px 24px;">
     <div style="padding: 5px">
-        <div class="widget-input-label">Project</div>
+        <div class="widget-input-label">{% trans "Project" %}</div>
         <div data-bind="component: {
             name: 'resource-instance-select-widget',
             params: {
@@ -19,20 +19,20 @@
         <div class="widget-input-label">
             <!-- ko if: datasetRoute === undefined -->
             <div>
-                Select an Object
+                {% trans "Select an Object" %}
             </div>
             <!-- /ko -->
             <!-- ko if: datasetRoute === 'non-destructive' -->
             <div>
-                Select an Object from your Project
+                {% trans "Select an Object from your Project" %}
             </div>
             <div style="font-style: italic; margin-bottom: 10px;">
-                Object must have at least one analysis area or sample location
+                {% trans "Object must have at least one analysis area or sample location" %}
             </div>
             <!-- /ko -->
             <!-- ko if:  datasetRoute === 'destructive' -->
             <div>
-                Select a Sample of interest
+                {% trans "Select a Sample of interest" %}
             </div>
             <!-- /ko -->
         </div>
@@ -52,16 +52,16 @@
     <!--/ko-->
     <!-- ko if: hasSetWithPhysicalThing() === false -->
     <div class="object-selector-label tabbed-workflow-step-information-box widget-input-label">
-        This project has no associated Objects. Your project must have an associated Object Collection with an Object before proceeding.
+        {% trans "This project has no associated Objects. Your project must have an associated Object Collection with an Object before proceeding." %}
     </div>
     <!-- /ko -->
     <!-- ko if: validateThing && isPhysicalThingValid() === false -->
     <div class="object-selector-label tabbed-workflow-step-information-box widget-input-label">
         <span data-bind="if: datasetRoute == 'non-destructive'">
-            The selected object must have at least one related sample location or analysis area.
+            {% trans "The selected object must have at least one related sample location or analysis area." %}
         </span>
         <span data-bind="if: datasetRoute == 'destructive'">
-            The selected object must be a sample.
+            {% trans "The selected object must be a sample." %}
         </span>
     </div>
     <!-- /ko -->

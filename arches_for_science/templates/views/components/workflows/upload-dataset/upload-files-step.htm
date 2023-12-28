@@ -32,7 +32,7 @@
 
 <!-- ko if: uploadFailed -->
 <div style="width: calc(50% - 46px); margin: 15px 45px; padding: 10px; border: 1px solid #eee;" class="afs-error-message ep-alert-red">
-    <i class="fa fa-warning" style="margin: 0 6px;"></i>
+    <i class="fa fa-warning" style="margin: 0 6px;" data-bind="attr: {'aria-label': $root.translations.warning}"></i>
     {% trans 'Failed to upload files.  Try again or contact an administrator.'%}
 </div>
 <!-- /ko -->
@@ -44,18 +44,17 @@
             <div class="file-select-window">
                 <div style="background: #C1F25F; border: dashed 1px #619100; border-radius: 2px;" class="bord-top pad-ver file-select">
                     <div class="" style="padding: 5px">
-                        <h2><i class="fa fa-cloud-upload"></i><span style="margin-left: 5px;">{% trans "Upload files" %}</h2>
-                        <h4 style="font-weight: 400;">{% trans 'Drag & Drop your files onto this panel to upload' %}</h4>
+                        <h2><i class="fa fa-cloud-upload" aria-hidden="true"></i><span style="margin-left: 5px;" data-bind="text: $root.translations.uploadFiles"></h2>
+                        <h4 style="font-weight: 400;" data-bind="text: $root.translations.filesOnPanel"></h4>
                     </div>
                     <button style="margin: 0px 0px 15px 0px;" type="button" class="btn btn-lg btn-file-select upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
                         <i class="fa fa-file"></i>
                         <span>{% trans "Select Files" %}</span>
                     </button>
                     <br>
-                    <div style="padding: 10px 10px 25px 10px;">{% trans "You may upload files of various formats " %}
-                        <span><strong>{% trans "but only ASCII files with X/Y data columns can be displayed on an interactive graph." %}</strong></span>
+                    <div style="padding: 10px 10px 25px 10px;">{% trans "You may upload files of various formats <span><strong>but only ASCII files with X/Y data columns can be displayed on an interactive graph.</strong></span>" %}
                         <br>
-                        {% trans "You may upload as many files as you wish; check with the site admin on the maximum file size." %}
+                        <span data-bind="text: $root.translations.fileUploadNumberSizeDesc"></span>
                     </div>
 
                 </div>
@@ -76,8 +75,7 @@
             </div>
             <div class="file-workbench-links">
                 <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
-                    <span>{% trans "Drag or " %}</span><span class="text-bold">{% trans "click here " %}</span>
-                    <span>{% trans "to upload more files" %}</span>
+                    <span>{% trans "Drag or <strong>click here</strong> to upload more files" %}</span>
                 </a>
             </div>
             <div style="min-height: 100%;">
@@ -90,7 +88,8 @@
                 <div class="file-workbench-file">
                     <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
                         <div style="flex: 1">
-                            <i data-bind="click: function(){$parent.deleteFile(file)}" class="fa fa-trash" style="color: black"></i>
+                            <i data-bind="click: function(){$parent.deleteFile(file)}, attr: {'aria-label': $root.translations.delete}"
+                                class="fa fa-trash" style="color: black"></i>
                             <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
                         </div>
                     </div>
@@ -98,8 +97,8 @@
             <!-- /ko -->
         </div>
         <div class="table-tools-container">
-            <div class="import-tool">x files</div>
-            <div class="import-tool">Remove All</div>
+            <div class="import-tool">{% trans "x files" %}</div>
+            <div class="import-tool">{% trans "Remove All" %}</div>
         </div>
     </div>
     <!-- /ko -->

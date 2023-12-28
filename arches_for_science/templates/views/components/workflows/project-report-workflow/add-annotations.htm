@@ -3,7 +3,7 @@
 
 <!--ko let: {self: $data} -->
 <div>
-    <div style="padding: 0;" class="widget-input-label">Select Physical Thing</div>
+    <div style="padding: 0;" class="widget-input-label">{% trans "Select Physical Thing" %}</div>
     <div style="display: flex; flex-direction: row; align-items:center; margin-top: 5px;">
         <div>
         <div style="display: inline-block;padding: 0 10;width: 600px;">
@@ -21,7 +21,7 @@
                                     closeOnSelect: true,
                                     allowClear: true,
                                     multiple: false,
-                                    placeholder: {% trans "'Available Physical Things'" %}
+                                    placeholder: '{% trans "Available Physical Things" %}'
                             }}">
                     </select>
                 </div>
@@ -110,12 +110,14 @@
             <div data-bind="foreach: {data: screenshots, as: 'screenshot'}">
                 <div class="screenshot-item">
                     <div>
+                        <!-- TODO: alt -->
                         <img style="width: 100%; border: 1px solid #454545;" data-bind="attr: {src: (screenshot.url || '/temp_file/' + screenshot.fileId)}">
                         <div class="summary-value" style="float: inline-end; margin-top: 5px; margin-bottom: -8px;" data-bind="text: screenshot.imageName"></div>
                     </div>
                         <div style="display: flex; flex-direction: row; float: inline-end;">
                             <div style="flex: 1">
-                                <a class="screenshot-delete" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}"><i style="padding: 10px 0px 10px 5px; font-size:15px;" class="fa fa-trash"></i> {% trans "Delete" %}</a>
+                                <a class="screenshot-delete" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}">
+                                    <i style="padding: 10px 5px 10px 5px; font-size:15px;" class="fa fa-trash" aria-hidden="true"></i>{% trans "Delete" %}</a>
                             </div>
                         </div>
                     </div>

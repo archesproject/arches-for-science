@@ -1,7 +1,7 @@
 {% load i18n %}
 <div>
     <div style="padding: 35px 60px 0px;">
-        <div class="widget-input-label">Project Name*</div>
+        <div class="widget-input-label">{% trans "Project Name" %}*</div>
         <div style="margin-top: -20px;" data-bind="component: {
             name: 'text-widget',
             params: {
@@ -12,7 +12,7 @@
         </div>
     </div>
     <div style="padding: 25px 60px 0px;">
-        <div class="widget-input-label">Scale of Project*</div>
+        <div class="widget-input-label">{% trans "Scale of Project" %}*</div>
         <div style="margin-top: -20px;" data-bind="component: {
             name: 'concept-radio-widget',
             params: {
