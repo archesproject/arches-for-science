@@ -444,14 +444,14 @@ class SaveSampleAreaView(SaveAnnotationView):
             response = {"result": e, "message": [_("Request Failed"), _("Unable to save")]}
             return JSONResponse(response, status=500)
 
-        sample_area_physical_thing_resource = Resource.objects.get(pk=sample_area_physical_thing_resourceid)
-        sample_area_physical_thing_resource.index()
-        sample_physical_thing_resource = Resource.objects.get(pk=sample_physical_thing_resourceid)
-        sample_physical_thing_resource.index()
-        sampling_activity_resource = Resource.objects.get(pk=sampling_activity_resourceid)
-        sampling_activity_resource.index()
-        parent_physical_thing_resource = Resource.objects.get(pk=parent_physical_thing_resourceid)
-        parent_physical_thing_resource.index()
+        resources_to_index = [
+            sample_area_physical_thing_resourceid,
+            sample_physical_thing_resourceid,
+            sampling_activity_resourceid,
+            parent_physical_thing_resourceid
+        ]
+        for resource in Resource.objects.filter(pk__in=resources_to_index):
+            resource.index()
 
         res = {
             "sample": {
