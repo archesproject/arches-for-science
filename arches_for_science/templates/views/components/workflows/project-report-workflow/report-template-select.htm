@@ -31,7 +31,7 @@
 
     <!-- ko if: templateFormatGroup.templates.length === 0 -->
     <div class="template-option-container">
-        <span class="h5" style="font-weight: normal;" data-bind="text: 'There are no ' + templateFormatGroup.heading + '.'"></span>
+        <span class="h5" style="font-weight: normal;" data-bind="text: '{% trans 'There are no' %}' + ' ' + templateFormatGroup.heading + '.'"></span>
     </div>
     <!-- /ko -->
     <!-- ko if: templateFormatGroup.templates.length >= 1 -->
@@ -45,23 +45,23 @@
                     }, 
                     attr: {
                         'aria-expanded': $parent.previewSelected().toString(),
-                        title: 'Preview ' + name + ' report'
+                        title: '{% trans 'Preview' context 'verb' %}' + ' ' + name + ' ' + '{% trans 'report' context 'noun' %}'
                     }"
                 >
                     <!-- ko if: thumbnail -->
-                    <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}" style="border: 1px solid #ddd">
+                    <img class="img-responsive" alt="" data-bind="attr: {src: thumbnail}" style="border: 1px solid #ddd">
                     <!-- /ko -->
                     <!-- ko ifnot: thumbnail -->
-                    <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>
+                    <div><i data-bind="attr: {class: templateFormatGroup.icon}" aria-hidden="true" style="font-size: 20em;"></i></div>
                     <!-- /ko -->
                 </div>
             <!-- /ko -->
             <!-- ko ifnot: preview -->
                 <!-- ko if: thumbnail -->
-                <img class="img-responsive" alt="Image" data-bind="attr: {src: thumbnail}" style="border: 1px solid #ddd">
+                <img class="img-responsive" alt="" data-bind="attr: {src: thumbnail}" style="border: 1px solid #ddd">
                 <!-- /ko -->
                 <!-- ko ifnot: thumbnail -->
-                <div><i data-bind="attr: {class: templateFormatGroup.icon}" style="font-size: 20em;"></i></div>
+                <div><i data-bind="attr: {class: templateFormatGroup.icon}" aria-hidden="true" style="font-size: 20em;"></i></div>
                 <!-- /ko -->
             <!-- /ko -->
 

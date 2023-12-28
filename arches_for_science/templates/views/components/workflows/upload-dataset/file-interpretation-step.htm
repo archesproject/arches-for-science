@@ -8,7 +8,7 @@
 }, css: {'disabled': digitalResources().length === 0, 
     'active': activeTab() === 'edit'
 }">
-    <i class="fa fa-pencil"></i>
+    <i class="fa fa-pencil" data-bind="attr: {'aria-label': $root.translations.edit}"></i>
     <span class="map-sidebar-text">{% trans "Dataset" %}</span>
 </div>
 
@@ -76,7 +76,7 @@
 
 <!--ko if: activeTab() === 'edit' -->
 <div class="workbench-card-sidepanel-header-container">
-    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Dataset Details'"></h4>
+    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: '{% trans 'Dataset Details' %}'"></h4>
 </div>
 <div class="workbench-card-sidepanel-border"></div>
 <div class="workbench-card-sidepanel-body">
@@ -104,9 +104,9 @@
     </div>
     <div data-bind="visible: showFileList">
         <button class="btn" style="background: #9490EE;color: #eee;" data-bind=" click: function(){showDatasetList(true); showFileList(false)}">
-            <i class="fa fa-list" style="color: #eee"></i> {% trans "Show Dataset List" %}</button>
+            <i class="fa fa-list" style="color: #eee" aria-hidden="true"></i> {% trans "Show Dataset List" %}</button>
         <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
-            <span>{% trans "Dataset" %}:</span>
+            <span>{% trans "Dataset:" %}</span>
             <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource().displayname"></span>
         </div>
         <div class="file-workbench-filter" style="max-height: 300px;height: auto;overflow-y:auto;">
@@ -114,8 +114,10 @@
             <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
                 data-bind="textInput: fileFilter"></input>
             <span class="clear-node-search"
-                data-bind="visible: fileFilter().length > 0, click: function() { fileFilter(''); }"><i
-                    class="fa fa-times-circle"></i></span>
+                data-bind="visible: fileFilter().length > 0, click: function() { fileFilter(''); },
+                    attr: {'aria-label': $root.translations.clearFilter}">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </span>
         </div>
         <div class='file-workbench-files' style="max-height: 300px;height: auto; overflow-y:auto;">
             <!-- ko foreach: { data: filteredFiles, as:'file'} -->
@@ -138,7 +140,7 @@
             style="background: #9490EE;color: #eee;" 
             data-bind=" click: function(){showDatasetList(true); showFileList(false); showFileInfo(false);}"
         >
-            <i class="fa fa-list" style="color: #eee"></i> {% trans "Show Dataset List" %}
+            <i class="fa fa-list" style="color: #eee" aria-hidden="true"></i> {% trans "Show Dataset List" %}
         </button>
         
         <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
@@ -164,7 +166,7 @@
                             closeOnSelect: false,
                             allowClear: true,
                             multiple: false,
-                            placeholder: {% trans "'Select File'" %}
+                            placeholder: '{% trans 'Select File' %}'
                     }}">
             </select>
         </div>
@@ -193,8 +195,8 @@
     </div>
 </div>
 <div class="workbench-button-panel">
-    <button class="btn btn-success" data-bind="click: save, css: {disabled: !dirty()}"><i class="ion-android-cloud-done"></i> {% trans 'Save'%}</button>
-    <button class="btn btn-danger" data-bind="click: reset, css: {disabled: !dirty()}"><i class="ion-android-cancel"></i> {% trans 'Cancel' %}</button>
+    <button class="btn btn-success" data-bind="click: save, css: {disabled: !dirty()}"><i class="ion-android-cloud-done" aria-hidden="true"></i> {% trans 'Save'%}</button>
+    <button class="btn btn-danger" data-bind="click: reset, css: {disabled: !dirty()}"><i class="ion-android-cancel" aria-hidden="true"></i> {% trans 'Cancel' %}</button>
 </div>
 
 <!-- /ko -->

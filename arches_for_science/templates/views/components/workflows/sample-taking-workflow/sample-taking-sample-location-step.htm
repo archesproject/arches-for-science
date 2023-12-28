@@ -40,7 +40,7 @@
     <!-- ko if: $data.activeTab() === 'dataset' -->
 
     <div class="workbench-card-sidepanel-header-container">
-        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: 'Sample Details'"></h4>
+        <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: '{% trans 'Sample Details' %}'"></h4>
     </div>
     <div class="workbench-card-sidepanel-border"></div>
     <div class="workbench-card-sidepanel-body" style="overflow-y: hidden">
@@ -59,7 +59,7 @@
                         " data-bind="
                             click: $data.loadNewSampleLocationTile
                         ">
-                        <i class="fa fa-folder"></i>
+                        <i class="fa fa-folder" aria-hidden="true"></i>
                         <span>
                             {% trans 'Add New Sample' %}
                         </span>
@@ -71,7 +71,7 @@
                             background: #9490EE;
                             color: #eee;
                         " data-bind="click: showSampleList">
-                        <i class="fa fa-folder"></i>
+                        <i class="fa fa-folder" aria-hidden="true"></i>
                         <span>{% trans 'Return to Samples List' %}</span>
                     </button>
                     <!-- /ko -->
@@ -82,13 +82,13 @@
                     <h5>{% trans 'Sample locations' %}</h5>
                 
                     <div style="margin-left: 5px; margin-right: 15px;">
-                        <input type="text" placeholder="{% trans 'filter...' %}" style="
+                        <input type="text" style="
                             width: 100%;
                             padding: 0px 5px;
                             height: 36px;
                             border: 1px solid #ddd;
                             margin-bottom: 3px;
-                        " data-bind="textInput: $data.sampleLocationFilterTerm">
+                        " data-bind="textInput: $data.sampleLocationFilterTerm, attr: {'placeholder': $root.translations.filter + '...'}">
                 
                         <div style="height: 320px;border: 1px solid #ddd;overflow-y: scroll;"> 
                             <table style="
@@ -116,31 +116,34 @@
                                         <!-- ko if: $parent.samplingActivityResourceId != $data.samplingActivityResourceId() -->
                                         <td style="cursor: pointer;" class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);"
-                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
-                                                <i class="fa fa-eye iiif-card-feature-edit"></i>
+                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false,
+                                                attr: {'aria-label': $root.translations.edit}">
+                                                <i class="fa fa-eye iiif-card-feature-edit" aria-hidden="true"></i>
                                             </a>
                                         </td>
                                         <td class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);" style="cursor: unset;">
-                                                <i class="fa fa-lock"></i>
+                                                <i class="fa fa-lock" data-bind="attr: {'aria-label': $root.translations.disabled}"></i>
                                             </a>
                                         </td>
                                         <!-- /ko -->
                                         <!-- ko if: $parent.samplingActivityResourceId == $data.samplingActivityResourceId() -->
                                         <td style="cursor: pointer;" class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);"
-                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false">
-                                                <i class="fa fa-pencil iiif-card-feature-edit"></i>
+                                                data-bind="click: function() { $parent.viewSampleLocationInstance($data); }, clickBubble: false,
+                                                attr: {'aria-label': $root.translations.edit}">
+                                                <i class="fa fa-pencil iiif-card-feature-edit" aria-hidden="true"></i>
                                             </a>
                                         </td>
                                         <td style="cursor: pointer;" class="iiif-card-feature-tool">
                                             <a href="javascript:void(0);"
-                                                data-bind="click: function() { $parent.showSampleLocationDeleteModal($data); }, clickBubble: false">
-                                                <i class="fa fa-trash iiif-card-feature-edit"></i>
+                                                data-bind="click: function() { $parent.showSampleLocationDeleteModal($data); }, clickBubble: false,
+                                                attr: {'aria-label': $root.translations.delete}">
+                                                <i class="fa fa-trash iiif-card-feature-edit" aria-hidden="true"></i>
                                             </a>
                                         </td>
                                         <!-- /ko -->
-
+                                        <!-- TODO(jtw) -->
                                         <td class="afs-workflow-table-contents" data-bind="text: (function(){
                                             var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
                                             return ko.unwrap($data.data[partIdentifierAssignmentLabelNodeId][$parent.activeLanguage()]['value']) + ' [Sample of ' + $parent.physicalThingName + ']';
@@ -172,7 +175,7 @@
                                     self.showStylingTools(!self.showStylingTools());
                                 }">
                                     <span data-bind="text: self.showStylingTools() ? '{% trans "Hide Style Tools" %}' : '{% trans "Show Style Tools" %}'"></span>
-                                    <i style="padding: 0px 3px; margin-top: 4px;" class="fa" data-bind="{
+                                    <i style="padding: 0px 3px; margin-top: 4px;" class="fa" aria-hidden="true" data-bind="{
                                         css: {
                                             'fa-caret-down' : !self.showStylingTools(),
                                             'fa-caret-up' : self.showStylingTools(),
@@ -182,19 +185,19 @@
                                 <div class="form-horizontal" data-bind="if: self.showStylingTools">
                                     <div class="style-tools-panel">
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">{% trans "Line Color" %}</label>
+                                            <label class="col-sm-4 control-label">{% trans "Line Color" as lineColor %}{{ lineColor }}</label>
                                             <div class="col-sm-8">
                                                 <div class="colorpicker-component input-group">
-                                                    <input placeholder="{% trans "Line Color " %}" class="form-control input-md widget-input" data-bind="colorPicker: {color: self.lineColor, format:'hex'}">
+                                                    <input placeholder="{{ lineColor }}" class="form-control input-md widget-input" data-bind="colorPicker: {color: self.lineColor, format:'hex'}">
                                                     <span class="input-group-addon style-tools-color-visualizer" data-bind="style: {background: self.lineColor}"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">{% trans "Fill color" %}</label>
+                                            <label class="col-sm-4 control-label">{% trans "Fill Color" as fillColor %}{{ fillColor }}</label>
                                             <div class="col-sm-8">
                                                 <div class="colorpicker-component input-group">
-                                                    <input placeholder="{% trans "Fill Color " %}" class="form-control input-md widget-input" data-bind="colorPicker: {color: self.fillColor, format:'hex'}">
+                                                    <input placeholder="{{ fillColor }}" class="form-control input-md widget-input" data-bind="colorPicker: {color: self.fillColor, format:'hex'}">
                                                     <span class="input-group-addon style-tools-color-visualizer" data-bind="style: {background: self.fillColor}"></span>
                                                 </div>
                                             </div>
@@ -237,7 +240,7 @@
                                             click: self.clearEditedGeometries,
                                         "
                                     >
-                                        <select data-placeholder="{% trans "Add a new feature..." %}" data-bind="
+                                        <select data-placeholder="'{% trans 'Add a new feature' %}'..." data-bind="
                                             value: self.featureLookup[widget.node_id()].selectedTool,
                                             valueAllowUnset: true,
                                             options: [
@@ -247,15 +250,15 @@
                                                 },
                                                 {
                                                     value: 'draw_point',
-                                                    text: 'Add point'
+                                                    text: {% trans 'Add point' as addPoint %} '{{ addPoint }}'
                                                 },
                                                 {
                                                     value: 'draw_line_string',
-                                                    text: 'Add line'
+                                                    text: {% trans 'Add line' as addLine %} '{{ addLine }}'
                                                 },
                                                 {
                                                     value: 'draw_polygon',
-                                                    text: 'Add polygon'
+                                                    text: {% trans 'Add polygon' as addPolygon %} '{{ addPolygon }}'
                                                 }
                                             ],
                                             optionsText: 'text',
@@ -268,7 +271,7 @@
                                         "></select>
                                     </div>
                                     <div class="add-new-feature" data-bind="visible: !self.sampleLocationDisabled() && self.disableDrawing">
-                                        <select data-placeholder="{% trans "Add a new feature..." %}" data-bind="
+                                        <select data-placeholder="{% trans 'Add a new feature' %}..." data-bind="
                                             value: self.featureLookup[widget.node_id()].selectedTool,
                                             valueAllowUnset: true,
                                             options: [
@@ -278,15 +281,15 @@
                                                 },
                                                 {
                                                     value: 'draw_point',
-                                                    text: 'Add point'
+                                                    text: '{{ addPoint }}'
                                                 },
                                                 {
                                                     value: 'draw_line_string',
-                                                    text: 'Add line'
+                                                    text: '{{ addLine }}'
                                                 },
                                                 {
                                                     value: 'draw_polygon',
-                                                    text: 'Add polygon'
+                                                    text: '{{ addPolygon }}'
                                                 }
                                             ],
                                             optionsText: 'text',
@@ -309,13 +312,13 @@
                                             </td>
                                             <td class="map-card-feature-tool" data-bind="visible: !self.sampleLocationDisabled()">
                                                 <a href="javascript:void(0);" data-bind="click: function() { self.editFeature(feature); }, clickBubble: false">
-                                                    <i class="fa fa-pencil map-card-feature-edit"></i>
+                                                    <i class="fa fa-pencil map-card-feature-edit" aria-hidden="true"></i>
                                                     {% trans "Edit" %}
                                                 </a>
                                             </td>
                                             <td class="map-card-feature-tool" data-bind="visible: !self.sampleLocationDisabled()">
                                                 <a href="javascript:void(0);" data-bind="click: function() { self.deleteFeature(feature); }, clickBubble: false">
-                                                    <i class="fa fa-trash map-card-feature-delete"></i>
+                                                    <i class="fa fa-trash map-card-feature-delete" aria-hidden="true"></i>
                                                     {% trans "Delete" %}
                                                 </a>
                                             </td>
@@ -422,14 +425,14 @@
             class="btn btn-success" 
             data-bind="click: $data.saveSampleLocationTile, css: {disabled: !$data.tileDirty()}, attr: {disabled: !$data.tileDirty()}"
         >
-            <i class="ion-android-cloud-done"></i>
+            <i class="ion-android-cloud-done" aria-hidden="true"></i>
             <span style="padding-left: 4px">{% trans 'Save' %}</span>
         </button>
         <button 
             class="btn btn-danger" 
             data-bind="click: $data.resetSampleLocationTile, css: {disabled: !$data.tileDirty()}, attr: {disabled: !$data.tileDirty()}"
         >
-            <i class="ion-android-cancel"></i>
+            <i class="ion-android-cancel" aria-hidden="true"></i>
             <span style="padding-left: 4px">{% trans 'Cancel' %}</span>
         </button>
     </div>

@@ -53,12 +53,12 @@ define([
 
             this.allTemplateFormats([
                 {
-                    heading: 'Word Templates',
+                    heading: arches.translations.wordTemplates,
                     templates: this.docxTemplates,
                     icon: 'fa fa-file-word-o',
                 },
                 {
-                    heading: 'Powerpoint Templates',
+                    heading: arches.translations.powerpointTemplates,
                     templates: this.pptTemplates,
                     icon: 'fa fa-file-powerpoint-o',
                 },

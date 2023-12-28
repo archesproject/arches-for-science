@@ -1,10 +1,11 @@
+{% load i18n %}
 <div class="object-search-step">
     <div class="workflow-search-panel">
         <div class="search-bar">
             <select data-bind="select2Query: {select2Config: targetResourceSelectConfig}"></select>
         </div>
         <div class="workflow-search-count">
-            <div class="count-number" data-bind="text: totalResults()"></div><div>Physical Things</div>
+            <div class="count-number" data-bind="text: totalResults()"></div><div>{% trans "Physical Things" %}</div>
         </div>
         <div class="child-exclusion">
             <div
@@ -14,7 +15,7 @@
                     params: {
                         value: includeSamples,
                         config: {
-                            label: 'Include samples',
+                            label: '{% trans 'Include samples' %}',
                         }
                     }
                 }
@@ -27,7 +28,7 @@
                         params: {
                             value: includeAnalysisAreas,
                             config: {
-                                label: 'Include analysis areas',
+                                label: '{% trans 'Include analysis areas' %}',
                             }
                         }
                     }
@@ -47,7 +48,7 @@
                                 <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
                                     <div class="summary-report-title" data-bind="text: $parent.getStringValue($data._source.displayname)"></div>
                                 </div>
-                                <div class="summary-report-description" data-bind="html: $parent.stripTags($parent.getStringValue($data._source.displaydescription)) || 'No description'"></div>
+                                <div class="summary-report-description" data-bind="html: $parent.stripTags($parent.getStringValue($data._source.displaydescription)) || '{% trans 'No description' as noDescription %}'"></div>
                             </div>
                         </div>
                     </div>
@@ -72,7 +73,7 @@
                 <div style="padding: 24px 24px 0px 24px;">
                 <!-- ko if: selectedResources().length === 0 && !dirty() -->
                 <div class="wf-multi-tile-step-list-empty">
-                    <p>You have not added any Physical Things to this Collection/Set</p>
+                    <p>{% trans "You have not added any Physical Things to this Collection/Set" %}</p>
                 </div>
                 <!--/ko -->
                 <!-- ko foreach: selectedResources -->
@@ -82,7 +83,7 @@
                         <div class="wf-multi-tile-card-info-details">
                             <dt data-bind="text: $parent.getStringValue($data.displayname)"></dt>
                             <dd>
-                                <a data-bind="html: $parent.getStringValue($data.displaydescription) || 'No description'"></a>
+                                <a data-bind="html: $parent.getStringValue($data.displaydescription) || '{{ noDescription }}'"></a>
                             </dd>
                         </div>
                     </div>
@@ -91,10 +92,9 @@
                             data-bind="click: function(){$parent.updateTileData($data)}"
                         >
                             <span>
-                                <i class="fa fa-times-circle"></i>
+                                <i class="fa fa-times-circle" aria-hidden="true"></i>
                             </span>
-                            <span class="">
-                                Remove
+                            <span class="" data-bind="text: $root.translations.remove">
                             </span>
                         </span>
                     </div>
@@ -104,9 +104,9 @@
                 <!-- ko if: selectedResources().length > 0 || dirty() -->
                 <div class="search-selection-controls">
                     <div style="display: flex; justify-content: flex-end;">
-                        <button class="btn btn-md btn-mint" data-bind="visible: dirty, click: function(){submit()}, text: complete() === true ? 'Save' : 'Save and Continue'"></button>
-                        <button class="btn btn-md btn-mint" data-bind="visible: !dirty() && complete() === true, click: function(){next()}">Continue</button>
-                        <button class="btn btn-md btn-warning" style="margin-left: 8px" data-bind="visible: dirty, click: function(){resetTile()}">Reset</button>
+                        <button class="btn btn-md btn-mint" data-bind="visible: dirty, click: function(){submit()}, text: complete() === true ? $root.translations.save : '{% trans 'Save and Continue' %}'"></button>
+                        <button class="btn btn-md btn-mint" data-bind="visible: !dirty() && complete() === true, click: function(){next()}, text: $root.translations.continue"></button>
+                        <button class="btn btn-md btn-warning" style="margin-left: 8px" data-bind="visible: dirty, click: function(){resetTile()}">{% trans "Reset" %}</button>
                     </div>                
                 </div>
                 <!--/ko -->

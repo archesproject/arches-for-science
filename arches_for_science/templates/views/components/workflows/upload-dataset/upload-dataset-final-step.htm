@@ -60,7 +60,7 @@
         <h5 class="summary-value" style="margin-bottom: -10px;">{% trans 'Files for Upload' %}</h5>
         <!-- ko foreach: {data: fileLists, as: 'fileList'} -->
         <!-- ko if: fileList().length > 0 -->
-        <h5 class="summary-value upload-dataset-name" data-bind="text: digitalResourceName || 'Unnamed Dataset (nothing to upload)'"></h5>
+        <h5 class="summary-value upload-dataset-name" data-bind="text: digitalResourceName || '{% trans 'Unnamed Dataset (nothing to upload)' %}'"></h5>
         <div style="margin-top: -20px">
             <!-- ko if: $parent.hasAnnotatedParts -->
             <div style="border: solid 1px #ddd">
@@ -86,8 +86,8 @@
                 </table>
                 <div class="final-step-section-block-item" style="margin-top: -15px;">
                     <div style="display: inline-flex;">
-                        <div class="summary-label">{% trans 'Files: ' %}</div>
-                        <div class="summary-value" data-bind="text: fileList().length + '{% trans " files uploaded" %}'"></div>
+                        <div class="summary-label">{% trans 'Files:' %} </div>
+                        <div class="summary-value" data-bind="text: fileList().length + ' {% trans 'files uploaded' context 'label for count' %}'"></div>
                     </div>
                 </div>
             </div>
