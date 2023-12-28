@@ -3,6 +3,7 @@ import json
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext as _
 from arches.app.views.base import BaseManagerView
 from arches.app.utils.decorators import can_edit_resource_instance
 import boto3
@@ -21,7 +22,7 @@ class S3MultipartUploaderView(BaseManagerView):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
-            raise Exception("Django storages for AWS not configured")
+            raise Exception(_("Django storages for AWS not configured"))
         
         json_body = json.loads(request.body)
         file_name = json_body["filename"]
@@ -50,7 +51,7 @@ class S3MultipartUploadManagerView(BaseManagerView):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
-            raise Exception("Django storages for AWS not configured")
+            raise Exception(_("Django storages for AWS not configured"))
 
         parts = []
         key = request.GET.get("key", "")
@@ -70,7 +71,7 @@ class S3MultipartUploadManagerView(BaseManagerView):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
-            raise Exception("Django storages for AWS not configured")
+            raise Exception(_("Django storages for AWS not configured"))
         
 
         s3 = boto3.client("s3")
@@ -91,7 +92,7 @@ class S3BatchSignView(BaseManagerView):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
-            raise Exception("Django storages for AWS not configured")
+            raise Exception(_("Django storages for AWS not configured"))
         key = request.GET.get("key", "")
         part_numbers = [int(x) for x in request.GET.get("partNumbers").split(",")]
         s3 = boto3.client("s3")
@@ -120,7 +121,7 @@ class S3UploadView(BaseManagerView):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
-            raise Exception("Django storages for AWS not configured")
+            raise Exception(_("Django storages for AWS not configured"))
         s3 = boto3.client("s3")
 
         file_name = request.GET.get("filename")
@@ -151,7 +152,7 @@ class S3UploadPartView(BaseManagerView):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
-            raise Exception("Django storages for AWS not configured")
+            raise Exception(_("Django storages for AWS not configured"))
         s3 = boto3.client("s3")
         key = request.GET.get("key", "")
         url = s3.generate_presigned_url(
@@ -174,7 +175,7 @@ class S3CompleteUploadView(BaseManagerView):
         try:
             storage_bucket = settings.AWS_STORAGE_BUCKET_NAME
         except AttributeError:
-            raise Exception("Django storages for AWS not configured")
+            raise Exception(_("Django storages for AWS not configured"))
         key = request.GET.get("key", "")
         s3 = boto3.client("s3")
         response = s3.complete_multipart_upload(
