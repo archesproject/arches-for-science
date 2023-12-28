@@ -83,7 +83,7 @@ define([
                         new params.form.AlertViewModel('ep-alert-red', data.title, data.message)) 
                     })
                     .catch(_ => { params.pageVm.alert(
-                        new params.form.AlertViewModel('ep-alert-red', params.form.error() || 'Error saving project name')) 
+                        new params.form.AlertViewModel('ep-alert-red', params.form.error() || arches.translations.issueSavingWorkflowStep))
                     });
                 }
             });
@@ -96,21 +96,6 @@ define([
 
         params.form.save = function() {
             params.form.complete(false);
-            if (!self.nameValue() || (self.nameValue() && !self.nameValue()[arches.activeLanguage].value)){
-                params.form.error(new Error("Missing Required Value"));
-                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Missing Required Value", "Name is required."));
-                if (params.form.savedData()) {
-                    self.nameValue(params.form.savedData().name.value);
-                }
-                params.form.complete(true);
-                return;
-            }
-    
-            if (!self.typeValue()) {
-                params.form.error(new Error("Missing Required Value"));
-                params.pageVm.alert(new params.form.AlertViewModel('ep-alert-red', "Missing Required Value", "Project scale is required."));
-                return;
-            }
 
             const nameTileData = {
                 "0b92cf5c-ca85-11e9-95b1-a4d18cec433a": self.nameValue(),
@@ -135,7 +120,7 @@ define([
                         self.projectResourceId(data.resourceinstance_id);
                         return self.saveTile(typeTileData, typeNodeGroupId, data.resourceinstance_id, typeTileId());
                     } else {
-                        params.form.error('Error saving project name');
+                        params.form.error(arches.translations.issueSavingWorkflowStep);
                     }
                 })
                 .then(function(data) {
@@ -146,7 +131,7 @@ define([
                         params.form.dirty(false);
                         params.pageVm.alert("");
                     } else {
-                        params.form.error('Error saving project scale');
+                        params.form.error(arches.translations.issueSavingWorkflowStep);
                     }
                 });
         };

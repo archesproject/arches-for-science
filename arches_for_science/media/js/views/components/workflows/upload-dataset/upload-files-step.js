@@ -261,7 +261,8 @@ define([
                     console.log('Tile update failed', err);
                     params.pageVm.alert(new params.form.AlertViewModel(
                         'ep-alert-red', 
-                        'Error saving the Dataset',
+                        arches.translations.error,
+                        arches.translations.issueSavingWorkflowStep,
                     ));
                     params.form.loading(false);
                     return;
