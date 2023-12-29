@@ -58,10 +58,15 @@ define([], function() {
         return processRawNodeValue(rawValue);
     };
 
+    const getPropByNodeId = (resource, nodeId, prop) => {
+        return Object.values(resource).find(val => val['@node_id'] == nodeId)[prop];
+    };
+
     return {
         getNodeValue: getNodeValue, // use this to get the "friendly" value of a node.  It uses both getRawNodeValue and processRawNodeValue
         getRawNodeValue: getRawNodeValue,
         processRawNodeValue: processRawNodeValue,
-        standardizeNode: standardizeNode
+        standardizeNode: standardizeNode,
+        getPropByNodeId,
     };
 });
