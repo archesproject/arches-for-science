@@ -1,10 +1,11 @@
 define(['jquery',
+    'arches',
     'knockout',
     'templates/views/components/cards/file-renderers/afs-reader.htm',
     'viewmodels/afs-instrument',
     'bindings/plotly',
     'bindings/select2-query',
-], function($, ko, forsReaderTemplate, AfsInstrumentViewModel) {
+], function($, arches, ko, forsReaderTemplate, AfsInstrumentViewModel) {
     return ko.components.register('fors-reader', {
         viewModel: function(params) {
             const self = this;
@@ -47,8 +48,8 @@ define(['jquery',
                         }
                     }
                 });
-                self.chartTitle("ASD Spectrum");
-                self.xAxisLabel("Wavelength (nm)");
+                self.chartTitle(arches.translations.asdSpectrum);
+                self.xAxisLabel(arches.translations.wavelengthLabel);
                 self.yAxisLabel(metadata.yunits);
             };
         },

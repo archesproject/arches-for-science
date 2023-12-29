@@ -1,10 +1,11 @@
 define(['jquery',
+    'arches',
     'knockout',
     'templates/views/components/cards/file-renderers/afs-reader.htm',
     'viewmodels/afs-instrument',
     'bindings/plotly',
     'bindings/select2-query',
-], function($, ko, ramanReaderTemplate, AfsInstrumentViewModel) {
+], function($, arches, ko, ramanReaderTemplate, AfsInstrumentViewModel) {
     return ko.components.register('raman-reader', {
         viewModel: function(params) {
             AfsInstrumentViewModel.apply(this, [params]);
@@ -17,9 +18,9 @@ define(['jquery',
                         series.value.push(Number(rec[0]));
                     }
                 });
-                this.chartTitle("Raman Spectrum");
-                this.xAxisLabel("Raman Shift (cm<sup>-1</sup>)");
-                this.yAxisLabel("Intensity");
+                this.chartTitle(arches.translations.ramanSpectrum);
+                this.xAxisLabel(arches.translations.ramanShift);
+                this.yAxisLabel(arches.translations.ramanIntensity);
             };
         },
         template: ramanReaderTemplate
