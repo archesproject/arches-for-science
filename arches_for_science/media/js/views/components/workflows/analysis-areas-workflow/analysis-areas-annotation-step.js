@@ -156,6 +156,7 @@ define([
             if (self.selectedAnalysisAreaInstance()){
                 const nameValue = self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId];
                 const baseName = self.getStrValue(nameValue) || "";
+                // TODO(jtw)
                 return `${baseName} [Region of ${self.physicalThingName()}]`;
             }
         });
