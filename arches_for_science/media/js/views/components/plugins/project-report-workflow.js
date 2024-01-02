@@ -15,7 +15,7 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Select Project',
+                    title: arches.translations.selectProject,
                     name: 'select-project',
                     required: true,
                     layoutSections: [
@@ -33,7 +33,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Select Template',
+                    title: arches.translations.selectTemplate,
                     name: 'select-report-template',
                     required: true,
                     layoutSections: [
@@ -49,7 +49,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Add Annotations',
+                    title: arches.translations.addAnnotations,
                     name: 'add-annotations',
                     layoutSections: [
                         {
@@ -68,7 +68,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Select Files',
+                    title: arches.translations.selectFiles,
                     name: 'download-project-files',
                     layoutSections: [
                         {
@@ -87,7 +87,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Download Report',
+                    title: arches.translations.downloadReport,
                     name: 'download-report',
                     lockableExternalSteps: ['select-project'],
                     layoutSections: [
