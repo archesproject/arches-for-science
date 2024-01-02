@@ -146,6 +146,7 @@ define([
         this.rendererConfigs = ko.observableArray();
 
         this.dataDelimiterRadio.subscribe(value => {
+            // TODO(jtw): UI?
             if(value != 'other'){
                 this.dataDelimiter(value);
             } else {
@@ -178,7 +179,7 @@ define([
                 width: 'element',
                 value: fileDetails.rendererConfig,
                 closeOnSelect: true,
-                placeholder: 'Select an Importer',
+                placeholder: arches.translations.selectImporter,
                 allowClear: true,
                 multiple: false 
             }

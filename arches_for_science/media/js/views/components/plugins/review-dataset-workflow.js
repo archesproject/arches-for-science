@@ -16,7 +16,7 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Datasets',
+                    title: arches.translations.datasets,
                     name: 'select-datasets', /* unique to workflow */
                     required: true,
                     layoutSections: [
@@ -37,7 +37,7 @@ define([
                     ],
                 },
                 {
-                    title: 'File Interpretation',
+                    title: arches.translations.fileInterpretation,
                     name: 'file-interpretation',
                     required: false,
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
@@ -58,7 +58,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Summary',
+                    title: arches.translations.summary,
                     name: 'review-dataset-complete', /* unique to workflow */
                     layoutSections: [
                         {
@@ -95,11 +95,11 @@ define([
                 this.alert(
                     new AlertViewModel(
                         'ep-alert-red',
-                        'Are you sure you would like to delete this workflow?',
-                        'All data created during the course of this workflow will be deleted.',
+                        arches.translations.deleteWorkflowTitle,
+                        arches.translations.deleteWorkflowWarning,
                         function(){}, //does nothing when canceled
                         () => {
-                            params.loading('Cleaning up...')
+                            params.loading(arches.translations.cleaningUp);
                             this.reverseWorkflowTransactions()
                         },
                     )

@@ -78,6 +78,7 @@ define([
                                     .on('add', function() {
                                         const titleArrary = feature.properties.name.split('[');
                                         const title = titleArrary[0].trim();
+                                        // TODO(jtw)
                                         const type = titleArrary[1].startsWith('Region') ? 'Analysis Area':
                                             titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
                                                 'Part';

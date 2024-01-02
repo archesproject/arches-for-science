@@ -21,7 +21,7 @@ define([
             this.componentName = 'upload-dataset-workflow';
 
             var sampleLocationStep = {
-                title: 'Data Files and Location',
+                title: arches.translations.dataFilesLocation,
                 name: 'select-dataset-files-step',
                 required: true,
                 workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
@@ -44,9 +44,10 @@ define([
             };
 
             var uploadDatasetStep = {
-                title: 'Upload Files',
+                title: arches.translations.uploadFiles,
                 name: 'upload-files',
-                description: 'The date that the sample was taken',
+                // TODO(jtw): seems wrong
+                description: arches.translations.dateSampleTaken,
                 component: 'views/components/workflows/component-based-step',
                 componentname: 'component-based-step',
                 workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
@@ -74,12 +75,12 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Dataset Type',
+                    title: arches.translations.datasetType,
                     name: 'dataset-step', /* unique to workflow */
                     required: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Dataset Type',
+                            sectionTitle: arches.translations.datasetType,
                             componentConfigs: [
                                 { 
                                     componentName: 'dataset-step',
@@ -109,7 +110,7 @@ define([
                     },
                 },
                 {
-                    title: 'Project Info',
+                    title: arches.translations.projectInfo,
                     name: 'project-info',
                     required: true,
                     layoutSections: [
@@ -132,7 +133,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Observation Info',
+                    title: arches.translations.observationInfo,
                     name: 'select-instrument-and-files',
                     required: true,
                     lockableExternalSteps: ['project-info'],
@@ -151,7 +152,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Select File Renderers',
+                    title: arches.translations.selectRenderers,
                     name: 'select-renderers',
                     required: true,
                     workflowstepclass: 'select-file-renderers-workflow-step',
@@ -172,7 +173,7 @@ define([
                     ],
                 },
                 {
-                    title: 'File Interpretation',
+                    title: arches.translations.fileInterpretation,
                     name: 'file-interpretation',
                     workflowstepclass: 'upload-dataset-step-workflow-component-based-step',
                     required: false,
@@ -194,7 +195,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Summary',
+                    title: arches.translations.summary,
                     name: 'upload-dataset-complete',  /* unique to workflow */
                     layoutSections: [
                         {
@@ -233,11 +234,11 @@ define([
                 this.alert(
                     new AlertViewModel(
                         'ep-alert-red',
-                        'Are you sure you would like to delete this workflow?',
-                        'All data created during the course of this workflow will be deleted.',
+                        arches.translations.deleteWorkflowTitle,
+                        arches.translations.deleteWorkflowWarning,
                         function(){}, //does nothing when canceled
                         () => {
-                            params.loading('Cleaning up...');
+                            params.loading(arches.translations.cleaningUp);
                             this.reverseWorkflowTransactions();
                         },
                     )
