@@ -18,7 +18,7 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Project Info',
+                    title: arches.translations.projectInfo,
                     name: 'select-project',  /* unique to workflow */
                     required: true,
                     layoutSections: [
@@ -39,9 +39,9 @@ define([
                     ],
                 },
                 {
-                    title: 'Sampling Activity Info',
+                    title: arches.translations.samplingActivityInfo,
                     name: 'sample-info',  /* unique to workflow */
-                    description: 'The date that the sample was taken',
+                    description: arches.translations.dateSampleTaken,
                     required: true,
                     lockableExternalSteps: ['select-project'],
                     layoutSections: [
@@ -60,12 +60,12 @@ define([
                     ],
                 },
                 {
-                    title: 'Image',
+                    title: arches.translations.image,
                     name: 'image-step',  /* unique to workflow */
                     required: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Image Service',
+                            sectionTitle: arches.translations.imageService,
                             componentConfigs: [
                                 { 
                                     componentName: 'sample-taking-image-step',
@@ -82,7 +82,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Sample Info',
+                    title: arches.translations.sampleInfo,
                     name: 'sample-location-step', /* unique to workflow */
                     required: true,
                     workflowstepclass: 'analysis-areas-workflow-regions-step',
@@ -108,7 +108,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Summary',
+                    title: arches.translations.summary,
                     name: 'add-project-complete',  /* unique to workflow */
                     graphid: '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
                     layoutSections: [
@@ -145,11 +145,11 @@ define([
                 this.alert(
                     new AlertViewModel(
                         'ep-alert-red',
-                        'Are you sure you would like to delete this workflow?',
-                        'All data created during the course of this workflow will be deleted.',
+                        arches.translations.deleteWorkflowTitle,
+                        arches.translations.deleteWorkflowWarning,
                         function(){}, //does nothing when canceled
                         () => {
-                            params.loading('Cleaning up...')
+                            params.loading(arches.translations.cleaningUp);
                             this.reverseWorkflowTransactions()
                         },
                     )

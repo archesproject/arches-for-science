@@ -1,4 +1,5 @@
 define(['jquery',
+    'arches',
     'knockout',
     'templates/views/components/cards/file-renderers/xy-reader.htm',
     'viewmodels/afs-instrument',
@@ -7,7 +8,7 @@ define(['jquery',
     'bindings/plotly',
     'bindings/select2-query',
     'views/components/plugins/importer-configuration'
-], function($, ko, afsReaderTemplate, AfsInstrumentViewModel, Cookies, XyParser) {
+], function($, arches, ko, afsReaderTemplate, AfsInstrumentViewModel, Cookies, XyParser) {
     return ko.components.register('xy-reader', {
         viewModel: function(params) {
             const self = this;
@@ -25,9 +26,9 @@ define(['jquery',
             this.rendererUrl = `/renderer/${self.renderer}`;
 
             // set defaults for chart title/axis
-            this.chartTitle('Data');
-            this.xAxisLabel('X Axis');
-            this.yAxisLabel('Y Axis');
+            this.chartTitle(arches.translations.data);
+            this.xAxisLabel(arches.translations.xAxis);
+            this.yAxisLabel(arches.translations.yAxis);
 
             this.rendererConfigs = ko.observable([]);
 
@@ -69,9 +70,21 @@ define(['jquery',
                         tile.save();
                     }
                 }	
-                this.chartTitle(this.selectedConfiguration?.config?.display?.chartTitle ? this.selectedConfiguration.config.display.chartTitle : 'Data');
-                this.xAxisLabel(this.selectedConfiguration?.config?.display?.xAxisLabel ? this.selectedConfiguration.config.display.xAxisLabel : 'X Axis');
-                this.yAxisLabel(this.selectedConfiguration?.config?.display?.yAxisLabel ? this.selectedConfiguration.config.display.yAxisLabel : 'Y Axis');
+                this.chartTitle(
+                    this.selectedConfiguration?.config?.display?.chartTitle
+                    ? this.selectedConfiguration.config.display.chartTitle
+                    : arches.translations.data
+                );
+                this.xAxisLabel(
+                    this.selectedConfiguration?.config?.display?.xAxisLabel
+                    ? this.selectedConfiguration.config.display.xAxisLabel
+                    : arches.translations.xAxis
+                );
+                this.yAxisLabel(
+                    this.selectedConfiguration?.config?.display?.yAxisLabel
+                    ? this.selectedConfiguration.config.display.yAxisLabel
+                    : arches.translations.yAxis
+                );
             });
 
             rendererConfigRefresh();

@@ -16,12 +16,12 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Select Project',
+                    title: arches.translations.selectProject,
                     name: 'select-project',  /* unique to workflow */
                     required: true,
                     layoutSections: [
                         {
-                            sectionTitle: 'Select Project',
+                            sectionTitle: arches.translations.selectProject,
                             componentConfigs: [
                                 {
                                     componentName: 'resource-instance-select-widget',
@@ -37,7 +37,7 @@ define([
                     ],
                 },
                 {
-                    title: 'Add Objects to Your Project',
+                    title: arches.translations.addObjects,
                     name: 'object-search-step',  /* unique to workflow */
                     required: true,
                     workflowstepclass: 'create-project-add-things-step',
@@ -62,9 +62,9 @@ define([
                     ],
                 },
                 {
-                    title: 'Summary',
+                    title: arches.translations.summary,
                     name: 'project-collection-complete',  /* unique to workflow */
-                    description: 'Summary',
+                    description: arches.translations.summary,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -100,11 +100,11 @@ define([
                 this.alert(
                     new AlertViewModel(
                         'ep-alert-red',
-                        'Are you sure you would like to delete this workflow?',
-                        'All data created during the course of this workflow will be deleted.',
+                        arches.translations.deleteWorkflowTitle,
+                        arches.translations.deleteWorkflowWarning,
                         function(){}, //does nothing when canceled
                         () => {
-                            params.loading('Cleaning up...')
+                            params.loading(arches.translations.cleaningUp);
                             this.reverseWorkflowTransactions()
                         },
                     )

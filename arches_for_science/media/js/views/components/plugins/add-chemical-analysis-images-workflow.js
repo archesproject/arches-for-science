@@ -16,7 +16,7 @@ define([
 
             this.stepConfig = [
                 {
-                    title: 'Project Info',
+                    title: arches.translations.projectInfo,
                     name: 'select-project',  /* unique to workflow */
                     required: true,
                     layoutSections: [
@@ -31,13 +31,13 @@ define([
                     ],
                 },
                 {
-                    title: 'Image',
+                    title: arches.translations.image,
                     name: 'image-step', /* unique to workflow */
                     required: true,
                     lockableExternalSteps: ['select-project'],
                     layoutSections: [
                         {
-                            sectionTitle: 'Image Service',
+                            sectionTitle: arches.translations.imageService,
                             componentConfigs: [
                                 { 
                                     componentName: 'add-chemical-analysis-images-image-step',
@@ -54,9 +54,9 @@ define([
                     ],
                 },
                 {
-                    title: 'Summary',
+                    title: arches.translations.summary,
                     name: 'add-chemical-analysis-images-complete',  /* unique to workflow */
-                    description: 'Summary',
+                    description: arches.translations.summary,
                     layoutSections: [
                         {
                             componentConfigs: [
@@ -95,11 +95,11 @@ define([
                 this.alert(
                     new AlertViewModel(
                         'ep-alert-red',
-                        'Are you sure you would like to delete this workflow?',
-                        'All data created during the course of this workflow will be deleted.',
+                        arches.translations.deleteWorkflowTitle,
+                        arches.translations.deleteWorkflowWarning,
                         function(){}, //does nothing when canceled
                         () => {
-                            params.loading('Cleaning up...');
+                            params.loading(arches.translations.cleaningUp);
                             this.reverseWorkflowTransactions();
                         },
                     )

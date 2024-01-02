@@ -1,4 +1,5 @@
 define([
+    'arches',
     'knockout',
     'jquery',
     'js-cookie',
@@ -7,7 +8,7 @@ define([
     'templates/views/components/plugins/importer-configuration.htm',
     'bootstrap',
     'bindings/select2-query'
-], function(ko, $, Cookies, xyParser, AlertViewModel, importerConfigurationTemplate) {
+], function(arches, ko, $, Cookies, xyParser, AlertViewModel, importerConfigurationTemplate) {
     const vm = function(params) {
         this.alert = params.alert;
         this.rendererConfigs = params.rendererConfigs || ko.observableArray();
@@ -31,7 +32,7 @@ define([
         this.xAxisLabel = ko.observable();
         this.yAxisLabel = ko.observable();
         this.dataDelimiter = ko.observable();
-        this.placeholder = 'Select a Transformation';
+        this.placeholder = arches.translations.selectTransformation;
 
         const transformations = xyParser.transformations().map(transform => {
             return {
@@ -45,6 +46,7 @@ define([
         this.selectedTransformation.subscribe(val => console.log(val));
 
         this.dataDelimiterRadio.subscribe(value => {
+            // TODO(jtw): UI?
             if(value != 'other'){
                 this.dataDelimiter(value);
             } else {
@@ -186,9 +188,12 @@ define([
                     rendererConfigRefresh();
                 } else {
                     this.alert(
-                        new AlertViewModel('ep-alert-red', "Importer in Use", "This importer is in use - it should be replaced in all files where it is used before deleting.")
+                        new AlertViewModel(
+                            'ep-alert-red',
+                            arches.translations.importerInUse,
+                            arches.translations.importerInUseWarning,
+                        )
                     );
-                    
                 }
             }
         };
