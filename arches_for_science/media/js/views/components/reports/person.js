@@ -13,13 +13,13 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'existence', title: 'Existence'},
-                {id: 'events', title: 'Events'},
-                {id: 'parthood', title: 'Parthood'},
-                {id: 'description', title: 'Description'},
-                {id: 'documentation', title: 'Documentation'},
-                {id: 'communication', title: 'Communication'},
+                {id: 'name', title: arches.translations.namesClassifications},
+                {id: 'existence', title: arches.translations.existence},
+                {id: 'events', title: arches.translations.events},
+                {id: 'parthood', title: arches.translations.parthood},
+                {id: 'description', title: arches.translations.description},
+                {id: 'documentation', title: arches.translations.documentation},
+                {id: 'communication', title: arches.translations.communication},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -44,7 +44,7 @@ define([
                 sections:
                     [
                         {
-                            title: 'References',
+                            title: arches.translations.references,
                             data: [{
                                 key: 'source reference work',
                                 value: self.getRawNodeValue(self.resource(), 'source'),
@@ -244,7 +244,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: arches.translations.parthood,
                             data: [{
                                 key: 'member of group', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 

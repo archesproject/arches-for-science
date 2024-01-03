@@ -24,7 +24,7 @@ define([
             self.setSelectedJson = async(format) => {
                 if(!self.json[format]){
                     const response = await fetch(`${arches.urls.api_resources(self.resourceInstanceId)}?format=${format}`);
-                    self.json[format] = response.ok ? await response.json() : 'Error Retrieving JSON for view.'; // let the user know if the json couldn't be retrieved.
+                    self.json[format] = response.ok ? await response.json() : arches.translations.jsonError; // let the user know if the json couldn't be retrieved.
                 }
                 self.selectedJSON(JSON.stringify(self.json[format], null, 2));
                 self.selectedFormat(format);

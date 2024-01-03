@@ -20,13 +20,13 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {'id': 'name', 'title': 'Names, Identifiers, Classification'},
-                {'id': 'description', 'title': 'Description'},
-                {'id': 'actor-relations', 'title': 'Actor Relations'},
-                {'id': 'location', 'title': 'Location'},
-                {'id': 'component', 'title': 'Components'},
-                {'id': 'instrument', 'title': 'Instrument Configuration'},
-                {'id': 'documentation', 'title': 'Documentation'},
+                {'id': 'name', 'title': arches.translations.namesIdentifiersClassifications},
+                {'id': 'description', 'title': arches.translations.description},
+                {'id': 'actor-relations', 'title': arches.translations.actorRelations},
+                {'id': 'location', 'title': arches.translations.location},
+                {'id': 'component', 'title': arches.translations.components},
+                {'id': 'instrument', 'title': arches.translations.instrumentConfiguration},
+                {'id': 'documentation', 'title': arches.translations.documentation},
                 {'id': 'json', 'title': 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -102,7 +102,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Location", 
+                            title: arches.translations.location,
                             data: [{
                                 key: 'current location', 
                                 value: self.getRawNodeValue(self.resource(), 'current location'), 
@@ -117,6 +117,7 @@ define([
                 sections: 
                     [
                         {
+                            // todo(jtw): card name
                             title: "Parent Instrument", 
                             data: [{
                                 key: 'parent instrument', 
@@ -133,7 +134,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Actor Relations", 
+                            title: arches.translations.actorRelations,
                             data: [{
                                 key: 'current owner', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
@@ -148,7 +149,7 @@ define([
                 sections: 
                     [
                         {
-                            title: "Instrument Configuration", 
+                            title: arches.translations.instrumentConfiguration,
                             data: [{
                                 key: 'Member of Set', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 

@@ -14,13 +14,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names, Identifiers, Classification'},
-                {id: 'description', title: 'Description'},
-                {id: 'existence', title: 'Timeline'},
-                {id: 'events', title: 'Events'},
-                {id: 'projects', title: 'Related Projects'},
-                {id: 'publications', title: 'Publications'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'name', title: arches.translations.namesIdentifiersClassifications},
+                {id: 'description', title: arches.translations.description},
+                // TODO(jtw): seems wrong
+                {id: 'existence', title: arches.translations.timeline},
+                {id: 'events', title: arches.translations.events},
+                {id: 'projects', title: arches.translations.projects},
+                {id: 'publications', title: arches.translations.publications},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'},
             ];
             self.visible = {

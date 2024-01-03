@@ -15,14 +15,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names, Identifiers, Classifications'},
-                {id: 'description', title: 'Description'},
-                {id: 'existence', title: 'Timeline'},
-                {id: 'location', title: 'Location'},
-                {id: 'documentation', title: 'Documentation'},
-                {id: 'communication', title: 'Contacts'},
-                {id: 'members', title: 'Group Members'},
-                {id: 'entities', title: 'Larger Entities'},
+                {id: 'name', title: arches.translations.namesIdentifiersClassifications},
+                {id: 'description', title: arches.translations.description},
+                {id: 'existence', title: arches.translations.timeline},
+                {id: 'location', title: arches.translations.location},
+                {id: 'documentation', title: arches.translations.documentation},
+                {id: 'communication', title: arches.translations.contacts},
+                {id: 'members', title: arches.translations.groupMembers},
+                {id: 'entities', title: arches.translations.largerEntities},
                 {id: 'json', title: 'JSON'}
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -33,7 +33,7 @@ define([
                 sections:
                     [
                         {
-                            title: 'References',
+                            title: arches.translations.references,
                             data: [{
                                 key: 'source reference work',
                                 value: self.getRawNodeValue(self.resource(), 'source'),
@@ -201,7 +201,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Location', 
+                            title: arches.translations.location,
                             data: [{
                                 key: 'residence or associated location of group', 
                                 value: self.getRawNodeValue(self.resource(), 'residence'), 
@@ -216,7 +216,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: arches.translations.parthood,
                             data: [{
                                 key: 'parent group', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
