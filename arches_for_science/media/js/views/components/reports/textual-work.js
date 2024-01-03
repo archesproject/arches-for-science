@@ -14,14 +14,14 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'existence', title: 'Existence'},
-                {id: 'substance', title: 'Substance'},
-                {id: 'event', title: 'Event'},
-                {id: 'parthood', title: 'Parthood'},
-                {id: 'aboutness', title: 'Aboutness'},
-                {id: 'description', title: 'Description'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'name', title: arches.translations.namesClassifications},
+                {id: 'existence', title: arches.translations.existence},
+                {id: 'substance', title: arches.translations.substance},
+                {id: 'event', title: arches.translations.event},
+                {id: 'parthood', title: arches.translations.parthood},
+                {id: 'aboutness', title: arches.translations.aboutness},
+                {id: 'description', title: arches.translations.description},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'}
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -174,7 +174,7 @@ define([
                 self.substanceData = ko.observable({
                     sections: [
                         {
-                            title: 'Substance', 
+                            title: arches.translations.substance,
                             data: [{
                                 key: 'language of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'language'), 
@@ -192,7 +192,7 @@ define([
                 self.parthoodData = ko.observable({
                     sections: [
                         {
-                            title: 'Part of Text', 
+                            title: arches.translations.partOfText,
                             data: [{
                                 key: 'parent textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -205,7 +205,7 @@ define([
                 self.aboutnessData = ko.observable({
                     sections: [
                         {
-                            title: 'Aboutness', 
+                            title: arches.translations.aboutness,
                             data: [{
                                 key: 'subject of textual work', 
                                 value: self.getRawNodeValue(self.resource(), 'subject'), 

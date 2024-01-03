@@ -14,15 +14,15 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'substance', title: 'Substance'},
+                {id: 'name', title: arches.translations.namesClassifications},
+                {id: 'substance', title: arches.translations.substance},
                 // {id: 'temporal', title: 'Temporal Relations'}, commented because no cards available
-                {id: 'location', title: 'Location'},
-                {id: 'parameters', title: 'Parameters & Outcomes'},
-                {id: 'parthood', title: 'Parthood'},
-                // {id: 'aboutness', title: 'Aboutness'}, commented because no cards available
-                {id: 'description', title: 'Description'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'location', title: arches.translations.location},
+                {id: 'parameters', title: arches.translations.parametersOutcomes},
+                {id: 'parthood', title: arches.translations.parthood},
+                // {id: 'aboutness', title: arches.translations.aboutness}, commented because no cards available
+                {id: 'description', title: arches.translations.description},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -76,7 +76,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Location', 
+                            title: arches.translations.location,
                             data: [{
                                 key: 'location of modification', 
                                 value: self.getRawNodeValue(self.resource(), 'took place at'), 
@@ -91,7 +91,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parameters & Outcomes', 
+                            title: arches.translations.parametersOutcomes,
                             data: [{
                                 key: 'technique of modification', 
                                 value: self.getRawNodeValue(self.resource(), 'technique'), 
@@ -131,7 +131,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: arches.translations.parthood,
                             data: [{
                                 key: 'parent project of modification', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -146,7 +146,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Aboutness', 
+                            title: arches.translations.aboutness,
                             data: [{
                                 key: 'influenced by', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 

@@ -14,13 +14,13 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'},
-                {id: 'substance', title: 'Substance'},
+                {id: 'name', title: arches.translations.namesClassifications},
+                {id: 'substance', title: arches.translations.substance},
                 {id: 'temporal', title: 'Temporal Relations'},
-                {id: 'parameters', title: 'Parameters & Outcomes'},
-                {id: 'parthood', title: 'Parthood'},
-                {id: 'description', title: 'Description'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'parameters', title: arches.translations.parametersOutcomes},
+                {id: 'parthood', title: arches.translations.parthood},
+                {id: 'description', title: arches.translations.description},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'},
             ];
 
@@ -151,7 +151,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: arches.translations.parthood,
                             data: [{
                                 key: 'parent project of sampling activity', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 

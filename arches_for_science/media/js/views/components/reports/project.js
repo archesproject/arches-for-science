@@ -14,12 +14,12 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names, Identifiers, Classification'},
-                {id: 'substance', title: 'Project Timeline'},
-                {id: 'parthood', title: 'Parent Project'},
-                {id: 'components', title: 'Component Projects'},
-                {id: 'description', title: 'Description'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'name', title: arches.translations.namesIdentifiersClassifications},
+                {id: 'substance', title: arches.translations.projectTimeline},
+                {id: 'parthood', title: arches.translations.parentProject},
+                {id: 'components', title: arches.translations.componentProjects},
+                {id: 'description', title: arches.translations.description},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -112,7 +112,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parent Project', 
+                            title: arches.translations.parentProject,
                             data: [{
                                 key: 'parent project', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -125,7 +125,7 @@ define([
             self.temporalData = ko.observable({
                 sections: [
                     {
-                        title: 'Temporal Relations of Project', 
+                        title: arches.translations.temporalRelationsOfProject,
                         data: [
                             /*{
                                 key: 'Project Period', 
@@ -151,7 +151,7 @@ define([
             self.parameterData = ko.observable({
                 sections: [
                     {
-                        title: 'Project Team', 
+                        title: arches.translations.projectTeam,
                         data: [{
                             key: 'project team', 
                             value: self.getRawNodeValue(self.resource(), 'carried out by'), 
@@ -160,7 +160,7 @@ define([
                         }]
                     },
                     {
-                        title: 'Activity Type of Project', 
+                        title: arches.translations.projectActivityType,
                         data: [{
                             key: 'activity type of project', 
                             value: self.getRawNodeValue(self.resource(), 'technique'), 
