@@ -15,13 +15,13 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names, Identifiers, Classification'},
-                {id: 'description', title: 'Description'},
-                {id: 'substance', title: 'Dates'},
-                {id: 'data', title: 'Data'},
-                {id: 'parthood', title: 'Parent Project'},
-                {id: 'objects', title: 'Related Objects'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'name', title: arches.translations.namesIdentifiersClassifications},
+                {id: 'description', title: arches.translations.description},
+                {id: 'substance', title: arches.translations.dates},
+                {id: 'data', title: arches.translations.data},
+                {id: 'parthood', title: arches.translations.parentProject},
+                {id: 'objects', title: arches.translations.relatedObjects},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'},
             ];
             self.reportMetadata = ko.observable(params.report?.report_json);
@@ -121,9 +121,9 @@ define([
             
                         const annotationTableHeader =
                             `<tr class="afs-table-header">
-                                <th>Area Name</th>
-                                <th>Part of Object</th>
-                                <th class="min-tabletl">Annotator</th>
+                                <th>${arches.translations.areaName}</th>
+                                <th>${arches.translations.partOfObject}</th>
+                                <th class="min-tabletl">${arches.translations.annotator}</th>
                                 <th class="afs-table-control all"></th>
                             </tr>`
 
@@ -259,7 +259,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parent Event',
+                            title: arches.translations.parentEvent,
                             data: [{
                                 key: 'parent event of observation', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -274,7 +274,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Recorded Value',
+                            title: arches.translations.recordedValue,
                             data: [{
                                 key: 'recorded value of observation', 
                                 value: self.getRawNodeValue(self.resource(), 'recorded value'), 
@@ -289,7 +289,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parameters & Outcomes', 
+                            title: arches.translations.parametersOutcomes,
                             data: [{
                                 key: 'technique of observation', 
                                 value: self.getRawNodeValue(self.resource(), 'technique'), 

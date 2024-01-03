@@ -13,16 +13,16 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names, Identifiers, Classification'}, 
-                {id: 'description', title: 'Description'},
-                {id: 'existence', title: 'Key Events'},
-                {id: 'substance', title: 'Physical Description'},
-                {id: 'actor-relations', title: 'Provenance'},
-                {id: 'location', title: 'Location'},
-                {id: 'parthood', title: 'Components'},
-                {id: 'sethood', title: 'Related Collection and Sets'},
-                {id: 'aboutness', title: 'Content and Iconography'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'name', title: arches.translations.namesIdentifiersClassifications},
+                {id: 'description', title: arches.translations.description},
+                {id: 'existence', title: arches.translations.keyEvents},
+                {id: 'substance', title: arches.translations.physicalDescription},
+                {id: 'actor-relations', title: arches.translations.provenance},
+                {id: 'location', title: arches.translations.location},
+                {id: 'parthood', title: arches.translations.components},
+                {id: 'sethood', title: arches.translations.relatedCollectionSets},
+                {id: 'aboutness', title: arches.translations.contentIconography},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'},
             ];
 
@@ -54,8 +54,8 @@ define([
             self.annotationTableHeader = 
                 `<tr class="afs-table-header">
                     <th>Region Name</th>
-                    <th>Part of Object</th>
-                    <th class="min-tabletl">Annotator</th>
+                    <th>${arches.translations.partOfObject}</th>
+                    <th class="min-tabletl">${arches.translations.annotator}</th>
                     <th class="none">Assigned Property Type</th>
                     <th class="none">Geometric Annotation Identifier</th>
                     <th class="afs-table-control all"></th>
@@ -302,7 +302,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Content and Iconography', 
+                            title: arches.translations.contentIconography,
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
@@ -317,7 +317,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Current Location of Object', 
+                            title: arches.translations.currentLocation,
                             data: [{
                                 key: 'current location', 
                                 value: self.getRawNodeValue(self.resource(), 'current location'), 
@@ -332,7 +332,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Components', 
+                            title: arches.translations.components,
                             data: [{
                                 key: 'parent object', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -366,7 +366,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Provenance', 
+                            title: arches.translations.provenance,
                             data: [{
                                 key: 'current owner of object', 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
@@ -383,7 +383,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Related Collection and Sets',
+                            title: arches.translations.relatedCollectionSets,
                             data: [{
                                 key: 'Collection Object is Part Of', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 

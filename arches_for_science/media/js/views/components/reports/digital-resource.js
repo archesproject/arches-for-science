@@ -20,16 +20,16 @@ define([
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
             self.sections = [
-                {id: 'name', title: 'Names and Classifications'}, 
-                {id: 'existence', title: 'Existence'},
-                {id: 'substance', title: 'Substance'},
-                {id: 'events', title: 'Events'},
-                {id: 'parthood', title: 'Parthood'},
-                {id: 'sethood', title: 'Sethood'},
-                {id: 'carriers', title: 'Information Carriers & Information Carried'},
-                {id: 'aboutness', title: 'Aboutness'},
-                {id: 'description', title: 'Description'},
-                {id: 'documentation', title: 'Documentation'},
+                {id: 'name', title: arches.translations.namesClassifications},
+                {id: 'existence', title: arches.translations.existence},
+                {id: 'substance', title: arches.translations.substance},
+                {id: 'events', title: arches.translations.events},
+                {id: 'parthood', title: arches.translations.parthood},
+                {id: 'sethood', title: arches.translations.sethood},
+                {id: 'carriers', title: arches.translations.carriers},
+                {id: 'aboutness', title: arches.translations.aboutness},
+                {id: 'description', title: arches.translations.description},
+                {id: 'documentation', title: arches.translations.documentation},
                 {id: 'json', title: 'JSON'},
             ];
 
@@ -155,7 +155,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Aboutness', 
+                            title: arches.translations.aboutness,
                             data: [{
                                 key: 'text carried by object', 
                                 value: self.getRawNodeValue(self.resource(), 'carries text'), 
@@ -171,7 +171,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Parthood', 
+                            title: arches.translations.parthood,
                             data: [{
                                 key: 'parent digital resource', 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
@@ -194,7 +194,7 @@ define([
                 sections: 
                     [
                         {
-                            title: 'Sethood', 
+                            title: arches.translations.sethood,
                             data: [{
                                 key: 'collection that includes digital resource', 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 

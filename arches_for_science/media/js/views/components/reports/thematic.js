@@ -15,71 +15,71 @@ define([
 
     TAB_DATA = [
         {
-            title: "Names/Classification",
+            title: arches.translations.namesClassifications,
             sections: [
                 {
                     nodeId: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',  /* assumes each section contains a single node */
-                    sectionTitle: "Name(s) of Thing",
+                    sectionTitle: arches.translations.namesOfThing,
                     hasPlusSign: true,
                     childNodeInformation: [
-                        { 
+                        {
                             nodeId: 'b9c1d8a6-b497-11e9-876b-a4d18cec433a',
-                            columnName: 'Name',
+                            columnName: arches.translations.name,
                             
                         },
-                        { 
+                        {
                             nodeId: 'b9c1d7ab-b497-11e9-9ab7-a4d18cec433a',
-                            columnName: 'Name Type',
+                            columnName: arches.translations.nameType,
                         },
-                        { 
+                        {
                             nodeId:'b9c1d400-b497-11e9-90ea-a4d18cec433a', 
-                            columnName: 'Language',
+                            columnName: arches.translations.language,
                         },
                     ],
                 },
                 {
                     nodeId: '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a',  /* assumes each section contains a single node */
-                    sectionTitle: "Type of Object",
+                    sectionTitle: arches.translations.objectType,
                 },
                 {
                     nodeId: '22c150ca-b498-11e9-9adc-a4d18cec433a',  /* assumes each section contains a single node */
-                    sectionTitle: "Identifiers",
+                    sectionTitle: arches.translations.identifiers,
                     hasPlusSign: true,
                     childNodeInformation: [
                         { 
                             nodeId: '22c169b5-b498-11e9-bdad-a4d18cec433a',
-                            columnName: 'Identifier',
+                            columnName: arches.translations.identifier,
                         },
                         { 
                             nodeId: '22c15cfa-b498-11e9-b5e3-a4d18cec433a',
-                            columnName: 'Identifier Type',
+                            columnName: arches.translations.identifierType,
                         },
                     ],
                 }
             ],
         },
         {
-            title: "Existence",
+            title: arches.translations.existence,
             sections: [],
         },
         {
-            title: "Parameters",
+            title: arches.translations.parameters,
             sections: [],
         },
         {
-            title: "Parts",
+            title: arches.translations.parts,
             sections: [],
         },
         {
-            title: "Temporal Relations",
+            title: arches.translations.temporalRelations,
             sections: [],
         },
         {
-            title: "Location",
+            title: arches.translations.location,
             sections: [],
         },
         {
-            title: "Descriptions",
+            title: arches.translations.descriptions,
             sections: [],
         }
     ];
