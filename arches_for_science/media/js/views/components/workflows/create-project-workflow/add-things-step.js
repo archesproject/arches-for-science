@@ -205,6 +205,7 @@ define([
                 }
             } else if (params.action === "update") {
                 loadExistingCollection();
+                params.form.lockExternalStep("select-project", true);
             }
         };
 
@@ -280,9 +281,6 @@ define([
                             usedSetTileId: ko.unwrap(self.usedSetTileId),
                         }
                     );
-                    if (params.action === "update") {
-                        params.form.lockExternalStep("select-project", true);
-                    }
                 })
                 .fail((err) => {
                     // eslint-disable-next-line no-console
