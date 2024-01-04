@@ -1,8 +1,9 @@
 define([
     'knockout',
+    'arches',
     'views/components/workflows/summary-step',
     'templates/views/components/workflows/create-project-workflow/create-project-final-step.htm'
-], function(ko, SummaryStep, createProjectFinalStepTemplate) {
+], function(ko, arches, SummaryStep, createProjectFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -37,18 +38,18 @@ define([
             this.displayName = val['displayname'] || 'unnamed';
             this.displaydescription = val['displaydescription'] || "none";
             this.reportVals = {
-                projectName: {'name': 'Project Name', 'value': this.getResourceValue(val.resource['Name'][0],['Name_content','@display_value'])},
-                projectTimespan: {'name': 'Project Timespan', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@display_value'])},
-                projectTeam: {'name': 'Project Team', 'value': this.getResourceValue(val.resource, ['carried out by','@display_value'])},
-                collection: {'name': 'Related Collection', 'value': this.getResourceValue(val.resource['Used Set'], ['@display_value'])},
+                projectName: {'name': arches.translations.projectName, 'value': this.getResourceValue(val.resource['Name'][0],['Name_content','@display_value'])},
+                projectTimespan: {'name': arches.translations.projectTimespan, 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@display_value'])},
+                projectTeam: {'name': arches.translations.projectTeam, 'value': this.getResourceValue(val.resource, ['carried out by','@display_value'])},
+                collection: {'name': arches.translations.relatedCollectionSets, 'value': this.getResourceValue(val.resource['Used Set'], ['@display_value'])},
             };
 
             var findStatement= function(type){
                 try {
                     self.reportVals.statements = val.resource['Statement'].map(function(statement){
                         return {
-                            content:  {'name': 'Project Statement', 'value': self.getResourceValue(statement, ['Statement_content','@display_value'])},
-                            type: {'name': 'type', 'value': self.getResourceValue(statement, ['Statement_type','@display_value'])}
+                            content:  {'name': arches.translations.projectStatement, 'value': self.getResourceValue(statement, ['Statement_content','@display_value'])},
+                            type: {'name': arches.translations.type, 'value': self.getResourceValue(statement, ['Statement_type','@display_value'])}
                         };
                     });
                 } catch(e) {
@@ -57,7 +58,7 @@ define([
                 var foundStatement = self.reportVals.statements.find(function(statement) {
                     return statement.type.value.split(",").indexOf(type) > -1;
                 });
-                return foundStatement ? foundStatement.content : {'name': 'Project Statement', 'value': 'None'};
+                return foundStatement ? foundStatement.content : {'name': arches.translations.projectStatement, 'value': 'None'};
             };
 
             this.reportVals.projectStatement = findStatement('description');

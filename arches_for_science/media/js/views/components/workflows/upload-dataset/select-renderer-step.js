@@ -73,7 +73,7 @@ define([
 
         (async() => {
             this.loading(true);
-            this.loadingMessage('Loading datasets...');
+            this.loadingMessage(arches.translations.loadingDatasets);
             await loadDigitalResources();
             
             // the following divorces the file's data from the label based graph structure.

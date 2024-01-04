@@ -37,6 +37,7 @@ define([
         this.getResourceData(params.parentPhysThingResourceId, this.parentPhysThingData);
 
         this.parentPhysThingData.subscribe(function(val){
+            // TODO(jtw) -- looks like label-based graph
             if (val.resource['Part Identifier Assignment']){
                 val.resource['Part Identifier Assignment'].forEach(function(annotation){
                     var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
@@ -127,8 +128,8 @@ define([
                 try {
                     self.reportVals.statements = val.resource['Statement'].map(function(val){
                         return {
-                            content:  {'name': 'Instrument Parameters', 'value': self.getResourceValue(val, ['Statement_content','@display_value'])},
-                            type: {'name': 'type', 'value': self.getResourceValue(val, ['Statement_type','@display_value'])}
+                            content:  {'name': arches.translations.instrumentParameters, 'value': self.getResourceValue(val, ['Statement_content','@display_value'])},
+                            type: {'name': arches.translations.type, 'value': self.getResourceValue(val, ['Statement_type','@display_value'])}
                         };
                     });
                 } catch(e) {
@@ -138,17 +139,17 @@ define([
                 var foundStatement = _.find(self.reportVals.statements, function(statement) {
                     return statement.type.value.split(",").indexOf(type) > -1;
                 });
-                return foundStatement ? foundStatement.content : {'name': 'Instrument Parameters', 'value': 'None'};
+                return foundStatement ? foundStatement.content : {'name': arches.translations.instrumentParameters, 'value': 'None'};
             };
     
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
-                observationName: {'name': 'Experiment/Observation Name', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
-                observationType: {'name': 'Type', 'value': this.getResourceValue(val.resource, ['type','@display_value'])},
-                project: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
-                usedObject: {'name': 'Used Object', 'value': this.getResourceValue(val.resource, ['observed','@display_value'])},
-                usedInstrument: {'name': 'Instrument', 'value': this.getResourceValue(val.resource, ['used instrument','@display_value'])},
-                usedProcess: {'name': 'Procedure', 'value': this.getResourceValue(val.resource, ['used process','@display_value'])},
+                observationName: {'name': arches.translations.experimentName, 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
+                observationType: {'name': arches.translations.type, 'value': this.getResourceValue(val.resource, ['type','@display_value'])},
+                project: {'name': arches.translations.project, 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
+                usedObject: {'name': arches.translations.usedObject, 'value': this.getResourceValue(val.resource, ['observed','@display_value'])},
+                usedInstrument: {'name': arches.translations.instrument, 'value': this.getResourceValue(val.resource, ['used instrument','@display_value'])},
+                usedProcess: {'name': arches.translations.procedure, 'value': this.getResourceValue(val.resource, ['used process','@display_value'])},
             };
 
             self.reportVals.statement = findStatementType(val, 'description');

@@ -38,7 +38,7 @@ define([
             if (response.ok) {
                 return await response.json();
             } else { 
-                throw('error retrieving related resources', response); // throw - this should never happen. 
+                throw('error retrieving related resources', response); // throw - this should never happen, therefore not i18n'd.
             }
 
         };
@@ -82,9 +82,11 @@ define([
             
             const today = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            // TODO(jtw) -- can we get the locale from django?
             const reportDate = today.toLocaleDateString('en-US', options);
             const physicalThingsDetailsArray = [...Object.values(physicalThingsDetails)];
             const objectOfStudyDetailsArray = physicalThingsDetailsArray.filter(thing => physicalThingFromPreviousStep.includes(thing.resourceinstanceid));
+            // TODO(jtw)
             const analysisAreas = physicalThingsDetailsArray.filter(physicalThing => physicalThing.resource?.type?.["@display_value"] == 'analysis areas');
             const annotationScreenshots = screenshots?.map((screenshot) => {
                 const url = `${window.location.origin}/temp_file/${screenshot.fileId}`;

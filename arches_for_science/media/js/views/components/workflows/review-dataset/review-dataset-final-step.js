@@ -2,9 +2,10 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'arches',
     'views/components/workflows/summary-step',
     'templates/views/components/workflows/review-dataset/review-dataset-final-step.htm',
-], function($, _, ko, SummaryStep, reviewDatasetFinalStepTemplate) {
+], function($, _, ko, arches, SummaryStep, reviewDatasetFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
@@ -42,7 +43,7 @@ define([
         this.resourceData.subscribe(function(val){
             this.displayName = val.displayname;
             this.reportVals = {
-                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content', '@display_value'])},
+                sampledObjectName: {'name': arches.translations.sampledObject, 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content', '@display_value'])},
             };
 
             let parentPhysThingParts;

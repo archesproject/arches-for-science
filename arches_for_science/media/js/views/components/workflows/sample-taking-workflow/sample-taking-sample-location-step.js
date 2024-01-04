@@ -519,7 +519,7 @@ define([
 
             self.savingTile(true);
             self.showingSampleLocationDeleteModal(false);
-            self.savingMessage("Deleting Sample Areas, Samples & Descriptions");
+            self.savingMessage(arches.translations.deleting);
 
             window.fetch(arches.urls.root + 'deletesamplearea', {
                 method: 'POST',
@@ -618,12 +618,11 @@ define([
 
             self.savingTile(true);
 
-            self.savingMessage(`This step is saving ...`);
+            self.savingMessage(arches.translations.saving);
             const savingMessages = [
-                `Sample Name, Classification and Statements`,
-                `Sample Area Name and Classification`,
-                `Relationship between Sample, Sample Area, and Parent Object (${params.physicalThingName})`,
-                `This may take a while, please do not move away from this step.`
+                arches.translations.namesClassifications,
+                arches.translations.relationship,
+                arches.translations.takesTime,
             ];
             let i = 0;
             const showMessage = setInterval(() => {
@@ -635,7 +634,7 @@ define([
             );
 
             const showExtraMessage = setTimeout(() => {
-                self.savingMessage(`This is taking longer than usual. Thank you for your patience.`);
+                self.savingMessage(arches.translations.takesTooLong);
             }, "20000");
 
             $.ajax({
@@ -645,7 +644,7 @@ define([
                 dataType: 'json',
             })
             .then(function(data){
-                self.savingMessage("Saved.");
+                self.savingMessage(arches.translations.saved);
                 clearInterval(showMessage);
                 clearTimeout(showExtraMessage);
 
@@ -904,8 +903,8 @@ define([
                                     })
                                     .then(function(descriptors) {
                                         popupData.name(descriptors.displayname);
-                                        const description = `<strong>Analysis Area</strong>
-                                            <br>Analysis Areas may not be modified in the sample taking workflow
+                                        const description = `<strong>${arches.translations.analysisAreas}</strong>
+                                            <br>${arches.translations.noModifyingAreas}
                                             <br>${descriptors['map_popup'] !== "Undefined" ? descriptors['map_popup'] : ''}`
                                         popupData.description(description);
                                     });
