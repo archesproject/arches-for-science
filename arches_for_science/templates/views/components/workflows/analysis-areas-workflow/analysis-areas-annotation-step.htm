@@ -82,7 +82,7 @@
 
                 <div style="overflow: hidden; height: 0px; transition: height .3s;"
                     data-bind="style: {height: sampleListShowing() ? '185px': '0px'}">
-                    <h5>{% trans 'Region locations' %}</h5>
+                    <h5>{% trans 'Analysis Area locations' %}</h5>
             
                     <div style="margin-left: 5px; margin-right: 15px;">
                         <input 
@@ -159,13 +159,7 @@
                                                 </a>
                                             </td>
                                             <!-- /ko -->
-                                            <!-- TODO(i18n) samples -->
-                                            <td class="afs-workflow-table-contents"
-                                                data-bind="text: (function(){
-                                                    const partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                                                    return $parent.getStrValue($data.data[partIdentifierAssignmentLabelNodeId]) + ' [Region of ' + $parent.physicalThingName() + ']';
-                                                })()"
-                                            ></td>
+                                            <td class="afs-workflow-table-contents" data-bind="text: $parent.areaNameFromTileData($data.data)"></td>
                                         </tr>
                                     <!-- /ko -->
                                 </tbody>
@@ -349,8 +343,9 @@
 
                         <!-- ko if: $data.partIdentifierAssignmentLabelWidget() -->
                             <h5 class="analysis-areas-annotation-step-widget-title">
-                                {% trans 'Name for Region (Part)' %} <span class="afs-workflow-required-tag">{% trans 'required' %}</span>
+                                {% trans 'Name for Analyis Area (Part)' %} <span class="afs-workflow-required-tag">{% trans 'required' %}</span>
                             </h5>
+                            <!-- TODO: aria-label -->
                             <i style="display: none;" data-bind="css: {'ion-asterisk widget-label-required': self.form.nodeLookup[$data.partIdentifierAssignmentLabelWidget().node_id()].isrequired}"></i>
 
                             <div class="afs-region-name" data-bind='

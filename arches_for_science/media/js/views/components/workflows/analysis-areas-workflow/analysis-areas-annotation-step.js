@@ -151,13 +151,15 @@ define([
                 self.physicalThingName(data.displayname);
             });
 
+        this.partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+        this.areaNameFromTileData = (tileData) => {
+            const nameValue = tileData[self.partIdentifierAssignmentLabelNodeId];
+            const baseName = self.getStrValue(nameValue) || "";
+            return `${baseName} [${arches.translations.analysisArea} ${arches.translations.of} ${self.physicalThingName()}]`;
+        };
         this.areaName = ko.computed(function(){
-            var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             if (self.selectedAnalysisAreaInstance()){
-                const nameValue = self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId];
-                const baseName = self.getStrValue(nameValue) || "";
-                // TODO(i18n) samples
-                return `${baseName} [Region of ${self.physicalThingName()}]`;
+                return self.areaNameFromTileData(self.selectedAnalysisAreaInstance().data);
             }
         });
 
