@@ -72,8 +72,12 @@ define([
                                     const parent = titleArray[1].startsWith('Analysis Area') ? titleArray[1].replace('Analysis Area of ', '').replace(']',''):
                                         titleArray[1].startsWith('Sample Area') ? titleArray[1].replace('Sample Area of ','').replace(']',''):
                                             titleArray[1].replace(']','');
-                                    // TODO(i18n) i18n -- difficult
-                                    const description = `${title} is a ${type} of ${parent},\n which is created before`;
+                                    const description = (
+                                        arches.translations.existingAnnotation
+                                        .replace('{title}', title)
+                                        .replace('{type}', type)
+                                        .replace('{parent}', parent)
+                                    );
                                     var popupData = {
                                         closePopup: function() {
                                             popup.remove();
