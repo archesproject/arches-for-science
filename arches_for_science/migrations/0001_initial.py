@@ -230,7 +230,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Collection or Set report",
+            description=_("Collection or Set report"),
             componentname="collection-set-report",
             templateid="b5380d34-15ef-4a38-95c0-df228068916d",
             preload_resource_data=False
@@ -243,7 +243,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Digital Resource report",
+            description=_("Digital Resource report"),
             componentname="digital-resource-report",
             templateid="e6390e54-31c4-4055-b064-ea9296c1c13a",
             preload_resource_data=False
@@ -256,7 +256,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Group report",
+            description=_("Group report"),
             componentname="group-report",
             templateid="3a9fd7d1-f065-4777-b664-3fda0eb39ffe",
             preload_resource_data=False
@@ -269,7 +269,7 @@ class Migration(migrations.Migration):
             defaultconfig={ 
                 "uncompacted_reporting": True
             },
-            description="Instrument report",
+            description=_("Instrument report"),
             componentname="instrument-report",
             templateid="c2edf720-9db0-4029-a102-48e6762ded79",
             preload_resource_data=False
@@ -282,7 +282,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Modification report",
+            description=_("Modification report"),
             componentname="modification-report",
             templateid="f02f4b69-08d9-49fa-a4d1-94ef8178fbce",
             preload_resource_data=False
@@ -295,7 +295,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Observation report",
+            description=_("Observation report"),
             componentname="observation-report",
             templateid="e581f911-185b-4456-873d-f83b46fd89ec",
             preload_resource_data=False
@@ -308,7 +308,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Period report",
+            description=_("Period report"),
             componentname="period-report",
             templateid="9f6b087b-12f4-4436-8bfc-257d1665ba40",
             preload_resource_data=False
@@ -321,7 +321,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Person report",
+            description=_("Person report"),
             componentname="person-report",
             templateid="15d3ab75-1191-41f0-a766-e7e8ce7b9ca9",
             preload_resource_data=False
@@ -334,7 +334,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Physical Thing report",
+            description=_("Physical Thing report"),
             componentname="physical-thing-report",
             templateid="b3056c21-33c4-4055-b064-ea9296c1c13a",
             preload_resource_data=False
@@ -347,7 +347,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Place report",
+            description=_("Place report"),
             componentname="place-report",
             templateid="34b7109d-2c0a-47fa-a307-4e361e142bfe",
             preload_resource_data=False
@@ -360,7 +360,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Project report",
+            description=_("Project report"),
             componentname="project-report",
             templateid="2b124304-6e42-4c0c-8161-14c010dcef71",
             preload_resource_data=False
@@ -373,7 +373,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="provenance Activity report",
+            description=_("provenance Activity report"),
             componentname="provenance-activity-report",
             templateid="1a51566c-4ba0-4633-b717-18f629350c9c",
             preload_resource_data=False
@@ -386,7 +386,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Sampling Activity report",
+            description=_("Sampling Activity report"),
             componentname="sampling-activity-report",
             templateid="4c864659-fc0d-45ec-a4da-c8fb8a7ec24e",
             preload_resource_data=False
@@ -399,7 +399,7 @@ class Migration(migrations.Migration):
             defaultconfig={
                 "uncompacted_reporting": True
             },
-            description="Textual Work report",
+            description=_("Textual Work report"),
             componentname="textual-work-report",
             templateid="590a02ad-7d47-4b29-90a3-2e29aada677d",
             preload_resource_data=False
@@ -410,7 +410,7 @@ class Migration(migrations.Migration):
             name=_("Thematic Template"),
             component="views/components/reports/thematic",
             defaultconfig={},
-            description="Thematic report template",
+            description=_("Thematic report template"),
             componentname="thematic-report",
             preload_resource_data=False,
             templateid="c560f22a-99b9-4a1c-b805-0891bbe63ada"
@@ -434,7 +434,7 @@ class Migration(migrations.Migration):
                 ],
                 "activeTabIndex": 1
             },
-            description="Visual Work report",
+            description=_("Visual Work report"),
             componentname="visual-work-report",
             templateid="c4167d32-33c4-4055-b064-ea9296c1c13a"
         )
