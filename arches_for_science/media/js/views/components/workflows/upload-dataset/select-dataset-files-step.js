@@ -381,7 +381,7 @@ define([
                 self.snapshot = params.form.savedData();
                 this.selectedAnnotationTile.subscribe(this.highlightAnnotation);
                 self.annotationNodes.subscribe(function(val){
-                    // TODO(jtw) - slug or name?
+                    // TODO(i18n) - slug or name?
                     var overlay = val.find(n => n.name.includes('Physical Thing'));
                     if (overlay) {
                         overlay.active(true);
@@ -423,7 +423,7 @@ define([
                     let timeoutId = 0;
 
                     part.calcDatasetName = ko.computed(function() {
-                        // TODO(jtw) slug or name?
+                        // TODO(i18n) slug or name?
                         const basename = part.datasetName() || 'Dataset';
 
                         return `${basename} (${childPhysThingName})`;

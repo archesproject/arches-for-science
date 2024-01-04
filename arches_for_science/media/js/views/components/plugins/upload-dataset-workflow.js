@@ -46,7 +46,7 @@ define([
             var uploadDatasetStep = {
                 title: arches.translations.uploadFiles,
                 name: 'upload-files',
-                // TODO(jtw): seems wrong
+                // TODO(i18n): seems wrong
                 description: arches.translations.dateSampleTaken,
                 component: 'views/components/workflows/component-based-step',
                 componentname: 'component-based-step',

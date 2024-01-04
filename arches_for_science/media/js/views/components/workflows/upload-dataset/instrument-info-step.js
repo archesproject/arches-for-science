@@ -107,7 +107,7 @@ define([
                 self.instrumentInstance(self.createRelatedInstance(val, instrumentUsedInObservation, observationInstrumentUsedIn));
                 instrumentData.then(function(data){
                     self.instrumentName(data._source.displayname);
-                    // TODO(jtw)
+                    // TODO(i18n) samples
                     self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
                 });
             }
@@ -119,7 +119,7 @@ define([
 
         this.dateValue.subscribe(function(val){
             if (self.instrumentName()) {
-                // TODO(jtw)
+                // TODO(i18n) samples
                 self.nameValue(`Observation of ${physThingName} with ${self.instrumentName()} ${val}`);
             }
         });

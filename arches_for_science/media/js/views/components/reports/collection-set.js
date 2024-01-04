@@ -16,7 +16,7 @@ define([
             self.sections = [
                 {id: 'name', title: arches.translations.namesIdentifiersClassifications},
                 {id: 'description', title: arches.translations.description},
-                // TODO(jtw): seems wrong
+                // TODO(i18n): seems wrong
                 {id: 'existence', title: arches.translations.timeline},
                 {id: 'events', title: arches.translations.events},
                 {id: 'projects', title: arches.translations.projects},
