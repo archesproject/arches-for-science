@@ -157,7 +157,9 @@ define([
                         statementTypeId
                     ],
                     "ca227582-78ed-11ea-a33b-acde48001122": [
-                        "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                        arches.activeLanguage === "nl"
+                        ? "9ff49782-7214-4763-a725-a33002ee9691"
+                        : "bc35776b-996f-4fc1-bd25-9f6432c1f349"  // english
                     ]
                 },
                 "nodegroup_id": "ca226fe2-78ed-11ea-a33b-acde48001122",

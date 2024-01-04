@@ -117,7 +117,9 @@ define([
                 "0b92d5a3-ca85-11e9-8ea8-a4d18cec433a": null,
                 "0b92de3d-ca85-11e9-affe-a4d18cec433a": null,
                 "0b92f8cc-ca85-11e9-8c26-a4d18cec433a": [
-                    "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                    arches.activeLanguage === "nl"
+                    ? "9ff49782-7214-4763-a725-a33002ee9691"
+                    : "bc35776b-996f-4fc1-bd25-9f6432c1f349"  // english
                 ],
                 "0b930757-ca85-11e9-a268-a4d18cec433a": [
                     "7d069762-bd96-44b8-afc8-4761389105c5"
