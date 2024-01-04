@@ -365,9 +365,8 @@ class SaveSampleAreaView(SaveAnnotationView):
                     sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
         base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid][get_language()]["value"]
-        # TODO(i18n) samples
-        sample_name = "{} [Sample of {}]".format(base_name, parent_physical_thing_name)
-        sample_area_name = "{} [Sample Area of {}]".format(base_name, parent_physical_thing_name)
+        sample_name = _("{} [Sample of {}]").format(base_name, parent_physical_thing_name)
+        sample_area_name = _("{} [Sample Area of {}]").format(base_name, parent_physical_thing_name)
 
         try:
             with transaction.atomic():
