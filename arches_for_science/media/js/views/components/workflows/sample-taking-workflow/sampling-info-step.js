@@ -85,7 +85,7 @@ define([
         });
         
         this.samplingDate.subscribe(function(val){
-            // TODO(jtw)
+            // TODO(i18n) samples
             self.samplingName(["Sampling Activity of", self.physicalThingNameValue, val].join(' '));
         });
 

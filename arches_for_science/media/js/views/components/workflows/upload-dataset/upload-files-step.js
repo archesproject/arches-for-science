@@ -23,7 +23,7 @@ define([
             this.datasetId = undefined;
             this.datasetName = ko.observable();
             this.calcDatasetName = ko.computed(function() {
-                // TODO(jtw) slug or name?
+                // TODO(i18n) slug or name?
                 const basename = self.datasetName() || 'Dataset';
                 return `${basename} (${physThingName})`
             });

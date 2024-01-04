@@ -35,7 +35,7 @@ define(['underscore',
 
             self.timeSpanData = ko.observable({
                 sections: [{
-                // TODO(jtw) UI?
+                // TODO(i18n) appears in UI?
                 title: 'TimeSpan', 
                 data: [{
                     key: self.dataConfig.timespan?.key || 'Timespan',

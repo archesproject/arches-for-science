@@ -117,7 +117,7 @@ define([
                 sections: 
                     [
                         {
-                            // todo(jtw): card name
+                            // TODO(i18n): card name
                             title: "Parent Instrument", 
                             data: [{
                                 key: 'parent instrument', 

@@ -37,7 +37,7 @@ define([
         this.getResourceData(params.parentPhysThingResourceId, this.parentPhysThingData);
 
         this.parentPhysThingData.subscribe(function(val){
-            // TODO(jtw) -- looks like label-based graph
+            // TODO(i18n) -- label-based graph
             if (val.resource['Part Identifier Assignment']){
                 val.resource['Part Identifier Assignment'].forEach(function(annotation){
                     var annotationName = self.getResourceValue(annotation,['Part Identifier Assignment_Physical Part of Object','@display_value']);
