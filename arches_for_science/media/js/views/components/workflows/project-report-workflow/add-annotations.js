@@ -113,7 +113,7 @@ define([
                 self.canvases(canvases);
                 self.selectedCanvas(self.canvases()[0]?.id);
                 self.refreshAnnotation();
-                this.summaryName(`Annotation Summary for ${self.physicalThingList()?.find(thing => thing.id == self.physicalThingValue())?.text}`);
+                this.summaryName(`${arches.translations.annotationSummaryFor} ${self.physicalThingList()?.find(thing => thing.id == self.physicalThingValue())?.text}`);
             } else {
                 self.summaryName(null);
                 self.canvases([]);
@@ -128,7 +128,7 @@ define([
             if (response.ok) {
                 return await response.json();
             } else { 
-                throw('error retrieving resource', response); // throw - this should never happen. 
+                throw('error retrieving resource', response); // throw - this should never happen, therefore not i18n'd
             }
         };
 
@@ -170,7 +170,7 @@ define([
             <div class="hover-feature-body">
                 <div class="hover-feature" data-bind="html: description"></div>
                 <div class="hover-feature-metadata">
-                    Resource Model:
+                    ${arches.translations.resourceModel}:
                     <span data-bind="text: graphName"></span>
                 </div>
                 <div class="hover-feature-metadata">
@@ -182,8 +182,8 @@ define([
                 <a data-bind="click: function () {
                     window.open(reportURL + resourceinstanceid);
                 }" href="javascript:void(0)">
-                    <i class="ion-document-text"></i>
-                    Report
+                    <i class="ion-document-text" aria-hidden="true"></i>
+                    ${arches.translations.report}
                 </a>
             </div>
         </div>`;
@@ -227,12 +227,14 @@ define([
                                 .on('add', function() {
                                     const titleArrary = feature.properties.name.split('[');
                                     const title = titleArrary[0].trim();
+                                    // TODO(jtw)
                                     const type = titleArrary[1].startsWith('Region') ? 'Analysis Area':
                                         titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
                                             'Part';
                                     const parent = titleArrary[1].startsWith('Region') ? titleArrary[1].replace('Region of ','').replace(']',''):
                                         titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
                                             titleArrary[1].replace(']','');
+                                    // TODO(jtw) -- i18n (difficult)
                                     const description = `${title} is a ${type} of ${parent} created before`;
                                     var popupData = {
                                         closePopup: function() {
@@ -240,6 +242,7 @@ define([
                                         },
                                         name: feature.properties.name,
                                         description: description,
+                                        // TODO(jtw) slug or name?
                                         graphName: 'Physical Thing',
                                         resourceinstanceid: feature.properties.sampleAreaResourceId,
                                         reportURL: arches.urls.resource_report

@@ -19,7 +19,7 @@ define([
         this.getTemplates = async() => {
             const response = await fetch(arches.urls.reports_list);
 
-            if(response.ok) {
+            if (!response.ok) {
                 const data = await response.json();
                 archesTemplates = data.map(template => {
                     if(!template.thumbnail){
@@ -45,6 +45,7 @@ define([
                     };
                 });
             } else {
+                // not i18n'd, does not surface in UI
                 throw('couldn\'t fetch report templates', response)
             }
             this.docxTemplates = archesTemplates.filter(template => template.format === 'docx');

@@ -94,6 +94,7 @@ define([
             analysis: '31d97bdd-f10f-4a26-958c-69cb5ab69af1',
         };
         this.physicalThingTypeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
+        // TODO(jtw)
         const sampleSubstring = '[Sample';  // for "[Sample of ..." and "[Sample Area of ..."
         const regionSubstring = '[Region';
 
@@ -299,7 +300,7 @@ define([
         this.targetResourceSelectConfig = {
             value: self.selectedTerm,
             minimumInputLength: 2,
-            placeholder: 'find a physical thing: enter an artist, object name, artwork title or object number',
+            placeholder: arches.translations.physicalThingPlaceholder,
             clickBubble: true,
             multiple: false,
             closeOnSelect: true,

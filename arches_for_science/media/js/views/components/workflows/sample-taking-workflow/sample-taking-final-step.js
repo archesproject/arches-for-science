@@ -65,12 +65,14 @@ define([
                                 .on('add', function() {
                                     const titleArrary = feature.properties.locationName.split('[');
                                     const title = titleArrary[0].trim();
+                                    // TODO(jtw)
                                     const type = titleArrary[1].startsWith('Region') ? 'Analysis Area':
                                         titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
                                             'Part';
                                     const parent = titleArrary[1].startsWith('Region') ? titleArrary[1].replace('Region of ','').replace(']',''):
                                         titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
                                             titleArrary[1].replace(']','');
+                                    // TODO(jtw) -- i18n (difficult)
                                     const description = `${title} is a ${type} of ${parent},\n which is created before`;
                                     var popupData = {
                                         closePopup: function() {
@@ -78,6 +80,7 @@ define([
                                         },
                                         name: feature.properties.locationName,
                                         description: description,
+                                        // TODO(jtw) slug or name?
                                         graphName: 'Physical Thing',
                                         resourceinstanceid: feature.properties.sampleAreaResourceId,
                                         reportURL: arches.urls.resource_report
@@ -141,11 +144,11 @@ define([
         this.resourceData.subscribe(function(val){ // 1st request
             this.displayName = val.displayname;
             this.reportVals = {
-                projectName: {'name': 'Project', 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
-                sampledObjectName: {'name': 'Sampled Object', 'value': this.getResourceValue(val.resource['Sampling Unit'][0], ['Sampling Area','Overall Object Sampled','@display_value'])},
-                samplers: {'name': 'Samplers', 'value': this.getResourceValue(val.resource, ['carried out by','@display_value'])},
-                samplingDate: {'name': 'Sampling Date', 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@display_value'])},
-                samplingActivityName: {'name': 'Sampling Activity Name', 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
+                projectName: {'name': arches.translations.project, 'value': this.getResourceValue(val.resource, ['part of','@display_value'])},
+                sampledObjectName: {'name': arches.translations.sampledObject, 'value': this.getResourceValue(val.resource['Sampling Unit'][0], ['Sampling Area','Overall Object Sampled','@display_value'])},
+                samplers: {'name': arches.translations.samplers, 'value': this.getResourceValue(val.resource, ['carried out by','@display_value'])},
+                samplingDate: {'name': arches.translations.samplingDate, 'value': this.getResourceValue(val.resource, ['TimeSpan','TimeSpan_begin of the begin','@display_value'])},
+                samplingActivityName: {'name':  arches.translations.samplingName, 'value': this.getResourceValue(val.resource['Name'][0], ['Name_content','@display_value'])},
             };
 
             var statements = val.resource['Statement'].map(function(val){
@@ -156,8 +159,8 @@ define([
             });
             var samplingTechnique = self.findStatementType(statements, "description,brief text");
             var samplingMotivation = self.findStatementType(statements, "sampling motivation");
-            this.reportVals.technique = {'name': 'Sampling Technique', 'value': samplingTechnique};
-            this.reportVals.motivation = {'name': 'Sampling Motivation', 'value': samplingMotivation};
+            this.reportVals.technique = {'name': arches.translations.samplingTechnique, 'value': samplingTechnique};
+            this.reportVals.motivation = {'name': arches.translations.samplingMotivation, 'value': samplingMotivation};
             let sampleAnnotationCollection = {};
             let partsAnnotationCollection = {};
 

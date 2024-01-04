@@ -69,7 +69,7 @@ define([
                 return;
             }
             self.loading(true);
-            self.loadingMessage('Saving interpretation data...');
+            self.loadingMessage(arches.translations.saving);
             for (const tileid in params.value()) {
                 const value = params.value()[tileid];
                 if(value.fileStatementParameter.dirty()){
@@ -86,7 +86,7 @@ define([
             self.digitalResources([]);
 
             self.loading(true);
-            self.loadingMessage('Reloading datasets...');
+            self.loadingMessage(arches.translations.loadingDatasets);
             await loadDigitalResources(false);
             if(oldDigitalResourceId){
                 self.selectedDigitalResource(self.digitalResources().find(digitalResource => digitalResource.resourceinstanceid == oldDigitalResourceId));
@@ -240,7 +240,7 @@ define([
 
         (async() => {
             self.loading(true);
-            self.loadingMessage('Loading datasets...');
+            self.loadingMessage(arches.translations.loadingDatasets);
             await loadDigitalResources();
             self.loading(false);
         })();

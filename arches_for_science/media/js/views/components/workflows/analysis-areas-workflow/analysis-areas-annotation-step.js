@@ -232,6 +232,8 @@ define([
         this.removeFeatureFromCanvas = function(feature) {
             var annotationNodes = self.annotationNodes();
             
+            // Not localized, since not actually the node name.
+            // Matches against string created in updateAnnotations(), below.
             var physicalThingAnnotationNodeName = "Analysis Areas";
             var physicalThingAnnotationNode = annotationNodes.find(function(annotationNode) {
                 return annotationNode.name === physicalThingAnnotationNodeName;
@@ -411,7 +413,7 @@ define([
 
             self.savingTile(true);
             self.showingAnalysisAreaDeleteModal(false);
-            self.savingMessage("Deleting Analysis Area");
+            self.savingMessage(arches.translations.deleting);
 
             window.fetch(arches.urls.root + 'deleteanalysisarea', {
                 method: 'POST',
@@ -479,11 +481,11 @@ define([
             self.savingTile(true);
             params.form.lockExternalStep('image-step', true);
 
-            self.savingMessage(`This step is saving ...`);
+            self.savingMessage(arches.translations.saving);
             const savingMessages = [
-                `Analysis Area Name and Classification`,
-                `Relationship between Analysis Area, Project and Parent Object (${self.physicalThingName()})`,
-                `This may take a while, please do not move away from this step.`
+                arches.translations.namesClassifications,
+                arches.translations.relationship,
+                arches.translations.takesTime,
             ];
             let i = 0;
             const showMessage = setInterval(() => {
@@ -495,7 +497,7 @@ define([
             );
 
             const showExtraMessage = setTimeout(() => {
-                self.savingMessage(`This is taking longer than usual. Thank you for your patience.`);
+                self.savingMessage(arches.translations.takesTooLong);
             }, "10000");
 
             const data = {
@@ -514,7 +516,7 @@ define([
                 data: data,
                 dataType: 'json',
             }).then(function(data){
-                self.savingMessage("Saved.");
+                self.savingMessage(arches.translations.saved);
                 clearInterval(showMessage);
                 clearTimeout(showExtraMessage);
 
@@ -751,8 +753,8 @@ define([
                                     })
                                     .then(function(descriptors) {
                                         popupData.name(descriptors.displayname);
-                                        const description = `<strong>Sample Location</strong>
-                                            <br>Sample locations may not be modified in the analysis area workflow
+                                        const description = `<strong>${arches.translations.sampleLocation}</strong>
+                                            <br>${arches.translations.noModifyingSamples}
                                             <br>${descriptors['map_popup'] !== "Undefined" ? descriptors['map_popup'] : ''}`;
                                         popupData.description(description);
                                     });
@@ -821,6 +823,7 @@ define([
                                     });
                                     self.annotationNodes([
                                         {
+                                            // Not user facing: used like a slug in this file
                                             name: "Analysis Areas",
                                             icon: "fa fa-eye",
                                             active: editNodeActiveState,
@@ -828,6 +831,7 @@ define([
                                             annotations: analysisAreaAnnotations
                                         },
                                         {
+                                            // Not user facing: used like a slug in this file
                                             name: "Sample Locations",
                                             icon: "fa fa-eyedropper",
                                             active: nonEditNodeActiveState,

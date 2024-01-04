@@ -24,8 +24,8 @@ define([
         this.resourceData.subscribe(async function(val){
             this.displayName = val['displayname'] || 'unnamed';
             this.reportVals = {
-                projectName: {'name': 'Project', 'value': params.relatedProjectData.projectName, 'resourceid': params.relatedProjectData.project},
-                observationName: {'name': 'Observation', 'value': params.relatedProjectData.observationName, 'resourceid': params.relatedProjectData.observation},
+                projectName: {'name': arches.translations.project, 'value': params.relatedProjectData.projectName, 'resourceid': params.relatedProjectData.project},
+                observationName: {'name': arches.translations.observation, 'value': params.relatedProjectData.observationName, 'resourceid': params.relatedProjectData.observation},
             };
             
             await getWorkflowDigitalResources();
