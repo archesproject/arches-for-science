@@ -88,7 +88,7 @@
                 <div class="afs-report-section">
                     <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.carriers)}, css: {'fa-angle-double-right': visible.files(), 'fa-angle-double-up': !visible.files()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Files" %}</h2>
                     <span data-bind="if: cards['files of digital resource'] && (!files().length || cards['files of digital resource'].cardinality == 'n')">
-                        <!-- TODO(jtw) -->
+                        <!-- TODO(i18n) card label -->
                         <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['files of digital resource'])}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add File" %}</a>
                     </span>
                 
@@ -116,7 +116,7 @@
                                                 <td data-bind="text: name"></td>
                                                 <td data-bind="text: metadataExists"></td>
                                                 <td class="afs-table-control">
-                                                    <!-- TODO(jtw) -->
+                                                    <!-- TODO(i18n) -->
                                                     <div data-bind="if: $parent.cards && $parent.cards['files of digital resource']">
                                                         <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['files of digital resource'])},
                                                             attr: {'aria-label': $root.translations.edit}">

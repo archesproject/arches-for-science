@@ -78,14 +78,14 @@ define([
                                     .on('add', function() {
                                         const titleArrary = feature.properties.name.split('[');
                                         const title = titleArrary[0].trim();
-                                        // TODO(jtw)
+                                        // TODO(i18n) samples
                                         const type = titleArrary[1].startsWith('Region') ? 'Analysis Area':
                                             titleArrary[1].startsWith('Sample Area') ? 'Sample Area':
                                                 'Part';
                                         const parent = titleArrary[1].startsWith('Region') ? titleArrary[1].replace('Region of ','').replace(']',''):
                                             titleArrary[1].startsWith('Sample Area') ? titleArrary[1].replace('Sample Area of ','').replace(']',''):
                                                 titleArrary[1].replace(']','');
-                                        // TODO(jtw) i18n -- difficult
+                                        // TODO(i18n) i18n -- difficult
                                         const description = `${title} is a ${type} of ${parent} created before`;
                                         var popupData = {
                                             closePopup: function() {
@@ -93,7 +93,7 @@ define([
                                             },
                                             name: feature.properties.name,
                                             description: description,
-                                            // TODO(jtw) graph or slug?
+                                            // TODO(i18n) graph or slug?
                                             graphName: 'Physical Thing',
                                             resourceinstanceid: feature.properties.sampleAreaResourceId,
                                             reportURL: arches.urls.resource_report

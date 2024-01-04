@@ -146,7 +146,7 @@ define([
         this.rendererConfigs = ko.observableArray();
 
         this.dataDelimiterRadio.subscribe(value => {
-            // TODO(jtw): UI?
+            // TODO(i18n): appears in UI?
             if(value != 'other'){
                 this.dataDelimiter(value);
             } else {

@@ -59,7 +59,7 @@ define([
             var chartConfig = {
                 responsive: false,
                 modeBarButtonsToAdd: [{ 
-                    // TODO(jtw) does this appear in UI?
+                    // TODO(i18n) appears in UI?
                     name: 'expand height',
                     icon: {
                         'width': 1800,

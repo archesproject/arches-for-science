@@ -22,7 +22,7 @@ def download_project_files_task(userid, files, temp_files, project_name):
 
     search_history_obj = SearchExportHistory.objects.get(pk=exportid) if exportid else None
 
-    # TODO(jtw): should this be a gettext_lazy?
+    # TODO(i18n): should this be a gettext_lazy?
     msg = _(
         "The report(s) and the related file(s) for the project '{}' are ready for download."
     ).format(project_name)
