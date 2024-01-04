@@ -62,15 +62,15 @@ define([
             });
         };
 
-        this.toggleSelection = function() {
-            let bool = false;
-            if (self.numberOfSelectedFiles() === 0) {
-                bool = true;
+        this.toggleSelection = function(observation) {
+            const noFilesSelected = observation.relatedFiles().
+                filter(file => file.selected()).length === 0;
+            const selectedValue = noFilesSelected;
+
+            observation.relatedFiles().forEach(file => file.selected(selectedValue));
+            if(selectedValue) {
+                observation.expanded(true);
             }
-            self.relatedObservations().forEach((observation) => {
-                observation.relatedFiles().forEach(file => file.selected(bool));
-            });
-            self.expandAll(true);
         };
 
         const addSelectedFiles = () => {
