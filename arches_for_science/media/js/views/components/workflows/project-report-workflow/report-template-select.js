@@ -45,6 +45,7 @@ define([
                     };
                 });
             } else {
+                // not i18n'd, does not surface in UI
                 throw('couldn\'t fetch report templates', response)
             }
             this.docxTemplates = archesTemplates.filter(template => template.format === 'docx');

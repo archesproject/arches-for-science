@@ -171,7 +171,7 @@ define([
                 self.loading(true);
 
                 if(file) {
-                    self.loadingMessage(`Uploading files (may take a few minutes)...`);
+                    self.loadingMessage(arches.translations.takesTime);
                     let fileInfo;
                     
                     if (!ko.unwrap(file.tileId)) {
@@ -226,7 +226,7 @@ define([
                 if(fileTile){
                     self.loading(true);
                     try {
-                        self.loadingMessage(`Deleting ${ko.unwrap(file.name)}...`);
+                        self.loadingMessage(`${arches.translations.deleting} ${ko.unwrap(file.name)}...`);
                         const formData = new window.FormData();
                         formData.append("tileid", fileTile);
 
@@ -241,7 +241,10 @@ define([
 
                         const body = await resp.json();
 
-                        if(resp.status == 200 || (resp.status == 500 && body?.message?.includes("likely already deleted"))){
+                        if (
+                            resp.status == 200 ||
+                            (resp.status == 500 && body?.exception === 'TileModel.ObjectDoesNotExist')
+                        ) {
                             const datasetFiles = this.selectedPart().datasetFiles();
                             this.selectedPart().datasetFiles(datasetFiles.filter(datasetFile => 
                                 ko.unwrap(datasetFile.tileId) != fileTile
@@ -287,7 +290,7 @@ define([
                     }));
 
                     self.loading(true);
-                    self.loadingMessage(`Saving dataset ${part.calcDatasetName()}`);
+                    self.loadingMessage(`${arches.translations.saving} ${part.calcDatasetName()}`);
                     if(files) {
                         Array.from(files).forEach(file => {
                             // Then save a file tile to the digital resource for each associated file
@@ -373,11 +376,12 @@ define([
 
             this.init = async() => {
                 self.loading(true);
-                self.loadingMessage(`Loading samples and analysis areas...`);
+                self.loadingMessage(arches.translations.loadingSamplesAnalyses);
                 self.activeTab('dataset');
                 self.snapshot = params.form.savedData();
                 this.selectedAnnotationTile.subscribe(this.highlightAnnotation);
                 self.annotationNodes.subscribe(function(val){
+                    // TODO(jtw) - slug or name?
                     var overlay = val.find(n => n.name.includes('Physical Thing'));
                     if (overlay) {
                         overlay.active(true);
@@ -419,6 +423,7 @@ define([
                     let timeoutId = 0;
 
                     part.calcDatasetName = ko.computed(function() {
+                        // TODO(jtw) slug or name?
                         const basename = part.datasetName() || 'Dataset';
 
                         return `${basename} (${childPhysThingName})`;

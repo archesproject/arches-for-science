@@ -33,9 +33,9 @@ define([
                 return val['Digital Source']['resourceId'] === digitalReferenceResourceId;
             });
             this.reportVals = {
-                projectName: {'name': 'Project', 'value': params.relatedProjectData.projectName, 'resourceid': params.relatedProjectData.project},
-                parentObject: {'name': 'Object', 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
-                digitalReference: {'name': 'Image Service', 'value': digitalReference['Digital Source']["@display_value"]},
+                projectName: {'name': arches.translations.project, 'value': params.relatedProjectData.projectName, 'resourceid': params.relatedProjectData.project},
+                parentObject: {'name': arches.translations.object, 'value': this.getResourceValue(val.resource, ['part of', '@display_value'])},
+                digitalReference: {'name': arches.translations.imageService, 'value': digitalReference['Digital Source']["@display_value"]},
             };
             var annotationCollection = {};
             self.regionResourceIds = self.regionInstances?.map(x => x.regionResource);

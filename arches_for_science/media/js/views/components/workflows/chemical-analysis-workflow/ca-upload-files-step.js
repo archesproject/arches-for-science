@@ -87,8 +87,7 @@ define([
 
             if (
               resp.status == 200 ||
-              (resp.status == 500 &&
-                body?.message?.includes("likely already deleted"))
+              (resp.status == 500 && body?.exception === 'TileModel.ObjectDoesNotExist')
             ) {
               const datasetFiles = this.files();
               this.files(
@@ -144,9 +143,7 @@ define([
         self.loading(true);
 
         if (file) {
-          self.loadingMessage(
-            `Building arches data structures before upload...`
-          );
+          self.loadingMessage(arches.translations.buildingArches);
           let fileInfo;
 
           if (!ko.unwrap(file.tileId)) {
