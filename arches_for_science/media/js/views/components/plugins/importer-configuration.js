@@ -46,7 +46,6 @@ define([
         this.selectedTransformation.subscribe(val => console.log(val));
 
         this.dataDelimiterRadio.subscribe(value => {
-            // TODO(i18n): appears in UI?
             if(value != 'other'){
                 this.dataDelimiter(value);
             } else {
