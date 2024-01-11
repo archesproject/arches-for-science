@@ -79,7 +79,7 @@ define(['underscore',
                     if(rootCard) {
                         const subCards = rootCardConfig.subCards;
                         const tileCards = self.createCardDictionary(rootCard.tiles().find(x => x.tileid == eventObservables.tileid)?.cards);
-                        if(tileCards){
+                        if(tileCards && subCards){
                             tileCards.name = tileCards?.[subCards.name];
                             tileCards.statement = tileCards?.[subCards.statement];
                             tileCards.timespan = tileCards?.[subCards.timespan];
@@ -205,7 +205,7 @@ define(['underscore',
                         
                         const existenceEventMetadata = [];
                         for(configuration of dataConfig.metadata){
-                            const label = rootCard.widgets().find(widget => widget.node.id == configuration?.nodeid)?.label() ?? configuration.key
+                            const label = rootCard?.widgets().find(widget => widget.node.id == configuration?.nodeid)?.label() ?? configuration.key
 
                             const type = configuration.type;
 
@@ -219,7 +219,7 @@ define(['underscore',
                             if(configuration.title && nodeValue != "--"){
                                 eventObservables.title(self.getNodeValue(eventData, {testPaths: [[configuration.path]]}));
                             }
-                            existenceEventMetadata.push({label, type, value})
+                            existenceEventMetadata.push({key: label, type, value})
                         }
                         eventObservables.metadata(existenceEventMetadata);
 
