@@ -19,6 +19,20 @@ define([
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
+
+            const cardIds = self.cardIds = Object.freeze({
+                nameOfDigitalResource: 'd2fdae3d-ca7a-11e9-ad84-a4d18cec433a',
+                identifierOfDigitalResource: 'db05b5ca-ca7a-11e9-82ca-a4d18cec433a',
+                typeOfDigitalResource: '09c1778a-ca7b-11e9-860b-a4d18cec433a',
+                statementAboutDigitalResource: 'da1fac57-ca7a-11e9-86a3-a4d18cec433a',
+                dimensionOfDigitalResource: 'd816108a-ca7a-11e9-9ce8-a4d18cec433a',
+                creationEventOfDigitalResource: 'de951c11-ca7a-11e9-a778-a4d18cec433a',
+                filesOfDigitalResource: '7c486328-d380-11e9-b88e-a4d18cec433a',
+                textCarriedByDigitalResource: 'a90b3a99-ca7a-11e9-8bc5-a4d18cec433a',
+                collectionThatIncludesDigitalResource: 'e19aee91-ca7c-11e9-98d8-a4d18cec433a',
+                standardsConformedToByDigitalResource: 'a4af8528-ca7f-11e9-8f7b-a4d18cec433a'
+            });
+
             self.sections = [
                 {id: 'name', title: arches.translations.namesClassifications},
                 {id: 'existence', title: arches.translations.existence},
@@ -61,23 +75,23 @@ define([
                 creation: {
                     graph: 'creation',
                     metadata: [{
-                        key: 'creator',
+                        nodeid: 'de954e91-ca7a-11e9-af76-a4d18cec433a',
                         path: 'creation_carried out by',
                         type: 'resource'
                     },{
-                        key: 'creation event location',
+                        nodeid: 'de955a05-ca7a-11e9-8f7a-a4d18cec433a',
                         path: 'creation_location',
                         type: 'resource'
                     },{
-                        key: 'creation event type',
+                        nodeid: 'de952c0c-ca7a-11e9-9fd3-a4d18cec433a',
                         path: 'creation_type',
                         type: 'resource'
                     },{
-                        key: 'creation event technique',
+                        nodeid: 'de952e6e-ca7a-11e9-8e0a-a4d18cec433a',
                         path: 'creation_technique',
                         type: 'resource'
                     },{
-                        key: 'physical object used in creation event',
+                        nodeid: 'de954c14-ca7a-11e9-a427-a4d18cec433a',
                         path: 'creation_used object',
                         type: 'resource'
                     }]
@@ -113,42 +127,30 @@ define([
                 
                 self.cards = self.createCardDictionary(cards)
                 self.nameCards = {
-                    name: self.cards?.['name of digital resource'],
-                    identifier: self.cards?.['identifier of digital resource'],
-                    type: self.cards?.['type of digital resource']
+                    name: self.cards?.[cardIds.nameOfDigitalResource],
+                    identifier: self.cards?.[cardIds.identifierOfDigitalResource],
+                    type: self.cards?.[cardIds.typeOfDigitalResource]
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards['statement about digital resource']
+                    statement: self.cards[cardIds.statementAboutDigitalResource]
                 };
 
                 self.substanceCards = {
-                    dimension: self.cards?.['dimension of digital resource']
+                    dimension: self.cards?.[cardIds.dimensionOfDigitalResource]
                 };
 
                 self.existenceCards = {
                     creation: {
-                        card: self.cards?.['creation event of digital resource'],
+                        card: self.cards?.[cardIds.creationEventOfDigitalResource],
                         subCards: {
-                            name: 'name for creation event',
-                            identifier: 'identifier for creation event',
-                            timespan: 'timespan of creation event',
-                            statement: 'statement about creation event',
+                            name: 'de950826-ca7a-11e9-9e62-a4d18cec433a',
+                            identifier: 'de951321-ca7a-11e9-86e2-a4d18cec433a',
+                            timespan: 'de952085-ca7a-11e9-a7dc-a4d18cec433a',
+                            statement: 'ef5c1e19-ca7a-11e9-bccf-a4d18cec433a',
                         }
                     },
                 };
-
-                /*self.eventsCards = {
-                    creation: {
-                        card: self.cards?.['creation event of digital resource'],
-                        subCards: {
-                            name: 'name for creation event',
-                            identifier: 'identifier for creation event',
-                            timespan: 'timespan of creation event',
-                            statement: 'statement about creation event',
-                        }
-                    },
-                };*/
             }
 
             self.aboutnessData = ko.observable({
@@ -157,9 +159,9 @@ define([
                         {
                             title: arches.translations.aboutness,
                             data: [{
-                                key: 'text carried by object', 
+                                key: self.cards?.[cardIds.textCarriedByDigitalResource].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'carries text'), 
-                                card: self.cards?.['text carried by object'],
+                                card: self.cards?.[cardIds.textCarriedByDigitalResource],
                                 type: 'resource'
                             }]
                         }
@@ -196,9 +198,9 @@ define([
                         {
                             title: arches.translations.sethood,
                             data: [{
-                                key: 'collection that includes digital resource', 
+                                key: self.cards?.[cardIds.collectionThatIncludesDigitalResource].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
-                                card: self.cards?.['collection that includes digital resource'],
+                                card: self.cards?.[cardIds.collectionThatIncludesDigitalResource],
                                 type: 'resource'
                             }]
                         }
@@ -206,10 +208,10 @@ define([
             });
 
             self.additionalData = ko.observableArray([{
-                key: 'standards conformed to by digital resource', 
+                key: self.cards?.[cardIds.standardsConformedToByDigitalResource].model.name(), 
                 value: self.getNodeValue(self.resource(), 'conforms to'), 
                 href: self.getNodeValue(self.resource(), 'conforms to'), 
-                card: self.cards?.['standards conformed to by digital resource'],
+                card: self.cards?.[cardIds.standardsConformedToByDigitalResource],
                 type: 'href'
             }]);
 

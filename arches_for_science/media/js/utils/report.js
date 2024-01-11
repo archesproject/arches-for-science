@@ -143,6 +143,7 @@ define([
             const dictionary = {};
             for(const card of cards){
                 dictionary[card.model.name()] = card;
+                dictionary[card.nodegroupid] = card;
             }
             labelBasedGraphUtils.standardizeNode(dictionary);
             return dictionary;
