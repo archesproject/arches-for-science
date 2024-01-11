@@ -205,7 +205,8 @@ define(['underscore',
                         
                         const existenceEventMetadata = [];
                         for(configuration of dataConfig.metadata){
-                            const key = configuration.key;
+                            const label = rootCard.widgets().find(widget => widget.node.id == configuration?.nodeid)?.label() ?? configuration.key
+
                             const type = configuration.type;
 
                             const nodeValue = self.getNodeValue(eventData, {testPaths: [[configuration.path]]})
@@ -218,7 +219,7 @@ define(['underscore',
                             if(configuration.title && nodeValue != "--"){
                                 eventObservables.title(self.getNodeValue(eventData, {testPaths: [[configuration.path]]}));
                             }
-                            existenceEventMetadata.push({key, type, value})
+                            existenceEventMetadata.push({label, type, value})
                         }
                         eventObservables.metadata(existenceEventMetadata);
 
