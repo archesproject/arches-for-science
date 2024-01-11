@@ -5,7 +5,7 @@
 {% block body %}
 <div data-bind="foreach: {data: events, as: 'eventName', noChildContext: true}" class="afs-report-section">
     <div>
-        <h2 class="afs-report-section-title" data-bind="text: eventName + ' ' + '{% trans 'Event' %}'" class="afs-report-section-title">
+        <h2 class="afs-report-section-title" data-bind="text: cards[eventName].card.model.name()" class="afs-report-section-title">
             <i data-bind="click: function() {toggleVisibility(visible[eventName])}, css: {'fa-angle-double-right': visible[eventName](), 'fa-angle-double-up': !visible[eventName]()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i>
         </h2>
         <span data-bind="if: cards[eventName] && cards[eventName].card && !cards[eventName].card.tiles().length,">
@@ -155,9 +155,10 @@
                     <!-- Event First Generation Cards -->
                     <div class="afs-report-subsection-firstchild">
                         <h5>{% trans "Event Identifiers" %}</h5>
+                        <span data-bind="console.log(eventData.identifiers().length)"></span>
                         <a data-bind="if: eventData.cards && eventData.cards.identifier, click: function(){addNewTile(eventData.cards.identifier)}" class="afs-report-a"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add Event Identifier" %}</a>
                         <!-- ko ifnot: eventData.identifiers().length -->
-                        <div class="afs-nodata-note">{% trans "No identifiers for this event" }</div>
+                        <div class="afs-nodata-note">{% trans "No identifiers for this event" %}</div>
                         <!-- /ko -->
 
                         <!-- ko if: eventData.identifiers().length -->
@@ -401,9 +402,9 @@
                                         {% trans "Add Part Identifier" %}
                                         <!--/ko-->
                                     </a>
-                                    
+                                    <span data-bind="console.log(identifiers.length)"></span>
                                     <!-- ko ifnot: identifiers().length -->
-                                    <div class="afs-nodata-note">{% trans "No identifiers for this part" }</div>
+                                    <div class="afs-nodata-note">{% trans "No identifiers for this part" %}</div>
                                     <!-- /ko-->
                                     
                                     <!-- ko if: identifiers().length -->

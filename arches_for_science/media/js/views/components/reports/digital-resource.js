@@ -30,7 +30,9 @@ define([
                 filesOfDigitalResource: '7c486328-d380-11e9-b88e-a4d18cec433a',
                 textCarriedByDigitalResource: 'a90b3a99-ca7a-11e9-8bc5-a4d18cec433a',
                 collectionThatIncludesDigitalResource: 'e19aee91-ca7c-11e9-98d8-a4d18cec433a',
-                standardsConformedToByDigitalResource: 'a4af8528-ca7f-11e9-8f7b-a4d18cec433a'
+                digitalServiceOfDigitalResource: '29c8c76e-ca7c-11e9-9e11-a4d18cec433a',
+                standardsConformedToByDigitalResource: 'a4af8528-ca7f-11e9-8f7b-a4d18cec433a',
+                parentDigitalResource: '1b3d7f38-ca7b-11e9-ab2c-a4d18cec433a'
             });
 
             self.sections = [
@@ -102,11 +104,11 @@ define([
                 'digital service': {
                     graph: 'service',
                     metadata: [{
-                        key: 'conforms to',
+                        nodeid: 'cec360bd-ca7f-11e9-9ab7-a4d18cec433a',
                         path: 'service_conforms to',
                         type: 'resource'
                     },{
-                        key: 'service type',
+                        nodeid: '5ceedd21-ca7c-11e9-a60f-a4d18cec433a',
                         path: 'service_type',
                         type: 'resource'
                     }]
@@ -119,7 +121,6 @@ define([
             self.documentationCards = {};
             self.substanceCards = {};
             self.existenceCards = {};
-            self.eventsCards = {};
             self.summary = params.summary;
 
             if(params.report.cards){
@@ -138,6 +139,12 @@ define([
 
                 self.substanceCards = {
                     dimension: self.cards?.[cardIds.dimensionOfDigitalResource]
+                };
+
+                self.eventsCards = {
+                    'digital service': {
+                        card: self.cards?.[cardIds.digitalServiceOfDigitalResource]
+                    }
                 };
 
                 self.existenceCards = {
@@ -175,7 +182,7 @@ define([
                         {
                             title: arches.translations.parthood,
                             data: [{
-                                key: 'parent digital resource', 
+                                key: self.cards?.[cardIds.parentDigitalResource].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
                                 type: 'resource'
                             }]
