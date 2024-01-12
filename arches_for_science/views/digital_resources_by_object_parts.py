@@ -51,7 +51,6 @@ class DigitalResourcesByObjectParts(View):
         try:
             object_type_tile = TileModel.objects.filter(resourceinstance_id=resourceid).get(nodegroup_id=type_nodegroup_id)
             object_types = object_type_tile.data[type_nodegroup_id]
-            # TODO(i18n) samples
             if sample_area_value_id in object_types:
                 return "sample area"
             elif sample_value_id in object_types:

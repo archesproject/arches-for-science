@@ -155,7 +155,7 @@ define([
         this.areaNameFromTileData = (tileData) => {
             const nameValue = tileData[self.partIdentifierAssignmentLabelNodeId];
             const baseName = self.getStrValue(nameValue) || "";
-            return `${baseName} [${arches.translations.analysisArea} ${arches.translations.of} ${self.physicalThingName()}]`;
+            return arches.translations.analysisAreaOf.replace('{}', baseName).replace('{}', self.physicalThingName());
         };
         this.areaName = ko.computed(function(){
             if (self.selectedAnalysisAreaInstance()){
