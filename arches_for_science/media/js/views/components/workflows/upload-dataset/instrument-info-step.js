@@ -107,8 +107,10 @@ define([
                 self.instrumentInstance(self.createRelatedInstance(val, instrumentUsedInObservation, observationInstrumentUsedIn));
                 instrumentData.then(function(data){
                     self.instrumentName(data._source.displayname);
-                    // TODO(i18n) samples
-                    self.nameValue(`Observation of ${physThingName} with ${data._source.displayname} ${self.dateValue()}`);
+                    const formattedName = arches.translations.observationWith
+                        .replace('{physicalThingName}', physThingName)
+                        .replace('{instrumentName}', data._source.displayname);
+                    self.nameValue(`${formattedName} ${self.dateValue()}`);
                 });
             }
             if (!val) {
@@ -119,8 +121,10 @@ define([
 
         this.dateValue.subscribe(function(val){
             if (self.instrumentName()) {
-                // TODO(i18n) samples
-                self.nameValue(`Observation of ${physThingName} with ${self.instrumentName()} ${val}`);
+                const formattedName = arches.translations.observationWith
+                    .replace('{physicalThingName}', physThingName)
+                    .replace('{instrumentName}', self.instrumentName());
+                self.nameValue(`${formattedName} ${val}`);
             }
         });
 
