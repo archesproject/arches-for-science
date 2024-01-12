@@ -56,6 +56,12 @@ define([
                         return feature.properties;
                     },
                     onEachFeature: function(feature, layer) {
+                        const classificationConcepts = Object.freeze({
+                            // Concept IDs, not values
+                            "a2588fa8-5ae6-4770-a473-dec0c05fb175": 'Analysis Area',
+                            "2703e524-b5ea-4548-bea7-7ce354e4e05a": 'Sample Area',
+                            "9db724b9-b3c7-4761-9a50-673d64a15bd8": 'Sample',
+                        });
                         if (!feature.properties.active){
                             var popup = L.popup({
                                 closeButton: false,
@@ -63,15 +69,11 @@ define([
                             })
                                 .setContent(iiifPopup)
                                 .on('add', function() {
+                                    // hope that translator has not adjusted the location of the bracket.
                                     const titleArray = feature.properties.locationName.split('[');
                                     const title = titleArray[0].trim();
-                                    // TODO(i18n) samples
-                                    const type = titleArray[1].startsWith('Analysis Area') ? 'Analysis Area':
-                                        titleArray[1].startsWith('Sample Area') ? 'Sample Area':
-                                            'Part';
-                                    const parent = titleArray[1].startsWith('Analysis Area') ? titleArray[1].replace('Analysis Area of ', '').replace(']',''):
-                                        titleArray[1].startsWith('Sample Area') ? titleArray[1].replace('Sample Area of ','').replace(']',''):
-                                            titleArray[1].replace(']','');
+                                    const type = classificationConcepts[feature.properties.classificationConceptId];
+                                    const parent = feature.properties.parentPhysicalThingName;
                                     const description = (
                                         arches.translations.existingAnnotation
                                         .replace('{title}', title)
@@ -209,35 +211,43 @@ define([
             const parentPhyiscalThingResourceId = self.getResourceValue(val.resource["Sampling Unit"][0], ['Sampling Area','Overall Object Sampled','resourceId']);
             const parentPhyiscalThing = ko.observable();
             self.getResourceData(parentPhyiscalThingResourceId, parentPhyiscalThing);
-            parentPhyiscalThing.subscribe(function(val){ // 2nd request
+            parentPhyiscalThing.subscribe(async function(val) { // 2nd request
                 const parts = self.getResourceValue(val.resource, ['Part Identifier Assignment']);
-                parts.forEach(function(part){
+                for (const part of parts) {
                     const locationName = self.getResourceValue(part,['Part Identifier Assignment_Physical Part of Object','@display_value']);
                     const tileId = self.getResourceValue(part,['@tile_id']);
-                    const sampleAreaResourceId = self.getResourceValue(part,['Part Identifier Assignment_Physical Part of Object','resourceId']);    
+                    const partResourceId = self.getResourceValue(part,['Part Identifier Assignment_Physical Part of Object','resourceId']);
                     const partsAnnotationString = self.getResourceValue(part,['Part Identifier Assignment_Polygon Identifier','@display_value']);
                     if (partsAnnotationString) {
                         const locationAnnotation = JSON.parse(partsAnnotationString.replaceAll("'",'"'));
                         const canvas = locationAnnotation.features[0].properties.canvas;
-                        locationAnnotation.features.forEach(function(feature){
-                            feature.properties.active = false;
-                            feature.properties.tileId = tileId;
-                            feature.properties.locationName = locationName;
-                            feature.properties.sampleAreaResourceId = sampleAreaResourceId;
-                        });
-                        if (canvas in partsAnnotationCollection) {
-                            partsAnnotationCollection[canvas].push({
-                                locationAnnotation: locationAnnotation,
-                                sampleAreaResourceId: sampleAreaResourceId,
+                        // TODO: fetch in parallel
+                        await fetch(self.urls.api_resources(partResourceId) + '?format=json&compact=false&v=beta')
+                        .then(response => response.json())
+                        .then(data => {
+                            locationAnnotation.features.forEach(function(feature) {
+                                feature.properties.active = false;
+                                feature.properties.tileId = tileId;
+                                feature.properties.locationName = locationName;
+                                // misnomer, could be analysis area
+                                feature.properties.sampleAreaResourceId = partResourceId;
+                                feature.properties.classificationConceptId = data.resource.type.concept_details[0].concept_id;
+                                feature.properties.parentPhysicalThingName = parentPhyiscalThing().resource._label['@display_value'];
                             });
-                        } else {
-                            partsAnnotationCollection[canvas] = [{
-                                locationAnnotation: locationAnnotation,
-                                sampleAreaResourceId: sampleAreaResourceId,
-                            }];
-                        }
+                            if (canvas in partsAnnotationCollection) {
+                                partsAnnotationCollection[canvas].push({
+                                    locationAnnotation: locationAnnotation,
+                                    sampleAreaResourceId: partResourceId,
+                                });
+                            } else {
+                                partsAnnotationCollection[canvas] = [{
+                                    locationAnnotation: locationAnnotation,
+                                    sampleAreaResourceId: partResourceId,
+                                }];
+                            }
+                        });
                     }
-                });
+                }
 
                 // add the annotation of parts to the final object
                 self.annotationStatus = ko.observable();

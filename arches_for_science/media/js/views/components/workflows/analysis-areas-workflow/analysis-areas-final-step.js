@@ -5,8 +5,9 @@ define([
     'arches',
     'views/components/workflows/summary-step',
     'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-final-step.htm',
+    'utils/label-based-graph-utils',
     'views/components/annotation-summary',
-], function(ko, _, uuid, arches, SummaryStep, analysisAreasFinalStepTemplate) {
+], function(ko, _, uuid, arches, SummaryStep, analysisAreasFinalStepTemplate, labelBasedGraphUtils) {
 
     function viewModel(params) {
         var self = this;
@@ -97,12 +98,21 @@ define([
                             annotator: annotation.annotator,
                         });
                     } else {
-                        annotation.annotationJson.features.map(feature => {
-                            feature.properties.color = '#999999';
-                            feature.properties.fillColor = '#999999';
-                            feature.properties.tileId = annotation.tileId;
-                            feature.properties.name = annotation.annotationName;
-                            feature.properties.active = false;
+                        // TODO: fetch in parallel
+                        fetch(self.urls.api_resources(annotation.resourceId) + '?format=json&compact=false&v=beta')
+                        .then(response => response.json())
+                        .then(data => {
+                            annotation.annotationJson.features.map(feature => {
+                                feature.properties.color = '#999999';
+                                feature.properties.fillColor = '#999999';
+                                feature.properties.tileId = annotation.tileId;
+                                feature.properties.name = annotation.annotationName;
+                                feature.properties.active = false;
+                                feature.properties.classificationConceptId = data.resource.type.concept_details[0].concept_id;
+                                feature.properties.parentPhysicalThingName = labelBasedGraphUtils.getPropByNodeId(
+                                    data.resource, 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a', '@display_value'
+                                );
+                            });
                         });
                     }
                 });
