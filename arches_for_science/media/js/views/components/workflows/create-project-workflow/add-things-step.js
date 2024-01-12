@@ -94,9 +94,6 @@ define([
             analysis: '31d97bdd-f10f-4a26-958c-69cb5ab69af1',
         };
         this.physicalThingTypeNodeId = '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a';
-        // TODO(i18n) samples
-        const sampleSubstring = '[Sample';  // for "[Sample of ..." and "[Sample Area of ..."
-        const regionSubstring = '[Region';
 
         this.value.subscribe(function(a) {
             a.forEach(function(action) {
@@ -332,8 +329,8 @@ define([
                         return (
                             result.context_label.includes("Physical Thing") ||
                             result.context_label.includes("Search Term")
-                        ) && (self.includeSamples() || !result.text.includes(sampleSubstring))
-                        && (self.includeAnalysisAreas() || !result.text.includes(regionSubstring))
+                        ) && (self.includeSamples() || !result.text.includes(arches.translations.sample))
+                        && (self.includeAnalysisAreas() || !result.text.includes(arches.translations.analysisArea))
                     });
                     return {
                         "results": filteredResults
