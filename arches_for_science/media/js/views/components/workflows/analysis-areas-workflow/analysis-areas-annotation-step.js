@@ -811,6 +811,7 @@ define([
                                 })
                                 .then(function(json) {
                                     json.features.forEach(function(feature) {
+                                        // TODO(i18n) slug or name?
                                         feature.properties.graphName = "Physical Thing";
                                         if (self.sampleLocationTileIds.includes(feature.properties.tileId)) {
                                             feature.properties.type = 'sample_location';
