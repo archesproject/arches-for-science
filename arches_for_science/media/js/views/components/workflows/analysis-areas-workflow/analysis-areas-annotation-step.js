@@ -410,7 +410,6 @@ define([
                 parentPhysicalThingTileData: koMapping.toJSON(parentPhysicalThing.data),
                 parentPhysicalThingTileId: parentPhysicalThing.tileid,
                 transactionId: params.form.workflowId,
-                analysisAreaName: self.areaName()
             };
 
             self.savingTile(true);
@@ -504,12 +503,12 @@ define([
 
             const data = {
                 parentPhysicalThingResourceid: self.physicalThingResourceId,
+                parentPhysicalThingName: self.physicalThingName(),
                 collectionResourceid: params.projectSet,
                 partIdentifierAssignmentTileData: koMapping.toJSON(self.selectedAnalysisAreaInstance().data),
                 partIdentifierAssignmentTileId: self.selectedAnalysisAreaInstance().tileid,
                 partIdentifierAssignmentResourceId: self.selectedAnalysisAreaInstance().resourceinstance_id,
                 transactionId: params.form.workflowId,
-                analysisAreaName: self.areaName(),
             };
 
             $.ajax({
