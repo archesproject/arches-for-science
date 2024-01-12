@@ -85,8 +85,7 @@ define([
         });
         
         this.samplingDate.subscribe(function(val){
-            // TODO(i18n) samples
-            self.samplingName(["Sampling Activity of", self.physicalThingNameValue, val].join(' '));
+            self.samplingName(arches.translations.samplingActivityOf.replace('{physicalThingName}', self.physicalThingNameValue) + ' ' + val);
         });
 
         const selectPhysThingData = params.selectPhysThingData;

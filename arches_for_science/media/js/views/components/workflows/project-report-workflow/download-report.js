@@ -86,7 +86,6 @@ define([
             const reportDate = today.toLocaleDateString('en-US', options);
             const physicalThingsDetailsArray = [...Object.values(physicalThingsDetails)];
             const objectOfStudyDetailsArray = physicalThingsDetailsArray.filter(thing => physicalThingFromPreviousStep.includes(thing.resourceinstanceid));
-            // TODO(i18n) samples
             const analysisAreas = physicalThingsDetailsArray.filter(physicalThing => physicalThing.resource?.type?.["@display_value"] == 'analysis areas');
             const annotationScreenshots = screenshots?.map((screenshot) => {
                 const url = `${window.location.origin}/temp_file/${screenshot.fileId}`;
