@@ -167,7 +167,7 @@ define([
         this.sampleNameFromTileData = (data) => {
             const partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
             const baseName = ko.unwrap(ko.unwrap(data[partIdentifierAssignmentLabelNodeId])?.[arches.activeLanguage]?.["value"]) || "";
-            return arches.translations.sampleOf.replace('{}', baseName).replace('{}', params.physicalThingName);
+            return arches.translations.sampleOf.replace('{sampleName}', baseName).replace('{physicalThingName}', params.physicalThingName);
         };
 
         this.sampleName = ko.computed(function() {

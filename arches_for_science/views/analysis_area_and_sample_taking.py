@@ -188,7 +188,7 @@ class SaveAnalysisAreaView(SaveAnnotationView):
             analysis_area_physical_thing_resourceid = part_identifier_assignment_tile_data[physical_part_of_object_nodeid][0]["resourceId"]
 
         base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid][get_language()]["value"]
-        name = _("{} [Analysis Area of {}]").format(base_name, parent_physical_thing_name)
+        name = _("{analysisName} [Analysis Area of {physicalThingName}]").format(analysisName=base_name, physicalThingName=parent_physical_thing_name)
 
         try:
             with transaction.atomic():
@@ -365,8 +365,8 @@ class SaveSampleAreaView(SaveAnnotationView):
                 sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
         base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid][get_language()]["value"]
-        sample_name = _("{} [Sample of {}]").format(base_name, parent_physical_thing_name)
-        sample_area_name = _("{} [Sample Area of {}]").format(base_name, parent_physical_thing_name)
+        sample_name = _("{sampleName} [Sample of {physicalThingName}]").format(sampleName=base_name, physicalThingName=parent_physical_thing_name)
+        sample_area_name = _("{sampleName} [Sample Area of {physicalThingName}]").format(sampleName=base_name, physicalThingName=parent_physical_thing_name)
 
         try:
             with transaction.atomic():
