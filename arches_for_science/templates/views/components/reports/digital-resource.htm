@@ -115,12 +115,12 @@
                                                 <td data-bind="text: name"></td>
                                                 <td data-bind="text: metadataExists"></td>
                                                 <td class="afs-table-control">
-                                                    <div data-bind="if: $parent.cards && $parent.cards[cardIds.filesOfDigitalResource]">
-                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards[cardIds.filesOfDigitalResource])},
+                                                    <div data-bind="if: $parent.cards && $parent.cards[$parent.cardIds.filesOfDigitalResource]">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards[$parent.cardIds.filesOfDigitalResource])},
                                                             attr: {'aria-label': $root.translations.edit}">
                                                             <i class="fa fa-mail-reply" aria-hidden="true"></i>
                                                         </a>
-                                                        <a data-bind="click: $parent.deleteTile.bind($data, tileid, $parent.cards[cardIds.filesOfDigitalResource]),
+                                                        <a data-bind="click: $parent.deleteTile.bind($data, tileid, $parent.cards[$parent.cardIds.filesOfDigitalResource]),
                                                             attr: {'aria-label': $root.translations.delete}">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </a>

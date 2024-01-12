@@ -12,6 +12,28 @@ define([
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
             Object.assign(self, reportUtils);
+
+            const cardIds = self.cardIds = Object.freeze({
+                productionEventOfObject: 'cc15650c-b497-11e9-a64d-a4d18cec433a',
+                destructionEventOfObject: 'fc651451-b497-11e9-9d7b-a4d18cec433a',
+                partRemovalEventOfObject: 'b11f217a-d2bc-11e9-8dfa-a4d18cec433a',
+                dimensionOfObject: '0b7f8d0a-b498-11e9-a189-a4d18cec433a',
+                nameOfObject: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',
+                identifierOfObject: '22c150ca-b498-11e9-9adc-a4d18cec433a',
+                externalUriForObject: '47971a2e-ac13-11ea-9f58-024e0d439fdb',
+                currentOwnerOfObject: 'b008dacc-b31d-11e9-84af-a4d18cec433a',
+                partsOfObject: 'fec59582-8593-11ea-97eb-acde48001122',
+                collectionObjectIsPartOf: '63e49254-c444-11e9-afbe-a4d18cec433a',
+                typeOfObject: '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a',
+                statementOrInterpretationAboutObject: '1952bb0a-b498-11e9-a679-a4d18cec433a',
+                digitalReferenceToObject: '8a4ad932-8d59-11eb-a9c4-faffc265b501',
+                additionEventOfObjectToCollection: '57f25133-d2bd-11e9-9131-a4d18cec433a',
+                removalEventOfObjectFromCollection: 'a1490580-d2bd-11e9-af41-a4d18cec433a',
+                textCarriedByObject: '23bf9ca1-b31e-11e9-8dd7-a4d18cec433a',
+                currentLocationOfObject: 'a030e34f-b31d-11e9-8c0b-a4d18cec433a',
+                parentObject: 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'
+            });
+
             self.sections = [
                 {id: 'name', title: arches.translations.namesIdentifiersClassifications},
                 {id: 'description', title: arches.translations.description},
@@ -75,56 +97,56 @@ define([
                 production: {
                     graph: 'production',
                     metadata: [{
-                        key: 'creator in production event',
+                        nodeid: 'cc16893d-b497-11e9-94b0-a4d18cec433a',
                         path: 'production_carried out by',
                         type: 'resource'
                     },{
-                        key: 'physical object used in production event',
+                        nodeid: 'cc15a23a-b497-11e9-bb7f-a4d18cec433a',
                         path: 'production_used object',
                         type: 'resource'
                     },{
-                        key: 'production event technique',
+                        nodeid: 'cc168005-b497-11e9-a303-a4d18cec433a',
                         path: 'production_technique',
                         type: 'resource'
                     },{
-                        key: 'production event type',
+                        nodeid: 'cc15ce0f-b497-11e9-bedd-a4d18cec433a',
                         path: 'production_type',
                         title: true,
                         type: 'resource'
                     },{
-                        key: 'location of production event',
+                        nodeid: 'cc15bb30-b497-11e9-b68a-a4d18cec433a',
                         path: 'production_location',
                         type: 'resource'
                     },{
-                        key: 'influenced on production event',
+                        nodeid: 'cc1591c7-b497-11e9-967e-a4d18cec433a',
                         path: 'production_influence',
                         type: 'resource'
                     }],
                     parts: {
                         graph: 'production_part',
                         metadata:[{
-                            key: 'creator of event',
+                            nodeid: 'cc16698f-b497-11e9-af2a-a4d18cec433a',
                             path: 'production_part_carried out by',
                             type: 'resource'
                         },{
-                            key: 'physical object used in production event',
+                            nodeid: 'cc167668-b497-11e9-8b05-a4d18cec433a',
                             path: 'production_part_used object',
                             type: 'resource'
                         },{
-                            key: 'production event technique',
+                            nodeid: 'cc159614-b497-11e9-b8df-a4d18cec433a',
                             path: 'production_part_technique',
                             type: 'kv'
                         },{
-                            key: 'production event type',
+                            nodeid: 'cc1605f5-b497-11e9-babb-a4d18cec433a',
                             path: 'production_part_type',
                             title: true,
                             type: 'kv'
                         },{
-                            key: 'location of production event',
+                            nodeid: 'cc168394-b497-11e9-a76d-a4d18cec433a',
                             path: 'production_part_location',
                             type: 'resource'
                         },{
-                            key: 'influenced on production event',
+                            nodeid: 'cc164b5e-b497-11e9-84fd-a4d18cec433a',
                             path: 'production_part_influence',
                             type: 'resource'
                         }]
@@ -133,11 +155,11 @@ define([
                 'destruction': { 
                     graph: 'destruction',
                     metadata: [{
-                        key: 'location of destruction event',
                         path: 'destruction_location',
+                        nodeid: 'fc653a19-b497-11e9-b323-a4d18cec433a',
                         type: 'resource'
                     },{
-                        key: 'destruction event type',
+                        nodeid: 'fc651bfa-b497-11e9-9648-a4d18cec433a',
                         path: 'destruction_type',
                         type: 'kv'
                     }]
@@ -145,23 +167,23 @@ define([
                 'removal from object': {
                     graph: 'removal from object',
                     metadata: [{
-                        key: 'object removed by part removal event',
+                        nodeid: '38814345-d2bd-11e9-b9d6-a4d18cec433a',
                         path: 'removal from object_removed from',
                         type: 'resource'
                     },{
-                        key: 'person in part removal event',
+                        nodeid: '37cde794-d31f-11e9-8be2-a4d18cec433a',
                         path: 'removal from object_carried out by',
                         type: 'resource'
                     },{
-                        key: 'removal from object event technique',
+                        nodeid: 'b11f2ff8-d2bc-11e9-8c50-a4d18cec433a',
                         path: 'removal from object_technique',
                         type: 'kv'
                     },{
-                        key: 'location of part removal event',
+                        nodeid: 'b11f63d7-d2bc-11e9-a754-a4d18cec433a',
                         path: 'removal from object_location',
                         type: 'resource'
                     },{
-                        key: 'influence on part removal event',
+                        nodeid: 'b11f3819-d2bc-11e9-a1f6-a4d18cec433a',
                         path: 'removal from object_influence',
                         type: 'resource'
                     }]
@@ -173,30 +195,30 @@ define([
                 addition: {
                     graph: 'addition to collection',
                     metadata: [{
-                        key: 'collection added to',
+                        nodeid: '7f13dbde-d2bd-11e9-9adc-a4d18cec433a',
                         path: 'addition to collection_added to',
                         type: 'resource'
                     },{
-                        key: 'addition event type',
+                        nodeid: '57f2ba0a-d2bd-11e9-a295-a4d18cec433a',
                         path: 'addition to collection_type',
                         type: 'kv'
                     },{
-                        key: 'person in removal event',
+                        nodeid: '93a9dbe1-d31f-11e9-a20f-a4d18cec433a',
                         path: 'addition to collection_carried out by',
                         type: 'resource'
                     }]
                 }, removal: {
                     graph:'removal from set',
                     metadata: [{
-                        key: 'collection removed from',
+                        nodeid: 'bb5d10d7-d2bd-11e9-b144-a4d18cec433a',
                         path: 'removal from set_removed from',
                         type: 'resource'
                     },{
-                        key: 'removal event type',
+                        nodeid: 'a149317a-d2bd-11e9-a02f-a4d18cec433a',
                         path: 'removal from set_type',
                         type: 'kv'
                     },{
-                        key: 'person in removal event',
+                        nodeid: '9689fbe8-d321-11e9-8eaf-a4d18cec433a',
                         path: 'removal from set_carried out by',
                         type: 'resource'
                     }]
@@ -212,87 +234,86 @@ define([
                 
                 self.cards = self.createCardDictionary(cards);
 
-                if(self.cards?.['production event of object']) {
-                    const productionEventChildren = self.cards['production event of object'].tiles()?.[0]?.cards ? self.cards['production event of object'].tiles()[0].cards : self.cards['production event of object'].cards();
-                    self.cards['production event of object'].children = self.createCardDictionary(productionEventChildren);
+                if(self.cards?.[cardIds.productionEventOfObject]) {
+                    const productionEventChildren = self.cards[cardIds.productionEventOfObject].tiles()?.[0]?.cards ? self.cards[cardIds.productionEventOfObject].tiles()[0].cards : self.cards[cardIds.productionEventOfObject].cards();
+                    self.cards[cardIds.productionEventOfObject].children = self.createCardDictionary(productionEventChildren);
                 }
 
                 self.nameCards = {
-                    name: self.cards?.['name of object'],
-                    identifier: self.cards?.['identifier of object'],
-                    exactMatch: self.cards?.['external uri for object'],
-                    type: self.cards?.['type of object']
+                    name: self.cards?.[cardIds.nameOfObject],
+                    identifier: self.cards?.[cardIds.identifierOfObject],
+                    exactMatch: self.cards?.[cardIds.externalUriForObject],
+                    type: self.cards?.[cardIds.typeOfObject]
                 };
 
                 self.descriptionCards = {
-                    statement: self.cards?.['statement or interpretation about object']
+                    statement: self.cards?.[cardIds.statementOrInterpretationAboutObject]
                 };
 
                 self.documentationCards = {
-                    digitalReference: self.cards?.['digital reference to object'],
-                    subjectOf: self.cards?.['source reference work for object']
+                    digitalReference: self.cards?.[cardIds.digitalReferenceToObject],
                 };
 
                 self.existenceCards = {
                     production: {
-                        card: self.cards?.['production event of object'],
+                        card: self.cards?.[cardIds.productionEventOfObject],
                         subCards: {
-                            name: 'name of production event',
-                            identifier: 'identifier of production event',
-                            timespan: 'timespan of production event',
-                            statement: 'statement about production event',
-                            part: 'production event part'
+                            name: 'cc1558a3-b497-11e9-9310-a4d18cec433a',
+                            identifier: 'cc153f33-b497-11e9-bab1-a4d18cec433a',
+                            timespan: 'cc15718f-b497-11e9-a9e8-a4d18cec433a',
+                            statement: '6c1d4051-bee9-11e9-a4d2-a4d18cec433a',
+                            part: 'cc1577b8-b497-11e9-8f11-a4d18cec433a'
                         },
                         partCards: { 
-                            name: 'name for production event part',
-                            identifier: 'identifier for production event part',
-                            timespan: 'timespan of production event part',
-                            statement: 'statement about production event part'
+                            name: 'cc1545ae-b497-11e9-9f51-a4d18cec433a',
+                            identifier: 'cc155257-b497-11e9-9ed7-a4d18cec433a',
+                            timespan: 'cc157e05-b497-11e9-8f5a-a4d18cec433a',
+                            statement: '7ae6204a-bee9-11e9-bd2a-a4d18cec433a'
                         }
                     },
                     destruction: {
-                        card:  self.cards?.['destruction event of object'],
+                        card:  self.cards?.[cardIds.destructionEventOfObject],
                         subCards: {
-                            name: 'name for destruction event',
-                            identifier: 'identifier for destruction event',
-                            timespan: 'timespan of destruction event',
-                            statement: 'statement about destruction event'
+                            name: 'fc6503cc-b497-11e9-a303-a4d18cec433a',
+                            identifier: 'fc64ff42-b497-11e9-b739-a4d18cec433a',
+                            timespan: 'fc64fa42-b497-11e9-83d1-a4d18cec433a',
+                            statement: 'fc650868-b497-11e9-9222-a4d18cec433a'
                         }
                     },
                     'removal from object': { 
-                        card: self.cards?.['part removal event of object'],
+                        card: self.cards?.[cardIds.partRemovalEventOfObject],
                         subCards: {
-                            name: 'name for part removal event',
-                            identifier: 'identifier for part removal event',
-                            timespan: 'timespan of part removal event',
-                            statement: 'statement about part removal event'
+                            name: 'b11f1228-d2bc-11e9-b283-a4d18cec433a',
+                            identifier: 'b11f0a30-d2bc-11e9-a6f5-a4d18cec433a',
+                            timespan: 'b11f19c7-d2bc-11e9-9621-a4d18cec433a',
+                            statement: 'b11f0e4c-d2bc-11e9-87c4-a4d18cec433a'
                         }
                     },
                 };
 
                 self.setCards = {
                     addition: {
-                        card:  self.cards?.['addition event of object to collection'],
+                        card:  self.cards?.[cardIds.additionEventOfObjectToCollection],
                         subCards: {
-                            name: 'name for addition event',
-                            identifier: 'identifier for addition event',
-                            timespan: 'timespan of addition event',
-                            statement: 'statement about addition event'
+                            name: '57f23078-d2bd-11e9-bd35-a4d18cec433a',
+                            identifier: '57f2288a-d2bd-11e9-87f9-a4d18cec433a',
+                            timespan: '57f23f94-d2bd-11e9-a248-a4d18cec433a',
+                            statement: '57f22c99-d2bd-11e9-8df9-a4d18cec433a'
                         }
                     },
                     removal: {
-                        card:  self.cards?.['removal event of object from collection'],
+                        card:  self.cards?.[cardIds.additionEventOfObjectToCollection],
                         subCards: {
-                            name: 'name for addition event',
-                            identifier: 'identifier for addition event',
-                            timespan: 'timespan of addition event',
-                            statement: 'statement about addition event'
+                            name: 'a148ed47-d2bd-11e9-a6fd-a4d18cec433a',
+                            identifier: 'a148e2cf-d2bd-11e9-ab6b-a4d18cec433a',
+                            timespan: 'a148f7c0-d2bd-11e9-95ca-a4d18cec433a',
+                            statement: 'a148e83d-d2bd-11e9-b696-a4d18cec433a'
                         }
                     }
                 };        
 
                 self.substanceCards = {
-                    dimension: self.cards?.['dimension of object']
+                    dimension: self.cards?.[cardIds.dimensionOfObject]
                 };
 
             }
@@ -304,9 +325,9 @@ define([
                         {
                             title: arches.translations.contentIconography,
                             data: [{
-                                key: 'text carried by object', 
+                                key: self.cards?.[cardIds.textCarriedByObject].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'carries'), 
-                                card: self.cards?.['text carried by object'],
+                                card: self.cards?.[cardIds.textCarriedByObject],
                                 type: 'resource'
                             }]
                         }
@@ -319,9 +340,9 @@ define([
                         {
                             title: arches.translations.currentLocation,
                             data: [{
-                                key: 'current location', 
+                                key: self.cards?.[cardIds.currentLocationOfObject].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'current location'), 
-                                card: self.cards?.['current location of object'],
+                                card: self.cards?.[cardIds.currentLocationOfObject],
                                 type: 'resource'
                             }]
                         }
@@ -334,9 +355,9 @@ define([
                         {
                             title: arches.translations.components,
                             data: [{
-                                key: 'parent object', 
+                                key: self.cards?.[cardIds.parentObject].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'part of'), 
-                                card: self.cards?.['parent object'],
+                                card: self.cards?.[cardIds.parentObject],
                                 type: 'resource'
                             }]
                         }
@@ -359,7 +380,7 @@ define([
                         }
                         return {column1, column2, column3, column4, column5, tileId, featureCollection}
                     })),
-                    card: self.cards?.['parts of object'],
+                    card: self.cards?.[cardIds.partsOfObject],
                 }: {};
 
             self.actorData = ko.observable({
@@ -368,9 +389,9 @@ define([
                         {
                             title: arches.translations.provenance,
                             data: [{
-                                key: 'current owner of object', 
+                                key: self.cards?.[cardIds.currentOwnerOfObject].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'current owner'), 
-                                card: self.cards?.['current owner of object'],
+                                card: self.cards?.[cardIds.currentOwnerOfObject],
                                 type: 'resource'
                             }]
                         }
@@ -385,9 +406,9 @@ define([
                         {
                             title: arches.translations.relatedCollectionSets,
                             data: [{
-                                key: 'Collection Object is Part Of', 
+                                key: self.cards?.[cardIds.collectionObjectIsPartOf].model.name(), 
                                 value: self.getRawNodeValue(self.resource(), 'member of'), 
-                                card: self.cards?.['collection object is part of'],
+                                card: self.cards?.[cardIds.collectionObjectIsPartOf],
                                 type: 'resource'
                             }]
                         }
@@ -421,12 +442,15 @@ define([
                 const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
                     return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                 });
-                return window.fetch(digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]['value'])
-                    .then(function(response){
-                        if(response.ok) {
-                            return response.json();
-                        }
-                    });
+                const thumbnailUrl = digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]?.['value'];
+                if(thumbnailUrl){
+                    return window.fetch()
+                        .then(function(response){
+                            if(response.ok) {
+                                return response.json();
+                            }
+                        });
+                }
             };
 
             const resourceId = ko.unwrap(self.reportMetadata).resourceinstanceid;

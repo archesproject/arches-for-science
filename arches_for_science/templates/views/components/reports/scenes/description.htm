@@ -36,7 +36,7 @@
                                 <td data-bind="text: language"></td>
                                 <td class="afs-table-control">
                                     <div data-bind="if: $parent.cards && $parent.cards.statement">
-                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.statement)}
+                                        <a data-bind="click: function() {$parent.edit(tileid, $parent.cards.statement)},
                                             attr: {'aria-label': $root.translations.edit}">
                                             <i class="fa fa-mail-reply" aria-hidden="true"></i>
                                         </a>
