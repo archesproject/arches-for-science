@@ -143,11 +143,7 @@
                                             </a>
                                         </td>
                                         <!-- /ko -->
-                                        <!-- TODO(i18n) samples -->
-                                        <td class="afs-workflow-table-contents" data-bind="text: (function(){
-                                            var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
-                                            return ko.unwrap($data.data[partIdentifierAssignmentLabelNodeId][$parent.activeLanguage()]['value']) + ' [Sample of ' + $parent.physicalThingName + ']';
-                                        })()" style="width: 100%; padding: 0px 5px;"></td>
+                                        <td class="afs-workflow-table-contents" data-bind="text: $parent.sampleNameFromTileData($data.data)" style="width: 100%; padding: 0px 5px;"></td>
                                     </tr>
                                     <!-- /ko -->
                                 </tbody>
