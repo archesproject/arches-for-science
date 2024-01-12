@@ -39,6 +39,9 @@ class MulticardResourceDescriptor(AbstractPrimaryDescriptorsFunction):
     This implementation just fetches the calculated result from the db."""
 
     def get_primary_descriptor_from_nodes(self, resource, config, context=None, descriptor=None):
+        resource.refresh_from_db(fields={"name", "descriptors"})
+        resource.get_descriptor_language(context)
+
         result = ""
         requested_language = context.get("language", None) if context else None
 
