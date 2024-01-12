@@ -13,6 +13,7 @@ from arches.app.models.tile import Tile
 
 PHYSICAL_THING_GRAPH_ID = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
 PART_IDENTIFIER_ASSIGNMENT = "b240c366-8594-11ea-97eb-acde48001122"
+PART_IDENTIFIER_ASSIGNMENT_LABEL = "3e541cc6-859b-11ea-97eb-acde48001122"
 SAMPLING_ACTIVITY_GRAPH_ID = "03357848-1d9d-11eb-a29f-024e0d439fdb"
 COLLECTION_RESOURCE = "54bf1022-a0b8-4f95-a5e9-82c084b2f533"  # arbitrary test value
 
@@ -58,10 +59,14 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         create_data = {
             "transaction_id": transaction_id,  # NB: snake_case
             "parentPhysicalThingResourceid": str(parent_phys_thing.pk),  # NB: lowercase id
+            "parentPhysicalThingName": "Test Name of Physical Thing",
             "collectionResourceid": COLLECTION_RESOURCE,
-            "partIdentifierAssignmentTileData": JSONSerializer().serialize(
-                {PART_IDENTIFIER_ASSIGNMENT: []}
-            ),
+            "partIdentifierAssignmentTileData": JSONSerializer().serialize({
+                PART_IDENTIFIER_ASSIGNMENT: [],
+                PART_IDENTIFIER_ASSIGNMENT_LABEL: {
+                    get_language(): {"value": "test value", "direction": "ltr"},
+                },
+            }),
             "analysisAreaName": "Test Analysis Area",
         }
         response = client.post(reverse("saveanalysisarea"), create_data)
@@ -101,14 +106,12 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         part = self.get_resource_instance(PHYSICAL_THING_GRAPH_ID)
 
         # Create
-        physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
-        part_identifier_assignment_label_nodeid = "3e541cc6-859b-11ea-97eb-acde48001122"
         part_identifier_assignment_polygon_identifier_nodeid = "97c30c42-8594-11ea-97eb-acde48001122"
         part_identifier_assignment_tile_data = {
-            part_identifier_assignment_label_nodeid: {
+            PART_IDENTIFIER_ASSIGNMENT_LABEL: {
                 get_language(): {"value": "test value", "direction": "ltr"}
             },
-            physical_part_of_object_nodeid: [],
+            PART_IDENTIFIER_ASSIGNMENT: [],
             part_identifier_assignment_polygon_identifier_nodeid: {},
         }
     
@@ -128,7 +131,7 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
 
         # Delete
         result = response.json()['result']
-        physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
+        physical_part_of_object_nodeid = PART_IDENTIFIER_ASSIGNMENT
         physical_part_of_object_resourceid = result['parentPhysicalThing']['physicalPartOfObjectTile']['data'][physical_part_of_object_nodeid][0]['resourceId']
         part_identifier_assignment_tile_data = {
             **part_identifier_assignment_tile_data,
@@ -140,7 +143,6 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         delete_data = {
             "transactionId": transaction_id,  # NB: camelCase
             "parentPhysicalThingResourceid": str(parent_phys_thing.pk),
-            "parentPhysicalThingName": "Test Name of Physical Thing",
             "partIdentifierAssignmentTileData": JSONSerializer().serialize(part_identifier_assignment_tile_data),
             "samplingActivityResourceId": str(sampling_activity.pk),
             "collectionResourceid": COLLECTION_RESOURCE,

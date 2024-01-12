@@ -1,6 +1,5 @@
-import json
 import logging
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
@@ -177,17 +176,19 @@ class SaveAnalysisAreaView(SaveAnnotationView):
 
     def post(self, request):
         parent_physical_thing_resourceid = request.POST.get("parentPhysicalThingResourceid")
+        parent_physical_thing_name = request.POST.get("parentPhysicalThingName")
         collection_resourceid = request.POST.get("collectionResourceid")
         transaction_id = request.POST.get("transactionId")
         part_identifier_assignment_tile_data = JSONDeserializer().deserialize(request.POST.get("partIdentifierAssignmentTileData"))
         part_identifier_assignment_tile_id = request.POST.get("partIdentifierAssignmentTileId") or None
-        name = request.POST.get("analysisAreaName")
-        if not name:
-            raise ValidationError(_("Name is required."))
+        part_identifier_assignment_label_nodeid = "3e541cc6-859b-11ea-97eb-acde48001122"
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         analysis_area_physical_thing_resourceid = None
         if part_identifier_assignment_tile_data[physical_part_of_object_nodeid]:
             analysis_area_physical_thing_resourceid = part_identifier_assignment_tile_data[physical_part_of_object_nodeid][0]["resourceId"]
+
+        base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid][get_language()]["value"]
+        name = _("{} [Analysis Area of {}]").format(base_name, parent_physical_thing_name)
 
         try:
             with transaction.atomic():
@@ -359,10 +360,9 @@ class SaveSampleAreaView(SaveAnnotationView):
 
         sample_physical_thing_resourceid = None
         sampling_unit_tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
-        if len(sampling_unit_tiles) > 0:
-            for sampling_unit_tile in sampling_unit_tiles:
-                if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
-                    sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
+        for sampling_unit_tile in sampling_unit_tiles:
+            if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
+                sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
         base_name = part_identifier_assignment_tile_data[part_identifier_assignment_label_nodeid][get_language()]["value"]
         sample_name = _("{} [Sample of {}]").format(base_name, parent_physical_thing_name)
@@ -498,7 +498,6 @@ class DeleteSampleAreaView(View):
         sampling_unit_nodegroupid = "b3e171a7-1d9d-11eb-a29f-024e0d439fdb"
 
         parent_physical_thing_resourceid = data.get("parentPhysicalThingResourceid")
-        parent_physical_thing_name = data.get("parentPhysicalThingName")
         sampling_activity_resourceid = data.get("samplingActivityResourceId")
         collection_resourceid = data.get("collectionResourceid")
         sample_motivation = data.get("sampleMotivation")
@@ -515,10 +514,9 @@ class DeleteSampleAreaView(View):
         try:
             sample_physical_thing_resourceid = None
             sampling_unit_tiles = Tile.objects.filter(resourceinstance_id=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
-            if len(sampling_unit_tiles) > 0:
-                for sampling_unit_tile in sampling_unit_tiles:
-                    if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
-                        sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
+            for sampling_unit_tile in sampling_unit_tiles:
+                if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
+                    sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
             parentPhysicalThingSampleTile = ResourceXResource.objects.get(
                 nodeid=physical_part_of_object_nodeid,
