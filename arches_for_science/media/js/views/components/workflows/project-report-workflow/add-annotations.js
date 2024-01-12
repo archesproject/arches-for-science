@@ -225,15 +225,17 @@ define([
                             })
                                 .setContent(popupHtml)
                                 .on('add', function() {
+                                    const classificationConcepts = Object.freeze({
+                                        // Concept IDs, not values
+                                        "a2588fa8-5ae6-4770-a473-dec0c05fb175": 'Analysis Area',
+                                        "2703e524-b5ea-4548-bea7-7ce354e4e05a": 'Sample Area',
+                                        "9db724b9-b3c7-4761-9a50-673d64a15bd8": 'Sample',
+                                    });
+                                    // hope that translator has not adjusted the location of the bracket.
                                     const titleArray = feature.properties.name.split('[');
                                     const title = titleArray[0].trim();
-                                    // TODO(i18n) samples
-                                    const type = titleArray[1].startsWith('Analysis Area') ? 'Analysis Area':
-                                        titleArray[1].startsWith('Sample Area') ? 'Sample Area':
-                                            'Part';
-                                    const parent = titleArray[1].startsWith('Analysis Area') ? titleArray[1].replace('Analysis Area of ', '').replace(']',''):
-                                        titleArray[1].startsWith('Sample Area') ? titleArray[1].replace('Sample Area of ','').replace(']',''):
-                                            titleArray[1].replace(']','');
+                                    const type = classificationConcepts[feature.properties.classificationConceptId];
+                                    const parent = feature.properties.parentPhysicalThingName;
                                     const description = (
                                         arches.translations.existingAnnotation
                                         .replace('{title}', title)
