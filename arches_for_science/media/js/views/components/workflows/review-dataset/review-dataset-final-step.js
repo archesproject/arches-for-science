@@ -2,9 +2,10 @@ define([
     'jquery',
     'underscore',
     'knockout',
+    'arches',
     'views/components/workflows/summary-step',
     'templates/views/components/workflows/review-dataset/review-dataset-final-step.htm',
-], function($, _, ko, SummaryStep, reviewDatasetFinalStepTemplate) {
+], function($, _, ko, arches, SummaryStep, reviewDatasetFinalStepTemplate) {
 
     function viewModel(params) {
         var self = this;
