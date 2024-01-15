@@ -67,7 +67,7 @@
                             <!-- ko if: $parent.requestingUserIsSuperuser() -->
                                 <td style="flex-grow: 1; max-width: 200px;" data-bind="text: $data.username"></td>
                             <!-- /ko -->
-                            <td style="flex-grow: 2; max-width: 400px;" data-bind="text: $data.workflowname"></td>
+                            <td style="flex-grow: 2; max-width: 400px;" data-bind="text: $data.pluginname"></td>
                             <td style="flex-grow: 1; max-width: 200px;">
                                 <a 
                                     data-bind="attr: {'href': `/plugins/${$data.workflowname}?workflow-id=${$data.workflowid}`}"
