@@ -232,7 +232,7 @@ define([
                                 // misnomer, could be analysis area
                                 feature.properties.sampleAreaResourceId = partResourceId;
                                 feature.properties.classificationConceptId = data.resource.type.concept_details[0].concept_id;
-                                feature.properties.parentPhysicalThingName = parentPhyiscalThing().resource._label['@display_value'];
+                                feature.properties.parentPhysicalThingName = parentPhyiscalThing().resource._label?.['@display_value'] ?? '';
                             });
                             if (canvas in partsAnnotationCollection) {
                                 partsAnnotationCollection[canvas].push({
