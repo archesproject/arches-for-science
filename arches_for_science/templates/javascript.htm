@@ -148,7 +148,7 @@
     takes-time='{% trans "This may take a while, please do not move away from this step." as takesTime %} "{{ takesTime|escapejs }}"'
     takes-too-long='{% trans "This is taking longer than usual. Thank you for your patience." as takesTooLong %} "{{ takesTooLong|escapejs }}"'
     analysis-area='{% trans "Analysis Area" as analysisArea %} "{{ analysisArea|escapejs }}"'
-    analysis-areas='"{{ analysisAreas|pluralize }}"'
+    analysis-areas='{% trans "Analysis Areas" as analysisAreas %} "{{ analysisAreas|escapejs }}"'
     no-modifying-areas='{% trans "Analysis Areas may not be modified in the sample taking workflow" as noModifyingAreas %} "{{ noModifyingAreas|escapejs }}"'
     sample-location='{% trans "Sample Location" as sampleLocation %} "{{ sampleLocation|escapejs }}"'
     no-modifying-samples='{% trans "Sample locations may not be modified in the analysis area workflow" as noModifyingSamples %} "{{ noModifyingSamples|escapejs }}"'
