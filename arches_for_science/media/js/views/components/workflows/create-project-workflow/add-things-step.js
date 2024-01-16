@@ -7,12 +7,13 @@ define([
     'arches',
     'templates/views/components/workflows/create-project-workflow/add-things-step.htm',
     'bindings/select2-query',
+    'views/components/resource-instance-creator',
     'views/components/search/paging-filter',
 ], function($, _, ko, koMapping, uuid, arches, addThingsStepTemplate) {
     var collectionNameNodegroupId = '52aa1673-c450-11e9-8640-a4d18cec433a'; // Name (E33) in Collection resource
     var activityUsedSetNodeId = 'cc5d6df3-d477-11e9-9f59-a4d18cec433a'; //Used Set in Project
     var activityNameNodeId = "0b92cf5c-ca85-11e9-95b1-a4d18cec433a"; // Name_content in Project resource
-
+    
     var getQueryObject = function() {
         var query = _.chain(decodeURIComponent(location.search).slice(1).split('&'))
             // Split each array item into [key, value]
@@ -31,8 +32,27 @@ define([
     
     function viewModel(params) {
         var self = this;
+        
+        self.newResourceInstance = ko.observable();
+        self.physicalThingGraphId = '9519cb4f-b25b-11e9-8c7b-a4d18cec433a';
 
         _.extend(this, params.form);
+
+        this.newResourceInstance.subscribe(async (data) => {
+            if(!data){ return; }
+            await self.updateSearchResults({
+                "type": "string",
+                "context": "",
+                "context_label": "Search Term",
+                "id": data,
+                "text": data,
+                "value": data,
+                "selected": true,
+                "inverted": false
+            });
+            this.updateTileData(this.targetResources()?.[0]._source);
+            self.updateSearchResults(self.termFilter());
+        })
 
         var limit = 7;
         this.projectResourceId = ko.observable();
@@ -351,7 +371,7 @@ define([
             escapeMarkup: function(m) {return m;}
         };
         
-        var getResultData = function(termFilter, pagingFilter) {
+        const getResultData = async function(termFilter, pagingFilter) {
             var filters = {};
             // let's empty term-filter and advanced-search
             _.each(self.filters, function(_value, key) {
@@ -413,9 +433,9 @@ define([
 
             self.reportDataLoading(true);
 
-            const setUpReports = function() {
+            const setUpReports = async function() {
                 const filterParams = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&');
-                fetch(arches.urls.physical_thing_search_results + '?' + filterParams)
+                await fetch(arches.urls.physical_thing_search_results + '?' + filterParams)
                     .then(response => response.json())
                     .then(data => {
                         _.each(self.searchResults, function(_value, key) {
@@ -445,11 +465,11 @@ define([
                         self.reportDataLoading(false);
                     });
             };
-            setUpReports();
+            await setUpReports();
         };
 
-        this.updateSearchResults = function(termFilter, pagingFilter) {
-            getResultData(termFilter, pagingFilter);
+        this.updateSearchResults = async function(termFilter, pagingFilter) {
+            await getResultData(termFilter, pagingFilter);
         };
 
         this.selectedTerm.subscribe(function(val) {

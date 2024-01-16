@@ -1,5 +1,5 @@
 <div class="object-search-step">
-    <div class="workflow-search-panel">
+    <div class="workflow-search-panel" style="display: flex">
         <div class="search-bar">
             <select data-bind="select2Query: {select2Config: targetResourceSelectConfig}"></select>
         </div>
@@ -34,6 +34,17 @@
                 "
             ></div>
         </div>
+        <div style="flex: 1"></div>
+        <div data-bind="component:{
+            name: 'views/components/widgets/resource-instance-creator',
+            params: {
+                graphids: [
+                    physicalThingGraphId,
+                ],
+                value: newResourceInstance,
+                disabled: locked,
+            }
+        }"></div>
     </div>
     <div class="workflow-search-results">
         <div class="workflow-search-results-full-container">
