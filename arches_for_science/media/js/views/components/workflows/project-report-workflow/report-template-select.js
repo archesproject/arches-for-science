@@ -19,7 +19,7 @@ define([
         this.getTemplates = async() => {
             const response = await fetch(arches.urls.reports_list);
 
-            if (!response.ok) {
+            if(response.ok) {
                 const data = await response.json();
                 archesTemplates = data.map(template => {
                     if(!template.thumbnail){

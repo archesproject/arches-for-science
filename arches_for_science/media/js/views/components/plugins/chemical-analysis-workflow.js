@@ -17,7 +17,7 @@ define([
 
             this.stepConfig = [
                 {
-                    title: arches.translations.projectinfo,
+                    title: arches.translations.projectInfo,
                     name: 'project-info',
                     required: true,
                     layoutSections: [
@@ -39,7 +39,7 @@ define([
                     ],
                 },
                 {
-                    title: arches.translations.observationinfo,
+                    title: arches.translations.observationInfo,
                     name: 'select-instrument-and-files',
                     required: true,
                     lockableExternalSteps: ['project-info'],
@@ -58,7 +58,7 @@ define([
                     ],
                 },
                 {
-                    title: arches.translations.uploadFile,
+                    title: arches.translations.uploadFiles,
                     name: 'upload-files',
                     // TODO(i18n): seems wrong
                     description: arches.translations.dateSampleTaken,
