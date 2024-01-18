@@ -26,14 +26,14 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-  "arches>=7.6.0a0,<8",
+  "arches>=7.6.0a1,<8",
   "supervisor==4.2.1",
   "django-pgtrigger==4.9.0",
   "django-storages==1.13.2",
   "boto3==1.25.3",
   "arches-templating>=0.1.2",
 ]
-version = "1.1.0a1"
+version = "1.1.0a2"
 
 [tool.setuptools]
 packages = ["arches_for_science"]
