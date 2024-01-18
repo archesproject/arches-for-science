@@ -80,7 +80,7 @@ def add_tiles(
         else:
             return
         name_tile.data[name_content_node_id] = build_string_object(name)
-        name_tile.save(transaction_id=transactionid, index=False)
+        name_tile.save(transaction_id=transactionid, index=True)
 
     if statement:
         statement_count = Tile.objects.filter(nodegroup_id=statement_nodegroupid, resourceinstance_id=resource_id).count()
@@ -91,7 +91,7 @@ def add_tiles(
         else:
             return
         statement_tile.data[statement_content_node_id] = build_string_object(statement)
-        statement_tile.save(transaction_id=transactionid, index=False)
+        statement_tile.save(transaction_id=transactionid, index=True)
 
     if service:
         for service_type_conformance, service_type in service.items():
