@@ -84,7 +84,7 @@ define([
         });
         this.digitalResourceTypeTile = digitalResourceTypeCard.getNewTile();
 
-        var digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
+        const digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
         var digitalResourceServiceIdentifierCard = digitalResourceServiceCard.cards().find(function(topCard) {
             return topCard.nodegroupid === digitalResourceServiceIdentifierNodegroupId;
         });
@@ -256,64 +256,35 @@ define([
             }
         };
 
-        this.save = function() {
+        this.save = async function() {
             params.form.complete(false);
             params.form.saving(true);
             params.pageVm.loading(true);
 
             params.form.lockExternalStep("select-project", true);
             if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
-                self.digitalResourceNameTile.transactionId = params.form.workflowId;
-                self.digitalResourceNameTile.save().then(function(data) {
-                    self.digitalResourceTypeTile.resourceinstance_id = data.resourceinstance_id;
-                    self.digitalResourceTypeTile.data[digitalResourceTypeNodeId](['305c62f0-7e3d-4d52-a210-b451491e6100']); // [IIIF Manifest]
-                    self.digitalResourceTypeTile.transactionId = params.form.workflowId;
-                    self.digitalResourceTypeTile.save();
-                    self.digitalResourceStatementTile.resourceinstance_id = data.resourceinstance_id;
-                    self.digitalResourceStatementTile.transactionId = params.form.workflowId;
-                    self.digitalResourceStatementTile.save().then(function(data) {
-                        self.digitalResourceServiceTile.resourceinstance_id = data.resourceinstance_id;
-                        self.digitalResourceServiceTile.data[digitalResourceServiceTypeNodeId](['e208df66-9e61-498b-8071-3024aa7bed30']); // web service
-                        self.digitalResourceServiceTile.transactionId = params.form.workflowId;
-                        self.digitalResourceServiceTile.save().then(function(data) {
-                            self.digitalResourceServiceIdentifierTile.resourceinstance_id = data.resourceinstance_id;
-                            self.digitalResourceServiceIdentifierTile.parenttile_id = data.tileid;
-                            self.digitalResourceServiceIdentifierTile.transactionId = params.form.workflowId;
-                            self.digitalResourceServiceIdentifierTile.save().then(async function(data) {
-                                params.form.savedData(data);
+                const manifest_response = await fetch(`${arches.urls.manifest_x_canvas}?manifest=${self.manifestData()['@id']}`);
+                const manifest_data = await manifest_response.json();
+                const digitalResourcesResourceId = manifest_data.digital_resource;
+                const card_response = await fetch(arches.urls.api_card + digitalResourcesResourceId);
+                const card_data = await card_response.json();
 
-                                self.savePhysicalThingDigitalReferenceTile(data);
-                                self.saveObservationDigitalReferenceTile(data);
-
-                                self.formData.append("transaction_id", params.form.workflowId);
-                                self.formData.append("observation_id", self.observationResourceInstanceId());
-
-                                const resp = await fetch(arches.urls.add_chemical_analysis_images_file_upload, {
-                                    method: 'POST',
-                                    credentials: 'include',
-                                    body: self.formData,
-                                    headers: {
-                                        "X-CSRFToken": Cookies.get('csrftoken')
-                                    }
-                                })
-                                var response = await resp.json();
-                                response.digitalResourceInstanceIds.forEach(function(d){
-                                    self.digitalResourcesInstanceIds.push(d);
-                                })
-
-                                data.digitalResourceInstancesIds = [];
-                                data.digitalResourceInstancesIds = self.digitalResourcesInstanceIds();
-                                data.ManifestResourceId = data.resourceinstance_id;
-                                params.form.savedData(data);
-                                params.form.value(data);
-
-                                params.form.complete(true);
-                                params.form.saving(false);
-                                params.pageVm.loading(false);
-                            })
-                        });
-                    });
+                const digitalServiceTile = card_data.tiles.find(function(tile) {
+                    return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                 });
+
+                self.savePhysicalThingDigitalReferenceTile(digitalServiceTile);
+                self.saveObservationDigitalReferenceTile(digitalServiceTile);
+
+                digitalServiceTile.digitalResourceInstancesIds = [];
+                digitalServiceTile.digitalResourceInstancesIds = self.digitalResourcesInstanceIds();
+                digitalServiceTile.ManifestResourceId = digitalServiceTile.resourceinstance_id;
+                params.form.savedData(digitalServiceTile);
+                params.form.value(digitalServiceTile);
+
+                params.form.complete(true);
+                params.form.saving(false);
+                params.pageVm.loading(false);
             }
             else {
                 var preferredManifestResourceData = self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.selectedPhysicalThingImageServiceName(); });
@@ -322,41 +293,21 @@ define([
                 var manifestResourceData = preferredManifestResourceData || alternateManifestResourceData; /* the same displayname should not exist in both values */
 
                 if (manifestResourceData && manifestResourceData.tiles) {
-                    var digitalResourceServiceIdentifierNodegroupId = '56f8e26e-ca7c-11e9-9aa3-a4d18cec433a';
-                    
                     var matchingTile = manifestResourceData.tiles.find(function(tile) {
                         return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
                     });
     
                     self.saveObservationDigitalReferenceTile(matchingTile);
     
-                    self.formData.append("transaction_id", params.form.workflowId);
-                    self.formData.append("observation_id", self.observationResourceInstanceId());
+                    matchingTile.digitalResourceInstancesIds = [];
+                    matchingTile.digitalResourceInstancesIds = self.digitalResourcesInstanceIds();
+                    matchingTile.ManifestResourceId = matchingTile.resourceinstance_id;
+                    params.form.savedData(matchingTile);
+                    params.form.value(matchingTile);
     
-                    fetch(arches.urls.add_chemical_analysis_images_file_upload, {
-                        method: 'POST',
-                        credentials: 'include',
-                        body: self.formData,
-                        headers: {
-                            "X-CSRFToken": Cookies.get('csrftoken')
-                        }
-                    }).then(resp => {
-                        return resp.json();
-                    }).then(respJSON => {
-                        respJSON.digitalResourceInstanceIds.forEach(function(d){
-                            self.digitalResourcesInstanceIds.push(d);
-                        });
-        
-                        matchingTile.digitalResourceInstancesIds = [];
-                        matchingTile.digitalResourceInstancesIds = self.digitalResourcesInstanceIds();
-                        matchingTile.ManifestResourceId = matchingTile.resourceinstance_id;
-                        params.form.savedData(matchingTile);
-                        params.form.value(matchingTile);
-        
-                        params.form.complete(true);
-                        params.form.saving(false);
-                        params.pageVm.loading(false);
-                    });
+                    params.form.complete(true);
+                    params.form.saving(false);
+                    params.pageVm.loading(false);
                 }
                 else {
                     params.form.complete(true);

@@ -3,7 +3,6 @@ from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from arches_for_science.views.renderer_config import RendererConfigView, RendererView
 from arches.app.views.plugin import PluginView
-from arches_for_science.views.workflows.add_chemical_analysis_images_file_upload import AddChemicalAnalysisImagesFileUpload
 from arches_for_science.views.workflows.upload_dataset.format_render_map import FormatRenderMap
 from arches_for_science.views.workflows.upload_dataset.update_file_format import UpdateFileFormat
 from arches_for_science.views.workflows.upload_dataset.select_dataset_files_step import SelectDatasetFilesStep
@@ -47,11 +46,6 @@ urlpatterns = [
         r"^workflows/upload-dataset-workflow/get-format-renderer/(?P<format>[0-9a-zA-Z_\-./]*)$",
         FormatRenderMap.as_view(),
         name="format_render_map",
-    ),
-    re_path(
-        r"^workflows/add_chemical_analysis_images/add_chemical_analysis_images_file_upload",
-        AddChemicalAnalysisImagesFileUpload.as_view(),
-        name="add_chemical_analysis_images_file_upload",
     ),
     re_path(r"^updateresourcelist", UpdateResourceListView.as_view(), name="updateresourcelist"),
     re_path(r"^uppy/s3/multipart/(?P<uploadid>[^\/]+)/complete$", S3CompleteUploadView.as_view(), name="s3_multipart_upload_complete"),

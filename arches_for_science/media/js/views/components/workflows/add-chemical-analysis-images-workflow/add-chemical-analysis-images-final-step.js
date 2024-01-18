@@ -12,7 +12,6 @@ define([
         var self = this;
         params.form.resourceId(params.relatedProjectData.observation);
         self.relatedDigitalResources = ko.observableArray()
-        self.workflowDigitalResources = ko.observableArray()
         self.workflowManifestResource = ko.observable()
         self.digitalResourcesIds = params.digitalResourcesIds.digitalResourceInstancesIds;
         self.manifestResourceId = params.manifestResourceId.ManifestResourceId;
@@ -28,7 +27,6 @@ define([
                 observationName: {'name': arches.translations.observation, 'value': params.relatedProjectData.observationName, 'resourceid': params.relatedProjectData.observation},
             };
             
-            await getWorkflowDigitalResources();
             await getWorkflowManifestResource();
 
             this.loading(false);
@@ -39,12 +37,6 @@ define([
             return await response.json()
         };
         
-        async function getWorkflowDigitalResources() {
-            self.workflowDigitalResources(await Promise.all(self.digitalResourcesIds.map( async function(resourceid){
-                return await self.getWorkflowResourceData(resourceid);
-            })));
-        };
-
         async function getWorkflowManifestResource() {
             self.workflowManifestResource(await self.getWorkflowResourceData(self.manifestResourceId))
         };
