@@ -35,7 +35,7 @@ define(['underscore',
 
             self.timeSpanData = ko.observable({
                 sections: [{
-                title: arches.translations.timeSpan,
+                title: arches.translations.timespan,
                 data: [{
                     key: self.dataConfig.timespan?.key || 'Timespan',
                     value: undefined,
@@ -49,7 +49,7 @@ define(['underscore',
                 self.dimensions(params.data.dimensions);
                 self.timeSpanData({
                     sections: [{
-                        title: arches.translations.timeSpan,
+                        title: arches.translations.timespan,
                         data: [{
                             key: params.data.timespan.key,
                             value: params.data.timespan.data,
@@ -160,7 +160,7 @@ define(['underscore',
                         ]});
                     self.timeSpanData({
                         sections: [{
-                            title: arches.translations.timeSpan,
+                            title: arches.translations.timespan,
                             data: [{
                                 key: self.dataConfig.timespan.key,
                                 value: {
