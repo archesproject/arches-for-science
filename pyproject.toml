@@ -56,3 +56,9 @@ exclude = '''
   | dist
 )/
 '''
+
+[tool.pylint."messages control"]
+disable = [
+  "no-member",  # Django false positives
+  "no-self-argument",  # Django false positives
+]

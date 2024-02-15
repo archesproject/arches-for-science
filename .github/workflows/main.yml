@@ -69,8 +69,7 @@ jobs:
         working-directory: afs
         run: |
           python -m pip install pylint
-          echo "Disabling no-member and no-self-argument due to Django false positives"
-          PYTHONPATH="../arches" pylint arches_for_science --errors-only --disable=no-member,no-self-argument
+          PYTHONPATH="../arches" pylint arches_for_science --errors-only
 
       - name: Run afs unit tests
         working-directory: afs
