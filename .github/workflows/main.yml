@@ -65,6 +65,13 @@ jobs:
         run: |
           PYTHONPATH="../arches" python manage.py makemigrations --check --settings=arches_for_science.test_settings
 
+      - name: Lint backend
+        working-directory: afs
+        run: |
+          python -m pip install pylint
+          echo "Disabling no-member and no-self-argument due to Django false positives"
+          PYTHONPATH="../arches" pylint arches_for_science --errors-only --disable=no-member,no-self-argument
+
       - name: Run afs unit tests
         working-directory: afs
         run: |
