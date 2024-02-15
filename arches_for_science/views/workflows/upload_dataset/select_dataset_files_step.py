@@ -167,7 +167,7 @@ class SelectDatasetFilesStep(View):
 
                     # raising the error here will cause the transaction to fail; the resource/tiles will not be saved
                     if raw_response.status_code != 200:
-                        raise
+                        raise Exception
                     else:
                         file_data["tileid"] = response["tileid"]
                         file_data["path"] = response["data"][dataset_file_node_id][0]['path']
