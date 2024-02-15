@@ -336,6 +336,8 @@ class SaveSampleAreaView(SaveAnnotationView):
         )
         tile.save(transaction_id=transactionid, request=request, index=False)
 
+        return tile
+
     def post(self, request):
         physical_part_of_object_nodeid = "b240c366-8594-11ea-97eb-acde48001122"
         part_identifier_assignment_label_nodeid = "3e541cc6-859b-11ea-97eb-acde48001122"
