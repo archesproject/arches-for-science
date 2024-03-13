@@ -151,7 +151,11 @@ define([
         };
 
         this.saveSamplingName = function() {
-            const languageValueId = ['bc35776b-996f-4fc1-bd25-9f6432c1f349']; //English
+            const languageValueId = [
+                arches.activeLanguage === "nl"
+                ? "9ff49782-7214-4763-a725-a33002ee9691"
+                : "bc35776b-996f-4fc1-bd25-9f6432c1f349"  // english
+            ];
             const prefLabelIds = ["7d069762-bd96-44b8-afc8-4761389105c5","8f40c740-3c02-4839-b1a4-f1460823a9fe"]; //[primary title, preferred terms];
             const samplingNameTileData = {
                 "tileid": ko.unwrap(self.samplingNameTile) || "",
@@ -257,7 +261,11 @@ define([
                 "sortorder": 0,
                 "tiles": {},
                 'data': {
-                    '0335789a-1d9d-11eb-a29f-024e0d439fdb': ['bc35776b-996f-4fc1-bd25-9f6432c1f349'],
+                    '0335789a-1d9d-11eb-a29f-024e0d439fdb': [
+                        arches.activeLanguage === 'nl'
+                        ? '9ff49782-7214-4763-a725-a33002ee9691'
+                        : 'bc35776b-996f-4fc1-bd25-9f6432c1f349'  // english
+                    ],
                     '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['df8e4cf6-9b0b-472f-8986-83d5b2ca28a0','72202a9f-1551-4cbc-9c7a-73c02321f3ea'],
                     '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingTechnique()
@@ -282,7 +290,11 @@ define([
                 "sortorder": 0,
                 "tiles": {},
                 'data': {
-                    '0335789a-1d9d-11eb-a29f-024e0d439fdb': ['bc35776b-996f-4fc1-bd25-9f6432c1f349'],
+                    '0335789a-1d9d-11eb-a29f-024e0d439fdb': [
+                        arches.activeLanguage === 'nl'
+                        ? '9ff49782-7214-4763-a725-a33002ee9691'
+                        : 'bc35776b-996f-4fc1-bd25-9f6432c1f349'  // english
+                    ],
                     '033578b6-1d9d-11eb-a29f-024e0d439fdb': null,
                     '033578b7-1d9d-11eb-a29f-024e0d439fdb': ['7060892c-4d91-4ab3-b3de-a95e19931a61'],
                     '033578c1-1d9d-11eb-a29f-024e0d439fdb': self.samplingMotivation()

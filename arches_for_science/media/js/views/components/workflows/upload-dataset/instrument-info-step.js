@@ -28,7 +28,6 @@ define([
         const nameTypeNodeId = '87e4092e-c457-11e9-8036-a4d18cec433a';
         // TODO: the default name type concept value needs to change/be confirmed.  
         const nameTypeConceptValue = ['ec635afd-beb1-426e-a21c-09866ea94d25'];
-        const languageConceptValue = ['bc35776b-996f-4fc1-bd25-9f6432c1f349'];
         const nameLanguageNodeId = '87e3ec82-c457-11e9-89d8-a4d18cec433a';
         const statementLanguageNodeId = '8ec31780-c457-11e9-9543-a4d18cec433a';
         const statementTypeNodeId = '8ec31b7d-c457-11e9-8550-a4d18cec433a';
@@ -44,6 +43,17 @@ define([
         const observedBy = "abe1b5f1-a8e3-42c5-b5a6-3382b75967d2";
         const instrumentUsedInObservation = "a0ed3c16-7b69-4db1-b2a1-2872ca8288d0";
         const observationInstrumentUsedIn = "c643ce0e-ccfa-4980-9346-abb2a959ee39";
+
+        this.getLanguageConceptValue = () => {
+            switch (arches.activeLanguage) {
+                case 'en':
+                    return 'bc35776b-996f-4fc1-bd25-9f6432c1f349';
+                case 'nl':
+                    return '9ff49782-7214-4763-a725-a33002ee9691';
+                default:
+                    return null;
+            }
+        };
 
         const getProp = function(key, prop) {
             if (ko.unwrap(params.value) && params.value()[key]) {
@@ -278,7 +288,7 @@ define([
             let nameData = {};
             nameData[nameNodeId] = createStrObject(self.nameValue());
             nameData[nameTypeNodeId] = nameTypeConceptValue;
-            nameData[nameLanguageNodeId] = languageConceptValue;
+            nameData[nameLanguageNodeId] = self.getLanguageConceptValue();;
             data['nameTile'] = self.buildTile(nameData, nameNodeGroupId, self.observationInstanceId(), nameTileId);
 
             let dateData = {};
@@ -298,7 +308,7 @@ define([
             let parameterData = {};
             parameterData[parameterNodeId] = self.parameterValue();
             parameterData[statementTypeNodeId] = statementTypeConceptValue;
-            parameterData[statementLanguageNodeId] = languageConceptValue;
+            parameterData[statementLanguageNodeId] = self.getLanguageConceptValue();
             data['parameterTile'] = self.buildTile(parameterData, parameterNodeGroupId, self.observationInstanceId(), parameterTileId);
 
             return window.fetch(arches.urls.root + 'instrument-info-form-save', {
