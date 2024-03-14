@@ -265,8 +265,8 @@
             </div>
     
             <div class="workflow-select-card-container" style="padding: 20px 20px 40px 20px;">
-                <div class="workflow-group-title">{% trans "Upload 3-D Data Sets and Derivative Products" %}</div>
                 <!-- ko with: workflows().find(workflow => workflow.pluginid === "c206cfc6-6b4a-481e-a018-8da72aeb7074") -->
+                <div class="workflow-group-title">{% trans "Upload 3-D Data Sets and Derivative Products" %}</div>
                 <a data-bind="attr: {href: $data.url, title: $data.name}" href="#">
                     <div data-bind="style: {'background-color': $data.config.thumbnailBackgroundColor}" class="workflow-select-card">
                         <h4 class="workflow-select-title" data-bind="text: $data.name"></h4>
