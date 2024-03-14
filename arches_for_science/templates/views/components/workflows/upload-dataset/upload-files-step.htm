@@ -1,0 +1,106 @@
+{% load static %}
+{% load i18n %}
+
+{% block tabs %}
+{% endblock tabs %}
+
+{% block sidepanel %}
+{% endblock sidepanel %}
+
+{% block main_menu %}
+
+
+<div class='loading-mask' data-bind="visible: loading"></div>
+<div class="afs-saving-message" data-bind="visible: loading, text: loadingMessage()"></div>
+<div class="file-workbench-filter" style="padding-left: 46px;  padding-right: 46px; display:flex; flex-direction: column">
+    <div class="dataset-name" style="flex-grow: 1;">
+        <label class="control-label">{% trans "Dataset Name" %}</label>
+        <input type="text" class="form-control" style="width: 50%; height:initial"
+            data-bind="textInput: datasetName"></input>
+        <div>
+            <input class="afs-calculated-datasetname" disabled type="text" style="width: 50%;" data-bind="textInput: calcDatasetName"></input>
+        </div>
+
+    </div>
+    <div style="padding-left: 20px;">
+        <!-- ko if: dirty -->
+        <button class="btn btn-shim btn-danger btn-labeled btn-sm fa fa-times" data-bind="click: reset">{% trans 'Cancel'%}</button>
+        <button class="btn btn-shim btn-labeled btn-sm fa fa-plus btn-mint" data-bind="click: saveFiles">{% trans 'Save'%}</button>
+        <!-- /ko -->
+    </div>
+</div>
+
+<!-- ko if: uploadFailed -->
+<div style="width: calc(50% - 46px); margin: 15px 45px; padding: 10px; border: 1px solid #eee;" class="afs-error-message ep-alert-red">
+    <i class="fa fa-warning" style="margin: 0 6px;" data-bind="attr: {'aria-label': $root.translations.warning}"></i>
+    {% trans 'Failed to upload files.  Try again or contact an administrator.'%}
+</div>
+<!-- /ko -->
+
+<div class="file-chart-upload-panel">
+    <!-- ko if: files().length === 0 -->
+    <div class="gallery-controls new-tile">
+        <div style="padding: 10px 45px 45px 45px;" class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+            <div class="file-select-window">
+                <div style="background: #C1F25F; border: dashed 1px #619100; border-radius: 2px;" class="bord-top pad-ver file-select">
+                    <div class="" style="padding: 5px">
+                        <h2><i class="fa fa-cloud-upload" aria-hidden="true"></i><span style="margin-left: 5px;" data-bind="text: $root.translations.uploadFiles"></h2>
+                        <h4 style="font-weight: 400;" data-bind="text: $root.translations.filesOnPanel"></h4>
+                    </div>
+                    <button style="margin: 0px 0px 15px 0px;" type="button" class="btn btn-lg btn-file-select upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                        <i class="fa fa-file"></i>
+                        <span>{% trans "Select Files" %}</span>
+                    </button>
+                    <br>
+                    <div style="padding: 10px 10px 25px 10px;">{% trans "You may upload files of various formats <span><strong>but only ASCII files with X/Y data columns can be displayed on an interactive graph.</strong></span>" %}
+                        <br>
+                        <span data-bind="text: $root.translations.fileUploadNumberSizeDesc"></span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="dropzone" style="min-height: 100%; display:none;">
+            <div id="hidden-dz-previews" class="dropzone-previews" data-bind="css: uniqueidClass"></div>
+        </div>
+    </div>
+    <!-- /ko -->
+      
+    <!-- ko if: files().length > 0 -->
+    <div style="background-color: white; padding: 10px 45px 45px 45px;">
+        <div class="dropzone-photo-upload" style="background: #C1F25F; border: dashed 1px #619100; padding: 40px; text-align: center; border-radius: 2px;" data-bind="dropzone: dropzoneOptions">
+            <div style="font-size: 1.35em; text-align: center; color: #440468;">
+                <i class="fa fa-cloud-upload"></i><span style="margin-left: 5px;">{% trans "File Upload" %}</span>
+            </div>
+            <div class="file-workbench-links">
+                <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                    <span>{% trans "Drag or <strong>click here</strong> to upload more files" %}</span>
+                </a>
+            </div>
+            <div style="min-height: 100%;">
+                <div id="hidden-dz-previews" style="display:none"></div>
+            </div>
+        </div>
+        <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 385px; border: solid 1px lightgrey;">
+            
+            <!-- ko foreach: {data: files, as: 'file'} -->
+                <div class="file-workbench-file">
+                    <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
+                        <div style="flex: 1">
+                            <i data-bind="click: function(){$parent.deleteFile(file)}, attr: {'aria-label': $root.translations.delete}"
+                                class="fa fa-trash" style="color: black"></i>
+                            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
+                        </div>
+                    </div>
+                </div>
+            <!-- /ko -->
+        </div>
+        <div class="table-tools-container">
+            <div class="import-tool">{% trans "x files" %}</div>
+            <div class="import-tool">{% trans "Remove All" %}</div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+{% endblock main_menu %}

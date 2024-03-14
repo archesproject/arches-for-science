@@ -1,0 +1,39 @@
+{
+    "name": "arches_for_science",
+    "repository": {
+        "url": "git@github.com:archesproject/arches-for-science.git",
+        "type": "git"
+    },
+    "version": "1.1.0",
+    "dependencies": {
+        "@uppy/aws-s3": "^3.3.1",
+        "@uppy/core": "^3.5.1",
+        "@uppy/dashboard": "^3.5.4",
+        "@uppy/drag-drop": "^3.0.3",
+        "@uppy/progress-bar": "^3.0.3",
+        "arches": "archesproject/arches#alpha/7.6.0a1",
+        "dom-to-image": "^2.6.0",
+        "html2canvas": "^1.4.1",
+        "plotly.js-dist": "^2.24.3",
+        "three": "^0.148.0"
+    },
+    "devDependencies": {
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#alpha/7.6.0a1"
+    },
+    "scripts": {
+        "build_production": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 NODE_ENV=production arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.prod.js",
+        "build_development": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.dev.js",
+        "build_test": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.dev.js --env test=true",
+        "start": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack serve --config arches_for_science/webpack/webpack.config.dev.js"
+    },
+    "nodeModulesPaths": {
+        "plotly.js-dist": "node_modules/plotly.js-dist",
+        "Plotly": "node_modules/plotly.js-dist",
+        "three": "node_modules/three",
+        "CSS2DRenderer": "node_modules/three/examples/jsm/renderers/CSS2DRenderer",
+        "TrackballControls": "node_modules/three/examples/jsm/controls/TrackballControls",
+        "PDBLoader": "node_modules/three/examples/jsm/loaders/PDBLoader",
+        "PCDLoader": "node_modules/three/examples/jsm/loaders/PCDLoader",
+        "ColladaLoader": "node_modules/three/examples/jsm/loaders/ColladaLoader"
+    }
+}

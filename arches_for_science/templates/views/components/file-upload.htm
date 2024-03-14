@@ -1,0 +1,42 @@
+{% load static %}
+{% load template_tags %}
+{% load i18n %}
+
+<div class="file-chart-upload-panel">
+    <div class="gallery-controls new-tile">
+        <div class="dropzone-photo-upload" data-bind="dropzone: dropzoneOptions">
+            <div class="file-select-window">
+                <div class="bord-top pad-ver file-select">
+                    <div class="" style="padding: 5px">
+                        <h2 data-bind="text: $root.translations.uploadFiles"></h2>
+                        <h4 data-bind="text: $root.translations.dragAndDropFilesOnPanel"></h4>
+                    </div>
+                    <button type="button" class="btn btn-lg btn-file-select fileinput-button dz-clickable" data-bind="css: uniqueidClass">
+                        <i class="fa fa-file" aria-hidden="true"></i>
+                        <span>{% trans "Select Files" %}</span>
+                    </button>
+                    <br>
+                    <div style="padding: 10px">
+                        <span data-bind="text: $root.translations.fileUploadOptional + ' '"></span>
+                        <span data-bind="text: $root.translations.optional + '.'"><strong></strong></span>
+                        <br>
+                        <span data-bind="text: $root.translations.fileUploadNumberSizeDesc"></span>
+                    </div>
+
+                </div>
+                <div class="file-upload-footer">
+                    <!-- ko if: acceptedFiles() !== null -->
+                    <span data-bind="text: ($root.translations.acceptedFileTypes + ': ' + acceptedFiles())"></span>
+                    <!-- /ko -->
+                    <!-- ko if: !acceptedFiles() -->
+                    <span data-bind="text: $root.translations.imageUploadFormatDesc"></span>
+                    <!-- /ko -->
+                </div>
+            </div>
+
+        </div>
+        <div style="min-height: 100%;">
+            <div id="hidden-dz-previews" style="display:none"></div>
+        </div>
+    </div>
+</div>

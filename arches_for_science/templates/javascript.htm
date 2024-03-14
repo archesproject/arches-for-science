@@ -1,0 +1,180 @@
+{% extends "javascript.htm" %}
+
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+
+
+{% block arches_urls %}
+{{ block.super }}
+<div class="arches-urls"
+    physical_thing_search_results = "{% url 'physical-thing-search-results' %}"
+    physical_things_set = "{% url 'physical_things_set' %}"   
+    reports_list ="{% url 'archestemplating_template_view_get' %}"
+    reports='(templateid)=>{return "{% url "archestemplating_template_view" "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" %}".replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", templateid)}',
+    upload_dataset_select_dataset_files_step = "{% url 'upload_dataset_select_dataset_files_step' %}"
+    upload_dataset_file_renderer = '(tileid)=>{return "{% url "upload_dataset_file_renderer" "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" %}".replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", tileid)}',
+    format_render_map = '(format)=>{return "{% url "format_render_map" "aaaaaaaa" %}".replace("aaaaaaaa", format)}'
+    download_project_files = "{% url 'download_project_files' %}"
+    temp_file = "{% url 'temp_file' %}"
+    manifest_x_canvas = "{% url 'manifest_x_canvas' %}"
+></div>
+{% endblock arches_urls %}
+
+{% block arches_translations %}
+{{ block.super }}
+<div class='arches-translations'
+    data-for-download='{% trans "Data for Download" as dataForDownload %}  "{{ dataForDownload|escapejs }}"'
+    no-related-files='{% trans "No Related Files" as noRelatedFiles %}  "{{ noRelatedFiles|escapejs }}"'
+    interpretation='{% trans "Interpretation" as interpretation %}  "{{ interpretation|escapejs }}"'
+    parameters='{% trans "Parameters" as parameters %}  "{{ parameters|escapejs }}"'
+    report-download='{% trans " Report Download" as reportDownloads %}  "{{ reportDownloads|escapejs }}"'
+    generating-report-message='{% trans "Generating Report" as generatingReportMessage %}  "{{ generatingReportMessage|escapejs }}"'
+    word-templates='{% trans "Word Templates" as wordTemplates %} "{{ wordTemplates|escapejs }}"'
+    powerpoint-templates='{% trans "Powerpoint Templates" as powerpointTemplates %} "{{ powerpointTemplates|escapejs }}"'
+    issue-saving-workflow-step='{% trans "There was an issue saving the workflow step." as issueSavingWorkflowStep %} "{{ issueSavingWorkflowStep|escapejs }}"'
+    asd-spectrum='{% trans "ASD Spectrum" as asdSpectrum %} "{{ asdSpectrum|escapejs }}"'
+    wavelength-label='{% trans "Wavelength (nm)" as wavelengthLabel %} "{{ wavelengthLabel|escapejs }}"'
+    raman-spectrum='{% trans "Raman Spectrum" as ramanSpectrum %} "{{ ramanSpectrum|escapejs }}"'
+    raman-shift='{% trans "Raman Shift (cm<sup>-1</sup>)" as ramanSpectrum %} "{{ ramanShift|escapejs }}"'
+    raman-intensity='{% trans "Intensity" context "Raman instrument values" as ramanIntensity %} "{{ ramanIntensity|escapejs }}"'
+    xrf-spectrum='{% trans "XRF Spectrum" as xrfSpectrum %} "{{ xrfSpectrum|escapejs }}"'
+    xrf-units='{% trans "keV" as xrfUnits %} "{{ xrfUnits|escapejs }}"'
+    count='{% trans "Count" context "quantity" as count %} "{{ count|escapejs }}"'
+    data='{% trans "Data" as data %} "{{ data|escapejs }}"'
+    x-axis='{% trans "X Axis" as xAxis %} "{{ xAxis|escapejs }}"'
+    y-axis='{% trans "Y Axis" as yAxis %} "{{ yAxis|escapejs }}"'
+    object='{% trans "Object" as object %} "{{ object|escapejs }}"'
+    project='{% trans "Project" as project %} "{{ project|escapejs }}"'
+    project-info='{% trans "Project Info" as projectInfo %} "{{ projectInfo|escapejs }}"'
+    select-project='{% trans "Select Project" as selectProject %} "{{ selectProject|escapejs }}"'
+    select-template='{% trans "Select Template" as selectTemplate %} "{{ selectTemplate|escapejs }}"'
+    summary='{% trans "Summary" as summary %} "{{ summary|escapejs }}"'
+    cleaning-up='{% trans "Cleaning up..." as cleaningUp %} "{{ cleaningUp|escapejs }}"'
+    regions='{% trans "Regions" as regions %} "{{ regions|escapejs }}"'
+    summary='{% trans "Summary" as summary %} "{{ summary|escapejs }}"'
+    observation='{% trans "Observation" as observation %} "{{ observation|escapejs }}"'
+    observation-info='{% trans "Observation Info" as observationInfo %} "{{ observationInfo|escapejs }}"'
+    date-sample-taken='{% trans "The date that the sample was taken" as dateSampleTaken %} "{{ dateSampleTaken|escapejs }}"'
+    project-name='{% trans "Project Name" as projectName %} "{{ projectName|escapejs }}"'
+    project-statement='{% trans "Project Statement" as projectStatement %} "{{ projectStatement|escapejs }}"'
+    project-start='{% trans "Project Start" as projectStart %} "{{ projectStart|escapejs }}"'
+    project-timespan='{% trans "Project Timespan" as projectTimespan %} "{{ projectTimespan|escapejs }}"'
+    project-timeline='{% trans "Project Timeline" as projectTimeline %} "{{ projectTimeline|escapejs }}"'
+    temporal-relations='{% trans "Temporal Relations" as temporalRelations %} "{{ temporalRelations|escapejs }}"'
+    temporal-relations-of-project='{% trans "Temporal Relations of Project" as temporalRelationsOfProject %} "{{ temporalRelationsOfProject|escapejs }}"'
+    project-activity-type='{% trans "Activity Type of Project" as projectActivityType %} "{{ projectActivityType|escapejs }}"'
+    project-team='{% trans "Project Team" as projectTeam %} "{{ projectTeam|escapejs }}"'
+    parent-project='{% trans "Parent Project" as parentProject %} "{{ parentProject|escapejs }}"'
+    component-projects='{% trans "Component Projects" as componentProjects %} "{{ componentProjects|escapejs }}"'
+    add-objects='{% trans "Add Objects to Your Project" as addObjects %} "{{ addObjects|escapejs }}"'
+    add-annotations='{% trans "Add Annotations" as addAnnotations %} "{{ addAnnotations|escapejs }}"'
+    select-importer='{% trans "Select an Importer" as selectImporter %} "{{ selectImporter|escapejs }}"'
+    select-transformation='{% trans "Select a Transformation" as selectTransformation %} "{{ selectTransformation|escapejs }}"'
+    select-renderers='{% trans "Select File Renderers" as selectRenderers %} "{{ selectRenderers|escapejs }}"'
+    importer-in-use='{% trans "Importer in Use" as importerInUse %} "{{ importerInUse|escapejs }}"'
+    importer-in-use-warning='{% trans "This importer is in use - it should be replaced in all files where it is used before deleting." as importerInUseWarning %} "{{ importerInUseWarning|escapejs }}"'
+    download-report='{% trans "Download Report" as downloadReport %} "{{ downloadReport|escapejs }}"'
+    datasets='{% trans "Datasets" as datasets %} "{{ datasets|escapejs }}"'
+    dataset-type='{% trans "Dataset Type" as datasetType %} "{{ datasetType|escapejs }}"'
+    file-interpretation='{% trans "File Interpretation" as fileInterpretation %} "{{ fileInterpretation|escapejs }}"'
+    sampling-activity-info='{% trans "Sampling Activity Info" as samplingActivityInfo %} "{{ samplingActivityInfo|escapejs }}"'
+    sample-info='{% trans "Sample Info" as sampleInfo %} "{{ sampleInfo|escapejs }}"'
+    data-files-location='{% trans "Data Files and Location" as dataFilesLocation %} "{{ dataFilesLocation|escapejs }}"'
+    json-error='{% trans "Error Retrieving JSON for view." as jsonError %} "{{ jsonError|escapejs }}"'
+    names-classifications='{% trans "Names, Classifications" as namesClassifications %} "{{ namesClassifications|escapejs }}"'
+    names-identifiers-classifications='{% trans "Names, Identifiers, Classifications" as namesIdentifiersClassifications %} "{{ namesIdentifiersClassifications|escapejs }}"'
+    timeline='{% trans "Timeline" as timeline %} "{{ timeline|escapejs }}"'
+    event='{% trans "Event" as event %} "{{ event|escapejs }}"'
+    events='{% trans "Events" as events %} "{{ events|escapejs }}"'
+    related-projects='{% trans "Related Projects" as relatedProjects %} "{{ relatedProjects|escapejs }}"'
+    related-objects='{% trans "Related Objects" as relatedObjects %} "{{ relatedObjects|escapejs }}"'
+    publications='{% trans "Publications" as publications %} "{{ publications|escapejs }}"'
+    documentation='{% trans "Documentation" as documentation %} "{{ documentation|escapejs }}"'
+    location='{% trans "Location" as location %} "{{ location|escapejs }}"'
+    contacts='{% trans "Contacts" as contacts %} "{{ contacts|escapejs }}"'
+    group-members='{% trans "Group Members" as groupMembers %} "{{ groupMembers|escapejs }}"'
+    larger-entities='{% trans "Larger Entities" as largerEntities %} "{{ largerEntities|escapejs }}"'
+    parts='{% trans "Parts" as parts %} "{{ parts|escapejs }}"'
+    part-of-object='{% trans "Part of Object" as partOfObject %} "{{ partOfObject|escapejs }}"'
+    part-of-text='{% trans "Part of Text" as partOfText %} "{{ partOfText|escapejs }}"'
+    parthood='{% trans "Parthood" as parthood %} "{{ parthood|escapejs }}"'
+    sethood='{% trans "Sethood" as sethood %} "{{ sethood|escapejs }}"'
+    existence='{% trans "Existence" as existence %} "{{ existence|escapejs }}"'
+    substance='{% trans "Substance" as substance %} "{{ substance|escapejs }}"'
+    carriers='{% trans "Information Carriers & Information Carried" as carriers %} "{{ carriers|escapejs }}"'
+    aboutness='{% trans "Aboutness" as aboutness %} "{{ aboutness|escapejs }}"'
+    actor-relations='{% trans "Actor Relations" as actorRelations %} "{{ actorRelations|escapejs }}"'
+    experiment-name='{% trans "Experiment/Observation Name" as experimentName %} "{{ experimentName|escapejs }}"'
+    sampled-object='{% trans "Sampled Object" as sampledObject %} "{{ sampledObject|escapejs }}"'
+    used-object='{% trans "Used Object" as usedObject %} "{{ usedObject|escapejs }}"'
+    components='{% trans "Components" as components %} "{{ components|escapejs }}"'
+    procedure='{% trans "Procedure" as procedure %} "{{ procedure|escapejs }}"'
+    instrument='{% trans "Instrument" as instrument %} "{{ instrument|escapejs }}"'
+    instrument-configuration='{% trans "Instrument Configuration" as instrumentConfiguration %} "{{ instrumentConfiguration|escapejs }}"'
+    instrument-parameters='{% trans "Instrument Parameters" as instrumentParameters %} "{{ instrumentParameters|escapejs }}"'
+    parameters-outcomes='{% trans "Parameters & Outcomes" as parametersOutcomes %} "{{ parametersOutcomes|escapejs }}"'
+    dates='{% trans "Dates" as dates %} "{{ dates|escapejs }}"'
+    sampling-date='{% trans "Sampling Date" as samplingDate %} "{{ samplingDate|escapejs }}"'
+    sampling-name='{% trans "Sampling Activity Name" as samplingName %} "{{ samplingName|escapejs }}"'
+    sampling-technique='{% trans "Sampling Technique" as samplingTechnique %} "{{ samplingTechnique|escapejs }}"'
+    sampling-motivation='{% trans "Sampling Motivation" as samplingMotivation %} "{{ samplingMotivation|escapejs }}"'
+    annotator='{% trans "Annotator" as annotator %} "{{ annotator|escapejs }}"'
+    samplers='{% trans "Samplers" as samplers %} "{{ samplers|escapejs }}"'
+    area-name='{% trans "Area Name" as areaName %} "{{ areaName|escapejs }}"'
+    parent-event='{% trans "Parent Event" as parentEvent %} "{{ parentEvent|escapejs }}"'
+    recorded-value='{% trans "Recorded Value" as recordedValue %} "{{ recordedValue|escapejs }}"'
+    communication='{% trans "Communication" as communication %} "{{ communication|escapejs }}"'
+    key-events='{% trans "Key Events" as keyEvents %} "{{ keyEvents|escapejs }}"'
+    physical-description='{% trans "Physical Description" as physicalDescription %} "{{ physicalDescription|escapejs }}"'
+    descriptions='{% trans "Descriptions" as descriptions %} "{{ descriptions|escapejs }}"'
+    provenance='{% trans "Provenance" as provenance %} "{{ provenance|escapejs }}"'
+    related-collection-sets='{% trans "Related Collection and Sets" as relatedCollectionSets %} "{{ relatedCollectionSets|escapejs }}"'
+    content-iconography='{% trans "Content and Iconography" as contentIconography %} "{{ contentIconography|escapejs }}"'
+    current-location='{% trans "Current Location of Object" as currentLocation %} "{{ currentLocation|escapejs }}"'
+    names-of-thing='{% trans "Name(s) of Thing" as namesOfThing %} "{{ namesOfThing|escapejs }}"'
+    name-type='{% trans "Name Type" as nameType %} "{{ nameType|escapejs }}"'
+    object-type='{% trans "Type of Object" as objectType %} "{{ objectType|escapejs }}"'
+    identifier='{% trans "Identifier" as identifier %} "{{ identifier|escapejs }}"'
+    identifiers='{% trans "Identifiers" as identifiers %} "{{ identifiers|escapejs }}"'
+    identifierType='{% trans "Identifier Type" as identifierType %} "{{ identifierType|escapejs }}"'
+    buildingArches='{% trans "Building arches data structures before upload..." as buildingArches %} "{{ buildingArches|escapejs }}"'
+    deleting='{% trans "Deleting" as deleting %} "{{ deleting|escapejs }}"'
+    loading-datasets='{% trans "Loading datasets..." as loadingDatasets %} "{{ loadingDatasets|escapejs }}"'
+    loading-samples-analyses='{% trans "Loading samples and analysis areas..." as loadingSamplesAnalyses %} "{{ loadingSamplesAnalyses|escapejs }}"'
+    saving='{% trans "Saving" as saving %} "{{ saving|escapejs }}"'
+    saved='{% trans "Saved." as saved %} "{{ saved|escapejs }}"'
+    takes-time='{% trans "This may take a while, please do not move away from this step." as takesTime %} "{{ takesTime|escapejs }}"'
+    takes-too-long='{% trans "This is taking longer than usual. Thank you for your patience." as takesTooLong %} "{{ takesTooLong|escapejs }}"'
+    analysis-area='{% trans "Analysis Area" as analysisArea %} "{{ analysisArea|escapejs }}"'
+    analysis-areas='{% trans "Analysis Areas" as analysisAreas %} "{{ analysisAreas|escapejs }}"'
+    analysis-area-of='{% trans "{analysisName} [Analysis Area of {physicalThingName}]" as analysisAreaOf %} "{{ analysisAreaOf|escapejs }}"'
+    sample='{% trans "Sample" as sample %} "{{ sample|escapejs }}"'
+    sample-of='{% trans "{sampleName} [Sample of {physicalThingName}]" as sampleOf %} "{{ sampleOf|escapejs }}"'
+    sampling-activity-of='{% trans "Sampling Activity of {physicalThingName}" as samplingActivityOf %} "{{ samplingActivityOf|escapejs }}"'
+    no-modifying-areas='{% trans "Analysis Areas may not be modified in the sample taking workflow" as noModifyingAreas %} "{{ noModifyingAreas|escapejs }}"'
+    sample-location='{% trans "Sample Location" as sampleLocation %} "{{ sampleLocation|escapejs }}"'
+    no-modifying-samples='{% trans "Sample locations may not be modified in the analysis area workflow" as noModifyingSamples %} "{{ noModifyingSamples|escapejs }}"'
+    physical-thing-placeholder='{% trans "find a physical thing: enter an artist, object name, artwork title or object number" as physicalThingPlaceholder %} "{{ physicalThingPlaceholder|escapejs }}"'
+    annotation-summary-for='{% trans "Annotation Summary for" as annotationSummaryFor %} "{{ annotationSummaryFor|escapejs }}"'
+    existing-annotation='{% trans "{title} is a(n) {type} of {parent}, which is created before" as existingAnnotation %} "{{ existingAnnotation|escapejs }}"'
+    timespan='{% trans "TimeSpan" as timespan %} "{{ timespan|escapejs }}"'
+    observation-with='{% trans "Observation of {physicalThingName} with {instrumentName}" as observationWith %} "{{ observationWith|escapejs }}"'
+></div>
+{% endblock arches_translations %}
+
+{% block project_modules %}
+<script>
+define('register-three', ['three'], function (THREE) {
+    window.THREE = THREE;
+    });
+
+</script>
+
+<!-- consumed by media/js/afs-settings.js -->
+<div id="projectSettings"
+    style="display: none"
+    cloudStorage='{"enabled": {{ project_settings.CLOUD_STORAGE_ENABLED }}}'
+></div>
+
+{% endblock project_modules %}

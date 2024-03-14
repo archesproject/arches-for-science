@@ -1,0 +1,71 @@
+{% load i18n %}
+<div class="download-project-files-step" data-bind="let: {self:$data}">
+    <div>
+        <h5 class="file-list-label" data-bind="text: $root.translations.dataForDownload"></h5>
+    </div>
+    <div class="expand-select-container">
+        <div class="table-tools-container">
+            <button class="project-file-selection" data-bind="click: function() { expandAll(true); }">
+                <i class="ion-plus" aria-hidden="true" style="margin-right: 5px;"></i>{% trans 'Expand' %}</button>
+            <button class="project-file-selection" data-bind="click: function() { expandAll(false); }">
+                <i class="ion-minus" aria-hidden="true" style="margin-right: 5px;"></i>{% trans 'Collapse' %}</button>
+            <div class="project-file-selection">
+                <span data-bind="text: numberOfFiles()"></span>
+                <span data-bind="visible: numberOfSelectedFiles() != 1">{% trans "files" %}</span>
+                <span data-bind="visible: numberOfSelectedFiles() == 1">{% trans "file" %}</span>
+                <span data-bind="visible: numberOfSelectedFiles()">(<span data-bind="text: numberOfSelectedFiles()"></span> {% trans "selected" %})</span>
+            </div>
+
+        </div>
+    </div>
+    <!-- ko foreach: { data: relatedObservations, as: "observation" } -->
+    <div class="file-list-container" data-bind="if: observation.relatedFiles().length > 0">
+        <div class="observation-list" style="display: flex;" data-bind="
+            click: function() { observation.expanded(!observation.expanded()); },
+            attr: {'aria-controls': observation.resourceinstanceid + '_wrapper' },
+        ">
+            <div style="flex:1;" >
+                <span>
+                    <i style="padding-right: 5px;" class="fa" data-bind="
+                        css: {'fa-caret-right': !observation.expanded(), 'fa-caret-down': observation.expanded()},
+                        attr: {'aria-label': '{% trans "Expand/Collapse" %}'}"></i>
+                </span>
+                <span data-bind="text: observation.name"></span>
+            </div>
+            <div style="max-width: auto;text-align:end;">
+                <button class="project-file-selection" data-bind="clickBubble: false, click:() =>{$parent.toggleSelection(observation);}">
+                    <span data-bind="visible: !observation.relatedFiles().filter(file => file.selected()).length">[{% trans "Select All" %}]</span>
+                    <span data-bind="visible: observation.relatedFiles().filter(file => file.selected()).length">[{% trans "Deselect All" %}]</span>
+                </button>
+            </div>
+        </div>
+        <!-- ko if: observation.expanded() -->        
+        <table class="table table-striped" width="100%" data-bind="attr: {id: observation.resourceinstanceid }">
+            <div class="observation-list" aria-expanded="false" data-bind="
+            click: function() { observation.expanded(!observation.expanded()); },
+            attr: {'aria-controls': observation.resourceinstanceid + '_wrapper' },
+        ">
+            <thead>
+                <tr class="afs-table-header">
+                    <th data-bind="text: $root.translations.fileName"></th>
+                    <th data-bind="text: $root.translations.interpretation"></th>
+                    <th data-bind="text: $root.translations.parameters"></th>
+                    <th data-bind="text: $root.translations.format">Format</th>
+                </tr>
+            </thead>
+            <tbody data-bind="dataTablesForEach: { data: observation.relatedFiles, as: 'file', noChildContext: true, dataTableOptions: $parent.fileTableConfig }">
+                <tr>
+                    <td>
+                        <input type="checkbox" data-bind="checked: file.selected">
+                        <a class="file-listing-link" target="_blank" data-bind="text: file.name, attr: { href: file.url }"></a>
+                    </td>
+                    <td class="file-listing-value" data-bind="text: file.interpretation"></td>
+                    <td class="file-listing-value" data-bind="text: observation.description"></td>
+                    <td class="file-listing-value" data-bind="text: file.type"></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+</div>

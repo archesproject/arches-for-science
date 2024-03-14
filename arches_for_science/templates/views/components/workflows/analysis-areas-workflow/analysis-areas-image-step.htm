@@ -1,0 +1,85 @@
+{% load i18n %}
+
+<div class="afs-image-service-instructions" style="padding-bottom: 8px;">
+    <p>
+        {% blocktrans %}
+        Select an existing image service for your object that you can use to draw the locations of your observations.
+        Or upload image(s) to create a new service.
+        {% endblocktrans %}
+    </p>
+
+    <!-- ko foreach: [...physicalThingDigitalReferencePreferredManifestResourceData(), ...physicalThingDigitalReferenceAlternateManifestResourceData()] -->
+        <div class="afs-image-service-list-item pad-btm">
+            <div class="iiif-gallery-canvas-thumbnail">
+                <!-- TODO: alt -->
+                <img style="height: 150px;" data-bind="attr: { src: $data.thumbnail }">
+            </div>
+            <div class="pad-lft">
+                <input 
+                    type="radio" 
+                    data-bind="{
+                        value: $data.displayname,
+                        checked: $parent.selectedPhysicalThingImageServiceName,
+                        disable: $parent.locked
+                    }"
+                />
+                <label 
+                    data-bind="
+                        text: $data.displayname,
+                        click: function() { $parent.selectedPhysicalThingImageServiceName($data.displayname) }
+                    "
+                ></label>
+            </div>
+        </div>
+    <!-- /ko -->
+</div>
+
+<button class="btn btn-success" style="margin-left: 28px;" data-bind="click: openManifestManager, disable: $parent.locked">
+    <i class="ion-android-cloud-done" aria-hidden="true"></i>
+    <span>
+        {% trans "Add or Create New Image Service" %}
+    </span>
+</button>
+
+<div class="afs-workflow-manifest-manager-container"
+    style="
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        height: calc(100vh - 50px);
+        width: calc(100vw - 50px);
+        transition: all linear .3s;
+        z-index: 1;
+    "
+    data-bind="
+        style: {
+            transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(100vw,0)'
+        },
+        component: {
+            name: 'manifest-manager',
+            params: {
+                summary: true,
+                shouldShowSelectService: $data.shouldShowSelectService,
+                manifestData: manifestData,
+                renderContext: 'manifest-workflow',
+                transactionId: workflowId
+            }
+        }
+    "
+></div>
+
+<div class="return-to-workflow-bar"
+    data-bind="
+    style: {
+        transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
+    }">
+    <button
+        class="btn btn-labeled btn-primary return-to-workflow-button"
+        data-bind="
+            style: {
+                transform: !isManifestManagerHidden() ? 'translate(0,0)' : 'translate(0,-100vh)'
+            },
+            click: handleExitFromManifestManager
+        "
+    >{% trans "Return to Workflow" %}</button>
+</div>

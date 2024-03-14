@@ -1,0 +1,100 @@
+{% load i18n %}
+<div class="importer-configuration">
+    <div data-bind="visible: showImporterList">
+        <h4 class="file-config-header">{% trans "Importer Configurations" %}</h4>
+        <h5 class="file-config-instructions">{% trans "Define how to import your x/y data" %}</h5>
+        <div class="importer-list-container">
+            <!-- ko foreach: {data: rendererConfigs, as: 'configuration' } -->
+            <div style="display:flex;align-items: center;">
+                <input style="margin: 8px" type="radio" name="selectedConfiguration" data-bind="checked: $parent.selectedConfiguration, value: configuration.configid"></input>
+                <span style="flex:1"><span data-bind="text: configuration.name"></span><span data-bind="if: configuration.description"><span class="tip"><i class="fa fa-info-circle"></i><span class="tooltiptext" data-bind="text: configuration.description"></span></span></span></span>
+                <i class="fa fa-pencil" role="button" data-bind="click:()=>{$parent.loadConfiguration(configuration);}" aria-label="{% trans 'Edit' %}"></i>
+                <i class="fa fa-trash" role="button" data-bind="click:()=>{$parent.deleteConfiguration(configuration);}" aria-label="{% trans 'Delete' %}"></i>
+            </div>
+            <!-- /ko -->
+        </div>
+
+        <button class="btn btn-primary" data-bind="click:()=>{showConfigurationPanel(true); showImporterList(false); editConfigurationId(undefined)}">{% trans "Add Importer Configuration" %}</button>
+    </div>
+    <div data-bind="visible: showConfigurationPanel" style="border: 1px solid #ddd; top: 4px;">
+        <div style="background-color: #004577; color: #fff; padding: 10px; font-weight: bold;">{% trans "Add Importer Configuration" %}</div>
+        <div style="background-color: #fafafa; overflow-y: scroll; height: calc(100vh - 337px);">
+            <div class="importer-config-panel">
+                <h4 class="file-config-header">{% trans "Importer Name" %}</h4>
+                <input type="text" name="configurationName" data-bind="textInput: configurationName" placeholder="{% trans 'Name of Importer' %}">
+                <h4 class="file-config-header">{% trans "Importer Description" %}</h4>
+                <textarea style="height: 50px;" type="text" name="configurationDescription" data-bind="textInput: configurationDescription" placeholder="{% trans 'Describe the Importer' %}">
+            </div>
+            <div class="importer-config-panel">
+                <h4 class="file-config-header">{% trans "Header" %}</h4>
+                <h5 class="file-config-instructions">{% trans "Define where your x/y data are found in the file" %}</h5>
+                <div style="display: flex; flex-direction: column; padding-bottom: 5px;">
+                    <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-none" type="radio" name="headerConfig" value="none" data-bind="checked: headerConfig"><label for="header-config-none">{% trans "File does not have a header" %}</label></div>
+                    <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-fixed" type="radio" name="headerConfig" value="fixed" data-bind="checked: headerConfig"><label for="header-config-fixed">{% trans "File has a fixed header (constant number of lines)" %}</label></div>
+                    <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-delimited" type="radio" name="headerConfig" value="delimited" data-bind="checked: headerConfig"><label for="header-config-delimited">{% trans "File header ends after specific text" %}</label></div>
+                </div>
+                <input type="text" name="headerDelimiter" data-bind="visible: headerConfig()=='delimited', textInput: headerDelimiter" placeholder="{% trans 'Ending Text' %}">
+                <input type="text" name="headerFixedLines" data-bind="visible: headerConfig()=='fixed', textInput: headerFixedLines" placeholder="{% trans 'Number of Lines' %}">
+            </div>
+            <div class="importer-config-panel">
+                <h4 class="file-config-header">{% trans "Footer" %}</h4>
+                <h5 class="file-config-instructions">{% trans "Define where your x/y data end in the file" %}</h5>
+                <div style="display: flex; flex-direction: column; padding-bottom: 5px;">
+                    <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-none" type="radio" name="footerConfig" value="none" data-bind="checked: footerConfig"><label for="header-config-none">{% trans "End of File" %}</label></div>
+                    <div style="display:flex; flex-direction: row; align-items:center; margin: 0"><input id="header-config-delimited" type="radio" name="footerConfig" value="delimited" data-bind="checked: footerConfig"><label for="header-config-delimited">{% trans "File footer begins after specific text (consistent ending text)" %}</label></div>
+                </div>
+                <input type="text" name="headerDelimiter" data-bind="visible: footerConfig()=='delimited', textInput: footerDelimiter" placeholder="{% trans 'Ending Text' %}">
+            </div>
+            <div class="importer-config-panel">
+                <h4 class="file-config-header">{% trans "Transformations" %}</h4>
+                <h5 class="file-config-instructions">{% trans "Optionally define a transformation for \"y\" data" %}</h5>
+                <select style="display:inline-block; flex: 1"
+                    data-bind="
+                        select2Query: {
+                            select2Config: {
+                                clickBubble: true,
+                                disabled: false,
+                                width: 'element',
+                                data: xyTransformations(),
+                                placeholder: placeholder,
+                                value: selectedTransformation,
+                                closeOnSelect: true,
+                                allowClear: false,
+                                multiple: false 
+                            }
+                        }">
+                </select>
+            </div>
+            <div class="importer-config-panel">
+                <h4 class="file-config-header">{% trans "Data Column Delimiter" %}</h4>
+                <div class="afs-error-message ep-alert-red" style="padding:5px;" data-bind="visible: invalidDelimiter()">{% trans "The data delimiter must be a valid regular expression" %}</div>
+                <h5 class="file-config-instructions">{% trans "Define how the data are separated" %}</h5>
+                <div style="display: flex; flex-direction: row">
+                    <div class="data-delimiter-radio"><input id="delimiter-space" type="radio" name="dataDelimiter" value="" data-bind="checked: dataDelimiterRadio"><label for="delimiter-space">{% trans "Whitespace" %}</label></div>
+                    <div class="data-delimiter-radio"><input id="delimiter-comma" type="radio" name="dataDelimiter" value="," data-bind="checked: dataDelimiterRadio"><label for="delimiter-comma">{% trans "Comma" %}</label></div>
+                    <div class="data-delimiter-radio"><input id="delimiter-pipe" type="radio" name="dataDelimiter" value="|" data-bind="checked: dataDelimiterRadio"><label for="delimiter-pipe">{% trans "Pipe" %}</label></div>
+                    <div class="data-delimiter-radio"><input id="delimiter-other" type="radio" name="dataDelimiter" value="other" data-bind="checked: dataDelimiterRadio"><label for="delimiter-other">{% trans "Other" %}</label></div>
+                </div>
+                <input type="text" name="delimiterCharacter" data-bind="visible: dataDelimiterRadio()=='other', textInput: dataDelimiter">
+                <div style="display: flex; margin: 5px 0;">
+                    <input style="margin: 0px 0px 0px 2px;" type="checkbox" name="includeDelimiter" value="includeDelimiter" data-bind="checked:includeDelimiter">
+                    <label style="margin-top: 2px;" for="header-config-none">{% trans "Include Delimiter in Value" %}</label>
+                </div>
+            </div>
+            <div class="importer-config-panel">
+                <h4 class="file-config-header">{% trans "Display/Charting" %}</h4>
+                <h4 class="file-config-header">{% trans "Chart Title" %}</h4>
+                <input type="text" placeholder="{% trans "Title" %}" name="chartTitle" data-bind="textInput: chartTitle">
+                <h4 class="file-config-header">{% trans "X Axis Label" %}</h4>
+                <input type="text" placeholder="{% trans "X Axis" %}" name="xAxisLabel" data-bind="textInput: xAxisLabel">
+                <h4 class="file-config-header">{% trans "Y Axis Label" %}</h4>
+                <input type="text" placeholder="{% trans "Y Axis" %}" name="yAxisLabel" data-bind="textInput: yAxisLabel">
+            </div>
+        </div>
+        <div style="display: flex;background-color: #eee;border-top: 1px solid #ddd">
+            <div style="flex: 1"></div>
+            <button class="btn btn-danger" type="text" name="delimiterCharacter" data-bind="click: cancelConfigEdit">{% trans "Cancel" %}</button>
+            <button class="btn btn-success" type="text" name="delimiterCharacter" data-bind="disable: invalidDelimiter(), click: saveConfigEdit">{% trans "Save" %}</button>
+        </div>
+    </div>
+</div>

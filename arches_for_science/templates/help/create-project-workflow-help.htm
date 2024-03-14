@@ -1,0 +1,43 @@
+{% load i18n %}
+
+<div class="ep-help-content">
+    <div>
+        <h4>{% trans "New Project Workflow" %}</h4>
+        
+        <p>This workflow creates a new Project resource instance. In Arches for Science (AfS), 
+            a Project is a set of activities and tasks revolving around an object(s) 
+            (i.e. Physical Thing(s)) to accomplish a specific set of goals over a period of time. 
+            AfS projects typically involve data collection and interpretation together with reporting outcomes.
+        </p>
+
+        <p>
+            The new Project created by this workflow will be used to link together other resource instances 
+            (such as Physical Things, Persons, Instruments, Observations, Sampling Activities, etc.) that 
+            relate together through the studies and analyses conducted in the Project.
+        </p>
+
+        <p>This workflow will ask you to provide the following information:</p>
+        
+        <h5><u>Required Information</u></h5>
+        <ul>
+            <li>Project name</li>
+            <li>Scale of Project (initiative, project, or research task)</li>
+            <li>Earliest start date</li>
+            <li>Project Team Members (existing or new Person resource instances)</li>
+            <li>Physical Things (studied by the Project)</li>
+        </ul>
+
+        <h5><u>Optional Information</u></h5>
+        <ul>
+            <li>Statement (textual description)</li>
+        </ul>
+
+        <h5><u>Workflow Outcomes</u></h5>
+        <p>
+            Completion of this workflow will result in the creation of a new Project resource instance 
+            and a new Collection resource instance. The project's collection will be used to organize 
+            the Physical Things resource instances involved in the Project. 
+        </p>
+        
+    </div>
+</div>

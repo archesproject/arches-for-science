@@ -1,0 +1,303 @@
+{% extends "views/report-templates/default.htm" %}
+{% load i18n %}
+
+{% block report %}
+    {% block report_title_bar %}
+    <!-- Custom Template Report Title Bar -->
+    <div class="relative">
+
+        <!-- Title Block -->
+        <div class="afs-report-toolbar">
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Observation:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+        </div>
+
+    </div>
+    {% endblock report_title_bar %}
+
+    
+    {% block body %}
+    <!-- Link nav -->
+    <div class="afs-report-anchor-container">
+        <ol class="afs-report-anchors breadcrumb">
+            <!-- ko foreach: {data: sections, as: 'section'} -->
+            <li data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="afs-report-a"></li>
+            <!-- /ko -->
+        </ol>
+    </div>
+    <div class="afs-tabbed-report">
+        <div class="afs-tabbed-report-content">
+            <!-- Names Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'name'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/name',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Description Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
+                    }
+                }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: descriptionData,
+                    }
+                }"></div>
+            </div>
+            <!-- Documentation Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/documentation',
+                    params: {
+                        data: resource,
+                        cards: documentationCards,
+                        dataConfig: documentationDataConfig,
+                    }
+                }"></div>
+            </div>            
+            <!-- Parent Project Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'parthood'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: parthoodData,
+                    }
+                }"></div>
+            </div>
+            <!-- Related Objects Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'objects'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedObjects)}, css: {'fa-angle-double-right': visible.relatedObjects(), 'fa-angle-double-up': !visible.relatedObjects()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Related Physical Things" %}</h2>
+                      
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.relatedObjects" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfRelatedObjects().length -->
+                        <div class="afs-nodata-note">{% trans "No objects related to this observation" %}</div>
+                        <!-- /ko -->
+
+                        <!-- ko if: collectionOfRelatedObjects().length -->
+                        <div class="afs-report-subsection" >
+                            <div class="firstchild-container">
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Object" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfRelatedObjects, dataTableOptions: relatedObjectsTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link" aria-label="{% trans 'Link' %}"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko if: annotations.length > 0 -->
+                        <div data-bind="foreach: annotations">
+                            <div data-bind="component: {
+                                name: 'views/components/reports/scenes/annotation-parts',
+                                params: {
+                                    annotation: $data.annotation,
+                                    selectedAnnotationTileId: $data.selectedAnnotationTileId,
+                                    annotationTableHeader: $data.annotationTableHeader,
+                                    annotationTableConfig: $data.annotationTableConfig,
+                                }}"></div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <!-- Dates Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'substance'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/substance',
+                    params: {
+                        data: resource,
+                        cards: substanceCards,
+                        dataConfig: substanceDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Data Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'data'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: dataData,
+                    }
+                }"></div>
+            </div>  
+            <!-- JSON Tab -->
+           <div class="afs-report-page afs-flex-col" data-bind="if: activeSection() === 'json'">
+               <div class="afs-flex-col" data-bind="component: {
+                   name: 'views/components/reports/scenes/json',
+                   params: {
+                       resourceInstanceId: reportMetadata().resourceinstanceid,
+                   }
+               }"></div>
+           </div>
+        </div>
+    </div>            
+    {% endblock body %}
+{% endblock report %}
+
+{% block summary %}
+<div class="afs-summary-report-header">
+    <h1 class="afs-summary-report-title"><span data-bind="text: displayname" class="afs-report-instance-name"></span><span class="afs-report-name pad-lft-sm">{% trans "(Observation)" %}</span></h1>
+</div>
+<div class="model-summary-report">
+    <div class="afs-report-page">
+        <!-- Names -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Observation Names" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: nameSummary() && nameSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Statement -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Statements" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: statementSummary() && statementSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no statements for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: statementSummary() && statementSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Statement" %}</th>
+                                <th>{% trans "Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: statementSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Object Observed -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Observed Objects" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: objectObservedSummary() && objectObservedSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no observed objects for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: objectObservedSummary() && objectObservedSummary().length -->
+                <div class="afs-report-data-block" data-bind="foreach: objectObservedSummary ">
+                    <div class="afs-block-value"><a data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a><!-- ko if: $index() < $parent.objectObservedSummary().length - 1  -->, <!-- /ko --></div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Procedure --> 
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Procedures" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: procedureSummary() -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no procedures for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: procedureSummary() -->
+                <div class="afs-report-data-block">
+                    <div class="afs-block-value"><a data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Person Carried out -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Persons Carrying Out Observation" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: personSummary() && personSummary().length-->
+                <h3 class="afs-report-nodata-message">{% trans "There are no persons for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: personSummary() && personSummary().length-->
+                <div class="afs-report-data-block" data-bind="foreach: personSummary ">
+                    <div class="afs-block-value"><a data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a><!-- ko if: $index() < $parent.personSummary().length - 1  -->, <!-- /ko --></div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Timespan --> 
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Timespan" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: timeSpanSummary() -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no timespans for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: timeSpanSummary() -->
+                <div class="afs-table pad-btm">
+                    <table data-bind="datatable: timespanTableConfig" class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Earliest Begin" %}</th>
+                                <th>{% trans "Lastest Begin" %}</th>
+                                <th>{% trans "Earliest End" %}</th>
+                                <th>{% trans "Lastest End" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-bind="text: timeSpanSummary().earliestBegin"></td>
+                                <td data-bind="text: timeSpanSummary().lastestBegin"></td>
+                                <td data-bind="text: timeSpanSummary().earliestEnd"></td>
+                                <td data-bind="text: timeSpanSummary().lastestEnd"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock summary %}

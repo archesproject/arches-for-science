@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<div class="ep-help-content">
+    <div>
+        <h4>{% trans "Upload XY Data Workflow" %}</h4>
+
+        <p>
+            This workflow associates 2 dimensional (X-Y) data with sampling activities,
+            physical things,  instruments, and other relevant information. Using this workflow, 
+            you can select or define renderers (provided the dataset is in a text-based format 
+            that can be parsed). 
+        </p>
+
+        <p>
+            Use image services in the 3<sup>rd</sup> step of this workflow to describe a location 
+            described by the 2D dataset.
+        </p>
+
+        <h5><u>Required Information</u></h5>
+        <ul>
+            <li>One or more 2 dimensional (X-Y) data files</li>
+            <li>Project</li>
+            <li>Physical Things (subject of the dataset)</li>
+        </ul>
+
+        <h5><u>Optional Information</u></h5>
+        <ul>
+            <li>Image Service (to define a sampled / studied location)</li>
+            <li>Instrument</li>
+            <li>Observation Type</li>
+            <li>Observation Date</li>
+            <li>Procedure Used (a Textual Work resource instance)</li>
+            <li>Instrument Parameters (textual description)</li>
+            <li>Image Service and Sampled Region (of sampled item)</li>
+            <li>File Render (<em>Note: no preview of the dataset will be available unless an 
+                appropriate file render is configured and selected</em>)</li>
+        </ul>
+
+        <h5><u>Workflow Outcomes</u></h5>
+        <p>
+            Completion of this workflow will create a new Observation resource instance that 
+            documents the uploaded 2D data and associates it with a relevant Physical Thing 
+            resource instance. 
+        </p>
+        
+    </div>
+</div>

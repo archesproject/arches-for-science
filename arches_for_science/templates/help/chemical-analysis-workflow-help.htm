@@ -1,0 +1,43 @@
+{% load i18n %}
+
+<div class="ep-help-content">
+    <div>
+        <h4>{% trans "Chemical Analysis Data Upload Workflow" %}</h4>
+
+        <p>
+            This workflow associates a large data file (including "data cubes") with sampling activities, 
+            physical things, instruments, and other relevant information. While the datafile will be too 
+            large and may require special software to process and render, association with other 
+            Arches for Science managed information will make it easier to find, manage, and understand.
+        </p>
+
+        <h5><u>Required Information</u></h5>
+        <ul>
+            <li>One or more data files</li>
+            <li>Project</li>
+            <li>Physical Things (subject of the dataset)</li>
+        </ul>
+
+        <h5><u>Optional Information</u></h5>
+        <ul>
+            <li>Instrument</li>
+            <li>Observation Type</li>
+            <li>Observation Date</li>
+            <li>Procedure Used (a Textual Work resource instance)</li>
+            <li>Instrument Parameters (textual description)</li>
+        </ul>
+
+        <h5><u>Workflow Outcomes</u></h5>
+        <p>
+           Completion of this workflow will create a new Observation resource instance that documents 
+           the uploaded data file and associates it with a relevant Physical Thing resource instance. 
+        </p>
+        <p>
+            <em>
+                Note: the uploaded datafile will typically be stored in a file system (usually cloud storage) 
+                external to Arches for Science.
+            </em>
+        </p>
+        
+    </div>
+</div>

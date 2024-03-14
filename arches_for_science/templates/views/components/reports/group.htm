@@ -1,0 +1,359 @@
+{% extends "views/report-templates/default.htm" %}
+{% load i18n %}
+
+{% block report %}
+    {% block report_title_bar %}
+    <!-- Custom Template Report Title Bar -->
+    <div class="relative">
+
+        <!-- Title Block -->
+        <div class="afs-report-toolbar">
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Group:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+        </div>
+
+    </div>
+    {% endblock report_title_bar %}
+
+    
+    {% block body %}
+    <!-- Link nav -->
+    <div class="afs-report-anchor-container">
+        <ol class="afs-report-anchors breadcrumb">
+            <!-- ko foreach: {data: sections, as: 'section'} -->
+            <li data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="afs-report-a"></li>
+            <!-- /ko -->
+        </ol>
+    </div>
+    <div class="afs-tabbed-report">
+        <div class="afs-tabbed-report-content">
+            <!-- Names Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'name'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/name',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Description Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
+                    }
+                }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: eventCards,
+                        events: eventEvents,
+                        dataConfig: eventDataConfig,
+                    }
+                }"></div>
+            </div>
+            <!-- Documentation Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
+                <!-- commented due to model discrepency in airtable
+                    <div data-bind="component: { 
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: sourceData,
+                    }
+                }"></div>--> 
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/documentation',
+                    params: {
+                        data: resource,
+                        cards: documentationCards,
+                        dataConfig: documentationDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Timeline Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: existenceCards,
+                        events: existenceEvents,
+                        dataConfig: existenceDataConfig,
+                    }
+                }"></div>
+            </div>
+            <!-- Group Members Tab --> 
+            <div class="afs-report-page" data-bind="if: activeSection() === 'members'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.groupMembers)}, css: {'fa-angle-double-right': visible.groupMembers(), 'fa-angle-double-up': !visible.groupMembers()}, attr: {'aria-label': '{{ toggle }}'}" class="fa toggle"></i> {% trans "Group Members" %}</h2>
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.groupMembers" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfGroupMembers().length -->
+                        <div class="afs-nodata-note">{% trans "No people or sub-groups associated with this group." %}</div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: collectionOfGroupMembers().length -->
+                        <div class="afs-report-subsection" >
+                            <div>
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Group Member" %}</th>
+                                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfGroupMembers, dataTableOptions: groupMemberTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: resourceType"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link" aria-label="{% trans 'Link' as link %}"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <!-- Larger Entities Tab --> 
+            <div class="afs-report-page" data-bind="if: activeSection() === 'entities'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.largerEntities)}, css: {'fa-angle-double-right': visible.largerEntities(), 'fa-angle-double-up': !visible.largerEntities()}, attr: {'aria-label': {% trans "Expand/Collapse" as toggle %} '{{ toggle }}'}" class="fa toggle"></i> {% trans "Larger Entities" %}</h2>
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.largerEntities" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: collectionOfLargerEntities().length -->
+                        <div class="afs-nodata-note">{% trans "No larger entities associated with this group." %}</div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: collectionOfLargerEntities().length -->
+                        <div class="afs-report-subsection" >
+                            <div>
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Group Member" %}</th>
+                                                <th class="min-tabletl">{% trans "Type" %}</th>
+                                                <th class="min-tabletl">{% trans "Description" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: collectionOfLargerEntities, dataTableOptions: groupMemberTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td data-bind="text: resourceType"></td>
+                                                <td data-bind="text: displaydescription" class="display-description"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link" aria-label="{{ link }}"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <!-- Location Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'location'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/default',
+                    params: {
+                        data: locationData
+                    }
+                }"></div>
+            </div>      
+            <!-- Communication Tab, unique to person -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'communication'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/communication',
+                    params: {
+                        data: resource,
+                        cards: communicationCards
+                    }
+                }"></div>
+            </div>
+            <!-- JSON Tab -->
+            <div class="afs-report-page afs-flex-col" data-bind="if: activeSection() === 'json'">
+                <div class="afs-flex-col" data-bind="component: {
+                    name: 'views/components/reports/scenes/json',
+                    params: {
+                        resourceInstanceId: reportMetadata().resourceinstanceid,
+                    }
+                }"></div>
+            </div>
+        </div>
+    </div>            
+    {% endblock body %}
+{% endblock report %}
+
+{% block summary %}
+<div class="afs-summary-report-header">
+    <h1 class="afs-summary-report-title"><span data-bind="text: displayname" class="afs-report-instance-name"></span><span class="afs-report-name pad-lft-sm">{% trans "(Group)" %}</span></h1>
+</div>
+
+<div class="model-summary-report">
+    <div class="afs-report-page">
+        <!-- Names -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Group Names" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: nameSummary() && nameSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Parent Group Tab -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Parent Groups" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: parentGroupSummary() && parentGroupSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no parent groups for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: parentGroupSummary() && parentGroupSummary().length -->
+                <div class="afs-report-data-block" data-bind="foreach: parentGroupSummary ">
+                    <div class="afs-block-value">
+                        <a data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a>
+                        <!-- ko if: $index() < $parent.parentGroupSummary().length - 1  -->, <!-- /ko -->
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Location Tab -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Residence or Associated Locations" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: locationSummary() && locationSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no residence / associated locations for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: locationSummary() && locationSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "locations" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: locationSummary, dataTableOptions: getTableConfig(1) }">
+                            <tr>
+                                <td><a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- professional activity -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Professional Activities" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: activitySummary() && activitySummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no professional activities for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: activitySummary() && activitySummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Technique" %}</th>
+                                <th>{% trans "Location" %}</th>
+                                <th>{% trans "Source Reference Work" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: activitySummary, dataTableOptions: getTableConfig(4) }">
+                            <tr>
+                                <td data-bind="text: type"></td>
+                                <td data-bind="text: technique"></td>
+                                <td>
+                                    <div data-bind="foreach: locations ">
+                                        <a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a><!-- ko if: $index() < $parent.locations.length - 1  -->, <!-- /ko -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div data-bind="foreach: sources ">
+                                        <a class="afs-table-link" data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a><!-- ko if: $index() < $parent.sources.length - 1  -->, <!-- /ko -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div> 
+        <!-- Identifier -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Identifiers" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: identifierSummary() && identifierSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no identifiers for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: identifierSummary() && identifierSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Identifier" %}</th>
+                                <th>{% trans "Identifier Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: identifierSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock summary %}

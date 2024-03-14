@@ -1,0 +1,17 @@
+{% load i18n %}
+<div class="download-project-files-step">
+    <div>
+        <span class="h5 file-list-label" data-bind="text: projectName() + $root.translations.reportDownload"></span>
+    </div>
+
+    <div class="download-report-button-container">
+        <button class="file-download-button btn btn-success" data-bind="click: generateReport">
+            <span style="color: #fff;" data-bind="text: $root.translations.download"></span>
+            <i class="fa fa-download" aria-hidden="true" style="margin-inline-start: 0.5em; margin-block-start: 0.25em"></i>
+        </button>
+        <div style="display: flex; flex-direction: row; padding-top: 10px">
+            <div style="padding-top: 3px" data-bind="text: message"></div>
+            <i style="padding:5px" class="fa fa-spin fa-spinner" data-bind="visible: loading"></i>
+        </div>
+    </div>
+</div>

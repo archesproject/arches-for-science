@@ -1,0 +1,41 @@
+{% load i18n %}
+<!-- ko if: loading() === false -->
+<div class="final-step">
+    <div class="afs-final-step-section">
+        <h5 class="summary-value">{% trans 'Related Project/Observation' %}</h5>
+        <div class="afs-final-step-block">
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: inline-flex;">
+                    <div class="summary-label" data-bind="text: reportVals.projectName.name + ':'"></div>
+                    <a data-bind="attr: { href: urls.resource + '/' + reportVals.projectName.resourceid}" target="_blank">
+                        <div class="summary-value" 
+                            data-bind = "text: reportVals.projectName.value">
+                        </div>
+                    </a>
+                </div>
+                <div style="display: inline-flex;">
+                    <div class="summary-label" data-bind="text: reportVals.observationName.name + ':'"></div>
+                    <a data-bind="attr: { href: urls.resource + '/' + reportVals.observationName.resourceid}" target="_blank">
+                        <div class="summary-value" 
+                            data-bind = "text: reportVals.observationName.value">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="afs-final-step-section">
+        <h5 class="summary-value">{% trans 'Related Manifest' %}</h5>
+        <div class="afs-final-step-block">
+            <div style="display: inline-flex;">
+                <a data-bind="attr: { href: urls.resource + '/' + workflowManifestResource().resourceinstanceid}" target="_blank">
+                    <div class="summary-value" 
+                        data-bind = "text: workflowManifestResource().displayname">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

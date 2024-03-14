@@ -1,6 +1,46 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arches-for-science"
+readme = "README.md"
+authors = [
+    {name = "Farallon Geographics, Inc", email = "dev@fargeo.com"}
+]
+license = {text = "GNU AGPL3"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+]
+requires-python = ">=3.10"
+dependencies = [
+  "arches>=7.6.0a1,<8",
+  "supervisor==4.2.1",
+  "django-pgtrigger==4.9.0",
+  "django-storages==1.13.2",
+  "boto3==1.25.3",
+  "arches-templating>=0.1.2",
+]
+version = "1.1.0a4"
+
+[tool.setuptools]
+packages = ["arches_for_science"]
+
 [tool.black]
 line-length = 140
-target-version = ['py37']
+target-version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -16,3 +56,9 @@ exclude = '''
   | dist
 )/
 '''
+
+[tool.pylint."messages control"]
+disable = [
+  "no-member",  # Django false positives
+  "no-self-argument",  # Django false positives
+]

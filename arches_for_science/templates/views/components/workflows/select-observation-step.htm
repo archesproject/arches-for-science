@@ -1,0 +1,35 @@
+{% load i18n %}
+<div style="height: 100%; padding: 10px 24px;">
+    <div style="padding: 5px">
+        <div class="widget-input-label">{% trans "Project" %}</div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                graphids: [
+                    projectGraphId,
+                ],
+                renderContext: 'workflow', 
+                value: projectValue,
+                disabled: locked,
+            }
+        }"></div>
+    </div>
+    <!--ko if: termFilter() -->
+    <div style="padding: 5px; margin-top: 15px;">
+        <div class="widget-input-label">
+            <span data-bind="if not: datasetRoute">
+                {% trans "Select an Observation" %}
+            </span>
+        </div>
+        <div data-bind="component: {
+            name: 'resource-instance-select-widget',
+            params: {
+                termFilter: termFilter(),
+                renderContext: 'workflow', 
+                value: observationValue,
+                disabled: locked,
+            }
+        }"></div>
+    </div>
+    <!--/ko-->
+</div>

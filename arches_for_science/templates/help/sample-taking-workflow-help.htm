@@ -1,0 +1,43 @@
+{% load i18n %}
+
+<div class="ep-help-content">
+    <div>
+        <h4>{% trans "Sample Taking Workflow" %}</h4>
+    </div>
+
+    <p>
+       This workflow creates a Sampling Activity resource instance that 
+       describes how and where a new sample (Physical Thing resource instance) 
+       was obtained from another sampled Physical thing resource instance.
+    </p>
+
+    <p>
+       Use image services in the 3<sup>rd</sup> and 4<sup>th</sup> step of 
+       this workflow to describe the location of where the sample was obtained.
+    </p>
+
+    <h5><u>Required Information</u></h5>
+    <ul>
+        <li>Project</li>
+        <li>Physical Things (studied by the Project)</li>
+    </ul>
+
+    <h5><u>Optional Information</u></h5>
+    <ul>
+        <li>Samplers (people conducting the sampling)</li>
+        <li>Sampling Date</li>
+        <li>Sampling Activity Type</li>
+        <li>Sampling Motivation (textual description)</li>
+        <li>Sampling Technique (textual description)</li>
+        <li>Image Service and Sampled Region (of sampled item)</li>
+    </ul>
+
+    <h5><u>Workflow Outcomes</u></h5>
+    <p>
+        Completion of this workflow will create a new Sampling Activity resource 
+        instance and a new sample (Physical Thing) resource instance. It will 
+        record the relationships between the sample, Sampling Activity, and the 
+        Physical Thing resource instance that was the source of the sample.
+    </p>
+    
+</div>

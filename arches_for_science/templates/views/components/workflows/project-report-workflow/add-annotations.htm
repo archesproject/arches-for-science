@@ -1,0 +1,129 @@
+{% load i18n %}
+{% load webpack_static from webpack_loader %}
+
+<!--ko let: {self: $data} -->
+<div>
+    <div style="padding: 0;" class="widget-input-label">{% trans "Select Physical Thing" %}</div>
+    <div style="display: flex; flex-direction: row; align-items:center; margin-top: 5px;">
+        <div>
+        <div style="display: inline-block;padding: 0 10;width: 600px;">
+            <div>
+                <div data-bind="if: physicalThingList()" class="col-xs-12 resource-instance-wrapper">
+                    <select style="display:inline-block;"
+                        data-bind="
+                            select2Query: {
+                                value: physicalThingValue,
+                                select2Config: {
+                                    clickBubble: false,
+                                    disabled: false,
+                                    data: physicalThingList(),
+                                    value: physicalThingValue,
+                                    closeOnSelect: true,
+                                    allowClear: true,
+                                    multiple: false,
+                                    placeholder: '{% trans "Available Physical Things" %}'
+                            }}">
+                    </select>
+                </div>
+            </div>
+        </div></div>
+        
+        <div style="flex: 0.66;"></div>
+    </div>
+
+    <div class="screenshot-container">
+        <div id="annotation-report" style="display: inline-flex; flex-direction: column; min-width: 50%; max-width: 50%; padding: 10px 10px 10px 0px;">
+            <div class="annotation-header" style="display: flex; justify-content: space-between;">
+                <div style="display: inline-block; margin-top: 7px; font-size: 14px;">
+                    {% trans "Select a canvas, zoom/pan to position it for a screenshot" %}
+                </div>
+                <div style="display: block; float: inline-end;">
+                    <button style="height:32px; border: 1px solid steelblue; border-radius: 2px;" class="btn btn-info" data-bind="click: screenshot, css: {disabled: !leafletConfig() }">
+                        <div style="display: flex; flex-direction: row">
+                            <div>{% trans "Grab Screenshot" %}</div>
+                            <i style="padding: 4px" class="fa fa-spin fa-spinner" data-bind="visible: loading"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <div data-bind="if: leafletConfig()">
+                <div id="leaflet-map-cllipped" style="border: solid 1px #ddd">
+                    <div id="leaflet-map" class="iiif-leaflet" data-bind="leaflet: leafletConfig" style="height: 500px; width: 100%"></div>
+                </div>
+            </div>
+
+            <div style="border: 1px solid #ddd; border-top: none;" class="iiif-gallery-sequence" data-bind="if: canvases().length > 0">
+                <div class="iiif-gallery-sequence-canvases" data-bind="foreach: {data: canvases, as: 'canvas'}">
+                    <div style="display: inline-block;">
+                        <div style="text-align:center;" class="iiif-gallery-canvas" data-bind="
+                            click: function() { self.canvasClick(canvas); },
+                            css: { active: canvas.id === self.selectedCanvas(),}"
+                        >
+                            <div class="iiif-gallery-canvas-thumbnail">
+                                <img data-bind="attr: { src: canvas.thumbnail || '{% webpack_static 'img/photo_missing.png' %}', title: canvas.label}">
+                            </div>
+                            <div class="iiif-gallery-canvas-label">
+                                <span data-bind="text: canvas.label"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="annotation-table" data-bind="if: annotation()">
+                <div style="width: 100%;">
+                    <table data-bind="datatable: annotationTableConfig" class="table table-striped" style="border-bottom: 1px solid #ddd;" width="100%">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Region Name" %}</th>
+                                <th>{% trans "Annotator" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: {data: annotation().info, as: 'part'}">
+                            <tr style="cursor: pointer" 
+                                data-bind="
+                                css:
+                                    {'selected': $parent.selectedAnnotationTileId() === part.tileId }, 
+                                click: function() {
+                                    $parent.highlightAnnotation(part.tileId);
+                                }">
+                                <td><div class="summary-value" data-bind="text: part.name"></div></td>
+                                <td><div class="summary-value" data-bind="text: part.annotator"></div></td>
+                            </tr>
+                        <tbody>
+                    </table>
+                    <div class="final-step-section-block-item">
+                        <div class="block-item files-metadata" style="display: inline-flex; color: #777;">
+                            <div class="" style="font-size: 13px; padding-right: 3px;" data-bind='text: "{% trans 'Regions of Interest: ' %}" + annotation().info.length'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="screenshot-table" data-bind="if: screenshots().length">
+            <div class="annotation-header">
+                <div style="display: inline-block; margin-top: 7px; font-size: 14px;">
+                    {% trans 'Screenshots (added to download file)' %}
+                </div>
+            </div>
+            <div data-bind="foreach: {data: screenshots, as: 'screenshot'}">
+                <div class="screenshot-item">
+                    <div>
+                        <!-- TODO: alt -->
+                        <img style="width: 100%; border: 1px solid #454545;" data-bind="attr: {src: (screenshot.url || '/temp_file/' + screenshot.fileId)}">
+                        <div class="summary-value" style="float: inline-end; margin-top: 5px; margin-bottom: -8px;" data-bind="text: screenshot.imageName"></div>
+                    </div>
+                        <div style="display: flex; flex-direction: row; float: inline-end;">
+                            <div style="flex: 1">
+                                <a class="screenshot-delete" data-bind="click: () => {$parent.deleteScreenshot(screenshot.imageName)}">
+                                    <i style="padding: 10px 5px 10px 5px; font-size:15px;" class="fa fa-trash" aria-hidden="true"></i>{% trans "Delete" %}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

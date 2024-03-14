@@ -1,0 +1,127 @@
+{% load i18n %}
+<div class="object-search-step">
+    <div class="workflow-search-panel" style="display: flex">
+        <div class="search-bar">
+            <select data-bind="select2Query: {select2Config: targetResourceSelectConfig}"></select>
+        </div>
+        <div class="workflow-search-count">
+            <div class="count-number" data-bind="text: totalResults()"></div><div>{% trans "Physical Things" %}</div>
+        </div>
+        <div class="child-exclusion">
+            <div
+            data-bind="
+                component: {
+                    name: 'views/components/simple-switch',
+                    params: {
+                        value: includeSamples,
+                        config: {
+                            label: '{% trans 'Include samples' %}',
+                        }
+                    }
+                }
+            "
+            ></div>
+            <div
+                data-bind="
+                    component: {
+                        name: 'views/components/simple-switch',
+                        params: {
+                            value: includeAnalysisAreas,
+                            config: {
+                                label: '{% trans 'Include analysis areas' %}',
+                            }
+                        }
+                    }
+                "
+            ></div>
+        </div>
+        <div style="flex: 1"></div>
+        <div data-bind="component:{
+            name: 'views/components/widgets/resource-instance-creator',
+            params: {
+                graphids: [
+                    physicalThingGraphId,
+                ],
+                value: newResourceInstance,
+                disabled: locked,
+            }
+        }"></div>
+    </div>
+    <div class="workflow-search-results">
+        <div class="workflow-search-results-full-container">
+            <div class="workflow-search-list-container"> 
+                <div class="workflow-search-list search-result-details">
+                    <div data-bind="css: {'loading-mask': reportDataLoading}">
+                        <div class="afs-project-search-result-details-container" data-bind="foreach: targetResources">
+                            <div class="search-result-item" data-bind="css: {'selected-instance': $parent.value().findIndex(
+                                res => res.resourceinstanceid === $data['_source']['resourceinstanceid']) >= 0},
+                            click: function(){$parent.updateTileData($data._source)}">
+                                <div style="display: inline-flex;justify-content: space-between; align-items: baseline; width: 100%;">
+                                    <div class="summary-report-title" data-bind="text: $parent.getStringValue($data._source.displayname)"></div>
+                                </div>
+                                <div class="summary-report-description" data-bind="html: $parent.stripTags($parent.getStringValue($data._source.displaydescription)) || '{% trans 'No description' as noDescription %}'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-results-footer">
+                    <div style="width:100%">
+                        <div data-bind="component: {
+                            name: 'paging-filter',
+                            params: {
+                                query,
+                                searchResults,
+                                filters,
+                            }
+                        }"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wf-multi-tile-step-list" style="padding: 0px;">
+
+                <div style="padding: 24px 24px 0px 24px;">
+                <!-- ko if: selectedResources().length === 0 && !dirty() -->
+                <div class="wf-multi-tile-step-list-empty">
+                    <p>{% trans "You have not added any Physical Things to this Collection/Set" %}</p>
+                </div>
+                <!--/ko -->
+                <!-- ko foreach: selectedResources -->
+                <div class="wf-multi-tile-step-card" data-bind="css: { child: $parent.resourceIsSampleOrAnalysis($data) }">
+                    <div class="wf-multi-tile-card-info">
+                        <!-- <div class="workflow-step-icon complete"><span><i class="fa fa-hashtag"></i></span></div> -->
+                        <div class="wf-multi-tile-card-info-details">
+                            <dt data-bind="text: $parent.getStringValue($data.displayname)"></dt>
+                            <dd>
+                                <a data-bind="html: $parent.getStringValue($data.displaydescription) || '{{ noDescription }}'"></a>
+                            </dd>
+                        </div>
+                    </div>
+                    <div class="wf-multi-tile-step-card-controls">
+                        <span
+                            data-bind="click: function(){$parent.updateTileData($data)}"
+                        >
+                            <span>
+                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                            </span>
+                            <span class="" data-bind="text: $root.translations.remove">
+                            </span>
+                        </span>
+                    </div>
+                 </div>
+                <!-- /ko -->
+                </div>
+                <!-- ko if: selectedResources().length > 0 || dirty() -->
+                <div class="search-selection-controls">
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-md btn-mint" data-bind="visible: dirty, click: function(){submit()}, text: complete() === true ? $root.translations.save : '{% trans 'Save and Continue' %}'"></button>
+                        <button class="btn btn-md btn-mint" data-bind="visible: !dirty() && complete() === true, click: function(){next()}, text: $root.translations.continue"></button>
+                        <button class="btn btn-md btn-warning" style="margin-left: 8px" data-bind="visible: dirty, click: function(){resetTile()}">{% trans "Reset" %}</button>
+                    </div>                
+                </div>
+                <!--/ko -->
+            </div>
+        </div>
+    </div>
+</div>

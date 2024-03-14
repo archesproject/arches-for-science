@@ -1,0 +1,206 @@
+{% extends "views/components/workbench.htm" %}
+{% load i18n %}
+
+{% block tabs %}
+<div class="workbench-card-sidebar-tab" data-bind="click: function(){ if (digitalResources().length) {
+    toggleTab('edit');
+}
+}, css: {'disabled': digitalResources().length === 0, 
+    'active': activeTab() === 'edit'
+}">
+    <i class="fa fa-pencil" data-bind="attr: {'aria-label': $root.translations.edit}"></i>
+    <span class="map-sidebar-text">{% trans "Dataset" %}</span>
+</div>
+
+{{ block.super }}
+{% endblock tabs %}
+
+{% block workbench %}
+<div class='loading-mask' data-bind="visible: loading"></div>
+<div class="afs-saving-message" data-bind="visible: loading, text: loadingMessage()"></div>
+<!-- ko with: $data, as: 'self' -->
+    {{ block.super }}
+<!-- /ko -->
+{% endblock workbench %}
+
+{% block content_management %}
+<!-- ko if: selectedFile -->
+<div>
+    <div class="card-display-panel">
+        <div>
+            <div id="hidden-dz-previews"></div>
+            <!-- ko if: selectedRenderer -->
+            <!-- ko component: {
+                    name: selectedRenderer().name,
+                    params: {
+                        // fileViewer: $data,
+                        //card: $parent.card,
+                        selected: selected,
+                        state: selectedRenderer().state,
+                        displayContent: displayContent,
+                        context: 'render',
+                        params: $data,
+                        loading: $parent.loading
+                    }
+                } -->
+            <!-- /ko -->
+            <!-- /ko -->
+
+        </div>
+    </div>
+
+
+</div>
+<!-- /ko -->
+
+<!-- ko ifnot: selectedFile -->
+<!-- ko if: activeTab() === 'edit' -->
+<div style="width: calc(100% - 400px); height: 100%; display: flex;justify-content:center; align-items:center;">
+    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 15px; background-color: #f9f9f9;">
+        <span>{% trans "Select a dataset and file to set and view interpretation and parameters." %}</span>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko ifnot: activeTab === 'edit' -->
+<div style="width: 100%; height: 100%; display: flex;justify-content:center; align-items:center;">
+    <div style="margin-bottom: 10px; border: 1px solid #ddd; padding: 15px; background-color: #f9f9f9;">
+        <span>{% trans "Select a dataset and file to set and view interpretation and parameters." %}</span>
+    </div>
+</div>
+<!-- /ko -->
+<!-- /ko -->
+{% endblock content_management %}
+
+
+{% block sidepanel %}
+
+<!--ko if: activeTab() === 'edit' -->
+<div class="workbench-card-sidepanel-header-container">
+    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel, text: '{% trans 'Dataset Details' %}'"></h4>
+</div>
+<div class="workbench-card-sidepanel-border"></div>
+<div class="workbench-card-sidepanel-body">
+    <div data-bind="visible: showDatasetList">
+        <div class="file-workbench-filter">
+            <h2 class="file-workbench-filter-header">{% trans 'Datasets' %}</h2>
+            <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
+                data-bind="textInput: digitalResourceFilter"></input>
+            <span class="clear-node-search" data-bind="visible: digitalResourceFilter().length > 0, click: function() { digitalResourceFilter(''); }"><i
+                    class="fa fa-times-circle"></i></span>
+        </div>
+        <div class='file-workbench-files' style="max-height: 300px;height: auto;overflow-y:auto;">
+            <!-- ko foreach: { data: filteredDigitalResources, as:'digitalResource'} -->
+            <div class='file-workbench-file' style="display: inline-flex;"
+                data-bind="click: function(ri){
+                    $parent.selectedDigitalResource(ri);
+                    $parent.showDatasetList(false);
+                    $parent.showFileList(true);
+                }, container: '.file-workbench-files'">
+                <i role="presentation" data-bind="class: 'fa fa-file'"></i>
+                <div class='file-name' data-bind="text: digitalResource.resource.Name.Name_content['@display_value']"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div data-bind="visible: showFileList">
+        <button class="btn" style="background: #9490EE;color: #eee;" data-bind=" click: function(){showDatasetList(true); showFileList(false)}">
+            <i class="fa fa-list" style="color: #eee" aria-hidden="true"></i> {% trans "Show Dataset List" %}</button>
+        <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
+            <span>{% trans "Dataset:" %}</span>
+            <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource().displayname"></span>
+        </div>
+        <div class="file-workbench-filter" style="max-height: 300px;height: auto;overflow-y:auto;">
+            <h2 class="file-workbench-filter-header">{% trans 'Data Files' %}</h2>
+            <input type="text" class="form-control" style="width: 100%; height:initial" placeholder="{% trans 'e.g.: .txt' %}"
+                data-bind="textInput: fileFilter"></input>
+            <span class="clear-node-search"
+                data-bind="visible: fileFilter().length > 0, click: function() { fileFilter(''); },
+                    attr: {'aria-label': $root.translations.clearFilter}">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class='file-workbench-files' style="max-height: 300px;height: auto; overflow-y:auto;">
+            <!-- ko foreach: { data: filteredFiles, as:'file'} -->
+            <div class='file-workbench-file' style="display: inline-flex;" data-bind="click: function(f){
+                    $parent.selectedFile(f);
+                    $parent.showFileInfo(true);
+                    $parent.showFileList(false);
+                }, container: '.file-workbench-files',
+                css:{'selected': file['@tile_id'] === ($parent.selectedFile() ? $parent.selectedFile()['@tile_id'] : '') }">
+                <i role="presentation" data-bind="class: 'fa fa-file'"></i>
+                <div class='file-name' data-bind="text: file.file_details[0].name"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div data-bind="visible: showFileInfo">
+            
+        <button 
+            class="btn" 
+            style="background: #9490EE;color: #eee;" 
+            data-bind=" click: function(){showDatasetList(true); showFileList(false); showFileInfo(false);}"
+        >
+            <i class="fa fa-list" style="color: #eee" aria-hidden="true"></i> {% trans "Show Dataset List" %}
+        </button>
+        
+        <div style="margin-top: 10px" data-bind="if: $parent.selectedDigitalResource()">
+            <h2 class="file-workbench-filter-header">{% trans "Dataset" %}</h2>
+            <span style="font-weight: bold" data-bind="text: $parent.selectedDigitalResource()?.displayname"></span>
+        </div>
+
+        <div style="margin-top: 14px;">
+            <h2 class="file-workbench-filter-header">{% trans "File" %}</h2>
+    
+            <select 
+                style="display:inline-block;"
+                data-bind="
+                    options:filteredFiles().map(file => { return {text: file.file_details[0].name, id: file.file_details[0].file_id } }),
+                    optionsText: 'text',
+                    optionsValue: 'id',
+                    select2Query: {
+                        select2Config: {
+                            clickBubble: false,
+                            disabled: false,
+                            value: selectedFileDropdownData,
+                            initSelection: initSelection,
+                            closeOnSelect: false,
+                            allowClear: true,
+                            multiple: false,
+                            placeholder: '{% trans 'Select File' %}'
+                    }}">
+            </select>
+        </div>
+
+        <div data-bind="visible: selectedFile()?.file_details?.[0] != undefined && (selectedFile().file_details[0].name.endsWith('txt') || selectedFile().file_details[0].name.endsWith('dx'))">
+            <div data-bind="hidden: currentRendererValid">
+                <div style="border: 1px solid #ddd; background-color: #F8735A; display: flex; color: #fff; padding: 10px 0px; align-items: center;">
+                    <i style="padding: 0px 10px;" role="presentation" class="fa fa-exclamation-triangle"></i>
+                    <div>{% trans 'The current renderer is not valid.  Please select a different renderer.' %}</div>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end;">
+                <h2 class="file-workbench-filter-header">{% trans 'File Parameters' %}</h2>
+            </div>
+            <textarea data-bind="textInput: fileStatementParameter" rows="4" class="form-control" style="width: 100%; height:initial" 
+            placeholder="{% trans 'e.g.: .txt' %}"></textarea>
+        </div>
+
+        <div>
+            <h2 class="file-workbench-filter-header">{% trans 'File Interpretation' %}</h2>
+            <textarea data-bind="textInput: fileStatementInterpretation" rows="4" class="form-control" style="width: 100%; height:initial"
+            placeholder="{% trans 'e.g.: .txt' %}"></textarea>
+        </div>
+    </div>
+</div>
+<div class="workbench-button-panel">
+    <button class="btn btn-success" data-bind="click: save, css: {disabled: !dirty()}"><i class="ion-android-cloud-done" aria-hidden="true"></i> {% trans 'Save'%}</button>
+    <button class="btn btn-danger" data-bind="click: reset, css: {disabled: !dirty()}"><i class="ion-android-cancel" aria-hidden="true"></i> {% trans 'Cancel' %}</button>
+</div>
+
+<!-- /ko -->
+
+
+{{ block.super }}
+{% endblock sidepanel %}

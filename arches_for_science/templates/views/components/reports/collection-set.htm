@@ -1,0 +1,287 @@
+{% extends "views/report-templates/default.htm" %}
+{% load i18n %}
+
+{% block report %}
+    {% block report_title_bar %}
+    <!-- Custom Template Report Title Bar -->
+    <div class="relative">
+
+        <!-- Title Block -->
+        <div class="afs-report-toolbar">
+            <h1 class="afs-report-toolbar-title"><span class="afs-report-name">{% trans "Collection or Set:" %}</span><span data-bind="text: displayname" class="afs-report-instance-name"></span></h1>
+        </div>
+
+    </div>
+    {% endblock report_title_bar %}
+
+    
+    {% block body %}
+    <!-- Link nav -->
+    <div class="afs-report-anchor-container">
+        <ol class="afs-report-anchors breadcrumb">
+            <!-- ko foreach: {data: sections, as: 'section'} -->
+            <li data-bind="click: function(){$parent.activeSection(section.id)}, css: {active: $parent.activeSection() === section.id}, text: section.title" class="afs-report-a"></li>
+            <!-- /ko -->
+        </ol>
+    </div>
+    <div class="afs-tabbed-report">
+        <div class="afs-tabbed-report-content">
+            <!-- Names Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'name'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/name',
+                    params: {
+                        data: resource,
+                        cards: nameCards,
+                        dataConfig: nameDataConfig
+                    }
+                }"></div>
+            </div>
+            <!-- Description Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'description'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/description',
+                    params: {
+                        data: resource,
+                        cards: descriptionCards,
+                    }
+                }"></div>
+            </div>
+            <!-- Documentation Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'documentation'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/documentation',
+                    params: {
+                        data: resource,
+                        cards: documentationCards,
+                        dataConfig: documentationDataConfig,
+                    }
+                }"></div>
+            </div>
+            <!-- Existence Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'existence'">
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: existenceCards,
+                        events: existenceEvents,
+                        dataConfig: existenceDataConfig,
+                    }
+                }"></div>
+            </div>
+            <!-- Project Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'projects'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.relatedProject)}, css: {'fa-angle-double-right': visible.relatedProject(), 'fa-angle-double-up': !visible.relatedProject()}, attr: {'aria-label': {% trans "Expand/Collapse" as toggle %} '{{ toggle }}'}" class="fa toggle"></i> {% trans "Related Projects" %}</h2>
+                    <div class="afs-card-control" data-bind="if: cards['related project of collection'] && relatedProject().length > 0">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Edit Related Project" %}</a>
+                    </div>
+                    <div class="afs-card-control" data-bind="if: cards['related project of collection'] && relatedProject().length == 0">
+                        <a class="afs-report-a" data-bind="click: function(){addNewTile(cards['related project of collection'])}"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add Related Project" %}</a>
+                    </div>
+
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.relatedProject" class="afs-report-collapsible-container pad-lft">
+                
+                        <!-- ko ifnot: relatedProject().length -->
+                        <div class="afs-nodata-note">{% trans "No related project for this resource" %}</div>
+                        <!-- /ko -->
+                        <!-- ko if: relatedProject().length -->
+                        <div class="afs-report-subsection" >
+                            <div class="firstchild-container">
+                                <div class="afs-table pad-btm">
+                                    <table class="table table-striped" cells pacing="0" width="100%">
+                                        <thead>
+                                            <tr class="afs-table-header">
+                                                <th>{% trans "Project" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: relatedProject, dataTableOptions: relatedProjectTableConfig }">
+                                            <tr>
+                                                <td data-bind="text: displayname"></td>
+                                                <td class="afs-table-control">
+                                                    <div data-bind="if: link">
+                                                        <a data-bind="attr: { href: link }">
+                                                            <i class="fa fa-link" aria-label="{% trans 'Link' %}"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <!-- Publication Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'publications'">
+                <div class="afs-report-section">
+                    <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.textualReference)}, css: {'fa-angle-double-right': visible.textualReference(), 'fa-angle-double-up': !visible.textualReference()}, attr: {'aria-label': '{{ toggle }}'}" class="fa toggle"></i> {% trans "Textual Reference" %}</h2>
+                    <a data-bind="{if: cards['textual reference to collection'], click: function(){addNewTile(cards['textual reference to collection'])}}" class="afs-report-a"><i class="fa fa-mail-reply"></i> {% trans "Add textual reference" %}</a>
+
+                    <!-- Collapsible content -->
+                    <div data-bind="visible: visible.textualReference" class="afs-report-collapsible-container pad-lft">
+
+                        <!-- ko ifnot: textualReference().length -->
+                        <div class="afs-nodata-note">{% trans "No textual references for this collection" %}</div>
+                        <!-- /ko -->
+
+                        <!-- ko if: textualReference().length -->
+                        <div class="afs-report-subsection">
+                            <div class="firstchild-container">
+                                <div class="afs-table">
+                                    <table class="table table-striped" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans "Textual Source" %}</th>
+                                                <th>{% trans "Textual Reference Type" %}</th>
+                                                <th class="afs-table-control all"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="dataTablesForEach: { data: textualReference, dataTableOptions: textualReferenceTableConfig}">
+                                            <tr>
+                                                <td><a class="afs-table-link" data-bind="text: textualSource, attr: {href: textualSourceLink}"></a></td>                                                
+                                                <td data-bind="text: textualReferenceType"></td>
+                                                <td class="afs-table-control">
+                                                    <!-- TODO(i18n) card label -->
+                                                    <div data-bind="if: $parent.cards['textual reference to collection']">
+                                                        <a data-bind="click: function() {$parent.editTile(tileid, $parent.cards['textual reference to collection'])},
+                                                            attr: {'aria-label': $root.translations.edit}">
+                                                            <i class="fa fa-mail-reply" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a data-bind="click: function() {$parent.deleteTile(tileid, $parent.cards['textual reference to collection'])},
+                                                            attr: {'aria-label': $root.translations.delete}">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <!-- Events Tab -->
+            <div class="afs-report-page" data-bind="if: activeSection() === 'events'">                
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/existence',
+                    params: {
+                        data: resource,
+                        cards: eventCards,
+                        events: eventEvents,
+                        dataConfig: eventDataConfig,
+                    }
+                }"></div>
+            </div>
+            <!-- JSON Tab -->
+           <div class="afs-report-page afs-flex-col" data-bind="if: activeSection() === 'json'">
+               <div class="afs-flex-col" data-bind="component: {
+                   name: 'views/components/reports/scenes/json',
+                   params: {
+                       resourceInstanceId: reportMetadata().resourceinstanceid,
+                   }
+               }"></div>
+           </div>
+        </div>
+    </div>            
+    {% endblock body %}
+{% endblock report %}
+
+{% block summary %}
+<div class="afs-summary-report-header">
+    <h1 class="afs-summary-report-title"><span data-bind="text: displayname" class="afs-report-instance-name"></span><span class="afs-report-name pad-lft-sm">{% trans "(Collection/Set)" %}</span></h1>
+</div>
+<div class="model-summary-report">
+    <div class="afs-report-page">
+        <!-- Names -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Collection/Set Names" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: nameSummary() && nameSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no names for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: nameSummary() && nameSummary().length -->
+                <div class="afs-table pad-btm">
+                    <table class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="afs-table-header">
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Name Type" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="dataTablesForEach: { data: nameSummary, dataTableOptions: getTableConfig(2) }">
+                            <tr>
+                                <td data-bind="text: content"></td>
+                                <td data-bind="text: type"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Type --> 
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Collection/Set Type" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: typeSummary() -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no type for this resource" %}</h3>
+                <!-- /ko -->
+                <!-- ko if: typeSummary() -->
+                <div class="afs-report-data-block">
+                    <div class="afs-block-value" data-bind="text: typeSummary().type"></div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- Related Project Tab -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Related Projects" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: relatedProjectSummary() && relatedProjectSummary().length -->
+                <h3 class="afs-report-nodata-message">{% trans "There are no related resources for this resource" %}</h3>
+                <!-- /ko -->    
+                <!-- ko if: relatedProjectSummary() && relatedProjectSummary().length -->
+                <div class="afs-report-data-block" data-bind="foreach: relatedProjectSummary ">
+                    <div class="afs-block-value">
+                        <a data-bind="click: function() {window.open(link);}, text: displayValue" href="javascript:void(0)"></a>
+                        <!-- ko if: $index() < $parent.relatedProjectSummary().length - 1  -->, <!-- /ko -->
+                    </div>
+                </div>
+                <!-- /ko -->        
+            </div>
+        </div>
+        <!-- Statement -->
+        <div class="afs-report-section">
+            <h2 class="afs-report-section-title">{% trans "Statement" %}</h2>
+            <div class="afs-report-subsection" >
+                <!-- ko ifnot: statementSummary() -->
+                <h3 class="afs-report-nodata-message">{% trans "There is no statement for this resource" %}</h3>
+                <!-- /ko -->    
+                <!-- ko if: statementSummary() -->
+                <div class="afs-report-data-block">
+                    <div class="afs-block-attributes">
+                        <div class="afs-block-key">{% trans "Statement:" %} </div>
+                        <div class="afs-block-value" data-bind="text: statementSummary().content"></div>
+                    </div>
+                    <div class="afs-block-attributes pad-btm">
+                        <div class="afs-block-key">{% trans "Type:" %} </div>
+                        <div class="afs-block-value" data-bind="text: statementSummary().type"></div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock summary %}

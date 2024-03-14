@@ -1,0 +1,37 @@
+{% load i18n %}
+<div style="padding: 5px 65px">
+    <div class="widget-input-label">{% trans "Select Project" %}</div>
+    <div data-bind="component: {
+        name: 'resource-instance-select-widget',
+        params: {
+            graphids: [
+                '0b9235d9-ca85-11e9-9fa2-a4d18cec433a',
+            ],
+            renderContext: 'workflow',
+            value: projectValue,
+            disabled: locked,
+        }
+    }"></div>
+    <!-- ko if: hasSetWithPhysicalThing() === false -->
+    <div class="tabbed-workflow-step-information-box widget-input-label" style="text-align: center; margin-top: 16px; height:fit-content; background-color: #fde9ad;">
+        {% trans "This project has no associated Objects. Your project must have an associated Object Collection with an Object before proceeding." %}
+    </div>
+    <!-- /ko -->
+    <!-- ko if: termFilter() || physicalThingsValue() -->
+    <div style="margin-top: 15px;">
+        <div class="widget-input-label">
+            <span>{% trans "Select Object(s) to include in your report" %}</span>
+        </div>
+        <div data-bind="component: {
+            name: 'resource-instance-multiselect-widget',
+            params: {
+                termFilter: termFilter(),
+                renderContext: 'workflow', 
+                value: physicalThingsValue,
+                disabled: locked,
+                graphids: ['9519cb4f-b25b-11e9-8c7b-a4d18cec433a'],  // physical thing
+            }
+        }"></div>
+    </div>
+    <!--/ko-->
+</div>

@@ -1,0 +1,56 @@
+{% load static %}
+{% load i18n %}
+
+{% block tabs %}
+{% endblock tabs %}
+
+{% block sidepanel %}
+{% endblock sidepanel %}
+
+{% block main_menu %}
+
+
+<div class='loading-mask' data-bind="visible: loading"></div>
+<div class="afs-saving-message" data-bind="visible: loading, text: loadingMessage()"></div>
+<div class="file-workbench-filter" style="padding-left: 46px;  padding-right: 46px; display:flex; flex-direction: column">
+    <div class="dataset-name" style="flex-grow: 1;">
+        <label class="control-label">{% trans "Dataset Name" %}</label>
+        <input type="text" class="form-control" style="width: 50%; height:initial"
+            data-bind="textInput: datasetName"></input>
+        <div>
+            <input class="afs-calculated-datasetname" disabled type="text" style="width: 50%;" data-bind="textInput: calcDatasetName"></input>
+        </div>
+
+    </div>
+</div>
+
+<div class="uppy-progress"></div>
+
+<div class="file-chart-upload-panel" style="height: auto">
+    
+    <div class="gallery-controls new-tile no-background" style="height: 100%">
+        <div data-bind="uppy: uppyOptions" style="height: 100%; width: 100%">
+        </div>
+    </div>
+
+    <!-- ko if: files().length > 0 -->
+    <div style="background-color: white; padding: 45px;">
+     
+        <div class="file-workbench-files" style="display: flex; flex-direction: column; height: 485px; border: solid 1px lightgrey; padding: 20px;">
+            
+            <!-- ko foreach: {data: files, as: 'file'} -->
+                <div class="file-workbench-file">
+                    <div style="display: flex; flex-direction: row; min-width: 500px; padding: 5px;">
+                        <div style="flex: 1">
+                            <i data-bind="click: function(){$parent.deleteFile(file)}, attr: {'aria-label': $root.translations.delete}"
+                                class="fa fa-trash" style="color: black"></i>
+                            <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
+                        </div>
+                    </div>
+                </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+{% endblock main_menu %}

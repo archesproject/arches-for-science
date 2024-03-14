@@ -1,0 +1,25 @@
+{% load i18n %}
+<div>
+    <div style="padding: 35px 60px 0px;">
+        <div class="widget-input-label">{% trans "Project Name" %}*</div>
+        <div style="margin-top: -20px;" data-bind="component: {
+            name: 'text-widget',
+            params: {
+                renderContext: 'workflow', 
+                value: nameValue,
+            }
+        }"></div>
+        </div>
+    </div>
+    <div style="padding: 25px 60px 0px;">
+        <div class="widget-input-label">{% trans "Scale of Project" %}*</div>
+        <div style="margin-top: -20px;" data-bind="component: {
+            name: 'concept-radio-widget',
+            params: {
+                node: {config: {rdmCollection: projectEventTypeRdmCollection }},
+                renderContext: 'workflow', 
+                value: typeValue,
+            }
+        }"></div>
+    </div>
+</div>

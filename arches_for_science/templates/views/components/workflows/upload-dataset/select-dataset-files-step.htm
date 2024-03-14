@@ -1,0 +1,165 @@
+{% extends "views/components/iiif-viewer.htm" %}
+{% load static %}
+{% load i18n %}
+
+{% block workbench %}
+<div class='loading-mask' data-bind="visible: loading"></div>
+<div class="afs-saving-message" data-bind="visible: loading, text: loadingMessage()"></div>
+<!-- ko with: $data, as: 'self' -->
+    {{ block.super }}
+<!-- /ko -->
+{% endblock workbench %}
+
+{% block tabs %}
+<div class="workbench-card-sidebar-tab" data-bind="click: function() {
+    toggleTab('dataset');
+}, css: {
+    'active': activeTab() === 'dataset'
+}">
+    <i class="fa fa-book" aria-hidden="true"></i>
+    <span class="map-sidebar-text">{% trans "Dataset" %}</span>
+</div>
+{{ block.super }}
+{% endblock tabs %}
+
+{% block sidepanel %}
+<!--ko foreach: { data: [$data], as: 'self' }-->
+<!--ko if: activeTab() === 'dataset'-->
+<div class="workbench-card-sidepanel-header-container">
+    <h4 class="workbench-card-sidepanel-header" data-bind="click: hideSidePanel">{% trans 'Manage Dataset' %}</h4>
+</div>
+<div class="workbench-card-sidepanel-border"></div>
+<div class="workbench-card-sidepanel-body">
+
+    <!-- endif -->
+
+    <div class="iiif-image-tools upload-dataset-select-dataset-files">
+        <!--ko if: annotations().length > 0-->
+        <div style="width:100%; display: flex;">
+            <button class="btn" style="background: #9490EE;color: #fff;" data-bind="visible: self.showDatasetDetails, click: function(){self.showDatasetDetails(false)}">
+                <i class="fa fa-list" aria-hidden="true" style="color: #fff"></i> {% trans "Back to Sampled Area List" %}</button>
+        </div>
+
+        <div data-bind="visible: !self.showDatasetDetails()">
+            <label class="control-label" style="font-size: 1.2em; font-weight: 500;">{% trans "Sampled Locations" %}</label>
+            <div style="margin-bottom: 10px; border: 1px solid #9951C0; padding: 20px; background-color: #FFFF00; border-radius: 2px;">
+                <div style="font-size: 1.15em; text-align: center; color: #440468;">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><span style="margin-left: 5px;">{% trans "Select a Location or Area" %}</span>
+                </div>
+                <div style="color: #9951C0; text-align: center;"> {% trans "Click on a location or area from the list below to start uploading files. Locked locations/areas were uploaded by others and can't be edited" %}</div>
+            </div>
+            <input type="text" class="form-control" style="width: 100%;" data-bind="textInput: partFilter, attr: {'placeholder': $root.translations.filter}">
+        </div>
+        <div class="panel" style="margin-bottom: 0px;">
+            <div style="margin-top: 5px">
+                <div data-bind="visible: !self.showDatasetDetails()">
+                    <div id="parts-panel" data-bind="foreach: {data: parts, as: 'part'}">
+                        <!--ko if: self.partFilter() === "" || part.displayname.toLowerCase().includes(self.partFilter().toLowerCase()) -->
+                        <div class="panel">
+                            <a role="button" data-parent="#parts-panel"  aria-expanded="false" data-bind="click: function(){ $parent.showDatasetDetails(true); $parent.selectedPart(part); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
+                                <div style="height: 25px; padding: 10px; display: flex; align-items:center;" class="file-workbench-file">
+                                    <span style="flex: 1" class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname + ' (' + part.type + ')'"></span>
+                                    <div data-bind="visible: !part.hasCurrentObservation()">
+                                        <i class="fa fa-lock" style="color: black" data-bind="attr: {'aria-label': $root.translations.disabled}"></i>
+                                    </div>
+                                    <div data-bind="visible: part.hasCurrentObservation() && part.datasetId()">
+                                        (<span data-bind="text: ko.unwrap(part?.datasetFiles)?.length"></span> <span data-bind="visible: ko.unwrap(part?.datasetFiles)?.length === 1">{% trans "new file" %}</span><span data-bind="visible: ko.unwrap(part?.datasetFiles)?.length !== 1">{% trans "new files" %}</span>)
+                                    </div>
+                                </div>
+  
+                            </a>
+                            
+                        </div>
+                        <!--/ko-->
+                    </div>
+                </div>
+
+                <div data-bind="visible: self.showDatasetDetails">
+                    <div style="margin-bottom: 10px; border: 1px solid #9951C0; padding: 20px; background-color: #FFFF00; border-radius: 2px;">
+                        <div style="font-size: 1.15em; text-align: center; color: #440468;">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i><span style="margin-left: 5px;">{% trans "File Formats" %}</span>
+                        </div>
+                        <div style="color: #9951C0; text-align: center;">{% trans "Only ASCII files can be presented as interactive charts. Supported image files and PDF files will be automatically detected and displayed." %}</div>
+                    </div>
+                    <div style="margin-top: 15px;" data-bind="visible: selectedPartHasCurrentObservation()">
+                        <div class="dataset-name">
+                            <label class="control-label" style="font-size: 1.2em; font-weight: 500;">{% trans "Dataset Name" as datasetName %}{{ datasetName }}</label>
+                            <div style="display: flex">
+                                <input style="flex: 1;" type="text" class="form-control" placeholder="{{ datasetName }}" data-bind="enable: self.selectedPartHasCurrentObservation(), textInput: selectedPart().datasetName">
+                            </div>
+                            <div style="display: flex;" >
+                                <input class="afs-calculated-datasetname" style="flex: 1; margin-bottom: 0px;" disabled type="text" data-bind="textInput: selectedPartHasCurrentObservation() ? selectedPart().calcDatasetName : selectedPart().datasetName"></input>
+                            </div>
+                        </div>
+                        <!-- ko if: uploadFailed -->
+                        <div style="padding: 10px; border: 1px solid #eee;" class="afs-error-message ep-alert-red">
+                            <i class="fa fa-warning" style="margin: 0 6px;" data-bind="attr: {'aria-label': $root.translations.warning}"></i>
+                            {% trans 'Failed to upload files.  Try again or contact an administrator.'%}
+                        </div>
+                        <!-- /ko -->
+                        <div class="dropzone-photo-upload" style="height: 80px; padding: 30px 15px; background: #C1F25F; border: 1px dashed #619100; border-radius: 2px; margin-bottom: 10px;" data-bind="visible: selectedPartHasCurrentObservation(), dropzone: dropzoneOptions">
+                            <div class="file-workbench-links">
+                                <a class="upload-dataset-files dz-clickable" data-bind="css: uniqueidClass">
+                                    <span>{% trans "Drag or <strong>click here</strong> to upload files" %}</span>
+                                </a>
+                            </div>
+                            <div style="min-height: 100%;">
+                                <div id="hidden-dz-previews" style="display:none"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-collapse collapse" data-bind="visible: ko.unwrap(selectedPart().datasetFiles).length; attr: { id: selectedPart().tileid }, css: { in: $index() == 0}">
+                        <label class="control-label" style="font-size: 1.2em; font-weight: 500; padding-top: 5px; ">{% trans "Files in Dataset" %}</label>
+                        <div class="file-workbench-files" style="height: 215px;" data-bind="foreach: {data: selectedPart().datasetFiles, as: 'file'}">
+                            <div class='file-workbench-file' style="display: flex;" data-bind="css: {staged: false}">
+                                <div style="flex: 1">
+                                    <i data-bind="visible: self.selectedPartHasCurrentObservation(),
+                                        click: function(){self.selectedPartHasCurrentObservation() ? $parent.deleteFile(file): console.log('no')},
+                                        attr: {'aria-label': $root.translations.delete}"
+                                        class="fa fa-trash" style="color: black"></i>
+                                    <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
+                                </div>
+                                <div data-bind="visible: !self.selectedPartHasCurrentObservation()">
+                                    <i class="fa fa-lock" style="color: black" data-bind="attr: {'aria-label': $root.translations.disabled}"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 10px;"><span data-bind="text: ko.unwrap(selectedPart().datasetFiles).length"></span> {% trans "files" %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ko-->
+    </div>
+
+    <div class="iiif-image-tools upload-dataset-select-dataset-files" style="margin-top: -20px;" data-bind="if: self.selectedPartHasCurrentObservation()">
+        <!--ko if: files().length > 0 && selectedPart() -->
+        <label class="control-label">{% trans "Available Files" %}</label>
+        <div class="file-workbench-files" data-bind="foreach: {data: files, as: 'file'}">
+            <div class='file-workbench-file' data-bind="css: {staged: false}">
+                <i class="fa fa-upload" data-bind="value: file, click: function(){$parent.addFileToPart(file)}"></i>
+                <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name, click: function(){$parent.addFileToPart(file)}, clickBubble: false"></span>
+            </div>
+        </div>
+        <!--/ko-->
+
+    </div>
+</div>
+
+{% block form_buttons %}
+<div class="workbench-button-panel">
+    <button 
+        style="width: 100%;"
+        class="btn btn-success" 
+        data-bind="click: function(){$parent.saveFiles(); }, css: {disabled: !(self.showDatasetDetails() && selectedPart()?.nameDirty())}, attr: {disabled: !(self.showDatasetDetails() && selectedPart()?.nameDirty())}"
+    >
+        <i class="ion-android-cloud-done" aria-hidden="true"></i>
+        <span>{% trans 'Save' %}</span>
+    </button>
+</div>
+{% endblock form_buttons %}
+
+<!--/ko-->
+<!--/ko-->
+{{ block.super }}
+{% endblock sidepanel %}
