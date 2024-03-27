@@ -263,7 +263,7 @@ class Command(BaseCommand):
                     path = self.get_inbound_path(node)
 
                     if options["count"] and graph.isresource:
-                        c = archesmodels.TileModel.objects.filter(nodegroup=node.nodegroup).count()
+                        c = archesmodels.TileModel.objects.filter(nodegroup_id=node.nodegroup.pk).count()
                     else:
                         c = -1
                     writer.writerow(
