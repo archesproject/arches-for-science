@@ -8,7 +8,6 @@ from django.utils.translation import get_language
 
 from arches.app.utils.betterJSONSerializer import JSONSerializer
 from arches.app.models.models import GraphModel, Node, NodeGroup, ResourceInstance, ResourceXResource, TileModel
-from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 
 PHYSICAL_THING_GRAPH_ID = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
@@ -40,7 +39,7 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
 
     def make_tile(self, parent_phys_thing, data, transaction_id):
         arbitrary_nodegroup = NodeGroup.objects.first()
-        new_tile = TileModel(resourceinstance=parent_phys_thing, nodegroup=arbitrary_nodegroup)
+        new_tile = TileModel(resourceinstance=parent_phys_thing, nodegroup_id=arbitrary_nodegroup.pk)
         new_tile.save()
         # Set the transactionid
         new_tile = Tile.objects.get(tileid=new_tile.pk)

@@ -147,7 +147,7 @@ class UpdateResourceListView(View):
                         tile = Tile.objects.get(pk=tile_id)
                     else:
                         try:
-                            tile = Tile.objects.get(resourceinstance=resource_id, nodegroup=member_of_set_node_id)
+                            tile = Tile.objects.get(resourceinstance=resource_id, nodegroup_id=member_of_set_node_id)
                         except ObjectDoesNotExist as e:
                             tile = Tile.get_blank_tile(nodeid=member_of_set_node_id, resourceid=resource_id)
                             tile.data[member_of_set_node_id] = []
