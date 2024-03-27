@@ -35,6 +35,29 @@ LOCALE_PATHS = [os.path.join(APP_ROOT, "locale")]
 
 FUNCTION_LOCATIONS = ["arches_for_science.pkg.extensions.functions"]
 
+DATABASES = {
+    "default": {
+        "ATOMIC_REQUESTS": False,
+        "AUTOCOMMIT": True,
+        "CONN_MAX_AGE": 0,
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "HOST": "localhost",
+        "NAME": "arches_for_science",
+        "OPTIONS": {},
+        "PASSWORD": "postgis",
+        "PORT": "5432",
+        "POSTGIS_TEMPLATE": "template_postgis",
+        "TEST": {
+            "CHARSET": None,
+            "COLLATION": None,
+            "MIRROR": None,
+            "NAME": None
+        },
+        "TIME_ZONE": None,
+        "USER": "postgres"
+    }
+}
+
 # Further settings may need to be added from project, just don't
 # want to clobber anything from core test settings for now.
 # Also, settings can be overridden directly. See @override_settings
