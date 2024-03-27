@@ -39,7 +39,7 @@ class SaveAnnotationView(View):
             tile = Tile.objects.get(pk=tileid)
         else:
             try:
-                tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup=nodegroupid)
+                tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup_id=nodegroupid)
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
         tile.data[nodeid] = nodevalue
@@ -63,7 +63,7 @@ class SaveAnnotationView(View):
             tile.data[nodeid][0]["resourceId"] = related_resourceid
         else:
             try:
-                tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup=nodeid)
+                tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup_id=nodeid)
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
             related_resource_template = get_related_resource_template(related_resourceid, relationship_type, inverse_relationship_type)
@@ -90,7 +90,7 @@ class SaveAnnotationView(View):
             tile = Tile.objects.get(pk=tileid)
         else:
             try:
-                tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup=nodeid)
+                tile = Tile.objects.get(resourceinstance=resourceinstanceid, nodegroup_id=nodeid)
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile(nodeid=nodeid, resourceid=resourceinstanceid)
                 tile.data[nodeid] = []
@@ -115,7 +115,7 @@ class SaveAnnotationView(View):
             tile = Tile.objects.get(pk=tileid)
         else:
             try:
-                tile = Tile.objects.get(resourceinstance=resourceid, nodegroup=physical_thing_name_nodegroupid)
+                tile = Tile.objects.get(resourceinstance=resourceid, nodegroup_id=physical_thing_name_nodegroupid)
             except ObjectDoesNotExist as e:
                 tile = Tile.get_blank_tile(nodeid=physical_thing_name_nodeid, resourceid=resourceid)
         tile.data[physical_thing_name_nodeid] = {}
@@ -264,7 +264,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         else:
             tile = None
             try:
-                tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
+                tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup_id=sampling_unit_nodegroupid)
                 for t in tiles:
                     if t.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                         tile = t
@@ -304,7 +304,7 @@ class SaveSampleAreaView(SaveAnnotationView):
         else:
             tile = None
             try:
-                tiles = Tile.objects.filter(resourceinstance=resourceid, nodegroup=statement_nodegroupid)
+                tiles = Tile.objects.filter(resourceinstance=resourceid, nodegroup_id=statement_nodegroupid)
                 for t in tiles:
                     if statement_types[type] in t.data[statement_type_nodeid]:
                         tile = t
@@ -361,7 +361,7 @@ class SaveSampleAreaView(SaveAnnotationView):
             sample_area_physical_thing_resourceid = part_identifier_assignment_tile_data[physical_part_of_object_nodeid][0]["resourceId"]
 
         sample_physical_thing_resourceid = None
-        sampling_unit_tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
+        sampling_unit_tiles = Tile.objects.filter(resourceinstance=sampling_activity_resourceid, nodegroup_id=sampling_unit_nodegroupid)
         for sampling_unit_tile in sampling_unit_tiles:
             if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                 sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
@@ -515,7 +515,7 @@ class DeleteSampleAreaView(View):
 
         try:
             sample_physical_thing_resourceid = None
-            sampling_unit_tiles = Tile.objects.filter(resourceinstance_id=sampling_activity_resourceid, nodegroup=sampling_unit_nodegroupid)
+            sampling_unit_tiles = Tile.objects.filter(resourceinstance_id=sampling_activity_resourceid, nodegroup_id=sampling_unit_nodegroupid)
             for sampling_unit_tile in sampling_unit_tiles:
                 if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                     sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
