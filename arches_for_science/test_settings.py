@@ -40,6 +40,6 @@ FUNCTION_LOCATIONS = ["arches_for_science.pkg.extensions.functions"]
 # Also, settings can be overridden directly. See @override_settings
 WEBPACK_LOADER = {
     "DEFAULT": {
-        "STATS_FILE": os.path.join(APP_ROOT, '..', 'webpack/webpack-stats.json'),
+        "STATS_FILE": os.path.join(APP_ROOT, '..', '/webpack-stats.json'),
     },
 }
