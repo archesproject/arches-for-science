@@ -1,5 +1,6 @@
 {
     "name": "arches_for_science",
+    "license": "AGPL-3.0-only",
     "repository": {
         "url": "git@github.com:archesproject/arches-for-science.git",
         "type": "git"
@@ -18,13 +19,20 @@
         "three": "^0.148.0"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#alpha/7.6.0a1"
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#jtw/prettier"
     },
     "scripts": {
-        "build_production": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 NODE_ENV=production arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.prod.js",
-        "build_development": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.dev.js",
-        "build_test": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack --config arches_for_science/webpack/webpack.config.dev.js --env test=true",
-        "start": "NODE_PATH=arches_for_science/media/node_modules NODE_OPTIONS=--max-old-space-size=2048 arches_for_science/media/node_modules/.bin/webpack serve --config arches_for_science/webpack/webpack.config.dev.js"
+        "build_development": "yarn eslint:check && yarn ts:check && cross-env NODE_OPTIONS=--max-old-space-size=2048 webpack --config ./webpack/webpack.config.dev.js",
+        "build_production": "yarn eslint:check && yarn ts:check && cross-env NODE_OPTIONS=--max-old-space-size=2048 NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
+        "build_test": "yarn eslint:check && yarn ts:check && cross-env NODE_OPTIONS=--max-old-space-size=2048 webpack --config ./webpack/webpack.config.dev.js --env test=true",
+        "eslint:check": "eslint . --ext .vue,.ts",
+        "eslint:watch": "nodemon --watch . --ext ts,vue --exec yarn --silent eslint:check",
+        "eslint:fix": "eslint . --ext .vue,.ts --fix",
+        "gettext:extract": "vue-gettext-extract",
+        "gettext:compile": "vue-gettext-compile",
+        "ts:check": "vue-tsc --noEmit",
+        "ts:watch": "vue-tsc --watch --noEmit",
+        "start": "cross-env NODE_OPTIONS=--max-old-space-size=2048 webpack serve --config ./webpack/webpack.config.dev.js"
     },
     "nodeModulesPaths": {
         "plotly.js-dist": "node_modules/plotly.js-dist",
