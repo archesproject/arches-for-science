@@ -1,8 +1,6 @@
 from django.core.management import call_command
-
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.test.client import Client
 from django.urls import reverse
 from django.utils.translation import get_language
 
@@ -26,11 +24,6 @@ def setUpModule():
 
 
 class AnalysisAreaAndSampleTakingTests(TestCase):
-    def login(self, username="dev", password="dev"):
-        client = Client()
-        client.login(username=username, password=password)
-        return client
-
     def get_resource_instance(self, graph_id):
         r = ResourceInstance(graph_id=graph_id)
         r.save()  # not part of the transaction, part of the setup
@@ -51,7 +44,7 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
 
     def test_create_delete_analysis_area(self):
         # TODO: fails with dev/dev? 🤔
-        client = self.login(username="ben", password="Test12345!")
+        self.client.login(username="ben", password="Test12345!")
 
         transaction_id = "10000000-1000-1000-1000-100000000000"
         parent_phys_thing = self.get_resource_instance(PHYSICAL_THING_GRAPH_ID)
@@ -70,7 +63,7 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
             ),
             "analysisAreaName": "Test Analysis Area",
         }
-        response = client.post(reverse("saveanalysisarea"), create_data)
+        response = self.client.post(reverse("saveanalysisarea"), create_data)
         self.assertEqual(response.status_code, 200)
 
         new_resource = ResourceInstance.objects.get(pk=response.json()["result"]["memberOfTile"]["resourceinstance_id"])
@@ -92,12 +85,12 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         }
         delete_data = JSONSerializer().serialize(delete_data)
         content_type = "application/json"
-        response = client.post(reverse("deleteanalysisarea"), delete_data, content_type=content_type)
+        response = self.client.post(reverse("deleteanalysisarea"), delete_data, content_type=content_type)
 
         self.assertEqual(response.status_code, 200)
 
     def test_create_delete_sample(self):
-        client = self.login()
+        self.client.login(username="dev", password="dev")
 
         transaction_id = "10000000-1000-1000-1000-100000000001"
         parent_phys_thing = self.get_resource_instance(PHYSICAL_THING_GRAPH_ID)
@@ -123,7 +116,7 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
             "sampleDescription": "Test Description",
             "samplingActivityResourceId": str(sampling_activity.pk),
         }
-        response = client.post(reverse("savesamplearea"), create_data)
+        response = self.client.post(reverse("savesamplearea"), create_data)
         self.assertEqual(response.status_code, 200)
 
         # Delete
@@ -150,6 +143,6 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         }
         delete_data = JSONSerializer().serialize(delete_data)
         content_type = "application/json"
-        response = client.post(reverse("deletesamplearea"), delete_data, content_type=content_type)
+        response = self.client.post(reverse("deletesamplearea"), delete_data, content_type=content_type)
 
         self.assertEqual(response.status_code, 200)
