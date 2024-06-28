@@ -1,18 +1,27 @@
 define([
-    'arches',
-    'knockout',
-    'jquery',
-    'js-cookie',
-    'utils/xy-parser',
-    'viewmodels/alert',
-    'templates/views/components/plugins/importer-configuration.htm',
-    'bootstrap',
-    'bindings/select2-query'
-], function(arches, ko, $, Cookies, xyParser, AlertViewModel, importerConfigurationTemplate) {
-    const vm = function(params) {
+    "arches",
+    "knockout",
+    "jquery",
+    "js-cookie",
+    "utils/xy-parser",
+    "viewmodels/alert",
+    "templates/views/components/plugins/importer-configuration.htm",
+    "bootstrap",
+    "bindings/select2-query",
+], function (
+    arches,
+    ko,
+    $,
+    Cookies,
+    xyParser,
+    AlertViewModel,
+    importerConfigurationTemplate
+) {
+    const vm = function (params) {
         this.alert = params.alert;
         this.rendererConfigs = params.rendererConfigs || ko.observableArray();
-        this.selectedConfiguration = params.selectedConfiguration || ko.observable();
+        this.selectedConfiguration =
+            params.selectedConfiguration || ko.observable();
         this.showConfigurationPanel = ko.observable();
         this.editConfigurationId = ko.observable(undefined);
         this.showImporterList = ko.observable(true);
@@ -34,51 +43,54 @@ define([
         this.dataDelimiter = ko.observable();
         this.placeholder = arches.translations.selectTransformation;
 
-        const transformations = xyParser.transformations().map(transform => {
+        const transformations = xyParser.transformations().map((transform) => {
             return {
-                "text": transform, 
-                "id": transform
+                text: transform,
+                id: transform,
             };
         });
 
         this.xyTransformations = ko.observable(transformations);
         this.selectedTransformation = ko.observable();
-        this.selectedTransformation.subscribe(val => console.log(val));
+        this.selectedTransformation.subscribe((val) => console.log(val));
 
-        this.dataDelimiterRadio.subscribe(value => {
-            if(value != 'other'){
+        this.dataDelimiterRadio.subscribe((value) => {
+            if (value != "other") {
                 this.dataDelimiter(value);
             } else {
                 this.dataDelimiter("");
             }
         });
 
-        this.renderer = 'e93b7b27-40d8-4141-996e-e59ff08742f3';
+        this.renderer = "e93b7b27-40d8-4141-996e-e59ff08742f3";
 
         this.cancelConfigEdit = () => {
             this.showConfigurationPanel(false);
             this.showImporterList(true);
         };
 
-        this.dataDelimiter.subscribe(newDelimiter => {
+        this.dataDelimiter.subscribe((newDelimiter) => {
             try {
-                const valueRegex = (newDelimiter.length < 2) ? new RegExp(`[${newDelimiter}\\s]+`) : new RegExp(`${newDelimiter}`)
+                const valueRegex =
+                    newDelimiter.length < 2
+                        ? new RegExp(`[${newDelimiter}\\s]+`)
+                        : new RegExp(`${newDelimiter}`);
                 this.invalidDelimiter(false);
             } catch (e) {
                 this.invalidDelimiter(true);
             }
         });
 
-        this.saveConfigEdit = async() => {
-            const configId = this.editConfigurationId() ?? '';
+        this.saveConfigEdit = async () => {
+            const configId = this.editConfigurationId() ?? "";
 
-            if(this.headerConfig() !== 'fixed'){
+            if (this.headerConfig() !== "fixed") {
                 this.headerFixedLines(undefined);
-            } 
-            if(this.headerConfig() !== 'delimited') {
+            }
+            if (this.headerConfig() !== "delimited") {
                 this.headerDelimiter(undefined); // blank out previous values; don't save them.
             }
-            if(this.footerConfig() !== 'delimited') {
+            if (this.footerConfig() !== "delimited") {
                 this.footerDelimiter(undefined); // blank out previous values; don't save them.
             }
 
@@ -94,21 +106,24 @@ define([
                 display: {
                     chartTitle: this.chartTitle(),
                     xAxisLabel: this.xAxisLabel(),
-                    yAxisLabel: this.yAxisLabel()
+                    yAxisLabel: this.yAxisLabel(),
                 },
-                rendererId: this.renderer
+                rendererId: this.renderer,
             };
 
-            const configSaveResponse = await fetch(`/renderer_config/${configId}`, {
-                method: 'POST',
-                credentials: 'include',
-                body: JSON.stringify(newConfiguration),
-                headers: {
-                    "X-CSRFToken": Cookies.get('csrftoken')
+            const configSaveResponse = await fetch(
+                `${arches.urls.renderer_config}${configId}`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify(newConfiguration),
+                    headers: {
+                        "X-CSRFToken": Cookies.get("csrftoken"),
+                    },
                 }
-            });
+            );
 
-            if(configSaveResponse.ok){
+            if (configSaveResponse.ok) {
                 rendererConfigRefresh();
             }
 
@@ -116,15 +131,15 @@ define([
             this.showImporterList(true);
         };
 
-        const rendererConfigRefresh = (async() => {
+        const rendererConfigRefresh = async () => {
             const rendererResponse = await fetch(`/renderer/${this.renderer}`);
-            if(rendererResponse.ok){
+            if (rendererResponse.ok) {
                 const renderers = await rendererResponse.json();
                 const configs = renderers?.configs;
                 this.rendererConfigs(configs);
 
-                // if (self.fileViewer.displayContent()) {	
-                //     const tile = self.fileViewer.displayContent().tile;	
+                // if (self.fileViewer.displayContent()) {
+                //     const tile = self.fileViewer.displayContent().tile;
                 //     const node = ko.unwrap(tile.data[self.fileViewer.fileListNodeId]);
                 //     const configId = ko.unwrap(node[0].rendererConfig);
                 //     if(configId){
@@ -134,32 +149,36 @@ define([
             } else {
                 this.rendererConfigs([]);
             }
-        });
+        };
 
         this.loadConfiguration = (configuration) => {
             this.configurationName(configuration.name);
             this.configurationDescription(configuration.description);
             const delimiterCharacter = configuration.config.delimiterCharacter;
-            if(configuration.config?.headerFixedLines){
-                this.headerConfig('fixed');
+            if (configuration.config?.headerFixedLines) {
+                this.headerConfig("fixed");
                 this.headerFixedLines(configuration.config.headerFixedLines);
             } else if (configuration.config?.headerDelimiter) {
-                this.headerConfig('delimited');
+                this.headerConfig("delimited");
                 this.headerDelimiter(configuration.config.headerDelimiter);
             } else {
-                this.headerConfig('none');
+                this.headerConfig("none");
             }
 
-            if(configuration.config?.footerDelimiter){
-                this.footerConfig('delimited');
-                this.footerDelimiter(configuration.config.footerDelimiter)
+            if (configuration.config?.footerDelimiter) {
+                this.footerConfig("delimited");
+                this.footerDelimiter(configuration.config.footerDelimiter);
             } else {
-                this.footerConfig('none');
+                this.footerConfig("none");
             }
 
-            const radioValue = ((!delimiterCharacter) ? '' : delimiterCharacter == ',' || delimiterCharacter == '|' ? delimiterCharacter : 'other');
+            const radioValue = !delimiterCharacter
+                ? ""
+                : delimiterCharacter == "," || delimiterCharacter == "|"
+                  ? delimiterCharacter
+                  : "other";
             this.dataDelimiterRadio(radioValue);
-            if(radioValue == "other"){
+            if (radioValue == "other") {
                 this.dataDelimiter(delimiterCharacter);
             }
             this.editConfigurationId(configuration.configid);
@@ -172,25 +191,28 @@ define([
             this.showImporterList(false);
         };
 
-        this.deleteConfiguration = async(configuration) => {
-            const configDeleteResponse = await fetch(`/renderer_config/${configuration.configid}`, {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                    "X-CSRFToken": Cookies.get('csrftoken')
+        this.deleteConfiguration = async (configuration) => {
+            const configDeleteResponse = await fetch(
+                `${arches.urls.renderer_config}${configuration.configid}`,
+                {
+                    method: "DELETE",
+                    credentials: "include",
+                    headers: {
+                        "X-CSRFToken": Cookies.get("csrftoken"),
+                    },
                 }
-            });
-            
-            if(configDeleteResponse.ok){
+            );
+
+            if (configDeleteResponse.ok) {
                 const responseJson = await configDeleteResponse.json();
-                if(responseJson.deleted){
+                if (responseJson.deleted) {
                     rendererConfigRefresh();
                 } else {
                     this.alert(
                         new AlertViewModel(
-                            'ep-alert-red',
+                            "ep-alert-red",
                             arches.translations.importerInUse,
-                            arches.translations.importerInUseWarning,
+                            arches.translations.importerInUseWarning
                         )
                     );
                 }
@@ -200,8 +222,8 @@ define([
         rendererConfigRefresh();
     };
 
-    return ko.components.register('importer-configuration', {
+    return ko.components.register("importer-configuration", {
         viewModel: vm,
-        template: importerConfigurationTemplate
+        template: importerConfigurationTemplate,
     });
 });
