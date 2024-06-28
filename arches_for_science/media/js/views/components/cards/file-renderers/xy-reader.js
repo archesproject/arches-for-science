@@ -44,7 +44,7 @@ define([
             // on init, get available renderer configs for display to user.
             const rendererConfigRefresh = async () => {
                 const rendererResponse = await fetch(
-                    `/renderer/${self.renderer}`
+                    `${arches.urls.renderer_config}${self.renderer}`
                 );
                 if (rendererResponse.ok) {
                     const renderers = await rendererResponse.json();
