@@ -85,7 +85,9 @@ define([
         });
         
         this.samplingDate.subscribe(function(val){
-            self.samplingName(arches.translations.samplingActivityOf.replace('{physicalThingName}', self.physicalThingNameValue) + ' ' + val);
+            const name = arches.translations.samplingActivityOf.replace('{physicalThingName}', self.physicalThingNameValue) + ' ' + val;
+            self.samplingName()[arches.activeLanguage].value = name
+            self.samplingName(self.samplingName());
         });
 
         const selectPhysThingData = params.selectPhysThingData;
