@@ -121,4 +121,4 @@ class PhysicalThingSearchView(View):
             return HttpResponseNotFound(_("There was an error retrieving the search results"))
 
     def get_permitted_nodegroups(self, user):
-        return [str(nodegroup.pk) for nodegroup in get_nodegroups_by_perm(user, "models.read_nodegroup")]
+        return [str(nodegroupid) for nodegroupid in get_nodegroups_by_perm(user, "models.read_nodegroup")]
