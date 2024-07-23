@@ -74,4 +74,4 @@ jobs:
       - name: Run afs unit tests
         working-directory: afs
         run: |
-          PYTHONPATH="../arches" python -W default::DeprecationWarning manage.py test tests --settings=tests.test_settings
+          python -W default::DeprecationWarning manage.py test tests --settings=tests.test_settings
