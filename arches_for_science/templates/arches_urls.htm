@@ -1,0 +1,18 @@
+{% extends "arches_urls.htm" %}
+
+{% block arches_urls %}
+{{ block.super }}
+<div class="arches-urls"
+    physical_thing_search_results = "{% url 'physical-thing-search-results' %}"
+    physical_things_set = "{% url 'physical_things_set' %}"   
+    reports_list ="{% url 'archestemplating_template_view_get' %}"
+    reports='(templateid)=>{return "{% url "archestemplating_template_view" "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" %}".replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", templateid)}',
+    upload_dataset_select_dataset_files_step = "{% url 'upload_dataset_select_dataset_files_step' %}"
+    upload_dataset_file_renderer = '(tileid)=>{return "{% url "upload_dataset_file_renderer" "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" %}".replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", tileid)}',
+    format_render_map = '(format)=>{return "{% url "format_render_map" "aaaaaaaa" %}".replace("aaaaaaaa", format)}'
+    download_project_files = "{% url 'download_project_files' %}"
+    temp_file = "{% url 'temp_file' %}"
+    manifest_x_canvas = "{% url 'manifest_x_canvas' %}"
+    renderer_config = "{% url 'renderer_config' %}"
+></div>
+{% endblock arches_urls %}
