@@ -8,6 +8,7 @@ import inspect
 import semantic_version
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
+from arches.settings_utils import transmit_webpack_django_config
 
 try:
     from arches.settings import *
