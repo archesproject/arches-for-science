@@ -63,7 +63,7 @@ jobs:
       - name: Check for missing migrations
         working-directory: afs
         run: |
-          PYTHONPATH="../arches" python manage.py makemigrations --check --settings=tests.test_settings
+          python manage.py makemigrations --check
 
       - name: Lint backend
         working-directory: afs
