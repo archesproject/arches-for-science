@@ -15,8 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-
 from arches.settings import *
+from arches_for_science.settings import *
 import arches
 import os
 
@@ -25,13 +25,9 @@ try:
 except ImportError:  # unable to import prior to installing requirements
     pass
 
-PACKAGE_NAME = "arches_for_science"
-APP_NAME = 'arches_for_science'
-
 APP_ROOT = os.path.dirname(__file__)
 TEST_ROOT = os.path.normpath(os.path.join(ROOT_DIR, "..", "tests"))
 
-ROOT_URLCONF = 'arches_for_science.urls'
 
 MIN_ARCHES_VERSION = arches.__version__
 MAX_ARCHES_VERSION = arches.__version__
@@ -47,12 +43,6 @@ RESOURCE_GRAPH_LOCATIONS = (os.path.join(TEST_ROOT, "fixtures", "resource_graphs
 ONTOLOGY_FIXTURES = os.path.join(TEST_ROOT, "fixtures", "ontologies", "test_ontology")
 ONTOLOGY_PATH = os.path.join(TEST_ROOT, "fixtures", "ontologies", "cidoc_crm")
 MEDIA_ROOT = os.path.join(TEST_ROOT, "fixtures", "data")
-
-BUSINESS_DATA_FILES = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
