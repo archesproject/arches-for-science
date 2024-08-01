@@ -1,29 +1,24 @@
 *.pyc
+*.log
 node_modules
-arches_for_science/media/build
-arches_for_science/logs/*.log
-arches_for_science/uploadedfiles
-arches_for_science/cantaloupe/*
+coverage/
+arches_for_science/logs
+arches_for_science/export_deliverables
 arches_for_science/ontologies/*.xml
-arches.log
-*.sublime*
-arches_for_science/settings_local.py
-.DS_Store
-*.djcache
-.vscode/
-Procfile
-arches_for_science/settings_docker.py
-CACHE
-arches_for_science/export_deliverables/
-arches_for_science/archestemp/
+arches_for_science/cantaloupe/*
 arches_for_science/staticfiles
-webpack/webpack-stats.json
-node_modules
-
-# Packaging
-*.egg-info/
+arches_for_science/media/packages
+arches_for_science/media/build/
+arches_for_science/uploadedfiles/*
+arches_for_science/settings_local.py
+webpack-stats.json
+.vscode/
+arches_for_science/settings_docker.py
+*.egg-info
+.DS_STORE
+arches_for_science/archestemp/
+CACHE
 build/lib
 dist
-
-# Historical app name
+#Historical app name
 afs/
