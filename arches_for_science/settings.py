@@ -8,7 +8,6 @@ import inspect
 import semantic_version
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
-from arches.settings_utils import transmit_webpack_django_config
 
 try:
     from arches.settings import *
@@ -393,7 +392,3 @@ SHOW_LANGUAGE_SWITCH = len(LANGUAGES) > 1
 #         from settings_local import *
 #     except ImportError as e:
 #         pass
-
-# returns an output that can be read by NODEJS
-if __name__ == "__main__":
-    transmit_webpack_django_config(**locals())

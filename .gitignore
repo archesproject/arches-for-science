@@ -15,10 +15,12 @@ webpack-stats.json
 .vscode/
 arches_for_science/settings_docker.py
 *.egg-info
+dist
 .DS_STORE
 arches_for_science/archestemp/
 CACHE
-build/lib
-dist
+.tsconfig-paths.json
+.frontend-configuration-settings.json
 #Historical app name
 afs/
+build/lib
