@@ -9,7 +9,14 @@ from arches_for_science.views.workflows.upload_dataset.select_dataset_files_step
 from arches_for_science.views.download_project_files import FileDownloader
 from arches_for_science.views.physical_thing_search import PhysicalThingSearchView
 from arches_for_science.views.physical_things_in_set import PhysicalThingSetView
-from arches_for_science.views.s3 import S3MultipartUploadManagerView, S3MultipartUploaderView, S3BatchSignView, S3CompleteUploadView, S3UploadPartView, S3UploadView
+from arches_for_science.views.s3 import (
+    S3MultipartUploadManagerView,
+    S3MultipartUploaderView,
+    S3BatchSignView,
+    S3CompleteUploadView,
+    S3UploadPartView,
+    S3UploadView,
+)
 from arches_for_science.views.update_resource_list import UpdateResourceListView
 from arches_for_science.views.analysis_area_and_sample_taking import (
     SaveAnalysisAreaView,

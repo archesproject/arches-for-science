@@ -10,11 +10,12 @@ from arches.app.utils.betterJSONSerializer import JSONSerializer, JSONDeserializ
 
 logger = logging.getLogger(__name__)
 
+
 class RendererView(View):
     def get(self, request, renderer_id=None):
         renderer = {}
         if renderer_id is None:
-            return JSONResponse([]) # this should be fixed later to return all renderers; not currently used.
+            return JSONResponse([])  # this should be fixed later to return all renderers; not currently used.
         else:
             renderer_config = RendererConfig.objects.filter(rendererid=renderer_id)
 
@@ -22,8 +23,9 @@ class RendererView(View):
                 renderer["configs"] = renderer_config.values()
                 return JSONResponse(renderer)
             else:
-                return HttpResponseNotFound(_('<h1>Renderers do not exist</h1>'))
-            
+                return HttpResponseNotFound(_("<h1>Renderers do not exist</h1>"))
+
+
 class RendererConfigView(View):
     def get(self, request, renderer_config_id=None):
         if renderer_config_id is None:
@@ -35,11 +37,11 @@ class RendererConfigView(View):
             if renderer_config:
                 return JSONResponse(renderer_config.values())
             else:
-                return HttpResponseNotFound(_('<h1>Renderers config does not exist</h1>'))
-    
+                return HttpResponseNotFound(_("<h1>Renderers config does not exist</h1>"))
+
     def post(self, request, renderer_config_id=None):
         body = JSONDeserializer().deserialize(request.body)
-        if(renderer_config_id):
+        if renderer_config_id:
             renderer_config = RendererConfig.objects.get(configid=renderer_config_id)
             renderer_config.rendererid = body["rendererId"]
             renderer_config.name = body["name"]
@@ -56,16 +58,17 @@ class RendererConfigView(View):
 
         return JSONResponse(response_dict)
 
-
     def delete(self, request, renderer_config_id):
-        file_nodegroup_id = '7c486328-d380-11e9-b88e-a4d18cec433a'
+        file_nodegroup_id = "7c486328-d380-11e9-b88e-a4d18cec433a"
         renderer_config = RendererConfig.objects.get(configid=renderer_config_id)
-        query = Q(**{
-            "nodegroup_id": file_nodegroup_id,
-            "data__has_key": file_nodegroup_id,
-            f"data__{file_nodegroup_id}__0__rendererConfig": renderer_config_id
-        })
- 
+        query = Q(
+            **{
+                "nodegroup_id": file_nodegroup_id,
+                "data__has_key": file_nodegroup_id,
+                f"data__{file_nodegroup_id}__0__rendererConfig": renderer_config_id,
+            }
+        )
+
         renderer_used = models.TileModel.objects.filter(query).exists()
         if not renderer_used:
             renderer_config.delete()
@@ -74,5 +77,3 @@ class RendererConfigView(View):
             response_dict = {"deleted": False}
 
         return JSONResponse(response_dict)
-
-

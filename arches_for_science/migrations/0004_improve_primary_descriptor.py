@@ -46,8 +46,7 @@ def retire_core_primary_descriptor(apps, schema_editor):
         component="views/components/functions/multicard-resource-descriptor",
     )
 
-    update_graphs(apps, from_function=original_fn, to_function=multi_card_fn,
-                  string_replacement_map=STRING_TEMPLATE_REPLACEMENTS)
+    update_graphs(apps, from_function=original_fn, to_function=multi_card_fn, string_replacement_map=STRING_TEMPLATE_REPLACEMENTS)
 
 
 def restore_core_primary_descriptor(apps, schema_editor):
@@ -60,8 +59,7 @@ def restore_core_primary_descriptor(apps, schema_editor):
     multi_card_fn = Function.objects.get(pk=MULTICARD_DESCRIPTOR_FUNCTION_PK)
 
     # Update FunctionXGraph records before cascade deleted below
-    update_graphs(apps, from_function=multi_card_fn, to_function=original_fn,
-                  string_replacement_map=STRING_TEMPLATE_REPLACEMENTS_REVERSED)
+    update_graphs(apps, from_function=multi_card_fn, to_function=original_fn, string_replacement_map=STRING_TEMPLATE_REPLACEMENTS_REVERSED)
 
     multi_card_fn.delete()
 

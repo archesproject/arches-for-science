@@ -68,9 +68,9 @@ class SelectDatasetFilesStep(View):
                 digital_reference_tile.resourceinstance_id = part_resource_id
                 digital_reference_tile.data[digital_reference_node_id] = [
                     {
-                        "resourceId": str(dataset_resource.resourceinstanceid), 
+                        "resourceId": str(dataset_resource.resourceinstanceid),
                         "ontologyProperty": digital_source,
-                        "inverseOntologyProperty": digital_source_for
+                        "inverseOntologyProperty": digital_source_for,
                     }
                 ]
                 digital_reference_tile.save(user=request.user, transaction_id=transaction_id)
@@ -170,15 +170,15 @@ class SelectDatasetFilesStep(View):
                         raise Exception
                     else:
                         file_data["tileid"] = response["tileid"]
-                        file_data["path"] = response["data"][dataset_file_node_id][0]['path']
+                        file_data["path"] = response["data"][dataset_file_node_id][0]["path"]
             file_response = [
                 {
                     "name": f[0]["name"],
-                    "path":f[0]["path"],
-                    "clientId":f[0]["clientFileId"] if "clientFileId" in f[0] else "",
+                    "path": f[0]["path"],
+                    "clientId": f[0]["clientFileId"] if "clientFileId" in f[0] else "",
                     "renderer": f[0]["renderer"] if "renderer" in f[0] else "",
                     "format": f[0].get("format", None),
-                    "tileId": f[0]["tileid"]
+                    "tileId": f[0]["tileid"],
                 }
                 for f in new_files
             ]

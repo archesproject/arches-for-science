@@ -61,20 +61,20 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
             "parentPhysicalThingResourceid": str(parent_phys_thing.pk),  # NB: lowercase id
             "parentPhysicalThingName": "Test Name of Physical Thing",
             "collectionResourceid": COLLECTION_RESOURCE,
-            "partIdentifierAssignmentTileData": JSONSerializer().serialize({
-                PART_IDENTIFIER_ASSIGNMENT: [],
-                PART_IDENTIFIER_ASSIGNMENT_LABEL: {
-                    get_language(): {"value": "test value", "direction": "ltr"},
-                },
-            }),
+            "partIdentifierAssignmentTileData": JSONSerializer().serialize(
+                {
+                    PART_IDENTIFIER_ASSIGNMENT: [],
+                    PART_IDENTIFIER_ASSIGNMENT_LABEL: {
+                        get_language(): {"value": "test value", "direction": "ltr"},
+                    },
+                }
+            ),
             "analysisAreaName": "Test Analysis Area",
         }
         response = client.post(reverse("saveanalysisarea"), create_data)
         self.assertEqual(response.status_code, 200)
 
-        new_resource = ResourceInstance.objects.get(
-            pk=response.json()['result']['memberOfTile']['resourceinstance_id']
-        )
+        new_resource = ResourceInstance.objects.get(pk=response.json()["result"]["memberOfTile"]["resourceinstance_id"])
         new_tile_data = {PART_IDENTIFIER_ASSIGNMENT: [{"resourceId": str(new_resource.pk)}]}
         new_tile = self.make_tile(parent_phys_thing, new_tile_data, transaction_id)
         rxr = ResourceXResource(
@@ -108,13 +108,11 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         # Create
         part_identifier_assignment_polygon_identifier_nodeid = "97c30c42-8594-11ea-97eb-acde48001122"
         part_identifier_assignment_tile_data = {
-            PART_IDENTIFIER_ASSIGNMENT_LABEL: {
-                get_language(): {"value": "test value", "direction": "ltr"}
-            },
+            PART_IDENTIFIER_ASSIGNMENT_LABEL: {get_language(): {"value": "test value", "direction": "ltr"}},
             PART_IDENTIFIER_ASSIGNMENT: [],
             part_identifier_assignment_polygon_identifier_nodeid: {},
         }
-    
+
         create_data = {
             "transaction_id": transaction_id,  # NB: snake_case
             "parentPhysicalThingResourceid": str(parent_phys_thing.pk),
@@ -130,9 +128,11 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Delete
-        result = response.json()['result']
+        result = response.json()["result"]
         physical_part_of_object_nodeid = PART_IDENTIFIER_ASSIGNMENT
-        physical_part_of_object_resourceid = result['parentPhysicalThing']['physicalPartOfObjectTile']['data'][physical_part_of_object_nodeid][0]['resourceId']
+        physical_part_of_object_resourceid = result["parentPhysicalThing"]["physicalPartOfObjectTile"]["data"][
+            physical_part_of_object_nodeid
+        ][0]["resourceId"]
         part_identifier_assignment_tile_data = {
             **part_identifier_assignment_tile_data,
             physical_part_of_object_nodeid: [

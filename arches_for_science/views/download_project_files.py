@@ -29,11 +29,11 @@ class FileDownloader(View):
             request.POST = request.POST.copy()
             json_data["templateId"] = template["templateId"]
             json_data["filename"] = template["filename"]
-            request._body = json.dumps(json_data) # TODO: there should be a better way
+            request._body = json.dumps(json_data)  # TODO: there should be a better way
             report_template = TemplateView()
             response = report_template.post(request, template["templateId"])
 
-            name = response.headers["Content-Disposition"].split("=")[1] #TODO: need more robust way to do this
+            name = response.headers["Content-Disposition"].split("=")[1]  # TODO: need more robust way to do this
             content = response.content
             f = BytesIO(content)
             file = File(f)

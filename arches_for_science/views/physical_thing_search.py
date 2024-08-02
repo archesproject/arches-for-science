@@ -49,9 +49,9 @@ class PhysicalThingSearchView(View):
 
         search_results_object = {"query": Query(se)}
 
-        request.GET[
-            "resource-type-filter"
-        ] = '[{"graphid":"9519cb4f-b25b-11e9-8c7b-a4d18cec433a","name":"Physical Thing","inverted":false}]'
+        request.GET["resource-type-filter"] = (
+            '[{"graphid":"9519cb4f-b25b-11e9-8c7b-a4d18cec433a","name":"Physical Thing","inverted":false}]'
+        )
         search_filter_factory = SearchFilterFactory(request)
         try:
             for filter_type, querystring in list(request.GET.items()) + [("search-results", "")]:
