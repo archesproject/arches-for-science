@@ -225,7 +225,10 @@ class Command(BaseCommand):
         print(f"Exporting Documentation Fields to {options['dest']}")
 
         with open(options["dest"], "w") as cfh:
-            writer = csv.writer(cfh, delimiter="\t",)
+            writer = csv.writer(
+                cfh,
+                delimiter="\t",
+            )
             writer.writerow(
                 (
                     "Graph",
@@ -320,7 +323,7 @@ class Command(BaseCommand):
         if desc.startswith("# Specific:"):
             # Pop the fields off the end in turn
             re_order = [("fieldId", fieldre), ("branchId", branchre), ("note", notere), ("general", generalre), ("specific", specificre)]
-            for (name, regex) in re_order:
+            for name, regex in re_order:
                 m = regex.search(desc)
                 if m:
                     d[name] = m.group(1).strip()

@@ -9,24 +9,26 @@ import pgtrigger
 
 from .trigger_functions import CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE, CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_ALL
 
+
 class TileModelProxy(TileModel):
     class Meta:
         proxy = True
         triggers = [
             pgtrigger.Trigger(
-                name='calculate_multicard_primary_descriptor_single',
+                name="calculate_multicard_primary_descriptor_single",
                 when=pgtrigger.After,
                 operation=pgtrigger.Insert | pgtrigger.Update | pgtrigger.Delete,
                 func=CALCULATE_MULTICARD_PRIMARY_DESCRIPTOR_SINGLE,
             ),
         ]
 
+
 class FunctionXGraphProxy(FunctionXGraph):
     class Meta:
         proxy = True
         triggers = [
             pgtrigger.Trigger(
-                name='calculate_multicard_primary_descriptor_all',
+                name="calculate_multicard_primary_descriptor_all",
                 when=pgtrigger.After,
                 condition=pgtrigger.Q(
                     new__function_id="00b2d15a-fda0-4578-b79a-784e4138664b",
@@ -44,7 +46,6 @@ class RendererConfig(models.Model):
     name = models.TextField(blank=False, null=False)
     description = models.TextField(blank=True, null=True)
     config = JSONField(default=dict)
-    
 
     class Meta:
         managed = True
@@ -64,6 +65,7 @@ class ManifestXDigitalResource(models.Model):
         managed = True
         db_table = "manifest_x_digitalresource"
 
+
 class CanvasXDigitalResource(models.Model):
     canvas = models.TextField(unique=True)
     digitalresource = models.TextField(unique=True)
@@ -71,6 +73,7 @@ class CanvasXDigitalResource(models.Model):
     class Meta:
         managed = True
         db_table = "canvas_x_digitalresource"
+
 
 class ManifestXCanvas(models.Model):
     manifest = models.TextField()
@@ -84,8 +87,10 @@ class ManifestXCanvas(models.Model):
 @receiver(post_save, sender=IIIFManifest)
 def create_digital_resources(sender, instance, created, **kwargs):
     from arches_for_science.utils.digital_resource_for_manifest import digital_resources_for_manifest, digital_resources_for_canvases
+
     digital_resources_for_manifest(instance, created)
     digital_resources_for_canvases(instance)
+
 
 @receiver(post_delete, sender=IIIFManifest)
 def delete_manifest_x_canvas(sender, instance, **kwargs):

@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         delete from relations where conceptidto = '102efe26-d6b5-4524-a1bc-93b1792b6970';
         delete from concepts where conceptid = '102efe26-d6b5-4524-a1bc-93b1792b6970';
         """
-    
+
     restore_top_concept = """
         insert into concepts (conceptid, legacyoid, nodetype) values ('102efe26-d6b5-4524-a1bc-93b1792b6970', 'http://localhost:8000/102efe26-d6b5-4524-a1bc-93b1792b6970', 'Concept');
         insert into values (valueid, value, conceptid, languageid, valuetype) values ('43a86d96-4b08-48f0-ac23-ccad248fdaec','TopConcept', '102efe26-d6b5-4524-a1bc-93b1792b6970', 'en-US', 'prefLabel');

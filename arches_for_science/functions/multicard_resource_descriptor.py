@@ -35,7 +35,7 @@ details = {
 
 class MulticardResourceDescriptor(AbstractPrimaryDescriptorsFunction):
     """Implemented in the database via triggers on tiles table.
-    
+
     This implementation just fetches the calculated result from the db."""
 
     def get_primary_descriptor_from_nodes(self, resource, config, context=None, descriptor=None):

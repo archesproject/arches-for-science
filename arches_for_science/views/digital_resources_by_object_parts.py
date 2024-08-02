@@ -4,6 +4,7 @@ from arches.app.models.models import TileModel
 from arches.app.models.resource import Resource
 from django.core.exceptions import ObjectDoesNotExist
 
+
 class DigitalResourcesByObjectParts(View):
     def get(self, request, resourceid):
         parts_nodegroup_id = "fec59582-8593-11ea-97eb-acde48001122"

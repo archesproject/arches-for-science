@@ -152,6 +152,4 @@ class Migration(migrations.Migration):
         with connection.cursor() as cursor:
             cursor.execute(sql)
 
-    operations = [
-        migrations.RunPython(forward, reverse)
-    ]
+    operations = [migrations.RunPython(forward, reverse)]
