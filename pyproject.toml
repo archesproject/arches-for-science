@@ -26,7 +26,7 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-  "arches>=7.6.0a1,<8",
+  "arches @ git+https://github.com/archesproject/arches.git@dev/7.6.x",
   "supervisor==4.2.1",
   "django-pgtrigger==4.9.0",
   "django-storages==1.13.2",
