@@ -62,7 +62,7 @@ DEBUG = True
 
 ROOT_URLCONF = 'arches_for_science.urls'
 ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": "localhost", "port": 9200}]
-ELASTICSEARCH_CONNECTION_OPTIONS = {"timeout": 30, "verify_certs": False}
+ELASTICSEARCH_CONNECTION_OPTIONS = {"request_timeout": 30, "verify_certs": False}
 # ELASTICSEARCH_CONNECTION_OPTIONS = {"request_timeout": 30, "verify_certs": False, "basic_auth": ("elastic", "E1asticSearchforArche5")}
 ELASTICSEARCH_PREFIX = 'arches_for_science'
 
