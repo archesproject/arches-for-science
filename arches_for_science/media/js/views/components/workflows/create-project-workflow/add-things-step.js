@@ -79,6 +79,9 @@ define([
             'paging-filter': ko.observable(),
             'search-results': ko.observable(),
         };
+        this.searchFilterVms = {
+            'paging-filter': ko.observable()
+        }
         this.termFilter = ko.observable();
         this.totalResults = ko.observable();
         this.query = ko.observable(getQueryObject());
@@ -449,7 +452,7 @@ define([
                         self.searchResults.timestamp(data.timestamp);
         
                         self.totalResults(data['total_results']);
-                        var resources = data['results']['hits']['hits'].map(source => {
+                        var resources = data['results']['results']['hits']['hits'].map(source => {
                             source._source.tiles.forEach((tile) => {
                                 if (tile.data['22c15cfa-b498-11e9-b5e3-a4d18cec433a'] && 
                                     tile.data['22c15cfa-b498-11e9-b5e3-a4d18cec433a'].length &&
