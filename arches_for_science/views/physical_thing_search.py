@@ -103,6 +103,8 @@ class PhysicalThingSearchView(View):
             # allow filters to modify the results
             for filter_type, querystring in list(request.GET.items()) + [("search-results", "")]:
                 search_filter = search_filter_factory.get_filter(filter_type)
+                if "results" not in results:
+                    results = {"results": results}
                 if search_filter:
                     search_filter.post_search_hook(search_results_object, results, permitted_nodegroups=permitted_nodegroups)
 
