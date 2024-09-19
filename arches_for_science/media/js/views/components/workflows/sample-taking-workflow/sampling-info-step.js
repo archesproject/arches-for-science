@@ -86,8 +86,13 @@ define([
         
         this.samplingDate.subscribe(function(val){
             const name = arches.translations.samplingActivityOf.replace('{physicalThingName}', self.physicalThingNameValue) + ' ' + val;
-            self.samplingName()[arches.activeLanguage].value = name
-            self.samplingName(self.samplingName());
+            try {
+                self.samplingName()[arches.activeLanguage].value = name
+            } catch(e) {
+                const val = {};
+                val[arches.activeLanguage] = {"direction": "ltr", "value": name}
+                self.samplingName(val);
+            }
         });
 
         const selectPhysThingData = params.selectPhysThingData;
