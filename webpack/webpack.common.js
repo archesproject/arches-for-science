@@ -325,7 +325,8 @@ module.exports = () => {
                         loader: Path.join(PROJECT_RELATIVE_NODE_MODULES_PATH, 'ts-loader'),
                         options: {
                             appendTsSuffixTo: [/\.vue$/],
-                            transpileOnly: true
+                            transpileOnly: true,
+                            configFile: Path.resolve(__dirname, '..', 'tsconfig.json')
                         }
                     },
                     {
@@ -350,7 +351,6 @@ module.exports = () => {
                     {
                         test: /\.css$/,
                         exclude: [
-                            /node_modules/,
                             Path.resolve(__dirname, APP_ROOT, 'media', 'css'),
                             Path.resolve(__dirname, ROOT_DIR, 'app', 'media', 'css'),
                             ...archesApplicationsCSSFilepaths
