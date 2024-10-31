@@ -38,7 +38,12 @@ class PhysicalThingSearchView(View):
             for filter_type, querystring in list(request.GET.items()) + [("search-results", "")]:
                 search_filter = search_filter_factory.get_filter(filter_type)
                 if search_filter:
-                    search_filter.append_dsl(search_results_object, querystring=querystring, permitted_nodegroups=permitted_nodegroups, include_provisional=include_provisional)
+                    search_filter.append_dsl(
+                        search_results_object,
+                        querystring=querystring,
+                        permitted_nodegroups=permitted_nodegroups,
+                        include_provisional=include_provisional,
+                    )
         except Exception as err:
             return JSONResponse(err.message, status=500)
 
@@ -57,7 +62,12 @@ class PhysicalThingSearchView(View):
             for filter_type, querystring in list(request.GET.items()) + [("search-results", "")]:
                 search_filter = search_filter_factory.get_filter(filter_type)
                 if search_filter:
-                    search_filter.append_dsl(search_results_object, querystring=querystring, permitted_nodegroups=permitted_nodegroups, include_provisional=include_provisional)
+                    search_filter.append_dsl(
+                        search_results_object,
+                        querystring=querystring,
+                        permitted_nodegroups=permitted_nodegroups,
+                        include_provisional=include_provisional,
+                    )
         except Exception as err:
             return JSONResponse(err.message, status=500)
 
