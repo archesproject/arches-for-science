@@ -10,3 +10,4 @@ class ArchesForScienceConfig(AppConfig):
 
     def ready(self):
         generate_frontend_configuration()
+        from . import signals
