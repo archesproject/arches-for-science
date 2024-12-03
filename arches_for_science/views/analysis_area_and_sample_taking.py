@@ -528,7 +528,6 @@ class DeleteSampleAreaView(View):
         # need to delete:
         # the "sample" physical thing
         # the "sample area" physical thing
-        # the tile from the parent physical thing that references the "sample area"
         # the tile from the sampling activity that references the "sample area"
 
         data = JSONDeserializer().deserialize(request.body)
@@ -540,7 +539,6 @@ class DeleteSampleAreaView(View):
         sampling_area_sample_created_nodeid = "b3e171ab-1d9d-11eb-a29f-024e0d439fdb"
         sampling_unit_nodegroupid = "b3e171a7-1d9d-11eb-a29f-024e0d439fdb"
 
-        parent_physical_thing_resourceid = data.get("parentPhysicalThingResourceid")
         sampling_activity_resourceid = data.get("samplingActivityResourceId")
         collection_resourceid = data.get("collectionResourceid")
         sample_motivation = data.get("sampleMotivation")
@@ -561,11 +559,6 @@ class DeleteSampleAreaView(View):
                 if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                     sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
-            parentPhysicalThingSampleTile = ResourceXResource.objects.get(
-                nodeid=physical_part_of_object_nodeid,
-                resourceinstanceidfrom_id=parent_physical_thing_resourceid,
-                resourceinstanceidto_id=sample_area_physical_thing_resourceid,
-            )
 
             samplingActivitySampleTile = ResourceXResource.objects.get(
                 nodeid=sampling_area_nodeid,
@@ -580,7 +573,7 @@ class DeleteSampleAreaView(View):
                 Resource.objects.get(resourceinstanceid=sample_physical_thing_resourceid).delete(
                     transaction_id=transaction_id, user=request.user
                 )
-                Tile.objects.get(tileid=parentPhysicalThingSampleTile.tileid_id).delete(transaction_id=transaction_id, request=request)
+
                 Tile.objects.get(tileid=samplingActivitySampleTile.tileid_id).delete(transaction_id=transaction_id, request=request)
             return JSONResponse(status=200)
         except:
@@ -593,11 +586,8 @@ class DeleteAnalysisAreaView(View):
     def post(self, request):
         # need to delete:
         # the "analysis" physical thing
-        # the tile from the parent physical thing that references the "sample area"
 
         data = JSONDeserializer().deserialize(request.body)
-
-        parent_physical_thing_resourceid = data.get("parentPhysicalThingResourceId")
         part_identifier_assignment_tile_data = JSONDeserializer().deserialize(data.get("parentPhysicalThingTileData"))
         transaction_id = data.get("transactionId")
 
@@ -608,17 +598,10 @@ class DeleteAnalysisAreaView(View):
             analysis_area_physical_thing_resourceid = part_identifier_assignment_tile_data[physical_part_of_object_nodeid][0]["resourceId"]
 
         try:
-            parentPhysicalThingAnalysisTile = ResourceXResource.objects.get(
-                nodeid=physical_part_of_object_nodeid,
-                resourceinstanceidfrom_id=parent_physical_thing_resourceid,
-                resourceinstanceidto_id=analysis_area_physical_thing_resourceid,
-            )
-
             with transaction.atomic():
                 Resource.objects.get(resourceinstanceid=analysis_area_physical_thing_resourceid).delete(
                     transaction_id=transaction_id, user=request.user
                 )
-                Tile.objects.get(tileid=parentPhysicalThingAnalysisTile.tileid_id).delete(transaction_id=transaction_id, request=request)
             return JSONResponse(status=200)
         except:
             response = {"message": _("Unable to delete"), "title": _("Delete Failed")}

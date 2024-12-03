@@ -47,7 +47,6 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         new_tile.data = data
         new_tile.save(transaction_id=transaction_id)
 
-        self.addCleanup(new_tile.delete)
         return new_tile
 
     def test_create_delete_analysis_area(self):
