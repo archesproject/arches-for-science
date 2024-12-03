@@ -559,7 +559,6 @@ class DeleteSampleAreaView(View):
                 if sampling_unit_tile.data[sampling_area_nodeid][0]["resourceId"] == sample_area_physical_thing_resourceid:
                     sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
-
             samplingActivitySampleTile = ResourceXResource.objects.get(
                 nodeid=sampling_area_nodeid,
                 resourceinstanceidfrom_id=sampling_activity_resourceid,
