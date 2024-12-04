@@ -87,6 +87,13 @@ Cantaloupe [installation instructions](https://arches.readthedocs.io/en/stable/d
 4. Next ensure arches and arches_for_science are included as dependencies in package.json
     ```
     "dependencies": {
+        "@uppy/aws-s3": "3.6.2",
+        "@uppy/core": "3.13.0",
+        "@uppy/dashboard": "3.9.0",
+        "@uppy/drag-drop": "3.1.0",
+        "@uppy/progress-bar": "3.1.1",
+        "@uppy/companion-client": "3.1.3",
+        "typescript": "5.6.2",
         "arches": "archesproject/arches#dev/7.6.x",
         "arches_for_science": "archesproject/arches-for-science#dev/2.0.x"
     }
@@ -111,7 +118,7 @@ Cantaloupe [installation instructions](https://arches.readthedocs.io/en/stable/d
     python manage.py runserver
     ```
 
-8. Next cd into your project's app directory (the one with package.json e.g. `$PROJECT_NAME/$PROJECT_NAME/`) install and build front-end dependencies:
+8. Next cd into your project's app directory (the one with package.json) install and build front-end dependencies:
     ```
     npm install
     npm run build_development
