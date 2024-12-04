@@ -17,13 +17,13 @@ Navigate to the `arches-for-science` directory from your terminal and run:
 ```
 pip install -e .
 ```
+`Important`: Installing the arches-for-science app will install Arches as a dependency. This may replace your current install of Arches with a version from PyPi. If you've installed Arches for development using the `--editable -e` flag, you'll need to re pip install arches after installing arches-for-science
 
 ### If installing for deployment, run:
 ```
 pip install arches-for-science
 ```
 
-`Important`: Installing the arches-for-science app will install Arches as a dependency. This may replace your current install of Arches with a version from PyPi. If you've installed Arches for development using the `--editable` flag, you'll need to re pip install arches after installing arches-for-science
 
 ## Project Configuration
 
