@@ -14,5 +14,6 @@
     temp_file = "{% url 'temp_file' %}"
     manifest_x_canvas = "{% url 'manifest_x_canvas' %}"
     renderer_config = "{% url 'renderer_config' %}"
+    renderer = '(rendererid)=>{return "{% url "renderer" "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" %}".replace("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", rendererid)}',
 ></div>
 {% endblock arches_urls %}

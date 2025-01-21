@@ -32,7 +32,6 @@ define([
             this.selectedFile = params.selectedFile || ko.observable();
             this.selectedConfiguration = undefined;
             AfsInstrumentViewModel.apply(this, [params]);
-            this.rendererUrl = `${arches.urls.renderer}${self.renderer}`;
 
             // set defaults for chart title/axis
             this.chartTitle(arches.translations.data);
@@ -44,7 +43,7 @@ define([
             // on init, get available renderer configs for display to user.
             const rendererConfigRefresh = async () => {
                 const rendererResponse = await fetch(
-                    `${arches.urls.renderer}${self.renderer}`
+                    arches.urls.renderer(self.renderer)
                 );
                 if (rendererResponse.ok) {
                     const renderers = await rendererResponse.json();
