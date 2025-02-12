@@ -449,6 +449,20 @@ define([
         };
 
         this.saveAnalysisAreaTile = function() {
+            var partIdentifierAssignmentLabelNodeId = '3e541cc6-859b-11ea-97eb-acde48001122';
+            var partIdentifierAssignmentPolygonIdentifierNodeId = "97c30c42-8594-11ea-97eb-acde48001122"
+            const featureCollection = ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentPolygonIdentifierNodeId])
+            if (!ko.unwrap(featureCollection?.features)?.length ||  // Area location
+                !ko.unwrap(ko.unwrap(self.selectedAnalysisAreaInstance().data[partIdentifierAssignmentLabelNodeId])?.[arches.activeLanguage]?.value)  // Area name
+            ) {
+                params.pageVm.alert(new params.form.AlertViewModel(
+                    "ep-alert-red",
+                    "Missing Values",
+                    "Sample Location and Sample Name are Required",
+                ));
+                return;    
+            }
+
             var updateAnnotations = function() {
                 return new Promise(function(resolve, _reject) {
                     /* updates selected annotations */ 
