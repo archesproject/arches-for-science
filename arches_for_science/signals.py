@@ -1,6 +1,6 @@
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
-from arches.app.models.models import IIIFManifest, ResourceXResource
+from arches.app.models.models import IIIFManifest, ResourceXResource, TileModel
 from arches.app.models.resource import Resource
 from .models import ManifestXCanvas, ManifestXDigitalResource
 import uuid
@@ -24,7 +24,10 @@ def delete_manifest_x_canvas(sender, instance, **kwargs):
 def ensure_part_tile_is_deleted(sender, instance, **kwargs):
     physical_thing_parts_node_id = uuid.UUID("b240c366-8594-11ea-97eb-acde48001122")
     if instance.nodeid_id == physical_thing_parts_node_id:
-        instance.tileid.delete()
-        resourceid = instance.tileid.resourceinstance_id
-        resource = Resource.objects.get(pk=resourceid)
-        resource.index()
+        try:
+            instance.tileid.delete()
+            resourceid = instance.tileid.resourceinstance_id
+            resource = Resource.objects.get(pk=resourceid)
+            resource.index()
+        except TileModel.DoesNotExist:
+            pass
