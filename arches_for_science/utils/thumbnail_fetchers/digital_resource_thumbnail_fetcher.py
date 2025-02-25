@@ -2,6 +2,7 @@ from arches.app.utils.search_thumbnail_fetcher_factory import SearchThumbnailFet
 from arches.app.utils.search_thumbnail_fetcher import SearchThumbnailFetcher
 import requests
 from django.utils.translation import get_language
+from django.http import Http404
 
 
 @SearchThumbnailFetcherFactory.register("707cbd78-ca7a-11e9-990b-a4d18cec433a")
@@ -19,16 +20,20 @@ class DigitalResourceThumbnailFetcher(SearchThumbnailFetcher):
             manifest_tile = next((tile for tile in self.resource.tiles if str(tile.nodegroup_id) == MANIFEST_NODEGROUP_ID), None)
             manifest_url = manifest_tile.data[MANIFEST_URL_NODE_ID][get_language()]["value"]
             response = requests.get(manifest_url)
-            response_json = response.json()
-            if "thumbnail" in response_json:
-                image_url = response_json["thumbnail"]["@id"]
-                if retrieve:
-                    response = requests.get(image_url, allow_redirects=True)
-                    response.raw.decode_content = True
-                    if response.ok:
-                        return (response.content, response.headers["Content-Type"])
-                else:
-                    response = requests.head(image_url, allow_redirects=True)
-                    if response.ok:
-                        return ()
+            try:
+                response_json = response.json()
+                if "thumbnail" in response_json:
+                    image_url = response_json["thumbnail"]["@id"]
+            except ValueError as e:
+                image_url = manifest_url.replace("full/full", "full/!200,200")
+
+            if retrieve:
+                response = requests.get(image_url, allow_redirects=True)
+                response.raw.decode_content = True
+                if response.ok:
+                    return (response.content, response.headers["Content-Type"])
+            else:
+                response = requests.head(image_url, allow_redirects=True)
+                if response.ok:
+                    return ()
         return None
