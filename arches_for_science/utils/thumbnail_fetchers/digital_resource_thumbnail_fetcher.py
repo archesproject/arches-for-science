@@ -23,7 +23,7 @@ class DigitalResourceThumbnailFetcher(SearchThumbnailFetcher):
                 response_json = response.json()
                 if "thumbnail" in response_json:
                     image_url = response_json["thumbnail"]["@id"]
-            except ValueError as e:
+            except ValueError:
                 image_url = manifest_url.replace("full/full", "full/!200,200")
 
             if retrieve:
