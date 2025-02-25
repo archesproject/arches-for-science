@@ -2,7 +2,6 @@ from arches.app.utils.search_thumbnail_fetcher_factory import SearchThumbnailFet
 from arches.app.utils.search_thumbnail_fetcher import SearchThumbnailFetcher
 import requests
 from django.utils.translation import get_language
-from django.http import Http404
 
 
 @SearchThumbnailFetcherFactory.register("707cbd78-ca7a-11e9-990b-a4d18cec433a")
