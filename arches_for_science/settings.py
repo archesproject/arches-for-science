@@ -191,7 +191,23 @@ LOGGING = {
         },
         "console": {"level": "WARNING", "class": "logging.StreamHandler", "formatter": "console"},
     },
-    "loggers": {"arches": {"handlers": ["file", "console"], "level": "WARNING", "propagate": True}},
+    "loggers": {
+        "arches": {
+            "handlers": ["file", "console"],
+            "level": "WARNING",
+            "propagate": True,
+        },
+        "arches_for_science": {
+            "handlers": ["file", "console"],
+            "level": "WARNING",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["file", "console"],
+            "level": "WARNING",
+            "propagate": True,
+        },
+    },
 }
 
 # Rate limit for authentication views
