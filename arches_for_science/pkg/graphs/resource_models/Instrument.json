@@ -136,7 +136,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Identifier for Instrument"
                     },
@@ -194,7 +194,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Instrument"
                     },
@@ -368,7 +368,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Current Location of Instrument"
                     },
@@ -397,7 +397,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Current Owner of Instrument"
                     },
@@ -455,7 +455,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type of Instrument"
                     },
@@ -513,7 +513,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dimension of Instrument"
                     },
@@ -600,7 +600,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement about Instrument"
                     },
@@ -4211,7 +4211,7 @@
             ],
             "graphid": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
             "iconclass": "fa fa-binoculars",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -5047,8 +5047,8 @@
                     },
                     "datatype": "concept-list",
                     "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "type",
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "hascustomalias": false,
                     "is_collector": true,
@@ -6427,11 +6427,13 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -7235,8 +7237,8 @@
             "publication": {
                 "graph_id": "b6c819b8-99f6-11ea-a9b7-3af9d3b32b71",
                 "notes": null,
-                "publicationid": "e0b8097c-2bfc-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-26T14:39:19.697"
+                "publicationid": "8bad062c-382e-11f0-9128-020539808477",
+                "published_time": "2025-05-23T16:35:01.150"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -7269,9 +7271,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }

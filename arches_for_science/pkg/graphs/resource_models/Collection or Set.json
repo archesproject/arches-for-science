@@ -368,7 +368,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Collection"
                     },
@@ -5649,7 +5649,7 @@
             ],
             "graphid": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
             "iconclass": "fa fa-cubes",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "",
             "name": {
@@ -7913,11 +7913,13 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -10025,8 +10027,8 @@
             "publication": {
                 "graph_id": "1b210ef3-b25c-11e9-a037-a4d18cec433a",
                 "notes": null,
-                "publicationid": "1d5bde54-2bfc-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-26T14:33:51.937"
+                "publicationid": "7f1c3182-382a-11f0-806e-020539808477",
+                "published_time": "2025-05-23T16:06:02.082"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -10059,9 +10061,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }

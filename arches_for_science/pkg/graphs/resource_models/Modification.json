@@ -24,7 +24,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Parent Project of Modification"
                     },
@@ -111,7 +111,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type of Modification"
                     },
@@ -167,7 +167,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Person Carrying Out Modification"
                     },
@@ -223,7 +223,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Location of Modification"
                     },
@@ -252,7 +252,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Modification"
                     },
@@ -397,7 +397,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "TimeSpan of Modification"
                     },
@@ -455,7 +455,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Identifier for Modification"
                     },
@@ -513,7 +513,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement about Modification"
                     },
@@ -542,7 +542,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Object Modified during Modification"
                     },
@@ -600,7 +600,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Procedure of Modification"
                     },
@@ -629,7 +629,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Tool for Modification"
                     },
@@ -656,7 +656,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Digital Reference to Modification"
                     },
@@ -685,7 +685,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Technique of Modification"
                     },
@@ -3386,7 +3386,7 @@
             ],
             "graphid": "5bece219-c456-11e9-8dcd-a4d18cec433a",
             "iconclass": "fa fa-cut",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -4333,11 +4333,13 @@
                 },
                 {
                     "alias": "content_n1",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "5bece219-c456-11e9-8dcd-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -5578,11 +5580,13 @@
                 },
                 {
                     "alias": "content_n5",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "statement",
                     "graph_id": "5bece219-c456-11e9-8dcd-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -5885,9 +5889,8 @@
             "publication": {
                 "graph_id": "5bece219-c456-11e9-8dcd-a4d18cec433a",
                 "notes": null,
-                "publicationid": "09682344-2a80-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-24T17:13:09.706",
-                "user_id": 1
+                "publicationid": "ed42f006-382e-11f0-9f22-020539808477",
+                "published_time": "2025-05-23T16:37:44.872"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -5916,34 +5919,13 @@
                 "en": "A modification to a physical object that changes but does not destroy it"
             },
             "template_id": "f02f4b69-08d9-49fa-a4d1-94ef8178fbce",
-            "topnode": {
-                "alias": "modification",
-                "config": {},
-                "datatype": "semantic",
-                "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                "exportable": false,
-                "fieldname": null,
-                "graph_id": "5bece219-c456-11e9-8dcd-a4d18cec433a",
-                "hascustomalias": false,
-                "is_collector": false,
-                "isrequired": false,
-                "issearchable": true,
-                "istopnode": true,
-                "name": "Modification",
-                "nodegroup_id": null,
-                "nodeid": "5becdd42-c456-11e9-bade-a4d18cec433a",
-                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E11_Modification",
-                "parentproperty": "",
-                "sortorder": 0,
-                "sourcebranchpublication_id": null
-            },
             "version": ""
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }

@@ -24,7 +24,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type of Digital Resource"
                     },
@@ -82,7 +82,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Parent Digital Resource"
                     },
@@ -140,7 +140,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Digital Service of Digital Resource"
                     },
@@ -227,7 +227,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Identifier for Digital Service"
                     },
@@ -341,7 +341,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Files of Digital Resource"
                     },
@@ -629,7 +629,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement about File"
                     },
@@ -687,7 +687,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Digital Resource"
                     },
@@ -832,7 +832,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Identifier of Digital Resource"
                     },
@@ -3464,6 +3464,7 @@
                     "card_id": "7c4a758f-d380-11e9-9a7b-a4d18cec433a",
                     "config": {
                         "acceptedFiles": "",
+                        "defaultValue": [],
                         "label": "File",
                         "maxFilesize": "200",
                         "rerender": true
@@ -6787,7 +6788,7 @@
             ],
             "graphid": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
             "iconclass": "fa fa-file-text-o",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "",
             "name": {
@@ -7037,8 +7038,8 @@
                     },
                     "datatype": "concept-list",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "type",
                     "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": true,
@@ -7122,11 +7123,13 @@
                 },
                 {
                     "alias": "file_name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "file_names",
                     "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -8188,6 +8191,7 @@
                     "alias": "file",
                     "config": {
                         "activateMax": false,
+                        "imagesOnly": false,
                         "maxFileSize": null,
                         "maxFiles": 100
                     },
@@ -9244,11 +9248,13 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -11698,8 +11704,8 @@
             "publication": {
                 "graph_id": "707cbd78-ca7a-11e9-990b-a4d18cec433a",
                 "notes": null,
-                "publicationid": "9e7d6764-2bfc-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-26T14:37:28.583"
+                "publicationid": "fc5b6458-382d-11f0-b11a-020539808477",
+                "published_time": "2025-05-23T16:31:00.701"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -11732,9 +11738,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }

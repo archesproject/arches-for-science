@@ -53,7 +53,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement about Textual Work"
                     },
@@ -138,7 +138,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Textual Work"
                     },
@@ -399,7 +399,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Creation Event of Textual Work"
                     },
@@ -602,7 +602,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Language of Textual Work"
                     },
@@ -656,7 +656,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Digital Reference to Textual Work"
                     },
@@ -1062,7 +1062,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Subject(s) of Textual Work"
                     },
@@ -1120,7 +1120,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type of Textual Work"
                     },
@@ -1236,7 +1236,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Content of Textual Work"
                     },
@@ -9052,7 +9052,7 @@
             ],
             "graphid": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
             "iconclass": "fa fa-book",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": null,
             "name": {
@@ -9531,11 +9531,13 @@
                 },
                 {
                     "alias": "statement_top__content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "statement",
                     "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -10099,11 +10101,13 @@
                 },
                 {
                     "alias": "name_top__content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -15873,9 +15877,8 @@
             "publication": {
                 "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
                 "notes": null,
-                "publicationid": "c7b4a5f0-2aa0-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-24T21:07:32.870",
-                "user_id": 1
+                "publicationid": "d0ae315e-3833-11f0-8ab0-020539808477",
+                "published_time": "2025-05-23T17:12:44.405"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -15904,34 +15907,13 @@
                 "en": "A conceptual, text-based work"
             },
             "template_id": "590a02ad-7d47-4b29-90a3-2e29aada677d",
-            "topnode": {
-                "alias": "textual_work",
-                "config": {},
-                "datatype": "semantic",
-                "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                "exportable": false,
-                "fieldname": null,
-                "graph_id": "a7b1a7c5-b25b-11e9-8a4e-a4d18cec433a",
-                "hascustomalias": false,
-                "is_collector": false,
-                "isrequired": false,
-                "issearchable": true,
-                "istopnode": true,
-                "name": "Textual Work",
-                "nodegroup_id": null,
-                "nodeid": "a7b1a466-b25b-11e9-9bc1-a4d18cec433a",
-                "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
-                "parentproperty": "",
-                "sortorder": 0,
-                "sourcebranchpublication_id": null
-            },
             "version": ""
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }

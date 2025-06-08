@@ -82,7 +82,7 @@
                     "instructions": {
                         "en": "Enter the dates of the project. "
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dates of Sampling Activity"
                     },
@@ -324,7 +324,7 @@
                     "instructions": {
                         "en": "Describe the sampling activity in general terms. Add a new statement for additional information (ex. rights statement, etc.)"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement about Sampling Activity"
                     },
@@ -353,7 +353,7 @@
                     "instructions": {
                         "en": "Person(s) or group(s) that performed the sampling"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Samplers"
                     },
@@ -382,7 +382,7 @@
                     "instructions": {
                         "en": "Enter the name of research project or task."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Sampling Activity"
                     },
@@ -440,7 +440,7 @@
                     "instructions": {
                         "en": "Select the larger project that this sampling activity is a component of. If none, leave blank."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Parent Project of Sampling Activity"
                     },
@@ -612,7 +612,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type of Sampling Activity"
                     },
@@ -639,7 +639,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Digital Reference to Sampling Activity"
                     },
@@ -722,7 +722,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Sampling Unit for Sampling Activity"
                     },
@@ -3678,7 +3678,7 @@
             ],
             "graphid": "03357848-1d9d-11eb-a29f-024e0d439fdb",
             "iconclass": "fa fa-youtube-play",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -4370,8 +4370,8 @@
                     },
                     "datatype": "resource-instance",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "project",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
                     "hascustomalias": false,
                     "is_collector": true,
@@ -5662,11 +5662,13 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -5683,11 +5685,13 @@
                 },
                 {
                     "alias": "statement_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "statement",
                     "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -6409,8 +6413,8 @@
             "publication": {
                 "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
                 "notes": null,
-                "publicationid": "9a702c16-2c00-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-26T15:05:59.772"
+                "publicationid": "86ad554e-3833-11f0-a7a4-020539808477",
+                "published_time": "2025-05-23T17:10:40.249"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -6443,9 +6447,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }

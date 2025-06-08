@@ -82,7 +82,7 @@
                     "instructions": {
                         "en": "Select the scale of the project (i.e. initiative, project, research task)"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Scale of Project"
                     },
@@ -198,7 +198,7 @@
                     "instructions": {
                         "en": "Enter the dates of the project. "
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dates of Project"
                     },
@@ -227,7 +227,7 @@
                     "instructions": {
                         "en": "Enter the name of research project or task."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Project"
                     },
@@ -498,7 +498,7 @@
                     "instructions": {
                         "en": "Enter any identifiers (ex. accession numbers, bar codes) that refer to the entire project."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Identifier for Project"
                     },
@@ -527,7 +527,7 @@
                     "instructions": {
                         "en": "Describe the project and its objectives. Add a new statement for additional information (ex. rights statement,etc etc)"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement about Project"
                     },
@@ -585,7 +585,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Activity Type of Project "
                     },
@@ -695,7 +695,7 @@
                     "instructions": {
                         "en": "Select the objects or groups of objects (collections) that are part of this project."
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Object or Collection Referenced in Project"
                     },
@@ -724,7 +724,7 @@
                     "instructions": {
                         "en": "Person(s) or group(s) that participated in the project"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Project Team"
                     },
@@ -3488,7 +3488,7 @@
             ],
             "graphid": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
             "iconclass": "fa fa-youtube-play",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -3709,8 +3709,8 @@
                     },
                     "datatype": "concept",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "proj_type",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": true,
@@ -4327,11 +4327,13 @@
                 },
                 {
                     "alias": "identifier_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the identifier.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "id",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -4591,11 +4593,13 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -5284,11 +5288,13 @@
                 },
                 {
                     "alias": "statement_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "statement",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -5997,8 +6003,8 @@
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "proj_team",
                     "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": true,
@@ -6018,8 +6024,8 @@
             "publication": {
                 "graph_id": "0b9235d9-ca85-11e9-9fa2-a4d18cec433a",
                 "notes": null,
-                "publicationid": "c8c66310-2bff-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-26T15:00:08.016"
+                "publicationid": "554ecfbb-3817-11f0-b814-020539808477",
+                "published_time": "2025-05-23T13:48:51.513"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -6052,9 +6058,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }

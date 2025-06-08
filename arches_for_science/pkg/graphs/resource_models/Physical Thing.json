@@ -53,7 +53,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Dimension of Object"
                     },
@@ -111,7 +111,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement or Interpretation about Object"
                     },
@@ -140,7 +140,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Identifier of Object"
                     },
@@ -169,7 +169,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Text Carried by Object"
                     },
@@ -542,7 +542,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Collection Object is Part of "
                     },
@@ -685,7 +685,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Digital Reference to Object"
                     },
@@ -714,7 +714,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type of Object"
                     },
@@ -743,7 +743,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Current Location of Object"
                     },
@@ -1033,7 +1033,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Current Owner of Object"
                     },
@@ -1265,7 +1265,7 @@
                     "instructions": {
                         "en": "(Should not be used at the same time as Production)"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Part Removal Event of Object"
                     },
@@ -1379,7 +1379,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Object"
                     },
@@ -1669,7 +1669,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Production Event of Object"
                     },
@@ -1843,7 +1843,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Parent Object"
                     },
@@ -2075,7 +2075,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Destruction Event of Object"
                     },
@@ -2135,7 +2135,7 @@
                     "instructions": {
                         "en": "Describe the workflow a bit here!"
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Parts of Object"
                     },
@@ -15358,7 +15358,7 @@
             ],
             "graphid": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
             "iconclass": "fa fa-asterisk",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "https://linked.art/ns/v1/linked-art.json",
             "name": {
@@ -16338,11 +16338,13 @@
                 },
                 {
                     "alias": "statement_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "statement",
                     "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -16456,11 +16458,13 @@
                 },
                 {
                     "alias": "identifier_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the identifier.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "id",
                     "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -19027,8 +19031,8 @@
                     },
                     "datatype": "concept-list",
                     "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "type",
                     "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": true,
@@ -20840,8 +20844,8 @@
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "owner",
                     "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": true,
@@ -22647,11 +22651,13 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: la-name-content\n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -24801,8 +24807,8 @@
                     },
                     "datatype": "resource-instance-list",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "creator",
                     "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -27019,8 +27025,8 @@
             "publication": {
                 "graph_id": "9519cb4f-b25b-11e9-8c7b-a4d18cec433a",
                 "notes": null,
-                "publicationid": "34652f2c-2c03-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-26T15:24:37.063"
+                "publicationid": "ac8114bb-3828-11f0-affa-020539808477",
+                "published_time": "2025-05-23T15:52:59.247"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -27053,9 +27059,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }
