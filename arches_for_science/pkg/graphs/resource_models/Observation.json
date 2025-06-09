@@ -78,7 +78,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Instrument / Tool Used for Observation"
                     },
@@ -221,7 +221,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Parent Event of Observation"
                     },
@@ -250,7 +250,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Type of Observation"
                     },
@@ -279,7 +279,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Name of Observation"
                     },
@@ -424,7 +424,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "TimeSpan of Observation"
                     },
@@ -511,7 +511,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Statement about Observation"
                     },
@@ -656,7 +656,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Object Observed during Observation"
                     },
@@ -685,7 +685,7 @@
                     "instructions": {
                         "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": false,
                     "name": {
                         "en": "Recorded Value of Observation"
                     },
@@ -3445,7 +3445,7 @@
             ],
             "graphid": "615b11ee-c457-11e9-910c-a4d18cec433a",
             "iconclass": "fa fa-eye",
-            "is_editable": true,
+            "is_editable": false,
             "isresource": true,
             "jsonldcontext": "",
             "name": {
@@ -4366,11 +4366,13 @@
                 },
                 {
                     "alias": "name_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThe string value of the full name.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "name",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -4781,8 +4783,8 @@
                     },
                     "datatype": "date",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "start_date",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -5490,11 +5492,13 @@
                 },
                 {
                     "alias": "statement_content",
-                    "config": {},
+                    "config": {
+                        "en": ""
+                    },
                     "datatype": "string",
                     "description": "# Specific:\n\n\n# General:\nThis field records the string content of the statement.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
-                    "exportable": false,
-                    "fieldname": null,
+                    "exportable": true,
+                    "fieldname": "statement",
                     "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                     "hascustomalias": false,
                     "is_collector": false,
@@ -5873,8 +5877,8 @@
             "publication": {
                 "graph_id": "615b11ee-c457-11e9-910c-a4d18cec433a",
                 "notes": null,
-                "publicationid": "7bacf64a-2bfd-11ee-a7c6-913c09b89e22",
-                "published_time": "2023-07-26T14:43:39.671"
+                "publicationid": "5febbaf8-382f-11f0-b47e-020539808477",
+                "published_time": "2025-05-23T16:40:57.238"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -5907,9 +5911,9 @@
         }
     ],
     "metadata": {
-        "db": "PostgreSQL 14.7 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-6), 64-bit",
+        "db": "PostgreSQL 16.8 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 7.3.1 20180712 (Red Hat 7.3.1-17), 64-bit",
         "git hash": "fatal: not a git repository (or any of the parent directories): .git",
         "os": "Linux",
-        "os version": "5.19.0-1028-aws"
+        "os version": "6.8.0-1021-aws"
     }
 }
