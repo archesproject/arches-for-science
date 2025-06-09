@@ -41,10 +41,6 @@
         </div>
         <!-- ko if: observation.expanded() -->        
         <table class="table table-striped" width="100%" data-bind="attr: {id: observation.resourceinstanceid }">
-            <div class="observation-list" aria-expanded="false" data-bind="
-            click: function() { observation.expanded(!observation.expanded()); },
-            attr: {'aria-controls': observation.resourceinstanceid + '_wrapper' },
-        ">
             <thead>
                 <tr class="afs-table-header">
                     <th data-bind="text: $root.translations.fileName"></th>
