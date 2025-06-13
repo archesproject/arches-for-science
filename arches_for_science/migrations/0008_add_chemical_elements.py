@@ -189,7 +189,7 @@ class Migration(migrations.Migration):
             element_concept = Concept(
                 conceptid=uuid.UUID(element["conceptid"]),
                 nodetype_id="Concept",
-                legacyoid=f"http://localhost:9900/{element["conceptid"]}",
+                legacyoid=f"http://localhost:8000/{element['conceptid']}",
             )
             element_concept.save()
 
