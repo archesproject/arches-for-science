@@ -21,7 +21,8 @@ define([], function() {
         if (getVersion(manifestData) === 3) {
             const sequences = manifestData ? manifestData.items : [];
             sequences.forEach(function(canvas_item) {
-                canvas = { items: canvas_item.items }
+                const canvas = {};
+                canvas.items = canvas_item.items;
                 canvas.label = canvas_item.label["en"][0];
                 canvas.id = getCanvasService(canvas_item, 3);
                 canvas.text = canvas.label;
@@ -54,10 +55,9 @@ define([], function() {
     const getCanvas = (manifestData, canvasId, updateCanvas) => {
         if (getVersion(manifestData) === 3) {
             if (manifestData.items.length > 0) {
-                canvases = manifestData.items;
+                const canvases = manifestData.items;
                 let canvasIndex = 0;
                 if (!updateCanvas) {
-                    console.log("canvases", canvases)
                     canvasIndex = canvases.findIndex((c) => (c.items[0].id === canvasId));
                 }
                 return canvases[canvasIndex];
@@ -87,7 +87,7 @@ define([], function() {
         if (version === 2) {
             return canvas.images?.[0]?.resource.service['@id'];
         } else if (version === 3) {
-            return canvas.id.replace("/canvas", "");
+            return canvas.items[0].items[0].body[0].service[0]["@id"];
         };
     };
     const getMetadata = (manifestData) => {
@@ -95,7 +95,7 @@ define([], function() {
             return manifestData.metadata;
         } else if (getVersion(manifestData) === 3) {
             return manifestData.metadata.map((data) => {
-                value = {};
+                const value = {};
                 Object.entries(data).forEach(([k, v]) => {
                     value[k] = v['en'][0];
                 });
