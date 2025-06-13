@@ -676,7 +676,7 @@ define([
         this.selectCanvas = function(canvas) {
             
             const service = iiifUtils.getCanvasService(canvas, self.version());
-            console.log("Selected Canvas Service: ", service);
+
             if (service && self.selectPrimaryPanel()) {
                 self.canvas(service);
                 self.canvasObject(canvas);
@@ -698,7 +698,6 @@ define([
             if (manifestData) {
                 self.version(iiifUtils.getVersion(manifestData));
                 const canvas = iiifUtils.getCanvas(manifestData, self.canvas(), self.updateCanvas);
-                console.log("Manifest canvas", canvas);
                 if (canvas) {
                     self.secondaryCanvasLayer = undefined;
                     self.canvasLayer = undefined;
