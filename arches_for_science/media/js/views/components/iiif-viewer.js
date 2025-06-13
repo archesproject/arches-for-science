@@ -9,22 +9,34 @@ define([
     'templates/views/components/iiif-viewer.htm',
     'select-woo-src/utils',
     'select-woo-src/data/array',
+    'utils/iiif-utils',
     'leaflet-iiif',
     'leaflet-fullscreen',
     'leaflet-side-by-side',
     'bindings/select2-query',
     'bindings/leaflet'
-], function($, ko, koMapping, L, arches, WorkbenchViewmodel, iiifPopup, iiifViewerTemplate, selectWooUtils, selectWooArrayAdapter) {
+], function(
+    $,
+    ko,
+    koMapping,
+    L,
+    arches,
+    WorkbenchViewmodel,
+    iiifPopup,
+    iiifViewerTemplate,
+    selectWooUtils,
+    selectWooArrayAdapter,
+    iiifUtils
+) {
     var IIIFViewerViewmodel = function(params) {
         var self = this;
         var abortFetchManifest;
-        this.getManifestDataValue = function(object, property, returnFirstVal) {
-            var val = object[property];
-            if (Array.isArray(val) && returnFirstVal) val = object[property][0]["@value"];
-            return val;
+
+        this.version = ko.observable();
+        this.getCanvasService = (canvas) => {
+            iiifUtils.getCanvasService(canvas, self.version());
         };
 
-         
         this.map = ko.observable();
         this.manifest = ko.observable(params.manifest);
         this.editManifest = ko.observable(!params.manifest);
@@ -285,23 +297,7 @@ define([
 
         this.canvases = ko.pureComputed(function() {
             var manifestData = self.manifestData();
-            var sequences = manifestData ? manifestData.sequences : [];
-            var canvases = [];
-            sequences.forEach(function(sequence) {
-                if (sequence.canvases) {
-                    sequence.label = self.getManifestDataValue(sequence, 'label', true);
-                    sequence.canvases.forEach(function(canvas) {
-                        canvas.label = self.getManifestDataValue(canvas, 'label', true);
-                        if (typeof canvas.thumbnail === 'object')
-                            canvas.thumbnail = canvas.thumbnail["@id"];
-                        else if (canvas.images && canvas.images[0] && canvas.images[0].resource)
-                            canvas.thumbnail = canvas.images[0].resource["@id"];
-                        canvas.id = self.getCanvasService(canvas);
-                        canvas.text = canvas.label;
-                        canvases.push(canvas);
-                    });
-                }
-            });
+            canvases = iiifUtils.getCanvases(manifestData)
             return canvases;
         });
 
@@ -364,7 +360,7 @@ define([
 
         var CustomDataAdapter = selectWooUtils.Decorate(selectWooArrayAdapter, CustomDataAdapterClass);
         CustomDataAdapter.prototype.current = function(callback){
-            const canvasObj = self.canvases().find(canvas => self.getCanvasService(canvas) == this.options.options.value());
+            const canvasObj = self.canvases().find(canvas => iiifUtils.getCanvasService(canvas, self.version()) == this.options.options.value());
             callback([canvasObj]);
         };
         CustomDataAdapter.prototype.query = function(params, callback){
@@ -671,7 +667,7 @@ define([
         this.secondaryCanvas.subscribe(updateSecondaryCanvasLayer);
 
         this.setSecondaryCanvas = (canvas) => {
-            const service = self.getCanvasService(canvas);
+            const service = iiifUtils.getCanvasService(canvas, self.version());
             if(service){
                 self.secondaryCanvas(service);
             }
@@ -679,17 +675,16 @@ define([
 
         this.selectCanvas = function(canvas) {
             
-            const service = self.getCanvasService(canvas);
-
+            const service = iiifUtils.getCanvasService(canvas, self.version());
+            console.log("Selected Canvas Service: ", service);
             if (service && self.selectPrimaryPanel()) {
                 self.canvas(service);
                 self.canvasObject(canvas);
-                self.canvasLabel(self.getManifestDataValue(canvas, 'label', true));
             } else {
                 self.secondaryCanvas(service);
                 self.secondaryCanvasObject(canvas);
-                self.canvasLabel(self.getManifestDataValue(canvas, 'label', true));
             }
+            self.canvasLabel(iiifUtils.getCanvasLabel(canvas, self.version()));
             self.origCanvasLabel(self.canvasLabel());
         };
 
@@ -698,47 +693,38 @@ define([
             self.expandGallery(false);
         };
 
-        this.getCanvasService = function(canvas) {
-            if (canvas.images.length > 0) return canvas.images[0].resource.service['@id'];
-        };
-
         this.updateCanvas = !self.canvas();
         this.manifestData.subscribe(function(manifestData) {
             if (manifestData) {
-                if (manifestData.sequences.length > 0) {
-                    var sequence = manifestData.sequences[0];
-                    var canvasIndex = 0;
-                    if (sequence.canvases.length > 0) {
-                        if (!self.updateCanvas) {
-                            canvasIndex = sequence.canvases.findIndex(function(c){return c.images[0].resource.service['@id'] === self.canvas();});
-                        }
-                        var canvas = sequence.canvases[canvasIndex];
+                self.version(iiifUtils.getVersion(manifestData));
+                const canvas = iiifUtils.getCanvas(manifestData, self.canvas(), self.updateCanvas);
+                console.log("Manifest canvas", canvas);
+                if (canvas) {
+                    self.secondaryCanvasLayer = undefined;
+                    self.canvasLayer = undefined;
+                    self.zoomToCanvas = true;
+                    const service = iiifUtils.getCanvasService(canvas, self.version());
+                    self.canvas(service);
+                    self.canvasObject(canvas);
 
-                        self.secondaryCanvasLayer = undefined;
-                        self.canvasLayer = undefined;
-                        const service = self.getCanvasService(canvas);
-                        self.zoomToCanvas = true;
-                        self.canvas(service);
-                        self.canvasObject(canvas);
-
-                        if(self.compareMode()){
-                            self.secondaryCanvas(service);
-                            self.secondaryCanvasObject(canvas);
-                        }
-                    }    
+                    if(self.compareMode()){
+                        self.secondaryCanvas(service);
+                        self.secondaryCanvasObject(canvas);
+                    }
                 }
+
                 self.updateCanvas = true;
-                self.origManifestName = self.getManifestDataValue(manifestData, 'label', true);
+                self.origManifestName = iiifUtils.getManifestDataValue(manifestData, 'label', true, self.version(), 'en');
                 self.manifestName(self.origManifestName);
-                self.origManifestDescription = self.getManifestDataValue(manifestData, 'description', true);
+                self.origManifestDescription = iiifUtils.getManifestDataValue(manifestData, 'description', true, self.version());
                 self.manifestDescription(self.origManifestDescription);
-                self.origManifestAttribution = self.getManifestDataValue(manifestData, 'attribution', true);
+                self.origManifestAttribution = iiifUtils.getManifestDataValue(manifestData, 'attribution', true, self.version());
                 self.manifestAttribution(self.origManifestAttribution);
-                self.origManifestLogo = self.getManifestDataValue(manifestData, 'logo', true);
+                self.origManifestLogo = iiifUtils.getManifestDataValue(manifestData, 'logo', true, self.version());
                 self.manifestLogo(self.origManifestLogo);
-                self.origManifestMetadata = koMapping.toJSON(self.getManifestDataValue(manifestData, 'metadata'));
+                self.origManifestMetadata = koMapping.toJSON(iiifUtils.getMetadata(manifestData));
                 self.manifestMetadata.removeAll();
-                self.getManifestDataValue(manifestData, 'metadata').forEach(function(entry){
+                iiifUtils.getMetadata(manifestData).forEach(function(entry){
                     self.manifestMetadata.push(koMapping.fromJS(entry));
                 });
             }
