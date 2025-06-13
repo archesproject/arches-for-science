@@ -144,6 +144,9 @@ class Migration(migrations.Migration):
         Relation = apps.get_model("models", "Relation")
         RelationType = apps.get_model("models", "DRelationType")
 
+        if Concept.objects.filter(pk=concept_scheme).exists() is False:
+            return
+
         root_concept = Concept(
             conceptid=uuid.UUID(root_conceptid),
             nodetype_id="Concept",
