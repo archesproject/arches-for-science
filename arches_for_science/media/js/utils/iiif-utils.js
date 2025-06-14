@@ -1,8 +1,10 @@
 define([], function() {
     const getVersion = (manifestData) => {
-        if (manifestData?.['@context'] === 'http://iiif.io/api/presentation/3/context.json') {
+        const urlString = manifestData?.['@context'];
+        const url = new URL(urlString);
+        if (url.pathname.split("/")[3].startsWith("3")) {
             return 3;
-        } else if (manifestData?.['@context'] === 'http://iiif.io/api/presentation/2/context.json') {
+        } else if (url.pathname.split("/")[3].startsWith("2")) {
             return 2;
         }
     };
