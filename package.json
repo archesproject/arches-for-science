@@ -19,7 +19,7 @@
         "three": "^0.148.0"
     },
     "devDependencies": {
-        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.6.10"
+        "arches-dev-dependencies": "archesproject/arches-dev-dependencies#stable/7.6.11"
     },
     "scripts": {
         "build_development": "npm run eslint:check && npm run ts:check && cross-env NODE_OPTIONS=--max-old-space-size=2048 webpack --config ./webpack/webpack.config.dev.js",
