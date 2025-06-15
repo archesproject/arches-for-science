@@ -11,10 +11,10 @@ define([], function() {
     const getManifestDataValue = function(object, property, returnFirstVal, version, i18n) {
         let val = object[property];
         if (version === 2) {
-            if (Array.isArray(val) && returnFirstVal) val = val[0]
+            if (Array.isArray(val) && returnFirstVal) val = val[0];
         } else if (version === 3) {
-            if (i18n) val = val[i18n]
-            if (Array.isArray(val) && returnFirstVal) val = val[0]
+            if (i18n) val = val[i18n];
+            if (Array.isArray(val) && returnFirstVal) val = val[0];
         }
         return val;
     };

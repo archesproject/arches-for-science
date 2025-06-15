@@ -157,7 +157,7 @@ define([
 
         this.showLogo = ko.pureComputed(() => {
             const imageExtenstion = ["bmp", "gif", "jpeg", "jpg", "png", "svg", "tif", "tiff", "webp"]
-            return !!imageExtenstion.find((ext) => self.manifestLogo().endsWith(ext))
+            return !!imageExtenstion.find((ext) => self.manifestLogo().endsWith(ext));
         });
 
         this.buildAnnotationNodes = params.buildAnnotationNodes || function(json) {
@@ -297,8 +297,7 @@ define([
 
         this.canvases = ko.pureComputed(function() {
             var manifestData = self.manifestData();
-            canvases = iiifUtils.getCanvases(manifestData)
-            return canvases;
+            return iiifUtils.getCanvases(manifestData);
         });
 
         var validateUrl = function(value) {
