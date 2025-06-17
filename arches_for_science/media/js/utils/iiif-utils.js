@@ -22,16 +22,14 @@ define([], function() {
         const canvases = [];
         if (getVersion(manifestData) === 3) {
             const sequences = manifestData ? manifestData.items : [];
-            sequences.forEach(function(canvas_item) {
-                const canvas = {};
-                canvas.items = canvas_item.items;
-                canvas.label = canvas_item.label["en"][0];
-                canvas.id = getCanvasService(canvas_item, 3);
+            sequences.forEach(function(canvas) {
+                canvas.label = canvas.label["en"][0];
+                canvas.id = getCanvasService(canvas, 3);
                 canvas.text = canvas.label;
-                if (typeof canvas_item.thumbnail === 'object')
-                    canvas.thumbnail = canvas_item.thumbnail[0]["id"];
-                else if (canvas_item.items?.[0]?.items?.[0]?.body?.id)
-                    canvas.thumbnail = canvas_item.items?.[0]?.items?.[0]?.body?.id;
+                if (typeof canvas.thumbnail === 'object')
+                    canvas.thumbnail = canvas.thumbnail[0]["id"];
+                else if (canvas.items?.[0]?.items?.[0]?.body?.id)
+                    canvas.thumbnail = canvas.items?.[0]?.items?.[0]?.body?.id;
                 canvases.push(canvas);
             })
         } else if (getVersion(manifestData) === 2) {
