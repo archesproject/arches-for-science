@@ -76,6 +76,24 @@ define([], function() {
         }
         return null;
     };
+    const getManifestThumbnail = (manifest) => {
+        if (manifest.sequences) {
+            return manifest.sequences[0].canvases[0].thumbnail
+        } else {
+            return manifest.items[0].thumbnail;
+        }
+    };
+    const getManifestLabel = (manifest) => {
+        const label = manifest.label;
+        if (typeof label === 'object') {
+            return manifest.label?.["en"]?.[0];
+        } else {
+            return label;
+        }
+    };
+    const getManifestId = (manifest) => {
+        return manifest?.['@id'] || manifest?.['id'];
+    };
     const getCanvasLabel = (canvas) => {
         const label = canvas.label;
         if (typeof label === 'object') {
@@ -118,6 +136,9 @@ define([], function() {
     return {
         getVersion,
         getManifestDataValue,
+        getManifestLabel,
+        getManifestId,
+        getManifestThumbnail,
         getCanvases,
         getCanvas,
         getCanvasLabel,

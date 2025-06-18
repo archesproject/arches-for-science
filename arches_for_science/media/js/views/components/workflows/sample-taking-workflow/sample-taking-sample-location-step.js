@@ -11,9 +11,10 @@ define([
     'viewmodels/card',
     'viewmodels/tile',
     'views/components/iiif-annotation',
+    'utils/iiif-utils',
     'templates/views/components/iiif-popup.htm',
     'templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step.htm'
-], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup, sampleTakingSampleLocationStepTemplate) {
+], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifUtils, iiifPopup, sampleTakingSampleLocationStepTemplate) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -314,7 +315,7 @@ define([
             if (!self.canvases) {
                 return tiles;
             }
-            const canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id']);
+            const canvasids = self.canvases().map(canvas => iiifUtils.getCanvasService(canvas));
 
             return tiles.filter(
                 tile => canvasids.find(
