@@ -699,7 +699,7 @@ define([
                     self.secondaryCanvasLayer = undefined;
                     self.canvasLayer = undefined;
                     self.zoomToCanvas = true;
-                    const service = iiifUtils.getCanvasService(canvas, self.version());
+                    const service = iiifUtils.getCanvasService(canvas);
                     self.canvas(service);
                     self.canvasObject(canvas);
 

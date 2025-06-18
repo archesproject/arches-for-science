@@ -78,13 +78,21 @@ define([], function() {
     };
     const getManifestThumbnail = (manifest) => {
         if (manifest.sequences) {
-            return manifest.sequences[0].canvases[0].thumbnail
+            const thumbnail = manifest.sequences[0].canvases[0].thumbnail;
+            if (typeof thumbnail === 'object') {
+                return thumbnail["@id"];
+            }
+            return thumbnail;
         } else {
-            return manifest.items[0].thumbnail;
+            const thumbnail = manifest.items[0].thumbnail;
+            if (typeof thumbnail === 'object') {
+                return thumbnail[0].id;
+            }
+            return thumbnail;
         }
     };
     const getManifestLabel = (manifest) => {
-        const label = manifest.label;
+        const label = manifest?.label;
         if (typeof label === 'object') {
             return manifest.label?.["en"]?.[0];
         } else {
