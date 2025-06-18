@@ -58,7 +58,7 @@ define([], function() {
                 const canvases = manifestData.items;
                 let canvasIndex = 0;
                 if (!updateCanvas) {
-                    canvasIndex = canvases.findIndex((c) => (c.items[0].id === canvasId));
+                    canvasIndex = canvases.findIndex((c) => (getCanvasService(c) === canvasId));
                 }
                 return canvases[canvasIndex];
             }
@@ -68,7 +68,7 @@ define([], function() {
                 let canvasIndex = 0;
                 if (sequence.canvases.length > 0) {
                     if (!updateCanvas) {
-                        canvasIndex = sequence.canvases.findIndex((c) => (c.images[0].resource.service['@id'] === canvasId));
+                        canvasIndex = sequence.canvases.findIndex((c) => (getCanvasService(c) === canvasId));
                     }
                     return sequence.canvases[canvasIndex];
                 }    
@@ -104,10 +104,11 @@ define([], function() {
     };
     const getCanvasService = (canvas) => {
         if (canvas.images) {
-            return canvas.images?.[0]?.resource.service['@id'];
+            return canvas.images[0].resource.service['@id'];
         } else if (canvas.items) {
-            return canvas.items?.[0].items[0].body[0].service[0]["@id"];
+            return canvas.items[0].items[0].body[0].service[0]["@id"];
         };
+        return null;
     };
     const getMetadata = (manifestData) => {
         if (getVersion(manifestData) === 2) {

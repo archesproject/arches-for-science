@@ -32,12 +32,12 @@ define([
             this.alert = params.alert || ko.observable(); 
             this.addCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.push(canvas);
-                self.canvas(canvas.images[0].resource.service['@id']);
+                self.canvas(iiifUtils.getCanvasService(canvas));
             };
 
             this.removeCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.remove(canvas);
-                self.canvas(canvas.images[0].resource.service['@id']);
+                self.canvas(iiifUtils.getCanvasService(canvas));
             };
 
             IIIFViewerViewmodel.apply(this, [{...params, renderContext: params?.renderContext ? params.renderContext: 'manifestManager'}]);

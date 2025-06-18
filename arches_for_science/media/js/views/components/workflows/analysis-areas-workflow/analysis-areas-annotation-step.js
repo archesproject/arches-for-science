@@ -67,7 +67,7 @@ define([
             const features = ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features);
             const canvasPath = features?.[0]?.properties.canvas();
             if (self.canvas() !== canvasPath) {
-                var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasPath);
+                var canvas = self.canvases().find(c => iiifUtils.getCanvasService(c) === canvasPath);
                 if (canvas) {
                     self.canvasClick(canvas);       
                 }

@@ -7,10 +7,9 @@ define([
     'models/graph',
     'viewmodels/card',
     'templates/views/components/workflows/sample-taking-workflow/sample-taking-image-step.htm',
-    'views/components/workflows/stringUtils',
     'utils/iiif-utils',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, sampleTakingImageStepTemplate, stringUtils, iiifUtils) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, sampleTakingImageStepTemplate, iiifUtils) {
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
