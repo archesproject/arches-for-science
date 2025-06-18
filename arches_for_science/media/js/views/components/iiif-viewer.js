@@ -33,9 +33,7 @@ define([
         var abortFetchManifest;
 
         this.version = ko.observable();
-        this.getCanvasService = (canvas) => {
-            iiifUtils.getCanvasService(canvas, self.version());
-        };
+        this.getCanvasService = iiifUtils.getCanvasService;
 
         this.map = ko.observable();
         this.manifest = ko.observable(params.manifest);
@@ -359,7 +357,7 @@ define([
 
         var CustomDataAdapter = selectWooUtils.Decorate(selectWooArrayAdapter, CustomDataAdapterClass);
         CustomDataAdapter.prototype.current = function(callback){
-            const canvasObj = self.canvases().find(canvas => iiifUtils.getCanvasService(canvas, self.version()) == this.options.options.value());
+            const canvasObj = self.canvases().find(canvas => iiifUtils.getCanvasService(canvas) == this.options.options.value());
             callback([canvasObj]);
         };
         CustomDataAdapter.prototype.query = function(params, callback){
@@ -666,7 +664,7 @@ define([
         this.secondaryCanvas.subscribe(updateSecondaryCanvasLayer);
 
         this.setSecondaryCanvas = (canvas) => {
-            const service = iiifUtils.getCanvasService(canvas, self.version());
+            const service = iiifUtils.getCanvasService(canvas);
             if(service){
                 self.secondaryCanvas(service);
             }
@@ -674,7 +672,7 @@ define([
 
         this.selectCanvas = function(canvas) {
             
-            const service = iiifUtils.getCanvasService(canvas, self.version());
+            const service = iiifUtils.getCanvasService(canvas);
 
             if (service && self.selectPrimaryPanel()) {
                 self.canvas(service);
@@ -683,7 +681,7 @@ define([
                 self.secondaryCanvas(service);
                 self.secondaryCanvasObject(canvas);
             }
-            self.canvasLabel(iiifUtils.getCanvasLabel(canvas, self.version()));
+            self.canvasLabel(iiifUtils.getCanvasLabel(canvas));
             self.origCanvasLabel(self.canvasLabel());
         };
 

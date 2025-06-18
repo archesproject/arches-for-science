@@ -24,14 +24,14 @@ define([], function() {
             const sequences = manifestData ? manifestData.items : [];
             sequences.forEach(function(canvas) {
                 canvas.label = canvas.label["en"][0];
-                canvas.id = getCanvasService(canvas, 3);
+                canvas.id = getCanvasService(canvas);
                 canvas.text = canvas.label;
                 if (typeof canvas.thumbnail === 'object')
                     canvas.thumbnail = canvas.thumbnail[0]["id"];
                 else if (canvas.items?.[0]?.items?.[0]?.body?.id)
                     canvas.thumbnail = canvas.items?.[0]?.items?.[0]?.body?.id;
                 canvases.push(canvas);
-            })
+            });
         } else if (getVersion(manifestData) === 2) {
             const sequences = manifestData ? manifestData.sequences : [];
             sequences.forEach(function(sequence) {
@@ -43,12 +43,12 @@ define([], function() {
                             canvas.thumbnail = canvas.thumbnail["@id"];
                         else if (canvas.images && canvas.images[0] && canvas.images[0].resource)
                             canvas.thumbnail = canvas.images[0].resource["@id"];
-                        canvas.id = getCanvasService(canvas, 2);
+                        canvas.id = getCanvasService(canvas);
                         canvas.text = canvas.label;
                         canvases.push(canvas);
                     });
                 }
-            })
+            });
         };
         return canvases;
     };
@@ -76,18 +76,19 @@ define([], function() {
         }
         return null;
     };
-    const getCanvasLabel = (canvas, version) => {
-        if (version === 2) {
-            return canvas.label;
-        } else if (version === 3) {
+    const getCanvasLabel = (canvas) => {
+        const label = canvas.label;
+        if (typeof label === 'object') {
             return canvas.label?.["en"]?.[0];
+        } else {
+            return label;
         }
     };
-    const getCanvasService = (canvas, version) => {
-        if (version === 2) {
+    const getCanvasService = (canvas) => {
+        if (canvas.images) {
             return canvas.images?.[0]?.resource.service['@id'];
-        } else if (version === 3) {
-            return canvas.items[0].items[0].body[0].service[0]["@id"];
+        } else if (canvas.items) {
+            return canvas.items?.[0].items[0].body[0].service[0]["@id"];
         };
     };
     const getMetadata = (manifestData) => {
