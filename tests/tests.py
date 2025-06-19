@@ -9,6 +9,7 @@ from arches.app.models.models import GraphModel, Node, NodeGroup, ResourceInstan
 from arches.app.models.tile import Tile
 
 PHYSICAL_THING_GRAPH_ID = "9519cb4f-b25b-11e9-8c7b-a4d18cec433a"
+PART_IDENTIFIER_ASSIGNMENT_NODEGROUP = "fec59582-8593-11ea-97eb-acde48001122"
 PART_IDENTIFIER_ASSIGNMENT = "b240c366-8594-11ea-97eb-acde48001122"
 PART_IDENTIFIER_ASSIGNMENT_LABEL = "3e541cc6-859b-11ea-97eb-acde48001122"
 SAMPLING_ACTIVITY_GRAPH_ID = "03357848-1d9d-11eb-a29f-024e0d439fdb"
@@ -30,13 +31,14 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
         self.addCleanup(r.delete)
         return r
 
-    def make_tile(self, parent_phys_thing, data, transaction_id):
-        arbitrary_nodegroup = NodeGroup.objects.first()
-        new_tile = TileModel(resourceinstance=parent_phys_thing, nodegroup_id=arbitrary_nodegroup.pk)
+    def make_tile(self, parent_phys_thing, data, transaction_id, nodegroup_id):
+        new_tile = Tile.get_blank_tile_from_nodegroup_id(nodegroup_id=nodegroup_id)
+        new_tile.resourceinstance = parent_phys_thing
         new_tile.save()
         # Set the transactionid
         new_tile = Tile.objects.get(tileid=new_tile.pk)
-        new_tile.data = data
+        for key, value in data.items():
+            new_tile.data[key] = value
         new_tile.save(transaction_id=transaction_id)
 
         return new_tile
@@ -67,15 +69,7 @@ class AnalysisAreaAndSampleTakingTests(TestCase):
 
         new_resource = ResourceInstance.objects.get(pk=response.json()["result"]["memberOfTile"]["resourceinstance_id"])
         new_tile_data = {PART_IDENTIFIER_ASSIGNMENT: [{"resourceId": str(new_resource.pk)}]}
-        new_tile = self.make_tile(parent_phys_thing, new_tile_data, transaction_id)
-        rxr = ResourceXResource(
-            nodeid=Node.objects.get(pk=PART_IDENTIFIER_ASSIGNMENT),
-            resourceinstanceidfrom=parent_phys_thing,
-            resourceinstanceidto=new_resource,
-            tileid=new_tile,
-        )
-        rxr.save()
-        self.addCleanup(rxr.delete)
+        self.make_tile(parent_phys_thing, new_tile_data, transaction_id, nodegroup_id=PART_IDENTIFIER_ASSIGNMENT_NODEGROUP)
 
         delete_data = {
             "transactionId": transaction_id,  # NB: camelCase

@@ -15,19 +15,7 @@ define([
     'leaflet-side-by-side',
     'bindings/select2-query',
     'bindings/leaflet'
-], function(
-    $,
-    ko,
-    koMapping,
-    L,
-    arches,
-    WorkbenchViewmodel,
-    iiifPopup,
-    iiifViewerTemplate,
-    selectWooUtils,
-    selectWooArrayAdapter,
-    iiifUtils
-) {
+], function($, ko, koMapping, L, arches, WorkbenchViewmodel, iiifPopup, iiifViewerTemplate, selectWooUtils, selectWooArrayAdapter, iiifUtils) {
     var IIIFViewerViewmodel = function(params) {
         var self = this;
         var abortFetchManifest;
