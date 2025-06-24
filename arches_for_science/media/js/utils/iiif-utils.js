@@ -7,7 +7,7 @@ define([], function() {
         } else if (url.pathname.split("/")[3].startsWith("2")) {
             return 2;
         } else {
-            throw new Error("Unable to identify version of IIIF presentation api. ");
+            throw new Error("Unable to identify version of IIIF presentation api.");
         }
     };
     const getManifestDataValue = function(object, property, returnFirstVal, version, i18n) {
