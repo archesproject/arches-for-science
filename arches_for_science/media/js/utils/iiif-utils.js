@@ -6,6 +6,8 @@ define([], function() {
             return 3;
         } else if (url.pathname.split("/")[3].startsWith("2")) {
             return 2;
+        } else {
+            throw new Error("Unable to identify version of IIIF presentation api. ");
         }
     };
     const getManifestDataValue = function(object, property, returnFirstVal, version, i18n) {
@@ -20,7 +22,8 @@ define([], function() {
     };
     const getCanvases = (manifestData) => {
         const canvases = [];
-        if (getVersion(manifestData) === 3) {
+        const version = getVersion(manifestData);
+        if (version === 3) {
             const sequences = manifestData ? manifestData.items : [];
             sequences.forEach(function(canvas) {
                 canvas.label = canvas.label["en"][0];
@@ -32,7 +35,7 @@ define([], function() {
                     canvas.thumbnail = canvas.items?.[0]?.items?.[0]?.body?.id;
                 canvases.push(canvas);
             });
-        } else if (getVersion(manifestData) === 2) {
+        } else if (version === 2) {
             const sequences = manifestData ? manifestData.sequences : [];
             sequences.forEach(function(sequence) {
                 if (sequence.canvases) {
@@ -53,7 +56,8 @@ define([], function() {
         return canvases;
     };
     const getCanvas = (manifestData, canvasId, updateCanvas) => {
-        if (getVersion(manifestData) === 3) {
+        const version = getVersion(manifestData);
+        if (version === 3) {
             if (manifestData.items.length > 0) {
                 const canvases = manifestData.items;
                 let canvasIndex = 0;
@@ -62,7 +66,7 @@ define([], function() {
                 }
                 return canvases[canvasIndex];
             }
-        } else if (getVersion(manifestData) === 2) {
+        } else if (version === 2) {
             if (manifestData.sequences.length > 0) {
                 const sequence = manifestData.sequences[0];
                 let canvasIndex = 0;
@@ -74,7 +78,6 @@ define([], function() {
                 }    
             }
         }
-        return null;
     };
     const getManifestThumbnail = (manifest) => {
         if (manifest.sequences) {
@@ -116,12 +119,12 @@ define([], function() {
         } else if (canvas.items) {
             return canvas.items[0].items[0].body[0].service[0]["@id"];
         };
-        return null;
     };
     const getMetadata = (manifestData) => {
-        if (getVersion(manifestData) === 2) {
+        const version = getVersion(manifestData);
+        if (version === 2) {
             return manifestData.metadata;
-        } else if (getVersion(manifestData) === 3) {
+        } else if (version === 3) {
             return manifestData.metadata.map((data) => {
                 const value = {};
                 Object.entries(data).forEach(([k, v]) => {
@@ -131,11 +134,11 @@ define([], function() {
             });
         };
     };
-    // I need a better name for this function
-    const changeCanvas = (manifestData) => {
-        if (getVersion(manifestData) === 2) {
+    const getInitialCanvas = (manifestData) => {
+        const version = getVersion(manifestData);
+        if (version === 2) {
             return manifestData.sequences[0].canvases[0];
-        } else if (getVersion(manifestData) === 3) {
+        } else if (version === 3) {
             return manifestData.items[0];
         }
     };
@@ -153,6 +156,6 @@ define([], function() {
         getCanvasLabel,
         getCanvasService,
         getMetadata,
-        changeCanvas,
+        getInitialCanvas,
     };
 });

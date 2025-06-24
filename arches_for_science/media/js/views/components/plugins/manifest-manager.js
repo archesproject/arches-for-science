@@ -237,7 +237,7 @@ define([
 
             this.manifestData.subscribe(function(manifestData) {
                 if (manifestData) {
-                    self.selectCanvas(iiifUtils.changeCanvas(manifestData));
+                    self.selectCanvas(iiifUtils.getInitialCanvas(manifestData));
                 }
                 if (params.manifestData && ko.isObservable(params.manifestData)) {
                     params.manifestData(manifestData);
