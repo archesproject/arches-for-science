@@ -12,10 +12,11 @@ define([
     'viewmodels/card',
     'viewmodels/tile',
     'views/components/iiif-annotation',
+    'utils/iiif-utils',
     'templates/views/components/iiif-popup.htm',
     'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step.htm',
     'views/components/resource-instance-nodevalue',
-], function(_, $, arches, ko, koMapping, geojsonExtent, L, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup, analysisAreasAnnotationStepTemplate) {
+], function(_, $, arches, ko, koMapping, geojsonExtent, L, StepUtils, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifUtils, iiifPopup, analysisAreasAnnotationStepTemplate) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -66,7 +67,7 @@ define([
             const features = ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features);
             const canvasPath = features?.[0]?.properties.canvas();
             if (self.canvas() !== canvasPath) {
-                var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasPath);
+                var canvas = self.canvases().find(c => iiifUtils.getCanvasService(c) === canvasPath);
                 if (canvas) {
                     self.canvasClick(canvas);       
                 }
@@ -293,7 +294,7 @@ define([
         };
 
         this.updateAnalysisAreaInstances = function() {
-            const canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id']);
+            const canvasids = self.canvases().map(canvas => iiifUtils.getCanvasService(canvas));
 
             const tileids = self.card.tiles().map(tile => tile.tileid);
             if (self.selectedAnalysisAreaInstance() && self.selectedAnalysisAreaInstance().tileid){

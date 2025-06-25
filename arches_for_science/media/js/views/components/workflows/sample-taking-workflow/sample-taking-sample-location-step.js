@@ -2,7 +2,6 @@ define([
     'underscore',
     'jquery',
     'arches',
-    'views/components/workflows/stepUtils',
     'knockout',
     'knockout-mapping',
     'geojson-extent',
@@ -11,9 +10,10 @@ define([
     'viewmodels/card',
     'viewmodels/tile',
     'views/components/iiif-annotation',
+    'utils/iiif-utils',
     'templates/views/components/iiif-popup.htm',
     'templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step.htm'
-], function(_, $, arches, StepUtils, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifPopup, sampleTakingSampleLocationStepTemplate) {
+], function(_, $, arches, ko, koMapping, geojsonExtent, ResourceUtils, GraphModel, CardViewModel, TileViewModel, IIIFAnnotationViewmodel, iiifUtils, iiifPopup, sampleTakingSampleLocationStepTemplate) {
     function viewModel(params) {
         var self = this;
         _.extend(this, params);
@@ -72,9 +72,9 @@ define([
 
         this.switchCanvas = function(tile){
             const features = ko.unwrap(tile.data[physicalThingPartAnnotationNodeId].features)
-            const canvasPath = features?.[0]?.properties.canvas()
+            const canvasPath = features?.[0]?.properties.canvas();
             if (self.canvas() !== canvasPath) {
-                var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasPath);
+                var canvas = self.canvases().find(c => iiifUtils.getCanvasService(c) === canvasPath);
                 if (canvas) {
                     self.canvasClick(canvas);       
                 }
@@ -314,7 +314,7 @@ define([
             if (!self.canvases) {
                 return tiles;
             }
-            const canvasids = self.canvases().map(canvas => canvas.images[0].resource['@id']);
+            const canvasids = self.canvases().map(canvas => iiifUtils.getCanvasService(canvas));
 
             return tiles.filter(
                 tile => canvasids.find(

@@ -8,8 +8,9 @@ define([
     'viewmodels/alert-json',
     'views/components/iiif-viewer',
     'templates/views/components/plugins/manifest-manager.htm',
+    'utils/iiif-utils',
     'bindings/dropzone'
-], function(ko, koMapping, $, Dropzone, uuid, arches, JsonErrorAlertViewModel, IIIFViewerViewmodel, manifestManagerTemplate) {
+], function(ko, koMapping, $, Dropzone, uuid, arches, JsonErrorAlertViewModel, IIIFViewerViewmodel, manifestManagerTemplate, iiifUtils) {
     return ko.components.register('manifest-manager', {
         viewModel: function(params) {
             var self = this;
@@ -31,12 +32,12 @@ define([
             this.alert = params.alert || ko.observable(); 
             this.addCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.push(canvas);
-                self.canvas(canvas.images[0].resource.service['@id']);
+                self.canvas(iiifUtils.getCanvasService(canvas));
             };
 
             this.removeCanvas = function(canvas) { //the function name needs to be better
                 self.canvasesForDeletion.remove(canvas);
-                self.canvas(canvas.images[0].resource.service['@id']);
+                self.canvas(iiifUtils.getCanvasService(canvas));
             };
 
             IIIFViewerViewmodel.apply(this, [{...params, renderContext: params?.renderContext ? params.renderContext: 'manifestManager'}]);
@@ -236,7 +237,7 @@ define([
 
             this.manifestData.subscribe(function(manifestData) {
                 if (manifestData) {
-                    self.selectCanvas(manifestData.sequences[0].canvases[0]);
+                    self.selectCanvas(iiifUtils.getInitialCanvas(manifestData));
                 }
                 if (params.manifestData && ko.isObservable(params.manifestData)) {
                     params.manifestData(manifestData);

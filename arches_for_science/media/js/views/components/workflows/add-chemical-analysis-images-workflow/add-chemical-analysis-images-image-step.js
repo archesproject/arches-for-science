@@ -6,10 +6,10 @@ define([
     'knockout-mapping',
     'models/graph',
     'viewmodels/card',
-    'js-cookie',
+    'utils/iiif-utils',
     'templates/views/components/workflows/add-chemical-analysis-images-workflow/add-chemical-analysis-images-image-step.htm',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, Cookies, addChemicalAnalysisImagesImageStepTemplate) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, iiifUtils, addChemicalAnalysisImagesImageStepTemplate) {
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
@@ -339,18 +339,19 @@ define([
 
         this.handleExitFromManifestManager = function() {
             self.isManifestManagerHidden(true);
+            const label = iiifUtils.getManifestLabel(self.manifestData());
 
             if (
-                self.manifestData() 
-                && self.manifestData()['label']
+                label
                 && !self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.manifestData()['label']; })
             ) {
+                const thumbnail = iiifUtils.getManifestThumbnail(self.manifestData());
                 self.physicalThingDigitalReferencePreferredManifestResourceData.push({
-                    'displayname': self.manifestData()['label'],
-                    'thumbnail': self.manifestData().sequences[0].canvases[0].thumbnail
+                    'displayname': label,
+                    'thumbnail': thumbnail,
                 });
 
-                self.selectedPhysicalThingImageServiceName(self.manifestData()['label']);
+                self.selectedPhysicalThingImageServiceName(label);
             }
         };
 
@@ -471,7 +472,7 @@ define([
                         .then(function(data) {
                             self.getThumbnail(data)
                                 .then(function(json) {
-                                    data.thumbnail = json.sequences[0].canvases[0].thumbnail['@id'];
+                                    data.thumbnail = iiifUtils.getManifestThumbnail(json);
                                     if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
                                         self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
                                     }

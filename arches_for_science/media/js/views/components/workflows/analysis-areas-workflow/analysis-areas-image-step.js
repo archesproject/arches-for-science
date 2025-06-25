@@ -8,8 +8,9 @@ define([
     'viewmodels/card',
     'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-image-step.htm',
     'views/components/workflows/stringUtils',
+    'utils/iiif-utils',
     'views/components/plugins/manifest-manager',
-], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, analysisAreasImageStepTemplate, stringUtils) {
+], function(_, $, arches, ko, koMapping, GraphModel, CardViewModel, analysisAreasImageStepTemplate, stringUtils, iiifUtils) {
     function viewModel(params) {
         var self = this;
         params.pageVm.loading(true);
@@ -78,10 +79,11 @@ define([
         this.save = async function() {
             params.form.complete(false);
             params.form.saving(true);
-
             params.form.lockExternalStep("select-project", true);
-            if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
-                const response = await fetch(`${arches.urls.manifest_x_canvas}?manifest=${self.manifestData()['@id']}`);
+            const label = iiifUtils.getManifestLabel(self.manifestData());
+            if (label === self.selectedPhysicalThingImageServiceName()) {
+                const manifestId = iiifUtils.getManifestId(self.manifestData());
+                const response = await fetch(`${arches.urls.manifest_x_canvas}?manifest=${manifestId}`);
                 const data = await response.json();
                 const digitalResourcesResourceId = data.digital_resource;
 
@@ -154,18 +156,19 @@ define([
 
         this.handleExitFromManifestManager = function() {
             self.isManifestManagerHidden(true);
+            const label = self.manifestData()?.label.en?.[0] || self.manifestData()?.label;
 
             if (
-                self.manifestData() 
-                && self.manifestData()['label']
+                label
                 && !self.physicalThingDigitalReferencePreferredManifestResourceData().find(function(manifestData) { return manifestData.displayname === self.manifestData()['label']; })
             ) {
+                const thumbnail = iiifUtils.getManifestThumbnail(self.manifestData());
                 self.physicalThingDigitalReferencePreferredManifestResourceData.push({
                     'displayname': self.manifestData()['label'],
-                    'thumbnail': self.manifestData().sequences[0].canvases[0].thumbnail
+                    'thumbnail': thumbnail,
                 });
 
-                self.selectedPhysicalThingImageServiceName(self.manifestData()['label']);
+                self.selectedPhysicalThingImageServiceName(label);
             }
         };
 
@@ -248,7 +251,7 @@ define([
                         .then(function(data) {
                             self.getThumnail(data)
                                 .then(function(json) {
-                                    data.thumbnail = json.sequences[0].canvases[0].thumbnail['@id'];
+                                    data.thumbnail = iiifUtils.getManifestThumbnail(json);
                                     if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
                                         self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
                                     }

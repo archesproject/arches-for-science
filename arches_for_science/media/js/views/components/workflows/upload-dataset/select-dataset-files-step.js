@@ -1,17 +1,14 @@
 define([
     'knockout',
-    'knockout-mapping',
     'uuid',
     'arches',
     'utils/resource',
-    'utils/report',
-    'utils/physical-thing',
-    'viewmodels/alert-json',
     'views/components/iiif-viewer',
     'js-cookie',
+    'utils/iiif-utils',
     'templates/views/components/workflows/upload-dataset/select-dataset-files-step.htm',
     'bindings/dropzone'
-], function(ko, koMapping, uuid, arches, resourceUtils, reportUtils, physicalThingUtils, JsonErrorAlertViewModel, IIIFViewerViewmodel, Cookies, selectDatasetFilesStepTemplate) {
+], function(ko, uuid, arches, resourceUtils, IIIFViewerViewmodel, Cookies, iiifUtils, selectDatasetFilesStepTemplate) {
     return ko.components.register('select-dataset-files-step', {
         viewModel: function(params) {
 
@@ -80,7 +77,7 @@ define([
             });
 
             this.switchCanvas = function(canvasId){
-                var canvas = self.canvases().find(c => c.images[0].resource.service['@id'] === canvasId);
+                var canvas = self.canvases().find(c => iiifUtils.getCanvasService(c) === canvasId);
                 if (canvas) {
                     self.canvasClick(canvas);              
                 }
