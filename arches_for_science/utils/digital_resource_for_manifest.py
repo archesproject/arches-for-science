@@ -169,15 +169,11 @@ def create_manifest_record(manifest_url):
     response = requests.get(manifest_url)
     manifest_data = response.json()
     manifest_values = get_manifest_values(manifest_data)
-    print(manifest_url)
-    print(manifest_data)
-    print(manifest_values)
 
     manifest = IIIFManifest(
         url=manifest_url, manifest=manifest_data, label=manifest_values["label"], description=manifest_values["description"]
     )
     manifest.save()
-    print(f"Manifest created with ID: {manifest.globalid}")
     return manifest.globalid
 
 
@@ -274,7 +270,6 @@ def digital_resources_for_manifest(instance, created):
 
     if created:
         manifest_resource_id = create_digital_resource(instance, "manifest")
-        print("manifest_resource_id", manifest_resource_id)
         create_manifest_x_digitalresource(get_manifest_values(instance.manifest)["manifest_id"], manifest_resource_id)
 
     else:
