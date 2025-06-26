@@ -27,7 +27,7 @@ class DigitalResourceThumbnailFetcher(SearchThumbnailFetcher):
                 None,
             )
             manifest_url = manifest_tile.data[MANIFEST_URL_NODE_ID][get_language()]["value"]
-            response = requests.get(manifest_url)
+            response = requests.get(manifest_url, timeout=1)
             try:
                 response_json = response.json()
                 if "thumbnail" in response_json:
