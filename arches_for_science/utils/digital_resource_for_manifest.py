@@ -15,6 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
+
 import requests
 import uuid
 from urllib.parse import urlparse
@@ -139,6 +140,7 @@ def add_tiles(
         ]
         part_of_tile.save(transaction_id=transactionid, index=True)
 
+
 def get_version_from_manifest(manifest_data):
     parsed_url = urlparse(manifest_data["@context"])
     if parsed_url.path.split("/")[3].startswith("3"):
@@ -152,19 +154,15 @@ def get_version_from_manifest(manifest_data):
 def get_manifest_values(manifest):
     version = get_version_from_manifest(manifest)
     if version == 2:
-        label =  manifest["label"]
+        label = manifest["label"]
         description = manifest["description"]
         manifest_id = manifest["@id"]
     elif version == 3:
-        label =  manifest["label"]["en"][0]
+        label = manifest["label"]["en"][0]
         description = manifest["description"]
         manifest_id = manifest["id"]
 
-    return {
-        "label": label,
-        "description": description,
-        "manifest_id": manifest_id
-    }
+    return {"label": label, "description": description, "manifest_id": manifest_id}
 
 
 def create_manifest_record(manifest_url):
@@ -176,10 +174,7 @@ def create_manifest_record(manifest_url):
     print(manifest_values)
 
     manifest = IIIFManifest(
-        url=manifest_url,
-        manifest=manifest_data,
-        label=manifest_values["label"],
-        description=manifest_values["description"]
+        url=manifest_url, manifest=manifest_data, label=manifest_values["label"], description=manifest_values["description"]
     )
     manifest.save()
     print(f"Manifest created with ID: {manifest.globalid}")
@@ -189,22 +184,17 @@ def create_manifest_record(manifest_url):
 def get_canvas_values(canvas):
     version = get_version_from_manifest(canvas)
     if version == 2:
-        label =  canvas["label"]
+        label = canvas["label"]
         description = canvas["description"]
         id = canvas["@id"]
         manifest_id = canvas["@id"]
     elif version == 3:
-        label =  canvas.label["en"][0]
+        label = canvas.label["en"][0]
         description = canvas["description"]["en"][0]
         id = ""
         manifest_id = canvas["id"]
 
-    return {
-        "label": label,
-        "description": description,
-        "id": id,
-        "manifest_id": manifest_id
-    }
+    return {"label": label, "description": description, "id": id, "manifest_id": manifest_id}
 
 
 def create_digital_resource_from_manifest(manifest_data, iiif_type, globalid=None, transactionid=None, canvas=None):
@@ -284,7 +274,7 @@ def digital_resources_for_manifest(instance, created):
 
     if created:
         manifest_resource_id = create_digital_resource(instance, "manifest")
-        print("manifest_resource_id",manifest_resource_id)
+        print("manifest_resource_id", manifest_resource_id)
         create_manifest_x_digitalresource(get_manifest_values(instance.manifest)["manifest_id"], manifest_resource_id)
 
     else:
