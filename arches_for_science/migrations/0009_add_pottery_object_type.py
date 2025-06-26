@@ -66,6 +66,15 @@ concepts = [
     }
 ]
 
+collection_items = [
+    {
+        "relationid": "db7f3277-87dc-444f-a25c-565db77d5a64",
+        "conceptidfrom": "56991802-f539-4b22-b5a9-b1945fceb52b",
+        "conceptidto": "b7465fec-27aa-48fd-a428-4927a397c0e5",
+        "relationshiptype": "member",
+    }
+]
+
 root_conceptid = "e5909f90-de56-40ed-8262-2b0b9ed629f2"
 
 
@@ -124,7 +133,17 @@ class Migration(migrations.Migration):
             if len(concept["children"]):
                 build_concepts(concept_instance, concept["children"])
 
+        def add_collection_items(collection_items=[]):
+            for concept in collection_items:
+                Relation.objects.update_or_create(
+                    conceptfrom_id=concept["conceptidfrom"],
+                    conceptto_id=concept["conceptidto"],
+                    relationtype=relation_types["member"],
+                    relationid=concept["relationid"],
+                )
+
         build_concepts(parent=root_concept, concepts=concepts)
+        add_collection_items(collection_items=collection_items)
 
     def reverse(apps, schema_editor):
         """
