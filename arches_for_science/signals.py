@@ -11,13 +11,16 @@ def create_digital_resources(sender, instance, created, **kwargs):
     from arches_for_science.utils.digital_resource_for_manifest import digital_resources_for_manifest, digital_resources_for_canvases
 
     digital_resources_for_manifest(instance, created)
-    digital_resources_for_canvases(instance)
+    internal = instance.url.startswith("/manifest/")
+    if internal:
+        digital_resources_for_canvases(instance)
 
 
 @receiver(post_delete, sender=IIIFManifest)
 def delete_manifest_x_canvas(sender, instance, **kwargs):
-    ManifestXCanvas.objects.filter(manifest=instance.manifest["@id"]).delete()
-    ManifestXDigitalResource.objects.filter(manifest=instance.manifest["@id"]).delete()
+    manifest_id = instance.manifest["id"] if "id" in instance.manifest else instance.manifest["@id"]
+    ManifestXCanvas.objects.filter(manifest=manifest_id).delete()
+    ManifestXDigitalResource.objects.filter(manifest=manifest_id).delete()
 
 
 @receiver(post_delete, sender=ResourceXResource)
