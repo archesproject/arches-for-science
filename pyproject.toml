@@ -8,7 +8,7 @@ readme = "README.md"
 authors = [
     {name = "Arches Project"}
 ]
-license = {text = "GNU AGPL3"}
+license = "AGPL-3.0-or-later"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python",
@@ -22,7 +22,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Information Technology",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 ]
 requires-python = ">=3.10"
 dependencies = [
@@ -33,9 +32,9 @@ dependencies = [
   "boto3==1.25.3",
   "arches-templating>=0.1.2",
 ]
-version = "2.1.0b0"
+version = "2.1.0b1"
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "livereload",
     "sst",
