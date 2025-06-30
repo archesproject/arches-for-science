@@ -252,7 +252,8 @@ def create_digital_resource(instance, iiif_type, canvas=None):
     manifest_data = instance.manifest
     globalid = instance.globalid
     transactionid = instance.transactionid
-    return create_digital_resource_from_manifest(manifest_data, iiif_type, globalid, transactionid)
+
+    return create_digital_resource_from_manifest(manifest_data, iiif_type, globalid, transactionid, canvas=canvas)
 
 
 def update_manifest_digital_resource(instance):
