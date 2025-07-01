@@ -15,7 +15,7 @@ define(['underscore',
                 materialStatement: ko.observable(true)
             }
             self.cards = Object.assign({}, params.cards);
-            self.elements = params.data().material?.concept_details || [];
+            self.elements = params.data().material?.concept_details || null;
             self.materialStatement = params.data()?.material?.material_data_assignment?.material_data_assignment_statement?.material_data_assignment_statement_content["@display_value"] || "";
         },
         template: materialSceneTemplate

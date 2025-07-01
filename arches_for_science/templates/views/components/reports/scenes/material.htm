@@ -8,18 +8,26 @@
         <h2 class="afs-report-section-title"><i data-bind="click: function() {toggleVisibility(visible.elements)}, css: {'fa-angle-double-right': visible.elements(), 'fa-angle-double-up': !visible.elements()}, attr: {'aria-label': '{% trans "Expand/Collapse" %}'}" class="fa toggle"></i> {% trans "Materials" %}</h2>
         <a data-bind="click: function(){addNewTile(cards['elements'])}" class="afs-report-a"><i class="fa fa-mail-reply" aria-hidden="true"></i> {% trans "Add Material" %}</a>
     </div>
-    <div class="afs-report-collapsible-container pad-lft" data-bind="if: visible['elements']">
+    <div class="afs-report-collapsible-container pad-lft" data-bind="if: visible['elements'] && (elements && materialStatement != '')">
+        <!-- ko if: elements.length -->
         <h4 style="text-transform: capitalize;" class="afs-block-key">{% trans "Elements" %}</h4><span></span>
         <!-- ko foreach: { data: elements, as: 'element' }-->
         <div>
             <span data-bind="text: element.value"></span>
         </div>
         <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: materialStatement != "" -->
         <h4 style="text-transform: capitalize;" class="afs-block-key">{% trans "Materials Statement" %}</h4><span></span>
         <div>
             <span data-bind="text: materialStatement"></span>
         </div>
+        <!-- /ko -->
     </div>
+
+    <!-- ko if: !elements.length && !materialStatement -->
+    <div style="text-transform: capitalize;" class="afs-nodata-note">{% trans "No Materials Specified" %}</div>
+    <!-- /ko -->
 </div>
  {% endblock body %}
 {% endblock report %}
