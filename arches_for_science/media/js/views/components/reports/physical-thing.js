@@ -5,7 +5,8 @@ define([
     'templates/views/components/reports/physical-thing.htm',
     'utils/report',
     'bindings/datatable', 
-    'views/components/reports/scenes/annotation-parts'
+    'views/components/reports/scenes/annotation-parts',
+    'views/components/reports/scenes/material'
 ], function(_, ko, arches, physicalThingReportTemplate, reportUtils) {
     return ko.components.register('physical-thing-report', {
         viewModel: function(params) {
@@ -31,7 +32,8 @@ define([
                 removalEventOfObjectFromCollection: 'a1490580-d2bd-11e9-af41-a4d18cec433a',
                 textCarriedByObject: '23bf9ca1-b31e-11e9-8dd7-a4d18cec433a',
                 currentLocationOfObject: 'a030e34f-b31d-11e9-8c0b-a4d18cec433a',
-                parentObject: 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a'
+                parentObject: 'f8d5fe4c-b31d-11e9-9625-a4d18cec433a',
+                elements: 'cbf9ba14-b31d-11e9-8529-a4d18cec433a'
             });
 
             self.sections = [
@@ -91,6 +93,7 @@ define([
             self.selectedAnnotationTileId = ko.observable(null);
             self.nameCards = {};
             self.descriptionCards = {};
+            self.materialCards = {};
             self.documentationCards = {};
             self.existenceEvents = ['production', 'destruction', 'removal from object'];
             self.existenceDataConfig = {
@@ -244,6 +247,10 @@ define([
                     identifier: self.cards?.[cardIds.identifierOfObject],
                     exactMatch: self.cards?.[cardIds.externalUriForObject],
                     type: self.cards?.[cardIds.typeOfObject]
+                };
+
+                self.materialCards = {
+                    elements: self.cards?.[cardIds.elements]
                 };
 
                 self.descriptionCards = {

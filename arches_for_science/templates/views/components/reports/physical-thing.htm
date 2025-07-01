@@ -88,6 +88,13 @@
                         requestedTypes: physicalThingPhysicalDescriptionTypes
                     }
                 }"></div>
+                <div data-bind="component: {
+                    name: 'views/components/reports/scenes/material',
+                    params: {
+                        data: resource,
+                        cards: materialCards,
+                    }
+                }"></div>
             </div>
             
             <!-- Actor Tab -->
