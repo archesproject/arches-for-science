@@ -8,6 +8,8 @@ from arches.app.utils.response import JSONErrorResponse, JSONResponse
 from arches.app.models.models import IIIFManifest
 from arches_for_science.models import ManifestXDigitalResource, CanvasXDigitalResource
 from arches_for_science.utils.digital_resource_for_manifest import create_manifest_record, create_digital_resource_from_manifest
+from django.db.models import Q
+import re
 
 
 class ManifestXCanvasView(View):
@@ -24,7 +26,10 @@ class ManifestXCanvasView(View):
                 canvas = link.canvas
             digital_resource = link.digitalresource
         elif manifest:
-            if not IIIFManifest.objects.filter(url=manifest).exists():
+            uuid_pattern = r"[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}"
+            match = re.search(uuid_pattern, manifest)
+            manifestid = uuid.UUID(match[0]) if match else None
+            if not IIIFManifest.objects.filter(Q(url=manifest) | Q(globalid=manifestid)).exists():
                 create_manifest_record(manifest)
             digital_resource = ManifestXDigitalResource.objects.get(manifest=manifest).digitalresource
 
