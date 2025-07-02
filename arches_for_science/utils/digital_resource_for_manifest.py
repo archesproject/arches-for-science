@@ -213,7 +213,7 @@ def create_digital_resource_from_manifest(manifest_data, iiif_type, globalid=Non
 
     if iiif_type == "manifest":
         manifest_values = get_manifest_values(manifest_data)
-        name = manifest_values["label"]
+        name = "{} Image Service".format(manifest_values["label"])
         statement = manifest_values["description"]
         id = {str(globalid): internal_id_valueid}
         service_identifiers = [
