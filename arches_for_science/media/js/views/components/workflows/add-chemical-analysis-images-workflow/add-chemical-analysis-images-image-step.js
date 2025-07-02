@@ -524,7 +524,7 @@ define([
                         .then(function(data) {
                             self.getThumbnail(data)
                                 .then(function(json) {
-                                    data.thumbnail = json.sequences[0].canvases[0].thumbnail['@id'];
+                                    data.thumbnail = iiifUtils.getManifestThumbnail(json);
                                     if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
                                         self.physicalThingDigitalReferencePreferredManifestResourceData.push(data);
                                     }

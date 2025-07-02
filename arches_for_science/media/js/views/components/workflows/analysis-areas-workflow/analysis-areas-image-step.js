@@ -156,7 +156,7 @@ define([
 
         this.handleExitFromManifestManager = function() {
             self.isManifestManagerHidden(true);
-            const label = self.manifestData()?.label.en?.[0] || self.manifestData()?.label;
+            const label = iiifUtils.getManifestLabel(self.manifestData());
 
             if (
                 label
@@ -164,7 +164,7 @@ define([
             ) {
                 const thumbnail = iiifUtils.getManifestThumbnail(self.manifestData());
                 self.physicalThingDigitalReferencePreferredManifestResourceData.push({
-                    'displayname': self.manifestData()['label'],
+                    'displayname': label,
                     'thumbnail': thumbnail,
                 });
 
@@ -210,7 +210,7 @@ define([
             });
         };
 
-        this.getThumnail = function(digitalResourceData) {
+        this.getThumbnail = function(digitalResourceData) {
             const digitalServiceTile = digitalResourceData.tiles.find(function(tile) {
                 return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
             });
@@ -249,7 +249,7 @@ define([
 
                     $.getJSON( arches.urls.api_card + physicalThingManifestResourceId )
                         .then(function(data) {
-                            self.getThumnail(data)
+                            self.getThumbnail(data)
                                 .then(function(json) {
                                     data.thumbnail = iiifUtils.getManifestThumbnail(json);
                                     if (digitalReferenceTypeValue === preferredManifestConceptValueId) {
