@@ -44,7 +44,7 @@ define([
                 dropdownCssClass: ':all:',
                 placeholder: placeholder,
                 multiple: true,
-                minimumInputLength: 2,
+                minimumInputLength: 1,
                 data:ko.unwrap(terms).concat(ko.unwrap(tags)),  // initial selection
                 ajax: {
                     url: arches.urls.search_terms,
