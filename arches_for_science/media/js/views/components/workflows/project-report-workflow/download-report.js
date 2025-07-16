@@ -118,6 +118,9 @@ define([
                         );
                     })
                 ],
+                instruments: Object.values(observationDetails).uniqueBy(
+                    obs => obs["resource"]?.["used instrument"]["@display_value"]
+                ).map(obs => obs["resource"]?.["used instrument"]),
                 projectDetails: [...Object.values(projectDetails)],
                 physicalThingsDetails: physicalThingsDetailsArray,
                 objectOfStudyDetails: objectOfStudyDetailsArray,
