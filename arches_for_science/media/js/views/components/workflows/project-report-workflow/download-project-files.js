@@ -78,7 +78,14 @@ define([
             self.relatedObservations().forEach((observation) => {
                 observation.relatedFiles().forEach((file) => {
                     if (file.selected()) {
-                        self.selectedFiles.push({'name': file.name, 'fileid': file.file_id, 'project': self.projectName});
+                        self.selectedFiles.push({
+                            'name': file.name,
+                            'fileid': file.file_id,
+                            'project': self.projectName,
+                            'interpretation': file.interpretation,
+                            'observation': observation.displayname,
+                            'parameters': observation.description
+                        });
                     }
                 });
             });
