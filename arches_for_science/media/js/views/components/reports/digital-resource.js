@@ -226,7 +226,7 @@ define([
             self.nameSummary = ko.observable();
             self.statementsSummary = ko.observable();
 
-            const thumbnailUrl = `/thumbnail/${params.report.report_json.resourceinstanceid}`;
+            const thumbnailUrl = arches.urls.thumbnail(params.report.report_json.resourceinstanceid);
             self.thumbnail = ko.observable();
 
             fetch(thumbnailUrl, {method: 'HEAD'}).then(resp => { 

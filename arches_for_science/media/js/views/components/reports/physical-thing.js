@@ -451,7 +451,7 @@ define([
                 });
                 const thumbnailUrl = digitalServiceTile.data[digitalResourceServiceIdentifierContentNodeId][arches.activeLanguage]?.['value'];
                 if(thumbnailUrl){
-                    return window.fetch()
+                    return window.fetch(thumbnailUrl)
                         .then(function(response){
                             if(response.ok) {
                                 return response.json();
