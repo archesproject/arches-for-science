@@ -69,11 +69,7 @@ define([
             this.loading = ko.observable(false);
 
             this.selectedPartHasCurrentObservation = ko.computed(() => {
-                if(!self.selectedPart()?.observationResourceId){
-                    return true;
-                } else {
-                    return self.selectedPart().observationResourceId == observationResourceId;
-                }
+                return true;
             });
 
             this.switchCanvas = function(canvasId){
@@ -431,22 +427,6 @@ define([
                     part.resourceReferenceId = part.resourceReferenceId || ko.observable();
                     part.nameDirty = part.nameDirty || ko.observable(false);
                     part.displayname = part.data[physicalThingPartNameNodeId][arches.activeLanguage]['value'];
-                    if (datasetTile && !manifestValueIds.includes(datasetTile.data[digitalReferenceTypeNodeId])) {
-                        const dataset = await resourceUtils.lookupResourceInstanceData(datasetTile.data[digitalReferenceNodeId][0].resourceId);
-                        const datasetName =  self.geti18nStringValue(dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).data[datasetNameNodeId]);
-                        const nameTileId =  dataset._source.tiles.find((tile) => tile.nodegroup_id === datasetNameNodeGroupId).tileid;
-                        const datasetTiles =  dataset._source.tiles.filter((tile) => tile.nodegroup_id === datasetFileNodeGroupId);
-                        const datasetFiles = datasetTiles.map((tile) => {
-                            let file = tile.data[datasetFileNodeId][0];
-                            file.tileId = ko.observable(tile.tileid);
-                            return file;
-                        });
-                        part.datasetId(dataset._id);
-                        await getPartObservationId(part);
-                        part.datasetName(datasetName);
-                        part.datasetFiles(datasetFiles);
-                        part.nameTileId(nameTileId);
-                    }
                     
                     if(!part.datasetId.getSubscriptionsCount()){
                         part.datasetId.subscribe(function(val){
@@ -482,11 +462,7 @@ define([
                     }
        
                     part.hasCurrentObservation = ko.computed(() => {
-                        if(!part?.observationResourceId){
-                            return true;
-                        } else {
-                            return part.observationResourceId == observationResourceId;
-                        }
+                        return true;
                     });
                 }
                 self.parts(parts);

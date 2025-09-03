@@ -59,10 +59,8 @@
                             <a role="button" data-parent="#parts-panel"  aria-expanded="false" data-bind="click: function(){ $parent.showDatasetDetails(true); $parent.selectedPart(part); }, attr: { href: '#' + part.tileid, 'aria-expanded': $index == 0 ? 'true' : 'false' }">
                                 <div style="height: 25px; padding: 10px; display: flex; align-items:center;" class="file-workbench-file">
                                     <span style="flex: 1" class="file-name manifest-manager-canvas-name" data-bind="text: part.displayname + ' (' + part.type + ')'"></span>
-                                    <div data-bind="visible: !part.hasCurrentObservation()">
-                                        <i class="fa fa-lock" style="color: black" data-bind="attr: {'aria-label': $root.translations.disabled}"></i>
-                                    </div>
-                                    <div data-bind="visible: part.hasCurrentObservation() && part.datasetId()">
+
+                                    <div data-bind="visible: part.datasetId()">
                                         (<span data-bind="text: ko.unwrap(part?.datasetFiles)?.length"></span> <span data-bind="visible: ko.unwrap(part?.datasetFiles)?.length === 1">{% trans "new file" %}</span><span data-bind="visible: ko.unwrap(part?.datasetFiles)?.length !== 1">{% trans "new files" %}</span>)
                                     </div>
                                 </div>
@@ -113,14 +111,11 @@
                         <div class="file-workbench-files" style="height: 215px;" data-bind="foreach: {data: selectedPart().datasetFiles, as: 'file'}">
                             <div class='file-workbench-file' style="display: flex;" data-bind="css: {staged: false}">
                                 <div style="flex: 1">
-                                    <i data-bind="visible: self.selectedPartHasCurrentObservation(),
-                                        click: function(){self.selectedPartHasCurrentObservation() ? $parent.deleteFile(file): console.log('no')},
+                                    <i data-bind="
+                                        click: function(){ $parent.deleteFile(file)},
                                         attr: {'aria-label': $root.translations.delete}"
                                         class="fa fa-trash" style="color: black"></i>
                                     <span class='file-name manifest-manager-canvas-name' data-bind="text: file.name"></span>
-                                </div>
-                                <div data-bind="visible: !self.selectedPartHasCurrentObservation()">
-                                    <i class="fa fa-lock" style="color: black" data-bind="attr: {'aria-label': $root.translations.disabled}"></i>
                                 </div>
                             </div>
                         </div>
