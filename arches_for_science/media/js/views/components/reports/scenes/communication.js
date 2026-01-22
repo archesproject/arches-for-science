@@ -1,47 +1,44 @@
-define([
-    'knockout', 
-    'templates/views/components/reports/scenes/communication.htm',
-    'utils/report',
-    'bindings/datatable'
-], function(ko, communicationSceneTemplate, reportUtils) {
-    return ko.components.register('views/components/reports/scenes/communication', {
-        viewModel: function(params) {
-            var self = this;
+import ko from 'knockout';
+import communicationSceneTemplate from 'templates/views/components/reports/scenes/communication.htm';
+import reportUtils from 'utils/report';
+import 'bindings/datatable';
 
-            Object.assign(self, reportUtils);
-            self.map = ko.observable();
-            self.selectedAnnotationTileId = ko.observable();
-            self.cards = {};
-            self.visible = {
-                contactPoints: ko.observable(true),
-            };
+export default ko.components.register('views/components/reports/scenes/communication', {
+    viewModel: function(params) {
+        var self = this;
 
-            self.contactPointsTableConfig = {
-                ...self.defaultTableConfig,
-                columns: Array(3).fill(null)
-            };
+        Object.assign(self, reportUtils);
+        self.map = ko.observable();
+        self.selectedAnnotationTileId = ko.observable();
+        self.cards = {};
+        self.visible = {
+            contactPoints: ko.observable(true),
+        };
 
-            self.dataConfig = {
-                name: 'contact point',
-            };
-            self.contactPoints = ko.observableArray();
-            self.cards = Object.assign({}, params.cards);
+        self.contactPointsTableConfig = {
+            ...self.defaultTableConfig,
+            columns: Array(3).fill(null)
+        };
 
-            Object.assign(self.dataConfig, params.dataConfig || {}) 
-            if(params?.compiled){
-                self.contactPoints(params.data.contactPoints);
-            } else {
-                self.contactPoints(self.getRawNodeValue(ko.unwrap(params.data), self.dataConfig.name)?.map(
-                    x => {
-                        const content = self.getNodeValue(x, `${self.dataConfig.name}_content`);
-                        const type = self.getNodeValue(x, `${self.dataConfig.name}_type`);
-                        const tileid = self.getTileId(x);
-                        return { content, type, tileid };
-                    }
-                ));
-            }
+        self.dataConfig = {
+            name: 'contact point',
+        };
+        self.contactPoints = ko.observableArray();
+        self.cards = Object.assign({}, params.cards);
 
-        },
-        template: communicationSceneTemplate
-    });
+        Object.assign(self.dataConfig, params.dataConfig || {}) 
+        if(params?.compiled){
+            self.contactPoints(params.data.contactPoints);
+        } else {
+            self.contactPoints(self.getRawNodeValue(ko.unwrap(params.data), self.dataConfig.name)?.map(
+                x => {
+                    const content = self.getNodeValue(x, `${self.dataConfig.name}_content`);
+                    const type = self.getNodeValue(x, `${self.dataConfig.name}_type`);
+                    const tileid = self.getTileId(x);
+                    return { content, type, tileid };
+                }
+            ));
+        }
+    },
+    template: communicationSceneTemplate
 });

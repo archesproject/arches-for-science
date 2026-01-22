@@ -1,86 +1,85 @@
-define(['jquery',
-    'underscore',
-    'knockout',
-    'templates/views/components/reports/visual-work.htm',
-    'arches',
-    'viewmodels/tabbed-report',
-    'utils/resource'
-], function($, _, ko, visualWorkReportTemplate, arches, TabbedReportViewModel, resourceUtils) {
-    return ko.components.register('visual-work-report', {
-        viewModel: function(params) {
-            var self = this;
-            params.configKeys = ['tabs', 'activeTabIndex'];
-            TabbedReportViewModel.apply(this, [params]);
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import visualWorkReportTemplate from 'templates/views/components/reports/visual-work.htm';
+import arches from 'arches';
+import TabbedReportViewModel from 'viewmodels/tabbed-report';
+import resourceUtils from 'utils/resource';
 
-            if (params.summary) {
+export default ko.components.register('visual-work-report', {
+    viewModel: function(params) {
+        var self = this;
+        params.configKeys = ['tabs', 'activeTabIndex'];
+        TabbedReportViewModel.apply(this, [params]);
 
-                this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;
+        if (params.summary) {
 
-                var StatementTextId = 'e58ecc2e-c062-11e9-ba30-a4d18cec433a'; // ok
-                var TypeOfWorkId = '28a4ae07-c062-11e9-a11d-a4d18cec433a';
-                var DepictsPhysicalId = '5513933a-c062-11e9-9e4b-a4d18cec433a';
+            this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;
 
-                /* created by is not available from the model
-                var createById = '';
-                this.createBy = ko.observableArray([]);
-                this.createByObjs = resourceUtils.getNodeValues({
-                    nodeId: createById,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+            var StatementTextId = 'e58ecc2e-c062-11e9-ba30-a4d18cec433a'; // ok
+            var TypeOfWorkId = '28a4ae07-c062-11e9-a11d-a4d18cec433a';
+            var DepictsPhysicalId = '5513933a-c062-11e9-9e4b-a4d18cec433a';
 
-                this.createByObjs.forEach(function(createByObj) {
-                    if (createByObj) {
-                        resourceUtils.lookupResourceInstanceData(createByObj.resourceId)
-                            .then(function(data) {
-                                self.createBy.push({ name: data._source.displayname, link: arches.urls.resource_report + createByObj.resourceId });
-                            });
-                    }});
-                */
+            /* created by is not available from the model
+            var createById = '';
+            this.createBy = ko.observableArray([]);
+            this.createByObjs = resourceUtils.getNodeValues({
+                nodeId: createById,
+                returnTiles: false
+            }, this.report.get('tiles'), this.report.graph);
 
-                var descriptionConceptValueId = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
-                var statementTextId = 'e58ecc2e-c062-11e9-ba30-a4d18cec433a';
-                var statementTypeId = 'e58eb7b5-c062-11e9-b08d-a4d18cec433a';
-                this.description = resourceUtils.getNodeValues({
-                    nodeId: statementTextId,
-                    //widgetLabel: 'Brief Text or Statement.Statement Text',
-                    where: {
-                        nodeId: statementTypeId,
-                        //widgetLabel: 'Brief Text or Statement.Type of Statement',
-                        contains: descriptionConceptValueId
-                    },
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+            this.createByObjs.forEach(function(createByObj) {
+                if (createByObj) {
+                    resourceUtils.lookupResourceInstanceData(createByObj.resourceId)
+                        .then(function(data) {
+                            self.createBy.push({ name: data._source.displayname, link: arches.urls.resource_report + createByObj.resourceId });
+                        });
+                }});
+            */
 
-                this.DepictsPhysicalValue = resourceUtils.getNodeValues({
-                    nodeId: DepictsPhysicalId,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+            var descriptionConceptValueId = 'df8e4cf6-9b0b-472f-8986-83d5b2ca28a0';
+            var statementTextId = 'e58ecc2e-c062-11e9-ba30-a4d18cec433a';
+            var statementTypeId = 'e58eb7b5-c062-11e9-b08d-a4d18cec433a';
+            this.description = resourceUtils.getNodeValues({
+                nodeId: statementTextId,
+                //widgetLabel: 'Brief Text or Statement.Statement Text',
+                where: {
+                    nodeId: statementTypeId,
+                    //widgetLabel: 'Brief Text or Statement.Type of Statement',
+                    contains: descriptionConceptValueId
+                },
+                returnTiles: false
+            }, this.report.get('tiles'), this.report.graph);
 
-                this.depictsPhysicalName = ko.observableArray([]);
-                this.DepictsPhysicalValue.forEach(function(depictsPhysical) {
-                    if (depictsPhysical) {
-                        resourceUtils.lookupResourceInstanceData(depictsPhysical.resourceId)
-                            .then(function(data) {
-                                self.depictsPhysicalName.push({ name: data._source.displayname, link: arches.urls.resource_report + depictsPhysical.resourceId });
-                            });
-                    }});
+            this.DepictsPhysicalValue = resourceUtils.getNodeValues({
+                nodeId: DepictsPhysicalId,
+                returnTiles: false
+            }, this.report.get('tiles'), this.report.graph);
 
-                this.TypeOfWorkName = ko.observable();
+            this.depictsPhysicalName = ko.observableArray([]);
+            this.DepictsPhysicalValue.forEach(function(depictsPhysical) {
+                if (depictsPhysical) {
+                    resourceUtils.lookupResourceInstanceData(depictsPhysical.resourceId)
+                        .then(function(data) {
+                            self.depictsPhysicalName.push({ name: data._source.displayname, link: arches.urls.resource_report + depictsPhysical.resourceId });
+                        });
+                }});
 
-                this.TypeOfWorkValue = resourceUtils.getNodeValues({
-                    nodeId: TypeOfWorkId,
-                    returnTiles: false
-                }, this.report.get('tiles'), this.report.graph);
+            this.TypeOfWorkName = ko.observable();
 
-                if (this.TypeOfWorkValue.length) {
-                    $.ajax(arches.urls.concept_value + '?valueid=' + self.TypeOfWorkValue, {
-                        dataType: "json"
-                    }).done(function(data) {
-                        self.TypeOfWorkName(data.value);
-                    });
-                }
+            this.TypeOfWorkValue = resourceUtils.getNodeValues({
+                nodeId: TypeOfWorkId,
+                returnTiles: false
+            }, this.report.get('tiles'), this.report.graph);
+
+            if (this.TypeOfWorkValue.length) {
+                $.ajax(arches.urls.concept_value + '?valueid=' + self.TypeOfWorkValue, {
+                    dataType: "json"
+                }).done(function(data) {
+                    self.TypeOfWorkName(data.value);
+                });
             }
-        },
-        template: visualWorkReportTemplate
-    });
+        }
+    },
+    template: visualWorkReportTemplate
 });

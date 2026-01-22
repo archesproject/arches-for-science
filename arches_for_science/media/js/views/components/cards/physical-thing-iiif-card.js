@@ -1,36 +1,34 @@
-define([
-    'knockout',
-    'templates/views/components/cards/iiif-card.htm',
-    'underscore',
-    'views/components/cards/iiif-card',
-    'utils/physical-thing'
-], function(ko, physicalThingIiifCardTemplate, _, IIIFCardComponentViewModel, physicalThingUtils) {
-    return ko.components.register('physical-thing-iiif-card', {
-        viewModel: function(params) {
-            var self = this;
-            IIIFCardComponentViewModel.apply(this, [params]);
-            if (this.form && this.state === 'form') {
-                var tiles = [];
-                ko.unwrap(this.form.topCards).reduce(function(tiles, card) {
-                    ko.unwrap(card.tiles).forEach(function(tile) {
-                        tiles.push(tile);
-                        tiles.concat(self.getTiles(tile));
-                    });
-                    return tiles;
-                }, tiles);
-                tiles = tiles.map(function(tile) {
-                    return tile.getData();
+import ko from 'knockout';
+import physicalThingIiifCardTemplate from 'templates/views/components/cards/iiif-card.htm';
+import _ from 'underscore';
+import IIIFCardComponentViewModel from 'views/components/cards/iiif-card';
+import physicalThingUtils from 'utils/physical-thing';
+
+export default ko.components.register('physical-thing-iiif-card', {
+    viewModel: function(params) {
+        var self = this;
+        IIIFCardComponentViewModel.apply(this, [params]);
+        if (this.form && this.state === 'form') {
+            var tiles = [];
+            ko.unwrap(this.form.topCards).reduce(function(tiles, card) {
+                ko.unwrap(card.tiles).forEach(function(tile) {
+                    tiles.push(tile);
+                    tiles.concat(self.getTiles(tile));
                 });
-                this.loading(true);
-                physicalThingUtils.getManifests(tiles).then(function(manifests) {
-                    self.loading(false);
-                    if (manifests.length > 0) {
-                        self.manifest(manifests[0]);
-                        self.getManifestData();
-                    }
-                });
-            }
-        },
-        template: physicalThingIiifCardTemplate
-    });
+                return tiles;
+            }, tiles);
+            tiles = tiles.map(function(tile) {
+                return tile.getData();
+            });
+            this.loading(true);
+            physicalThingUtils.getManifests(tiles).then(function(manifests) {
+                self.loading(false);
+                if (manifests.length > 0) {
+                    self.manifest(manifests[0]);
+                    self.getManifestData();
+                }
+            });
+        }
+    },
+    template: physicalThingIiifCardTemplate
 });
