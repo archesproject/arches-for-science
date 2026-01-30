@@ -2,6 +2,7 @@ import $ from 'jquery';
 import _ from 'underscore';
 import ko from 'knockout';
 import arches from 'arches';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'select-woo';
 
 ko.bindingHandlers.termSearch = {
@@ -46,7 +47,7 @@ ko.bindingHandlers.termSearch = {
             minimumInputLength: 1,
             data:ko.unwrap(terms).concat(ko.unwrap(tags)),  // initial selection
             ajax: {
-                url: arches.urls.search_terms,
+                url: generateArchesURL("search_terms"),
                 dataType: 'json',
                 quietMillis: 500,
                 data: function(requestParams) {

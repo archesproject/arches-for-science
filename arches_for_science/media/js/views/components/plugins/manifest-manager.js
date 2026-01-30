@@ -2,11 +2,11 @@ import ko from 'knockout';
 import koMapping from 'knockout-mapping';
 import $ from 'jquery';
 import uuid from 'uuid';
-import arches from 'arches';
 import JsonErrorAlertViewModel from 'viewmodels/alert-json';
 import IIIFViewerViewmodel from 'views/components/iiif-viewer';
 import manifestManagerTemplate from 'templates/views/components/plugins/manifest-manager.htm';
 import iiifUtils from 'utils/iiif-utils';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'bindings/dropzone';
 
 export default ko.components.register('manifest-manager', {
@@ -126,7 +126,7 @@ export default ko.components.register('manifest-manager', {
             }
             $.ajax({
                 type: "POST",
-                url: arches.urls.manifest_manager,
+                url: generateArchesURL("manifest_manager"),
                 data: self.formData,
                 cache: false,
                 processData: false,
@@ -161,7 +161,7 @@ export default ko.components.register('manifest-manager', {
             self.formData.append("manifest", ko.unwrap(self.manifest));
             $.ajax({
                 type: "DELETE",
-                url: arches.urls.manifest_manager,
+                url: generateArchesURL("manifest_manager"),
                 data: JSON.stringify({"manifest": ko.unwrap(self.manifest)}),
                 cache: false,
                 processData: false,
@@ -253,7 +253,7 @@ export default ko.components.register('manifest-manager', {
         }); 
         
         this.dropzoneOptions4create = {
-            url: "arches.urls.root",
+            url: generateArchesURL('root'),
             dictDefaultMessage: '',
             autoProcessQueue: false,
             uploadMultiple: true,
@@ -271,7 +271,7 @@ export default ko.components.register('manifest-manager', {
         };
 
         this.dropzoneOptions = {
-            url: "arches.urls.root",
+            url: generateArchesURL('root'),
             dictDefaultMessage: '',
             autoProcessQueue: false,
             uploadMultiple: true,

@@ -1,7 +1,6 @@
-// need to check again
-import arches from 'arches';
 import uuid from 'uuid';
 import ResourceUtils from 'utils/resource';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 
 export default {
     saveThingToProject: async function(physicalThingInstanceId, projectSetInstanceId, workflowId, resourceLookup){
@@ -57,7 +56,7 @@ export default {
         };
 
         if (!alreadySaved) {
-            return window.fetch(arches.urls.api_tiles(tileId || uuid.generate()), {
+            return window.fetch(generateArchesURL("api_tiles", {tileid: tileId || uuid.generate()}), {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(tileObj),

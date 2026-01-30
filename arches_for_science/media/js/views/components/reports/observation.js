@@ -3,6 +3,7 @@ import ko from 'knockout';
 import observationReportTemplate from 'templates/views/components/reports/observation.htm';
 import arches from 'arches';
 import reportUtils from 'utils/report';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'views/components/reports/scenes/name';
 import 'views/components/reports/scenes/json';
 
@@ -88,7 +89,7 @@ export default ko.components.register('observation-report', {
                     let parts;
                     if (partentPhysicalThingResourceId) {
                         let parentResource;
-                        await window.fetch(arches.urls.api_resources(partentPhysicalThingResourceId) + '?format=json&compact=false&v=beta')
+                        await window.fetch(generateArchesURL("resources", { resourceid: partentPhysicalThingResourceId }) + '?format=json&compact=false&v=beta')
                             .then(response => response.json())
                             .then(data => { parentResource = data.resource; })
 

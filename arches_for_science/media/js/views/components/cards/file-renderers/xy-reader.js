@@ -5,6 +5,7 @@ import afsReaderTemplate from "templates/views/components/cards/file-renderers/x
 import AfsInstrumentViewModel from "viewmodels/afs-instrument";
 import Cookies from "js-cookie";
 import XyParser from "utils/xy-parser";
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import "bindings/plotly";
 import "bindings/select2-query";
 import "views/components/plugins/importer-configuration";
@@ -34,7 +35,7 @@ export default ko.components.register("xy-reader", {
         // on init, get available renderer configs for display to user.
         const rendererConfigRefresh = async () => {
             const rendererResponse = await fetch(
-                arches.urls.renderer(self.renderer)
+                generateArchesURL("renderer", { renderer_id: self.renderer })
             );
             if (rendererResponse.ok) {
                 const renderers = await rendererResponse.json();
@@ -130,7 +131,7 @@ export default ko.components.register("xy-reader", {
                 rendererId: self.renderer,
             };
             const configSaveResponse = await fetch(
-                arches.urls.renderer_config,
+                generateArchesURL("renderer_config"),
                 {
                     method: "POST",
                     credentials: "include",

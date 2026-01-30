@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import ko from 'knockout';
-import arches from 'arches';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import selectDatasetStepTemplate from 'templates/views/components/workflows/review-dataset/select-dataset.htm';
 
 function viewModel(params) {
@@ -13,7 +13,7 @@ function viewModel(params) {
 
     const getDigitalResources = async function(resourceid) {
         if(!resourceid){ return; }
-        const url = `${arches.urls.root}digital-resources-by-object-parts/${resourceid}`;
+        const url = generateArchesURL("digital-resources-by-object-parts", {resourceid: resourceid});
         const result = await fetch(url, {
             method: 'GET',
             credentials: 'include'

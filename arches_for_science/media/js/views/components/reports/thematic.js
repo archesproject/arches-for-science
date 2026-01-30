@@ -5,6 +5,7 @@ import thematicReportTemplate from 'templates/views/report-templates/thematic.ht
 import koMapping from 'knockout-mapping';
 import arches from 'arches';
 import ReportViewModel from 'viewmodels/report';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'bindings/chosen';
 
 NODE_ID = "@node_id";
@@ -157,7 +158,7 @@ var viewModel = function(params) {
     this.initialize = function() {
         self.loading(true);
 
-        var url = arches.urls.api_resources(params.report.get('resourceid')) + '?format=json&compact=false';
+        var url = generateArchesURL("resources", { resourceid: params.report.get('resourceid') }) + '?format=json&compact=false';
 
         $.get(url, function(data) {
             self.disambiguatedResourceGraph(data);

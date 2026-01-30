@@ -3,6 +3,7 @@ import ko from "knockout";
 import Cookies from "js-cookie";
 import xyParser from "utils/xy-parser";
 import AlertViewModel from "viewmodels/alert";
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import importerConfigurationTemplate from "templates/views/components/plugins/importer-configuration.htm";
 import "bootstrap";
 import "bindings/select2-query";
@@ -102,7 +103,7 @@ const vm = function (params) {
         };
 
         const configSaveResponse = await fetch(
-            `${arches.urls.renderer_config}${configId}`,
+            generateArchesURL("renderer_config", { renderer_config_id: configId}),
             {
                 method: "POST",
                 credentials: "include",
@@ -183,7 +184,7 @@ const vm = function (params) {
 
     this.deleteConfiguration = async (configuration) => {
         const configDeleteResponse = await fetch(
-            `${arches.urls.renderer_config}${configuration.configid}`,
+            generateArchesURL("renderer_config", { renderer_config_id: configuration.configid}),
             {
                 method: "DELETE",
                 credentials: "include",

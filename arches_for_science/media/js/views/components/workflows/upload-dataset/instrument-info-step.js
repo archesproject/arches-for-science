@@ -2,6 +2,7 @@ import arches from 'arches';
 import uuid from 'uuid';
 import ko from 'knockout';
 import resourceUtils from 'utils/resource';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import instrumentInfoStepTemplate from 'templates/views/components/workflows/upload-dataset/instrument-info-step.htm';
 import 'viewmodels/card';
    
@@ -185,7 +186,7 @@ function viewModel(params) {
 
     this.saveTile = function(data, nodeGroupId, resourceid, tileid) {
         let tile = self.buildTile(data, nodeGroupId, resourceid, tileid);
-        return window.fetch(arches.urls.api_tiles(tileid || uuid.generate()), {
+        return window.fetch(generateArchesURL("api_tiles", {tileid: tileid || uuid.generate()}), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(tile),
@@ -212,12 +213,12 @@ function viewModel(params) {
         const textualWorkTypeNodegroupId= "dc946b1e-c070-11e9-a005-a4d18cec433a";
         const procedureValueId = "60d1e09c-0f14-4348-ae14-57fdb9ef87c4";
 
-        window.fetch(arches.urls.api_resources(self.procedureValue()) + '?format=json&compact=false')
+        window.fetch(generateArchesURL("resources", { resourceid: self.procedureValue() }) + '?format=json&compact=false')
             .then(response => response.json())
             .then(data => {
                 const textualWorkTypeTileId = data.resource.type?.['@tile_id'];
                 if (textualWorkTypeTileId){
-                    window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                    window.fetch(generateArchesURL("api_tiles", {tileid: textualWorkTypeTileId}), {
                         method: 'GET',
                         credentials: 'include',
                         headers: {
@@ -228,7 +229,7 @@ function viewModel(params) {
                         .then(tile => {
                             if (!tile.data[textualWorkTypeNodegroupId].includes(procedureValueId)){
                                 tile.data[textualWorkTypeNodegroupId].push(procedureValueId);
-                                window.fetch(arches.urls.api_tiles(textualWorkTypeTileId), {
+                                window.fetch(generateArchesURL("api_tiles", {tileid: textualWorkTypeTileId}), {
                                     method: 'POST',
                                     credentials: 'include',
                                     body: JSON.stringify(tile),
@@ -299,7 +300,7 @@ function viewModel(params) {
         parameterData[statementLanguageNodeId] = languageConceptValue;
         data['parameterTile'] = self.buildTile(parameterData, parameterNodeGroupId, self.observationInstanceId(), parameterTileId);
 
-        return window.fetch(arches.urls.root + 'instrument-info-form-save', {
+        return window.fetch(generateArchesURL("instrument-info-form-save"), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),

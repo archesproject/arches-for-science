@@ -3,6 +3,7 @@ import ko from 'knockout';
 import L from 'leaflet';
 import uuid from 'uuid';
 import arches from 'arches';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import SummaryStep from 'views/components/workflows/summary-step';
 import iiifPopup from 'templates/views/components/iiif-popup.htm';
 import sampleTakingFinalStepTemplate from 'templates/views/components/workflows/sample-taking-workflow/sample-taking-final-step.htm';
@@ -87,7 +88,7 @@ function viewModel(params) {
                                     // TODO(i18n) slug or name?
                                     graphName: 'Physical Thing',
                                     resourceinstanceid: feature.properties.sampleAreaResourceId,
-                                    reportURL: arches.urls.resource_report
+                                    reportURL: generateArchesURL("resource_report")
                                 };
                                 var popupElement = popup.getElement()
                                     .querySelector('.mapboxgl-popup-content');

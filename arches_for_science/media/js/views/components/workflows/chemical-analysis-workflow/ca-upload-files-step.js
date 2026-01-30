@@ -3,6 +3,7 @@ import ko from "knockout";
 import uuid from "uuid";
 import arches from "arches";
 import Cookies from "js-cookie";
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import uploadFilesStepTemplate from "templates/views/components/workflows/chemical-analysis-workflow/ca-upload-files-step.htm";
 import "bindings/uppy";
 
@@ -71,7 +72,7 @@ export default ko.components.register("ca-upload-files-step", {
                 const formData = new window.FormData();
                 formData.append("tileid", fileTile);
 
-                const resp = await window.fetch(arches.urls.tile, {
+                const resp = await window.fetch(generateArchesURL("tile"), {
                 method: "DELETE",
                 credentials: "include",
                 body: JSON.stringify(Object.fromEntries(formData.entries())),
@@ -226,7 +227,7 @@ export default ko.components.register("ca-upload-files-step", {
             });
 
             const resp = await window.fetch(
-                arches.urls.upload_dataset_select_dataset_files_step,
+                generateArchesURL("upload_dataset_select_dataset_files_step"),
                 {
                 method: "POST",
                 credentials: "include",

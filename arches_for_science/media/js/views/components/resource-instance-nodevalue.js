@@ -2,6 +2,7 @@ import ko from 'knockout';
 import arches from 'arches';
 import ResourceUtils from 'utils/resource';
 import ResourceInstanceSelectViewModel from 'viewmodels/resource-instance-select';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import resourceInstanceSelectTemplate from 'templates/views/components/widgets/resource-instance-select.htm';
 import 'bindings/select2-query';
 
@@ -42,7 +43,7 @@ export default ko.components.register('views/components/resource-instance-nodeva
                 } 
             },
             ajax: {
-                url: arches.urls.related_resources + self.relatedResourceId + "?paginate=false",
+                url: generateArchesURL("related_resources", { resourceid: self.relatedResourceId }) + "?paginate=false",
                 dataType: 'json',
                 processResults: function(data) {
                     const filteredResources = data.related_resources.filter(function(resource) {

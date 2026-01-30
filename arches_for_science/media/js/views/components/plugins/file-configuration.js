@@ -3,6 +3,7 @@ import arches from 'arches';
 import fileRenderers from 'file-renderers';
 import TileModel from 'models/tile';
 import xyParser from 'utils/xy-parser';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import fileConfigurationTemplate from 'templates/views/components/plugins/file-configuration.htm';
 import 'bindings/codemirror';
 import 'views/components/cards/file-renderers/xy-reader';
@@ -297,7 +298,7 @@ const vm = function(params) {
     };
 
     this.updateConfiguration = async(file, rendererConfigId) => {
-        const tilesResponse = await fetch(arches.urls.api_tiles(file.tileid));
+        const tilesResponse = await fetch(generateArchesURL("api_tiles", {tileid: file.tileid}));
         if(tilesResponse.ok) {
             const tile = await tilesResponse.json();
             const fileNode = tile?.data?.[file.nodeid];

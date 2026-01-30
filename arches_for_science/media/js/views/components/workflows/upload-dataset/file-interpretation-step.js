@@ -9,6 +9,7 @@ import WorkbenchComponentViewModel from 'views/components/workbench';
 import fileRenderers from 'file-renderers';
 import Cookies from 'js-cookie';
 import TileModel from 'models/tile';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 
 function viewModel(params) {
 
@@ -190,7 +191,7 @@ function viewModel(params) {
 
     this.digitalResources = ko.observableArray();
     this.getDigitalResource = async(resourceid, newStatements) => {
-        const response = await window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta');
+        const response = await window.fetch(generateArchesURL("resources", { resourceid: resourceid }) + '?format=json&compact=false&v=beta');
         if(!response.ok) {return;}
         const data = await response.json();
 
@@ -488,7 +489,7 @@ function viewModel(params) {
     }
 
     this.downloadSelection = function() {
-        var url = arches.urls.download_files + "?tiles=" + JSON.stringify(self.card.staging()) + "&node=" + self.fileListNodeId;
+        var url = generateArchesURL("download_files") + "?tiles=" + JSON.stringify(self.card.staging()) + "&node=" + self.fileListNodeId;
         window.open(url);
     };
 

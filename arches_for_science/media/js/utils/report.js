@@ -1,6 +1,6 @@
 import ko from 'knockout';
-import arches from 'arches';
 import labelBasedGraphUtils from 'utils/label-based-graph-utils';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 
 // TODO: this library is a bit dangerous with an undeclared jquery dependency.  Those should be removed; they aren't necessary.
 const deleteTile = async(tileid, card) => {
@@ -8,7 +8,7 @@ const deleteTile = async(tileid, card) => {
     if(tile){
         return $.ajax({
             type: "DELETE",
-            url: arches.urls.tile,
+            url: generateArchesURL("tile"),
             data: JSON.stringify(tile.getData()),
             success: () => {
                 const tiles = card.tiles();
@@ -48,7 +48,7 @@ const getResourceLink = (node) => {
     if(node) {
         const resourceId = node.resourceId;
         if(resourceId){
-            return `${arches.urls.resource}\\${resourceId}`;
+            return generateArchesURL("resource_report", { resourceid: resourceId });
         }
     }
 };
@@ -82,7 +82,7 @@ export default {
     },
 
     getRelatedResources: async(resourceid) => {
-        return (window.fetch(arches.urls.related_resources + resourceid + "?paginate=false")
+        return (window.fetch(generateArchesURL("related_resources", { resourceid: resourceid }) + "?paginate=false")
             .then(response => response.json()));
     },
 
