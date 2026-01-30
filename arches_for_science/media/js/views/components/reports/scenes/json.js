@@ -2,6 +2,7 @@ import ko from 'knockout';
 import jsonSceneTemplate from 'templates/views/components/reports/scenes/json.htm';
 import reportUtils from 'utils/report';
 import arches from 'arches';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'viewmodels/widget';
 import 'bindings/codemirror';
 
@@ -22,7 +23,7 @@ export default ko.components.register('views/components/reports/scenes/json', {
 
         self.setSelectedJson = async(format) => {
             if(!self.json[format]){
-                const response = await fetch(`${arches.urls.api_resources(self.resourceInstanceId)}?format=${format}`);
+                const response = await fetch(`${generateArchesURL("resources", { resourceid: self.resourceInstanceId })}?format=${format}`);
                 self.json[format] = response.ok ? await response.json() : arches.translations.jsonError; // let the user know if the json couldn't be retrieved.
             }
             self.selectedJSON(JSON.stringify(self.json[format], null, 2));

@@ -7,6 +7,7 @@ import GraphModel from 'models/graph';
 import CardViewModel from 'viewmodels/card';
 import sampleTakingImageStepTemplate from 'templates/views/components/workflows/sample-taking-workflow/sample-taking-image-step.htm';
 import iiifUtils from 'utils/iiif-utils';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'views/components/plugins/manifest-manager';
 
 function viewModel(params) {
@@ -103,7 +104,7 @@ function viewModel(params) {
             "transaction_id": params.form.workflowId
         };
 
-        return window.fetch(arches.urls.api_tiles(self.samplingActivityDigitalReferenceTileId), {
+        return window.fetch(generateArchesURL("api_tiles", {tileid: self.samplingActivityDigitalReferenceTileId}), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(samplingActivityDigitalReferenceTileData),
@@ -120,11 +121,11 @@ function viewModel(params) {
         const label = iiifUtils.getManifestLabel(self.manifestData());
         if (label === self.selectedPhysicalThingImageServiceName()) {
             const manifestId = iiifUtils.getManifestId(self.manifestData());
-            const response = await fetch(`${arches.urls.manifest_x_canvas}?manifest=${manifestId}`);
+            const response = await fetch(`${generateArchesURL("manifest_x_canvas")}?manifest=${manifestId}`);
             const data = await response.json();
             const digitalResourcesResourceId = data.digital_resource;
 
-            const card_response = await fetch(arches.urls.api_card + digitalResourcesResourceId);
+            const card_response = await fetch(generateArchesURL("api_card", { resourceid: digitalResourcesResourceId }).urls.api_card);
             const card_data = await card_response.json();
             const digitalServiceTile = card_data.tiles.find(function(tile) {
                 return tile.nodegroup_id === digitalResourceServiceIdentifierNodegroupId;
@@ -211,7 +212,7 @@ function viewModel(params) {
     };
 
     this.getPhysicalThingDigitalReferenceData = function() {
-        $.getJSON( arches.urls.api_card + self.physicalThingResourceId ).then(function(data) {
+        $.getJSON( generateArchesURL("api_card", { resourceid: self.physicalThingResourceId}) ).then(function(data) {
             var digitalReferenceCardData = data.cards.find(function(card) {
                 return card.nodegroup_id === '8a4ad932-8d59-11eb-a9c4-faffc265b501';
             });
@@ -285,7 +286,7 @@ function viewModel(params) {
             if (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ))  {
                 var physicalThingManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
                 
-                $.getJSON( arches.urls.api_card + physicalThingManifestResourceId )
+                $.getJSON( generateArchesURL("api_card", { resourceid: physicalThingManifestResourceId}) )
                     .then(function(data) {
                         self.getThumbnail(data)
                             .then(function(json) {

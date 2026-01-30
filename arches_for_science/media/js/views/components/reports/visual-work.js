@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import ko from 'knockout';
-import visualWorkReportTemplate from 'templates/views/components/reports/visual-work.htm';
-import arches from 'arches';
 import TabbedReportViewModel from 'viewmodels/tabbed-report';
 import resourceUtils from 'utils/resource';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
+import visualWorkReportTemplate from 'templates/views/components/reports/visual-work.htm';
 
 export default ko.components.register('visual-work-report', {
     viewModel: function(params) {
@@ -14,7 +14,7 @@ export default ko.components.register('visual-work-report', {
 
         if (params.summary) {
 
-            this.editorLink = arches.urls.resource_editor + this.report.attributes.resourceid;
+            this.editorLink = generateArchesURL("resource_editor", { resourceid: this.report.attributes.resourceid });
 
             var StatementTextId = 'e58ecc2e-c062-11e9-ba30-a4d18cec433a'; // ok
             var TypeOfWorkId = '28a4ae07-c062-11e9-a11d-a4d18cec433a';
@@ -32,7 +32,10 @@ export default ko.components.register('visual-work-report', {
                 if (createByObj) {
                     resourceUtils.lookupResourceInstanceData(createByObj.resourceId)
                         .then(function(data) {
-                            self.createBy.push({ name: data._source.displayname, link: arches.urls.resource_report + createByObj.resourceId });
+                            self.createBy.push({
+                                name: data._source.displayname,
+                                link: generateArchesURL("resource_report", { resourceid: createByObj.resourceId }),
+                            });
                         });
                 }});
             */
@@ -61,7 +64,10 @@ export default ko.components.register('visual-work-report', {
                 if (depictsPhysical) {
                     resourceUtils.lookupResourceInstanceData(depictsPhysical.resourceId)
                         .then(function(data) {
-                            self.depictsPhysicalName.push({ name: data._source.displayname, link: arches.urls.resource_report + depictsPhysical.resourceId });
+                            self.depictsPhysicalName.push({
+                                name: data._source.displayname,
+                                link: generateArchesURL("resource_report", { resourceid: depictsPhysical.resourceId }),
+                            });
                         });
                 }});
 
@@ -73,7 +79,7 @@ export default ko.components.register('visual-work-report', {
             }, this.report.get('tiles'), this.report.graph);
 
             if (this.TypeOfWorkValue.length) {
-                $.ajax(arches.urls.concept_value + '?valueid=' + self.TypeOfWorkValue, {
+                $.ajax(generateArchesURL("concept_value") + '?valueid=' + self.TypeOfWorkValue, {
                     dataType: "json"
                 }).done(function(data) {
                     self.TypeOfWorkName(data.value);

@@ -1,5 +1,6 @@
 import ko from 'knockout';
 import arches from 'arches';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import downloadFilesTemplate from 'templates/views/components/workflows/project-report-workflow/download-project-files.htm';
 
 function viewModel(params) {
@@ -105,11 +106,11 @@ function viewModel(params) {
     };
 
     this.getFilesFromObservation = async() => {
-        const projectResponse = await window.fetch(arches.urls.related_resources + self.projectValue  + "?paginate=false");
+        const projectResponse = await window.fetch(generateArchesURL("related_resources", { resourceid: self.projectValue }) + "?paginate=false");
         const projectJson = await projectResponse.json();
 
         const collectionForProject = projectJson.related_resources.find((res) => res.graph_id === collectionGraphId).resourceinstanceid;
-        const collectionResponse = await window.fetch(arches.urls.related_resources + collectionForProject  + "?paginate=false");
+        const collectionResponse = await window.fetch(generateArchesURL("related_resources", { resourceid: collectionForProject }) + "?paginate=false");
         const collectionJson = await collectionResponse.json();
 
         const projectPhysicalThings = collectionJson.related_resources.filter((res) => res.graph_id === physicalThingGraphId)
@@ -130,7 +131,7 @@ function viewModel(params) {
         const selectedFileIds = self.selectedFiles().map((file) => file.fileid);
         for (const projectObservation of projectObservations) {
             const relatedFiles = ko.observableArray();
-            const response = await window.fetch(arches.urls.related_resources + projectObservation.resourceinstanceid  + "?paginate=false");
+            const response = await window.fetch(generateArchesURL("related_resources", { resourceid: projectObservation.resourceinstanceid }) + "?paginate=false");
             
             if(response.ok) {
                 const json = await response.json();

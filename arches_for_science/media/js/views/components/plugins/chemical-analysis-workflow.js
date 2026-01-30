@@ -4,6 +4,7 @@ import arches from 'arches';
 import Workflow from 'viewmodels/workflow';
 import AlertViewModel from 'viewmodels/alert';
 import chemicalAnalysisWorkflow from 'templates/views/components/plugins/chemical-analysis-workflow.htm';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'viewmodels/workflow-step';
 import 'views/components/workflows/select-phys-thing-step';
 import 'views/components/workflows/chemical-analysis-workflow/ca-instrument-info-step';
@@ -114,7 +115,7 @@ export default ko.components.register('chemical-analysis-workflow', {
             const quitUrl = this.quitUrl;
             return $.ajax({
                 type: "POST",
-                url: arches.urls.transaction_reverse(this.id())
+                url: generateArchesURL("transaction_reverse", { transactionid: this.id() })
             }).then(function() {
                 params.loading(false);
                 window.location.href = quitUrl;
@@ -135,7 +136,7 @@ export default ko.components.register('chemical-analysis-workflow', {
                 )
             );
         };
-        this.quitUrl = arches.urls.plugin('init-workflow');
+        this.quitUrl = generateArchesURL("plugins", { slug: 'init-workflow' });
     },
     template: chemicalAnalysisWorkflow
 });

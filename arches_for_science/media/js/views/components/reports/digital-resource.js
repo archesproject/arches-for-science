@@ -3,6 +3,7 @@ import ko from 'knockout';
 import digitalResourceReportTemplate from 'templates/views/components/reports/digital-resource.htm';
 import arches from 'arches'; 
 import reportUtils from 'utils/report'; 
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'views/components/reports/scenes/name'; 
 import 'views/components/reports/scenes/description'; 
 import 'views/components/reports/scenes/documentation'; 
@@ -223,7 +224,7 @@ export default ko.components.register('digital-resource-report', {
         self.nameSummary = ko.observable();
         self.statementsSummary = ko.observable();
 
-        const thumbnailUrl = arches.urls.thumbnail(params.report.report_json.resourceinstanceid);
+        const thumbnailUrl = generateArchesURL("thumbnail", { resourceinstanceid: params.report.report_json.resourceinstanceid });
         self.thumbnail = ko.observable();
 
         fetch(thumbnailUrl, {method: 'HEAD'}).then(resp => { 

@@ -10,6 +10,7 @@ import CardViewModel from 'viewmodels/card';
 import TileViewModel from 'viewmodels/tile';
 import IIIFAnnotationViewmodel from 'views/components/iiif-annotation';
 import iiifUtils from 'utils/iiif-utils';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import iiifPopup from 'templates/views/components/iiif-popup.htm';
 import sampleTakingSampleLocationStepTemplate from 'templates/views/components/workflows/sample-taking-workflow/sample-taking-sample-location-step.htm';
 
@@ -185,7 +186,7 @@ function viewModel(params) {
             subscription.dispose();
         });
 
-        $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
+        $.getJSON(generateArchesURL("api_card", { resourceid: self.physicalThingResourceId }).urls.api_card).then(function(data) {
             self.loadExternalCardData(data);
         });
 
@@ -354,7 +355,7 @@ function viewModel(params) {
     this.sampleLocationInstances.subscribe(async (instances) => {
         for(const instance of instances) {
             const instanceResourceId = ko.unwrap(ko.unwrap(instance.data[partIdentifierAssignmentPhysicalPartOfObjectNodeId])?.[0]?.resourceId);
-            const currentResourceRelatedResources = await(await window.fetch(`${arches.urls.related_resources}${instanceResourceId}`)).json();
+            const currentResourceRelatedResources = await(await window.fetch(generateArchesURL("related_resources", { resourceid: instanceResourceId }))).json();
             const relatedSamplingActivity = currentResourceRelatedResources?.related_resources?.related_resources?.filter(x => x?.graph_id == samplingActivityGraphId);
             instance.samplingActivityResourceId(relatedSamplingActivity?.[0]?.resourceinstanceid);
         }
@@ -386,7 +387,7 @@ function viewModel(params) {
             if(self.selectedSampleLocationInstance()?.samplingActivityResourceId) {
                 self.selectedSampleRelatedSamplingActivity(self.selectedSampleLocationInstance().samplingActivityResourceId());
             } else if (selectedSampleLocationParentPhysicalThingResourceId){
-                const selectedResourceRelatedResources = await(await window.fetch(`${arches.urls.related_resources}${selectedSampleLocationParentPhysicalThingResourceId}`)).json();
+                const selectedResourceRelatedResources = await(await window.fetch(generateArchesURL("related_resources", { resourceid: selectedSampleLocationParentPhysicalThingResourceId }))).json();
                 const relatedSamplingActivity = selectedResourceRelatedResources?.related_resources?.related_resources?.filter(x => x?.graph_id == samplingActivityGraphId);
                 self.selectedSampleRelatedSamplingActivity(relatedSamplingActivity?.[0].resourceinstanceid);
             } else {
@@ -524,7 +525,7 @@ function viewModel(params) {
         self.showingSampleLocationDeleteModal(false);
         self.savingMessage(arches.translations.deleting);
 
-        window.fetch(arches.urls.root + 'deletesamplearea', {
+        window.fetch(generateArchesURL("deletesamplearea"), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),
@@ -641,7 +642,7 @@ function viewModel(params) {
         }, "20000");
 
         $.ajax({
-            url: arches.urls.root + 'savesamplearea',
+            url: generateArchesURL("savesamplearea"),
             type: 'POST',
             data: data,
             dataType: 'json',
@@ -691,7 +692,7 @@ function viewModel(params) {
                 params.pageVm.alert("");
                 self.drawFeatures([]);
             });
-            $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
+            $.getJSON(generateArchesURL("api_card", { resourceid: self.physicalThingResourceId }).urls.api_card).then(function(data) {
                 self.loadExternalCardData(data);
             });
 
@@ -897,10 +898,10 @@ function viewModel(params) {
                                 'description': ko.observable(''),
                                 'graphName': feature.properties.graphName,
                                 'resourceinstanceid': analysisArea.resourceid,
-                                'reportURL': arches.urls.resource_report,
+                                'reportURL': generateArchesURL("resource_report"),
                                 'translations': arches.translations,
                             };
-                            window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
+                            window.fetch(generateArchesURL("resource_descriptors", { resourceid: popupData.resourceinstanceid }))
                                 .then(function(response) {
                                     return response.json();
                                 })
@@ -964,7 +965,7 @@ function viewModel(params) {
                     let analysisAreaAnnotations = ko.observableArray();
                     var canvas = self.canvas();
                     if (canvas) {
-                        window.fetch(arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
+                        window.fetch(generateArchesURL("iiifannotations") + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
                             .then(function(response) {
                                 return response.json();
                             })
@@ -1136,7 +1137,7 @@ function viewModel(params) {
 
     this._fetchCard = function(resourceId, graphId, nodegroupId) {
         return new Promise(function(resolve, _reject) {
-            $.getJSON( arches.urls.api_card + ( resourceId || graphId ) ).then(function(data) {
+            $.getJSON( generateArchesURL("api_card", { resourceid: resourceId || graphId }).urls.api_card ).then(function(data) {
                 var cardData = data.cards.find(function(card) {
                     return card.nodegroup_id === nodegroupId;
                 });

@@ -9,6 +9,7 @@ import MapComponentViewModel from 'views/components/map';
 import selectFeatureLayersFactory from 'views/components/cards/select-feature-layers';
 import AlertViewModel from 'viewmodels/alert';
 import domToImage from 'dom-to-image';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import addAnnotationsTemplate from 'templates/views/components/workflows/project-report-workflow/add-annotations.htm';
 import 'bindings/leaflet';
 
@@ -122,7 +123,7 @@ function viewModel(params) {
     });
 
     const fetchResource = async function(resourceid) {
-        const response = await window.fetch(arches.urls.api_resources(resourceid) + '?format=json&compact=false&v=beta');
+        const response = await window.fetch(generateArchesURL("resources", { resourceid: resourceid }) + '?format=json&compact=false&v=beta');
 
         if (response.ok) {
             return await response.json();
@@ -250,7 +251,7 @@ function viewModel(params) {
                                     // TODO(i18n) slug or name?
                                     graphName: 'Physical Thing',
                                     resourceinstanceid: feature.properties.sampleAreaResourceId,
-                                    reportURL: arches.urls.resource_report
+                                    reportURL: generateArchesURL("resource_report")
                                 };
                                 var popupElement = popup.getElement()
                                     .querySelector('.mapboxgl-popup-content');
@@ -313,7 +314,7 @@ function viewModel(params) {
                 const formData = new window.FormData();
                 formData.append("file", screenshot.blob);
                 formData.append("fileName", screenshot.imageName);
-                const response = await window.fetch(arches.urls.temp_file, {
+                const response = await window.fetch(generateArchesURL("temp_file"), {
                     method: 'POST',
                     credentials: 'include',
                     body: formData,

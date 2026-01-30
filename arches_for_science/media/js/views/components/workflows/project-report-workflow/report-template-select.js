@@ -2,6 +2,7 @@ import _ from 'underscore';
 import arches from 'arches';
 import ko from 'knockout';
 import $ from 'jquery';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import reportTemplateSelectTemplate from 'templates/views/components/workflows/project-report-workflow/report-template-select.htm';
 
 function viewModel(params) {
@@ -16,7 +17,7 @@ function viewModel(params) {
     // this.xlsxTemplates = [];
 
     this.getTemplates = async() => {
-        const response = await fetch(arches.urls.reports_list);
+        const response = await fetch(generateArchesURL("reports_list"));
 
         if(response.ok) {
             const data = await response.json();
