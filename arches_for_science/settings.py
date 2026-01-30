@@ -63,6 +63,14 @@ ELASTICSEARCH_CONNECTION_OPTIONS = {"request_timeout": 30, "verify_certs": False
 # ELASTICSEARCH_CONNECTION_OPTIONS = {"request_timeout": 30, "verify_certs": False, "basic_auth": ("elastic", "E1asticSearchforArche5")}
 ELASTICSEARCH_PREFIX = "arches_for_science"
 
+ELASTICSEARCH_CONNECTION_OPTIONS = {
+    "request_timeout": 30,
+    "verify_certs": False,
+    "ca_certs": "/Users/njk/projects/elasticsearch-8.10.4/config/certs/http_ca.crt",
+    "basic_auth": ("elastic", "Bu0-_Kp8dt8xzDHOSIaJ"),
+}
+ELASTICSEARCH_HOSTS = [{"scheme": "https", "host": "localhost", "port": 9200}]
+
 LOAD_DEFAULT_ONTOLOGY = False
 LOAD_PACKAGE_ONTOLOGIES = True
 
@@ -96,7 +104,6 @@ SEARCH_THUMBNAILS = False
 
 INSTALLED_APPS = (
     "webpack_loader",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -107,7 +114,7 @@ INSTALLED_APPS = (
     "arches.app.models",
     "arches.management",
     "guardian",
-    "captcha",
+    "django_recaptcha",
     "revproxy",
     "corsheaders",
     "oauth2_provider",
@@ -120,7 +127,10 @@ INSTALLED_APPS = (
 
 # Placing this last ensures any templates provided by Arches Applications
 # take precedence over core arches templates in arches/app/templates.
-INSTALLED_APPS += ("arches.app",)
+INSTALLED_APPS += (
+    "arches.app",
+    "django.contrib.admin",
+)
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
