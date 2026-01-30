@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools>=77", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -14,25 +14,24 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Framework :: Django",
-    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.2",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Information Technology",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
-  "arches>=7.6.17,<8",
+  "arches>=8.1.0a8",
   "supervisor==4.2.1",
-  "django-pgtrigger==4.9.0",
   "django-storages==1.13.2",
   "boto3==1.25.3",
   "arches-templating>=0.1.2",
 ]
-version = "2.1.0b5"
+version = "3.0.0a0"
 
 [dependency-groups]
 dev = [
