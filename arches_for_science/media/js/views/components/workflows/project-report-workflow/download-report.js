@@ -4,6 +4,7 @@ import ko from 'knockout';
 import cookies from 'js-cookie';
 import reportUtils from 'utils/report';
 import JsonErrorAlertViewModel from 'viewmodels/alert-json';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import downloadReportTemplate from 'templates/views/components/workflows/project-report-workflow/download-report.htm';
 
 function viewModel(params) {
@@ -22,7 +23,7 @@ function viewModel(params) {
     this.loading = ko.observable(false);
     this.templates = ko.observableArray(params.templates);
     const screenshots = params.annotationStepData ? params.annotationStepData.screenshots : [];
-    const lbgApiEndpoint = `${arches.urls.api_bulk_disambiguated_resource_instance}?v=beta&resource_ids=`;
+    const lbgApiEndpoint = `${generateArchesURL("api_bulk_disambiguated_resource_instance")}?v=beta&resource_ids=`;
     const projectDetailsUrl = lbgApiEndpoint + projectId;
     
     const regex = /filename\*?=['"]?(?:UTF-\d['"]*)?([^;\r\n"']*)['"]?;?/i;
@@ -32,7 +33,7 @@ function viewModel(params) {
     this.projectName = ko.observable();
 
     const getRelatedResources = async function(resourceid) {
-        const response = await window.fetch(arches.urls.related_resources + resourceid + "?paginate=false");
+        const response = await window.fetch(generateArchesURL("related_resources", { resourceid: resourceid }) + "?paginate=false");
 
         if (response.ok) {
             return await response.json();
@@ -43,7 +44,7 @@ function viewModel(params) {
     };
 
     const getProjectName = async() => {
-        const response = await fetch(`${arches.urls.api_resources(projectId)}?format=json`);
+        const response = await fetch(`${generateArchesURL("resources", { resourceid: projectId })}?format=json`);
         const data = await response.json();
         self.projectName(data.displayname);
     };
@@ -126,7 +127,7 @@ function viewModel(params) {
             files: files
         };
 
-        window.fetch(arches.urls.download_project_files, {
+        window.fetch(generateArchesURL("download_project_files"), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),

@@ -3,6 +3,7 @@ import $ from 'jquery';
 import arches from 'arches';
 import ko from 'knockout';
 import uuid from 'uuid';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import samplingInfoStepTemplate from 'templates/views/components/workflows/sample-taking-workflow/sampling-info-step.htm';
 import 'views/components/resource-instance-nodevalue';
 
@@ -131,7 +132,7 @@ function viewModel(params) {
 
     this.saveNodeValue = function(nodeid, data, resourceinstanceid, tileid) {
         return $.ajax({
-            url: arches.urls.api_node_value,
+            url: generateArchesURL("api_node_value"),
             type: 'POST',
             data: {
                 'nodeid': nodeid,
@@ -148,7 +149,7 @@ function viewModel(params) {
         formData.append('data', JSON.stringify(tile));
         formData.append('transaction_id', params.form.workflowId);
         return $.ajax({
-            url: arches.urls.api_tiles(tileid),
+            url: generateArchesURL("api_tiles", {tileid: tileid}),
             type: 'POST',
             processData: false,
             contentType: false,

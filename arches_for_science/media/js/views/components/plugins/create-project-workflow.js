@@ -3,6 +3,7 @@ import $ from 'jquery';
 import arches from 'arches';
 import Workflow from 'viewmodels/workflow';
 import AlertViewModel from 'viewmodels/alert';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import createProjectWorkflowTemplate from 'templates/views/components/plugins/create-project-workflow.htm';
 import 'viewmodels/workflow-step';
 import 'views/components/workflows/create-project-workflow/project-name-step';
@@ -146,7 +147,7 @@ export default ko.components.register('create-project-workflow', {
             const quitUrl = this.quitUrl;
             return $.ajax({
                 type: "POST",
-                url: arches.urls.transaction_reverse(this.id())
+                url: generateArchesURL("transaction_reverse", { transactionid: this.id() })
             }).then(function() {
                 params.loading(false);
                 window.location.href = quitUrl;
@@ -167,7 +168,7 @@ export default ko.components.register('create-project-workflow', {
                 )
             );
         };
-        this.quitUrl = arches.urls.plugin('init-workflow');
+        this.quitUrl = generateArchesURL("plugins", { slug: 'init-workflow' });
     },
     template: createProjectWorkflowTemplate
 });

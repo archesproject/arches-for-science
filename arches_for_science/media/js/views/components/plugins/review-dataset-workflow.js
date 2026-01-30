@@ -3,6 +3,7 @@ import $ from 'jquery';
 import arches from 'arches';
 import Workflow from 'viewmodels/workflow';
 import AlertViewModel from 'viewmodels/alert';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import reviewDatasetWorkflowTemplate from 'templates/views/components/plugins/review-dataset-workflow.htm';
 import 'viewmodels/workflow-step';
 import 'views/components/workflows/review-dataset/select-dataset';
@@ -83,7 +84,7 @@ export default ko.components.register('review-dataset-workflow', {
             const quitUrl = this.quitUrl;
             return $.ajax({
                 type: "POST",
-                url: arches.urls.transaction_reverse(this.id())
+                url: generateArchesURL("transaction_reverse", { transactionid: this.id() })
             }).then(function() {
                 params.loading(false);
                 window.location.href = quitUrl;
@@ -104,7 +105,7 @@ export default ko.components.register('review-dataset-workflow', {
                 )
             );
         };
-        this.quitUrl = arches.urls.plugin('init-workflow');
+        this.quitUrl = generateArchesURL("plugins", { slug: 'init-workflow' });
     },
     template: reviewDatasetWorkflowTemplate
 });

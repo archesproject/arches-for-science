@@ -5,6 +5,7 @@ import resourceUtils from 'utils/resource';
 import IIIFViewerViewmodel from 'views/components/iiif-viewer';
 import Cookies from 'js-cookie';
 import iiifUtils from 'utils/iiif-utils';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import selectDatasetFilesStepTemplate from 'templates/views/components/workflows/upload-dataset/select-dataset-files-step.htm';
 import 'bindings/dropzone';
 
@@ -149,7 +150,7 @@ export default ko.components.register('select-dataset-files-step', {
 
         const getPartObservationId = async(part) => {
             if(part.datasetId()) {
-                const selectedDatasetCrossReferences = await (await window.fetch(`${arches.urls.related_resources}${part.datasetId()}`)).json();
+                const selectedDatasetCrossReferences = await (await window.fetch(generateArchesURL("related_resources", { resourceid: part.datasetId() }))).json();
                 const relatedObservation = selectedDatasetCrossReferences?.related_resources?.related_resources?.filter(x => x?.graph_id == observationGraphId);
                 part.observationResourceId = relatedObservation?.[0]?.resourceinstanceid;
                 if(part.datasetId() == self.selectedPart()?.datasetId()){
@@ -222,7 +223,7 @@ export default ko.components.register('select-dataset-files-step', {
                     const formData = new window.FormData();
                     formData.append("tileid", fileTile);
 
-                    const resp = await window.fetch(arches.urls.tile, {
+                    const resp = await window.fetch(generateArchesURL("tile"), {
                         method: 'DELETE', 
                         credentials: 'include',
                         body: JSON.stringify(Object.fromEntries(formData.entries())),
@@ -290,7 +291,7 @@ export default ko.components.register('select-dataset-files-step', {
                     });
                 }
 
-                const resp = await window.fetch(arches.urls.upload_dataset_select_dataset_files_step, {
+                const resp = await window.fetch(generateArchesURL("upload_dataset_select_dataset_files_step"), {
                     method: 'POST',
                     credentials: 'include',
                     body: formData,
@@ -343,7 +344,7 @@ export default ko.components.register('select-dataset-files-step', {
         };
 
         this.dropzoneOptions = {
-            url: "arches.urls.root",
+            url: generateArchesURL('root'),
             dictDefaultMessage: '',
             autoProcessQueue: false,
             uploadMultiple: true,

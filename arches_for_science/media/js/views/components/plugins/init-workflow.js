@@ -1,14 +1,14 @@
 import ko from 'knockout';
-import arches from 'arches';
 import afsSettings from 'afs-settings';
 import JsonErrorAlertViewModel from 'viewmodels/alert-json';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import initWorkflowTemplate from 'templates/views/components/plugins/init-workflow.htm';
 
 var InitWorkflow = function(params) {
     this.workflows = ko.observableArray([]);
     this.helpTemplateData = ko.observableArray([]);
     
-    fetch(arches.urls.api_plugins).then(resp => {
+    fetch(generateArchesURL("api_plugins")).then(resp => {
         if (resp.ok) {
             return resp.json();
         }
@@ -18,7 +18,7 @@ var InitWorkflow = function(params) {
     }).then(respJSON => {
         let workflows = respJSON.reduce((acc, plugin) => {
             if (plugin.config.is_workflow) {
-                plugin.url = arches.urls.plugin(plugin.slug);
+                plugin.url = generateArchesURL("plugins", { slug: plugin.slug });
                 acc.push(plugin);
             }
             return acc;
@@ -50,7 +50,7 @@ var InitWorkflow = function(params) {
     this.selectedHelpTemplate.subscribe(helpTemplateName => {
         if (helpTemplateName) {
             this.isHelpTemplateLoading(true);
-            this.helpTemplateUrl(arches.urls.help_template + `?template=${helpTemplateName}`);
+            this.helpTemplateUrl(generateArchesURL("help_template") + `?template=${helpTemplateName}`);
         }
         else {
             this.helpTemplateUrl(null);
@@ -67,7 +67,7 @@ var InitWorkflow = function(params) {
         }
     });
 
-    fetch(arches.urls.api_user_incomplete_workflows).then(resp => {
+    fetch(generateArchesURL("api_user_incomplete_workflows")).then(resp => {
         if (resp.ok) {
             return resp.json();
         }

@@ -2,6 +2,7 @@ import ko from 'knockout';
 import geojsonExtent from 'geojson-extent';
 import L from 'leaflet';
 import arches from 'arches';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import annotationSummaryTemplate from 'templates/views/components/annotation-summary.htm';
 import 'viewmodels/widget';
 import 'views/components/iiif-viewer';
@@ -101,7 +102,7 @@ export default ko.components.register('views/components/annotation-summary', {
                                         // TODO(i18n) graph or slug?
                                         graphName: 'Physical Thing',
                                         resourceinstanceid: feature.properties.sampleAreaResourceId,
-                                        reportURL: arches.urls.resource_report
+                                        reportURL: generateArchesURL("resource_report")
                                     };
                                     var popupElement = popup.getElement()
                                         .querySelector('.mapboxgl-popup-content');

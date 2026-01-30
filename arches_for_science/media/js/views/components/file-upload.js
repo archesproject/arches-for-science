@@ -1,5 +1,6 @@
 import ko from 'knockout';
 import uuid from 'uuid';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import fileUploadTemplate from 'templates/views/components/file-upload.htm';
 import 'bindings/dropzone';
 
@@ -28,7 +29,7 @@ export default ko.components.register('file-upload', {
             console.log(val);
         };
         this.dropzoneOptions = {
-            url: "arches.urls.root",
+            url: generateArchesURL('root'),
             dictDefaultMessage: '',
             autoProcessQueue: false,
             uploadMultiple: true,

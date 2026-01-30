@@ -12,6 +12,7 @@ import CardViewModel from 'viewmodels/card';
 import TileViewModel from 'viewmodels/tile';
 import IIIFAnnotationViewmodel from 'views/components/iiif-annotation';
 import iiifUtils from 'utils/iiif-utils';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import iiifPopup from 'templates/views/components/iiif-popup.htm';
 import analysisAreasAnnotationStepTemplate from 'templates/views/components/workflows/analysis-areas-workflow/analysis-areas-annotation-step.htm';
 import 'views/components/resource-instance-nodevalue';
@@ -141,7 +142,7 @@ function viewModel(params) {
     });
 
     this.physicalThingName = ko.observable();
-    window.fetch(arches.urls.api_resources(self.physicalThingResourceId) + '?format=json&compact=false&v=beta')
+    window.fetch(generateArchesURL("resources", { resourceid: self.physicalThingResourceId }) + '?format=json&compact=false&v=beta')
         .then(function(response){
             if(response.ok){
                 return response.json();
@@ -170,7 +171,7 @@ function viewModel(params) {
             }
             subscription.dispose();
         });
-        $.getJSON(arches.urls.api_card + self.physicalThingResourceId).then(function(data) {
+        $.getJSON(generateArchesURL("api_card", { resourceid: self.physicalThingResourceId})).then(function(data) {
             self.loadExternalCardData(data);
         });
     };
@@ -334,7 +335,7 @@ function viewModel(params) {
             if(analysisAreaTile.data[physicalPartObjectNodeId]()){
                 analysisAreaResourceId = analysisAreaTile.data[physicalPartObjectNodeId]()[0]["resourceId"]();
             }
-            window.fetch(arches.urls.root + 'analysisarealocked' + '?resourceId=' + analysisAreaResourceId)
+            window.fetch(generateArchesURL("analysisarealocked") + '?resourceId=' + analysisAreaResourceId)
                 .then(function(response) {
                     if(response.ok){
                         return response.json();
@@ -416,7 +417,7 @@ function viewModel(params) {
         self.showingAnalysisAreaDeleteModal(false);
         self.savingMessage(arches.translations.deleting);
 
-        window.fetch(arches.urls.root + 'deleteanalysisarea', {
+        window.fetch(generateArchesURL("deleteanalysisarea"), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),
@@ -526,7 +527,7 @@ function viewModel(params) {
         };
 
         $.ajax({
-            url: arches.urls.root + 'saveanalysisarea',
+            url: generateArchesURL("saveanalysisarea"),
             type: 'POST',
             data: data,
             dataType: 'json',
@@ -759,10 +760,10 @@ function viewModel(params) {
                                 'description': ko.observable(''),
                                 'graphName': feature.properties.graphName,
                                 'resourceinstanceid': sampleLocation.resourceid,
-                                'reportURL': arches.urls.resource_report,
+                                'reportURL': generateArchesURL("resource_report"),
                                 'translations': arches.translations,
                             };
-                            window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
+                            window.fetch(generateArchesURL("resource_descriptors", { resourceid: popupData.resourceinstanceid }))
                                 .then(function(response) {
                                     return response.json();
                                 })
@@ -819,7 +820,7 @@ function viewModel(params) {
                     let analysisAreaAnnotations = ko.observableArray();
                     var canvas = self.canvas();
                     if (canvas) {
-                        window.fetch(arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
+                        window.fetch(generateArchesURL("iiifannotations") + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
                             .then(function(response) {
                                 return response.json();
                             })
@@ -993,7 +994,7 @@ function viewModel(params) {
 
     this._fetchCard = function(resourceId, graphId, nodegroupId) {
         return new Promise(function(resolve, _reject) {
-            $.getJSON( arches.urls.api_card + ( resourceId || graphId ) ).then(function(data) {
+            $.getJSON( generateArchesURL("api_card", { resourceid: resourceId || graphId }) ).then(function(data) {
                 var cardData = data.cards.find(function(card) {
                     return card.nodegroup_id === nodegroupId;
                 });

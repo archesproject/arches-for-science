@@ -3,6 +3,7 @@ import ko from 'knockout';
 import koMapping from 'knockout-mapping';
 import L from 'leaflet';
 import arches from 'arches';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import WorkbenchViewmodel from 'views/components/workbench';
 import iiifPopup from 'templates/views/components/iiif-popup.htm';
 import iiifViewerTemplate from 'templates/views/components/iiif-viewer.htm';
@@ -152,7 +153,7 @@ var IIIFViewerViewmodel = function(params) {
                 const updateAnnotations = async function() {
                     var canvas = self.canvas();
                     if (canvas) {
-                        const annotationsUrl = arches.urls.iiifannotations + '?canvas=' + canvas + '&nodeid=' + node.nodeid;
+                        const annotationsUrl = generateArchesURL("iiifannotations") + '?canvas=' + canvas + '&nodeid=' + node.nodeid;
                         if(!cachedAnnotations[annotationsUrl]){
                             const response = await window.fetch(annotationsUrl);
 
@@ -181,7 +182,7 @@ var IIIFViewerViewmodel = function(params) {
         );
     };
 
-    window.fetch(arches.urls.iiifannotationnodes)
+    window.fetch(generateArchesURL("iiifannotationnodes"))
         .then(function(response) {
             return response.json();
         })
@@ -250,10 +251,10 @@ var IIIFViewerViewmodel = function(params) {
                                 'description': ko.observable(''),
                                 'graphName': feature.properties.graphName,
                                 'resourceinstanceid': feature.properties.resourceId,
-                                'reportURL': arches.urls.resource_report,
+                                'reportURL': generateArchesURL("resource_report"),
                                 'translations': arches.translations
                             };
-                            window.fetch(arches.urls.resource_descriptors + popupData.resourceinstanceid)
+                            window.fetch(generateArchesURL("resource_descriptors", { resourceid: popupData.resourceinstanceid }))
                                 .then(function(response) {
                                     return response.json();
                                 })
@@ -299,7 +300,7 @@ var IIIFViewerViewmodel = function(params) {
         allowClear: true,
         placeholder: arches.translations.selectAManifest,
         ajax: {
-            url: arches.urls.iiifmanifest,
+            url: generateArchesURL("iiifmanifest"),
             dataType: 'json',
             quietMillis: 250,
             data: function(requestParams) {

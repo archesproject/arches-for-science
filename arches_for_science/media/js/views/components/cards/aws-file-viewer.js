@@ -1,11 +1,11 @@
 import ko from 'knockout';
-import arches from 'arches';
 import uuid from 'uuid';
 import CardComponentViewModel from 'viewmodels/card-component';
 import CardMultiSelectViewModel from 'viewmodels/card-multi-select';
 import WorkbenchComponentViewModel from 'views/components/workbench';
 import fileRenderers from 'file-renderers';
 import awsFileViewer from 'templates/views/components/card_components/aws-file-viewer.htm';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'bindings/slide';
 import 'bindings/fadeVisible';
 import 'bindings/scroll-to-file';
@@ -363,7 +363,7 @@ export default ko.components.register('aws-file-viewer-card', {
         }
 
         this.downloadSelection = function() {
-            var url = arches.urls.download_files + "?tiles=" + JSON.stringify(self.card.staging()) + "&node=" + self.fileListNodeId;
+            var url = generateArchesURL("download_files") + "?tiles=" + JSON.stringify(self.card.staging()) + "&node=" + self.fileListNodeId;
             window.open(url);
         };
 

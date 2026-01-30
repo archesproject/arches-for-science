@@ -1,6 +1,7 @@
 import ko from 'knockout';
 import arches from 'arches';
 import Workflow from 'viewmodels/workflow';
+import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import projectReportWorkflow from 'templates/views/components/plugins/project-report-workflow.htm';
 import 'views/components/workflows/project-report-workflow/project-report-select';
 import 'views/components/workflows/project-report-workflow/report-template-select';
@@ -111,7 +112,7 @@ export default ko.components.register('project-report-workflow', {
         ];
 
         Workflow.apply(this, [params]);
-        this.quitUrl = arches.urls.plugin('init-workflow');
+        this.quitUrl = generateArchesURL("plugins", { slug: 'init-workflow' });
     },
     template: projectReportWorkflow 
 });
