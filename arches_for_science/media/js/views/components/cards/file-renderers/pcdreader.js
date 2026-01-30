@@ -1,8 +1,13 @@
 import ko from 'knockout';
 import pcdReaderTemplate from 'templates/views/components/cards/file-renderers/pcdreader.htm';
-import THREE from 'three';
-import 'PCDLoader';
-import 'TrackballControls';
+import {
+    Color,
+    PerspectiveCamera,
+    Scene,
+    WebGLRenderer,
+} from 'three';
+import { PCDLoader } from 'PCDLoader';
+import { TrackballControls } from 'TrackballControls';
 import 'bindings/threePCD';
 
 export default ko.components.register('pcdreader', {
@@ -19,17 +24,17 @@ export default ko.components.register('pcdreader', {
         init();
 
         function init() {
-            self.scene = new THREE.Scene();
-            self.scene.background = new THREE.Color( 0x000000 );
-            self.camera = new THREE.PerspectiveCamera( 15, window.innerWidth / window.innerHeight, 0.01, 40 );
+            self.scene = new Scene();
+            self.scene.background = new Color( 0x000000 );
+            self.camera = new PerspectiveCamera( 15, window.innerWidth / window.innerHeight, 0.01, 40 );
             self.camera.position.x = 0.4;
             self.camera.position.z = - 2;
             self.camera.up.set( 0, 0, 1 );
             self.scene.add( self.camera );
-            renderer = new THREE.WebGLRenderer( { antialias: true } );
+            renderer = new WebGLRenderer( { antialias: true } );
             renderer.setPixelRatio( window.devicePixelRatio );
-            self.loader = new THREE.PCDLoader();
-            self.controls = new THREE.TrackballControls( self.camera, renderer.domElement );
+            self.loader = new PCDLoader();
+            self.controls = new TrackballControls( self.camera, renderer.domElement );
             self.controls.rotateSpeed = 2.0;
             self.controls.zoomSpeed = 0.3;
             self.controls.panSpeed = 0.2;

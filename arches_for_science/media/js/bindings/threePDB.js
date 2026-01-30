@@ -1,6 +1,15 @@
 import $ from 'jquery';
 import ko from 'knockout';
-import THREE from 'three';
+import {
+    BoxBufferGeometry,
+    Color,
+    IcosahedronGeometry,
+    Mesh,
+    MeshPhongMaterial,
+    Vector3,
+} from 'three';
+import { CSS2DObject } from 'CSS2DRenderer';
+
 
 ko.bindingHandlers.threePDB = {
     init: function(element, valueAccessor) {
@@ -12,7 +21,7 @@ ko.bindingHandlers.threePDB = {
             var height = window.innerHeight;
             config.camera.aspect = width / height;
             config.camera.updateProjectionMatrix();
-            return {'height': height, 'width': width}
+            return {'height': height, 'width': width};
         };
 
         config.renderers.forEach(function(renderer){
@@ -60,8 +69,8 @@ ko.bindingHandlers.threePDB = {
                 var geometryAtoms = pdb.geometryAtoms;
                 var geometryBonds = pdb.geometryBonds;
                 var json = pdb.json;
-                var boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
-                var sphereGeometry = new THREE.IcosahedronGeometry( 1, 2 );
+                var boxGeometry = new BoxBufferGeometry( 1, 1, 1 );
+                var sphereGeometry = new IcosahedronGeometry( 1, 2 );
                 geometryAtoms.computeBoundingBox();
                 geometryAtoms.boundingBox.getCenter( config.offset ).negate();
                 geometryAtoms.translate( config.offset.x, config.offset.y, config.offset.z );
@@ -70,8 +79,8 @@ ko.bindingHandlers.threePDB = {
                 var positions = geometryAtoms.getAttribute( 'position' );
                 var colors = geometryAtoms.getAttribute( 'color' );
 
-                var position = new THREE.Vector3();
-                var color = new THREE.Color();
+                var position = new Vector3();
+                var color = new Color();
 
                 for ( var i = 0; i < positions.count; i ++ ) {
 
@@ -83,9 +92,9 @@ ko.bindingHandlers.threePDB = {
                     color.g = colors.getY( i );
                     color.b = colors.getZ( i );
 
-                    var material = new THREE.MeshPhongMaterial( { color: color } );
+                    var material = new MeshPhongMaterial( { color: color } );
 
-                    var object = new THREE.Mesh( sphereGeometry, material );
+                    var object = new Mesh( sphereGeometry, material );
                     object.position.copy( position );
                     object.position.multiplyScalar( 75 );
                     object.scale.multiplyScalar( 25 );
@@ -98,7 +107,7 @@ ko.bindingHandlers.threePDB = {
                     text.style.color = 'rgb(' + atom[ 3 ][ 0 ] + ',' + atom[ 3 ][ 1 ] + ',' + atom[ 3 ][ 2 ] + ')';
                     text.textContent = atom[ 4 ];
 
-                    var label = new THREE.CSS2DObject( text );
+                    var label = new CSS2DObject( text );
                     label.position.copy( object.position );
                     config.root.add( label );
 
@@ -106,8 +115,8 @@ ko.bindingHandlers.threePDB = {
 
                 positions = geometryBonds.getAttribute( 'position' );
 
-                var start = new THREE.Vector3();
-                var end = new THREE.Vector3();
+                var start = new Vector3();
+                var end = new Vector3();
 
                 for ( var j = 0; j < positions.count; j += 2 ) {
 
@@ -122,7 +131,7 @@ ko.bindingHandlers.threePDB = {
                     start.multiplyScalar( 75 );
                     end.multiplyScalar( 75 );
 
-                    var mesh = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( 0xffffff ) );
+                    var mesh = new Mesh( boxGeometry, new MeshPhongMaterial( 0xffffff ) );
                     mesh.position.copy( start );
                     mesh.position.lerp( end, 0.5 );
                     mesh.scale.set( 5, 5, start.distanceTo( end ) );
