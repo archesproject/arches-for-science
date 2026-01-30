@@ -45,11 +45,11 @@ export default ko.components.register('aws-file-viewer-card', {
 
         this.fileRenderer = this.card.renderer;
 
-        //dynamically require the renderer - since these can be quite large/cumbersome
+        // dynamically import the renderer - since these can be quite large/cumbersome
         const renderer = fileRenderers.find(renderer => renderer.id === this.fileRenderer());
-        if(renderer) {
-            require([renderer.component], function(component){
-                self.rendererComponentName(renderer.name);
+        if (renderer) {
+            import(renderer.component).then((component) => {
+                self.rendererComponentName(component.name);
             });
         }
 
