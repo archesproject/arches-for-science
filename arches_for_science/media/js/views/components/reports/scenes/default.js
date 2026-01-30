@@ -1,28 +1,26 @@
-define(['underscore',
-    'knockout',
-    'templates/views/components/reports/scenes/default.htm',
-    'arches',
-    'utils/report',
-    'bindings/datatable',
-    'views/components/reports/scenes/keyvalue'
-], function(_, ko, defaultSceneTemplate, arches, reportUtils) {
-    return ko.components.register('views/components/reports/scenes/default', {
-        // IMPORTANT:  this scene *requires* you to compile your own data.  Aboutness is too disparate across all models.
-        viewModel: function(params) {
-            var self = this;
-            Object.assign(self, reportUtils);
+import _ from 'underscore';
+import ko from 'knockout';
+import defaultSceneTemplate from 'templates/views/components/reports/scenes/default.htm';
+import reportUtils from 'utils/report';
+import 'bindings/datatable';
+import 'views/components/reports/scenes/keyvalue';
 
-            self.cards = Object.assign({}, params.cards);
-            self.edit = params.editTile || self.editTile;
-            self.delete = params.deleteTile || self.deleteTile;
-            self.add = params.addTile || self.addNewTile;
-            self.data = ko.observable();
-            self.data(ko.unwrap(params.data));
-            self.visible = {};
-            for(const section of ko.unwrap(params.data).sections) {
-                self.visible[section.title] = ko.observable(true);
-            }
-        },
-        template: defaultSceneTemplate
-    });
+export default ko.components.register('views/components/reports/scenes/default', {
+    // IMPORTANT:  this scene *requires* you to compile your own data.  Aboutness is too disparate across all models.
+    viewModel: function(params) {
+        var self = this;
+        Object.assign(self, reportUtils);
+
+        self.cards = Object.assign({}, params.cards);
+        self.edit = params.editTile || self.editTile;
+        self.delete = params.deleteTile || self.deleteTile;
+        self.add = params.addTile || self.addNewTile;
+        self.data = ko.observable();
+        self.data(ko.unwrap(params.data));
+        self.visible = {};
+        for(const section of ko.unwrap(params.data).sections) {
+            self.visible[section.title] = ko.observable(true);
+        }
+    },
+    template: defaultSceneTemplate
 });

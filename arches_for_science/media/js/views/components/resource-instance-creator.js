@@ -1,26 +1,24 @@
-define([
-    'knockout',
-    'templates/views/components/resource-instance-creator.htm',
-    'viewmodels/resource-instance-select',
-    'bindings/select2-query',
-], function(ko, resourceInstanceSelectWidgetTemplate, ResourceInstanceSelectViewModel) {
-    const viewModel = function(params) {
-        params.value = params.value || ko.observable();
-        params.allowInstanceCreation = true;
-        params.renderContext = 'workflow';
-        params.datatype = 'resource-instance';
-        params.disabled = params.disabled || ko.observable(false);
-        ResourceInstanceSelectViewModel.apply(this, [params]);
+import ko from 'knockout';
+import resourceInstanceSelectWidgetTemplate from 'templates/views/components/resource-instance-creator.htm';
+import ResourceInstanceSelectViewModel from 'viewmodels/resource-instance-select';
+import 'bindings/select2-query';
 
-        this.newResource = function(){
-            this.select2Config.onSelect({
-                "_id": params.graphids[0]
-            });
-        }
-    };
+const viewModel = function(params) {
+    params.value = params.value || ko.observable();
+    params.allowInstanceCreation = true;
+    params.renderContext = 'workflow';
+    params.datatype = 'resource-instance';
+    params.disabled = params.disabled || ko.observable(false);
+    ResourceInstanceSelectViewModel.apply(this, [params]);
 
-    return ko.components.register('views/components/widgets/resource-instance-creator', {
-        viewModel: viewModel,
-        template: resourceInstanceSelectWidgetTemplate,
-    });
+    this.newResource = function(){
+        this.select2Config.onSelect({
+            "_id": params.graphids[0]
+        });
+    }
+};
+
+export default ko.components.register('views/components/widgets/resource-instance-creator', {
+    viewModel: viewModel,
+    template: resourceInstanceSelectWidgetTemplate,
 });

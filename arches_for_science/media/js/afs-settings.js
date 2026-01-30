@@ -1,4 +1,4 @@
-define([], function() {
+export default function() {
     function removeTrailingCommaFromObject(string) {
         return string.replace(/,\s*}*$/, "}");
     }
@@ -13,5 +13,5 @@ define([], function() {
         };
     } catch (error) {
         console.error(error);
-    }
-});
+    };
+};
