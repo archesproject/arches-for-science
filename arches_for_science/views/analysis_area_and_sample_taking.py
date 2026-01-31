@@ -562,9 +562,9 @@ class DeleteSampleAreaView(View):
                     sample_physical_thing_resourceid = sampling_unit_tile.data[sampling_area_sample_created_nodeid][0]["resourceId"]
 
             samplingActivitySampleTile = ResourceXResource.objects.get(
-                nodeid=sampling_area_nodeid,
-                resourceinstanceidfrom_id=sampling_activity_resourceid,
-                resourceinstanceidto_id=sample_area_physical_thing_resourceid,
+                node_id=sampling_area_nodeid,
+                from_resource_id=sampling_activity_resourceid,
+                to_resource_id=sample_area_physical_thing_resourceid,
             )
 
             with transaction.atomic():
@@ -575,7 +575,7 @@ class DeleteSampleAreaView(View):
                     transaction_id=transaction_id, user=request.user
                 )
 
-                Tile.objects.get(tileid=samplingActivitySampleTile.tileid_id).delete(transaction_id=transaction_id, request=request)
+                Tile.objects.get(tileid=samplingActivitySampleTile.tile_id).delete(transaction_id=transaction_id, request=request)
             return JSONResponse(status=200)
         except:
             response = {"message": _("Unable to delete"), "title": _("Delete Failed")}
