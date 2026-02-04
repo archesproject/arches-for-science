@@ -72,9 +72,12 @@ urlpatterns = [
     re_path(r"^renderer_config/(?P<renderer_config_id>[^\/]+)", RendererConfigView.as_view(), name="renderer_config"),
     re_path(r"^renderer_config/", RendererConfigView.as_view(), name="renderer_config"),
     re_path(r"^manifest_x_canvas/", ManifestXCanvasView.as_view(), name="manifest_x_canvas"),
-    path("reports/", include("arches_templating.urls")),
-    path("", include("arches.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns.append(path("reports/", include("arches_templating.urls")))
+urlpatterns.append(path("", include("arches_component_lab.urls")))
+urlpatterns.append(path("", include("arches_controlled_lists.urls")))
+urlpatterns.append(path("", include("arches.urls")))
 
 # Only handle i18n routing in active project. This will still handle the routes provided by Arches core and Arches applications,
 # but handling i18n routes in multiple places causes application errors.
