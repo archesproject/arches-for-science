@@ -30,6 +30,7 @@ dependencies = [
   "django-storages==1.13.2",
   "boto3==1.42.38",
   "arches-templating>=0.1.2",
+  "arches_controlled_lists @ git+https://github.com/archesproject/arches-controlled-lists@dev/1.1.x",
 ]
 version = "3.0.0a0"
 
