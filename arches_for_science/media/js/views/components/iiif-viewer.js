@@ -153,7 +153,7 @@ var IIIFViewerViewmodel = function(params) {
                 const updateAnnotations = async function() {
                     var canvas = self.canvas();
                     if (canvas) {
-                        const annotationsUrl = generateArchesURL("iiifannotations") + '?canvas=' + canvas + '&nodeid=' + node.nodeid;
+                        const annotationsUrl = generateArchesURL("arches:iiifannotations") + '?canvas=' + canvas + '&nodeid=' + node.nodeid;
                         if(!cachedAnnotations[annotationsUrl]){
                             const response = await window.fetch(annotationsUrl);
 
@@ -182,7 +182,7 @@ var IIIFViewerViewmodel = function(params) {
         );
     };
 
-    window.fetch(generateArchesURL("iiifannotationnodes"))
+    window.fetch(generateArchesURL("arches:iiifannotationnodes"))
         .then(function(response) {
             return response.json();
         })
@@ -251,10 +251,10 @@ var IIIFViewerViewmodel = function(params) {
                                 'description': ko.observable(''),
                                 'graphName': feature.properties.graphName,
                                 'resourceinstanceid': feature.properties.resourceId,
-                                'reportURL': generateArchesURL("resource_report"),
+                                'reportURL': generateArchesURL("arches:resource_report"),
                                 'translations': arches.translations
                             };
-                            window.fetch(generateArchesURL("resource_descriptors", { resourceid: popupData.resourceinstanceid }))
+                            window.fetch(generateArchesURL("arches:resource_descriptors", { resourceid: popupData.resourceinstanceid }))
                                 .then(function(response) {
                                     return response.json();
                                 })
@@ -300,7 +300,7 @@ var IIIFViewerViewmodel = function(params) {
         allowClear: true,
         placeholder: arches.translations.selectAManifest,
         ajax: {
-            url: generateArchesURL("iiifmanifest"),
+            url: generateArchesURL("arches:iiifmanifest"),
             dataType: 'json',
             quietMillis: 250,
             data: function(requestParams) {

@@ -112,7 +112,7 @@ export default ko.components.register('project-report-workflow', {
         ];
 
         Workflow.apply(this, [params]);
-        this.quitUrl = generateArchesURL("plugins", { slug: 'init-workflow' });
+        this.quitUrl = generateArchesURL("arches:plugins", { slug: 'init-workflow' });
     },
     template: projectReportWorkflow 
 });

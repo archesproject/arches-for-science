@@ -66,7 +66,7 @@ function viewModel(params) {
 
     this.saveTile = function(data, nodeGroupId, resourceid, tileid) {
         let tile = self.buildTile(data, nodeGroupId, resourceid, tileid);
-        return window.fetch(generateArchesURL("api_tiles", {tileid: tileid || uuid.generate()}), {
+        return window.fetch(generateArchesURL("arches:api_tiles", {tileid: tileid || uuid.generate()}), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(tile),

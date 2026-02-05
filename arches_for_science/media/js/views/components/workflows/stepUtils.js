@@ -56,7 +56,7 @@ export default {
         };
 
         if (!alreadySaved) {
-            return window.fetch(generateArchesURL("api_tiles", {tileid: tileId || uuid.generate()}), {
+            return window.fetch(generateArchesURL("arches:api_tiles", {tileid: tileId || uuid.generate()}), {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify(tileObj),

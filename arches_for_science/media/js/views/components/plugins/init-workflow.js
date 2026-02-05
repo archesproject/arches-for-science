@@ -8,7 +8,7 @@ var InitWorkflow = function(params) {
     this.workflows = ko.observableArray([]);
     this.helpTemplateData = ko.observableArray([]);
     
-    fetch(generateArchesURL("api_plugins")).then(resp => {
+    fetch(generateArchesURL("arches:api_plugins", { pluginid: "" })).then(resp => {
         if (resp.ok) {
             return resp.json();
         }
@@ -18,13 +18,14 @@ var InitWorkflow = function(params) {
     }).then(respJSON => {
         let workflows = respJSON.reduce((acc, plugin) => {
             if (plugin.config.is_workflow) {
-                plugin.url = generateArchesURL("plugins", { slug: plugin.slug });
+                plugin.url = generateArchesURL("arches:plugins", { slug: plugin.slug });
                 acc.push(plugin);
             }
             return acc;
         }, []);
 
         // filters out the chemical analysis and chemical image workflows if cloud storage is not enabled.
+        console.log(afsSettings.cloudStorage);
         if(!afsSettings.cloudStorage.enabled){
             workflows = workflows.filter(
                 workflow => {
@@ -50,7 +51,7 @@ var InitWorkflow = function(params) {
     this.selectedHelpTemplate.subscribe(helpTemplateName => {
         if (helpTemplateName) {
             this.isHelpTemplateLoading(true);
-            this.helpTemplateUrl(generateArchesURL("help_template") + `?template=${helpTemplateName}`);
+            this.helpTemplateUrl(generateArchesURL("arches:help_templates") + `?template=${helpTemplateName}`);
         }
         else {
             this.helpTemplateUrl(null);
@@ -67,7 +68,7 @@ var InitWorkflow = function(params) {
         }
     });
 
-    fetch(generateArchesURL("api_user_incomplete_workflows")).then(resp => {
+    fetch(generateArchesURL("arches:api_user_incomplete_workflows")).then(resp => {
         if (resp.ok) {
             return resp.json();
         }

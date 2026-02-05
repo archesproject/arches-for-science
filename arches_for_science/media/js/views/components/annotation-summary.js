@@ -102,7 +102,7 @@ export default ko.components.register('views/components/annotation-summary', {
                                         // TODO(i18n) graph or slug?
                                         graphName: 'Physical Thing',
                                         resourceinstanceid: feature.properties.sampleAreaResourceId,
-                                        reportURL: generateArchesURL("resource_report")
+                                        reportURL: generateArchesURL("arches:resource_report")
                                     };
                                     var popupElement = popup.getElement()
                                         .querySelector('.mapboxgl-popup-content');

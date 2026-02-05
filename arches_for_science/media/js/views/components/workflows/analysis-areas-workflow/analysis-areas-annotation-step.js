@@ -142,7 +142,7 @@ function viewModel(params) {
     });
 
     this.physicalThingName = ko.observable();
-    window.fetch(generateArchesURL("resources", { resourceid: self.physicalThingResourceId }) + '?format=json&compact=false&v=beta')
+    window.fetch(generateArchesURL("arches:resources", { resourceid: self.physicalThingResourceId }) + '?format=json&compact=false&v=beta')
         .then(function(response){
             if(response.ok){
                 return response.json();
@@ -171,7 +171,7 @@ function viewModel(params) {
             }
             subscription.dispose();
         });
-        $.getJSON(generateArchesURL("api_card", { resourceid: self.physicalThingResourceId})).then(function(data) {
+        $.getJSON(generateArchesURL("arches:api_card", { resourceid: self.physicalThingResourceId})).then(function(data) {
             self.loadExternalCardData(data);
         });
     };
@@ -335,7 +335,7 @@ function viewModel(params) {
             if(analysisAreaTile.data[physicalPartObjectNodeId]()){
                 analysisAreaResourceId = analysisAreaTile.data[physicalPartObjectNodeId]()[0]["resourceId"]();
             }
-            window.fetch(generateArchesURL("analysisarealocked") + '?resourceId=' + analysisAreaResourceId)
+            window.fetch(generateArchesURL("arches_for_science:analysisarealocked") + '?resourceId=' + analysisAreaResourceId)
                 .then(function(response) {
                     if(response.ok){
                         return response.json();
@@ -417,7 +417,7 @@ function viewModel(params) {
         self.showingAnalysisAreaDeleteModal(false);
         self.savingMessage(arches.translations.deleting);
 
-        window.fetch(generateArchesURL("deleteanalysisarea"), {
+        window.fetch(generateArchesURL("arches_for_science:deleteanalysisarea"), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),
@@ -527,7 +527,7 @@ function viewModel(params) {
         };
 
         $.ajax({
-            url: generateArchesURL("saveanalysisarea"),
+            url: generateArchesURL("arches_for_science:saveanalysisarea"),
             type: 'POST',
             data: data,
             dataType: 'json',
@@ -760,10 +760,10 @@ function viewModel(params) {
                                 'description': ko.observable(''),
                                 'graphName': feature.properties.graphName,
                                 'resourceinstanceid': sampleLocation.resourceid,
-                                'reportURL': generateArchesURL("resource_report"),
+                                'reportURL': generateArchesURL("arches:resource_report"),
                                 'translations': arches.translations,
                             };
-                            window.fetch(generateArchesURL("resource_descriptors", { resourceid: popupData.resourceinstanceid }))
+                            window.fetch(generateArchesURL("arches:resource_descriptors", { resourceid: popupData.resourceinstanceid }))
                                 .then(function(response) {
                                     return response.json();
                                 })
@@ -820,7 +820,7 @@ function viewModel(params) {
                     let analysisAreaAnnotations = ko.observableArray();
                     var canvas = self.canvas();
                     if (canvas) {
-                        window.fetch(generateArchesURL("iiifannotations") + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
+                        window.fetch(generateArchesURL("arches:iiifannotations") + '?canvas=' + canvas + '&nodeid=' + partIdentifierAssignmentPolygonIdentifierNodeId)
                             .then(function(response) {
                                 return response.json();
                             })
@@ -994,7 +994,7 @@ function viewModel(params) {
 
     this._fetchCard = function(resourceId, graphId, nodegroupId) {
         return new Promise(function(resolve, _reject) {
-            $.getJSON( generateArchesURL("api_card", { resourceid: resourceId || graphId }) ).then(function(data) {
+            $.getJSON( generateArchesURL("arches:api_card", { resourceid: resourceId || graphId }) ).then(function(data) {
                 var cardData = data.cards.find(function(card) {
                     return card.nodegroup_id === nodegroupId;
                 });

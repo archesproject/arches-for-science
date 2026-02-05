@@ -103,7 +103,7 @@ const vm = function (params) {
         };
 
         const configSaveResponse = await fetch(
-            generateArchesURL("renderer_config", { renderer_config_id: configId}),
+            generateArchesURL("arches_for_science:renderer_config", { renderer_config_id: configId}),
             {
                 method: "POST",
                 credentials: "include",
@@ -184,7 +184,7 @@ const vm = function (params) {
 
     this.deleteConfiguration = async (configuration) => {
         const configDeleteResponse = await fetch(
-            generateArchesURL("renderer_config", { renderer_config_id: configuration.configid}),
+            generateArchesURL("arches_for_science:renderer_config", { renderer_config_id: configuration.configid}),
             {
                 method: "DELETE",
                 credentials: "include",

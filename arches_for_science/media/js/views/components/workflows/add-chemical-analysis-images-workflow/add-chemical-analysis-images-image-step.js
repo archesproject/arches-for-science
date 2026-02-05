@@ -263,10 +263,10 @@ function viewModel(params) {
 
         params.form.lockExternalStep("select-project", true);
         if (self.manifestData() && self.manifestData()['label'] === self.selectedPhysicalThingImageServiceName()) {
-            const manifest_response = await fetch(`${generateArchesURL("manifest_x_canvas")}?manifest=${self.manifestData()['@id']}`);
+            const manifest_response = await fetch(`${generateArchesURL("arches_for_science:manifest_x_canvas")}?manifest=${self.manifestData()['@id']}`);
             const manifest_data = await manifest_response.json();
             const digitalResourcesResourceId = manifest_data.digital_resource;
-            const card_response = await fetch(generateArchesURL("api_card", { resourceid: digitalResourcesResourceId}));
+            const card_response = await fetch(generateArchesURL("arches:api_card", { resourceid: digitalResourcesResourceId}));
             const card_data = await card_response.json();
 
             const digitalServiceTile = card_data.tiles.find(function(tile) {
@@ -356,7 +356,7 @@ function viewModel(params) {
     };
 
     this.getPhysicalThingDigitalReferenceData = function() {
-        $.getJSON( generateArchesURL("api_card", { resourceid: self.physicalThingResourceId}) ).then(function(data) {
+        $.getJSON( generateArchesURL("arches:api_card", { resourceid: self.physicalThingResourceId}) ).then(function(data) {
             var digitalReferenceCardData = data.cards.find(function(card) {
                 return card.nodegroup_id === '8a4ad932-8d59-11eb-a9c4-faffc265b501';
             });
@@ -394,7 +394,7 @@ function viewModel(params) {
     };
 
     this.getObservationDigitalReferenceData = function() {
-        $.getJSON( generateArchesURL("api_card", { resourceid: self.observationResourceId}) ).then(function(data) {
+        $.getJSON( generateArchesURL("arches:api_card", { resourceid: self.observationResourceId}) ).then(function(data) {
             var digitalReferenceCardData = data.cards.find(function(card) {
                 return card.nodegroup_id === '0ae149ba-8e30-11eb-a9c4-faffc265b501';
             });
@@ -468,7 +468,7 @@ function viewModel(params) {
             if (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ))  {
                 var physicalThingManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
 
-                $.getJSON( generateArchesURL("api_card", { resourceid: physicalThingManifestResourceId}) )
+                $.getJSON( generateArchesURL("arches:api_card", { resourceid: physicalThingManifestResourceId}) )
                     .then(function(data) {
                         self.getThumbnail(data)
                             .then(function(json) {
@@ -520,7 +520,7 @@ function viewModel(params) {
             if (digitalReferenceTypeValue === ( preferredManifestConceptValueId || alternateManifestConceptValueId ))  {
                 var physicalThingManifestResourceId = tile.data[digitalSourceNodeId]()[0].resourceId();
 
-                $.getJSON( generateArchesURL("api_card", { resourceid: physicalThingManifestResourceId}) )
+                $.getJSON( generateArchesURL("arches:api_card", { resourceid: physicalThingManifestResourceId}) )
                     .then(function(data) {
                         self.getThumbnail(data)
                             .then(function(json) {

@@ -35,7 +35,7 @@ export default ko.components.register("xy-reader", {
         // on init, get available renderer configs for display to user.
         const rendererConfigRefresh = async () => {
             const rendererResponse = await fetch(
-                generateArchesURL("renderer", { renderer_id: self.renderer })
+                generateArchesURL("arches_for_science:renderer", { renderer_id: self.renderer })
             );
             if (rendererResponse.ok) {
                 const renderers = await rendererResponse.json();
@@ -131,7 +131,7 @@ export default ko.components.register("xy-reader", {
                 rendererId: self.renderer,
             };
             const configSaveResponse = await fetch(
-                generateArchesURL("renderer_config"),
+                generateArchesURL("arches_for_science:renderer_config"),
                 {
                     method: "POST",
                     credentials: "include",

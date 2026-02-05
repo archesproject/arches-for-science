@@ -298,7 +298,7 @@ const vm = function(params) {
     };
 
     this.updateConfiguration = async(file, rendererConfigId) => {
-        const tilesResponse = await fetch(generateArchesURL("api_tiles", {tileid: file.tileid}));
+        const tilesResponse = await fetch(generateArchesURL("arches:api_tiles", {tileid: file.tileid}));
         if(tilesResponse.ok) {
             const tile = await tilesResponse.json();
             const fileNode = tile?.data?.[file.nodeid];

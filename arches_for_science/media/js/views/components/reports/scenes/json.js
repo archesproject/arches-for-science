@@ -23,7 +23,7 @@ export default ko.components.register('views/components/reports/scenes/json', {
 
         self.setSelectedJson = async(format) => {
             if(!self.json[format]){
-                const response = await fetch(`${generateArchesURL("resources", { resourceid: self.resourceInstanceId })}?format=${format}`);
+                const response = await fetch(`${generateArchesURL("arches:resources", { resourceid: self.resourceInstanceId })}?format=${format}`);
                 self.json[format] = response.ok ? await response.json() : arches.translations.jsonError; // let the user know if the json couldn't be retrieved.
             }
             self.selectedJSON(JSON.stringify(self.json[format], null, 2));

@@ -158,7 +158,7 @@ var viewModel = function(params) {
     this.initialize = function() {
         self.loading(true);
 
-        var url = generateArchesURL("resources", { resourceid: params.report.get('resourceid') }) + '?format=json&compact=false';
+        var url = generateArchesURL("arches:resources", { resourceid: params.report.get('resourceid') }) + '?format=json&compact=false';
 
         $.get(url, function(data) {
             self.disambiguatedResourceGraph(data);

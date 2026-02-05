@@ -43,7 +43,7 @@ export default ko.components.register('views/components/resource-instance-nodeva
                 } 
             },
             ajax: {
-                url: generateArchesURL("related_resources", { resourceid: self.relatedResourceId }) + "?paginate=false",
+                url: generateArchesURL("arches:related_resources", { resourceid: self.relatedResourceId }) + "?paginate=false",
                 dataType: 'json',
                 processResults: function(data) {
                     const filteredResources = data.related_resources.filter(function(resource) {

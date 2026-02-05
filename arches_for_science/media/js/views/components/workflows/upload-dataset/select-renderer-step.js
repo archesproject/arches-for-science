@@ -56,7 +56,7 @@ function viewModel(params) {
 
     this.digitalResources = ko.observableArray();
     this.getDigitalResource = async(resourceid) => {
-        const response = await window.fetch(generateArchesURL("resources", { resourceid: resourceid }) + '?format=json&compact=false&v=beta');
+        const response = await window.fetch(generateArchesURL("arches:resources", { resourceid: resourceid }) + '?format=json&compact=false&v=beta');
         if(!response.ok) {return;}
         const data = await response.json();
 
