@@ -89,7 +89,7 @@ export default ko.components.register('observation-report', {
                     let parts;
                     if (partentPhysicalThingResourceId) {
                         let parentResource;
-                        await window.fetch(generateArchesURL("resources", { resourceid: partentPhysicalThingResourceId }) + '?format=json&compact=false&v=beta')
+                        await window.fetch(generateArchesURL("arches:resources", { resourceid: partentPhysicalThingResourceId }) + '?format=json&compact=false&v=beta')
                             .then(response => response.json())
                             .then(data => { parentResource = data.resource; })
 

@@ -132,7 +132,7 @@ function viewModel(params) {
 
     this.saveNodeValue = function(nodeid, data, resourceinstanceid, tileid) {
         return $.ajax({
-            url: generateArchesURL("api_node_value"),
+            url: generateArchesURL("arches:api_node_value"),
             type: 'POST',
             data: {
                 'nodeid': nodeid,
@@ -149,7 +149,7 @@ function viewModel(params) {
         formData.append('data', JSON.stringify(tile));
         formData.append('transaction_id', params.form.workflowId);
         return $.ajax({
-            url: generateArchesURL("api_tiles", {tileid: tileid}),
+            url: generateArchesURL("arches:api_tiles", {tileid: tileid}),
             type: 'POST',
             processData: false,
             contentType: false,

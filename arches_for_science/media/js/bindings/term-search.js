@@ -47,7 +47,7 @@ ko.bindingHandlers.termSearch = {
             minimumInputLength: 1,
             data:ko.unwrap(terms).concat(ko.unwrap(tags)),  // initial selection
             ajax: {
-                url: generateArchesURL("search_terms"),
+                url: generateArchesURL("arches:search_terms"),
                 dataType: 'json',
                 quietMillis: 500,
                 data: function(requestParams) {

@@ -13,7 +13,7 @@ function viewModel(params) {
 
     const getDigitalResources = async function(resourceid) {
         if(!resourceid){ return; }
-        const url = generateArchesURL("digital-resources-by-object-parts", {resourceid: resourceid});
+        const url = generateArchesURL("arches_for_science:digital-resources-by-object-parts", {resourceid: resourceid});
         const result = await fetch(url, {
             method: 'GET',
             credentials: 'include'

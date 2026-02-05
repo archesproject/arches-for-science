@@ -72,7 +72,7 @@ export default ko.components.register("ca-upload-files-step", {
                 const formData = new window.FormData();
                 formData.append("tileid", fileTile);
 
-                const resp = await window.fetch(generateArchesURL("tile"), {
+                const resp = await window.fetch(generateArchesURL("arches:tile"), {
                 method: "DELETE",
                 credentials: "include",
                 body: JSON.stringify(Object.fromEntries(formData.entries())),
@@ -227,7 +227,7 @@ export default ko.components.register("ca-upload-files-step", {
             });
 
             const resp = await window.fetch(
-                generateArchesURL("upload_dataset_select_dataset_files_step"),
+                generateArchesURL("arches_for_science:upload_dataset_select_dataset_files_step"),
                 {
                 method: "POST",
                 credentials: "include",

@@ -14,7 +14,7 @@ export default ko.components.register('visual-work-report', {
 
         if (params.summary) {
 
-            this.editorLink = generateArchesURL("resource_editor", { resourceid: this.report.attributes.resourceid });
+            this.editorLink = generateArchesURL("arches:resource_editor", { resourceid: this.report.attributes.resourceid });
 
             var StatementTextId = 'e58ecc2e-c062-11e9-ba30-a4d18cec433a'; // ok
             var TypeOfWorkId = '28a4ae07-c062-11e9-a11d-a4d18cec433a';
@@ -34,7 +34,7 @@ export default ko.components.register('visual-work-report', {
                         .then(function(data) {
                             self.createBy.push({
                                 name: data._source.displayname,
-                                link: generateArchesURL("resource_report", { resourceid: createByObj.resourceId }),
+                                link: generateArchesURL("arches:resource_report", { resourceid: createByObj.resourceId }),
                             });
                         });
                 }});
@@ -66,7 +66,7 @@ export default ko.components.register('visual-work-report', {
                         .then(function(data) {
                             self.depictsPhysicalName.push({
                                 name: data._source.displayname,
-                                link: generateArchesURL("resource_report", { resourceid: depictsPhysical.resourceId }),
+                                link: generateArchesURL("arches:resource_report", { resourceid: depictsPhysical.resourceId }),
                             });
                         });
                 }});
@@ -79,7 +79,7 @@ export default ko.components.register('visual-work-report', {
             }, this.report.get('tiles'), this.report.graph);
 
             if (this.TypeOfWorkValue.length) {
-                $.ajax(generateArchesURL("concept_value") + '?valueid=' + self.TypeOfWorkValue, {
+                $.ajax(generateArchesURL("arches:concept_value") + '?valueid=' + self.TypeOfWorkValue, {
                     dataType: "json"
                 }).done(function(data) {
                     self.TypeOfWorkName(data.value);

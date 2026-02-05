@@ -17,7 +17,7 @@ function viewModel(params) {
     // this.xlsxTemplates = [];
 
     this.getTemplates = async() => {
-        const response = await fetch(generateArchesURL("reports_list"));
+        const response = await fetch(generateArchesURL("arches_templating:archestemplating_template_view_get"));
 
         if(response.ok) {
             const data = await response.json();

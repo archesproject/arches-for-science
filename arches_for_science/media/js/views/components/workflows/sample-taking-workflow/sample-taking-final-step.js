@@ -88,7 +88,7 @@ function viewModel(params) {
                                     // TODO(i18n) slug or name?
                                     graphName: 'Physical Thing',
                                     resourceinstanceid: feature.properties.sampleAreaResourceId,
-                                    reportURL: generateArchesURL("resource_report")
+                                    reportURL: generateArchesURL("arches:resource_report")
                                 };
                                 var popupElement = popup.getElement()
                                     .querySelector('.mapboxgl-popup-content');

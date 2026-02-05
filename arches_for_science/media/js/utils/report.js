@@ -8,7 +8,7 @@ const deleteTile = async(tileid, card) => {
     if(tile){
         return $.ajax({
             type: "DELETE",
-            url: generateArchesURL("tile"),
+            url: generateArchesURL("arches:tile"),
             data: JSON.stringify(tile.getData()),
             success: () => {
                 const tiles = card.tiles();
@@ -48,7 +48,7 @@ const getResourceLink = (node) => {
     if(node) {
         const resourceId = node.resourceId;
         if(resourceId){
-            return generateArchesURL("resource_report", { resourceid: resourceId });
+            return generateArchesURL("arches:resource_report", { resourceid: resourceId });
         }
     }
 };
@@ -82,7 +82,7 @@ export default {
     },
 
     getRelatedResources: async(resourceid) => {
-        return (window.fetch(generateArchesURL("related_resources", { resourceid: resourceid }) + "?paginate=false")
+        return (window.fetch(generateArchesURL("arches:related_resources", { resourceid: resourceid }) + "?paginate=false")
             .then(response => response.json()));
     },
 

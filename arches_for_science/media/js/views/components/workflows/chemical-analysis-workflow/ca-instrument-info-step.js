@@ -171,7 +171,7 @@ function viewModel(params) {
 
     this.saveTile = function(data, nodeGroupId, resourceid, tileid) {
         let tile = self.buildTile(data, nodeGroupId, resourceid, tileid);
-        return window.fetch(generateArchesURL("api_tiles", {tileid: tileid || uuid.generate()}), {
+        return window.fetch(generateArchesURL("arches:api_tiles", {tileid: tileid || uuid.generate()}), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(tile),
@@ -198,12 +198,12 @@ function viewModel(params) {
         const textualWorkTypeNodegroupId= "dc946b1e-c070-11e9-a005-a4d18cec433a";
         const procedureValueId = "60d1e09c-0f14-4348-ae14-57fdb9ef87c4";
 
-        window.fetch(generateArchesURL("resources", { resourceid: self.procedureValue() }) + '?format=json&compact=false')
+        window.fetch(generateArchesURL("arches:resources", { resourceid: self.procedureValue() }) + '?format=json&compact=false')
             .then(response => response.json())
             .then(data => {
                 const textualWorkTypeTileId = data.resource.type?.['@tile_id'];
                 if (textualWorkTypeTileId){
-                    window.fetch(generateArchesURL("api_tiles", {tileid: textualWorkTypeTileId}), {
+                    window.fetch(generateArchesURL("arches:api_tiles", {tileid: textualWorkTypeTileId}), {
                         method: 'GET',
                         credentials: 'include',
                         headers: {
@@ -214,7 +214,7 @@ function viewModel(params) {
                         .then(tile => {
                             if (!tile.data[textualWorkTypeNodegroupId].includes(procedureValueId)){
                                 tile.data[textualWorkTypeNodegroupId].push(procedureValueId);
-                                window.fetch(generateArchesURL("api_tiles", {tileid: textualWorkTypeTileId}), {
+                                window.fetch(generateArchesURL("arches:api_tiles", {tileid: textualWorkTypeTileId}), {
                                     method: 'POST',
                                     credentials: 'include',
                                     body: JSON.stringify(tile),
@@ -285,7 +285,7 @@ function viewModel(params) {
         parameterData[statementLanguageNodeId] = languageConceptValue;
         data['parameterTile'] = self.buildTile(parameterData, parameterNodeGroupId, self.observationInstanceId(), parameterTileId);
 
-        return window.fetch(generateArchesURL("instrument-info-form-save"), {
+        return window.fetch(generateArchesURL("arches_for_science:instrument-info-form-save"), {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(data),

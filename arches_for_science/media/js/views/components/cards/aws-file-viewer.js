@@ -363,7 +363,7 @@ export default ko.components.register('aws-file-viewer-card', {
         }
 
         this.downloadSelection = function() {
-            var url = generateArchesURL("download_files") + "?tiles=" + JSON.stringify(self.card.staging()) + "&node=" + self.fileListNodeId;
+            var url = generateArchesURL("arches:download_files") + "?tiles=" + JSON.stringify(self.card.staging()) + "&node=" + self.fileListNodeId;
             window.open(url);
         };
 

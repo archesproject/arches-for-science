@@ -224,7 +224,7 @@ export default ko.components.register('digital-resource-report', {
         self.nameSummary = ko.observable();
         self.statementsSummary = ko.observable();
 
-        const thumbnailUrl = generateArchesURL("thumbnail", { resourceinstanceid: params.report.report_json.resourceinstanceid });
+        const thumbnailUrl = generateArchesURL("arches:thumbnail", { resourceinstanceid: params.report.report_json.resourceinstanceid });
         self.thumbnail = ko.observable();
 
         fetch(thumbnailUrl, {method: 'HEAD'}).then(resp => { 

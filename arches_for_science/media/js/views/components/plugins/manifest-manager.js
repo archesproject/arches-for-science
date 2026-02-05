@@ -126,7 +126,7 @@ export default ko.components.register('manifest-manager', {
             }
             $.ajax({
                 type: "POST",
-                url: generateArchesURL("manifest_manager"),
+                url: generateArchesURL("arches:manifest_manager"),
                 data: self.formData,
                 cache: false,
                 processData: false,
@@ -161,7 +161,7 @@ export default ko.components.register('manifest-manager', {
             self.formData.append("manifest", ko.unwrap(self.manifest));
             $.ajax({
                 type: "DELETE",
-                url: generateArchesURL("manifest_manager"),
+                url: generateArchesURL("arches:manifest_manager"),
                 data: JSON.stringify({"manifest": ko.unwrap(self.manifest)}),
                 cache: false,
                 processData: false,

@@ -137,12 +137,12 @@ function viewModel(params) {
     }, null, "arrayChange");
 
     const loadExistingCollection = async function(){
-        const projectRelatedResources = await (await window.fetch(`${generateArchesURL("related_resources", { resourceid: self.projectResourceId() })}`)).json();
+        const projectRelatedResources = await (await window.fetch(`${generateArchesURL("arches:related_resources", { resourceid: self.projectResourceId() })}`)).json();
         const existingCollection = projectRelatedResources.related_resources.related_resources.find(x=>x.graph_id==="1b210ef3-b25c-11e9-a037-a4d18cec433a");
         if (existingCollection) {
             self.collectionResourceId(existingCollection.resourceinstanceid);
 
-            const collectionRelatedResources = await (await window.fetch(`${generateArchesURL("related_resources", { resourceid: self.collectionResourceId() })}`)).json();
+            const collectionRelatedResources = await (await window.fetch(`${generateArchesURL("arches:related_resources", { resourceid: self.collectionResourceId() })}`)).json();
 
             self.startValue(
                 collectionRelatedResources.related_resources.related_resources
@@ -281,7 +281,7 @@ function viewModel(params) {
 
         const resourcesToUpdate = createResourceListToUpdate();
         $.ajax({
-            url: generateArchesURL("updateresourcelist"),
+            url: generateArchesURL("arches_for_science:updateresourcelist"),
             type: 'POST',
             data: {
                 projectresourceid: ko.unwrap(self.projectResourceId),
@@ -326,7 +326,7 @@ function viewModel(params) {
         closeOnSelect: true,
         allowClear: true,
         ajax: {
-            url: generateArchesURL("search_terms"),
+            url: generateArchesURL("arches:search_terms"),
             dataType: 'json',
             quietMillis: 250,
             data: function(requestParams) {
@@ -436,7 +436,7 @@ function viewModel(params) {
 
         const setUpReports = async function() {
             const filterParams = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&');
-            await fetch(generateArchesURL("physical_thing_search_results") + '?' + filterParams)
+            await fetch(generateArchesURL("arches_for_science:physical_thing_search_results") + '?' + filterParams)
                 .then(response => response.json())
                 .then(data => {
                     _.each(self.searchResults, function(_value, key) {

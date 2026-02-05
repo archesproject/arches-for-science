@@ -150,7 +150,7 @@ export default ko.components.register('select-dataset-files-step', {
 
         const getPartObservationId = async(part) => {
             if(part.datasetId()) {
-                const selectedDatasetCrossReferences = await (await window.fetch(generateArchesURL("related_resources", { resourceid: part.datasetId() }))).json();
+                const selectedDatasetCrossReferences = await (await window.fetch(generateArchesURL("arches:related_resources", { resourceid: part.datasetId() }))).json();
                 const relatedObservation = selectedDatasetCrossReferences?.related_resources?.related_resources?.filter(x => x?.graph_id == observationGraphId);
                 part.observationResourceId = relatedObservation?.[0]?.resourceinstanceid;
                 if(part.datasetId() == self.selectedPart()?.datasetId()){
@@ -223,7 +223,7 @@ export default ko.components.register('select-dataset-files-step', {
                     const formData = new window.FormData();
                     formData.append("tileid", fileTile);
 
-                    const resp = await window.fetch(generateArchesURL("tile"), {
+                    const resp = await window.fetch(generateArchesURL("arches:tile"), {
                         method: 'DELETE', 
                         credentials: 'include',
                         body: JSON.stringify(Object.fromEntries(formData.entries())),
@@ -291,7 +291,7 @@ export default ko.components.register('select-dataset-files-step', {
                     });
                 }
 
-                const resp = await window.fetch(generateArchesURL("upload_dataset_select_dataset_files_step"), {
+                const resp = await window.fetch(generateArchesURL("arches_for_science:upload_dataset_select_dataset_files_step"), {
                     method: 'POST',
                     credentials: 'include',
                     body: formData,

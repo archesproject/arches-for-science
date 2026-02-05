@@ -116,7 +116,7 @@ export default ko.components.register('analysis-areas-workflow', {
             const quitUrl = this.quitUrl;
             return $.ajax({
                 type: "POST",
-                url: generateArchesURL("transaction_reverse", { transactionid: this.id() })
+                url: generateArchesURL("arches:transaction_reverse", { transactionid: this.id() })
             }).then(function() {
                 params.loading(false);
                 window.location.href = quitUrl;
@@ -138,7 +138,7 @@ export default ko.components.register('analysis-areas-workflow', {
             );
         };
         
-        this.quitUrl = generateArchesURL("plugins", { slug: 'init-workflow' });
+        this.quitUrl = generateArchesURL("arches:plugins", { slug: 'init-workflow' });
     },
     template: analysisAreasWorkflowTemplate
 });
