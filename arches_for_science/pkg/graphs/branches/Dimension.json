@@ -16,13 +16,13 @@
                     "graph_id": "d9738a38-b24d-11e9-b32c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "name": {
                         "en": "Name"
@@ -45,13 +45,13 @@
                     "graph_id": "d9738a38-b24d-11e9-b32c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "name": {
                         "en": "Dimension"
@@ -74,13 +74,13 @@
                     "graph_id": "d9738a38-b24d-11e9-b32c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "name": {
                         "en": "Name"
@@ -103,13 +103,13 @@
                     "graph_id": "d9738a38-b24d-11e9-b32c-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
                     "name": {
                         "en": "Statement"
@@ -166,7 +166,6 @@
                             "placeholder"
                         ],
                         "label": "type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -179,7 +178,7 @@
                     "sortorder": 4,
                     "source_identifier_id": null,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "d976167a-b24d-11e9-bd8e-a4d18cec433a",
@@ -241,7 +240,6 @@
                             "placeholder"
                         ],
                         "label": "Unit",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -254,7 +252,7 @@
                     "sortorder": 3,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "d976167a-b24d-11e9-bd8e-a4d18cec433a",
@@ -363,14 +361,11 @@
                 {
                     "card_id": "42c2bc3d-b250-11e9-a6d5-a4d18cec433a",
                     "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
+                        "defaultValue": [],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Type of Name",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -383,7 +378,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "42c2bc3d-b250-11e9-a6d5-a4d18cec433a",
@@ -441,13 +436,38 @@
                     "card_id": "42c2bc3d-b250-11e9-a6d5-a4d18cec433a",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Language of Text",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -460,7 +480,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ea198e88-073d-11ea-aac2-acde48001122",
@@ -526,13 +546,38 @@
                     "card_id": "ea198e88-073d-11ea-aac2-acde48001122",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Language of Text",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -545,19 +590,16 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ea198e88-073d-11ea-aac2-acde48001122",
                     "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
+                        "defaultValue": [],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Type of Name",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -570,7 +612,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ea198e88-073d-11ea-aac2-acde48001122",
@@ -628,13 +670,24 @@
                     "card_id": "ea19914e-073d-11ea-aac2-acde48001122",
                     "config": {
                         "defaultValue": [
-                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "167327e5-9278-4f40-95ca-4637b55ddfdd",
+                                        "language_id": "en",
+                                        "list_item_id": "74c7bf6c-fde6-4624-8373-7cb5078a8215",
+                                        "value": "brief text",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1adae7ea-4884-432f-af44-c9aea3a48a3d",
+                                "uri": "http://vocab.getty.edu/aat/300418049"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Type of Statement",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -647,7 +700,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "ea19914e-073d-11ea-aac2-acde48001122",
@@ -705,13 +758,38 @@
                     "card_id": "ea19914e-073d-11ea-aac2-acde48001122",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Language of Text",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -724,7 +802,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 }
             ],
             "color": null,
@@ -1055,9 +1133,10 @@
                 {
                     "alias": "unit",
                     "config": {
-                        "rdmCollection": "44295221-1215-4359-a079-234b317f65b7"
+                        "controlledList": "44295221-1215-4359-a079-234b317f65b7",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1156,9 +1235,10 @@
                 {
                     "alias": "language_n1",
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1181,9 +1261,10 @@
                 {
                     "alias": "type",
                     "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "controlledList": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1229,9 +1310,10 @@
                 {
                     "alias": "type_n1",
                     "config": {
-                        "rdmCollection": "c9e838f8-7660-4701-821c-721dac98a10b"
+                        "controlledList": "c9e838f8-7660-4701-821c-721dac98a10b",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1399,9 +1481,10 @@
                 {
                     "alias": "type_n2",
                     "config": {
-                        "rdmCollection": "1adae7ea-4884-432f-af44-c9aea3a48a3d"
+                        "controlledList": "1adae7ea-4884-432f-af44-c9aea3a48a3d",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1447,9 +1530,10 @@
                 {
                     "alias": "language_n2",
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1472,9 +1556,10 @@
                 {
                     "alias": "type_n3",
                     "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "controlledList": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1527,10 +1612,10 @@
                 {
                     "alias": "language",
                     "config": {
-                        "graphid": null,
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -1677,9 +1762,9 @@
             "publication": {
                 "graph_id": "d9738a38-b24d-11e9-b32c-a4d18cec433a",
                 "most_recent_edit_id": null,
-                "notes": null,
-                "publicationid": "ec2186ae-95b5-11ed-a5e5-a683e74f6c3a",
-                "published_time": "2023-01-16T09:53:30.159"
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "bd1e0215-03f6-411e-9435-1df0d0baaab2",
+                "published_time": "2026-02-06T13:22:15.217"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
