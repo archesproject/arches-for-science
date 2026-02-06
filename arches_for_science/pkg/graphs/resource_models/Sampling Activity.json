@@ -834,13 +834,38 @@
                     "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name Language",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -853,19 +878,16 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
+                        "defaultValue": [],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -878,7 +900,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357887-1d9d-11eb-a29f-024e0d439fdb",
@@ -1026,14 +1048,37 @@
                     "card_id": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
-                            "df8e4cf6-9b0b-472f-8986-83d5b2ca28a0",
-                            "72202a9f-1551-4cbc-9c7a-73c02321f3ea"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "88a56018-92f7-44d7-ba05-2eb19bcb9824",
+                                        "language_id": "en",
+                                        "list_item_id": "391818d1-5d43-4499-a007-7732969caadb",
+                                        "value": "description",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "69abe4f9-f16f-47bf-8fdf-ccce67a18e5d",
+                                "uri": "http://vocab.getty.edu/aat/300411780"
+                            },
+                            {
+                                "labels": [
+                                    {
+                                        "id": "b6aa61b6-5954-4f01-906c-a805b2bef198",
+                                        "language_id": "en",
+                                        "list_item_id": "2e45a071-47d0-4d6b-ba9d-9add9475a6d6",
+                                        "value": "brief text",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "69abe4f9-f16f-47bf-8fdf-ccce67a18e5d",
+                                "uri": "http://vocab.getty.edu/aat/300418049"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Statement Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select one or more types for this Statement"
                         }
@@ -1046,19 +1091,44 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Statement Language",
-                        "options": [],
                         "placeholder": {
                             "en": "Select one or more languages of the content"
                         }
@@ -1071,7 +1141,7 @@
                     "sortorder": 3,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335786f-1d9d-11eb-a29f-024e0d439fdb",
@@ -1111,7 +1181,6 @@
                             "placeholder"
                         ],
                         "label": "Sampling Activity Technique",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -1124,7 +1193,7 @@
                     "sortorder": 0,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335784e-1d9d-11eb-a29f-024e0d439fdb",
@@ -1230,7 +1299,6 @@
                             "placeholder"
                         ],
                         "label": "Language",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -1243,7 +1311,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357857-1d9d-11eb-a29f-024e0d439fdb",
@@ -1283,7 +1351,6 @@
                             "placeholder"
                         ],
                         "label": "Type of Statement",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -1296,7 +1363,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
@@ -1332,13 +1399,38 @@
                     "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name Language",
-                        "options": [],
                         "placeholder": {
                             "en": "Select one or more language"
                         }
@@ -1351,7 +1443,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
@@ -1378,14 +1470,11 @@
                 {
                     "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
+                        "defaultValue": [],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select a type for this name"
                         }
@@ -1398,7 +1487,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357869-1d9d-11eb-a29f-024e0d439fdb",
@@ -1497,7 +1586,6 @@
                             "placeholder"
                         ],
                         "label": "Unit",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -1510,7 +1598,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
@@ -1520,7 +1608,6 @@
                             "placeholder"
                         ],
                         "label": "Duration Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -1533,7 +1620,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357884-1d9d-11eb-a29f-024e0d439fdb",
@@ -1669,7 +1756,6 @@
                             "placeholder"
                         ],
                         "label": "Identifier Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -1682,7 +1768,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357860-1d9d-11eb-a29f-024e0d439fdb",
@@ -1753,7 +1839,7 @@
                         ],
                         "label": "Location of Sampling Activity",
                         "placeholder": {
-                            "en": null
+                            "en": ""
                         }
                     },
                     "id": "033578e8-1d9d-11eb-a29f-024e0d439fdb",
@@ -1774,7 +1860,6 @@
                             "placeholder"
                         ],
                         "label": "Type of Timespan",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -1787,7 +1872,7 @@
                     "sortorder": 4,
                     "source_identifier_id": null,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357854-1d9d-11eb-a29f-024e0d439fdb",
@@ -1907,13 +1992,38 @@
                     "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name language",
-                        "options": [],
                         "placeholder": {
                             "en": "Select one or more languages of the content"
                         }
@@ -1926,7 +2036,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
@@ -2014,30 +2124,24 @@
                     "card_id": "03357875-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
-                            "8f40c740-3c02-4839-b1a4-f1460823a9fe"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "5a106529-1721-43e9-b902-40927ad79f08",
+                                        "language_id": "en",
+                                        "list_item_id": "5f400d39-3b6b-4b8a-939b-4e49787c7444",
+                                        "value": "preferred terms",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "80028d07-9c98-48cf-84db-f77bc01c8bbc",
+                                "uri": "http://vocab.getty.edu/aat/300404670"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name type",
-                        "options": [
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "f4643b7d-2710-4aca-8892-c0eeed02dfe9",
-                                "id": "0798bf2c-ab07-43d7-81f4-f1e2d20251a1",
-                                "sortorder": "",
-                                "text": "alternate titles"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "18610abd-e0e5-48bb-9a7a-3830d75755d0",
-                                "id": "7d069762-bd96-44b8-afc8-4761389105c5",
-                                "sortorder": "",
-                                "text": "primary title"
-                            }
-                        ],
                         "placeholder": {
                             "en": "Select one or more types for this name"
                         },
@@ -2051,7 +2155,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000013"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335786c-1d9d-11eb-a29f-024e0d439fdb",
@@ -2084,7 +2188,7 @@
                         ],
                         "label": "Instrument used in Sampling Activity",
                         "placeholder": {
-                            "en": null
+                            "en": ""
                         }
                     },
                     "id": "033578f7-1d9d-11eb-a29f-024e0d439fdb",
@@ -2123,13 +2227,38 @@
                     "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
                         "defaultValue": [
-                            "bc35776b-996f-4fc1-bd25-9f6432c1f349"
+                            {
+                                "labels": [
+                                    {
+                                        "id": "9ef7c937-9c22-431b-b616-ec8a1262271d",
+                                        "language_id": "fr",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "anglais",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ad5573c8-b357-40b2-a5f6-d1dc57fa2c11",
+                                        "language_id": "de",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "Englisch",
+                                        "valuetype_id": "prefLabel"
+                                    },
+                                    {
+                                        "id": "ab46cdfd-d4f0-4b00-80e3-c7d4eaa171f9",
+                                        "language_id": "en",
+                                        "list_item_id": "38729dbe-6d1c-48ce-bf47-e2a18945600e",
+                                        "value": "English (language)",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                                "uri": "http://vocab.getty.edu/aat/300388277"
+                            }
                         ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name Language",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2142,7 +2271,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
@@ -2177,14 +2306,11 @@
                 {
                     "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
                     "config": {
-                        "defaultValue": [
-                            "0fa02b3a-eb9b-4e6c-a0fd-3e948795df10"
-                        ],
+                        "defaultValue": [],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Name Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2197,7 +2323,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335788a-1d9d-11eb-a29f-024e0d439fdb",
@@ -2237,7 +2363,6 @@
                             "placeholder"
                         ],
                         "label": "Name Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2250,7 +2375,7 @@
                     "sortorder": 0,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
@@ -2312,7 +2437,6 @@
                             "placeholder"
                         ],
                         "label": "Name Language",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2325,7 +2449,7 @@
                     "sortorder": 2,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "0335785a-1d9d-11eb-a29f-024e0d439fdb",
@@ -2366,7 +2490,7 @@
                         ],
                         "label": "Influence on Sampling Activity",
                         "placeholder": {
-                            "en": null
+                            "en": ""
                         }
                     },
                     "id": "03357902-1d9d-11eb-a29f-024e0d439fdb",
@@ -2387,7 +2511,6 @@
                             "placeholder"
                         ],
                         "label": "Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2400,7 +2523,7 @@
                     "sortorder": 0,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "fec2d45c-1da0-11eb-a29f-024e0d439fdb",
@@ -2411,7 +2534,7 @@
                         ],
                         "label": "Sampling Procedure",
                         "placeholder": {
-                            "en": null
+                            "en": ""
                         }
                     },
                     "id": "2155396a-1da1-11eb-a29f-024e0d439fdb",
@@ -2454,7 +2577,6 @@
                             "placeholder"
                         ],
                         "label": "Digital Reference Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2467,7 +2589,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "985a7550-1d9e-11eb-a29f-024e0d439fdb",
@@ -2477,7 +2599,6 @@
                             "placeholder"
                         ],
                         "label": "Sampling Activity Tool Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2490,7 +2611,7 @@
                     "sortorder": 0,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "b1125005-911a-11ec-a428-ad03e9261309",
@@ -2522,7 +2643,6 @@
                             "placeholder"
                         ],
                         "label": "Textual Reference Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2535,7 +2655,7 @@
                     "sortorder": 1,
                     "source_identifier_id": null,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "b3e171a9-1d9d-11eb-a29f-024e0d439fdb",
@@ -2585,7 +2705,7 @@
                         ],
                         "label": "Sampled Area Name",
                         "placeholder": {
-                            "en": null
+                            "en": ""
                         }
                     },
                     "id": "b3e171b1-1d9d-11eb-a29f-024e0d439fdb",
@@ -2714,7 +2834,6 @@
                             "placeholder"
                         ],
                         "label": "Statement_creation_time_type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -2727,7 +2846,7 @@
                     "sortorder": 5,
                     "source_identifier_id": null,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "c470c54b-911a-11ec-a428-ad03e9261309",
@@ -4627,9 +4746,10 @@
                 {
                     "alias": "technique",
                     "config": {
-                        "rdmCollection": "35ed167d-ab89-4f38-b046-3349256be725"
+                        "controlledList": "35ed167d-ab89-4f38-b046-3349256be725",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -4813,9 +4933,10 @@
                 {
                     "alias": "timespan_statement_type",
                     "config": {
-                        "rdmCollection": "1adae7ea-4884-432f-af44-c9aea3a48a3d"
+                        "controlledList": "1adae7ea-4884-432f-af44-c9aea3a48a3d",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -4909,9 +5030,10 @@
                 {
                     "alias": "timespan_duration_name_language",
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThe language of the name, selected from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -4934,9 +5056,10 @@
                 {
                     "alias": "timespan_duration_unit",
                     "config": {
-                        "rdmCollection": "bbf81641-b1dd-4ddf-858d-7e8ca823d385"
+                        "controlledList": "bbf81641-b1dd-4ddf-858d-7e8ca823d385",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -4982,9 +5105,10 @@
                 {
                     "alias": "name_language",
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThe language of the name, selected from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5030,10 +5154,10 @@
                 {
                     "alias": "statement_language",
                     "config": {
-                        "graphid": null,
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThis is the language of the statement, drawn from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5173,9 +5297,10 @@
                 {
                     "alias": "statement_name_language",
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThe language of the name, selected from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5223,9 +5348,10 @@
                 {
                     "alias": "timespan_statement_name_language",
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThe language of the name, selected from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5319,9 +5445,10 @@
                 {
                     "alias": "identifier_type",
                     "config": {
-                        "rdmCollection": "4096365e-4fe7-412d-906c-16f3d356e8be"
+                        "controlledList": "4096365e-4fe7-412d-906c-16f3d356e8be",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5378,9 +5505,10 @@
                 {
                     "alias": "timespan_statement_name_type",
                     "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "controlledList": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5588,9 +5716,10 @@
                 {
                     "alias": "timespan_type",
                     "config": {
-                        "rdmCollection": "c53d3557-e033-4aa1-b020-0dc2b690025f"
+                        "controlledList": "c53d3557-e033-4aa1-b020-0dc2b690025f",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5659,9 +5788,10 @@
                 {
                     "alias": "timespan_duration_type",
                     "config": {
-                        "rdmCollection": "0eb564f7-3ccb-4b13-aab1-307011c8610a"
+                        "controlledList": "0eb564f7-3ccb-4b13-aab1-307011c8610a",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5684,9 +5814,10 @@
                 {
                     "alias": "timespan_duration_name_type",
                     "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "controlledList": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5709,9 +5840,10 @@
                 {
                     "alias": "timespan_name_type",
                     "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "controlledList": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5734,9 +5866,10 @@
                 {
                     "alias": "name_type",
                     "config": {
-                        "rdmCollection": "80028d07-9c98-48cf-84db-f77bc01c8bbc"
+                        "controlledList": "80028d07-9c98-48cf-84db-f77bc01c8bbc",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5782,9 +5915,10 @@
                 {
                     "alias": "statement_type",
                     "config": {
-                        "rdmCollection": "69abe4f9-f16f-47bf-8fdf-ccce67a18e5d"
+                        "controlledList": "69abe4f9-f16f-47bf-8fdf-ccce67a18e5d",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThis branch allows the classifications themselves to be classified in order to know what sort of type it is, without recognizing all of them individually. This is important when the set of first degree types is not easily enumerable, such as classifications for the type of object or work.  See: https://linked.art/model/base/#types-of-types\n\n# Arches Note:\nNote that the metatype is hidden from view. Ensure that it has a default set when imported into another branch or model.\n\n* BranchId: la-meta-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5830,9 +5964,10 @@
                 {
                     "alias": "statement_name_type",
                     "config": {
-                        "rdmCollection": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce"
+                        "controlledList": "9f1cf9a8-ce65-455f-ab1e-a9b36e9e23ce",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nIn order to make data both consistent and able to be customized to specific scenarios, nodes can be classified with terms from controlled vocabularies. This field gives a way to be more specific about the sort of entity, while maintaining the core information using the ontology class. See: https://linked.art/model/base/#types-and-classifications\n\n# Arches Note:\n\n\n* BranchId: la-classification\n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5912,10 +6047,10 @@
                 {
                     "alias": "timespan_statement_language",
                     "config": {
-                        "graphid": null,
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThis is the language of the statement, drawn from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -5984,9 +6119,10 @@
                 {
                     "alias": "timespan_name_language",
                     "config": {
-                        "rdmCollection": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef"
+                        "controlledList": "f7fc4f6d-fd46-4881-846f-4a08bc1a3fef",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\nThe language of the name, selected from a controlled vocabulary.\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -6084,9 +6220,10 @@
                 {
                     "alias": "type",
                     "config": {
-                        "rdmCollection": "6e3bd268-68bc-4464-aad0-82eabfd5a78f"
+                        "controlledList": "6e3bd268-68bc-4464-aad0-82eabfd5a78f",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -6132,9 +6269,10 @@
                 {
                     "alias": "digital_reference_type",
                     "config": {
-                        "rdmCollection": "933cf221-2d71-478f-998a-a5e088457971"
+                        "controlledList": "933cf221-2d71-478f-998a-a5e088457971",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -6195,9 +6333,10 @@
                 {
                     "alias": "used_object_type",
                     "config": {
-                        "rdmCollection": "a373aabe-bba3-4c41-a363-d8f879c2f7ff"
+                        "controlledList": "a373aabe-bba3-4c41-a363-d8f879c2f7ff",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -6281,9 +6420,10 @@
                 {
                     "alias": "textual_reference_type",
                     "config": {
-                        "rdmCollection": "8b7faa16-3846-4360-b767-bb2c823b6550"
+                        "controlledList": "8b7faa16-3846-4360-b767-bb2c823b6550",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -6617,9 +6757,10 @@
                 {
                     "alias": "statement_creation_time_type",
                     "config": {
-                        "rdmCollection": "c53d3557-e033-4aa1-b020-0dc2b690025f"
+                        "controlledList": "c53d3557-e033-4aa1-b020-0dc2b690025f",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
                     "exportable": false,
                     "fieldname": null,
@@ -6817,9 +6958,9 @@
             "publication": {
                 "graph_id": "03357848-1d9d-11eb-a29f-024e0d439fdb",
                 "most_recent_edit_id": null,
-                "notes": null,
-                "publicationid": "86ad554e-3833-11f0-a7a4-020539808477",
-                "published_time": "2025-05-23T17:10:40.249"
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "22ffa594-c005-40dd-a663-697bec8e439e",
+                "published_time": "2026-02-06T12:59:33.694"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
