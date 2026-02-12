@@ -77,6 +77,7 @@ urlpatterns = [
 urlpatterns.append(path("reports/", include("arches_templating.urls")))
 urlpatterns.append(path("", include("arches_component_lab.urls")))
 urlpatterns.append(path("", include("arches_controlled_lists.urls")))
+urlpatterns.append(path("", include("arches_querysets.urls")))
 urlpatterns.append(path("", include("arches.urls")))
 
 # Only handle i18n routing in active project. This will still handle the routes provided by Arches core and Arches applications,
