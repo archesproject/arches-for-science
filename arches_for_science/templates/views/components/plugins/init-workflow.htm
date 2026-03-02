@@ -27,11 +27,12 @@
             data-bind="style: {maxWidth: $data.requestingUserIsSuperuser() ? '1200px' : '1000px'}"
         >
             <div style="width: 100%; display: flex; justify-content: flex-end; padding: 10px 12px;">
-                <i 
+                <button
                     aria-label="{% trans 'Close Incomplete Workflow Modal' %}"
-                    class="fa fa-times" style="font-size: 20px; cursor: pointer;"
+                    tabindex="0"
+                    class="close fa fa-times" style="font-size: 20px; cursor: pointer;"
                     data-bind="click: function(){ $data.shouldShowIncompleteWorkflowsModal(false); }"
-                ></i>
+                ></button>
             </div>
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <h2>{% trans 'Incomplete Workflows' %}</h2>
