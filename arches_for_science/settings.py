@@ -381,18 +381,18 @@ LANGUAGES = [
 # override this to permenantly display/hide the language switcher
 SHOW_LANGUAGE_SWITCH = len(LANGUAGES) > 1
 
-# try:
-#     from .package_settings import *
-# except ImportError:
-#     try:
-#         from package_settings import *
-#     except ImportError as e:
-#         pass
+try:
+    from .package_settings import *
+except ImportError:
+    try:
+        from package_settings import *
+    except ImportError as e:
+        pass
 
-# try:
-#     from .settings_local import *
-# except ImportError as e:
-#     try:
-#         from settings_local import *
-#     except ImportError as e:
-#         pass
+try:
+    from .settings_local import *
+except ImportError as e:
+    try:
+        from settings_local import *
+    except ImportError as e:
+        pass
