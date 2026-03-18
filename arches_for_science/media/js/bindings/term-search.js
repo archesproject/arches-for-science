@@ -12,7 +12,6 @@ ko.bindingHandlers.termSearch = {
         var tags = valueAccessor().tags;
         var language = valueAccessor().language;
         var placeholder = valueAccessor().placeholder;
-
         tags.subscribe(function(tags) {
             // first clear any existing tags
             searchbox.tags.forEach(tag => {
@@ -31,14 +30,12 @@ ko.bindingHandlers.termSearch = {
                 searchbox.empty();
             }
         });
+        
         terms.subscribe(function(terms) {
             if (terms.length == 0 && searchbox.tags.length == 0)
                 searchbox.empty();
         });
-        var self = this;
-        this.stripMarkup = function(m){
-            return m.replace(/(<([^>]+)>)/gi, "");
-        };
+        const stripMarkup = (m) => m.replace(/(<([^>]+)>)/gi, '');
 
         var searchbox = $(el).selectWoo({
             dropdownCssClass: ':all:',
@@ -108,7 +105,7 @@ ko.bindingHandlers.termSearch = {
                         markup.push('<button tabindex="0" id="' + searchType + 'group" class="btn search-type-btn term-search-btn ' + active + ' ">' + label + '</button>');
                     });
                 } else {
-                    markup.push(self.stripMarkup(result.text));
+                    markup.push(stripMarkup(result.text));
                     //window.selectWoo.util.markMatch(result.text, query.term, markup, stripMarkup);
                 }
                 var context = result.context_label != '' ? '<i class="concept_result_schemaname">(' + _.escape(result.context_label) + ')</i>' : '';
@@ -137,7 +134,7 @@ ko.bindingHandlers.termSearch = {
                     };
                 }
 
-                result.text = self.stripMarkup(result.text);
+                result.text = stripMarkup(result.text);
 
                 var context = result.context_label != '' ? '<i class="concept_result_schemaname">(' + _.escape(result.context_label) + ')</i>' : '';
                 var markup = '<button class="search-tag"><span data-filter="external-filter"><i class="fa fa-minus" style="display:none;"></i>' + result.text + '</span>' + context + '</button>';
