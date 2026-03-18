@@ -8,185 +8,182 @@ import ReportViewModel from 'viewmodels/report';
 import { generateArchesURL } from "@/arches/utils/generate-arches-url.ts";
 import 'bindings/chosen';
 
-NODE_ID = "@node_id";
-TILE_ID = "@tile_id";
-VALUE = "@value";
-NON_DATA_COLLECTING_NODE = "NON_DATA_COLLECTING_NODE";
+export default ko.components.register('thematic-report', {
+    viewModel: function(params) {
+                NODE_ID = "node_id";
+                TILE_ID = "@tile_id";
+                VALUE = "@value";
+                NON_DATA_COLLECTING_NODE = "NON_DATA_COLLECTING_NODE";
 
-TAB_DATA = [
-    {
-        title: arches.translations.namesClassifications,
-        sections: [
-            {
-                nodeId: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',  /* assumes each section contains a single node */
-                sectionTitle: arches.translations.namesOfThing,
-                hasPlusSign: true,
-                childNodeInformation: [
+                TAB_DATA = [
                     {
-                        nodeId: 'b9c1d8a6-b497-11e9-876b-a4d18cec433a',
-                        columnName: arches.translations.name,
-                        
+                        title: arches.translations.namesClassifications,
+                        sections: [
+                            {
+                                nodeId: 'b9c1ced7-b497-11e9-a4da-a4d18cec433a',  /* assumes each section contains a single node */
+                                sectionTitle: arches.translations.namesOfThing,
+                                hasPlusSign: true,
+                                childNodeInformation: [
+                                    {
+                                        nodeId: 'b9c1d8a6-b497-11e9-876b-a4d18cec433a',
+                                        columnName: arches.translations.name,
+                                        
+                                    },
+                                    {
+                                        nodeId: 'b9c1d7ab-b497-11e9-9ab7-a4d18cec433a',
+                                        columnName: arches.translations.nameType,
+                                    },
+                                    {
+                                        nodeId:'b9c1d400-b497-11e9-90ea-a4d18cec433a', 
+                                        columnName: arches.translations.language,
+                                    },
+                                ],
+                            },
+                            {
+                                nodeId: '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a',  /* assumes each section contains a single node */
+                                sectionTitle: arches.translations.objectType,
+                            },
+                            {
+                                nodeId: '22c150ca-b498-11e9-9adc-a4d18cec433a',  /* assumes each section contains a single node */
+                                sectionTitle: arches.translations.identifiers,
+                                hasPlusSign: true,
+                                childNodeInformation: [
+                                    { 
+                                        nodeId: '22c169b5-b498-11e9-bdad-a4d18cec433a',
+                                        columnName: arches.translations.identifier,
+                                    },
+                                    { 
+                                        nodeId: '22c15cfa-b498-11e9-b5e3-a4d18cec433a',
+                                        columnName: arches.translations.identifierType,
+                                    },
+                                ],
+                            }
+                        ],
                     },
                     {
-                        nodeId: 'b9c1d7ab-b497-11e9-9ab7-a4d18cec433a',
-                        columnName: arches.translations.nameType,
+                        title: arches.translations.existence,
+                        sections: [],
                     },
                     {
-                        nodeId:'b9c1d400-b497-11e9-90ea-a4d18cec433a', 
-                        columnName: arches.translations.language,
+                        title: arches.translations.parameters,
+                        sections: [],
                     },
-                ],
-            },
-            {
-                nodeId: '8ddfe3ab-b31d-11e9-aff0-a4d18cec433a',  /* assumes each section contains a single node */
-                sectionTitle: arches.translations.objectType,
-            },
-            {
-                nodeId: '22c150ca-b498-11e9-9adc-a4d18cec433a',  /* assumes each section contains a single node */
-                sectionTitle: arches.translations.identifiers,
-                hasPlusSign: true,
-                childNodeInformation: [
-                    { 
-                        nodeId: '22c169b5-b498-11e9-bdad-a4d18cec433a',
-                        columnName: arches.translations.identifier,
+                    {
+                        title: arches.translations.parts,
+                        sections: [],
                     },
-                    { 
-                        nodeId: '22c15cfa-b498-11e9-b5e3-a4d18cec433a',
-                        columnName: arches.translations.identifierType,
+                    {
+                        title: arches.translations.temporalRelations,
+                        sections: [],
                     },
-                ],
+                    {
+                        title: arches.translations.location,
+                        sections: [],
+                    },
+                    {
+                        title: arches.translations.descriptions,
+                        sections: [],
+                    }
+                ];
+
+                var ThematicReportTab = function(tabDatum, disambiguatedResourceGraph, hideEmptySections) {
+                    var self = this;
+
+                    this.hideEmptySections = hideEmptySections;  /* READ-ONLY on this level */
+
+                    /* BEGIN page layout source-of-truth */ 
+                    this.title = tabDatum.title;
+                    this.sections = ko.observableArray(tabDatum.sections);
+                    /* END page layout source-of-truth */ 
+
+                    this.initialize = function() {
+                        self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph);
+                    };
+
+                    this.mapResourceInstanceDataToSections = function(tabDatum, disambiguatedResourceGraph) {
+                        tabDatum.sections.forEach(function(section) {
+                            /* BEGIN normalize resourceInstanceData shape */ 
+                            var resourceInstanceData = Object.values(disambiguatedResourceGraph.resource).find(function(topLevelData) {
+                                if (topLevelData instanceof Array) {
+                                    return topLevelData[0][NODE_ID] === section.nodeId;  /* all data has same nodeId */
+                                }
+                                return topLevelData[NODE_ID] === section.nodeId;
+                            });
+
+                            if (!(resourceInstanceData instanceof Array)) {
+                                if (!resourceInstanceData) {
+                                    resourceInstanceData = [];
+                                }
+                                else {
+                                    resourceInstanceData = [ resourceInstanceData ];
+                                }
+                            }
+                            /* END normalize resourceInstanceData shape */ 
+
+                            section['resourceInstanceData'] = resourceInstanceData;
+                        });
+                    };
+
+                    this.getResourceInstanceNodeData = function(nodeId, resourceInstanceData) {
+                        if (resourceInstanceData[NODE_ID] === nodeId) {
+                            return resourceInstanceData[NODE_ID];
+                        }
+                        else {
+                            return Object.values(resourceInstanceData).find(function(resourceInstanceChildNodeData) {
+                                return resourceInstanceChildNodeData[NODE_ID] === nodeId;
+                            });
+                        }
+                    };
+                    
+                    this.initialize();
+                };
+
+        var self = this;
+        ReportViewModel.apply(this, [params]);
+
+        this.loading = ko.observable();
+
+        this.disambiguatedResourceGraph = ko.observable();
+
+        this.reportTabs = ko.observableArray();
+
+        this.activeTabIndex = ko.observable(0);
+        this.activeTab = ko.computed(function() {
+            if (self.reportTabs().length) {
+                return self.reportTabs()[self.activeTabIndex()];
             }
-        ],
-    },
-    {
-        title: arches.translations.existence,
-        sections: [],
-    },
-    {
-        title: arches.translations.parameters,
-        sections: [],
-    },
-    {
-        title: arches.translations.parts,
-        sections: [],
-    },
-    {
-        title: arches.translations.temporalRelations,
-        sections: [],
-    },
-    {
-        title: arches.translations.location,
-        sections: [],
-    },
-    {
-        title: arches.translations.descriptions,
-        sections: [],
-    }
-];
-
-var ThematicReportTab = function(tabDatum, disambiguatedResourceGraph, hideEmptySections) {
-    var self = this;
-
-    this.hideEmptySections = hideEmptySections;  /* READ-ONLY on this level */
-
-    /* BEGIN page layout source-of-truth */ 
-    this.title = tabDatum.title;
-    this.sections = ko.observableArray(tabDatum.sections);
-    /* END page layout source-of-truth */ 
-
-    this.initialize = function() {
-        self.mapResourceInstanceDataToSections(tabDatum, disambiguatedResourceGraph);
-    };
-
-    this.mapResourceInstanceDataToSections = function(tabDatum, disambiguatedResourceGraph) {
-        tabDatum.sections.forEach(function(section) {
-            /* BEGIN normalize resourceInstanceData shape */ 
-            var resourceInstanceData = Object.values(disambiguatedResourceGraph.resource).find(function(topLevelData) {
-                if (topLevelData instanceof Array) {
-                    return topLevelData[0][NODE_ID] === section.nodeId;  /* all data has same nodeId */
-                }
-                return topLevelData[NODE_ID] === section.nodeId;
-            });
-
-            if (!(resourceInstanceData instanceof Array)) {
-                if (!resourceInstanceData) {
-                    resourceInstanceData = [];
-                }
-                else {
-                    resourceInstanceData = [ resourceInstanceData ];
-                }
-            }
-            /* END normalize resourceInstanceData shape */ 
-
-            section['resourceInstanceData'] = resourceInstanceData;
         });
-    };
 
-    this.getResourceInstanceNodeData = function(nodeId, resourceInstanceData) {
-        if (resourceInstanceData[NODE_ID] === nodeId) {
-            return resourceInstanceData[NODE_ID];
-        }
-        else {
-            return Object.values(resourceInstanceData).find(function(resourceInstanceChildNodeData) {
-                return resourceInstanceChildNodeData[NODE_ID] === nodeId;
+        this.emptyReportSectionsHidden = ko.observable(false);
+
+        this.initialize = function() {
+            self.loading(true);
+
+            var url = generateArchesURL("arches:resources", { resourceid: params.report.get('resourceid') }) + '?format=json&compact=false';
+
+            $.get(url, function(data) {
+                self.disambiguatedResourceGraph(data);
+
+                TAB_DATA.forEach(function(tabDatum) {
+                    self.reportTabs.push(
+                        new ThematicReportTab(
+                            tabDatum,
+                            self.disambiguatedResourceGraph(),
+                            self.emptyReportSectionsHidden
+                        )
+                    );
+                });
+
+                self.loading(false);
             });
-        }
-    };
-    
-    this.initialize();
-};
-
-var viewModel = function(params) {
-    var self = this;
-    ReportViewModel.apply(this, [params]);
-
-    this.loading = ko.observable();
-
-    this.disambiguatedResourceGraph = ko.observable();
-
-    this.reportTabs = ko.observableArray();
-
-    this.activeTabIndex = ko.observable(0);
-    this.activeTab = ko.computed(function() {
-        if (self.reportTabs().length) {
-            return self.reportTabs()[self.activeTabIndex()];
-        }
-    });
-
-    this.emptyReportSectionsHidden = ko.observable(false);
-
-    this.initialize = function() {
-        self.loading(true);
-
-        var url = generateArchesURL("arches:resources", { resourceid: params.report.get('resourceid') }) + '?format=json&compact=false';
-
-        $.get(url, function(data) {
-            self.disambiguatedResourceGraph(data);
-
-            TAB_DATA.forEach(function(tabDatum) {
-                self.reportTabs.push(
-                    new ThematicReportTab(
-                        tabDatum,
-                        self.disambiguatedResourceGraph(),
-                        self.emptyReportSectionsHidden
-                    )
-                );
-            });
-
-            self.loading(false);
-        });
-    };
+        };
 
     this.toggleEmptyReportSections = function() {
         self.emptyReportSectionsHidden(!self.emptyReportSectionsHidden());
     };
 
     this.initialize();
-};
-
-ko.components.register('thematic-report', {
-    viewModel: viewModel,
+},
     template: thematicReportTemplate
 });
 
-export default viewModel;
